@@ -693,11 +693,13 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
 }
 
 function FlipboardCountry({ countryCode }: { countryCode: string }) {
-  const countries = journeyData.countries as Record<string, { name: string }>;
+  const { language } = useI18n();
+  const countries = journeyData.countries as Record<string, { name: { ko: string; en: string } }>;
   const [displayChars, setDisplayChars] = useState<string[]>([]);
   const [settledCount, setSettledCount] = useState(0);
   
-  const countryName = countries[countryCode]?.name || countryCode;
+  const countryName = (countries[countryCode]?.name?.[language as 'ko' | 'en'] || (countries[countryCode]?.name as unknown as string) || countryCode).toUpperCase();
+
   
   useEffect(() => {
     // Compute targetChars inside effect to avoid stale closure
