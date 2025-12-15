@@ -490,14 +490,8 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
     }).filter(Boolean) as { id: number; position: THREE.Vector3; name: string; isCurrentStop: boolean }[];
   }, [stops, cities, currentStopIdx, language]);
   
-  // Dynamic fog based on zoom level to create depth/focus effect
-  const fogNear = 5 - (zoom * 1.5);
-  const fogFar = 15 - (zoom * 3);
-
   return (
     <>
-      <color attach="background" args={['#000000']} />
-      <fog attach="fog" args={['#000000', fogNear, fogFar]} />
       <ambientLight intensity={1.5} />
       <directionalLight position={[5, 3, 5]} intensity={2} />
       <directionalLight position={[-5, -2, -3]} intensity={0.6} />
