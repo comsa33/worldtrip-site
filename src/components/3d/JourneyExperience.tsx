@@ -2,7 +2,7 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { Bus, Train, Plane, Ship, Mountain, Flag, ChevronDown, Globe, Languages } from 'lucide-react';
+import { ChevronDown, Globe, Languages } from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
 import countryBackgrounds from '../../data/countryBackgrounds.json';
@@ -18,6 +18,8 @@ interface Stop {
   city: string;
   country: string;
   transport: string;
+  startDate?: string;
+  endDate?: string;
   note?: string;
 }
 
@@ -631,76 +633,144 @@ function LanguageToggle() {
     </div>
   );
 }
-
-function TransportIcon({ type }: { type: string }) {
-  const icons: Record<string, React.ReactNode> = {
-    bus: <Bus size={14} />,
-    train: <Train size={14} />,
-    flight: <Plane size={14} />,
-    boat: <Ship size={14} />,
-    trek: <Mountain size={14} />,
-    start: <Flag size={14} />,
-  };
-  return <>{icons[type] || <Bus size={14} />}</>;
-}
-
-function InfoPanel({ stop, stopIndex, totalStops }: { stop: Stop; stopIndex: number; totalStops: number }) {
+function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: number; stops: Stop[] }) {
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
-  const countries = journeyData.countries as Record<string, { name: string }>;
   
-  if (!stop) return null;
+  // Show 7 stops centered on current (3 before, current, 3 after)
+  const visibleRange = 3;
+  const startIdx = Math.max(0, currentStopIndex - visibleRange);
+  const endIdx = Math.min(stops.length - 1, currentStopIndex + visibleRange);
   
-  const city = cities[stop.city];
-  const cityName = city ? city[language as 'ko' | 'en'] : stop.city;
-  const countryName = countries[stop.country]?.name || stop.country;
+  const visibleStops = stops.slice(startIdx, endIdx + 1);
+  const centerOffset = currentStopIndex - startIdx;
   
-  const transportLabels: Record<string, { ko: string; en: string }> = {
-    bus: { ko: '버스', en: 'Bus' },
-    train: { ko: '기차', en: 'Train' },
-    flight: { ko: '비행기', en: 'Flight' },
-    boat: { ko: '보트', en: 'Boat' },
-    trek: { ko: '트레킹', en: 'Trek' },
-    start: { ko: '출발', en: 'Start' },
+  // Format date: "2016-09-15" -> "'16.09.15"
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return '';
+    const parts = dateStr.split('-');
+    return `'${parts[0].slice(2)}.${parts[1]}.${parts[2]}`;
   };
   
   return (
-    <div className="info-panel">
-      <div className={`transport-badge transport-badge--${stop.transport}`}>
-        <TransportIcon type={stop.transport} />
-        <span>{transportLabels[stop.transport]?.[language as 'ko' | 'en'] || stop.transport}</span>
+    <div className="vertical-timeline">
+      <div className="vertical-timeline__track" />
+      <div 
+        className="vertical-timeline__stops"
+        style={{ 
+          transform: `translateY(calc(50% - ${centerOffset * 52}px))` 
+        }}
+      >
+        {visibleStops.map((stop, idx) => {
+          const actualIdx = startIdx + idx;
+          const isVisited = actualIdx < currentStopIndex;
+          const isCurrent = actualIdx === currentStopIndex;
+          const city = cities[stop.city];
+          const cityName = city ? city[language as 'ko' | 'en'] : stop.city;
+          
+          return (
+            <div 
+              key={stop.id}
+              className={`timeline-stop ${isCurrent ? 'timeline-stop--current' : ''} ${isVisited ? 'timeline-stop--visited' : ''}`}
+            >
+              <div className="timeline-stop__dot">
+                {isCurrent && <div className="timeline-stop__pulse" />}
+              </div>
+              <div className="timeline-stop__info">
+                <span className="timeline-stop__city">{cityName}</span>
+                {isCurrent && stop.startDate && (
+                  <span className="timeline-stop__date">
+                    {formatDate(stop.startDate)}
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
-      <div className="info-panel__progress">
-        <span className="current">{String(stopIndex + 1).padStart(3, '0')}</span>
-        <span className="divider">/</span>
-        <span className="total">{String(totalStops).padStart(3, '0')}</span>
-      </div>
-      <h2 className="info-panel__city">{cityName}</h2>
-      <p className="info-panel__country">{countryName}</p>
-      {stop.note && <p className="info-panel__note">{stop.note}</p>}
     </div>
   );
 }
 
-function PhotoCard() {
-  const { t } = useI18n();
+function FlipboardCountry({ countryCode }: { countryCode: string }) {
+  const countries = journeyData.countries as Record<string, { name: string }>;
+  const [displayChars, setDisplayChars] = useState<string[]>([]);
+  const [settledCount, setSettledCount] = useState(0);
+  
+  const countryName = countries[countryCode]?.name || countryCode;
+  
+  useEffect(() => {
+    // Compute targetChars inside effect to avoid stale closure
+    const targetChars = countryName.split('');
+    
+    // Reset with exact length
+    setSettledCount(0);
+    setDisplayChars(new Array(targetChars.length).fill(' '));
+    
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ가나다라마바사아자차카타파하';
+    let currentSettled = 0;
+    
+    // Progressive reveal: settle one character at a time
+    const settleInterval = setInterval(() => {
+      if (currentSettled >= targetChars.length) {
+        clearInterval(settleInterval);
+        // Ensure final state is exact
+        setDisplayChars([...targetChars]);
+        return;
+      }
+      
+      // Flip animation for current character
+      let flipCount = 0;
+      const maxFlips = 6;
+      
+      const flipChar = setInterval(() => {
+        setDisplayChars(() => {
+          const newChars = new Array(targetChars.length).fill(' ');
+          // Already settled characters stay fixed
+          for (let i = 0; i < currentSettled; i++) {
+            newChars[i] = targetChars[i];
+          }
+          // Current flipping character
+          if (flipCount >= maxFlips) {
+            newChars[currentSettled] = targetChars[currentSettled];
+          } else {
+            newChars[currentSettled] = chars[Math.floor(Math.random() * chars.length)];
+          }
+          // Remaining characters show random
+          for (let i = currentSettled + 1; i < targetChars.length; i++) {
+            newChars[i] = chars[Math.floor(Math.random() * chars.length)];
+          }
+          return newChars;
+        });
+        
+        flipCount++;
+        if (flipCount > maxFlips) {
+          clearInterval(flipChar);
+          currentSettled++;
+          setSettledCount(currentSettled);
+        }
+      }, 50);
+      
+    }, 150);
+    
+    return () => clearInterval(settleInterval);
+  }, [countryName]);
+  
+  // Slice to exact length to prevent extra empty flipboards
+  const visibleChars = displayChars.slice(0, countryName.length);
+  
   return (
-    <div className="photo-card">
-      <div className="photo-card__placeholder">
-        <div className="photo-card__icon" />
-        <span>{t('journey.addPhoto')}</span>
+    <div className="flipboard-country">
+      <div className="flipboard-country__text">
+        {visibleChars.map((char, idx) => (
+          <span 
+            key={idx} 
+            className={`flipboard-char ${idx < settledCount ? 'flipboard-char--settled' : 'flipboard-char--flipping'}`}
+          >
+            {char || countryName[idx]}
+          </span>
+        ))}
       </div>
-    </div>
-  );
-}
-
-function ProgressBar({ progress }: { progress: number }) {
-  return (
-    <div className="progress-bar">
-      <div className="progress-bar__track">
-        <div className="progress-bar__fill" style={{ height: `${progress * 100}%` }} />
-      </div>
-      <span className="progress-bar__label">{Math.round(progress * 100)}%</span>
     </div>
   );
 }
@@ -869,12 +939,8 @@ function JourneyExperienceContent() {
       
       <Header />
       
-      <div className="content-layer">
-        <PhotoCard />
-        <InfoPanel stop={city} stopIndex={currentStop} totalStops={stops.length} />
-      </div>
-      
-      <ProgressBar progress={progress} />
+      <VerticalTimeline currentStopIndex={currentStop} stops={stops} />
+      <FlipboardCountry countryCode={currentCountry} />
       
       {progress < 0.02 && <ScrollHint />}
     </div>

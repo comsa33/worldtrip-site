@@ -160,6 +160,7 @@
     "EG": { "name": "이집트", "continent": "africa" },
     "ES": { "name": "스페인", "continent": "europe" },
     "IT": { "name": "이탈리아", "continent": "europe" },
+    "BG": { "name": "불가리아", "continent": "europe" },
     "RS": { "name": "세르비아", "continent": "europe" },
     "HU": { "name": "헝가리", "continent": "europe" },
     "PL": { "name": "폴란드", "continent": "europe" },
