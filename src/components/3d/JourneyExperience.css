@@ -606,13 +606,15 @@
   z-index: 50;
   height: 360px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   overflow: hidden;
+  padding: 0 1rem; /* Added horizontal padding */
 }
 
 .vertical-timeline__track {
   position: absolute;
-  left: 6px;
+  left: 21px; /* Adjusted: 5px (alignment) + 16px (padding-left) */
   top: 0;
   bottom: 0;
   width: 2px;

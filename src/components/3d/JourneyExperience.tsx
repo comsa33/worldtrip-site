@@ -490,8 +490,14 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
     }).filter(Boolean) as { id: number; position: THREE.Vector3; name: string; isCurrentStop: boolean }[];
   }, [stops, cities, currentStopIdx, language]);
   
+  // Dynamic fog based on zoom level to create depth/focus effect
+  const fogNear = 5 - (zoom * 1.5);
+  const fogFar = 15 - (zoom * 3);
+
   return (
     <>
+      <color attach="background" args={['#000000']} />
+      <fog attach="fog" args={['#000000', fogNear, fogFar]} />
       <ambientLight intensity={1.5} />
       <directionalLight position={[5, 3, 5]} intensity={2} />
       <directionalLight position={[-5, -2, -3]} intensity={0.6} />
@@ -559,13 +565,13 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
             <group key={stop.id} position={stop.position} scale={[markerScale, markerScale, markerScale]}>
               {/* White core for visibility */}
               <mesh>
-                <sphereGeometry args={[0.004, 12, 12]} />
+                <sphereGeometry args={[0.003, 12, 12]} />
                 <meshBasicMaterial color="#ffffff" />
               </mesh>
               {/* Mint glow outer */}
               <mesh>
-                <sphereGeometry args={[0.008, 12, 12]} />
-                <meshBasicMaterial color={baemin} transparent opacity={0.5} />
+                <sphereGeometry args={[0.006, 12, 12]} />
+                <meshBasicMaterial color={baemin} transparent opacity={0.7} />
               </mesh>
               {/* Show label only when very close */}
               {dotProduct > 0.8 && (
