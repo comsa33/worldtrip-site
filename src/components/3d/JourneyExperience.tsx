@@ -2,7 +2,7 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { ChevronDown, Globe, Languages, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronDown, Globe, Languages } from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
 import countryBackgrounds from '../../data/countryBackgrounds.json';
@@ -827,37 +827,6 @@ function FlipboardCountry({ countryCode }: { countryCode: string }) {
 }
 
 // ... (existing imports)
-
-function MobileControls() {
-  const handleScroll = (direction: 'prev' | 'next') => {
-    const scrollAmount = window.innerHeight;
-    const targetScroll = window.scrollY + (direction === 'next' ? scrollAmount : -scrollAmount);
-    
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
-  };
-
-  return (
-    <div className="mobile-controls">
-      <button 
-        className="mobile-control-btn" 
-        onClick={() => handleScroll('prev')}
-        aria-label="Previous stop"
-      >
-        <ChevronLeft size={32} />
-      </button>
-      <button 
-        className="mobile-control-btn" 
-        onClick={() => handleScroll('next')}
-        aria-label="Next stop"
-      >
-        <ChevronRight size={32} />
-      </button>
-    </div>
-  );
-}
 
 function ScrollHint() {
   const { t } = useI18n();
