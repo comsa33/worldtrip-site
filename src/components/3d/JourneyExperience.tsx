@@ -592,13 +592,21 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
       
       <Traveler position={position} zoomScale={zoomScale} />
       <Camera target={position} zoom={zoom} isUserInteracting={isUserInteracting} currentStopId={displayStopId} />
-      <OrbitControls 
-        enableZoom={false} 
-        enablePan={false} 
-        autoRotate={!isUserInteracting && zoom < 0.2} 
-        autoRotateSpeed={0.15}
-        onStart={onInteraction}
-      />
+      {(() => {
+        const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+        return (
+          <OrbitControls 
+            enableZoom={isMobile} 
+            enablePan={false} 
+            enableRotate={!isMobile}
+            minDistance={3.5}
+            maxDistance={7}
+            autoRotate={!isUserInteracting && zoom < 0.2} 
+            autoRotateSpeed={0.15}
+            onStart={onInteraction}
+          />
+        );
+      })()}
     </>
   );
 }
@@ -838,6 +846,18 @@ function ScrollHint() {
   );
 }
 
+function MobileSwipeHint() {
+  const { language } = useI18n();
+  const text = language === 'ko' ? '↕ 스와이프하여 탐험' : '↕ Swipe to explore';
+  
+  return (
+    <div className="mobile-swipe-hint">
+      <span className="mobile-swipe-hint__icon">👆</span>
+      <span>{text}</span>
+    </div>
+  );
+}
+
 function Header() {
   const { t } = useI18n();
   return (
@@ -973,8 +993,73 @@ function JourneyExperienceContent() {
     };
   }, []);
   
+  // Mobile fullscreen swipe handling
+  const touchStartY = useRef<number | null>(null);
+  const scrollStartY = useRef<number | null>(null);
+  const isDragging = useRef(false);
+  const lastVibrationY = useRef<number>(0);
+  
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    scrollStartY.current = window.scrollY;
+    lastVibrationY.current = window.scrollY;
+    isDragging.current = true;
+  };
+  
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging.current || touchStartY.current === null || scrollStartY.current === null) return;
+    
+    const currentY = e.touches[0].clientY;
+    const deltaY = touchStartY.current - currentY;
+    
+    // Sensitivity multiplier for "dial" feel
+    const sensitivity = 40;
+    const newScrollY = scrollStartY.current + (deltaY * sensitivity);
+    
+    window.scrollTo(0, newScrollY);
+    
+    // Haptic feedback every ~100px of scroll movement
+    const distanceSinceLastVibration = Math.abs(newScrollY - lastVibrationY.current);
+    if (distanceSinceLastVibration > 100 && navigator.vibrate) {
+      navigator.vibrate(5);
+      lastVibrationY.current = newScrollY;
+    }
+  };
+  
+  const handleTouchEnd = () => {
+    if (!isDragging.current) return;
+    
+    isDragging.current = false;
+    touchStartY.current = null;
+    scrollStartY.current = null;
+    
+    // Snap to nearest stop
+    const stopHeight = document.documentElement.scrollHeight / stops.length;
+    const currentScroll = window.scrollY;
+    const nearestStopIndex = Math.round(currentScroll / stopHeight);
+    
+    window.scrollTo({
+      top: nearestStopIndex * stopHeight,
+      behavior: 'smooth'
+    });
+    
+    // Final haptic on snap
+    if (navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+  };
+  
+  // Detect mobile for touch-action
+  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+  
   return (
-    <div className="journey-experience">
+    <div 
+      className="journey-experience"
+      onTouchStart={isMobile ? handleTouchStart : undefined}
+      onTouchMove={isMobile ? handleTouchMove : undefined}
+      onTouchEnd={isMobile ? handleTouchEnd : undefined}
+      style={isMobile ? { touchAction: 'none' } : undefined}
+    >
       <div className="scroll-spacer" style={{ height: `${stops.length * 100}vh` }} />
       
       <CountryBackground countryCode={currentCountry} />
@@ -996,6 +1081,7 @@ function JourneyExperienceContent() {
       <FlipboardCountry countryCode={currentCountry} />
       
       {progress < 0.02 && <ScrollHint />}
+      {progress < 0.05 && <MobileSwipeHint />}
     </div>
   );
 }

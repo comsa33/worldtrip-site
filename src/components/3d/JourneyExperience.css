@@ -395,7 +395,51 @@
 /* =============================================================================
    Responsive Design
    ============================================================================= */
+/* Mobile Swipe Hint - shown only on mobile */
+.mobile-swipe-hint {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  /* Hide desktop scroll hint on mobile */
+  .scroll-hint {
+    display: none !important;
+  }
+  
+  /* Mobile swipe hint near timeline */
+  .mobile-swipe-hint {
+    display: flex;
+    position: fixed;
+    right: 2rem;
+    bottom: calc(50% - 220px);
+    transform: translateX(50%);
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem;
+    z-index: 49;
+    animation: fadeIn 1s ease 1s forwards, gentlePulse 3s ease-in-out infinite;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .mobile-swipe-hint__icon {
+    font-size: 1rem;
+    animation: swipeUpDown 2s ease-in-out infinite;
+  }
+  
+  @keyframes swipeUpDown {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-4px); }
+    75% { transform: translateY(4px); }
+  }
+  
+  @keyframes gentlePulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+  
   .journey-header {
     padding: 1rem 1.25rem;
   }
