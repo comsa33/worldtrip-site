@@ -640,17 +640,17 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
-  height: 360px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
-  padding: 0 1rem; /* Added horizontal padding */
+  padding: 0 1rem;
 }
 
 .vertical-timeline__track {
   position: absolute;
-  left: 21px; /* Adjusted: 5px (alignment) + 16px (padding-left) */
+  left: 21px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -667,15 +667,15 @@
 .vertical-timeline__stops {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .timeline-stop {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 0;
+  gap: 14px;
+  padding: 10px 0;
   opacity: 0.4;
   transform: scale(0.9);
   transform-origin: left center;
@@ -693,8 +693,8 @@
 
 .timeline-stop__dot {
   position: relative;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: rgba(42, 193, 188, 0.3);
   border: 2px solid #2AC1BC;
@@ -703,18 +703,18 @@
 
 .timeline-stop--visited .timeline-stop__dot {
   background: #2AC1BC;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border: none;
   margin: 3px;
 }
 
 .timeline-stop--current .timeline-stop__dot {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: #2AC1BC;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 12px rgba(42, 193, 188, 0.6);
+  box-shadow: 0 0 16px rgba(42, 193, 188, 0.6);
 }
 
 .timeline-stop__pulse {
@@ -739,29 +739,31 @@
 .timeline-stop__info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 120px;
+  gap: 3px;
+  min-width: 140px;
 }
 
 .timeline-stop__city {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
-  font-weight: 400;
+  font-weight: 500;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .timeline-stop--current .timeline-stop__city {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #2AC1BC;
-  text-shadow: 0 0 20px rgba(42, 193, 188, 0.4);
+  text-shadow: 0 0 20px rgba(42, 193, 188, 0.4), 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .timeline-stop__date {
   font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
   letter-spacing: 0.05em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* =============================================================================
@@ -784,6 +786,7 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
 }
 
 .flipboard-char {

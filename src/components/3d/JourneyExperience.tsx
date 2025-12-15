@@ -371,17 +371,23 @@ function getProgressiveZoom(stopId: number): number {
   // Valparaíso(98) to Bahía Inglesa(99): 1.5
   if (stopId === 98 || stopId === 99) return 1.5;
   
-  // Atacama(100) to Sucre(105): 1.8
-  if (stopId >= 100 && stopId <= 105) return 1.8;
+  // Atacama(100) to Sucre(105): 2.0 (zoomed in for desert/highlands)
+  if (stopId >= 100 && stopId <= 105) return 2.0;
   
-  // El Alto(106) to Machu Picchu(110): 1.6
-  if (stopId >= 106 && stopId <= 110) return 1.6;
+  // El Alto(106) to Machu Picchu(110): 2.0 (maintain zoom through Peru)
+  if (stopId >= 106 && stopId <= 110) return 2.0;
   
   // Lima(111): 1.5
   if (stopId === 111) return 1.5;
   
-  // Piura(112) to Cali(122): 1.7
-  if (stopId >= 112 && stopId <= 122) return 1.7;
+  // Piura(112) to Loja(113): 1.7
+  if (stopId >= 112 && stopId <= 113) return 1.7;
+  
+  // Cajas(114) to Pasto(121): 1.8 (zoomed in for Andes region)
+  if (stopId >= 114 && stopId <= 121) return 1.8;
+  
+  // Cali(122): zoom out to 1.5
+  if (stopId === 122) return 1.5;
   
   // Bogotá(123) and Medellín(124): 1.5
   if (stopId === 123 || stopId === 124) return 1.5;
@@ -492,10 +498,10 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
   
   return (
     <>
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[5, 3, 5]} intensity={2} />
-      <directionalLight position={[-5, -2, -3]} intensity={0.6} />
-      <pointLight position={[0, 0, 5]} intensity={1} />
+      <ambientLight intensity={1.0} />
+      <directionalLight position={[5, 3, 5]} intensity={1.4} />
+      <directionalLight position={[-5, -2, -3]} intensity={0.4} />
+      <pointLight position={[0, 0, 5]} intensity={0.7} />
       <Stars radius={200} depth={100} count={1500} factor={3} fade speed={0.2} />
       <Earth />
       <TravelPath points={path} progress={progress} />
@@ -542,9 +548,9 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
                 center
                 style={{
                   color: baemin,
-                  fontSize: '11px',
+                  fontSize: '14px',
                   fontWeight: '600',
-                  textShadow: '0 1px 3px rgba(0,0,0,0.95)',
+                  textShadow: '0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8)',
                   whiteSpace: 'nowrap',
                   pointerEvents: 'none',
                 }}
@@ -574,9 +580,9 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
                   center
                   style={{
                     color: baemin,
-                    fontSize: '7px',
+                    fontSize: '10px',
                     fontWeight: '400',
-                    textShadow: '0 1px 2px rgba(0,0,0,0.9)',
+                    textShadow: '0 2px 6px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.8)',
                     whiteSpace: 'nowrap',
                     pointerEvents: 'none',
                     opacity: 0.7,
