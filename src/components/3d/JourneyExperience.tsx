@@ -599,8 +599,8 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
             enableZoom={isMobile} 
             enablePan={false} 
             enableRotate={!isMobile}
-            minDistance={3.5}
-            maxDistance={7}
+            minDistance={isMobile ? 3.0 : undefined}
+            maxDistance={isMobile ? 8 : undefined}
             autoRotate={!isUserInteracting && zoom < 0.2} 
             autoRotateSpeed={0.15}
             onStart={onInteraction}
@@ -852,7 +852,6 @@ function MobileSwipeHint() {
   
   return (
     <div className="mobile-swipe-hint">
-      <span className="mobile-swipe-hint__icon">👆</span>
       <span>{text}</span>
     </div>
   );

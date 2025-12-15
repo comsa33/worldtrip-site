@@ -406,38 +406,30 @@
     display: none !important;
   }
   
-  /* Mobile swipe hint near timeline */
+  /* Mobile swipe hint - bottom center */
   .mobile-swipe-hint {
     display: flex;
     position: fixed;
-    right: 2rem;
-    bottom: calc(50% - 220px);
-    transform: translateX(50%);
+    left: 50%;
+    bottom: 2.5rem;
+    transform: translateX(-50%);
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     color: rgba(255,255,255,0.5);
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
     z-index: 49;
     animation: fadeIn 1s ease 1s forwards, gentlePulse 3s ease-in-out infinite;
     opacity: 0;
     pointer-events: none;
   }
   
-  .mobile-swipe-hint__icon {
-    font-size: 1rem;
-    animation: swipeUpDown 2s ease-in-out infinite;
-  }
-  
-  @keyframes swipeUpDown {
-    0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-4px); }
-    75% { transform: translateY(4px); }
-  }
-  
   @keyframes gentlePulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.8; }
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
   }
   
   .journey-header {
