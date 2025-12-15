@@ -994,58 +994,50 @@ function JourneyExperienceContent() {
   
   // Mobile fullscreen swipe handling
   const touchStartY = useRef<number | null>(null);
-  const scrollStartY = useRef<number | null>(null);
   const isDragging = useRef(false);
-  const lastVibrationY = useRef<number>(0);
   
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
-    scrollStartY.current = window.scrollY;
-    lastVibrationY.current = window.scrollY;
     isDragging.current = true;
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging.current || touchStartY.current === null || scrollStartY.current === null) return;
-    
-    const currentY = e.touches[0].clientY;
-    const deltaY = touchStartY.current - currentY;
-    
-    // Sensitivity multiplier for "dial" feel
-    const sensitivity = 40;
-    const newScrollY = scrollStartY.current + (deltaY * sensitivity);
-    
-    window.scrollTo(0, newScrollY);
-    
-    // Haptic feedback every ~100px of scroll movement
-    const distanceSinceLastVibration = Math.abs(newScrollY - lastVibrationY.current);
-    if (distanceSinceLastVibration > 100 && navigator.vibrate) {
-      navigator.vibrate(5);
-      lastVibrationY.current = newScrollY;
+    // Prevent default to stop page scroll during swipe detection
+    if (isDragging.current) {
+      e.preventDefault();
     }
   };
   
-  const handleTouchEnd = () => {
-    if (!isDragging.current) return;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging.current || touchStartY.current === null) return;
     
-    isDragging.current = false;
-    touchStartY.current = null;
-    scrollStartY.current = null;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaY = touchStartY.current - touchEndY;
     
-    // Snap to nearest stop
+    // Threshold for swipe detection (40px)
+    const swipeThreshold = 40;
+    
+    // Calculate target stop based on swipe direction
     const stopHeight = document.documentElement.scrollHeight / stops.length;
-    const currentScroll = window.scrollY;
-    const nearestStopIndex = Math.round(currentScroll / stopHeight);
+    let targetStopIndex = currentStop;
     
+    if (deltaY > swipeThreshold) {
+      // Swiped UP = go to NEXT stop
+      targetStopIndex = Math.min(currentStop + 1, stops.length - 1);
+    } else if (deltaY < -swipeThreshold) {
+      // Swiped DOWN = go to PREVIOUS stop
+      targetStopIndex = Math.max(currentStop - 1, 0);
+    }
+    
+    // Scroll to target stop
     window.scrollTo({
-      top: nearestStopIndex * stopHeight,
+      top: targetStopIndex * stopHeight,
       behavior: 'smooth'
     });
     
-    // Final haptic on snap
-    if (navigator.vibrate) {
-      navigator.vibrate(10);
-    }
+    // Reset state
+    isDragging.current = false;
+    touchStartY.current = null;
   };
   
   // Detect mobile for touch-action
