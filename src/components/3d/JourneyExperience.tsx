@@ -974,7 +974,6 @@ function JourneyExperienceContent() {
     const swipeThreshold = 40;
     
     // Calculate target stop based on swipe direction
-    const stopHeight = document.documentElement.scrollHeight / stops.length;
     let targetStopIndex = currentStop;
     
     if (deltaY > swipeThreshold) {
@@ -985,9 +984,34 @@ function JourneyExperienceContent() {
       targetStopIndex = Math.max(currentStop - 1, 0);
     }
     
-    // Scroll to target stop
+    // Find the path index where target stop starts (where toStopId matches)
+    const targetStopId = stops[targetStopIndex]?.id;
+    let targetPathIndex = 0;
+    
+    for (let i = 0; i < path.length; i++) {
+      // Look for where we arrive at the target stop (toStopId)
+      // and segment progress is past the 0.15 threshold
+      if (path[i].toStopId === targetStopId && path[i].segmentProgress >= 0.15) {
+        targetPathIndex = i;
+        break;
+      }
+      // Also check if this is the starting stop (fromStopId) 
+      if (path[i].fromStopId === targetStopId && path[i].segmentProgress < 0.15) {
+        targetPathIndex = i;
+        break;
+      }
+    }
+    
+    // Calculate progress from path index
+    const targetProgress = targetPathIndex / path.length;
+    
+    // Convert progress to scroll position
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const targetScrollY = targetProgress * maxScroll;
+    
+    // Scroll to target position
     window.scrollTo({
-      top: targetStopIndex * stopHeight,
+      top: targetScrollY,
       behavior: 'smooth'
     });
     

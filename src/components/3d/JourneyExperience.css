@@ -18,6 +18,13 @@
   touch-action: pan-y; /* Allow vertical scrolling on mobile */
 }
 
+@media (max-width: 768px) {
+  .canvas-container {
+    pointer-events: none;
+    touch-action: none;
+  }
+}
+
 /* =============================================================================
    Header
    ============================================================================= */
@@ -892,7 +899,8 @@
 /* Responsive */
 @media (max-width: 768px) {
   .vertical-timeline {
-    right: 1rem;
+    right: auto;
+    left: 1rem;
     height: 480px;
   }
   
@@ -904,10 +912,10 @@
     font-size: 0.8rem;
   }
   
-  /* Mobile swipe hint - positioned near timeline */
+  /* Mobile swipe hint - positioned on right side */
   .mobile-swipe-hint {
-    right: auto;
-    left: 1rem;
+    left: auto;
+    right: 1rem;
     bottom: auto;
     top: 50%;
     transform: translateY(-50%);
