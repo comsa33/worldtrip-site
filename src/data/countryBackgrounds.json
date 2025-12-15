@@ -1,0 +1,152 @@
+{
+  "KR": {
+    "flag": "https://flagcdn.com/w640/kr.png",
+    "landmark": "https://images.unsplash.com/photo-1534274867514-d5b47ef89ed7?w=1200",
+    "landmarkName": { "ko": "경복궁", "en": "Gyeongbokgung Palace" }
+  },
+  "VN": {
+    "flag": "https://flagcdn.com/w640/vn.png",
+    "landmark": "https://images.unsplash.com/photo-1555921015-5532091f6026?w=1200",
+    "landmarkName": { "ko": "하롱베이", "en": "Ha Long Bay" }
+  },
+  "MY": {
+    "flag": "https://flagcdn.com/w640/my.png",
+    "landmark": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1200",
+    "landmarkName": { "ko": "페트로나스 타워", "en": "Petronas Towers" }
+  },
+  "ID": {
+    "flag": "https://flagcdn.com/w640/id.png",
+    "landmark": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200",
+    "landmarkName": { "ko": "발리", "en": "Bali" }
+  },
+  "TH": {
+    "flag": "https://flagcdn.com/w640/th.png",
+    "landmark": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=1200",
+    "landmarkName": { "ko": "왓 아룬", "en": "Wat Arun" }
+  },
+  "LA": {
+    "flag": "https://flagcdn.com/w640/la.png",
+    "landmark": "https://images.unsplash.com/photo-1558431382-27e303142255?w=1200",
+    "landmarkName": { "ko": "루앙프라방", "en": "Luang Prabang" }
+  },
+  "IN": {
+    "flag": "https://flagcdn.com/w640/in.png",
+    "landmark": "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200",
+    "landmarkName": { "ko": "타지마할", "en": "Taj Mahal" }
+  },
+  "NP": {
+    "flag": "https://flagcdn.com/w640/np.png",
+    "landmark": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1200",
+    "landmarkName": { "ko": "히말라야", "en": "Himalayas" }
+  },
+  "JP": {
+    "flag": "https://flagcdn.com/w640/jp.png",
+    "landmark": "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=1200",
+    "landmarkName": { "ko": "후지산", "en": "Mount Fuji" }
+  },
+  "AE": {
+    "flag": "https://flagcdn.com/w640/ae.png",
+    "landmark": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200",
+    "landmarkName": { "ko": "부르즈 칼리파", "en": "Burj Khalifa" }
+  },
+  "EG": {
+    "flag": "https://flagcdn.com/w640/eg.png",
+    "landmark": "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=1200",
+    "landmarkName": { "ko": "피라미드", "en": "Pyramids of Giza" }
+  },
+  "ES": {
+    "flag": "https://flagcdn.com/w640/es.png",
+    "landmark": "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1200",
+    "landmarkName": { "ko": "사그라다 파밀리아", "en": "Sagrada Familia" }
+  },
+  "IT": {
+    "flag": "https://flagcdn.com/w640/it.png",
+    "landmark": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200",
+    "landmarkName": { "ko": "콜로세움", "en": "Colosseum" }
+  },
+  "RS": {
+    "flag": "https://flagcdn.com/w640/rs.png",
+    "landmark": "https://images.unsplash.com/photo-1555990538-1e7c3fe8c15d?w=1200",
+    "landmarkName": { "ko": "베오그라드 요새", "en": "Belgrade Fortress" }
+  },
+  "BG": {
+    "flag": "https://flagcdn.com/w640/bg.png",
+    "landmark": "https://images.unsplash.com/photo-1596394723269-b2cbca4e6313?w=1200",
+    "landmarkName": { "ko": "릴라 수도원", "en": "Rila Monastery" }
+  },
+  "HU": {
+    "flag": "https://flagcdn.com/w640/hu.png",
+    "landmark": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=1200",
+    "landmarkName": { "ko": "부다페스트 국회의사당", "en": "Hungarian Parliament" }
+  },
+  "PL": {
+    "flag": "https://flagcdn.com/w640/pl.png",
+    "landmark": "https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=1200",
+    "landmarkName": { "ko": "바르샤바 구시가지", "en": "Warsaw Old Town" }
+  },
+  "CZ": {
+    "flag": "https://flagcdn.com/w640/cz.png",
+    "landmark": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=1200",
+    "landmarkName": { "ko": "프라하 성", "en": "Prague Castle" }
+  },
+  "BE": {
+    "flag": "https://flagcdn.com/w640/be.png",
+    "landmark": "https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=1200",
+    "landmarkName": { "ko": "그랑 플라스", "en": "Grand Place" }
+  },
+  "FR": {
+    "flag": "https://flagcdn.com/w640/fr.png",
+    "landmark": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200",
+    "landmarkName": { "ko": "에펠탑", "en": "Eiffel Tower" }
+  },
+  "PT": {
+    "flag": "https://flagcdn.com/w640/pt.png",
+    "landmark": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1200",
+    "landmarkName": { "ko": "벨렘 타워", "en": "Belém Tower" }
+  },
+  "MA": {
+    "flag": "https://flagcdn.com/w640/ma.png",
+    "landmark": "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1200",
+    "landmarkName": { "ko": "마라케쉬 메디나", "en": "Marrakesh Medina" }
+  },
+  "BR": {
+    "flag": "https://flagcdn.com/w640/br.png",
+    "landmark": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1200",
+    "landmarkName": { "ko": "구세주 그리스도상", "en": "Christ the Redeemer" }
+  },
+  "AR": {
+    "flag": "https://flagcdn.com/w640/ar.png",
+    "landmark": "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=1200",
+    "landmarkName": { "ko": "라 보카", "en": "La Boca" }
+  },
+  "UY": {
+    "flag": "https://flagcdn.com/w640/uy.png",
+    "landmark": "https://images.unsplash.com/photo-1597933601831-f689d75e4b9c?w=1200",
+    "landmarkName": { "ko": "몬테비데오 해안", "en": "Montevideo Coastline" }
+  },
+  "CL": {
+    "flag": "https://flagcdn.com/w640/cl.png",
+    "landmark": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200",
+    "landmarkName": { "ko": "아타카마 사막", "en": "Atacama Desert" }
+  },
+  "BO": {
+    "flag": "https://flagcdn.com/w640/bo.png",
+    "landmark": "https://images.unsplash.com/photo-1591755811850-3f313e9f5a9d?w=1200",
+    "landmarkName": { "ko": "우유니 소금사막", "en": "Salar de Uyuni" }
+  },
+  "PE": {
+    "flag": "https://flagcdn.com/w640/pe.png",
+    "landmark": "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1200",
+    "landmarkName": { "ko": "마추픽추", "en": "Machu Picchu" }
+  },
+  "EC": {
+    "flag": "https://flagcdn.com/w640/ec.png",
+    "landmark": "https://images.unsplash.com/photo-1570268774566-e81ac2e1f7c8?w=1200",
+    "landmarkName": { "ko": "키토", "en": "Quito" }
+  },
+  "CO": {
+    "flag": "https://flagcdn.com/w640/co.png",
+    "landmark": "https://images.unsplash.com/photo-1533756972958-d6f38a9761e3?w=1200",
+    "landmarkName": { "ko": "카르타헤나", "en": "Cartagena" }
+  }
+}

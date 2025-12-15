@@ -1,0 +1,595 @@
+.journey-experience {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+  overflow-x: hidden;
+}
+
+.scroll-spacer {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+}
+
+.canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* =============================================================================
+   Header
+   ============================================================================= */
+.journey-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+}
+
+.journey-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+}
+
+/* =============================================================================
+   Language Toggle - Modern Pill Design
+   ============================================================================= */
+.lang-toggle {
+  position: relative;
+}
+
+.lang-toggle__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(20px);
+}
+
+.lang-toggle__btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.lang-toggle__menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 120px;
+  padding: 0.5rem;
+  background: rgba(20,20,25,0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(40px);
+  animation: fadeInDown 0.2s ease;
+}
+
+.lang-toggle__item {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lang-toggle__item:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.lang-toggle__item.active {
+  background: rgba(41,151,255,0.15);
+  color: #2997ff;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================================================
+   Content Layer - Modern Glass Design
+   ============================================================================= */
+.content-layer {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  pointer-events: none;
+}
+
+.content-layer > * {
+  pointer-events: auto;
+}
+
+/* =============================================================================
+   Info Panel - Premium Glass Card
+   ============================================================================= */
+.info-panel {
+  max-width: 380px;
+  padding: 1.75rem 2rem;
+  background: linear-gradient(135deg, rgba(15,15,20,0.85) 0%, rgba(25,25,35,0.75) 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(60px) saturate(150%);
+  box-shadow: 
+    0 25px 50px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.info-panel__progress {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.info-panel__progress .current {
+  color: #2997ff;
+  font-size: 1rem;
+}
+
+.info-panel__progress .divider {
+  color: rgba(255,255,255,0.2);
+}
+
+.info-panel__progress .total {
+  color: rgba(255,255,255,0.35);
+}
+
+.info-panel__city {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.info-panel__country {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 1rem;
+}
+
+.info-panel__note {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* =============================================================================
+   Transport Badge - Modern Pill
+   ============================================================================= */
+.transport-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.transport-badge--flight {
+  background: linear-gradient(135deg, rgba(255,107,53,0.2) 0%, rgba(255,107,53,0.1) 100%);
+  border: 1px solid rgba(255,107,53,0.3);
+  color: #ff6b35;
+  animation: pulse-flight 2s ease-in-out infinite;
+}
+
+.transport-badge--bus {
+  background: rgba(76,175,80,0.15);
+  border: 1px solid rgba(76,175,80,0.25);
+  color: #4caf50;
+}
+
+.transport-badge--train {
+  background: rgba(33,150,243,0.15);
+  border: 1px solid rgba(33,150,243,0.25);
+  color: #2196f3;
+}
+
+.transport-badge--boat {
+  background: rgba(0,188,212,0.15);
+  border: 1px solid rgba(0,188,212,0.25);
+  color: #00bcd4;
+}
+
+.transport-badge--trek {
+  background: rgba(121,85,72,0.2);
+  border: 1px solid rgba(121,85,72,0.3);
+  color: #a1887f;
+}
+
+.transport-badge--start {
+  background: rgba(233,30,99,0.15);
+  border: 1px solid rgba(233,30,99,0.25);
+  color: #e91e63;
+}
+
+@keyframes pulse-flight {
+  0%, 100% { box-shadow: 0 0 15px rgba(255,107,53,0.2); }
+  50% { box-shadow: 0 0 25px rgba(255,107,53,0.4); }
+}
+
+/* =============================================================================
+   Photo Card - Clean Modern Style
+   ============================================================================= */
+.photo-card {
+  width: 280px;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.photo-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.photo-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.75rem;
+}
+
+.photo-card__icon {
+  width: 48px;
+  height: 48px;
+  border: 2px dashed rgba(255,255,255,0.12);
+  border-radius: 12px;
+  position: relative;
+}
+
+.photo-card__icon::before,
+.photo-card__icon::after {
+  content: '';
+  position: absolute;
+  background: rgba(255,255,255,0.12);
+}
+
+.photo-card__icon::before {
+  width: 2px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.photo-card__icon::after {
+  width: 20px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* =============================================================================
+   Progress Bar - Sleek Design
+   ============================================================================= */
+.progress-bar {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  z-index: 50;
+}
+
+.progress-bar__track {
+  width: 3px;
+  height: 180px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  width: 100%;
+  background: linear-gradient(180deg, #2997ff 0%, #5856d6 100%);
+  border-radius: 100px;
+  transition: height 0.15s ease;
+  box-shadow: 0 0 20px rgba(41,151,255,0.4);
+}
+
+.progress-bar__label {
+  font-family: 'SF Mono', monospace;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+}
+
+/* =============================================================================
+   Scroll Hint - Subtle Animation
+   ============================================================================= */
+.scroll-hint {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.85rem;
+  z-index: 50;
+  animation: fadeIn 1s ease 0.5s forwards;
+  opacity: 0;
+}
+
+.scroll-hint svg {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* =============================================================================
+   Responsive Design
+   ============================================================================= */
+@media (max-width: 768px) {
+  .journey-header {
+    padding: 1rem 1.25rem;
+  }
+  
+  .content-layer {
+    flex-direction: column;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .photo-card {
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 16/9;
+  }
+  
+  .info-panel {
+    max-width: 100%;
+    padding: 1.25rem 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .info-panel__city {
+    font-size: 1.75rem;
+  }
+  
+  .progress-bar {
+    right: 1rem;
+  }
+  
+  .progress-bar__track {
+    height: 120px;
+  }
+  
+  .progress-bar__label {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   Country Background - Flag & Landmark
+   ============================================================================= */
+.country-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.country-background__layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  opacity: 0.45;
+  transform: scale(1) translateX(0);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.country-background__layer--in {
+  animation: bgEnter 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.country-background__layer--out {
+  animation: bgExit 1s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+/* New background: Slides in from right with zoom and blur clear */
+@keyframes bgEnter {
+  0% { 
+    opacity: 0; 
+    transform: scale(1.15) translateX(5%);
+    filter: blur(8px);
+  }
+  40% {
+    opacity: 0.3;
+    filter: blur(4px);
+  }
+  100% { 
+    opacity: 0.45; 
+    transform: scale(1) translateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Old background: Fades out with slight left slide and blur */
+@keyframes bgExit {
+  0% { 
+    opacity: 0.45; 
+    transform: scale(1) translateX(0);
+    filter: blur(0);
+  }
+  50% {
+    opacity: 0.2;
+    filter: blur(3px);
+  }
+  100% { 
+    opacity: 0; 
+    transform: scale(0.95) translateX(-5%);
+    filter: blur(8px);
+  }
+}
+
+.country-background__flag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  mask-image: linear-gradient(to right, 
+    rgba(0,0,0,1) 0%, 
+    rgba(0,0,0,0.8) 40%, 
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-image: linear-gradient(to right, 
+    rgba(0,0,0,1) 0%, 
+    rgba(0,0,0,0.8) 40%, 
+    rgba(0,0,0,0) 100%
+  );
+  filter: saturate(0.7) brightness(0.8);
+}
+
+.country-background__landmark {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  mask-image: linear-gradient(to left, 
+    rgba(0,0,0,1) 0%, 
+    rgba(0,0,0,0.8) 40%, 
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-image: linear-gradient(to left, 
+    rgba(0,0,0,1) 0%, 
+    rgba(0,0,0,0.8) 40%, 
+    rgba(0,0,0,0) 100%
+  );
+  filter: saturate(0.6) brightness(0.7);
+}
+
+.country-background__blend {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 80% at center,
+    transparent 0%,
+    transparent 20%,
+    rgba(0,0,0,0.3) 60%,
+    rgba(0,0,0,0.6) 100%
+  );
+}
+
+/* Responsive adjustments for background */
+@media (max-width: 768px) {
+  .country-background__layer {
+    opacity: 0.08;
+  }
+  
+  .country-background__flag,
+  .country-background__landmark {
+    width: 100%;
+    height: 50%;
+  }
+  
+  .country-background__flag {
+    top: 0;
+    left: 0;
+    mask-image: linear-gradient(to bottom, 
+      rgba(0,0,0,1) 0%, 
+      rgba(0,0,0,0) 100%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, 
+      rgba(0,0,0,1) 0%, 
+      rgba(0,0,0,0) 100%
+    );
+  }
+  
+  .country-background__landmark {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    mask-image: linear-gradient(to top, 
+      rgba(0,0,0,1) 0%, 
+      rgba(0,0,0,0) 100%
+    );
+    -webkit-mask-image: linear-gradient(to top, 
+      rgba(0,0,0,1) 0%, 
+      rgba(0,0,0,0) 100%
+    );
+  }
+}

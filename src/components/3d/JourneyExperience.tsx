@@ -1,0 +1,890 @@
+import { useRef, useMemo, useState, useEffect } from 'react';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
+import * as THREE from 'three';
+import { Bus, Train, Plane, Ship, Mountain, Flag, ChevronDown, Globe, Languages } from 'lucide-react';
+import journeyData from '../../data/journey.json';
+import citiesData from '../../data/cities.json';
+import countryBackgrounds from '../../data/countryBackgrounds.json';
+import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
+import './JourneyExperience.css';
+
+// =============================================================================
+// Types
+// =============================================================================
+
+interface Stop {
+  id: number;
+  city: string;
+  country: string;
+  transport: string;
+  note?: string;
+}
+
+interface CityData {
+  ko: string;
+  en: string;
+  lat: number;
+  lng: number;
+  country: string;
+}
+
+interface BackgroundImage {
+  flag: string;
+  landmark: string;
+  landmarkName: { ko: string; en: string };
+}
+
+// =============================================================================
+// Utility Functions
+// =============================================================================
+
+function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lng + 180) * (Math.PI / 180);
+  return new THREE.Vector3(
+    -radius * Math.sin(phi) * Math.cos(theta),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta)
+  );
+}
+
+function generatePath(stops: Stop[], cities: Record<string, CityData>, radius: number) {
+  const points: { point: THREE.Vector3; transport: string; fromStopId: number; toStopId: number; segmentProgress: number }[] = [];
+  
+  for (let i = 0; i < stops.length - 1; i++) {
+    const currentCity = cities[stops[i].city];
+    const nextCity = cities[stops[i + 1].city];
+    
+    if (!currentCity || !nextCity) continue;
+    
+    const start = latLngToVector3(currentCity.lat, currentCity.lng, radius);
+    const end = latLngToVector3(nextCity.lat, nextCity.lng, radius);
+    const transport = stops[i + 1].transport;
+    
+    const segments = transport === 'flight' ? 50 : 30;
+    for (let j = 0; j <= segments; j++) {
+      const t = j / segments;
+      const point = new THREE.Vector3().lerpVectors(start, end, t);
+      
+      if (transport === 'flight') {
+        const arc = Math.sin(t * Math.PI) * 0.15;
+        point.normalize().multiplyScalar(radius + arc);
+      } else {
+        point.normalize().multiplyScalar(radius);
+      }
+      
+      // Track both source and destination stop, plus progress within segment
+      points.push({ 
+        point, 
+        transport, 
+        fromStopId: stops[i].id, 
+        toStopId: stops[i + 1].id,
+        segmentProgress: t 
+      });
+    }
+  }
+  
+  return points;
+}
+
+// =============================================================================
+// 3D Components
+// =============================================================================
+
+function Earth() {
+  // Use 8K high-resolution texture
+  const hiresTexture = useLoader(THREE.TextureLoader, '/assets/textures/earth_8k.jpg');
+  
+  return (
+    <group>
+      {/* Beautiful blue ocean base */}
+      <Sphere args={[1.99, 128, 128]}>
+        <meshStandardMaterial 
+          color="#0277bd"
+          roughness={0.3}
+          metalness={0.5}
+        />
+      </Sphere>
+      
+      {/* High-res Earth texture */}
+      <Sphere args={[2, 128, 128]}>
+        <meshStandardMaterial 
+          map={hiresTexture} 
+          roughness={0.5}
+          metalness={0.1}
+        />
+      </Sphere>
+      
+      {/* Atmosphere glow */}
+      <Sphere args={[2.05, 64, 64]}>
+        <meshBasicMaterial color="#4fc3f7" transparent opacity={0.08} side={THREE.BackSide} />
+      </Sphere>
+      
+      {/* Outer glow */}
+      <Sphere args={[2.1, 64, 64]}>
+        <meshBasicMaterial color="#81d4fa" transparent opacity={0.04} side={THREE.BackSide} />
+      </Sphere>
+    </group>
+  );
+}
+
+function Traveler({ position, zoomScale }: { position: THREE.Vector3; zoomScale: number }) {
+  // Red pulsing indicator - always visible and distinct
+  const pulseRef = useRef<THREE.Mesh>(null);
+  const outerPulseRef = useRef<THREE.Mesh>(null);
+  
+  // Scale inversely with zoom to maintain consistent visual size
+  const scale = 1 / Math.max(zoomScale, 0.5);
+  
+  // Pulse animation
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    const pulse = 0.9 + Math.sin(t * 4) * 0.3; // Fast pulse between 0.6-1.2
+    const outerPulse = 0.8 + Math.sin(t * 2) * 0.4;
+    
+    if (pulseRef.current) {
+      pulseRef.current.scale.setScalar(pulse);
+    }
+    if (outerPulseRef.current) {
+      outerPulseRef.current.scale.setScalar(outerPulse);
+      (outerPulseRef.current.material as THREE.MeshBasicMaterial).opacity = 0.3 - Math.sin(t * 2) * 0.15;
+    }
+  });
+  
+  return (
+    <group position={position} scale={[scale, scale, scale]}>
+      {/* Bright red core - always visible */}
+      <mesh>
+        <sphereGeometry args={[0.010, 32, 32]} />
+        <meshBasicMaterial color="#FF3B3B" />
+      </mesh>
+      
+      {/* Pulsing inner glow - smaller */}
+      <mesh ref={pulseRef}>
+        <sphereGeometry args={[0.018, 32, 32]} />
+        <meshBasicMaterial color="#FF6B6B" transparent opacity={0.5} />
+      </mesh>
+      
+      {/* Pulsing outer halo - smaller */}
+      <mesh ref={outerPulseRef}>
+        <sphereGeometry args={[0.028, 32, 32]} />
+        <meshBasicMaterial color="#FF4757" transparent opacity={0.2} />
+      </mesh>
+    </group>
+  );
+}
+
+// Transport color palette - bright neon colors for high visibility
+const TRANSPORT_COLORS: Record<string, string> = {
+  flight: '#FF4757',   // Bright red-coral
+  bus: '#00D9FF',      // Bright cyan
+  train: '#C56CF0',    // Bright purple
+  boat: '#FFD93D',     // Bright yellow
+  trek: '#6BCB77',     // Bright green
+  start: '#FF6B9D',    // Bright pink
+};
+
+function TravelPath({ points, progress }: { points: { point: THREE.Vector3; transport: string }[]; progress: number }) {
+  const idx = Math.floor(points.length * progress);
+  // Only show up to current position (no preview)
+  const traveled = points.slice(0, Math.max(idx, 1));
+  const future = points.slice(Math.max(0, idx));
+  
+  // Build segments grouped by transport type
+  const segments = useMemo(() => {
+    const result: { pts: THREE.Vector3[]; color: string }[] = [];
+    let lastColor = '';
+    
+    for (const p of traveled) {
+      const color = TRANSPORT_COLORS[p.transport] || '#4ECDC4';
+      if (color !== lastColor) {
+        // Start new segment, connect with previous if exists
+        if (result.length > 0) {
+          result[result.length - 1].pts.push(p.point);
+        }
+        result.push({ pts: [p.point], color });
+        lastColor = color;
+      } else {
+        result[result.length - 1].pts.push(p.point);
+      }
+    }
+    return result;
+  }, [traveled]);
+  
+  return (
+    <>
+      {/* Render each segment with its transport color */}
+      {segments.map((seg, i) => (
+        <group key={i}>
+          {/* Soft glow layer */}
+          {seg.pts.length >= 2 && (
+            <Line points={seg.pts} color={seg.color} lineWidth={6} transparent opacity={0.25} />
+          )}
+          {/* Main solid line - fully visible */}
+          {seg.pts.length >= 2 && (
+            <Line points={seg.pts} color={seg.color} lineWidth={2} />
+          )}
+        </group>
+      ))}
+      {/* Future path */}
+      {future.length >= 2 && (
+        <Line points={future.map(p => p.point)} color="#666666" lineWidth={0.5} transparent opacity={0.06} />
+      )}
+    </>
+  );
+}
+
+// Progressive zoom logic:
+// - Start: Gwangju(1) very zoomed in → Incheon(2) zooming out → flight = fully out
+// - India 1st: Chennai(16)→Mumbai(22) zoom in, Mumbai(22)→Varanasi(28) zoom out, Sonoli(29)=snap out
+// - Italy: Milan(51)→La Spezia(56) zoom in, back to Milan(62)=snap out
+function getProgressiveZoom(stopId: number): number {
+  // START: Gwangju(1) - very zoomed in, Korea focus
+  if (stopId === 1) {
+    return 1.5; // Maximum close-up on Korea
+  }
+  
+  // Incheon(2) - still fairly zoomed in
+  if (stopId === 2) {
+    return 0.8;
+  }
+  
+  // First flight onwards - zoomed out (except special sections)
+  if (stopId >= 3 && stopId <= 6) {
+    return 0; // Fully zoomed out until Kuala Lumpur 1st
+  }
+  
+  // INDONESIA (Lake Toba): Medan(7) → Tuktuk(8) zoom in, then zoom out
+  if (stopId === 7) {
+    return 1.5; // Very strong zoom for Medan
+  }
+  if (stopId === 8) {
+    return 2.0; // Extreme zoom at Tuktuk (Lake Toba)
+  }
+  if (stopId === 9) {
+    return 2.0; // Stay zoomed in at Medan return
+  }
+  if (stopId === 10) {
+    return 0.5; // Continuing zoom out at Kuala Lumpur 2nd
+  }
+  if (stopId === 11) {
+    return 1.5; // Zoom in heading to Laos (Bangkok → Vang Vieng)
+  }
+  
+  // LAOS: Vang Vieng(12), Luang Prabang(13), Vientiane(14) - stay zoomed in
+  if (stopId >= 12 && stopId <= 14) {
+    return 2.0; // Maximum zoom in Laos
+  }
+  
+  // Udon Thani(15) - still fairly zoomed
+  if (stopId === 15) {
+    return 1.8;
+  }
+  
+  // INDIA starts at Chennai(16) - gradual transition handled by India section
+  
+  // INDIA FIRST LEG: Chennai(16) → Hyderabad(20) → Kolkata(27) → Sonoli(29)
+  // Chennai(16): 1.5
+  if (stopId === 16) return 1.5;
+  // Pondicherry(17): 1.7
+  if (stopId === 17) return 1.7;
+  // Gradual 1.7 → 2.0: Bengaluru(18) to Hyderabad(20)
+  if (stopId === 18) return 1.8;
+  if (stopId === 19) return 1.9;
+  if (stopId === 20) return 2.0;
+  // Maintain 2.0: Pune(21) to Kolkata(27)
+  if (stopId >= 21 && stopId <= 27) return 2.0;
+  // Gradual 2.0 → 1.8: Varanasi(28) to Sonoli(29)
+  if (stopId === 28) return 1.9;
+  if (stopId === 29) return 1.8;
+  
+  // NEPAL: Pokhara(30) → Annapurna(31) → Kathmandu(32) → Pokhara(33)
+  // Zoom in to 2.0 for Pokhara
+  if (stopId === 30) return 2.0;
+  // Peak 2.2 for Annapurna and maintain
+  if (stopId === 31) return 2.2;
+  if (stopId === 32) return 2.2;
+  if (stopId === 33) return 2.2;
+  
+  // INDIA SECOND LEG: Back to Varanasi(34) → New Delhi(37) → Korea(38)
+  // Varanasi(34): 1.8
+  if (stopId === 34) return 1.8;
+  // Gradual 1.8 → 1.5: Lucknow(35) to New Delhi(37)
+  if (stopId === 35) return 1.7;
+  if (stopId === 36) return 1.6;
+  if (stopId === 37) return 1.5;
+  // Korea trip(38-41): zoom out to 1.0
+  if (stopId >= 38 && stopId <= 41) return 1.0;
+  // Tokyo(42): slight zoom
+  if (stopId === 42) return 1.2;
+  // New Delhi return(43): transition
+  if (stopId === 43) return 1.0;
+  
+  // UAE: Abu Dhabi(44) 1.5, Dubai(45-46) 1.7
+  if (stopId === 44) return 1.5;
+  if (stopId === 45 || stopId === 46) return 1.7;
+  
+  // EGYPT: Cairo(47) 1.3, Dahab(48) 1.7
+  if (stopId === 47) return 1.3;
+  if (stopId === 48) return 1.7;
+  
+  // SPAIN: Barcelona(49) 1.5
+  if (stopId === 49) return 1.5;
+  
+  // ITALY: Milan(51) → gradual to Bra(53), maintain, zoom out at end
+  if (stopId === 51) return 1.8;  // Milan entry
+  if (stopId === 52) return 1.95; // Torino
+  if (stopId === 53) return 2.1;  // Bra - peak
+  if (stopId >= 54 && stopId <= 61) return 2.1; // Maintain through Italy
+  if (stopId === 62) return 1.3;  // Milan exit - zoom out to 1.3
+  
+  // EUROPE (Sofia to Lisbon): maintain 1.3 until leaving for Brazil
+  if (stopId >= 63 && stopId <= 75) return 1.3;
+  
+  // BRAZIL Coast: Rio(76) → gradual to Paraty(80) = 2.0
+  if (stopId === 76) return 1.7;  // Rio de Janeiro
+  if (stopId === 77) return 1.8;  // Angra
+  if (stopId === 78) return 1.85; // Ilha Grande
+  if (stopId === 79) return 1.9;  // Angra return
+  if (stopId === 80) return 2.0;  // Paraty - peak
+  if (stopId >= 81 && stopId <= 84) return 2.0; // Maintain to Santos
+  
+  // São Paulo(85) zoom out to 1.7, maintain to Navegantes(87)
+  if (stopId >= 85 && stopId <= 87) return 1.7;
+  
+  // Bombinhas(88) 1.9, then 2.0 through Imbituba(93)
+  if (stopId === 88) return 1.9;
+  if (stopId >= 89 && stopId <= 93) return 2.0;
+  
+  // Iguazu(94) zoom out to 1.5, maintain to Posadas(95)
+  if (stopId === 94 || stopId === 95) return 1.5;
+  
+  // Montevideo(96) and Buenos Aires(97): 1.6
+  if (stopId === 96 || stopId === 97) return 1.6;
+  
+  // Santiago(98): 1.3 zoom out
+  if (stopId === 98) return 1.3;
+  
+  // Valparaíso(99) to Bahía Inglesa(100): 1.5
+  if (stopId === 99 || stopId === 100) return 1.5;
+  
+  // Atacama(101) to Sucre(106): 1.8
+  if (stopId >= 101 && stopId <= 106) return 1.8;
+  
+  // El Alto(107) to Machu Picchu(111): 1.6
+  if (stopId >= 107 && stopId <= 111) return 1.6;
+  
+  // Lima(112): 1.5
+  if (stopId === 112) return 1.5;
+  
+  // Piura(113) to Cali(123): 1.7
+  if (stopId >= 113 && stopId <= 123) return 1.7;
+  
+  // Bogotá(124) and Medellín(125): 1.5
+  if (stopId === 124 || stopId === 125) return 1.5;
+  
+  // Cartagena(126): 1.7
+  if (stopId === 126) return 1.7;
+  
+  // Barranquilla(127) to Incheon(128): 1.0 zoom out
+  if (stopId >= 127) return 1.0;
+  
+  // Everything else - zoomed out
+  return 0;
+}
+
+function Camera({ target, zoom, isUserInteracting, currentStopId }: { 
+  target: THREE.Vector3; 
+  zoom: number; 
+  isUserInteracting: boolean;
+  currentStopId: number;
+}) {
+  const { camera } = useThree();
+  const cameraTarget = useRef(new THREE.Vector3(-2.5, 3, -3.5));
+  const initialized = useRef(false);
+  
+  useEffect(() => {
+    // Skip auto-positioning when user is manually interacting
+    if (isUserInteracting) return;
+    
+    // Initialize camera to face first position on mount
+    if (!initialized.current && target.length() > 0) {
+      const dir = target.clone().normalize();
+      cameraTarget.current.copy(dir.multiplyScalar(5.5));
+      initialized.current = true;
+    }
+    
+    // Get progressive zoom based on current stop
+    const progressiveZoom = getProgressiveZoom(currentStopId);
+    
+    // Combine base zoom with progressive zoom
+    const effectiveZoom = Math.max(zoom, progressiveZoom);
+    const distance = 5.5 - (effectiveZoom * 1.5); // Range: 4.0 to 5.5
+    
+    const dir = target.clone().normalize();
+    cameraTarget.current.copy(dir.multiplyScalar(distance));
+    
+  }, [target, zoom, isUserInteracting, currentStopId]);
+  
+  useFrame(() => {
+    // Only auto-follow when not interacting
+    if (!isUserInteracting) {
+      camera.position.lerp(cameraTarget.current, 0.025);
+    }
+    camera.lookAt(0, 0, 0);
+  });
+  return null;
+}
+
+function Scene({ progress, zoom, isUserInteracting, onInteraction }: { 
+  progress: number; 
+  zoom: number; 
+  isUserInteracting: boolean;
+  onInteraction: () => void;
+}) {
+  const stops = journeyData.stops as Stop[];
+  const cities = citiesData.cities as Record<string, CityData>;
+  const { language } = useI18n();
+  
+  const path = useMemo(() => generatePath(stops, cities, 2.02), [stops, cities]);
+  
+  const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+  
+  const { position, displayStopId } = useMemo(() => {
+    const pt = path[pathIdx] || { point: new THREE.Vector3(0, 2, 0), transport: 'bus', fromStopId: 1, toStopId: 2, segmentProgress: 0 };
+    // Show current stop when stationary (t < 0.15), destination when moving
+    const showStopId = pt.segmentProgress < 0.15 ? pt.fromStopId : pt.toStopId;
+    return { position: pt.point, displayStopId: showStopId };
+  }, [path, pathIdx]);
+  
+  // Calculate current stop index from displayStopId
+  const currentStopIdx = useMemo(() => {
+    const stopIdx = stops.findIndex(s => s.id === displayStopId);
+    return Math.max(stopIdx, 0);
+  }, [stops, displayStopId]);
+  
+  // Calculate zoom scale for markers (inverse of progressive zoom)
+  const zoomScale = useMemo(() => {
+    const progressiveZoom = getProgressiveZoom(displayStopId);
+    // Convert zoom level to scale: higher zoom = smaller scale
+    // 0 zoom = scale 1, 2 zoom = scale ~0.5
+    return 1 + progressiveZoom * 0.5;
+  }, [displayStopId]);
+  
+  // Get visited stops (only show stops we've actually reached)
+  const visitedStops = useMemo(() => {
+    // Show stops up to and including the one we're currently at
+    return stops.slice(0, currentStopIdx + 1).map((stop, idx) => {
+      const city = cities[stop.city];
+      if (!city) return null;
+      const pos = latLngToVector3(city.lat, city.lng, 2.03);
+      return {
+        id: stop.id,
+        position: pos,
+        name: city[language as 'ko' | 'en'],
+        isCurrentStop: idx === currentStopIdx,
+      };
+    }).filter(Boolean) as { id: number; position: THREE.Vector3; name: string; isCurrentStop: boolean }[];
+  }, [stops, cities, currentStopIdx, language]);
+  
+  return (
+    <>
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[5, 3, 5]} intensity={2} />
+      <directionalLight position={[-5, -2, -3]} intensity={0.6} />
+      <pointLight position={[0, 0, 5]} intensity={1} />
+      <Stars radius={200} depth={100} count={1500} factor={3} fade speed={0.2} />
+      <Earth />
+      <TravelPath points={path} progress={progress} />
+      
+      {/* City markers for visited stops */}
+      {visitedStops.map((stop) => {
+        // Calculate if marker is facing camera (simple dot product check)
+        const markerDir = stop.position.clone().normalize();
+        const cameraDir = position.clone().normalize();
+        const dotProduct = markerDir.dot(cameraDir);
+        const isVisible = dotProduct > -0.3; // Show if roughly facing same hemisphere as current position
+        
+        if (!isVisible) return null;
+        
+        // Calculate marker scale (inverse of zoom)
+        const markerScale = 1 / Math.max(zoomScale, 0.5);
+        
+        // Baedal Minjok mint color for all markers
+        const baemin = '#2AC1BC';
+        const baeminGlow = '#3DD8D4';
+        
+        if (stop.isCurrentStop) {
+          // DESTINATION: Ring (empty circle) + glow effect
+          return (
+            <group key={stop.id} position={stop.position} scale={[markerScale, markerScale, markerScale]}>
+              {/* Outer glow */}
+              <mesh>
+                <sphereGeometry args={[0.022, 16, 16]} />
+                <meshBasicMaterial color={baeminGlow} transparent opacity={0.3} />
+              </mesh>
+              {/* Ring - larger sphere with transparent center illusion */}
+              <mesh>
+                <ringGeometry args={[0.012, 0.016, 24]} />
+                <meshBasicMaterial color={baemin} side={THREE.DoubleSide} />
+              </mesh>
+              {/* Inner glow for ring */}
+              <mesh>
+                <ringGeometry args={[0.008, 0.020, 24]} />
+                <meshBasicMaterial color={baeminGlow} transparent opacity={0.4} side={THREE.DoubleSide} />
+              </mesh>
+              {/* City name label */}
+              <Html
+                position={[0, 0.035, 0]}
+                center
+                style={{
+                  color: baemin,
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  textShadow: '0 1px 3px rgba(0,0,0,0.95)',
+                  whiteSpace: 'nowrap',
+                  pointerEvents: 'none',
+                }}
+              >
+                {stop.name}
+              </Html>
+            </group>
+          );
+        } else {
+          // PAST STOPS: Small filled circle with white core
+          return (
+            <group key={stop.id} position={stop.position} scale={[markerScale, markerScale, markerScale]}>
+              {/* White core for visibility */}
+              <mesh>
+                <sphereGeometry args={[0.004, 12, 12]} />
+                <meshBasicMaterial color="#ffffff" />
+              </mesh>
+              {/* Mint glow outer */}
+              <mesh>
+                <sphereGeometry args={[0.008, 12, 12]} />
+                <meshBasicMaterial color={baemin} transparent opacity={0.5} />
+              </mesh>
+              {/* Show label only when very close */}
+              {dotProduct > 0.8 && (
+                <Html
+                  position={[0, 0.02, 0]}
+                  center
+                  style={{
+                    color: baemin,
+                    fontSize: '7px',
+                    fontWeight: '400',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.9)',
+                    whiteSpace: 'nowrap',
+                    pointerEvents: 'none',
+                    opacity: 0.7,
+                  }}
+                >
+                  {stop.name}
+                </Html>
+              )}
+            </group>
+          );
+        }
+      })}
+      
+      <Traveler position={position} zoomScale={zoomScale} />
+      <Camera target={position} zoom={zoom} isUserInteracting={isUserInteracting} currentStopId={displayStopId} />
+      <OrbitControls 
+        enableZoom={false} 
+        enablePan={false} 
+        autoRotate={!isUserInteracting && zoom < 0.2} 
+        autoRotateSpeed={0.15}
+        onStart={onInteraction}
+      />
+    </>
+  );
+}
+
+// =============================================================================
+// UI Components
+// =============================================================================
+
+function LanguageToggle() {
+  const { language, setLanguage } = useI18n();
+  const [open, setOpen] = useState(false);
+  
+  return (
+    <div className="lang-toggle">
+      <button className="lang-toggle__btn" onClick={() => setOpen(!open)}>
+        <Languages size={16} />
+        <span>{language.toUpperCase()}</span>
+      </button>
+      {open && (
+        <div className="lang-toggle__menu">
+          {SUPPORTED_LANGUAGES.map((lang) => (
+            <button
+              key={lang.code}
+              className={`lang-toggle__item ${language === lang.code ? 'active' : ''}`}
+              onClick={() => { setLanguage(lang.code as Language); setOpen(false); }}
+            >
+              {lang.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TransportIcon({ type }: { type: string }) {
+  const icons: Record<string, React.ReactNode> = {
+    bus: <Bus size={14} />,
+    train: <Train size={14} />,
+    flight: <Plane size={14} />,
+    boat: <Ship size={14} />,
+    trek: <Mountain size={14} />,
+    start: <Flag size={14} />,
+  };
+  return <>{icons[type] || <Bus size={14} />}</>;
+}
+
+function InfoPanel({ stop, stopIndex, totalStops }: { stop: Stop; stopIndex: number; totalStops: number }) {
+  const { language } = useI18n();
+  const cities = citiesData.cities as Record<string, CityData>;
+  const countries = journeyData.countries as Record<string, { name: string }>;
+  
+  if (!stop) return null;
+  
+  const city = cities[stop.city];
+  const cityName = city ? city[language as 'ko' | 'en'] : stop.city;
+  const countryName = countries[stop.country]?.name || stop.country;
+  
+  const transportLabels: Record<string, { ko: string; en: string }> = {
+    bus: { ko: '버스', en: 'Bus' },
+    train: { ko: '기차', en: 'Train' },
+    flight: { ko: '비행기', en: 'Flight' },
+    boat: { ko: '보트', en: 'Boat' },
+    trek: { ko: '트레킹', en: 'Trek' },
+    start: { ko: '출발', en: 'Start' },
+  };
+  
+  return (
+    <div className="info-panel">
+      <div className={`transport-badge transport-badge--${stop.transport}`}>
+        <TransportIcon type={stop.transport} />
+        <span>{transportLabels[stop.transport]?.[language as 'ko' | 'en'] || stop.transport}</span>
+      </div>
+      <div className="info-panel__progress">
+        <span className="current">{String(stopIndex + 1).padStart(3, '0')}</span>
+        <span className="divider">/</span>
+        <span className="total">{String(totalStops).padStart(3, '0')}</span>
+      </div>
+      <h2 className="info-panel__city">{cityName}</h2>
+      <p className="info-panel__country">{countryName}</p>
+      {stop.note && <p className="info-panel__note">{stop.note}</p>}
+    </div>
+  );
+}
+
+function PhotoCard() {
+  const { t } = useI18n();
+  return (
+    <div className="photo-card">
+      <div className="photo-card__placeholder">
+        <div className="photo-card__icon" />
+        <span>{t('journey.addPhoto')}</span>
+      </div>
+    </div>
+  );
+}
+
+function ProgressBar({ progress }: { progress: number }) {
+  return (
+    <div className="progress-bar">
+      <div className="progress-bar__track">
+        <div className="progress-bar__fill" style={{ height: `${progress * 100}%` }} />
+      </div>
+      <span className="progress-bar__label">{Math.round(progress * 100)}%</span>
+    </div>
+  );
+}
+
+function ScrollHint() {
+  const { t } = useI18n();
+  return (
+    <div className="scroll-hint">
+      <span>{t('journey.scrollToExplore')}</span>
+      <ChevronDown size={24} />
+    </div>
+  );
+}
+
+function Header() {
+  const { t } = useI18n();
+  return (
+    <header className="journey-header">
+      <div className="journey-header__brand">
+        <Globe size={20} />
+        <span>{t('journey.title')}</span>
+      </div>
+      <LanguageToggle />
+    </header>
+  );
+}
+
+// =============================================================================
+// Country Background Component
+// =============================================================================
+
+function CountryBackground({ countryCode }: { countryCode: string }) {
+  const [currentCode, setCurrentCode] = useState<string>(countryCode);
+  const [previousCode, setPreviousCode] = useState<string | null>(null);
+  const [transitioning, setTransitioning] = useState(false);
+  
+  const backgrounds = countryBackgrounds as Record<string, BackgroundImage>;
+  
+  useEffect(() => {
+    // Only trigger transition if country actually changed
+    if (countryCode !== currentCode) {
+      setPreviousCode(currentCode);
+      setCurrentCode(countryCode);
+      setTransitioning(true);
+      
+      // Match CSS animation duration (1.2s) + buffer
+      const timer = setTimeout(() => {
+        setTransitioning(false);
+        setPreviousCode(null);
+      }, 1500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [countryCode, currentCode]);
+  
+  const currentBg = backgrounds[currentCode] || null;
+  const previousBg = previousCode ? backgrounds[previousCode] : null;
+  
+  if (!currentBg) return null;
+  
+  return (
+    <div className="country-background">
+      {/* Previous background - exits */}
+      {previousBg && transitioning && (
+        <div 
+          key={`out-${previousCode}`}
+          className="country-background__layer country-background__layer--out"
+        >
+          <div className="country-background__flag" style={{ backgroundImage: `url(${previousBg.flag})` }} />
+          <div className="country-background__landmark" style={{ backgroundImage: `url(${previousBg.landmark})` }} />
+        </div>
+      )}
+      
+      {/* Current background - enters */}
+      <div 
+        key={`in-${currentCode}-${transitioning}`}
+        className={`country-background__layer ${transitioning ? 'country-background__layer--in' : ''}`}
+      >
+        <div className="country-background__flag" style={{ backgroundImage: `url(${currentBg.flag})` }} />
+        <div className="country-background__landmark" style={{ backgroundImage: `url(${currentBg.landmark})` }} />
+      </div>
+      
+      <div className="country-background__blend" />
+    </div>
+  );
+}
+
+// =============================================================================
+// Main Component
+// =============================================================================
+
+function JourneyExperienceContent() {
+  const [progress, setProgress] = useState(0);
+  const [zoom, setZoom] = useState(0);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const interactionTimeoutRef = useRef<number | null>(null);
+  
+  const stops = journeyData.stops as Stop[];
+  const cities = citiesData.cities as Record<string, CityData>;
+  
+  // Pre-generate path to calculate accurate current stop
+  const path = useMemo(() => generatePath(stops, cities, 2.02), [stops, cities]);
+  
+  // Calculate current stop to display
+  const currentStop = useMemo(() => {
+    const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+    const pt = path[pathIdx];
+    if (!pt) return 0;
+    
+    // Show current stop when stationary (t < 0.15), destination when moving
+    const showStopId = pt.segmentProgress < 0.15 ? pt.fromStopId : pt.toStopId;
+    const stopIdx = stops.findIndex(s => s.id === showStopId);
+    return Math.max(stopIdx, 0);
+  }, [path, progress, stops]);
+  
+  const city = stops[currentStop];
+  const currentCountry = city?.country || 'KR';
+  
+  // Handle user interaction - pause auto-follow for 3 seconds
+  const handleUserInteraction = () => {
+    setIsUserInteracting(true);
+    
+    if (interactionTimeoutRef.current) {
+      clearTimeout(interactionTimeoutRef.current);
+    }
+    
+    interactionTimeoutRef.current = window.setTimeout(() => {
+      setIsUserInteracting(false);
+    }, 3000);
+  };
+  
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = Math.max(0, Math.min(1, window.scrollY / h));
+      setProgress(p);
+      setZoom(p < 0.05 ? 0 : Math.min((p - 0.05) / 0.2, 1));
+      // Reset user interaction on scroll
+      setIsUserInteracting(false);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (interactionTimeoutRef.current) {
+        clearTimeout(interactionTimeoutRef.current);
+      }
+    };
+  }, []);
+  
+  return (
+    <div className="journey-experience">
+      <div className="scroll-spacer" style={{ height: `${stops.length * 100}vh` }} />
+      
+      <CountryBackground countryCode={currentCountry} />
+      
+      <div className="canvas-container">
+        <Canvas camera={{ position: [-2.5, 3, -3.5], fov: 45 }} gl={{ antialias: true }}>
+          <Scene 
+            progress={progress} 
+            zoom={zoom} 
+            isUserInteracting={isUserInteracting}
+            onInteraction={handleUserInteraction}
+          />
+        </Canvas>
+      </div>
+      
+      <Header />
+      
+      <div className="content-layer">
+        <PhotoCard />
+        <InfoPanel stop={city} stopIndex={currentStop} totalStops={stops.length} />
+      </div>
+      
+      <ProgressBar progress={progress} />
+      
+      {progress < 0.02 && <ScrollHint />}
+    </div>
+  );
+}
+
+export default function JourneyExperience() {
+  return (
+    <I18nProvider>
+      <JourneyExperienceContent />
+    </I18nProvider>
+  );
+}
