@@ -637,6 +637,51 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
   
+  // Touch handling state
+  const touchStartY = useRef<number | null>(null);
+  const scrollStartY = useRef<number | null>(null);
+  const lastTouchY = useRef<number | null>(null);
+  const isDragging = useRef(false);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    lastTouchY.current = e.touches[0].clientY;
+    scrollStartY.current = window.scrollY;
+    isDragging.current = true;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging.current || touchStartY.current === null || scrollStartY.current === null) return;
+    
+    const currentY = e.touches[0].clientY;
+    const deltaY = touchStartY.current - currentY;
+    
+    // Increased sensitivity for "dial" feel (40x multiplier to move page faster)
+    const sensitivity = 40; 
+    
+    // Directly update scroll position for immediate feedback
+    // standard scroll height per stop is usually viewport height based on logic
+    window.scrollTo(0, scrollStartY.current + (deltaY * sensitivity));
+    
+    lastTouchY.current = currentY;
+  };
+
+  const handleTouchEnd = () => {
+    isDragging.current = false;
+    touchStartY.current = null;
+    scrollStartY.current = null;
+    
+    // Snap logic: "Magnet-like" snap to nearest stop
+    const stopHeight = document.documentElement.scrollHeight / stops.length;
+    const currentScroll = window.scrollY;
+    const nearestStopIndex = Math.round(currentScroll / stopHeight);
+    
+    window.scrollTo({
+      top: nearestStopIndex * stopHeight,
+      behavior: 'smooth'
+    });
+  };
+
   // Show 7 stops centered on current (3 before, current, 3 after)
   const visibleRange = 3;
   const startIdx = Math.max(0, currentStopIndex - visibleRange);
@@ -653,7 +698,15 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
   };
   
   return (
-    <div className="vertical-timeline">
+    <div 
+      className="vertical-timeline"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      // Add non-passive style for touch action needed? 
+      // React handles passive events by default, but for preventing scroll it might need specific css
+      style={{ touchAction: 'none' }} 
+    >
       <div className="vertical-timeline__track" />
       <div 
         className="vertical-timeline__stops"
@@ -678,11 +731,7 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
               </div>
               <div className="timeline-stop__info">
                 <span className="timeline-stop__city">{cityName}</span>
-                {isCurrent && stop.startDate && (
-                  <span className="timeline-stop__date">
-                    {formatDate(stop.startDate)}
-                  </span>
-                )}
+                <span className="timeline-stop__date">{formatDate(stop.startDate) || formatDate(stop.endDate)}</span>
               </div>
             </div>
           );
@@ -977,7 +1026,6 @@ function JourneyExperienceContent() {
       <VerticalTimeline currentStopIndex={currentStop} stops={stops} />
       <FlipboardCountry countryCode={currentCountry} />
       
-      <MobileControls />
       {progress < 0.02 && <ScrollHint />}
     </div>
   );
