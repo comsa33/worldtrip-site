@@ -73,7 +73,7 @@ export default function AboutPage() {
               </div>
               <h3 className="story-block__title">345일간의 여정</h3>
               <p className="story-block__text">
-                2016년 7월부터 2017년 6월까지, 약 1년간 23개국을 여행했습니다.
+                2016년 7월부터 2017년 6월까지, 약 1년간 30개국을 여행했습니다.
                 아시아에서 시작해 중동, 유럽, 아프리카, 그리고 남미까지.
                 중간에 친구 결혼식 사회를 보기 위해 잠깐 한국에 다녀오기도 했죠.
               </p>
