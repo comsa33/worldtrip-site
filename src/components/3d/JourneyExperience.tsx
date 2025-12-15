@@ -602,11 +602,9 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
         const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
         return (
           <OrbitControls 
-            enableZoom={isMobile} 
+            enableZoom={false} 
             enablePan={false} 
             enableRotate={!isMobile}
-            minDistance={isMobile ? 3.0 : undefined}
-            maxDistance={isMobile ? 8 : undefined}
             autoRotate={!isUserInteracting && zoom < 0.2} 
             autoRotateSpeed={0.15}
             onStart={onInteraction}
@@ -650,51 +648,6 @@ function LanguageToggle() {
 function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: number; stops: Stop[] }) {
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
-  
-  // Touch handling state
-  const touchStartY = useRef<number | null>(null);
-  const scrollStartY = useRef<number | null>(null);
-  const lastTouchY = useRef<number | null>(null);
-  const isDragging = useRef(false);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    lastTouchY.current = e.touches[0].clientY;
-    scrollStartY.current = window.scrollY;
-    isDragging.current = true;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging.current || touchStartY.current === null || scrollStartY.current === null) return;
-    
-    const currentY = e.touches[0].clientY;
-    const deltaY = touchStartY.current - currentY;
-    
-    // Increased sensitivity for "dial" feel (40x multiplier to move page faster)
-    const sensitivity = 40; 
-    
-    // Directly update scroll position for immediate feedback
-    // standard scroll height per stop is usually viewport height based on logic
-    window.scrollTo(0, scrollStartY.current + (deltaY * sensitivity));
-    
-    lastTouchY.current = currentY;
-  };
-
-  const handleTouchEnd = () => {
-    isDragging.current = false;
-    touchStartY.current = null;
-    scrollStartY.current = null;
-    
-    // Snap logic: "Magnet-like" snap to nearest stop
-    const stopHeight = document.documentElement.scrollHeight / stops.length;
-    const currentScroll = window.scrollY;
-    const nearestStopIndex = Math.round(currentScroll / stopHeight);
-    
-    window.scrollTo({
-      top: nearestStopIndex * stopHeight,
-      behavior: 'smooth'
-    });
-  };
 
   // Show 7 stops centered on current (3 before, current, 3 after)
   const visibleRange = 3;
@@ -704,6 +657,9 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
   const visibleStops = stops.slice(startIdx, endIdx + 1);
   const centerOffset = currentStopIndex - startIdx;
   
+  // Item height for positioning
+  const itemHeight = 52;
+  
   // Format date: "2016-09-15" -> "'16.09.15"
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return '';
@@ -712,20 +668,12 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
   };
   
   return (
-    <div 
-      className="vertical-timeline"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      // Add non-passive style for touch action needed? 
-      // React handles passive events by default, but for preventing scroll it might need specific css
-      style={{ touchAction: 'none' }} 
-    >
+    <div className="vertical-timeline">
       <div className="vertical-timeline__track" />
       <div 
         className="vertical-timeline__stops"
         style={{ 
-          transform: `translateY(calc(50% - ${centerOffset * 52}px))` 
+          transform: `translateY(calc(50% - ${centerOffset * itemHeight}px))` 
         }}
       >
         {visibleStops.map((stop, idx) => {
@@ -854,11 +802,13 @@ function ScrollHint() {
 
 function MobileSwipeHint() {
   const { language } = useI18n();
-  const text = language === 'ko' ? '↕ 스와이프하여 탐험' : '↕ Swipe to explore';
+  const text = language === 'ko' ? '스와이프' : 'Swipe';
   
   return (
     <div className="mobile-swipe-hint">
+      <ChevronDown size={14} />
       <span>{text}</span>
+      <ChevronDown size={14} style={{ transform: 'rotate(180deg)' }} />
     </div>
   );
 }
