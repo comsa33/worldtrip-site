@@ -984,19 +984,17 @@ function JourneyExperienceContent() {
       targetStopIndex = Math.max(currentStop - 1, 0);
     }
     
-    // Find the path index where target stop starts (where toStopId matches)
+    // Find the FIRST path index where currentStop calculation would return targetStopIndex
+    // This matches exactly how currentStop is calculated in the useMemo
     const targetStopId = stops[targetStopIndex]?.id;
     let targetPathIndex = 0;
     
     for (let i = 0; i < path.length; i++) {
-      // Look for where we arrive at the target stop (toStopId)
-      // and segment progress is past the 0.15 threshold
-      if (path[i].toStopId === targetStopId && path[i].segmentProgress >= 0.15) {
-        targetPathIndex = i;
-        break;
-      }
-      // Also check if this is the starting stop (fromStopId) 
-      if (path[i].fromStopId === targetStopId && path[i].segmentProgress < 0.15) {
+      const pt = path[i];
+      // Replicate the currentStop calculation logic exactly
+      const displayedStopId = pt.segmentProgress < 0.15 ? pt.fromStopId : pt.toStopId;
+      
+      if (displayedStopId === targetStopId) {
         targetPathIndex = i;
         break;
       }
