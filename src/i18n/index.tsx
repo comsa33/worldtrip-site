@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 // =============================================================================
 // i18n - Internationalization System
 // Extensible for future language additions (ja, zh, es, etc.)
@@ -23,7 +24,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.journey': '여정',
     'nav.countries': '국가',
     'nav.about': '소개',
-    
+
     // Journey
     'journey.title': '세계일주 배낭여행',
     'journey.subtitle': '345일간의 여정',
@@ -38,7 +39,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'journey.of': '/',
     'journey.photoComingSoon': '사진 추가 예정',
     'journey.complete': '여행 완료',
-    
+
     // Transport
     'transport.bus': '버스',
     'transport.train': '기차',
@@ -46,14 +47,14 @@ export const translations: Record<Language, Record<string, string>> = {
     'transport.boat': '보트',
     'transport.trek': '트레킹',
     'transport.start': '출발',
-    
+
     // Continents
     'continent.asia': '아시아',
     'continent.middle-east': '중동',
     'continent.africa': '아프리카',
     'continent.europe': '유럽',
     'continent.south-america': '남미',
-    
+
     // Common
     'common.next': '다음',
     'common.prev': '이전',
@@ -66,7 +67,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.journey': 'Journey',
     'nav.countries': 'Countries',
     'nav.about': 'About',
-    
+
     // Journey
     'journey.title': 'World Backpacking Trip',
     'journey.subtitle': '345 Days Around the World',
@@ -81,7 +82,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'journey.of': 'of',
     'journey.photoComingSoon': 'Photos coming soon',
     'journey.complete': 'Journey Complete',
-    
+
     // Transport
     'transport.bus': 'Bus',
     'transport.train': 'Train',
@@ -89,14 +90,14 @@ export const translations: Record<Language, Record<string, string>> = {
     'transport.boat': 'Boat',
     'transport.trek': 'Trek',
     'transport.start': 'Start',
-    
+
     // Continents
     'continent.asia': 'Asia',
     'continent.middle-east': 'Middle East',
     'continent.africa': 'Africa',
     'continent.europe': 'Europe',
     'continent.south-america': 'South America',
-    
+
     // Common
     'common.next': 'Next',
     'common.prev': 'Previous',
@@ -129,7 +130,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('language') as Language;
-      if (saved && SUPPORTED_LANGUAGES.some(l => l.code === saved)) {
+      if (saved && SUPPORTED_LANGUAGES.some((l) => l.code === saved)) {
         return saved;
       }
       // Detect browser language

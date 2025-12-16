@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
@@ -39,15 +39,40 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
     return cityPhotos[cityName].photos;
   }, [cityName, cityPhotos]);
 
-  const cityCode = cityName ? cityPhotos[cityName]?.cityCode : null;
-
   // Derive entering state from cityName (no useEffect needed)
   const isEntering = !!cityName;
+
+  // Preload first few thumbnails for instant display
+  useEffect(() => {
+    if (photos.length > 0) {
+      photos.slice(0, 4).forEach((photo) => {
+        if (photo.thumbnail) {
+          const img = new Image();
+          img.src = photo.thumbnail;
+        }
+      });
+    }
+  }, [photos]);
 
   // Handle thumbnail click
   const handleThumbnailClick = (photo: Photo) => {
     setIsPhotoZooming(true);
     setSelectedPhoto(photo);
+
+    // Preload current and adjacent photos for instant switching
+    const currentIndex = photos.findIndex((p) => p.id === photo.id);
+    const photosToPreload = [
+      photo, // Current
+      photos[currentIndex - 1], // Previous
+      photos[currentIndex + 1], // Next
+    ].filter(Boolean);
+
+    photosToPreload.forEach((p) => {
+      if (p?.url) {
+        const img = new Image();
+        img.src = p.url.replace('/f_auto,q_auto/', '/f_auto,q_65,w_700/');
+      }
+    });
   };
 
   // Handle close photo
@@ -67,6 +92,13 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
     }
   };
 
+  // Handle horizontal scroll with mouse wheel on thumbnail bar
+  const handleThumbnailWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    // Convert vertical wheel to horizontal scroll
+    e.currentTarget.scrollLeft += e.deltaY;
+    e.preventDefault();
+  };
+
   if (!cityName || photos.length === 0) return null;
 
   return (
@@ -83,7 +115,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
       </button>
 
       {/* Horizontal thumbnail bar */}
-      <div className="photo-gallery__circle">
+      <div className="photo-gallery__circle" onWheel={handleThumbnailWheel}>
         {photos.map((photo, index) => (
           <button
             key={photo.id}
@@ -92,10 +124,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
             onClick={() => handleThumbnailClick(photo)}
           >
             <img
-              src={
-                photo.thumbnail ||
-                `/assets/images/cities/${cityCode}/${photo.filename?.replace('.jpg', '.png')}`
-              }
+              src={photo.thumbnail?.replace('w_200,h_200', 'w_120,h_120')}
               alt={photo.caption[language as 'ko' | 'en']}
               loading="lazy"
             />
@@ -112,8 +141,9 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
           <div className="photo-gallery__viewer-content">
             <img
               src={
-                selectedPhoto.url ||
-                `/assets/images/cities/${cityCode}/${selectedPhoto.filename?.replace('.jpg', '.png')}`
+                selectedPhoto.url
+                  ? selectedPhoto.url.replace('/f_auto,q_auto/', '/f_auto,q_65,w_700/')
+                  : selectedPhoto.url
               }
               alt={selectedPhoto.caption[language as 'ko' | 'en']}
             />

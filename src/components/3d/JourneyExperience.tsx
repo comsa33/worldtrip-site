@@ -1218,6 +1218,9 @@ function JourneyExperienceContent() {
 
   useEffect(() => {
     const onScroll = () => {
+      // Don't update globe when gallery is open
+      if (selectedCity !== null) return;
+
       const h = document.documentElement.scrollHeight - window.innerHeight;
       const p = Math.max(0, Math.min(1, window.scrollY / h));
       setProgress(p);
@@ -1232,7 +1235,7 @@ function JourneyExperienceContent() {
         clearTimeout(interactionTimeoutRef.current);
       }
     };
-  }, []);
+  }, [selectedCity]);
 
   // Mobile fullscreen swipe handling - using refs for non-passive event listeners
   const touchStartY = useRef<number | null>(null);
@@ -1244,13 +1247,15 @@ function JourneyExperienceContent() {
   const progressRef = useRef(progress);
   const currentStopRef = useRef(currentStop);
   const stopsRef = useRef(stops);
+  const selectedCityRef = useRef<string | null>(null);
 
   useEffect(() => {
     pathRef.current = path;
     progressRef.current = progress;
     currentStopRef.current = currentStop;
     stopsRef.current = stops;
-  }, [path, progress, currentStop, stops]);
+    selectedCityRef.current = selectedCity;
+  }, [path, progress, currentStop, stops, selectedCity]);
 
   // Detect mobile for touch-action - using hook for proper reactivity
   const isMobile = useIsMobile();
@@ -1262,6 +1267,9 @@ function JourneyExperienceContent() {
     const container = containerRef.current;
 
     const handleTouchStart = (e: TouchEvent) => {
+      // Don't handle touch if gallery is open
+      if (selectedCityRef.current !== null) return;
+
       if (e.touches.length === 1) {
         touchStartY.current = e.touches[0].clientY;
         isDragging.current = true;
@@ -1272,12 +1280,18 @@ function JourneyExperienceContent() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      // Allow default scrolling if gallery is open (for thumbnail scroll)
+      if (selectedCityRef.current !== null) return;
+
       if (isDragging.current && e.touches.length === 1) {
         e.preventDefault();
       }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
+      // Don't handle swipe if gallery is open
+      if (selectedCityRef.current !== null) return;
+
       if (!isDragging.current || touchStartY.current === null) return;
 
       const touchEndY = e.changedTouches[0].clientY;

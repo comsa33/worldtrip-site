@@ -72,6 +72,7 @@
   max-width: 85vw;
   overflow-x: auto;
   overflow-y: hidden;
+  touch-action: pan-x; /* Allow horizontal touch scrolling only */
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
@@ -100,7 +101,8 @@
   min-width: 64px;
   flex-shrink: 0;
   border-radius: 12px;
-  border: 2px solid transparent;
+  border: none;
+  outline: none;
   background: rgba(0, 0, 0, 0.3);
   overflow: hidden;
   cursor: pointer;
@@ -122,13 +124,12 @@
 }
 
 .photo-gallery__thumbnail:hover {
-  border-color: rgba(255, 255, 255, 0.5);
   transform: scale(1.08);
 }
 
 .photo-gallery__thumbnail--selected {
-  border-color: #fff;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
 }
 
 .photo-gallery__thumbnail img {
