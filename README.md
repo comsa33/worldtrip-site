@@ -56,29 +56,49 @@ npm run build
    CLOUDINARY_API_KEY=your_api_key
    CLOUDINARY_API_SECRET=your_api_secret
    ```
+4. Cloudinary에 도시 폴더 생성:
+   ```bash
+   node scripts/create-cloudinary-folders.js
+   ```
 
-### 도시 폴더 생성
+### 사진 업로드 (로컬 → Cloudinary)
 
-모든 여행 도시의 폴더를 Cloudinary에 생성:
-```bash
-node scripts/create-cloudinary-folders.js
-```
+1. 로컬 폴더에 사진 추가:
 
-### 사진 업로드
+   ```
+   photos/cities/{도시명}/
+   예: photos/cities/pondicherry/IMG_8345.jpg
+   ```
 
-1. Cloudinary 웹 대시보드 → Media Library → cities/{도시명} 폴더로 이동
-2. 사진을 드래그 앤 드롭으로 업로드
+2. 업로드 스크립트 실행:
+   ```bash
+   npm run upload-photos
+   ```
 
-### 갤러리 동기화
+   - EXIF 메타데이터 자동 추출 (날짜+시간, GPS 위치)
+   - Cloudinary에 업로드 + 메타데이터 저장
+   - `cityPhotos.json` 자동 업데이트
 
-Cloudinary에 업로드된 사진을 앱 갤러리에 연결:
-```bash
-node scripts/sync-cloudinary-photos.js
-```
+### Cloudinary에서 메타데이터 편집
 
-이 스크립트는 `src/data/cityPhotos.json`을 자동으로 업데이트합니다.
+1. Cloudinary 대시보드 → Media Library → cities/{도시명}
+2. 사진 클릭 → Contextual metadata 섹션:
+   - `caption`: 사진 제목
+   - `description`: 사진 설명
+3. 동기화 실행:
+   ```bash
+   npm run sync-photos
+   ```
 
-> **참고**: 동기화 후 `cityPhotos.json`에서 `date`와 `caption`을 수동으로 입력하세요.
+### npm 스크립트 요약
+
+| 명령어                   | 설명                                |
+| ------------------------ | ----------------------------------- |
+| `npm run create-folders` | 로컬 photos/cities/ 폴더 구조 생성  |
+| `npm run upload-photos`  | 로컬 사진 → Cloudinary 업로드       |
+| `npm run sync-photos`    | Cloudinary → cityPhotos.json 동기화 |
+
+> **참고**: 사진 파일(.jpg, .png 등)은 `.gitignore`에서 제외되어 Git에 커밋되지 않습니다.
 
 ## ✏️ 콘텐츠 수정 가이드
 
@@ -89,10 +109,11 @@ node scripts/sync-cloudinary-photos.js
 ### 국가 테마 색상
 
 `src/styles/index.css`에서 국가별 테마 색상을 수정:
+
 ```css
-[data-country-theme="vietnam"] {
-  --color-accent-primary: #DA251D;
-  --color-accent-secondary: #FFCD00;
+[data-country-theme='vietnam'] {
+  --color-accent-primary: #da251d;
+  --color-accent-secondary: #ffcd00;
 }
 ```
 

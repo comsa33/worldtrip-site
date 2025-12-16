@@ -161,12 +161,14 @@ async function syncPhotos() {
       continue;
     }
     
-    // Get photos from this folder (exclude .placeholder)
+    // Get photos from this folder with metadata (context, image_metadata for EXIF)
     const resources = await cloudinary.api.resources({
       type: 'upload',
       prefix: `cities/${cityCode}/`,
       max_results: 100,
-      resource_type: 'image'
+      resource_type: 'image',
+      context: true,           // Get user-defined context (title, description, etc.)
+      image_metadata: true     // Get EXIF metadata
     });
     
     // Filter out placeholder files
@@ -178,28 +180,76 @@ async function syncPhotos() {
     
     console.log(`📸 ${koreanName} (${cityCode}): ${photos.length}장`);
     
+    const photoData = [];
+    
+    for (let idx = 0; idx < photos.length; idx++) {
+      const photo = photos[idx];
+      const publicId = photo.public_id;
+      const filename = publicId.split('/').pop();
+      
+      // Extract context metadata (user-defined in Cloudinary)
+      const context = photo.context?.custom || {};
+      const title = context.caption || context.alt || '';
+      const description = context.description || '';
+      
+      // Extract date from context first, fallback to EXIF
+      let date = context.date || '';
+      if (!date && photo.image_metadata) {
+        const exif = photo.image_metadata;
+        const dateStr = exif.DateTimeOriginal || exif.DateTime || exif.DateTimeDigitized;
+        if (dateStr) {
+          date = dateStr.replace(/^(\d{4}):(\d{2}):(\d{2}).*/, '$1-$2-$3');
+        }
+      }
+      
+      // Extract GPS from context first, fallback to EXIF
+      let gps = null;
+      if (context.lat && context.lng) {
+        gps = {
+          lat: parseFloat(context.lat),
+          lng: parseFloat(context.lng)
+        };
+      } else if (photo.image_metadata) {
+        const exif = photo.image_metadata;
+        if (exif.GPSLatitude && exif.GPSLongitude) {
+          try {
+            gps = {
+              lat: parseFloat(exif.GPSLatitude),
+              lng: parseFloat(exif.GPSLongitude)
+            };
+          } catch (e) {
+            // GPS parsing failed
+          }
+        }
+      }
+      
+      // Generate optimized URL
+      const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${publicId}`;
+      
+      photoData.push({
+        id: `${cityCode}-${String(idx + 1).padStart(3, '0')}`,
+        publicId: publicId,
+        url: url,
+        thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/${publicId}`,
+        date: date,
+        gps: gps,
+        caption: {
+          ko: title || filename,
+          en: title || filename
+        },
+        alt: description || title || filename
+      });
+      
+      // Log metadata info
+      const dateInfo = date ? ` 📅 ${date}` : '';
+      const gpsInfo = gps ? ` 📍 ${gps.lat.toFixed(4)}, ${gps.lng.toFixed(4)}` : '';
+      const titleInfo = title ? ` 💬 "${title}"` : '';
+      console.log(`  ${filename}${dateInfo}${gpsInfo}${titleInfo}`);
+    }
+    
     cityPhotos[koreanName] = {
       cityCode: cityCode,
-      photos: photos.map((photo, idx) => {
-        // Extract filename from public_id
-        const publicId = photo.public_id;
-        const filename = publicId.split('/').pop();
-        
-        // Generate optimized URL
-        const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${publicId}`;
-        
-        return {
-          id: `${cityCode}-${String(idx + 1).padStart(3, '0')}`,
-          publicId: publicId,
-          url: url,
-          thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/${publicId}`,
-          date: '', // User can fill this in manually
-          caption: {
-            ko: filename, // User can update captions manually
-            en: filename
-          }
-        };
-      })
+      photos: photoData
     };
     
     totalPhotos += photos.length;

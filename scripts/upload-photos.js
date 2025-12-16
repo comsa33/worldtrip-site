@@ -1,0 +1,346 @@
+/**
+ * 사진 업로드 자동화 스크립트
+ * 
+ * photos/cities/{도시}/ 폴더의 사진을 읽어:
+ * 1. EXIF 메타데이터 추출 (촬영 날짜, GPS 위치)
+ * 2. Cloudinary에 업로드
+ * 3. cityPhotos.json 업데이트
+ * 
+ * 사용법: node scripts/upload-photos.js
+ */
+
+import { v2 as cloudinary } from 'cloudinary';
+import { config } from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import ExifParser from 'exif-parser';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env
+config();
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
+const PHOTOS_DIR = path.join(__dirname, '../photos/cities');
+
+// 영문 폴더명 -> 한글 도시명 매핑 (전체 여정)
+const folderToKorean = {
+  'gwangju': '광주',
+  'incheon': '인천',
+  'hochiminh': '호치민',
+  'danang': '다낭',
+  'kualalumpur': '쿠알라룸푸르',
+  'medan': '메단',
+  'tuktuk': '뚝뚝섬',
+  'bangkok': '방콕',
+  'vangvieng': '방비엥',
+  'luangprabang': '루앙프라방',
+  'vientiane': '비엔티안',
+  'udonthani': '우돈타니',
+  'chennai': '첸나이',
+  'pondicherry': '퐁디셰리',
+  'bangalore': '벵갈루루',
+  'hampi': '함피',
+  'hyderabad': '하이데라바드',
+  'pune': '푸네',
+  'mumbai': '뭄바이',
+  'aurangabad': '아우랑가바드',
+  'ajanta': '아잔타',
+  'nagpur': '나그푸르',
+  'jabalpur': '자발푸르',
+  'kolkata': '콜카타',
+  'varanasi': '바라나시',
+  'sonauli': '소놀리',
+  'pokhara': '포카라',
+  'annapurna': '안나푸르나',
+  'kathmandu': '카트만두',
+  'lucknow': '러크나우',
+  'agra': '아그라',
+  'newdelhi': '뉴델리',
+  'tokyo': '도쿄',
+  'abudhabi': '아부다비',
+  'dubai': '두바이',
+  'cairo': '카이로',
+  'dahab': '다합',
+  'barcelona': '바르셀로나',
+  'milan': '밀라노',
+  'turin': '토리노',
+  'bra': '브라',
+  'genoa': '제노바',
+  'portofino': '포르토피노',
+  'laspezia': '라스페치아',
+  'pisa': '피사',
+  'florence': '피렌체',
+  'cinqueterre': '친퀘테레',
+  'ortalake': '오르타 호수',
+  'sofia': '소피아',
+  'belgrade': '베오그라드',
+  'budapest': '부다페스트',
+  'katowice': '카토비세',
+  'warsaw': '바르샤바',
+  'prague': '프라하',
+  'brussels': '브뤼셀',
+  'paris': '파리',
+  'madrid': '마드리드',
+  'porto': '포르투',
+  'marrakech': '마라케쉬',
+  'casablanca': '카사블랑카',
+  'lisbon': '리스본',
+  'rio': '리우데자네이루',
+  'angradosreis': '앙그라 도스 헤이스',
+  'ilhagrande': '이야 그란지',
+  'paraty': '파라치',
+  'itaguai': '이타과이',
+  'caraguatatuba': '카라과타투바',
+  'saosebastiao': '사웅 세바스치앙',
+  'santos': '산투스',
+  'saopaulo': '상파울루',
+  'curitiba': '쿠리치바',
+  'navegantes': '나베간치스',
+  'bombinhas': '봄비냐스',
+  'saojose': '상주제',
+  'florianopolis': '플로리아노폴리스',
+  'guardadoembau': '과르다 두 엠바우',
+  'garopaba': '가로파바',
+  'imbituba': '임비투바',
+  'iguazu': '이과수',
+  'posadas': '포사다스',
+  'montevideo': '몬테비데오',
+  'buenosaires': '부에노스아이레스',
+  'santiago': '산티아고',
+  'valparaiso': '발파라이소',
+  'bahiainglesa': '바히아 잉글레사',
+  'sanpedrodeatacama': '산 페드로 데 아타카마',
+  'lagunaverde': '라구나 베르데',
+  'desiertodalil': '살바도르 달리 사막',
+  'uyuni': '우유니',
+  'potosi': '포토시',
+  'sucre': '수크레',
+  'elalto': '엘알토',
+  'copacabana_bolivia': '코파카바나',
+  'puno': '푸노',
+  'juliaca': '줄리아카',
+  'machupicchu': '마추픽추',
+  'lima': '리마',
+  'piura': '피우라',
+  'border': '국경',
+  'cajas': '카하스 국립공원',
+  'cuenca': '쿠엔카',
+  'banos': '바뇨스',
+  'pujili': '푸힐리',
+  'quito': '키토',
+  'tulcan': '툴칸',
+  'ipiales': '이피알레스',
+  'pasto': '파스토',
+  'cali': '칼리',
+  'bogota': '보고타',
+  'medellin': '메데진',
+  'cartagena': '카르타헤나',
+  'barranquilla': '바랑키야'
+};
+
+// EXIF 메타데이터 추출
+function extractExif(filePath) {
+  try {
+    const buffer = fs.readFileSync(filePath);
+    const parser = ExifParser.create(buffer);
+    const result = parser.parse();
+    
+    const tags = result.tags;
+    
+    // 날짜+시간 추출
+    let date = null;
+    if (tags.DateTimeOriginal) {
+      const d = new Date(tags.DateTimeOriginal * 1000);
+      // ISO 형식: YYYY-MM-DDTHH:mm:ss
+      date = d.toISOString().slice(0, 19);
+    }
+    
+    // GPS 위치 추출
+    let gps = null;
+    if (tags.GPSLatitude && tags.GPSLongitude) {
+      gps = {
+        lat: tags.GPSLatitude,
+        lng: tags.GPSLongitude
+      };
+    }
+    
+    return { date, gps };
+  } catch (error) {
+    console.log(`  ⚠️  EXIF 읽기 실패: ${path.basename(filePath)}`);
+    return { date: null, gps: null };
+  }
+}
+
+// 사진 업로드
+async function uploadPhoto(filePath, cityCode, index) {
+  const filename = path.basename(filePath, path.extname(filePath));
+  const folder = `cities/${cityCode}`;
+  const photoName = `photo${String(index).padStart(3, '0')}`;
+  const publicId = `${folder}/${photoName}`;
+  
+  // EXIF 추출
+  const exif = extractExif(filePath);
+  
+  try {
+    // Build context string with all metadata
+    const contextParts = [];
+    if (exif.date) contextParts.push(`date=${exif.date}`);
+    if (exif.gps) {
+      contextParts.push(`lat=${exif.gps.lat}`);
+      contextParts.push(`lng=${exif.gps.lng}`);
+    }
+    
+    // Cloudinary에 업로드 (asset_folder로 Folders UI에 표시)
+    const result = await cloudinary.uploader.upload(filePath, {
+      public_id: photoName,
+      folder: folder,
+      asset_folder: folder,
+      overwrite: true,
+      context: contextParts.length > 0 ? contextParts.join('|') : undefined,
+    });
+    
+    return {
+      id: `${cityCode}-${String(index).padStart(3, '0')}`,
+      publicId: publicId,
+      url: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${publicId}`,
+      thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/${publicId}`,
+      date: exif.date || '',
+      gps: exif.gps,
+      caption: {
+        ko: filename,
+        en: filename
+      }
+    };
+  } catch (error) {
+    console.error(`  ❌ 업로드 실패: ${filename}`, error.message);
+    return null;
+  }
+}
+
+async function main() {
+  console.log('📷 사진 업로드 자동화 시작...\n');
+  
+  // photos/cities 폴더가 없으면 안내
+  if (!fs.existsSync(PHOTOS_DIR)) {
+    console.log('❌ photos/cities 폴더가 없습니다.');
+    console.log('   먼저 다음 명령으로 폴더 구조를 생성하세요:');
+    console.log('   node scripts/create-photo-folders.js\n');
+    return;
+  }
+  
+  const cityPhotos = {};
+  let totalUploaded = 0;
+  
+  // 각 도시 폴더 순회
+  const cityFolders = fs.readdirSync(PHOTOS_DIR).filter(f => {
+    const fullPath = path.join(PHOTOS_DIR, f);
+    return fs.statSync(fullPath).isDirectory();
+  });
+  
+  for (const cityCode of cityFolders) {
+    const cityPath = path.join(PHOTOS_DIR, cityCode);
+    const koreanName = folderToKorean[cityCode];
+    
+    if (!koreanName) {
+      console.log(`⚠️  ${cityCode} - 한글 매핑 없음, 건너뜀`);
+      continue;
+    }
+    
+    // 이미지 파일 찾기 (.gitkeep 제외)
+    const imageFiles = fs.readdirSync(cityPath).filter(f => {
+      const ext = path.extname(f).toLowerCase();
+      return ['.jpg', '.jpeg', '.png', '.heic', '.webp'].includes(ext);
+    });
+    
+    if (imageFiles.length === 0) {
+      continue; // 사진 없는 폴더는 건너뜀
+    }
+    
+    // Cloudinary에서 이미 업로드된 사진 확인
+    let existingPhotos = [];
+    try {
+      const resources = await cloudinary.api.resources({
+        type: 'upload',
+        prefix: `cities/${cityCode}/`,
+        max_results: 100,
+        resource_type: 'image'
+      });
+      existingPhotos = resources.resources.map(r => r.public_id);
+    } catch (e) {
+      // 폴더가 없으면 빈 배열
+    }
+    
+    console.log(`📸 ${koreanName} (${cityCode}): ${imageFiles.length}장`);
+    
+    const photos = [];
+    let skipped = 0;
+    
+    for (let i = 0; i < imageFiles.length; i++) {
+      const photoName = `photo${String(i + 1).padStart(3, '0')}`;
+      const expectedPublicId = `cities/${cityCode}/${photoName}`;
+      
+      // 이미 업로드된 사진이면 스킵
+      if (existingPhotos.includes(expectedPublicId)) {
+        console.log(`  ⏭️  ${imageFiles[i]} - 이미 업로드됨`);
+        skipped++;
+        continue;
+      }
+      
+      const imagePath = path.join(cityPath, imageFiles[i]);
+      const result = await uploadPhoto(imagePath, cityCode, i + 1);
+      
+      if (result) {
+        photos.push(result);
+        const gpsInfo = result.gps ? ` 📍 ${result.gps.lat.toFixed(4)}, ${result.gps.lng.toFixed(4)}` : '';
+        const dateInfo = result.date ? ` 📅 ${result.date}` : '';
+        console.log(`  ✅ ${imageFiles[i]}${dateInfo}${gpsInfo}`);
+        totalUploaded++;
+      }
+    }
+    
+    if (skipped > 0) {
+      console.log(`  📊 스킵: ${skipped}장, 업로드: ${photos.length}장`);
+    }
+    
+    if (photos.length > 0) {
+      cityPhotos[koreanName] = {
+        cityCode: cityCode,
+        photos: photos
+      };
+    }
+  }
+  
+  // cityPhotos.json 업데이트
+  if (Object.keys(cityPhotos).length > 0) {
+    const outputPath = path.join(__dirname, '../src/data/cityPhotos.json');
+    
+    // 기존 파일 읽기 (있으면)
+    let existingData = {};
+    if (fs.existsSync(outputPath)) {
+      existingData = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
+    }
+    
+    // 새 데이터 병합
+    const mergedData = { ...existingData, ...cityPhotos };
+    
+    fs.writeFileSync(outputPath, JSON.stringify(mergedData, null, 2), 'utf-8');
+    console.log(`\n📝 cityPhotos.json 업데이트됨`);
+  }
+  
+  console.log('\n' + '='.repeat(50));
+  console.log(`✨ 완료!`);
+  console.log(`   업로드: ${totalUploaded}장`);
+  console.log(`   도시: ${Object.keys(cityPhotos).length}개`);
+}
+
+main().catch(console.error);

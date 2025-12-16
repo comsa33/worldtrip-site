@@ -55,7 +55,7 @@
   transform: scale(1.1);
 }
 
-/* Circular thumbnails container - positioned at bottom */
+/* Circular thumbnails container - positioned at bottom with scroll */
 .photo-gallery__circle {
   position: absolute;
   bottom: 8%;
@@ -69,12 +69,36 @@
   -webkit-backdrop-filter: blur(30px);
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 85vw;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.photo-gallery__circle::-webkit-scrollbar {
+  height: 6px;
+}
+
+.photo-gallery__circle::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.photo-gallery__circle::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.photo-gallery__circle::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Individual thumbnail - Apple style */
 .photo-gallery__thumbnail {
   width: 64px;
   height: 64px;
+  min-width: 64px;
+  flex-shrink: 0;
   border-radius: 12px;
   border: 2px solid transparent;
   background: rgba(0, 0, 0, 0.3);
@@ -135,7 +159,7 @@
   background: #fefefe;
   border-radius: 4px;
   padding: 16px 16px 56px 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.3),
     0 20px 50px rgba(0, 0, 0, 0.2);
   position: relative;
@@ -166,9 +190,28 @@
   font-size: 12px;
   font-weight: 400;
   line-height: 1.3;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   letter-spacing: -0.01em;
   max-width: 70%;
+}
+
+.photo-gallery__alt {
+  color: rgba(0, 0, 0, 0.6);
+  margin: 4px 0 0 0;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.3;
+  font-style: italic;
+}
+
+.photo-gallery__meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
 }
 
 .photo-gallery__date {
@@ -176,6 +219,11 @@
   font-size: 10px;
   font-family: 'SF Mono', 'Menlo', monospace;
   letter-spacing: 0.05em;
+}
+
+.photo-gallery__location {
+  color: #888;
+  font-size: 10px;
 }
 
 /* Mobile responsive */
@@ -188,41 +236,43 @@
     overflow-x: auto;
     justify-content: flex-start;
   }
-  
+
   .photo-gallery__thumbnail {
     width: 56px;
     height: 56px;
+    min-width: 56px;
+    min-height: 56px;
     flex-shrink: 0;
   }
-  
+
   .photo-gallery__close {
     top: 1rem;
     right: 1rem;
     width: 36px;
     height: 36px;
   }
-  
+
   .photo-gallery__viewer {
     transform: translate(-50%, -60%) scale(0.9);
   }
-  
+
   .photo-gallery__viewer--zoomed {
     transform: translate(-50%, -60%) scale(1);
   }
-  
+
   .photo-gallery__viewer-content {
     padding: 10px 10px 48px 10px;
   }
-  
+
   .photo-gallery__viewer-content img {
     max-width: 85vw;
     max-height: 40vh;
   }
-  
+
   .photo-gallery__caption {
     font-size: 11px;
   }
-  
+
   .photo-gallery__date {
     font-size: 9px;
   }

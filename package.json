@@ -10,7 +10,10 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "create-folders": "node scripts/create-photo-folders.js",
+    "upload-photos": "node scripts/upload-photos.js",
+    "sync-photos": "node scripts/sync-cloudinary-photos.js"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -27,6 +30,7 @@
     "@types/three": "^0.182.0",
     "cloudinary": "^2.8.0",
     "dotenv": "^17.2.3",
+    "exif-parser": "^0.1.12",
     "gsap": "^3.14.2",
     "lucide-react": "^0.561.0",
     "react": "^19.2.0",

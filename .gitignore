@@ -17,6 +17,15 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Local photos (only .gitkeep tracked, images ignored)
+photos/cities/**/*.jpg
+photos/cities/**/*.jpeg
+photos/cities/**/*.png
+photos/cities/**/*.heic
+photos/cities/**/*.HEIC
+photos/cities/**/*.webp
+!photos/cities/**/.gitkeep
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

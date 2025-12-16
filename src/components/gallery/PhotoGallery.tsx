@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { X } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
@@ -11,7 +11,9 @@ interface Photo {
   thumbnail?: string;
   publicId?: string;
   date: string;
+  gps?: { lat: number; lng: number } | null;
   caption: { ko: string; en: string };
+  alt?: string;
 }
 
 interface CityPhotoData {
@@ -27,7 +29,6 @@ interface PhotoGalleryProps {
 export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
   const { language } = useI18n();
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [isEntering, setIsEntering] = useState(false);
   const [isPhotoZooming, setIsPhotoZooming] = useState(false);
 
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
@@ -40,15 +41,8 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
 
   const cityCode = cityName ? cityPhotos[cityName]?.cityCode : null;
 
-  // Animation on open
-  useEffect(() => {
-    if (cityName) {
-      setIsEntering(true);
-      setSelectedPhoto(null);
-    } else {
-      setIsEntering(false);
-    }
-  }, [cityName]);
+  // Derive entering state from cityName (no useEffect needed)
+  const isEntering = !!cityName;
 
   // Handle thumbnail click
   const handleThumbnailClick = (photo: Photo) => {
@@ -76,7 +70,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
   if (!cityName || photos.length === 0) return null;
 
   return (
-    <div 
+    <div
       className={`photo-gallery ${isEntering ? 'photo-gallery--open' : ''}`}
       onClick={handleBackdropClick}
     >
@@ -98,7 +92,10 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
             onClick={() => handleThumbnailClick(photo)}
           >
             <img
-              src={photo.thumbnail || `/assets/images/cities/${cityCode}/${photo.filename?.replace('.jpg', '.png')}`}
+              src={
+                photo.thumbnail ||
+                `/assets/images/cities/${cityCode}/${photo.filename?.replace('.jpg', '.png')}`
+              }
               alt={photo.caption[language as 'ko' | 'en']}
               loading="lazy"
             />
@@ -108,22 +105,49 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
 
       {/* Center photo viewer - Polaroid style */}
       {selectedPhoto && (
-        <div 
+        <div
           className={`photo-gallery__viewer ${isPhotoZooming ? 'photo-gallery__viewer--zoomed' : ''}`}
           onClick={handleClosePhoto}
         >
           <div className="photo-gallery__viewer-content">
             <img
-              src={selectedPhoto.url || `/assets/images/cities/${cityCode}/${selectedPhoto.filename?.replace('.jpg', '.png')}`}
+              src={
+                selectedPhoto.url ||
+                `/assets/images/cities/${cityCode}/${selectedPhoto.filename?.replace('.jpg', '.png')}`
+              }
               alt={selectedPhoto.caption[language as 'ko' | 'en']}
             />
             <div className="photo-gallery__caption-area">
               <p className="photo-gallery__caption">
                 {selectedPhoto.caption[language as 'ko' | 'en']}
               </p>
-              <span className="photo-gallery__date">
-                {selectedPhoto.date}
-              </span>
+              {selectedPhoto.alt &&
+                selectedPhoto.alt !== selectedPhoto.caption[language as 'ko' | 'en'] && (
+                  <p className="photo-gallery__alt">{selectedPhoto.alt}</p>
+                )}
+              <div className="photo-gallery__meta">
+                {selectedPhoto.date && (
+                  <span className="photo-gallery__date">
+                    {selectedPhoto.date.includes('T')
+                      ? new Date(selectedPhoto.date).toLocaleString(
+                          language === 'ko' ? 'ko-KR' : 'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          }
+                        )
+                      : selectedPhoto.date}
+                  </span>
+                )}
+                {selectedPhoto.gps && (
+                  <span className="photo-gallery__location">
+                    📍 {selectedPhoto.gps.lat.toFixed(2)}, {selectedPhoto.gps.lng.toFixed(2)}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
