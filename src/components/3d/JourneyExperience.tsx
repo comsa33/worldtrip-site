@@ -485,11 +485,11 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
   
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
   
-  const { position, displayStopId } = useMemo(() => {
+  const { position, displayStopId, fromStopId } = useMemo(() => {
     const pt = path[pathIdx] || { point: new THREE.Vector3(0, 2, 0), transport: 'bus', fromStopId: 1, toStopId: 2, segmentProgress: 0 };
     // Show current stop when stationary (t < 0.15), destination when moving
     const showStopId = pt.segmentProgress < SEGMENT_THRESHOLD ? pt.fromStopId : pt.toStopId;
-    return { position: pt.point, displayStopId: showStopId };
+    return { position: pt.point, displayStopId: showStopId, fromStopId: pt.fromStopId };
   }, [path, pathIdx]);
   
   // Calculate current stop index from displayStopId
@@ -518,9 +518,10 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
         position: pos,
         name: city[language as 'ko' | 'en'],
         isCurrentStop: idx === currentStopIdx,
+        isFromStop: stop.id === fromStopId && fromStopId !== displayStopId, // Departure city (not the same as destination)
       };
-    }).filter(Boolean) as { id: number; position: THREE.Vector3; name: string; isCurrentStop: boolean }[];
-  }, [stops, cities, currentStopIdx, language]);
+    }).filter(Boolean) as { id: number; position: THREE.Vector3; name: string; isCurrentStop: boolean; isFromStop: boolean }[];
+  }, [stops, cities, currentStopIdx, language, fromStopId, displayStopId]);
   
   return (
     <>
@@ -579,6 +580,38 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
                   textShadow: '0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8)',
                   whiteSpace: 'nowrap',
                   pointerEvents: 'none',
+                }}
+              >
+                {stop.name}
+              </Html>
+            </group>
+          );
+        } else if (stop.isFromStop) {
+          // FROM STOP (departure): Same size as destination but not bold
+          return (
+            <group key={stop.id} position={stop.position} scale={[markerScale, markerScale, markerScale]}>
+              {/* White core for visibility */}
+              <mesh>
+                <sphereGeometry args={[0.005, 12, 12]} />
+                <meshBasicMaterial color="#ffffff" />
+              </mesh>
+              {/* Mint glow outer */}
+              <mesh>
+                <sphereGeometry args={[0.010, 12, 12]} />
+                <meshBasicMaterial color={baemin} transparent opacity={0.6} />
+              </mesh>
+              {/* City name label - same size as destination, but normal weight */}
+              <Html
+                position={[0, 0.025, 0]}
+                center
+                style={{
+                  color: baemin,
+                  fontSize: '14px',
+                  fontWeight: '400',  // Normal weight (not bold)
+                  textShadow: '0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8)',
+                  whiteSpace: 'nowrap',
+                  pointerEvents: 'none',
+                  opacity: 0.85,
                 }}
               >
                 {stop.name}
