@@ -681,7 +681,7 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction, onCityClick }
         const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
         return (
           <OrbitControls 
-            enableZoom={true}
+            enableZoom={isMobile}
             enablePan={false} 
             enableRotate={!isMobile}
             minDistance={1.5}
@@ -882,13 +882,20 @@ function ScrollHint() {
 
 function MobileSwipeHint() {
   const { language } = useI18n();
-  const text = language === 'ko' ? '스와이프' : 'Swipe';
+  const swipeText = language === 'ko' ? '스와이프로 탐색' : 'Swipe to navigate';
+  const pinchText = language === 'ko' ? '핀치로 확대/축소' : 'Pinch to zoom';
   
   return (
     <div className="mobile-swipe-hint">
-      <ChevronDown size={14} />
-      <span>{text}</span>
-      <ChevronDown size={14} style={{ transform: 'rotate(180deg)' }} />
+      <div className="mobile-swipe-hint__row">
+        <ChevronDown size={12} />
+        <span>{swipeText}</span>
+        <ChevronDown size={12} style={{ transform: 'rotate(180deg)' }} />
+      </div>
+      <div className="mobile-swipe-hint__row mobile-swipe-hint__row--pinch">
+        <span>👌</span>
+        <span>{pinchText}</span>
+      </div>
     </div>
   );
 }
