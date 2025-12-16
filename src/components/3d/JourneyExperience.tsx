@@ -10,6 +10,13 @@ import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../..
 import './JourneyExperience.css';
 
 // =============================================================================
+// Constants
+// =============================================================================
+
+const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
+const TIMELINE_ITEM_HEIGHT = 52; // Must match CSS .timeline-stop height
+
+// =============================================================================
 // Types
 // =============================================================================
 
@@ -35,6 +42,25 @@ interface BackgroundImage {
   flag: string;
   landmark: string;
   landmarkName: { ko: string; en: string };
+}
+
+// =============================================================================
+// Hooks
+// =============================================================================
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  return isMobile;
 }
 
 // =============================================================================
@@ -462,7 +488,7 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
   const { position, displayStopId } = useMemo(() => {
     const pt = path[pathIdx] || { point: new THREE.Vector3(0, 2, 0), transport: 'bus', fromStopId: 1, toStopId: 2, segmentProgress: 0 };
     // Show current stop when stationary (t < 0.15), destination when moving
-    const showStopId = pt.segmentProgress < 0.15 ? pt.fromStopId : pt.toStopId;
+    const showStopId = pt.segmentProgress < SEGMENT_THRESHOLD ? pt.fromStopId : pt.toStopId;
     return { position: pt.point, displayStopId: showStopId };
   }, [path, pathIdx]);
   
@@ -657,8 +683,8 @@ function VerticalTimeline({ currentStopIndex, stops }: { currentStopIndex: numbe
   const visibleStops = stops.slice(startIdx, endIdx + 1);
   const centerOffset = currentStopIndex - startIdx;
   
-  // Item height for positioning
-  const itemHeight = 52;
+  // Item height for positioning - use constant
+  const itemHeight = TIMELINE_ITEM_HEIGHT;
   
   // Format date: "2016-09-15" -> "'16.09.15"
   const formatDate = (dateStr?: string) => {
@@ -788,8 +814,6 @@ function FlipboardCountry({ countryCode }: { countryCode: string }) {
   );
 }
 
-// ... (existing imports)
-
 function ScrollHint() {
   const { t } = useI18n();
   return (
@@ -909,7 +933,7 @@ function JourneyExperienceContent() {
     if (!pt) return 0;
     
     // Show current stop when stationary (t < 0.15), destination when moving
-    const showStopId = pt.segmentProgress < 0.15 ? pt.fromStopId : pt.toStopId;
+    const showStopId = pt.segmentProgress < SEGMENT_THRESHOLD ? pt.fromStopId : pt.toStopId;
     const stopIdx = stops.findIndex(s => s.id === showStopId);
     return Math.max(stopIdx, 0);
   }, [path, progress, stops]);
@@ -984,21 +1008,26 @@ function JourneyExperienceContent() {
       targetStopIndex = Math.max(currentStop - 1, 0);
     }
     
-    // Find the FIRST path index where currentStop calculation would return targetStopIndex
-    // This matches exactly how currentStop is calculated in the useMemo
+    // Find the CENTER of the path range where this stop is displayed
+    // This gives a stable viewing position instead of first/last edge
     const targetStopId = stops[targetStopIndex]?.id;
-    let targetPathIndex = 0;
+    let firstIndex = -1;
+    let lastIndex = -1;
     
     for (let i = 0; i < path.length; i++) {
       const pt = path[i];
-      // Replicate the currentStop calculation logic exactly
-      const displayedStopId = pt.segmentProgress < 0.15 ? pt.fromStopId : pt.toStopId;
+      const displayedStopId = pt.segmentProgress < SEGMENT_THRESHOLD ? pt.fromStopId : pt.toStopId;
       
       if (displayedStopId === targetStopId) {
-        targetPathIndex = i;
-        break;
+        if (firstIndex === -1) firstIndex = i;
+        lastIndex = i;
       }
     }
+    
+    // Use center of range for stable positioning
+    const targetPathIndex = firstIndex !== -1 
+      ? Math.floor((firstIndex + lastIndex) / 2) 
+      : 0;
     
     // Calculate progress from path index
     const targetProgress = targetPathIndex / path.length;
@@ -1018,8 +1047,8 @@ function JourneyExperienceContent() {
     touchStartY.current = null;
   };
   
-  // Detect mobile for touch-action
-  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+  // Detect mobile for touch-action - using hook for proper reactivity
+  const isMobile = useIsMobile();
   
   return (
     <div 
