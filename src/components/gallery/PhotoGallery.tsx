@@ -6,7 +6,10 @@ import './PhotoGallery.css';
 
 interface Photo {
   id: string;
-  filename: string;
+  filename?: string;
+  url?: string;
+  thumbnail?: string;
+  publicId?: string;
   date: string;
   caption: { ko: string; en: string };
 }
@@ -77,8 +80,8 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
       className={`photo-gallery ${isEntering ? 'photo-gallery--open' : ''}`}
       onClick={handleBackdropClick}
     >
-      {/* Glassmorphism backdrop */}
-      <div className="photo-gallery__backdrop" />
+      {/* Glassmorphism backdrop - click to close */}
+      <div className="photo-gallery__backdrop" onClick={onClose} />
 
       {/* Close button */}
       <button className="photo-gallery__close" onClick={onClose}>
@@ -95,7 +98,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
             onClick={() => handleThumbnailClick(photo)}
           >
             <img
-              src={`/assets/images/cities/${cityCode}/${photo.filename.replace('.jpg', '.png')}`}
+              src={photo.thumbnail || `/assets/images/cities/${cityCode}/${photo.filename?.replace('.jpg', '.png')}`}
               alt={photo.caption[language as 'ko' | 'en']}
               loading="lazy"
             />
@@ -111,7 +114,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
         >
           <div className="photo-gallery__viewer-content">
             <img
-              src={`/assets/images/cities/${cityCode}/${selectedPhoto.filename.replace('.jpg', '.png')}`}
+              src={selectedPhoto.url || `/assets/images/cities/${cityCode}/${selectedPhoto.filename?.replace('.jpg', '.png')}`}
               alt={selectedPhoto.caption[language as 'ko' | 'en']}
             />
             <div className="photo-gallery__caption-area">

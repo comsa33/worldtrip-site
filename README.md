@@ -38,6 +38,46 @@ npm run build
 │   └── /styles             # CSS 스타일
 ```
 
+## ☁️ Cloudinary 사진 관리
+
+이 프로젝트는 Cloudinary를 사용하여 사진을 관리합니다.
+
+### 초기 설정
+
+1. [Cloudinary](https://cloudinary.com)에 가입
+2. `.env.sample`을 복사하여 `.env` 파일 생성
+3. Cloudinary 대시보드에서 API 키 정보 입력:
+   ```bash
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   ```
+
+### 도시 폴더 생성
+
+모든 여행 도시의 폴더를 Cloudinary에 생성:
+```bash
+node scripts/create-cloudinary-folders.js
+```
+
+### 사진 업로드
+
+1. Cloudinary 웹 대시보드 → Media Library → cities/{도시명} 폴더로 이동
+2. 사진을 드래그 앤 드롭으로 업로드
+
+### 갤러리 동기화
+
+Cloudinary에 업로드된 사진을 앱 갤러리에 연결:
+```bash
+node scripts/sync-cloudinary-photos.js
+```
+
+이 스크립트는 `src/data/cityPhotos.json`을 자동으로 업데이트합니다.
+
+> **참고**: 동기화 후 `cityPhotos.json`에서 `date`와 `caption`을 수동으로 입력하세요.
+
+---
+
 ## ✏️ 콘텐츠 추가/수정 가이드
 
 ### 1. 사진 추가하기
