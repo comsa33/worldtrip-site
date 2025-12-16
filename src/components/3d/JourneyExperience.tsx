@@ -1045,95 +1045,150 @@ function JourneyExperienceContent() {
     };
   }, []);
   
-  // Mobile fullscreen swipe handling
+  // Mobile fullscreen swipe handling - using refs for non-passive event listeners
   const touchStartY = useRef<number | null>(null);
   const isDragging = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  const handleTouchStart = (e: React.TouchEvent) => {
-    // Only handle single-touch for swipe navigation
-    // Multi-touch (pinch) is handled by OrbitControls
-    if (e.touches.length === 1) {
-      touchStartY.current = e.touches[0].clientY;
-      isDragging.current = true;
-    } else {
-      // Multi-touch: disable swipe, let OrbitControls handle pinch
-      isDragging.current = false;
-      touchStartY.current = null;
-    }
-  };
+  // Store path and progress in refs for use in event handlers
+  const pathRef = useRef(path);
+  const progressRef = useRef(progress);
+  const currentStopRef = useRef(currentStop);
+  const stopsRef = useRef(stops);
   
-  const handleTouchMove = (e: React.TouchEvent) => {
-    // Only prevent default for single-touch swipe, not pinch zoom
-    if (isDragging.current && e.touches.length === 1) {
-      e.preventDefault();
-    }
-  };
+  useEffect(() => {
+    pathRef.current = path;
+    progressRef.current = progress;
+    currentStopRef.current = currentStop;
+    stopsRef.current = stops;
+  }, [path, progress, currentStop, stops]);
   
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!isDragging.current || touchStartY.current === null) return;
+  // Detect mobile for touch-action - using hook for proper reactivity
+  const isMobile = useIsMobile();
+  
+  // Setup non-passive touch event listeners
+  useEffect(() => {
+    if (!isMobile || !containerRef.current) return;
     
-    const touchEndY = e.changedTouches[0].clientY;
-    const deltaY = touchStartY.current - touchEndY;
+    const container = containerRef.current;
     
-    // Threshold for swipe detection (40px)
-    const swipeThreshold = 40;
-    
-    // Get current position info
-    const currentPathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
-    const currentPt = path[currentPathIdx];
-    
-    let targetPathIndex = currentPathIdx;
-    
-    if (deltaY > swipeThreshold) {
-      // Swiped UP = go FORWARD
-      
-      // Check if we're currently mid-flight (not at a stop)
-      const isMidFlight = currentPt && currentPt.transport === 'flight' && 
-                          currentPt.segmentProgress > 0.2 && currentPt.segmentProgress < 0.8;
-      
-      if (isMidFlight) {
-        // Currently mid-flight: complete the flight to destination
-        for (let i = currentPathIdx; i < path.length; i++) {
-          const pt = path[i];
-          // Find start of next segment (arrived at destination)
-          if (pt.fromStopId === currentPt.toStopId && pt.segmentProgress < 0.05) {
-            targetPathIndex = i;
-            break;
-          }
-          // Or end of current flight segment
-          if (pt.toStopId === currentPt.toStopId && pt.segmentProgress > 0.95) {
-            targetPathIndex = i;
-          }
-        }
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        touchStartY.current = e.touches[0].clientY;
+        isDragging.current = true;
       } else {
-        // At a stop: check if next segment is a flight
-        const nextStopIndex = Math.min(currentStop + 1, stops.length - 1);
-        const nextStop = stops[nextStopIndex];
-        const isNextFlight = nextStop?.transport === 'flight';
+        isDragging.current = false;
+        touchStartY.current = null;
+      }
+    };
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isDragging.current && e.touches.length === 1) {
+        e.preventDefault();
+      }
+    };
+    
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!isDragging.current || touchStartY.current === null) return;
+      
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
+      const swipeThreshold = 40;
+      
+      const path = pathRef.current;
+      const progress = progressRef.current;
+      const currentStop = currentStopRef.current;
+      const stops = stopsRef.current;
+      
+      const currentPathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+      const currentPt = path[currentPathIdx];
+      
+      let targetPathIndex = currentPathIdx;
+      
+      if (deltaY > swipeThreshold) {
+        // Swiped UP = go FORWARD
+        const isMidFlight = currentPt && currentPt.transport === 'flight' && 
+                            currentPt.segmentProgress > 0.2 && currentPt.segmentProgress < 0.8;
         
-        if (isNextFlight) {
-          // Go to flight midpoint first (fun in-flight view!)
+        if (isMidFlight) {
           for (let i = currentPathIdx; i < path.length; i++) {
             const pt = path[i];
-            if (pt.toStopId === nextStop.id && pt.segmentProgress >= 0.45 && pt.segmentProgress <= 0.55) {
+            if (pt.fromStopId === currentPt.toStopId && pt.segmentProgress < 0.05) {
               targetPathIndex = i;
               break;
             }
+            if (pt.toStopId === currentPt.toStopId && pt.segmentProgress > 0.95) {
+              targetPathIndex = i;
+            }
           }
         } else {
-          // Normal navigation: go to next stop
-          const targetStopIndex = nextStopIndex;
-          const targetStopId = stops[targetStopIndex]?.id;
-          const isLastStop = targetStopIndex === stops.length - 1;
+          const nextStopIndex = Math.min(currentStop + 1, stops.length - 1);
+          const nextStop = stops[nextStopIndex];
+          const isNextFlight = nextStop?.transport === 'flight';
           
-          if (isLastStop) {
-            for (let i = path.length - 1; i >= 0; i--) {
-              if (path[i].toStopId === targetStopId) {
+          if (isNextFlight) {
+            for (let i = currentPathIdx; i < path.length; i++) {
+              const pt = path[i];
+              if (pt.toStopId === nextStop.id && pt.segmentProgress >= 0.45 && pt.segmentProgress <= 0.55) {
                 targetPathIndex = i;
                 break;
               }
             }
           } else {
+            const targetStopIndex = nextStopIndex;
+            const targetStopId = stops[targetStopIndex]?.id;
+            const isLastStop = targetStopIndex === stops.length - 1;
+            
+            if (isLastStop) {
+              for (let i = path.length - 1; i >= 0; i--) {
+                if (path[i].toStopId === targetStopId) {
+                  targetPathIndex = i;
+                  break;
+                }
+              }
+            } else {
+              for (let i = 0; i < path.length; i++) {
+                const pt = path[i];
+                if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
+                  targetPathIndex = i;
+                  break;
+                }
+              }
+            }
+          }
+        }
+        
+      } else if (deltaY < -swipeThreshold) {
+        // Swiped DOWN = go BACKWARD
+        const isMidFlight = currentPt && currentPt.transport === 'flight' && 
+                            currentPt.segmentProgress > 0.2 && currentPt.segmentProgress < 0.8;
+        
+        if (isMidFlight) {
+          const departureStopId = currentPt.fromStopId;
+          for (let i = 0; i < path.length; i++) {
+            const pt = path[i];
+            if (pt.fromStopId === departureStopId && pt.segmentProgress < 0.05) {
+              targetPathIndex = i;
+              break;
+            }
+          }
+        } else {
+          const prevStopIndex = Math.max(currentStop - 1, 0);
+          const currentStopData = stops[currentStop];
+          const wasPrevFlight = currentStopData?.transport === 'flight';
+          
+          if (wasPrevFlight && currentStop > 0) {
+            for (let i = currentPathIdx; i >= 0; i--) {
+              const pt = path[i];
+              if (pt.toStopId === currentStopData.id && pt.segmentProgress >= 0.45 && pt.segmentProgress <= 0.55) {
+                targetPathIndex = i;
+                break;
+              }
+            }
+          } else {
+            const targetStopIndex = prevStopIndex;
+            const targetStopId = stops[targetStopIndex]?.id;
+            
             for (let i = 0; i < path.length; i++) {
               const pt = path[i];
               if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
@@ -1145,82 +1200,34 @@ function JourneyExperienceContent() {
         }
       }
       
-    } else if (deltaY < -swipeThreshold) {
-      // Swiped DOWN = go BACKWARD
+      const targetProgress = targetPathIndex / path.length;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const targetScrollY = targetProgress * maxScroll;
       
-      // Check if we're currently mid-flight
-      const isMidFlight = currentPt && currentPt.transport === 'flight' && 
-                          currentPt.segmentProgress > 0.2 && currentPt.segmentProgress < 0.8;
+      window.scrollTo({
+        top: targetScrollY,
+        behavior: 'smooth'
+      });
       
-      if (isMidFlight) {
-        // Mid-flight: go back to departure (find exact stop position)
-        const departureStopId = currentPt.fromStopId;
-        // Search from beginning to find exact stop position
-        for (let i = 0; i < path.length; i++) {
-          const pt = path[i];
-          if (pt.fromStopId === departureStopId && pt.segmentProgress < 0.05) {
-            targetPathIndex = i;
-            break;
-          }
-        }
-      } else {
-        // At a stop: check if previous segment was a flight
-        const prevStopIndex = Math.max(currentStop - 1, 0);
-        const currentStopData = stops[currentStop];
-        const wasPrevFlight = currentStopData?.transport === 'flight';
-        
-        if (wasPrevFlight && currentStop > 0) {
-          // Go to flight midpoint first (reverse through flight)
-          for (let i = currentPathIdx; i >= 0; i--) {
-            const pt = path[i];
-            if (pt.toStopId === currentStopData.id && pt.segmentProgress >= 0.45 && pt.segmentProgress <= 0.55) {
-              targetPathIndex = i;
-              break;
-            }
-          }
-        } else {
-          // Normal navigation: go to previous stop
-          const targetStopIndex = prevStopIndex;
-          const targetStopId = stops[targetStopIndex]?.id;
-          
-          for (let i = 0; i < path.length; i++) {
-            const pt = path[i];
-            if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
-              targetPathIndex = i;
-              break;
-            }
-          }
-        }
-      }
-    }
+      isDragging.current = false;
+      touchStartY.current = null;
+    };
     
-    // Calculate progress from path index
-    const targetProgress = targetPathIndex / path.length;
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
     
-    // Convert progress to scroll position
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const targetScrollY = targetProgress * maxScroll;
-    
-    // Scroll to target position
-    window.scrollTo({
-      top: targetScrollY,
-      behavior: 'smooth'
-    });
-    
-    // Reset state
-    isDragging.current = false;
-    touchStartY.current = null;
-  };
-  
-  // Detect mobile for touch-action - using hook for proper reactivity
-  const isMobile = useIsMobile();
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isMobile]);
   
   return (
     <div 
+      ref={containerRef}
       className="journey-experience"
-      onTouchStart={isMobile ? handleTouchStart : undefined}
-      onTouchMove={isMobile ? handleTouchMove : undefined}
-      onTouchEnd={isMobile ? handleTouchEnd : undefined}
       style={isMobile ? { touchAction: 'none' } : undefined}
     >
       <div className="scroll-spacer" style={{ height: `${stops.length * 100}vh` }} />
