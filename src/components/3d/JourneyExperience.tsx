@@ -576,19 +576,44 @@ function Scene({
     return cityData?.country || null;
   }, [stops, currentStopIdx, cities]);
 
-  // Get all countries data for labels on globe
+  // Get nearby countries data for labels on globe (current ±1 for performance)
   const allCountriesData = useMemo(() => {
     const countries = (countriesData as { countries: CountryData[] }).countries;
-    return countries.map((country) => {
-      const labelPos = latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.08);
-      return {
-        code: country.code,
-        name: country.name,
-        position: labelPos,
-        isCurrent: country.code === currentCountryCode,
-      };
-    });
-  }, [currentCountryCode]);
+
+    // Find visited countries in order
+    const visitedCountryCodes = stops
+      .map((stop) => {
+        const cityData = cities[stop.city];
+        return cityData?.country;
+      })
+      .filter((code, index, self) => code && self.indexOf(code) === index);
+
+    const currentIndex = visitedCountryCodes.indexOf(currentCountryCode || '');
+
+    // Show current ±1 countries only (3 total max)
+    const visibleCountryCodes = new Set<string>();
+    if (currentCountryCode) {
+      visibleCountryCodes.add(currentCountryCode);
+      if (currentIndex > 0) {
+        visibleCountryCodes.add(visitedCountryCodes[currentIndex - 1]!);
+      }
+      if (currentIndex < visitedCountryCodes.length - 1) {
+        visibleCountryCodes.add(visitedCountryCodes[currentIndex + 1]!);
+      }
+    }
+
+    return countries
+      .filter((country) => visibleCountryCodes.has(country.code))
+      .map((country) => {
+        const labelPos = latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.08);
+        return {
+          code: country.code,
+          name: country.name,
+          position: labelPos,
+          isCurrent: country.code === currentCountryCode,
+        };
+      });
+  }, [currentCountryCode, stops, cities]);
 
   return (
     <>
@@ -1217,20 +1242,44 @@ function JourneyExperienceContent() {
   };
 
   useEffect(() => {
+    let rafId: number | null = null;
+    let lastScrollTime = 0;
+    const throttleMs = 16; // 60fps
+
     const onScroll = () => {
       // Don't update globe when gallery is open
       if (selectedCity !== null) return;
 
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      const p = Math.max(0, Math.min(1, window.scrollY / h));
-      setProgress(p);
-      setZoom(p < 0.05 ? 0 : Math.min((p - 0.05) / 0.2, 1));
-      // Reset user interaction on scroll
-      setIsUserInteracting(false);
+      const now = Date.now();
+      if (now - lastScrollTime < throttleMs) {
+        // Too soon, skip this event
+        return;
+      }
+      lastScrollTime = now;
+
+      // Cancel any pending RAF
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+
+      // Schedule update on next animation frame
+      rafId = requestAnimationFrame(() => {
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        const p = Math.max(0, Math.min(1, window.scrollY / h));
+        setProgress(p);
+        setZoom(p < 0.05 ? 0 : Math.min((p - 0.05) / 0.2, 1));
+        // Reset user interaction on scroll
+        setIsUserInteracting(false);
+        rafId = null;
+      });
     };
-    window.addEventListener('scroll', onScroll);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
       if (interactionTimeoutRef.current) {
         clearTimeout(interactionTimeoutRef.current);
       }
