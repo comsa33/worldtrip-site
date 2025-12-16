@@ -5,7 +5,7 @@
       "name": { "en": "South Korea", "ko": "한국", "native": "대한민국" },
       "slug": "korea",
       "continent": "asia",
-      "coordinates": { "lat": 37.5665, "lng": 126.9780 },
+      "coordinates": { "lat": 37.5665, "lng": 126.978 },
       "theme": {
         "primary": "#003478",
         "secondary": "#C60C30",
@@ -13,8 +13,20 @@
         "gradient": "linear-gradient(135deg, #003478 0%, #C60C30 100%)"
       },
       "visits": [
-        { "order": 0, "startDate": "2016-07-01", "endDate": "2016-07-01", "cities": ["서울"], "note": "출발" },
-        { "order": 11, "startDate": "2016-10-15", "endDate": "2016-10-20", "cities": ["서울"], "note": "결혼식 사회로 잠깐 귀국" }
+        {
+          "order": 0,
+          "startDate": "2016-07-01",
+          "endDate": "2016-07-01",
+          "cities": ["서울"],
+          "note": "출발"
+        },
+        {
+          "order": 11,
+          "startDate": "2016-10-15",
+          "endDate": "2016-10-20",
+          "cities": ["서울"],
+          "note": "결혼식 사회로 잠깐 귀국"
+        }
       ],
       "stats": { "days": 6, "cities": 1 }
     },
@@ -30,7 +42,14 @@
         "pattern": "lotus",
         "gradient": "linear-gradient(135deg, #DA251D 0%, #FFCD00 100%)"
       },
-      "visits": [{ "order": 1, "startDate": "2016-07-02", "endDate": "2016-07-15", "cities": ["호치민", "다낭", "하노이"] }],
+      "visits": [
+        {
+          "order": 1,
+          "startDate": "2016-07-02",
+          "endDate": "2016-07-15",
+          "cities": ["호치민", "다낭", "하노이"]
+        }
+      ],
       "stats": { "days": 14, "cities": 3 }
     },
     {
@@ -46,8 +65,18 @@
         "gradient": "linear-gradient(135deg, #010066 0%, #CC0000 100%)"
       },
       "visits": [
-        { "order": 2, "startDate": "2016-07-16", "endDate": "2016-07-25", "cities": ["쿠알라룸푸르", "말라카"] },
-        { "order": 4, "startDate": "2016-08-05", "endDate": "2016-08-10", "cities": ["페낭", "랑카위"] }
+        {
+          "order": 2,
+          "startDate": "2016-07-16",
+          "endDate": "2016-07-25",
+          "cities": ["쿠알라룸푸르", "말라카"]
+        },
+        {
+          "order": 4,
+          "startDate": "2016-08-05",
+          "endDate": "2016-08-10",
+          "cities": ["페낭", "랑카위"]
+        }
       ],
       "stats": { "days": 20, "cities": 4 }
     },
@@ -63,7 +92,14 @@
         "pattern": "batik",
         "gradient": "linear-gradient(135deg, #FF0000 0%, #8B0000 100%)"
       },
-      "visits": [{ "order": 3, "startDate": "2016-07-26", "endDate": "2016-08-04", "cities": ["발리", "족자카르타"] }],
+      "visits": [
+        {
+          "order": 3,
+          "startDate": "2016-07-26",
+          "endDate": "2016-08-04",
+          "cities": ["발리", "족자카르타"]
+        }
+      ],
       "stats": { "days": 10, "cities": 2 }
     },
     {
@@ -78,7 +114,14 @@
         "pattern": "plumeria",
         "gradient": "linear-gradient(135deg, #002868 0%, #CE1126 100%)"
       },
-      "visits": [{ "order": 5, "startDate": "2016-08-11", "endDate": "2016-08-20", "cities": ["비엔티안", "루앙프라방"] }],
+      "visits": [
+        {
+          "order": 5,
+          "startDate": "2016-08-11",
+          "endDate": "2016-08-20",
+          "cities": ["비엔티안", "루앙프라방"]
+        }
+      ],
       "stats": { "days": 10, "cities": 2 }
     },
     {
@@ -86,15 +129,39 @@
       "name": { "en": "Thailand", "ko": "태국", "native": "ประเทศไทย" },
       "slug": "thailand",
       "continent": "asia",
-      "coordinates": { "lat": 15.8700, "lng": 100.9925 },
+      "coordinates": { "lat": 15.87, "lng": 100.9925 },
       "theme": {
         "primary": "#A51931",
         "secondary": "#F4F5F8",
         "pattern": "elephant",
         "gradient": "linear-gradient(135deg, #A51931 0%, #2D2A4A 100%)"
       },
-      "visits": [{ "order": 6, "startDate": "2016-08-21", "endDate": "2016-09-05", "cities": ["방콕", "치앙마이", "푸켓"] }],
+      "visits": [
+        {
+          "order": 6,
+          "startDate": "2016-08-21",
+          "endDate": "2016-09-05",
+          "cities": ["방콕", "치앙마이", "푸켓"]
+        }
+      ],
       "stats": { "days": 16, "cities": 3 }
+    },
+    {
+      "code": "KH",
+      "name": { "en": "Cambodia", "ko": "캄보디아", "native": "កម្ពុជា" },
+      "slug": "cambodia",
+      "continent": "asia",
+      "coordinates": { "lat": 12.5657, "lng": 104.991 },
+      "theme": {
+        "primary": "#032EA1",
+        "secondary": "#E00025",
+        "pattern": "angkor",
+        "gradient": "linear-gradient(135deg, #032EA1 0%, #E00025 100%)"
+      },
+      "visits": [
+        { "order": 5, "startDate": "2016-08-01", "endDate": "2016-08-03", "cities": ["시엠립"] }
+      ],
+      "stats": { "days": 3, "cities": 1 }
     },
     {
       "code": "IN",
@@ -109,9 +176,24 @@
         "gradient": "linear-gradient(135deg, #FF9933 0%, #138808 100%)"
       },
       "visits": [
-        { "order": 7, "startDate": "2016-09-06", "endDate": "2016-09-25", "cities": ["델리", "아그라", "자이푸르", "바라나시"] },
-        { "order": 9, "startDate": "2016-10-05", "endDate": "2016-10-14", "cities": ["콜카타", "고아"] },
-        { "order": 13, "startDate": "2016-10-28", "endDate": "2016-11-10", "cities": ["뭄바이", "케랄라"] }
+        {
+          "order": 7,
+          "startDate": "2016-09-06",
+          "endDate": "2016-09-25",
+          "cities": ["델리", "아그라", "자이푸르", "바라나시"]
+        },
+        {
+          "order": 9,
+          "startDate": "2016-10-05",
+          "endDate": "2016-10-14",
+          "cities": ["콜카타", "고아"]
+        },
+        {
+          "order": 13,
+          "startDate": "2016-10-28",
+          "endDate": "2016-11-10",
+          "cities": ["뭄바이", "케랄라"]
+        }
       ],
       "stats": { "days": 52, "cities": 8 }
     },
@@ -120,14 +202,21 @@
       "name": { "en": "Nepal", "ko": "네팔", "native": "नेपाल" },
       "slug": "nepal",
       "continent": "asia",
-      "coordinates": { "lat": 28.3949, "lng": 84.1240 },
+      "coordinates": { "lat": 28.3949, "lng": 84.124 },
       "theme": {
         "primary": "#DD2C00",
         "secondary": "#003366",
         "pattern": "himalaya",
         "gradient": "linear-gradient(135deg, #DD2C00 0%, #003366 100%)"
       },
-      "visits": [{ "order": 8, "startDate": "2016-09-26", "endDate": "2016-10-04", "cities": ["카트만두", "포카라"] }],
+      "visits": [
+        {
+          "order": 8,
+          "startDate": "2016-09-26",
+          "endDate": "2016-10-04",
+          "cities": ["카트만두", "포카라"]
+        }
+      ],
       "stats": { "days": 9, "cities": 2 }
     },
     {
@@ -142,7 +231,14 @@
         "pattern": "sakura",
         "gradient": "linear-gradient(135deg, #BC002D 0%, #FF6B9D 100%)"
       },
-      "visits": [{ "order": 12, "startDate": "2016-10-21", "endDate": "2016-10-27", "cities": ["도쿄", "오사카"] }],
+      "visits": [
+        {
+          "order": 12,
+          "startDate": "2016-10-21",
+          "endDate": "2016-10-27",
+          "cities": ["도쿄", "오사카"]
+        }
+      ],
       "stats": { "days": 7, "cities": 2 }
     },
     {
@@ -157,7 +253,14 @@
         "pattern": "arabesque",
         "gradient": "linear-gradient(135deg, #00732F 0%, #BF9B30 100%)"
       },
-      "visits": [{ "order": 14, "startDate": "2016-11-11", "endDate": "2016-11-14", "cities": ["두바이", "아부다비"] }],
+      "visits": [
+        {
+          "order": 14,
+          "startDate": "2016-11-11",
+          "endDate": "2016-11-14",
+          "cities": ["두바이", "아부다비"]
+        }
+      ],
       "stats": { "days": 4, "cities": 2 }
     },
     {
@@ -172,7 +275,14 @@
         "pattern": "pyramid",
         "gradient": "linear-gradient(135deg, #C09300 0%, #8B6914 100%)"
       },
-      "visits": [{ "order": 15, "startDate": "2016-11-15", "endDate": "2016-11-28", "cities": ["카이로", "룩소르", "아스완"] }],
+      "visits": [
+        {
+          "order": 15,
+          "startDate": "2016-11-15",
+          "endDate": "2016-11-28",
+          "cities": ["카이로", "룩소르", "아스완"]
+        }
+      ],
       "stats": { "days": 14, "cities": 3 }
     },
     {
@@ -188,8 +298,18 @@
         "gradient": "linear-gradient(135deg, #AA151B 0%, #F1BF00 100%)"
       },
       "visits": [
-        { "order": 16, "startDate": "2016-11-29", "endDate": "2016-12-10", "cities": ["마드리드", "바르셀로나"] },
-        { "order": 23, "startDate": "2017-01-20", "endDate": "2017-01-25", "cities": ["세비야", "그라나다"] }
+        {
+          "order": 16,
+          "startDate": "2016-11-29",
+          "endDate": "2016-12-10",
+          "cities": ["마드리드", "바르셀로나"]
+        },
+        {
+          "order": 23,
+          "startDate": "2017-01-20",
+          "endDate": "2017-01-25",
+          "cities": ["세비야", "그라나다"]
+        }
       ],
       "stats": { "days": 18, "cities": 4 }
     },
@@ -205,7 +325,14 @@
         "pattern": "renaissance",
         "gradient": "linear-gradient(135deg, #009246 0%, #CE2B37 100%)"
       },
-      "visits": [{ "order": 17, "startDate": "2016-12-11", "endDate": "2016-12-20", "cities": ["로마", "피렌체", "베네치아"] }],
+      "visits": [
+        {
+          "order": 17,
+          "startDate": "2016-12-11",
+          "endDate": "2016-12-20",
+          "cities": ["로마", "피렌체", "베네치아"]
+        }
+      ],
       "stats": { "days": 10, "cities": 3 }
     },
     {
@@ -220,7 +347,14 @@
         "pattern": "traditional",
         "gradient": "linear-gradient(135deg, #C6363C 0%, #0C4076 100%)"
       },
-      "visits": [{ "order": 18, "startDate": "2016-12-21", "endDate": "2016-12-25", "cities": ["베오그라드"] }],
+      "visits": [
+        {
+          "order": 18,
+          "startDate": "2016-12-21",
+          "endDate": "2016-12-25",
+          "cities": ["베오그라드"]
+        }
+      ],
       "stats": { "days": 5, "cities": 1 }
     },
     {
@@ -235,7 +369,14 @@
         "pattern": "kalocsai",
         "gradient": "linear-gradient(135deg, #CE2939 0%, #477050 100%)"
       },
-      "visits": [{ "order": 19, "startDate": "2016-12-26", "endDate": "2016-12-31", "cities": ["부다페스트"] }],
+      "visits": [
+        {
+          "order": 19,
+          "startDate": "2016-12-26",
+          "endDate": "2016-12-31",
+          "cities": ["부다페스트"]
+        }
+      ],
       "stats": { "days": 6, "cities": 1 }
     },
     {
@@ -250,7 +391,14 @@
         "pattern": "wycinanki",
         "gradient": "linear-gradient(135deg, #DC143C 0%, #8B0000 100%)"
       },
-      "visits": [{ "order": 20, "startDate": "2017-01-01", "endDate": "2017-01-07", "cities": ["크라쿠프", "바르샤바"] }],
+      "visits": [
+        {
+          "order": 20,
+          "startDate": "2017-01-01",
+          "endDate": "2017-01-07",
+          "cities": ["크라쿠프", "바르샤바"]
+        }
+      ],
       "stats": { "days": 7, "cities": 2 }
     },
     {
@@ -258,14 +406,21 @@
       "name": { "en": "Czech Republic", "ko": "체코", "native": "Česko" },
       "slug": "czech",
       "continent": "europe",
-      "coordinates": { "lat": 49.8175, "lng": 15.4730 },
+      "coordinates": { "lat": 49.8175, "lng": 15.473 },
       "theme": {
         "primary": "#11457E",
         "secondary": "#D7141A",
         "pattern": "bohemian",
         "gradient": "linear-gradient(135deg, #11457E 0%, #D7141A 100%)"
       },
-      "visits": [{ "order": 21, "startDate": "2017-01-08", "endDate": "2017-01-14", "cities": ["프라하", "체스키크롬로프"] }],
+      "visits": [
+        {
+          "order": 21,
+          "startDate": "2017-01-08",
+          "endDate": "2017-01-14",
+          "cities": ["프라하", "체스키크롬로프"]
+        }
+      ],
       "stats": { "days": 7, "cities": 2 }
     },
     {
@@ -280,7 +435,14 @@
         "pattern": "artnouveau",
         "gradient": "linear-gradient(135deg, #000000 0%, #FDDA24 100%)"
       },
-      "visits": [{ "order": 22, "startDate": "2017-01-15", "endDate": "2017-01-19", "cities": ["브뤼셀", "브뤼헤"] }],
+      "visits": [
+        {
+          "order": 22,
+          "startDate": "2017-01-15",
+          "endDate": "2017-01-19",
+          "cities": ["브뤼셀", "브뤼헤"]
+        }
+      ],
       "stats": { "days": 5, "cities": 2 }
     },
     {
@@ -295,7 +457,14 @@
         "pattern": "zellige",
         "gradient": "linear-gradient(135deg, #C1272D 0%, #006233 100%)"
       },
-      "visits": [{ "order": 24, "startDate": "2017-01-26", "endDate": "2017-02-05", "cities": ["마라케시", "페스", "셰프샤우엔"] }],
+      "visits": [
+        {
+          "order": 24,
+          "startDate": "2017-01-26",
+          "endDate": "2017-02-05",
+          "cities": ["마라케시", "페스", "셰프샤우엔"]
+        }
+      ],
       "stats": { "days": 11, "cities": 3 }
     },
     {
@@ -310,7 +479,14 @@
         "pattern": "azulejo",
         "gradient": "linear-gradient(135deg, #006600 0%, #FF0000 100%)"
       },
-      "visits": [{ "order": 25, "startDate": "2017-02-06", "endDate": "2017-02-15", "cities": ["리스본", "포르투"] }],
+      "visits": [
+        {
+          "order": 25,
+          "startDate": "2017-02-06",
+          "endDate": "2017-02-15",
+          "cities": ["리스본", "포르투"]
+        }
+      ],
       "stats": { "days": 10, "cities": 2 }
     },
     {
@@ -318,14 +494,21 @@
       "name": { "en": "Brazil", "ko": "브라질", "native": "Brasil" },
       "slug": "brazil",
       "continent": "south-america",
-      "coordinates": { "lat": -14.2350, "lng": -51.9253 },
+      "coordinates": { "lat": -14.235, "lng": -51.9253 },
       "theme": {
         "primary": "#009C3B",
         "secondary": "#FFDF00",
         "pattern": "tropical",
         "gradient": "linear-gradient(135deg, #009C3B 0%, #FFDF00 100%)"
       },
-      "visits": [{ "order": 26, "startDate": "2017-02-16", "endDate": "2017-03-01", "cities": ["리우데자네이루", "상파울루", "이과수"] }],
+      "visits": [
+        {
+          "order": 26,
+          "startDate": "2017-02-16",
+          "endDate": "2017-03-01",
+          "cities": ["리우데자네이루", "상파울루", "이과수"]
+        }
+      ],
       "stats": { "days": 14, "cities": 3 }
     },
     {
@@ -340,7 +523,9 @@
         "pattern": "nanduti",
         "gradient": "linear-gradient(135deg, #D52B1E 0%, #0038A8 100%)"
       },
-      "visits": [{ "order": 27, "startDate": "2017-03-02", "endDate": "2017-03-05", "cities": ["아순시온"] }],
+      "visits": [
+        { "order": 27, "startDate": "2017-03-02", "endDate": "2017-03-05", "cities": ["아순시온"] }
+      ],
       "stats": { "days": 4, "cities": 1 }
     },
     {
@@ -355,7 +540,14 @@
         "pattern": "tango",
         "gradient": "linear-gradient(135deg, #74ACDF 0%, #F6B40E 100%)"
       },
-      "visits": [{ "order": 28, "startDate": "2017-03-06", "endDate": "2017-03-20", "cities": ["부에노스아이레스", "우수아이아", "엘칼라파테"] }],
+      "visits": [
+        {
+          "order": 28,
+          "startDate": "2017-03-06",
+          "endDate": "2017-03-20",
+          "cities": ["부에노스아이레스", "우수아이아", "엘칼라파테"]
+        }
+      ],
       "stats": { "days": 15, "cities": 3 }
     },
     {
@@ -363,14 +555,21 @@
       "name": { "en": "Chile", "ko": "칠레", "native": "Chile" },
       "slug": "chile",
       "continent": "south-america",
-      "coordinates": { "lat": -35.6751, "lng": -71.5430 },
+      "coordinates": { "lat": -35.6751, "lng": -71.543 },
       "theme": {
         "primary": "#D52B1E",
         "secondary": "#0039A6",
         "pattern": "mapuche",
         "gradient": "linear-gradient(135deg, #D52B1E 0%, #0039A6 100%)"
       },
-      "visits": [{ "order": 29, "startDate": "2017-03-21", "endDate": "2017-04-05", "cities": ["산티아고", "발파라이소", "아타카마"] }],
+      "visits": [
+        {
+          "order": 29,
+          "startDate": "2017-03-21",
+          "endDate": "2017-04-05",
+          "cities": ["산티아고", "발파라이소", "아타카마"]
+        }
+      ],
       "stats": { "days": 16, "cities": 3 }
     },
     {
@@ -385,7 +584,14 @@
         "pattern": "andean",
         "gradient": "linear-gradient(135deg, #D52B1E 0%, #007934 100%)"
       },
-      "visits": [{ "order": 30, "startDate": "2017-04-06", "endDate": "2017-04-18", "cities": ["라파스", "우유니", "수크레"] }],
+      "visits": [
+        {
+          "order": 30,
+          "startDate": "2017-04-06",
+          "endDate": "2017-04-18",
+          "cities": ["라파스", "우유니", "수크레"]
+        }
+      ],
       "stats": { "days": 13, "cities": 3 }
     },
     {
@@ -393,14 +599,21 @@
       "name": { "en": "Peru", "ko": "페루", "native": "Perú" },
       "slug": "peru",
       "continent": "south-america",
-      "coordinates": { "lat": -9.1900, "lng": -75.0152 },
+      "coordinates": { "lat": -9.19, "lng": -75.0152 },
       "theme": {
         "primary": "#D91023",
         "secondary": "#FFFFFF",
         "pattern": "inca",
         "gradient": "linear-gradient(135deg, #D91023 0%, #8B0000 100%)"
       },
-      "visits": [{ "order": 31, "startDate": "2017-04-19", "endDate": "2017-05-05", "cities": ["리마", "쿠스코", "마추픽추"] }],
+      "visits": [
+        {
+          "order": 31,
+          "startDate": "2017-04-19",
+          "endDate": "2017-05-05",
+          "cities": ["리마", "쿠스코", "마추픽추"]
+        }
+      ],
       "stats": { "days": 17, "cities": 3 }
     },
     {
@@ -415,7 +628,14 @@
         "pattern": "otavalo",
         "gradient": "linear-gradient(135deg, #FFD100 0%, #034EA2 100%)"
       },
-      "visits": [{ "order": 32, "startDate": "2017-05-06", "endDate": "2017-05-20", "cities": ["키토", "갈라파고스"] }],
+      "visits": [
+        {
+          "order": 32,
+          "startDate": "2017-05-06",
+          "endDate": "2017-05-20",
+          "cities": ["키토", "갈라파고스"]
+        }
+      ],
       "stats": { "days": 15, "cities": 2 }
     },
     {
@@ -430,7 +650,14 @@
         "pattern": "mochica",
         "gradient": "linear-gradient(135deg, #FCD116 0%, #003893 100%)"
       },
-      "visits": [{ "order": 33, "startDate": "2017-05-21", "endDate": "2017-06-10", "cities": ["보고타", "메데인", "카르타헤나"] }],
+      "visits": [
+        {
+          "order": 33,
+          "startDate": "2017-05-21",
+          "endDate": "2017-06-10",
+          "cities": ["보고타", "메데인", "카르타헤나"]
+        }
+      ],
       "stats": { "days": 21, "cities": 3 }
     }
   ]

@@ -14,33 +14,33 @@
   --color-bg-card: rgba(20, 20, 20, 0.6);
   --color-bg-glass: rgba(255, 255, 255, 0.02);
   --color-bg-glass-strong: rgba(255, 255, 255, 0.05);
-  
+
   /* Text Colors - Higher contrast */
   --color-text-primary: #f5f5f7;
   --color-text-secondary: rgba(245, 245, 247, 0.8);
   --color-text-tertiary: rgba(245, 245, 247, 0.5);
   --color-text-muted: rgba(245, 245, 247, 0.25);
-  
+
   /* Accent Colors */
   --color-accent-primary: #2997ff;
   --color-accent-secondary: #5856d6;
   --color-accent-gradient: linear-gradient(135deg, #2997ff 0%, #5856d6 100%);
-  
+
   /* Premium Glow Effects */
   --glow-soft: 0 0 40px rgba(41, 151, 255, 0.15);
   --glow-medium: 0 0 60px rgba(41, 151, 255, 0.2);
   --glow-strong: 0 0 80px rgba(41, 151, 255, 0.3);
-  
+
   /* Glass Effects */
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-border-light: rgba(255, 255, 255, 0.12);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   --glass-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
-  
+
   /* Typography - Apple-like */
   --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
   --font-body: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-  
+
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -52,22 +52,22 @@
   --font-size-5xl: 3.5rem;
   --font-size-6xl: 4.5rem;
   --font-size-hero: clamp(3rem, 12vw, 7rem);
-  
+
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  
+
   --line-height-tight: 1.1;
   --line-height-snug: 1.25;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
-  
+
   --letter-spacing-tight: -0.03em;
   --letter-spacing-normal: -0.01em;
   --letter-spacing-wide: 0.05em;
-  
+
   /* Spacing */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -83,7 +83,7 @@
   --space-24: 6rem;
   --space-32: 8rem;
   --space-40: 10rem;
-  
+
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -92,17 +92,17 @@
   --radius-2xl: 24px;
   --radius-3xl: 32px;
   --radius-full: 9999px;
-  
+
   /* Transitions - Smooth and refined */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   --transition-fast: 200ms var(--ease-out-quart);
   --transition-base: 400ms var(--ease-out-expo);
   --transition-slow: 600ms var(--ease-out-expo);
   --transition-slower: 800ms var(--ease-out-expo);
-  
+
   /* Z-Index Scale */
   --z-base: 0;
   --z-dropdown: 100;
@@ -110,7 +110,7 @@
   --z-modal: 300;
   --z-tooltip: 400;
   --z-overlay: 500;
-  
+
   /* Container */
   --container-max: 1200px;
   --container-padding: var(--space-6);
@@ -119,7 +119,9 @@
 /* -----------------------------------------------------------------------------
    Reset & Base Styles
    ----------------------------------------------------------------------------- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -156,7 +158,8 @@ a {
   transition: color var(--transition-fast);
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
   display: block;
@@ -171,11 +174,17 @@ button {
   color: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
@@ -241,15 +250,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
   border: 1px solid var(--glass-border);
-  box-shadow: 
+  box-shadow:
     var(--glass-shadow),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-2xl);
@@ -370,11 +375,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   aspect-ratio: 3/4;
   cursor: pointer;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.03) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
   overflow: hidden;
@@ -393,7 +394,7 @@ h1, h2, h3, h4, h5, h6 {
 .country-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 
+  box-shadow:
     var(--glass-shadow-lg),
     0 0 40px rgba(var(--accent-color-rgb, 41, 151, 255), 0.15);
 }
@@ -425,8 +426,12 @@ h1, h2, h3, h4, h5, h6 {
    Animations - Refined
    ----------------------------------------------------------------------------- */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
@@ -452,28 +457,45 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(41, 151, 255, 0.3);
   }
-  50% { 
+  50% {
     box-shadow: 0 0 40px rgba(41, 151, 255, 0.5);
   }
 }
 
 @keyframes subtle-pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .animate-fade-in {
@@ -494,12 +516,24 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeInUp 600ms var(--ease-out-expo) forwards;
 }
 
-.stagger > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger > *:nth-child(2) { animation-delay: 0.15s; }
-.stagger > *:nth-child(3) { animation-delay: 0.2s; }
-.stagger > *:nth-child(4) { animation-delay: 0.25s; }
-.stagger > *:nth-child(5) { animation-delay: 0.3s; }
-.stagger > *:nth-child(6) { animation-delay: 0.35s; }
+.stagger > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.25s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.3s;
+}
+.stagger > *:nth-child(6) {
+  animation-delay: 0.35s;
+}
 
 /* -----------------------------------------------------------------------------
    Loading States
@@ -542,12 +576,7 @@ h1, h2, h3, h4, h5, h6 {
    ----------------------------------------------------------------------------- */
 .divider {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--glass-border) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, var(--glass-border) 50%, transparent 100%);
 }
 
 /* -----------------------------------------------------------------------------
@@ -575,172 +604,178 @@ h1, h2, h3, h4, h5, h6 {
 /* -----------------------------------------------------------------------------
    Country Theme Overrides
    ----------------------------------------------------------------------------- */
-[data-country-theme="vietnam"] {
-  --color-accent-primary: #DA251D;
-  --color-accent-secondary: #FFCD00;
-  --color-accent-gradient: linear-gradient(135deg, #DA251D 0%, #FFCD00 100%);
+[data-country-theme='vietnam'] {
+  --color-accent-primary: #da251d;
+  --color-accent-secondary: #ffcd00;
+  --color-accent-gradient: linear-gradient(135deg, #da251d 0%, #ffcd00 100%);
 }
 
-[data-country-theme="malaysia"] {
+[data-country-theme='malaysia'] {
   --color-accent-primary: #010066;
-  --color-accent-secondary: #FFD700;
-  --color-accent-gradient: linear-gradient(135deg, #010066 0%, #FFD700 100%);
+  --color-accent-secondary: #ffd700;
+  --color-accent-gradient: linear-gradient(135deg, #010066 0%, #ffd700 100%);
 }
 
-[data-country-theme="indonesia"] {
-  --color-accent-primary: #FF0000;
-  --color-accent-secondary: #FFFFFF;
-  --color-accent-gradient: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+[data-country-theme='indonesia'] {
+  --color-accent-primary: #ff0000;
+  --color-accent-secondary: #ffffff;
+  --color-accent-gradient: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
 }
 
-[data-country-theme="laos"] {
+[data-country-theme='laos'] {
   --color-accent-primary: #002868;
-  --color-accent-secondary: #CE1126;
-  --color-accent-gradient: linear-gradient(135deg, #002868 0%, #CE1126 100%);
+  --color-accent-secondary: #ce1126;
+  --color-accent-gradient: linear-gradient(135deg, #002868 0%, #ce1126 100%);
 }
 
-[data-country-theme="thailand"] {
-  --color-accent-primary: #A51931;
-  --color-accent-secondary: #2D2A4A;
-  --color-accent-gradient: linear-gradient(135deg, #A51931 0%, #2D2A4A 100%);
+[data-country-theme='thailand'] {
+  --color-accent-primary: #a51931;
+  --color-accent-secondary: #2d2a4a;
+  --color-accent-gradient: linear-gradient(135deg, #a51931 0%, #2d2a4a 100%);
 }
 
-[data-country-theme="india"] {
-  --color-accent-primary: #FF9933;
+[data-country-theme='cambodia'] {
+  --color-accent-primary: #032ea1;
+  --color-accent-secondary: #e00025;
+  --color-accent-gradient: linear-gradient(135deg, #032ea1 0%, #e00025 100%);
+}
+
+[data-country-theme='india'] {
+  --color-accent-primary: #ff9933;
   --color-accent-secondary: #138808;
-  --color-accent-gradient: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+  --color-accent-gradient: linear-gradient(135deg, #ff9933 0%, #138808 100%);
 }
 
-[data-country-theme="nepal"] {
-  --color-accent-primary: #DD2C00;
+[data-country-theme='nepal'] {
+  --color-accent-primary: #dd2c00;
   --color-accent-secondary: #003366;
-  --color-accent-gradient: linear-gradient(135deg, #DD2C00 0%, #003366 100%);
+  --color-accent-gradient: linear-gradient(135deg, #dd2c00 0%, #003366 100%);
 }
 
-[data-country-theme="japan"] {
-  --color-accent-primary: #BC002D;
-  --color-accent-secondary: #FF99AA;
-  --color-accent-gradient: linear-gradient(135deg, #BC002D 0%, #FF99AA 100%);
+[data-country-theme='japan'] {
+  --color-accent-primary: #bc002d;
+  --color-accent-secondary: #ff99aa;
+  --color-accent-gradient: linear-gradient(135deg, #bc002d 0%, #ff99aa 100%);
 }
 
-[data-country-theme="uae"] {
-  --color-accent-primary: #00732F;
-  --color-accent-secondary: #BF9B30;
-  --color-accent-gradient: linear-gradient(135deg, #00732F 0%, #BF9B30 100%);
+[data-country-theme='uae'] {
+  --color-accent-primary: #00732f;
+  --color-accent-secondary: #bf9b30;
+  --color-accent-gradient: linear-gradient(135deg, #00732f 0%, #bf9b30 100%);
 }
 
-[data-country-theme="egypt"] {
-  --color-accent-primary: #C09300;
-  --color-accent-secondary: #1A1A1A;
-  --color-accent-gradient: linear-gradient(135deg, #C09300 0%, #1A1A1A 100%);
+[data-country-theme='egypt'] {
+  --color-accent-primary: #c09300;
+  --color-accent-secondary: #1a1a1a;
+  --color-accent-gradient: linear-gradient(135deg, #c09300 0%, #1a1a1a 100%);
 }
 
-[data-country-theme="spain"] {
-  --color-accent-primary: #AA151B;
-  --color-accent-secondary: #F1BF00;
-  --color-accent-gradient: linear-gradient(135deg, #AA151B 0%, #F1BF00 100%);
+[data-country-theme='spain'] {
+  --color-accent-primary: #aa151b;
+  --color-accent-secondary: #f1bf00;
+  --color-accent-gradient: linear-gradient(135deg, #aa151b 0%, #f1bf00 100%);
 }
 
-[data-country-theme="italy"] {
+[data-country-theme='italy'] {
   --color-accent-primary: #009246;
-  --color-accent-secondary: #CE2B37;
-  --color-accent-gradient: linear-gradient(135deg, #009246 0%, #CE2B37 100%);
+  --color-accent-secondary: #ce2b37;
+  --color-accent-gradient: linear-gradient(135deg, #009246 0%, #ce2b37 100%);
 }
 
-[data-country-theme="serbia"] {
-  --color-accent-primary: #C6363C;
-  --color-accent-secondary: #0C4076;
-  --color-accent-gradient: linear-gradient(135deg, #C6363C 0%, #0C4076 100%);
+[data-country-theme='serbia'] {
+  --color-accent-primary: #c6363c;
+  --color-accent-secondary: #0c4076;
+  --color-accent-gradient: linear-gradient(135deg, #c6363c 0%, #0c4076 100%);
 }
 
-[data-country-theme="hungary"] {
-  --color-accent-primary: #CE2939;
+[data-country-theme='hungary'] {
+  --color-accent-primary: #ce2939;
   --color-accent-secondary: #477050;
-  --color-accent-gradient: linear-gradient(135deg, #CE2939 0%, #477050 100%);
+  --color-accent-gradient: linear-gradient(135deg, #ce2939 0%, #477050 100%);
 }
 
-[data-country-theme="poland"] {
-  --color-accent-primary: #DC143C;
-  --color-accent-secondary: #FFFFFF;
-  --color-accent-gradient: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+[data-country-theme='poland'] {
+  --color-accent-primary: #dc143c;
+  --color-accent-secondary: #ffffff;
+  --color-accent-gradient: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
 }
 
-[data-country-theme="czech"] {
-  --color-accent-primary: #11457E;
-  --color-accent-secondary: #D7141A;
-  --color-accent-gradient: linear-gradient(135deg, #11457E 0%, #D7141A 100%);
+[data-country-theme='czech'] {
+  --color-accent-primary: #11457e;
+  --color-accent-secondary: #d7141a;
+  --color-accent-gradient: linear-gradient(135deg, #11457e 0%, #d7141a 100%);
 }
 
-[data-country-theme="belgium"] {
-  --color-accent-primary: #FDDA24;
-  --color-accent-secondary: #1A1A1A;
-  --color-accent-gradient: linear-gradient(135deg, #1A1A1A 0%, #FDDA24 100%);
+[data-country-theme='belgium'] {
+  --color-accent-primary: #fdda24;
+  --color-accent-secondary: #1a1a1a;
+  --color-accent-gradient: linear-gradient(135deg, #1a1a1a 0%, #fdda24 100%);
 }
 
-[data-country-theme="morocco"] {
-  --color-accent-primary: #C1272D;
+[data-country-theme='morocco'] {
+  --color-accent-primary: #c1272d;
   --color-accent-secondary: #006233;
-  --color-accent-gradient: linear-gradient(135deg, #C1272D 0%, #006233 100%);
+  --color-accent-gradient: linear-gradient(135deg, #c1272d 0%, #006233 100%);
 }
 
-[data-country-theme="portugal"] {
+[data-country-theme='portugal'] {
   --color-accent-primary: #006600;
-  --color-accent-secondary: #FF0000;
-  --color-accent-gradient: linear-gradient(135deg, #006600 0%, #FF0000 100%);
+  --color-accent-secondary: #ff0000;
+  --color-accent-gradient: linear-gradient(135deg, #006600 0%, #ff0000 100%);
 }
 
-[data-country-theme="brazil"] {
-  --color-accent-primary: #009C3B;
-  --color-accent-secondary: #FFDF00;
-  --color-accent-gradient: linear-gradient(135deg, #009C3B 0%, #FFDF00 100%);
+[data-country-theme='brazil'] {
+  --color-accent-primary: #009c3b;
+  --color-accent-secondary: #ffdf00;
+  --color-accent-gradient: linear-gradient(135deg, #009c3b 0%, #ffdf00 100%);
 }
 
-[data-country-theme="paraguay"] {
-  --color-accent-primary: #D52B1E;
-  --color-accent-secondary: #0038A8;
-  --color-accent-gradient: linear-gradient(135deg, #D52B1E 0%, #0038A8 100%);
+[data-country-theme='paraguay'] {
+  --color-accent-primary: #d52b1e;
+  --color-accent-secondary: #0038a8;
+  --color-accent-gradient: linear-gradient(135deg, #d52b1e 0%, #0038a8 100%);
 }
 
-[data-country-theme="argentina"] {
-  --color-accent-primary: #74ACDF;
-  --color-accent-secondary: #F6B40E;
-  --color-accent-gradient: linear-gradient(135deg, #74ACDF 0%, #F6B40E 100%);
+[data-country-theme='argentina'] {
+  --color-accent-primary: #74acdf;
+  --color-accent-secondary: #f6b40e;
+  --color-accent-gradient: linear-gradient(135deg, #74acdf 0%, #f6b40e 100%);
 }
 
-[data-country-theme="chile"] {
-  --color-accent-primary: #D52B1E;
-  --color-accent-secondary: #0039A6;
-  --color-accent-gradient: linear-gradient(135deg, #D52B1E 0%, #0039A6 100%);
+[data-country-theme='chile'] {
+  --color-accent-primary: #d52b1e;
+  --color-accent-secondary: #0039a6;
+  --color-accent-gradient: linear-gradient(135deg, #d52b1e 0%, #0039a6 100%);
 }
 
-[data-country-theme="bolivia"] {
-  --color-accent-primary: #D52B1E;
+[data-country-theme='bolivia'] {
+  --color-accent-primary: #d52b1e;
   --color-accent-secondary: #007934;
-  --color-accent-gradient: linear-gradient(135deg, #D52B1E 0%, #007934 100%);
+  --color-accent-gradient: linear-gradient(135deg, #d52b1e 0%, #007934 100%);
 }
 
-[data-country-theme="peru"] {
-  --color-accent-primary: #D91023;
-  --color-accent-secondary: #FFFFFF;
-  --color-accent-gradient: linear-gradient(135deg, #D91023 0%, #8B0000 100%);
+[data-country-theme='peru'] {
+  --color-accent-primary: #d91023;
+  --color-accent-secondary: #ffffff;
+  --color-accent-gradient: linear-gradient(135deg, #d91023 0%, #8b0000 100%);
 }
 
-[data-country-theme="ecuador"] {
-  --color-accent-primary: #FFD100;
-  --color-accent-secondary: #034EA2;
-  --color-accent-gradient: linear-gradient(135deg, #FFD100 0%, #034EA2 100%);
+[data-country-theme='ecuador'] {
+  --color-accent-primary: #ffd100;
+  --color-accent-secondary: #034ea2;
+  --color-accent-gradient: linear-gradient(135deg, #ffd100 0%, #034ea2 100%);
 }
 
-[data-country-theme="colombia"] {
-  --color-accent-primary: #FCD116;
+[data-country-theme='colombia'] {
+  --color-accent-primary: #fcd116;
   --color-accent-secondary: #003893;
-  --color-accent-gradient: linear-gradient(135deg, #FCD116 0%, #003893 100%);
+  --color-accent-gradient: linear-gradient(135deg, #fcd116 0%, #003893 100%);
 }
 
-[data-country-theme="korea"] {
+[data-country-theme='korea'] {
   --color-accent-primary: #003478;
-  --color-accent-secondary: #C60C30;
-  --color-accent-gradient: linear-gradient(135deg, #003478 0%, #C60C30 100%);
+  --color-accent-secondary: #c60c30;
+  --color-accent-gradient: linear-gradient(135deg, #003478 0%, #c60c30 100%);
 }
 
 /* -----------------------------------------------------------------------------
@@ -750,7 +785,7 @@ h1, h2, h3, h4, h5, h6 {
   :root {
     --container-padding: var(--space-4);
   }
-  
+
   .text-hero {
     font-size: clamp(2.5rem, 10vw, 4rem);
   }

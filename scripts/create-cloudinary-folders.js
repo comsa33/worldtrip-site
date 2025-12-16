@@ -26,6 +26,7 @@ const cityToFolder = {
   '쿠알라룸푸르': 'kualalumpur',
   '메단': 'medan',
   '뚝뚝섬': 'tuktuk',
+  '시엠립': 'siemreap',
   '방콕': 'bangkok',
   '방비엥': 'vangvieng',
   '루앙프라방': 'luangprabang',

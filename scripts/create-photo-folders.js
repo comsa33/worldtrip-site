@@ -18,7 +18,7 @@ const PHOTOS_DIR = path.join(__dirname, '../photos/cities');
 // 모든 여행 도시 목록
 const cities = [
   'gwangju', 'incheon', 'hochiminh', 'danang', 'kualalumpur', 'medan', 'tuktuk',
-  'bangkok', 'vangvieng', 'luangprabang', 'vientiane', 'udonthani', 'chennai',
+  'siemreap', 'bangkok', 'vangvieng', 'luangprabang', 'vientiane', 'udonthani', 'chennai',
   'pondicherry', 'bangalore', 'hampi', 'hyderabad', 'pune', 'mumbai', 'aurangabad',
   'ajanta', 'nagpur', 'jabalpur', 'kolkata', 'varanasi', 'sonauli', 'pokhara',
   'annapurna', 'kathmandu', 'lucknow', 'agra', 'newdelhi', 'tokyo', 'abudhabi',

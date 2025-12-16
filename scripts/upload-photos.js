@@ -41,6 +41,7 @@ const folderToKorean = {
   'kualalumpur': '쿠알라룸푸르',
   'medan': '메단',
   'tuktuk': '뚝뚝섬',
+  'siemreap': '시엠립',
   'bangkok': '방콕',
   'vangvieng': '방비엥',
   'luangprabang': '루앙프라방',

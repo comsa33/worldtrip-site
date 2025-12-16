@@ -24,6 +24,11 @@
     "landmark": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=1200",
     "landmarkName": { "ko": "왓 아룬", "en": "Wat Arun" }
   },
+  "KH": {
+    "flag": "https://flagcdn.com/w640/kh.png",
+    "landmark": "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=1200",
+    "landmarkName": { "ko": "앙코르와트", "en": "Angkor Wat" }
+  },
   "LA": {
     "flag": "https://flagcdn.com/w640/la.png",
     "landmark": "https://images.unsplash.com/photo-1558431382-27e303142255?w=1200",
