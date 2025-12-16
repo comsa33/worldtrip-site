@@ -2,11 +2,14 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { ChevronDown, Globe, Languages } from 'lucide-react';
+import { ChevronDown, Globe, Languages, Camera as CameraIcon } from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
 import countryBackgrounds from '../../data/countryBackgrounds.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
+import AboutOverlay from '../about/AboutOverlay';
+import PhotoGallery from '../gallery/PhotoGallery';
+import cityPhotosData from '../../data/cityPhotos.json';
 import './JourneyExperience.css';
 
 // =============================================================================
@@ -471,11 +474,12 @@ function Camera({ target, zoom, isUserInteracting, currentStopId }: {
   return null;
 }
 
-function Scene({ progress, zoom, isUserInteracting, onInteraction }: { 
+function Scene({ progress, zoom, isUserInteracting, onInteraction, onCityClick }: { 
   progress: number; 
   zoom: number; 
   isUserInteracting: boolean;
   onInteraction: () => void;
+  onCityClick: (cityName: string) => void;
 }) {
   const stops = journeyData.stops as Stop[];
   const cities = citiesData.cities as Record<string, CityData>;
@@ -551,6 +555,10 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
         const baeminGlow = '#3DD8D4';
         
         if (stop.isCurrentStop) {
+          // Check if this city has photos - use original Korean city name from journey data
+          const originalCityName = stops[currentStopIdx]?.city;
+          const cityHasPhotos = Boolean(originalCityName && cityPhotosData[originalCityName as keyof typeof cityPhotosData]);
+          
           // DESTINATION: Ring (empty circle) + glow effect
           return (
             <group key={stop.id} position={stop.position} scale={[markerScale, markerScale, markerScale]}>
@@ -569,7 +577,7 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
                 <ringGeometry args={[0.008, 0.020, 24]} />
                 <meshBasicMaterial color={baeminGlow} transparent opacity={0.4} side={THREE.DoubleSide} />
               </mesh>
-              {/* City name label */}
+              {/* City name label - clickable for current stop */}
               <Html
                 position={[0, 0.035, 0]}
                 center
@@ -579,10 +587,22 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction }: {
                   fontWeight: '600',
                   textShadow: '0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8)',
                   whiteSpace: 'nowrap',
-                  pointerEvents: 'none',
+                  pointerEvents: cityHasPhotos ? 'auto' : 'none',
+                  cursor: cityHasPhotos ? 'pointer' : 'default',
                 }}
               >
-                {stop.name}
+                <div 
+                  onClick={cityHasPhotos ? () => onCityClick(originalCityName!) : undefined}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  {stop.name}
+                  {cityHasPhotos && (
+                    <CameraIcon size={12} style={{
+                      animation: 'floatBounce 1.5s ease-in-out infinite',
+                      opacity: 0.9,
+                    }} />
+                  )}
+                </div>
               </Html>
             </group>
           );
@@ -951,6 +971,7 @@ function JourneyExperienceContent() {
   const [progress, setProgress] = useState(0);
   const [zoom, setZoom] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
   
   const stops = journeyData.stops as Stop[];
@@ -985,6 +1006,15 @@ function JourneyExperienceContent() {
     interactionTimeoutRef.current = window.setTimeout(() => {
       setIsUserInteracting(false);
     }, 3000);
+  };
+  
+  // Handle city click for photo gallery
+  const handleCityClick = (cityName: string) => {
+    setSelectedCity(cityName);
+  };
+  
+  const handleCloseGallery = () => {
+    setSelectedCity(null);
   };
   
   useEffect(() => {
@@ -1186,6 +1216,7 @@ function JourneyExperienceContent() {
             zoom={zoom} 
             isUserInteracting={isUserInteracting}
             onInteraction={handleUserInteraction}
+            onCityClick={handleCityClick}
           />
         </Canvas>
       </div>
@@ -1197,6 +1228,12 @@ function JourneyExperienceContent() {
       
       {progress < 0.02 && <ScrollHint />}
       {progress < 0.05 && <MobileSwipeHint />}
+      
+      {/* About section at starting point */}
+      <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
+      
+      {/* Photo gallery overlay */}
+      <PhotoGallery cityName={selectedCity} onClose={handleCloseGallery} />
     </div>
   );
 }

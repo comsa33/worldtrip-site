@@ -1,0 +1,92 @@
+.about-overlay {
+  position: fixed;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  pointer-events: none;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.about-overlay__card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1.25rem 2.5rem;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.about-overlay__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2AC1BC;
+  margin: 0 0 0.15rem 0;
+  letter-spacing: 0.02em;
+}
+
+.about-overlay__subtitle {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0.75rem 0;
+}
+
+.about-overlay__story {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.65;
+  margin: 0 0 0.75rem 0;
+  white-space: pre-line;
+}
+
+.about-overlay__quote {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #2AC1BC;
+  margin: 0;
+  padding: 0.75rem 0 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .about-overlay {
+    bottom: 10%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  
+  .about-overlay__card {
+    width: 70vw;
+    max-width: 70vw;
+    padding: 1rem 1.25rem;
+  }
+  
+  .about-overlay__title {
+    font-size: 1rem;
+  }
+  
+  .about-overlay__story {
+    font-size: 0.75rem;
+  }
+  
+  .about-overlay__quote {
+    font-size: 0.8rem;
+  }
+}

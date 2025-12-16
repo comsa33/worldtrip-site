@@ -1,0 +1,250 @@
+{
+  "광주": {
+    "cityCode": "gwangju",
+    "photos": [
+      {
+        "id": "gwangju-001",
+        "filename": "departure-night.jpg",
+        "date": "2016.07.14",
+        "caption": {
+          "ko": "출발 전날 밤, 설렘과 두려움이 교차하던 순간",
+          "en": "The night before departure, a mix of excitement and fear"
+        }
+      },
+      {
+        "id": "gwangju-002",
+        "filename": "airport-way.jpg",
+        "date": "2016.07.15",
+        "caption": {
+          "ko": "공항으로 가는 길, 익숙한 풍경을 뒤로하고",
+          "en": "On the way to the airport, leaving familiar scenes behind"
+        }
+      }
+    ]
+  },
+  "호치민": {
+    "cityCode": "hochiminh",
+    "photos": [
+      {
+        "id": "hcm-001",
+        "filename": "motorbike-wave.jpg",
+        "date": "2016.07.18",
+        "caption": {
+          "ko": "끝없이 이어지는 오토바이 물결",
+          "en": "An endless wave of motorbikes"
+        }
+      },
+      {
+        "id": "hcm-002",
+        "filename": "war-museum.jpg",
+        "date": "2016.07.20",
+        "caption": {
+          "ko": "전쟁박물관에서 마주한 역사의 무게",
+          "en": "The weight of history at the War Museum"
+        }
+      }
+    ]
+  },
+  "루앙프라방": {
+    "cityCode": "luangprabang",
+    "photos": [
+      {
+        "id": "lpb-001",
+        "filename": "alms-giving.jpg",
+        "date": "2016.08.12",
+        "caption": {
+          "ko": "새벽 탁발 행렬, 고요한 경건함",
+          "en": "Dawn alms giving ceremony, serene reverence"
+        }
+      },
+      {
+        "id": "lpb-002",
+        "filename": "mekong-sunset.jpg",
+        "date": "2016.08.14",
+        "caption": {
+          "ko": "메콩강에 지는 노을",
+          "en": "Sunset over the Mekong River"
+        }
+      }
+    ]
+  },
+  "바라나시": {
+    "cityCode": "varanasi",
+    "photos": [
+      {
+        "id": "vrn-001",
+        "filename": "ganga-puja.jpg",
+        "date": "2016.10.05",
+        "caption": {
+          "ko": "갠지스강 저녁 푸자 의식",
+          "en": "Evening Puja ceremony at the Ganges"
+        }
+      },
+      {
+        "id": "vrn-002",
+        "filename": "cremation-ghat.jpg",
+        "date": "2016.10.06",
+        "caption": {
+          "ko": "마니카르니카 가트, 삶과 죽음의 경계",
+          "en": "Manikarnika Ghat, the boundary of life and death"
+        }
+      },
+      {
+        "id": "vrn-003",
+        "filename": "old-alleys.jpg",
+        "date": "2016.10.07",
+        "caption": {
+          "ko": "미로 같은 골목에서 길을 잃다",
+          "en": "Getting lost in the labyrinthine alleys"
+        }
+      }
+    ]
+  },
+  "안나푸르나": {
+    "cityCode": "annapurna",
+    "photos": [
+      {
+        "id": "anp-001",
+        "filename": "poon-hill-sunrise.jpg",
+        "date": "2016.11.22",
+        "caption": {
+          "ko": "푼힐에서 맞이한 히말라야 일출",
+          "en": "Himalayan sunrise from Poon Hill"
+        }
+      },
+      {
+        "id": "anp-002",
+        "filename": "trekking-path.jpg",
+        "date": "2016.11.24",
+        "caption": {
+          "ko": "구름 위를 걷는 듯한 트레킹",
+          "en": "Trekking as if walking above the clouds"
+        }
+      }
+    ]
+  },
+  "카이로": {
+    "cityCode": "cairo",
+    "photos": [
+      {
+        "id": "cai-001",
+        "filename": "pyramids.jpg",
+        "date": "2017.02.10",
+        "caption": {
+          "ko": "4500년의 시간을 마주하다",
+          "en": "Face to face with 4500 years of history"
+        }
+      },
+      {
+        "id": "cai-002",
+        "filename": "nile-felucca.jpg",
+        "date": "2017.02.12",
+        "caption": {
+          "ko": "나일강 펠루카에서의 평화로운 오후",
+          "en": "A peaceful afternoon on a Nile felucca"
+        }
+      }
+    ]
+  },
+  "바르셀로나": {
+    "cityCode": "barcelona",
+    "photos": [
+      {
+        "id": "bcn-001",
+        "filename": "sagrada-familia.jpg",
+        "date": "2017.04.18",
+        "caption": {
+          "ko": "가우디의 미완성 걸작, 사그라다 파밀리아",
+          "en": "Gaudí's unfinished masterpiece, Sagrada Família"
+        }
+      },
+      {
+        "id": "bcn-002",
+        "filename": "park-guell.jpg",
+        "date": "2017.04.20",
+        "caption": {
+          "ko": "구엘공원에서 바라본 바르셀로나",
+          "en": "Barcelona viewed from Park Güell"
+        }
+      }
+    ]
+  },
+  "우유니": {
+    "cityCode": "uyuni",
+    "photos": [
+      {
+        "id": "uyn-001",
+        "filename": "salt-flat.jpg",
+        "date": "2017.09.05",
+        "caption": {
+          "ko": "끝없이 펼쳐진 하얀 세상",
+          "en": "An endless white world"
+        }
+      },
+      {
+        "id": "uyn-002",
+        "filename": "starry-night.jpg",
+        "date": "2017.09.06",
+        "caption": {
+          "ko": "소금사막 위 쏟아지는 별들",
+          "en": "Stars pouring over the salt flat"
+        }
+      },
+      {
+        "id": "uyn-003",
+        "filename": "cactus-island.jpg",
+        "date": "2017.09.07",
+        "caption": {
+          "ko": "소금 바다 위의 선인장 섬",
+          "en": "Cactus island in the sea of salt"
+        }
+      }
+    ]
+  },
+  "마추픽추": {
+    "cityCode": "machupicchu",
+    "photos": [
+      {
+        "id": "mcp-001",
+        "filename": "machu-picchu-view.jpg",
+        "date": "2017.09.20",
+        "caption": {
+          "ko": "구름 위의 잃어버린 도시",
+          "en": "The lost city above the clouds"
+        }
+      },
+      {
+        "id": "mcp-002",
+        "filename": "huayna-picchu.jpg",
+        "date": "2017.09.21",
+        "caption": {
+          "ko": "와이나픽추에서 내려다본 마추픽추",
+          "en": "Machu Picchu viewed from Huayna Picchu"
+        }
+      }
+    ]
+  },
+  "리우데자네이루": {
+    "cityCode": "rio",
+    "photos": [
+      {
+        "id": "rio-001",
+        "filename": "christ-redeemer.jpg",
+        "date": "2017.08.15",
+        "caption": {
+          "ko": "코르코바도 언덕 위 거대한 품",
+          "en": "The grand embrace atop Corcovado"
+        }
+      },
+      {
+        "id": "rio-002",
+        "filename": "copacabana.jpg",
+        "date": "2017.08.17",
+        "caption": {
+          "ko": "코파카바나 해변의 일상",
+          "en": "Daily life at Copacabana Beach"
+        }
+      }
+    ]
+  }
+}
