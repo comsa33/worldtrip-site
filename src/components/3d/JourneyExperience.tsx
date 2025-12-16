@@ -681,9 +681,12 @@ function Scene({ progress, zoom, isUserInteracting, onInteraction, onCityClick }
         const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
         return (
           <OrbitControls 
-            enableZoom={false} 
+            enableZoom={true}
             enablePan={false} 
             enableRotate={!isMobile}
+            minDistance={1.5}
+            maxDistance={8}
+            zoomSpeed={0.5}
             autoRotate={!isUserInteracting && zoom < 0.2} 
             autoRotateSpeed={0.15}
             onStart={onInteraction}
@@ -1040,13 +1043,21 @@ function JourneyExperienceContent() {
   const isDragging = useRef(false);
   
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    isDragging.current = true;
+    // Only handle single-touch for swipe navigation
+    // Multi-touch (pinch) is handled by OrbitControls
+    if (e.touches.length === 1) {
+      touchStartY.current = e.touches[0].clientY;
+      isDragging.current = true;
+    } else {
+      // Multi-touch: disable swipe, let OrbitControls handle pinch
+      isDragging.current = false;
+      touchStartY.current = null;
+    }
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
-    // Prevent default to stop page scroll during swipe detection
-    if (isDragging.current) {
+    // Only prevent default for single-touch swipe, not pinch zoom
+    if (isDragging.current && e.touches.length === 1) {
       e.preventDefault();
     }
   };
