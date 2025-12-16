@@ -147,6 +147,34 @@
       "lng": 83.8203,
       "country": "NP"
     },
+    "박타푸르": {
+      "ko": "박타푸르",
+      "en": "Bhaktapur",
+      "lat": 27.671,
+      "lng": 85.4298,
+      "country": "NP"
+    },
+    "싯다르타나가르": {
+      "ko": "싯다르타나가르",
+      "en": "Siddharthanagar",
+      "lat": 27.5053,
+      "lng": 83.4539,
+      "country": "NP"
+    },
+    "프라야그라지": {
+      "ko": "프라야그라지",
+      "en": "Prayagraj",
+      "lat": 25.4358,
+      "lng": 81.8463,
+      "country": "IN"
+    },
+    "고라크푸르": {
+      "ko": "고라크푸르",
+      "en": "Gorakhpur",
+      "lat": 26.7606,
+      "lng": 83.3732,
+      "country": "IN"
+    },
     "카트만두": {
       "ko": "카트만두",
       "en": "Kathmandu",
@@ -163,6 +191,13 @@
       "country": "AE"
     },
     "두바이": { "ko": "두바이", "en": "Dubai", "lat": 25.2048, "lng": 55.2708, "country": "AE" },
+    "샤르자": {
+      "ko": "샤르자",
+      "en": "Sharjah",
+      "lat": 25.3463,
+      "lng": 55.4209,
+      "country": "AE"
+    },
     "카이로": { "ko": "카이로", "en": "Cairo", "lat": 30.0444, "lng": 31.2357, "country": "EG" },
     "다합": { "ko": "다합", "en": "Dahab", "lat": 28.501, "lng": 34.5137, "country": "EG" },
     "바르셀로나": {
