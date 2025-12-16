@@ -388,9 +388,9 @@ function getProgressiveZoom(stopId: number): number {
   if (stopId >= 68 && stopId <= 80) return 1.5;
 
   // BRAZIL Coast: Rio(81) → gradual to Paraty(85) = 2.0
-  if (stopId === 81) return 1.8; // Rio de Janeiro
-  if (stopId === 82) return 2.0; // Angra
-  if (stopId === 83) return 2.1; // Ilha Grande
+  if (stopId === 81) return 1.1; // Rio de Janeiro
+  if (stopId === 82) return 2.1; // Angra
+  if (stopId === 83) return 2.2; // Ilha Grande
   if (stopId === 84) return 2.2; // Angra return
   if (stopId === 85) return 2.1; // Paraty - peak
   if (stopId >= 86 && stopId <= 89) return 2.0; // Maintain to Santos
@@ -542,10 +542,20 @@ function Scene({
 
   // Get visited stops (only show stops we've actually reached)
   const visitedStops = useMemo(() => {
+    const currentCityName = stops[currentStopIdx]?.city;
+
     // Show stops up to and including the one we're currently at
     return stops
       .slice(0, currentStopIdx + 1)
       .map((stop, idx) => {
+        const isCurrentStop = idx === currentStopIdx;
+
+        // If this is a past stop but for the same city as current stop, skip it
+        // This prevents double rendering (small label under big label)
+        if (!isCurrentStop && stop.city === currentCityName) {
+          return null;
+        }
+
         const city = cities[stop.city];
         if (!city) return null;
         const pos = latLngToVector3(city.lat, city.lng, 2.03);
@@ -553,7 +563,7 @@ function Scene({
           id: stop.id,
           position: pos,
           name: city[language as 'ko' | 'en'],
-          isCurrentStop: idx === currentStopIdx,
+          isCurrentStop,
           isFromStop: stop.id === fromStopId && fromStopId !== displayStopId, // Departure city (not the same as destination)
         };
       })
