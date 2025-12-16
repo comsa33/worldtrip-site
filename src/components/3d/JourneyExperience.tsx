@@ -90,7 +90,7 @@ function generatePath(stops: Stop[], cities: Record<string, CityData>, radius: n
     const end = latLngToVector3(nextCity.lat, nextCity.lng, radius);
     const transport = stops[i + 1].transport;
     
-    const segments = transport === 'flight' ? 50 : 30;
+    const segments = transport === 'flight' ? 80 : 30; // Flight has more segments = slower line drawing
     for (let j = 0; j <= segments; j++) {
       const t = j / segments;
       const point = new THREE.Vector3().lerpVectors(start, end, t);
@@ -464,7 +464,7 @@ function Camera({ target, zoom, isUserInteracting, currentStopId }: {
   useFrame(() => {
     // Only auto-follow when not interacting
     if (!isUserInteracting) {
-      camera.position.lerp(cameraTarget.current, 0.025);
+      camera.position.lerp(cameraTarget.current, 0.15);
     }
     camera.lookAt(0, 0, 0);
   });
@@ -1030,40 +1030,118 @@ function JourneyExperienceContent() {
     // Threshold for swipe detection (40px)
     const swipeThreshold = 40;
     
-    // Calculate target stop based on swipe direction
-    let targetStopIndex = currentStop;
+    // Get current position info
+    const currentPathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+    const currentPt = path[currentPathIdx];
+    
+    let targetPathIndex = currentPathIdx;
     
     if (deltaY > swipeThreshold) {
-      // Swiped UP = go to NEXT stop
-      targetStopIndex = Math.min(currentStop + 1, stops.length - 1);
-    } else if (deltaY < -swipeThreshold) {
-      // Swiped DOWN = go to PREVIOUS stop
-      targetStopIndex = Math.max(currentStop - 1, 0);
-    }
-    
-    // Find the path index where traveler is exactly AT the stop
-    // Strategy: Find where fromStopId === targetStopId AND segmentProgress is near 0
-    // This is the moment when traveler is AT the stop, about to depart
-    // For the LAST stop (no outgoing segment), find where toStopId === targetStopId AND segmentProgress is near 1
-    const targetStopId = stops[targetStopIndex]?.id;
-    const isLastStop = targetStopIndex === stops.length - 1;
-    let targetPathIndex = 0;
-    
-    if (isLastStop) {
-      // Last stop: find the end of the incoming segment (arrived at final destination)
-      for (let i = path.length - 1; i >= 0; i--) {
-        if (path[i].toStopId === targetStopId) {
-          targetPathIndex = i;
-          break;
+      // Swiped UP = go FORWARD
+      
+      // Check if we're currently mid-flight (not at a stop)
+      const isMidFlight = currentPt && currentPt.transport === 'flight' && 
+                          currentPt.segmentProgress > 0.2 && currentPt.segmentProgress < 0.8;
+      
+      if (isMidFlight) {
+        // Currently mid-flight: complete the flight to destination
+        for (let i = currentPathIdx; i < path.length; i++) {
+          const pt = path[i];
+          // Find start of next segment (arrived at destination)
+          if (pt.fromStopId === currentPt.toStopId && pt.segmentProgress < 0.05) {
+            targetPathIndex = i;
+            break;
+          }
+          // Or end of current flight segment
+          if (pt.toStopId === currentPt.toStopId && pt.segmentProgress > 0.95) {
+            targetPathIndex = i;
+          }
+        }
+      } else {
+        // At a stop: check if next segment is a flight
+        const nextStopIndex = Math.min(currentStop + 1, stops.length - 1);
+        const nextStop = stops[nextStopIndex];
+        const isNextFlight = nextStop?.transport === 'flight';
+        
+        if (isNextFlight) {
+          // Go to flight midpoint first (fun in-flight view!)
+          for (let i = currentPathIdx; i < path.length; i++) {
+            const pt = path[i];
+            if (pt.toStopId === nextStop.id && pt.segmentProgress >= 0.45 && pt.segmentProgress <= 0.55) {
+              targetPathIndex = i;
+              break;
+            }
+          }
+        } else {
+          // Normal navigation: go to next stop
+          const targetStopIndex = nextStopIndex;
+          const targetStopId = stops[targetStopIndex]?.id;
+          const isLastStop = targetStopIndex === stops.length - 1;
+          
+          if (isLastStop) {
+            for (let i = path.length - 1; i >= 0; i--) {
+              if (path[i].toStopId === targetStopId) {
+                targetPathIndex = i;
+                break;
+              }
+            }
+          } else {
+            for (let i = 0; i < path.length; i++) {
+              const pt = path[i];
+              if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
+                targetPathIndex = i;
+                break;
+              }
+            }
+          }
         }
       }
-    } else {
-      // Normal stops: find where fromStopId matches and segmentProgress is near 0 (at the stop)
-      for (let i = 0; i < path.length; i++) {
-        const pt = path[i];
-        if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
-          targetPathIndex = i;
-          break;
+      
+    } else if (deltaY < -swipeThreshold) {
+      // Swiped DOWN = go BACKWARD
+      
+      // Check if we're currently mid-flight
+      const isMidFlight = currentPt && currentPt.transport === 'flight' && 
+                          currentPt.segmentProgress > 0.2 && currentPt.segmentProgress < 0.8;
+      
+      if (isMidFlight) {
+        // Mid-flight: go back to departure (find exact stop position)
+        const departureStopId = currentPt.fromStopId;
+        // Search from beginning to find exact stop position
+        for (let i = 0; i < path.length; i++) {
+          const pt = path[i];
+          if (pt.fromStopId === departureStopId && pt.segmentProgress < 0.05) {
+            targetPathIndex = i;
+            break;
+          }
+        }
+      } else {
+        // At a stop: check if previous segment was a flight
+        const prevStopIndex = Math.max(currentStop - 1, 0);
+        const currentStopData = stops[currentStop];
+        const wasPrevFlight = currentStopData?.transport === 'flight';
+        
+        if (wasPrevFlight && currentStop > 0) {
+          // Go to flight midpoint first (reverse through flight)
+          for (let i = currentPathIdx; i >= 0; i--) {
+            const pt = path[i];
+            if (pt.toStopId === currentStopData.id && pt.segmentProgress >= 0.45 && pt.segmentProgress <= 0.55) {
+              targetPathIndex = i;
+              break;
+            }
+          }
+        } else {
+          // Normal navigation: go to previous stop
+          const targetStopIndex = prevStopIndex;
+          const targetStopId = stops[targetStopIndex]?.id;
+          
+          for (let i = 0; i < path.length; i++) {
+            const pt = path[i];
+            if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
+              targetPathIndex = i;
+              break;
+            }
+          }
         }
       }
     }
