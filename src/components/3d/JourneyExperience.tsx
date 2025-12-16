@@ -647,6 +647,7 @@ function Scene({
               <Html
                 center
                 transform
+                pointerEvents="none"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -667,6 +668,7 @@ function Scene({
                     whiteSpace: 'nowrap',
                     lineHeight: 1.2,
                     transition: 'color 0.5s ease',
+                    pointerEvents: 'none',
                   }}
                 >
                   {language === 'ko' ? countryData.name.ko : countryData.name.en.toUpperCase()}
@@ -681,6 +683,7 @@ function Scene({
                     whiteSpace: 'nowrap',
                     marginTop: '4px',
                     transition: 'color 0.5s ease',
+                    pointerEvents: 'none',
                   }}
                 >
                   {countryData.name.native}
