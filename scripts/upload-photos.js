@@ -182,9 +182,41 @@ function extractExif(filePath) {
   }
 }
 
+// GPS 좌표 → 주소 변환 (도로명/구/시/도)
+async function getAddressFromGPS(lat, lng) {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=16&addressdetails=1`;
+  
+  try {
+    const response = await fetch(url, {
+      headers: { 
+        'User-Agent': 'worldtrip-upload-script/1.0'
+      }
+    });
+    
+    if (!response.ok) return null;
+    
+    const data = await response.json();
+    const addr = data.address;
+    
+    // 도로명, 구/시/도 추출
+    const road = addr.road || addr.street || '';
+    const district = addr.suburb || addr.district || addr.neighbourhood || '';
+    const city = addr.city || addr.town || addr.village || '';
+    const state = addr.state || addr.province || '';
+    
+    // 조합: "도로명, 구, 시" (빈값 제외)
+    const parts = [road, district, city, state].filter(Boolean);
+    return parts.join(', ');
+  } catch (error) {
+    console.log(`  ⚠️  주소 변환 실패: ${error.message}`);
+    return null;
+  }
+}
+
 // 사진 업로드
 async function uploadPhoto(filePath, cityCode, index) {
   const filename = path.basename(filePath, path.extname(filePath));
+  const originalFilename = path.basename(filePath); // 확장자 포함
   const folder = `cities/${cityCode}`;
   const photoName = `photo${String(index).padStart(3, '0')}`;
   const publicId = `${folder}/${photoName}`;
@@ -192,14 +224,24 @@ async function uploadPhoto(filePath, cityCode, index) {
   // EXIF 추출
   const exif = extractExif(filePath);
   
+  // GPS가 있으면 주소 변환 (도로명/구/시/도)
+  let address = null;
+  if (exif.gps) {
+    address = await getAddressFromGPS(exif.gps.lat, exif.gps.lng);
+    // API rate limit (1 req/sec)
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+  
   try {
-    // Build context string with all metadata
+    // Build context string with all metadata INCLUDING original filename
     const contextParts = [];
+    contextParts.push(`filename=${originalFilename}`); // 원본 파일명 저장
     if (exif.date) contextParts.push(`date=${exif.date}`);
     if (exif.gps) {
       contextParts.push(`lat=${exif.gps.lat}`);
       contextParts.push(`lng=${exif.gps.lng}`);
     }
+    if (address) contextParts.push(`address=${address}`); // 주소 저장
     
     // Cloudinary에 업로드 (asset_folder로 Folders UI에 표시)
     const result = await cloudinary.uploader.upload(filePath, {
@@ -218,9 +260,10 @@ async function uploadPhoto(filePath, cityCode, index) {
       date: exif.date || '',
       gps: exif.gps,
       caption: {
-        ko: filename,
-        en: filename
-      }
+        ko: '', // 빈값으로 설정 (캡션 없음)
+        en: ''
+      },
+      originalFilename: originalFilename // 추적용
     };
   } catch (error) {
     console.error(`  ❌ 업로드 실패: ${filename}`, error.message);
@@ -267,16 +310,32 @@ async function main() {
       continue; // 사진 없는 폴더는 건너뜀
     }
     
-    // Cloudinary에서 이미 업로드된 사진 확인
-    let existingPhotos = [];
+    // Cloudinary에서 이미 업로드된 사진의 원본 파일명 확인
+    let existingFilenames = [];
+    let existingCount = 0;
     try {
       const resources = await cloudinary.api.resources({
         type: 'upload',
         prefix: `cities/${cityCode}/`,
-        max_results: 100,
-        resource_type: 'image'
+        max_results: 500,
+        resource_type: 'image',
+        context: true // context 메타데이터 포함
       });
-      existingPhotos = resources.resources.map(r => r.public_id);
+      
+      existingCount = resources.resources.length;
+      
+      // context에서 원본 파일명 추출
+      existingFilenames = resources.resources
+        .map(r => {
+          if (r.context && r.context.custom) {
+            const filenameMatch = r.context.custom.filename;
+            return filenameMatch || null;
+          }
+          return null;
+        })
+        .filter(Boolean);
+        
+      console.log(`  📦 기존 사진: ${existingCount}장`);
     } catch (e) {
       // 폴더가 없으면 빈 배열
     }
@@ -287,24 +346,24 @@ async function main() {
     let skipped = 0;
     
     for (let i = 0; i < imageFiles.length; i++) {
-      const photoName = `photo${String(i + 1).padStart(3, '0')}`;
-      const expectedPublicId = `cities/${cityCode}/${photoName}`;
+      const currentFilename = imageFiles[i];
       
-      // 이미 업로드된 사진이면 스킵
-      if (existingPhotos.includes(expectedPublicId)) {
-        console.log(`  ⏭️  ${imageFiles[i]} - 이미 업로드됨`);
+      // 파일명으로 중복 체크
+      if (existingFilenames.includes(currentFilename)) {
+        console.log(`  ⏭️  ${currentFilename} - 이미 업로드됨`);
         skipped++;
         continue;
       }
       
-      const imagePath = path.join(cityPath, imageFiles[i]);
-      const result = await uploadPhoto(imagePath, cityCode, i + 1);
+      const imagePath = path.join(cityPath, currentFilename);
+      // 기존 개수 + 새로 추가되는 순서로 번호 부여
+      const result = await uploadPhoto(imagePath, cityCode, existingCount + photos.length + 1);
       
       if (result) {
         photos.push(result);
         const gpsInfo = result.gps ? ` 📍 ${result.gps.lat.toFixed(4)}, ${result.gps.lng.toFixed(4)}` : '';
         const dateInfo = result.date ? ` 📅 ${result.date}` : '';
-        console.log(`  ✅ ${imageFiles[i]}${dateInfo}${gpsInfo}`);
+        console.log(`  ✅ ${currentFilename}${dateInfo}${gpsInfo}`);
         totalUploaded++;
       }
     }
@@ -313,35 +372,13 @@ async function main() {
       console.log(`  📊 스킵: ${skipped}장, 업로드: ${photos.length}장`);
     }
     
-    if (photos.length > 0) {
-      cityPhotos[koreanName] = {
-        cityCode: cityCode,
-        photos: photos
-      };
-    }
-  }
-  
-  // cityPhotos.json 업데이트
-  if (Object.keys(cityPhotos).length > 0) {
-    const outputPath = path.join(__dirname, '../src/data/cityPhotos.json');
-    
-    // 기존 파일 읽기 (있으면)
-    let existingData = {};
-    if (fs.existsSync(outputPath)) {
-      existingData = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
-    }
-    
-    // 새 데이터 병합
-    const mergedData = { ...existingData, ...cityPhotos };
-    
-    fs.writeFileSync(outputPath, JSON.stringify(mergedData, null, 2), 'utf-8');
-    console.log(`\n📝 cityPhotos.json 업데이트됨`);
+    totalUploaded += photos.length;
   }
   
   console.log('\n' + '='.repeat(50));
   console.log(`✨ 완료!`);
   console.log(`   업로드: ${totalUploaded}장`);
-  console.log(`   도시: ${Object.keys(cityPhotos).length}개`);
+  console.log(`\n💡 TIP: cityPhotos.json을 업데이트하려면 'npm run sync-photos'를 실행하세요.`);
 }
 
 main().catch(console.error);

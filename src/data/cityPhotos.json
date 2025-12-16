@@ -1,451 +1,4 @@
 {
-  "첸나이": {
-    "cityCode": "chennai",
-    "photos": [
-      {
-        "id": "chennai-001",
-        "publicId": "cities/chennai/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/chennai/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/chennai/photo001",
-        "date": "2016-09-17T13:24:23",
-        "gps": {
-          "lat": 13.043338888888888,
-          "lng": 80.27998333333333
-        },
-        "caption": {
-          "ko": "photo001",
-          "en": "photo001"
-        },
-        "alt": "photo001"
-      },
-      {
-        "id": "chennai-002",
-        "publicId": "cities/chennai/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/chennai/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/chennai/photo002",
-        "date": "2016-09-17T14:08:05",
-        "gps": {
-          "lat": 13.043758333333333,
-          "lng": 80.26818888888889
-        },
-        "caption": {
-          "ko": "photo002",
-          "en": "photo002"
-        },
-        "alt": "photo002"
-      },
-      {
-        "id": "chennai-003",
-        "publicId": "cities/chennai/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/chennai/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/chennai/photo003",
-        "date": "2016-09-20T06:14:17",
-        "gps": {
-          "lat": 13.082983333333333,
-          "lng": 80.27471944444444
-        },
-        "caption": {
-          "ko": "photo003",
-          "en": "photo003"
-        },
-        "alt": "photo003"
-      },
-      {
-        "id": "chennai-004",
-        "publicId": "cities/chennai/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/chennai/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/chennai/photo004",
-        "date": "2016-09-20T07:28:50",
-        "gps": {
-          "lat": 13.089322222222222,
-          "lng": 80.27454444444444
-        },
-        "caption": {
-          "ko": "photo004",
-          "en": "photo004"
-        },
-        "alt": "photo004"
-      },
-      {
-        "id": "chennai-005",
-        "publicId": "cities/chennai/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/chennai/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/chennai/photo005",
-        "date": "2016-09-20T07:32:27",
-        "gps": {
-          "lat": 13.09443888888889,
-          "lng": 80.27237777777778
-        },
-        "caption": {
-          "ko": "photo005",
-          "en": "photo005"
-        },
-        "alt": "photo005"
-      }
-    ]
-  },
-  "호치민": {
-    "cityCode": "hochiminh",
-    "photos": [
-      {
-        "id": "hochiminh-001",
-        "publicId": "cities/hochiminh/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo001",
-        "date": "2016-08-14T21:04:48",
-        "gps": {
-          "lat": 10.766983333333334,
-          "lng": 106.69277222222223
-        },
-        "caption": {
-          "ko": "photo001",
-          "en": "photo001"
-        },
-        "alt": "photo001"
-      },
-      {
-        "id": "hochiminh-002",
-        "publicId": "cities/hochiminh/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo002",
-        "date": "2016-08-13T18:06:48",
-        "gps": {
-          "lat": 10.769886111111113,
-          "lng": 106.69332777777778
-        },
-        "caption": {
-          "ko": "photo002",
-          "en": "photo002"
-        },
-        "alt": "photo002"
-      },
-      {
-        "id": "hochiminh-003",
-        "publicId": "cities/hochiminh/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo003",
-        "date": "2016-08-13T18:23:43",
-        "gps": {
-          "lat": 10.771397222222223,
-          "lng": 106.69234444444444
-        },
-        "caption": {
-          "ko": "photo003",
-          "en": "photo003"
-        },
-        "alt": "photo003"
-      },
-      {
-        "id": "hochiminh-004",
-        "publicId": "cities/hochiminh/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo004",
-        "date": "2016-08-14T20:04:10",
-        "gps": {
-          "lat": 10.776355555555556,
-          "lng": 106.70110277777778
-        },
-        "caption": {
-          "ko": "photo004",
-          "en": "photo004"
-        },
-        "alt": "photo004"
-      },
-      {
-        "id": "hochiminh-005",
-        "publicId": "cities/hochiminh/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo005",
-        "date": "2016-08-14T23:42:11",
-        "gps": {
-          "lat": 10.765091666666667,
-          "lng": 106.69584722222223
-        },
-        "caption": {
-          "ko": "photo005",
-          "en": "photo005"
-        },
-        "alt": "photo005"
-      },
-      {
-        "id": "hochiminh-006",
-        "publicId": "cities/hochiminh/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo006",
-        "date": "2016-08-14T22:03:45",
-        "gps": {
-          "lat": 10.76688888888889,
-          "lng": 106.69278611111112
-        },
-        "caption": {
-          "ko": "photo006",
-          "en": "photo006"
-        },
-        "alt": "photo006"
-      },
-      {
-        "id": "hochiminh-007",
-        "publicId": "cities/hochiminh/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo007",
-        "date": "2016-08-15T00:25:11",
-        "gps": {
-          "lat": 10.766383333333334,
-          "lng": 106.69168055555556
-        },
-        "caption": {
-          "ko": "photo007",
-          "en": "photo007"
-        },
-        "alt": "photo007"
-      },
-      {
-        "id": "hochiminh-008",
-        "publicId": "cities/hochiminh/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo008",
-        "date": "2016-08-15T15:47:33",
-        "gps": {
-          "lat": 10.762608333333333,
-          "lng": 106.69456111111111
-        },
-        "caption": {
-          "ko": "photo008",
-          "en": "photo008"
-        },
-        "alt": "photo008"
-      },
-      {
-        "id": "hochiminh-009",
-        "publicId": "cities/hochiminh/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo009",
-        "date": "2016-08-15T15:36:56",
-        "gps": {
-          "lat": 10.766283333333334,
-          "lng": 106.69319166666666
-        },
-        "caption": {
-          "ko": "photo009",
-          "en": "photo009"
-        },
-        "alt": "photo009"
-      },
-      {
-        "id": "hochiminh-010",
-        "publicId": "cities/hochiminh/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo010",
-        "date": "2016-08-15T16:08:37",
-        "gps": {
-          "lat": 10.76465,
-          "lng": 106.69158055555556
-        },
-        "caption": {
-          "ko": "photo010",
-          "en": "photo010"
-        },
-        "alt": "photo010"
-      },
-      {
-        "id": "hochiminh-011",
-        "publicId": "cities/hochiminh/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo011",
-        "date": "2016-08-15T20:04:17",
-        "gps": {
-          "lat": 10.762475,
-          "lng": 106.69416944444446
-        },
-        "caption": {
-          "ko": "photo011",
-          "en": "photo011"
-        },
-        "alt": "photo011"
-      },
-      {
-        "id": "hochiminh-012",
-        "publicId": "cities/hochiminh/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo012",
-        "date": "2016-08-15T18:19:28",
-        "gps": {
-          "lat": 10.75901111111111,
-          "lng": 106.69242777777778
-        },
-        "caption": {
-          "ko": "photo012",
-          "en": "photo012"
-        },
-        "alt": "photo012"
-      },
-      {
-        "id": "hochiminh-013",
-        "publicId": "cities/hochiminh/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo013",
-        "date": "2016-08-19T18:44:24",
-        "gps": {
-          "lat": 10.766572222222223,
-          "lng": 106.69203055555556
-        },
-        "caption": {
-          "ko": "photo013",
-          "en": "photo013"
-        },
-        "alt": "photo013"
-      },
-      {
-        "id": "hochiminh-014",
-        "publicId": "cities/hochiminh/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo014",
-        "date": "2016-08-20T23:06:25",
-        "gps": {
-          "lat": 10.788688888888888,
-          "lng": 106.69079722222223
-        },
-        "caption": {
-          "ko": "photo014",
-          "en": "photo014"
-        },
-        "alt": "photo014"
-      },
-      {
-        "id": "hochiminh-015",
-        "publicId": "cities/hochiminh/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo015",
-        "date": "2016-08-20T23:35:36",
-        "gps": {
-          "lat": 10.776475000000001,
-          "lng": 106.70150833333334
-        },
-        "caption": {
-          "ko": "photo015",
-          "en": "photo015"
-        },
-        "alt": "photo015"
-      },
-      {
-        "id": "hochiminh-016",
-        "publicId": "cities/hochiminh/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo016",
-        "date": "2016-08-21T11:23:44",
-        "gps": {
-          "lat": 10.768791666666667,
-          "lng": 106.68478333333334
-        },
-        "caption": {
-          "ko": "photo016",
-          "en": "photo016"
-        },
-        "alt": "photo016"
-      },
-      {
-        "id": "hochiminh-017",
-        "publicId": "cities/hochiminh/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo017",
-        "date": "2016-08-21T12:36:52",
-        "gps": {
-          "lat": 10.780133333333334,
-          "lng": 106.63145555555555
-        },
-        "caption": {
-          "ko": "photo017",
-          "en": "photo017"
-        },
-        "alt": "photo017"
-      },
-      {
-        "id": "hochiminh-018",
-        "publicId": "cities/hochiminh/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo018",
-        "date": "2016-08-21T01:38:56",
-        "gps": {
-          "lat": 10.775952777777778,
-          "lng": 106.70160555555556
-        },
-        "caption": {
-          "ko": "photo018",
-          "en": "photo018"
-        },
-        "alt": "photo018"
-      }
-    ]
-  },
-  "퐁디셰리": {
-    "cityCode": "pondicherry",
-    "photos": [
-      {
-        "id": "pondicherry-001",
-        "publicId": "cities/pondicherry/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pondicherry/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pondicherry/photo001",
-        "date": "2016-09-18T10:44:39",
-        "gps": {
-          "lat": 12.004380555555555,
-          "lng": 79.808525
-        },
-        "caption": {
-          "ko": "photo001",
-          "en": "photo001"
-        },
-        "alt": "photo001"
-      },
-      {
-        "id": "pondicherry-002",
-        "publicId": "cities/pondicherry/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pondicherry/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pondicherry/photo002",
-        "date": "2016-09-18T10:48:21",
-        "gps": {
-          "lat": 12.005366666666667,
-          "lng": 79.8102111111111
-        },
-        "caption": {
-          "ko": "photo002",
-          "en": "photo002"
-        },
-        "alt": "photo002"
-      },
-      {
-        "id": "pondicherry-003",
-        "publicId": "cities/pondicherry/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pondicherry/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pondicherry/photo003",
-        "date": "2016-09-18T11:01:56",
-        "gps": {
-          "lat": 12.004466666666668,
-          "lng": 79.80818055555555
-        },
-        "caption": {
-          "ko": "photo003",
-          "en": "photo003"
-        },
-        "alt": "photo003"
-      },
-      {
-        "id": "pondicherry-004",
-        "publicId": "cities/pondicherry/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pondicherry/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pondicherry/photo004",
-        "date": "2016-09-18T12:40:54",
-        "gps": {
-          "lat": 11.932397222222221,
-          "lng": 79.83621111111111
-        },
-        "caption": {
-          "ko": "photo004",
-          "en": "photo004"
-        },
-        "alt": "photo004"
-      }
-    ]
-  },
   "다낭": {
     "cityCode": "danang",
     "photos": [
@@ -459,10 +12,12 @@
           "lat": 15.876602777777778,
           "lng": 108.32572222222223
         },
+        "location": "Nguyễn Hoàng, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "0A0004CB-B56D-4273-9737-2B0B1CCBAB65_1_105_c",
-          "en": "0A0004CB-B56D-4273-9737-2B0B1CCBAB65_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001"
       },
       {
         "id": "danang-002",
@@ -474,10 +29,12 @@
           "lat": 16.071569444444446,
           "lng": 108.20948055555556
         },
+        "location": "Đường Hải Phòng, Phường Thanh Khê",
         "caption": {
-          "ko": "308AB062-67F8-431D-86FD-CAD0D2DE0F3D_1_105_c",
-          "en": "308AB062-67F8-431D-86FD-CAD0D2DE0F3D_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002"
       },
       {
         "id": "danang-003",
@@ -489,10 +46,12 @@
           "lat": 15.876869444444445,
           "lng": 108.32609444444444
         },
+        "location": "Trần Phú, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "49647F9C-318C-40C7-B67C-90D6D41AD171_1_105_c",
-          "en": "49647F9C-318C-40C7-B67C-90D6D41AD171_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003"
       },
       {
         "id": "danang-004",
@@ -504,10 +63,12 @@
           "lat": 15.876144444444446,
           "lng": 108.32821666666666
         },
+        "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "4F315ACF-B1B9-4012-8351-2480EBC0C600_1_105_c",
-          "en": "4F315ACF-B1B9-4012-8351-2480EBC0C600_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004"
       },
       {
         "id": "danang-005",
@@ -519,10 +80,12 @@
           "lat": 15.879516666666667,
           "lng": 108.31057777777778
         },
+        "location": "Thanh Hà, Phường Hội An Tây",
         "caption": {
-          "ko": "60B5CFB9-6D35-4664-B60A-AD327E594291_1_105_c",
-          "en": "60B5CFB9-6D35-4664-B60A-AD327E594291_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005"
       },
       {
         "id": "danang-006",
@@ -534,10 +97,12 @@
           "lat": 15.477877777777778,
           "lng": 108.34519166666666
         },
+        "location": "Thành phố Đà Nẵng",
         "caption": {
-          "ko": "71639FAD-A1D7-4406-ADED-8A274289DE4D_1_105_c",
-          "en": "71639FAD-A1D7-4406-ADED-8A274289DE4D_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006"
       },
       {
         "id": "danang-007",
@@ -549,10 +114,12 @@
           "lat": 15.877705555555556,
           "lng": 108.31427222222221
         },
+        "location": "Thanh Hà, Phường Hội An Tây",
         "caption": {
-          "ko": "74FF6D28-8028-4849-9EFB-AD30CDE0BD01_1_105_c",
-          "en": "74FF6D28-8028-4849-9EFB-AD30CDE0BD01_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007"
       },
       {
         "id": "danang-008",
@@ -564,10 +131,12 @@
           "lat": 15.877075,
           "lng": 108.32633888888888
         },
+        "location": "Trần Phú, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "9CDE127C-3175-4433-A1CD-EB9D7B6D1342_1_105_c",
-          "en": "9CDE127C-3175-4433-A1CD-EB9D7B6D1342_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008"
       },
       {
         "id": "danang-009",
@@ -579,10 +148,12 @@
           "lat": 10.782583333333335,
           "lng": 106.67604166666668
         },
+        "location": "Trần Văn Ðang, Phường Nhiêu Lộc, Thủ Đức",
         "caption": {
-          "ko": "A2042808-CE3B-4AE1-9665-C1F07D474F5B_1_105_c",
-          "en": "A2042808-CE3B-4AE1-9665-C1F07D474F5B_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009"
       },
       {
         "id": "danang-010",
@@ -594,10 +165,12 @@
           "lat": 15.876402777777779,
           "lng": 108.326875
         },
+        "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "B4DA7C78-4E86-420D-ADAF-F47B3288BBA9_1_105_c",
-          "en": "B4DA7C78-4E86-420D-ADAF-F47B3288BBA9_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010"
       },
       {
         "id": "danang-011",
@@ -609,10 +182,12 @@
           "lat": 15.913519444444445,
           "lng": 108.34059166666667
         },
+        "location": "Hai Bà Trưng, Phường Hội An Tây",
         "caption": {
-          "ko": "BD955A7F-5B0C-463A-9D73-222732D9BDB1_1_105_c",
-          "en": "BD955A7F-5B0C-463A-9D73-222732D9BDB1_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011"
       },
       {
         "id": "danang-012",
@@ -624,10 +199,12 @@
           "lat": 15.876555555555557,
           "lng": 108.32653055555555
         },
+        "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "BE4CD540-6F7B-4CB8-B8B5-3F70F5190E34_1_105_c",
-          "en": "BE4CD540-6F7B-4CB8-B8B5-3F70F5190E34_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012"
       },
       {
         "id": "danang-013",
@@ -639,10 +216,12 @@
           "lat": 15.87631388888889,
           "lng": 108.32646944444444
         },
+        "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "C521F0E1-BFA7-428E-9EF1-F9BC781352FC_1_105_c",
-          "en": "C521F0E1-BFA7-428E-9EF1-F9BC781352FC_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013"
       },
       {
         "id": "danang-014",
@@ -654,10 +233,12 @@
           "lat": 15.876325000000001,
           "lng": 108.3256611111111
         },
+        "location": "Nguyễn Hoàng, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "CC893E13-9471-4688-965C-021661947CEE_1_105_c",
-          "en": "CC893E13-9471-4688-965C-021661947CEE_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo014"
       },
       {
         "id": "danang-015",
@@ -669,10 +250,12 @@
           "lat": 15.913783333333333,
           "lng": 108.34072777777777
         },
+        "location": "Hai Bà Trưng, Phường Hội An Tây",
         "caption": {
-          "ko": "D6F66D06-588A-415A-9CE2-9A26E074979E_1_105_c",
-          "en": "D6F66D06-588A-415A-9CE2-9A26E074979E_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015"
       },
       {
         "id": "danang-016",
@@ -684,10 +267,12 @@
           "lat": 15.877358333333333,
           "lng": 108.34219999999999
         },
+        "location": "Cẩm Châu, Phường Hội An Đông",
         "caption": {
-          "ko": "E91D034E-B186-4BCD-934A-EFDBD3A1041E_1_105_c",
-          "en": "E91D034E-B186-4BCD-934A-EFDBD3A1041E_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016"
       },
       {
         "id": "danang-017",
@@ -699,10 +284,388 @@
           "lat": 15.876222222222223,
           "lng": 108.32578333333333
         },
+        "location": "Nguyễn Hoàng, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "F650D684-C84A-4513-8EAC-B22E0B92A60E_1_105_c",
-          "en": "F650D684-C84A-4513-8EAC-B22E0B92A60E_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo017"
+      }
+    ]
+  },
+  "호치민": {
+    "cityCode": "hochiminh",
+    "photos": [
+      {
+        "id": "hochiminh-001",
+        "publicId": "cities/hochiminh/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo001",
+        "date": "2016-08-19T07:24:25",
+        "gps": {
+          "lat": 10.767630555555556,
+          "lng": 106.6913388888889
+        },
+        "location": "Hẻm 283 Phạm Ngũ Lão, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001"
+      },
+      {
+        "id": "hochiminh-002",
+        "publicId": "cities/hochiminh/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo002",
+        "date": "2016-08-19T09:49:33",
+        "gps": {
+          "lat": 10.77278888888889,
+          "lng": 106.69722777777778
+        },
+        "location": "Phan Chu Trinh, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002"
+      },
+      {
+        "id": "hochiminh-003",
+        "publicId": "cities/hochiminh/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo003",
+        "date": "2016-08-20T19:39:38",
+        "gps": {
+          "lat": 10.764669444444445,
+          "lng": 106.69508611111111
+        },
+        "location": "Ðề Thám, Phường Cầu Ông Lãnh, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003"
+      },
+      {
+        "id": "hochiminh-004",
+        "publicId": "cities/hochiminh/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo004",
+        "date": "2016-08-20T23:02:25",
+        "gps": {
+          "lat": 10.789680555555556,
+          "lng": 106.69007222222223
+        },
+        "location": "Nguyễn Hữu Cầu, Phường Tân Định, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004"
+      },
+      {
+        "id": "hochiminh-005",
+        "publicId": "cities/hochiminh/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo005",
+        "date": "2016-08-19T05:57:50",
+        "gps": {
+          "lat": 10.775113888888889,
+          "lng": 106.68655277777778
+        },
+        "location": "Cách Mạng Tháng 8, Phường Bàn Cờ, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005"
+      },
+      {
+        "id": "hochiminh-006",
+        "publicId": "cities/hochiminh/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo006",
+        "date": "2016-08-15T16:08:37",
+        "gps": {
+          "lat": 10.76465,
+          "lng": 106.69158055555556
+        },
+        "location": "Nguyễn Cư Trinh, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006"
+      },
+      {
+        "id": "hochiminh-007",
+        "publicId": "cities/hochiminh/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo007",
+        "date": "2016-08-14T13:19:54",
+        "gps": {
+          "lat": 10.773358333333334,
+          "lng": 106.69963055555556
+        },
+        "location": "Nguyễn Trung Trực, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007"
+      },
+      {
+        "id": "hochiminh-008",
+        "publicId": "cities/hochiminh/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo008",
+        "date": "2016-08-20T23:38:36",
+        "gps": {
+          "lat": 10.775975,
+          "lng": 106.70159166666667
+        },
+        "location": "Nguyễn Huệ, Phường Sài Gòn, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008"
+      },
+      {
+        "id": "hochiminh-009",
+        "publicId": "cities/hochiminh/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo009",
+        "date": "2016-08-19T18:44:26",
+        "gps": {
+          "lat": 10.766583333333333,
+          "lng": 106.69203888888889
+        },
+        "location": "Bùi Viện, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009"
+      },
+      {
+        "id": "hochiminh-010",
+        "publicId": "cities/hochiminh/photo010",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo010",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo010",
+        "date": "2016-08-13T18:23:43",
+        "gps": {
+          "lat": 10.771397222222223,
+          "lng": 106.69234444444444
+        },
+        "location": "Lê Thị Riêng, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010"
+      },
+      {
+        "id": "hochiminh-011",
+        "publicId": "cities/hochiminh/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo011",
+        "date": "2016-08-20T14:13:52",
+        "gps": {
+          "lat": 10.766222222222222,
+          "lng": 106.69138333333333
+        },
+        "location": "Bùi Viện, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011"
+      },
+      {
+        "id": "hochiminh-012",
+        "publicId": "cities/hochiminh/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo012",
+        "date": "2016-08-15T18:19:28",
+        "gps": {
+          "lat": 10.75901111111111,
+          "lng": 106.69242777777778
+        },
+        "location": "Đường Võ Văn Kiệt, Phường Cầu Ông Lãnh, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012"
+      },
+      {
+        "id": "hochiminh-013",
+        "publicId": "cities/hochiminh/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo013",
+        "date": "2016-08-15T00:25:11",
+        "gps": {
+          "lat": 10.766383333333334,
+          "lng": 106.69168055555556
+        },
+        "location": "Bùi Viện, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013"
+      },
+      {
+        "id": "hochiminh-014",
+        "publicId": "cities/hochiminh/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo014",
+        "date": "2016-08-15T18:07:31",
+        "gps": {
+          "lat": 10.762283333333333,
+          "lng": 106.69374166666667
+        },
+        "location": "Cô Giang, Phường Cầu Ông Lãnh, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo014"
+      },
+      {
+        "id": "hochiminh-015",
+        "publicId": "cities/hochiminh/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo015",
+        "date": "2016-08-14T21:04:48",
+        "gps": {
+          "lat": 10.766983333333334,
+          "lng": 106.69277222222223
+        },
+        "location": "Bùi Viện, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015"
+      },
+      {
+        "id": "hochiminh-016",
+        "publicId": "cities/hochiminh/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo016",
+        "date": "2016-08-15T11:47:48",
+        "gps": null,
+        "location": null,
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016"
+      },
+      {
+        "id": "hochiminh-017",
+        "publicId": "cities/hochiminh/photo017",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo017",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo017",
+        "date": "2016-08-15T21:48:15",
+        "gps": {
+          "lat": 10.782583333333335,
+          "lng": 106.67604166666668
+        },
+        "location": "Trần Văn Ðang, Phường Nhiêu Lộc, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo017"
+      },
+      {
+        "id": "hochiminh-018",
+        "publicId": "cities/hochiminh/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo018",
+        "date": "2016-08-15T15:36:56",
+        "gps": {
+          "lat": 10.766283333333334,
+          "lng": 106.69319166666666
+        },
+        "location": "Hẻm 100 Trần Hưng Đạo, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo018"
+      },
+      {
+        "id": "hochiminh-019",
+        "publicId": "cities/hochiminh/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo019",
+        "date": "2016-08-13T18:06:52",
+        "gps": {
+          "lat": 10.769966666666667,
+          "lng": 106.69329166666667
+        },
+        "location": "Lê Lai, Phường Bến Thành, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019"
+      },
+      {
+        "id": "hochiminh-020",
+        "publicId": "cities/hochiminh/photo020",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo020",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo020",
+        "date": "2016-08-13T23:31:29",
+        "gps": {
+          "lat": 10.775411111111111,
+          "lng": 106.70498611111111
+        },
+        "location": "Phan Văn Ðạt, Phường Sài Gòn, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo020"
+      },
+      {
+        "id": "hochiminh-021",
+        "publicId": "cities/hochiminh/photo021",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo021",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo021",
+        "date": "2016-08-20T23:06:33",
+        "gps": {
+          "lat": 10.788688888888888,
+          "lng": 106.69079722222223
+        },
+        "location": "Hai Bà Trưng, Phường Xuân Hòa, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo021"
+      },
+      {
+        "id": "hochiminh-022",
+        "publicId": "cities/hochiminh/photo022",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo022",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo022",
+        "date": "2016-08-14T21:26:21",
+        "gps": {
+          "lat": 10.765030555555555,
+          "lng": 106.69586944444445
+        },
+        "location": "Phường Cầu Ông Lãnh, Thủ Đức",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo022"
       }
     ]
   },
@@ -719,10 +682,12 @@
           "lat": 3.237155555555556,
           "lng": 101.68369166666668
         },
+        "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "02C8AC77-4833-49E3-B34F-DD2A7335924F_1_105_c",
-          "en": "02C8AC77-4833-49E3-B34F-DD2A7335924F_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001"
       },
       {
         "id": "kualalumpur-002",
@@ -734,10 +699,12 @@
           "lat": 3.133461111111111,
           "lng": 101.68884166666668
         },
+        "location": "Jalan Tun Sambanthan 4, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "063B1E43-2AD2-4519-A67C-DB1D9FA9983D_1_105_c",
-          "en": "063B1E43-2AD2-4519-A67C-DB1D9FA9983D_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002"
       },
       {
         "id": "kualalumpur-003",
@@ -749,10 +716,12 @@
           "lat": 3.145572222222222,
           "lng": 101.70844166666667
         },
+        "location": "Jalan Alor, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "1537BE9A-5E85-48E0-8A33-91A45B8B0BBC_1_105_c",
-          "en": "1537BE9A-5E85-48E0-8A33-91A45B8B0BBC_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003"
       },
       {
         "id": "kualalumpur-004",
@@ -764,10 +733,12 @@
           "lat": 3.1454416666666667,
           "lng": 101.69825833333334
         },
+        "location": "Jalan Tun Tan Cheng Lock, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "1E4A9F55-AEC4-4BDF-8C2B-176E7774C146_1_105_c",
-          "en": "1E4A9F55-AEC4-4BDF-8C2B-176E7774C146_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004"
       },
       {
         "id": "kualalumpur-005",
@@ -776,10 +747,12 @@
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kualalumpur/photo005",
         "date": "2016-08-28T13:31:01",
         "gps": null,
+        "location": null,
         "caption": {
-          "ko": "35BBDD0F-A1E8-47C9-812F-9BAB49CFD574_1_105_c",
-          "en": "35BBDD0F-A1E8-47C9-812F-9BAB49CFD574_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005"
       },
       {
         "id": "kualalumpur-006",
@@ -791,10 +764,12 @@
           "lat": 3.2381722222222225,
           "lng": 101.68400555555556
         },
+        "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "364EDDCB-A237-4323-9295-19D9ADFE5116_1_105_c",
-          "en": "364EDDCB-A237-4323-9295-19D9ADFE5116_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006"
       },
       {
         "id": "kualalumpur-007",
@@ -806,10 +781,12 @@
           "lat": 3.238238888888889,
           "lng": 101.68183888888889
         },
+        "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "392697C5-A424-4AB7-A32E-3E1D0FD46EF1_1_105_c",
-          "en": "392697C5-A424-4AB7-A32E-3E1D0FD46EF1_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007"
       },
       {
         "id": "kualalumpur-008",
@@ -821,10 +798,12 @@
           "lat": 3.238213888888889,
           "lng": 101.68176944444446
         },
+        "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "39A05E9B-CD33-4915-8774-EFDBC84845E9_1_105_c",
-          "en": "39A05E9B-CD33-4915-8774-EFDBC84845E9_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008"
       },
       {
         "id": "kualalumpur-009",
@@ -836,10 +815,12 @@
           "lat": 3.144425,
           "lng": 101.69731944444445
         },
+        "location": "Jalan Hang Lekir, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "3A354669-C6EF-4244-9FF9-FF3681B14E0B_1_105_c",
-          "en": "3A354669-C6EF-4244-9FF9-FF3681B14E0B_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009"
       },
       {
         "id": "kualalumpur-010",
@@ -851,10 +832,12 @@
           "lat": 3.132197222222222,
           "lng": 101.68775833333333
         },
+        "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "62C88E27-465A-4762-AA05-A9D41405EA88_1_105_c",
-          "en": "62C88E27-465A-4762-AA05-A9D41405EA88_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010"
       },
       {
         "id": "kualalumpur-011",
@@ -866,10 +849,12 @@
           "lat": 3.133463888888889,
           "lng": 101.688775
         },
+        "location": "Jalan Tun Sambanthan 4, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "68560F31-D162-4498-A175-5D6F21D44B51_1_105_c",
-          "en": "68560F31-D162-4498-A175-5D6F21D44B51_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011"
       },
       {
         "id": "kualalumpur-012",
@@ -878,10 +863,12 @@
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kualalumpur/photo012",
         "date": "2016-08-28T14:27:16",
         "gps": null,
+        "location": null,
         "caption": {
-          "ko": "9688C1EF-BC74-4CFE-BAA1-03B25C516ED9_1_105_c",
-          "en": "9688C1EF-BC74-4CFE-BAA1-03B25C516ED9_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012"
       },
       {
         "id": "kualalumpur-013",
@@ -893,10 +880,12 @@
           "lat": 3.1589638888888887,
           "lng": 101.71083888888889
         },
+        "location": "Jalan P. Ramlee, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "A25DEB65-5E6F-45A6-B807-85E4289DE1D1_1_105_c",
-          "en": "A25DEB65-5E6F-45A6-B807-85E4289DE1D1_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013"
       },
       {
         "id": "kualalumpur-014",
@@ -908,10 +897,12 @@
           "lat": 3.131911111111111,
           "lng": 101.68792777777779
         },
+        "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "A8A2B7A4-3841-4691-A85E-1A9E5183CC18_1_105_c",
-          "en": "A8A2B7A4-3841-4691-A85E-1A9E5183CC18_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo014"
       },
       {
         "id": "kualalumpur-015",
@@ -923,10 +914,12 @@
           "lat": 3.1570694444444443,
           "lng": 101.71260000000001
         },
+        "location": "Persiaran KLCC, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "B5D96EB5-FDDB-49FD-B694-C5B75C8EB357_1_105_c",
-          "en": "B5D96EB5-FDDB-49FD-B694-C5B75C8EB357_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015"
       },
       {
         "id": "kualalumpur-016",
@@ -935,10 +928,12 @@
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kualalumpur/photo016",
         "date": "2016-08-27T22:25:05",
         "gps": null,
+        "location": null,
         "caption": {
-          "ko": "B6E25679-25DA-40A4-891A-5E99A8541B65_1_105_c",
-          "en": "B6E25679-25DA-40A4-891A-5E99A8541B65_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016"
       },
       {
         "id": "kualalumpur-017",
@@ -950,10 +945,12 @@
           "lat": 3.132286111111111,
           "lng": 101.687675
         },
+        "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "B87F2579-BA22-4275-A016-C14050F2D5A6_1_105_c",
-          "en": "B87F2579-BA22-4275-A016-C14050F2D5A6_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo017"
       },
       {
         "id": "kualalumpur-018",
@@ -965,10 +962,12 @@
           "lat": 3.132125,
           "lng": 101.68746944444445
         },
+        "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "E3FDBB7F-35D9-4BEA-BF70-49EA56BE3D45_1_105_c",
-          "en": "E3FDBB7F-35D9-4BEA-BF70-49EA56BE3D45_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo018"
       },
       {
         "id": "kualalumpur-019",
@@ -980,10 +979,12 @@
           "lat": 2.7529833333333333,
           "lng": 101.70551944444445
         },
+        "location": "Sepang, Selangor",
         "caption": {
-          "ko": "E6436958-AC32-46B4-A609-4E211ECABD75_1_105_c",
-          "en": "E6436958-AC32-46B4-A609-4E211ECABD75_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019"
       }
     ]
   },
@@ -1000,10 +1001,12 @@
           "lat": 2.801986111111111,
           "lng": 99.02651944444445
         },
+        "location": "Jalan Parapat, Tiga Dolok, Sumatera Utara",
         "caption": {
-          "ko": "346B3C63-8247-4ACF-B16B-15E5E4DDDC4C_1_105_c",
-          "en": "346B3C63-8247-4ACF-B16B-15E5E4DDDC4C_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001"
       },
       {
         "id": "medan-002",
@@ -1015,10 +1018,12 @@
           "lat": 3.568172222222222,
           "lng": 98.97495277777777
         },
+        "location": "Jalan Raya Medan-Tebing Tinggi, Tualang, Tualang, Sumatera Utara",
         "caption": {
-          "ko": "3E6494D2-BFFE-4CDB-938D-10446472A9DD_1_105_c",
-          "en": "3E6494D2-BFFE-4CDB-938D-10446472A9DD_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002"
       },
       {
         "id": "medan-003",
@@ -1030,10 +1035,12 @@
           "lat": 3.593427777777778,
           "lng": 98.66905277777778
         },
+        "location": "Jalan Guru Patimpus, Kesawan, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "3F6B1551-C7EE-4AD5-8369-92028E8E9E51_1_105_c",
-          "en": "3F6B1551-C7EE-4AD5-8369-92028E8E9E51_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003"
       },
       {
         "id": "medan-004",
@@ -1045,10 +1052,12 @@
           "lat": 3.605038888888889,
           "lng": 98.64571388888889
         },
+        "location": "Jalan Tengku Amir Hamzah, Sei Sikambing, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "8E9A8747-4952-4D38-A588-AEFC5501F801_1_105_c",
-          "en": "8E9A8747-4952-4D38-A588-AEFC5501F801_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004"
       },
       {
         "id": "medan-005",
@@ -1060,10 +1069,12 @@
           "lat": 3.3705083333333334,
           "lng": 99.16697777777779
         },
+        "location": "Jalan Komodor Laut Yos Sudarso, Kota Tebing Tinggi, Sumatera Utara",
         "caption": {
-          "ko": "9859BB47-5F56-4226-8530-6B1D7D0345B3_1_105_c",
-          "en": "9859BB47-5F56-4226-8530-6B1D7D0345B3_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005"
       },
       {
         "id": "medan-006",
@@ -1075,10 +1086,12 @@
           "lat": 3.5939305555555556,
           "lng": 98.67101944444445
         },
+        "location": "Jalan Guru Patimpus, Kesawan, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "9DD5B72C-7CE0-4DF6-9D1C-778A18A31B0D_1_105_c",
-          "en": "9DD5B72C-7CE0-4DF6-9D1C-778A18A31B0D_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006"
       },
       {
         "id": "medan-007",
@@ -1090,10 +1103,12 @@
           "lat": 3.568633333333333,
           "lng": 98.96556944444444
         },
+        "location": "Jalan Raya Medan-Tebing Tinggi, Tualang, Tualang, Sumatera Utara",
         "caption": {
-          "ko": "CA731B06-57ED-4304-AEFC-21AE2A5D93C2_1_105_c",
-          "en": "CA731B06-57ED-4304-AEFC-21AE2A5D93C2_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007"
       },
       {
         "id": "medan-008",
@@ -1105,10 +1120,12 @@
           "lat": 3.5935305555555557,
           "lng": 98.6699
         },
+        "location": "Jalan Guru Patimpus, Kesawan, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "E9190BF5-EA7F-4CC9-B5D4-CDA4A5C54D1A_1_105_c",
-          "en": "E9190BF5-EA7F-4CC9-B5D4-CDA4A5C54D1A_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008"
       },
       {
         "id": "medan-009",
@@ -1120,10 +1137,12 @@
           "lat": 3.5904444444444445,
           "lng": 98.65084166666668
         },
+        "location": "Jalan Jenderal Gatot Subroto, Petisah, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "F236B323-F493-4303-9E83-4246175163F3_1_105_c",
-          "en": "F236B323-F493-4303-9E83-4246175163F3_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009"
       }
     ]
   },
@@ -1140,10 +1159,12 @@
           "lat": 2.6807499999999997,
           "lng": 98.84061388888888
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "01161E42-A3E0-4541-9571-99AFA271D1DE_1_105_c",
-          "en": "01161E42-A3E0-4541-9571-99AFA271D1DE_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001"
       },
       {
         "id": "tuktuk-002",
@@ -1152,10 +1173,12 @@
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/tuktuk/photo002",
         "date": "2016-08-24T19:59:28",
         "gps": null,
+        "location": null,
         "caption": {
-          "ko": "01DE2BF9-96A1-4244-A3D3-587732681F44_1_105_c",
-          "en": "01DE2BF9-96A1-4244-A3D3-587732681F44_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002"
       },
       {
         "id": "tuktuk-003",
@@ -1167,10 +1190,12 @@
           "lat": 3.5943083333333337,
           "lng": 98.66882222222223
         },
+        "location": "Jalan Haji Adam Malik, Petisah, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "12CE7225-B2FD-4EDD-8E0C-5603F833A298_1_105_c",
-          "en": "12CE7225-B2FD-4EDD-8E0C-5603F833A298_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003"
       },
       {
         "id": "tuktuk-004",
@@ -1182,10 +1207,12 @@
           "lat": 2.6689249999999998,
           "lng": 98.8555611111111
         },
+        "location": "Tuk Tuk, Sumatera Utara",
         "caption": {
-          "ko": "4396B300-0561-4739-BC06-6E57B91925AB_1_105_c",
-          "en": "4396B300-0561-4739-BC06-6E57B91925AB_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004"
       },
       {
         "id": "tuktuk-005",
@@ -1197,10 +1224,12 @@
           "lat": 2.6609416666666665,
           "lng": 98.93040555555557
         },
+        "location": "Tiga Raja, Sumatera Utara",
         "caption": {
-          "ko": "4B1C8AF7-62A3-403C-962E-C9C33AF4610C_1_105_c",
-          "en": "4B1C8AF7-62A3-403C-962E-C9C33AF4610C_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005"
       },
       {
         "id": "tuktuk-006",
@@ -1212,10 +1241,12 @@
           "lat": 2.6730388888888887,
           "lng": 98.84877777777777
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "6295C270-AF36-4F65-A222-8E6AC3DAE3A3_1_105_c",
-          "en": "6295C270-AF36-4F65-A222-8E6AC3DAE3A3_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006"
       },
       {
         "id": "tuktuk-007",
@@ -1227,10 +1258,12 @@
           "lat": 2.6805666666666665,
           "lng": 98.84042222222222
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "7E0DA335-0E7A-414F-A42C-13E867F28501_1_105_c",
-          "en": "7E0DA335-0E7A-414F-A42C-13E867F28501_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007"
       },
       {
         "id": "tuktuk-008",
@@ -1242,10 +1275,12 @@
           "lat": 2.6680194444444445,
           "lng": 98.93806388888889
         },
+        "location": "Jalan Sisingamangaraja, Parapat, Sumatera Utara",
         "caption": {
-          "ko": "8B41B3DC-E74E-4BD5-867D-CF660606D5FA_1_105_c",
-          "en": "8B41B3DC-E74E-4BD5-867D-CF660606D5FA_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008"
       },
       {
         "id": "tuktuk-009",
@@ -1257,10 +1292,12 @@
           "lat": 2.6689416666666665,
           "lng": 98.85557499999999
         },
+        "location": "Tuk Tuk, Sumatera Utara",
         "caption": {
-          "ko": "9D77C679-4B8E-4817-A2BD-26A65753078B_1_105_c",
-          "en": "9D77C679-4B8E-4817-A2BD-26A65753078B_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009"
       },
       {
         "id": "tuktuk-010",
@@ -1272,10 +1309,12 @@
           "lat": 2.673144444444444,
           "lng": 98.84844166666666
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "AA773288-4882-46FC-AAB7-EB71789EEE1D_1_105_c",
-          "en": "AA773288-4882-46FC-AAB7-EB71789EEE1D_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010"
       },
       {
         "id": "tuktuk-011",
@@ -1287,10 +1326,12 @@
           "lat": 2.6789888888888886,
           "lng": 98.84137777777778
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "D615D105-47F4-4C9F-B12E-F8DD6C08C8D1_1_105_c",
-          "en": "D615D105-47F4-4C9F-B12E-F8DD6C08C8D1_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011"
       },
       {
         "id": "tuktuk-012",
@@ -1302,10 +1343,12 @@
           "lat": 2.680747222222222,
           "lng": 98.84065277777778
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "D91AAF80-923A-4C55-ACF0-1E744159FE7E_1_105_c",
-          "en": "D91AAF80-923A-4C55-ACF0-1E744159FE7E_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012"
       },
       {
         "id": "tuktuk-013",
@@ -1317,10 +1360,12 @@
           "lat": 2.678547222222222,
           "lng": 98.84285833333333
         },
+        "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "EFB3E178-1209-4BCC-BAF8-6F64C229DB6B_1_105_c",
-          "en": "EFB3E178-1209-4BCC-BAF8-6F64C229DB6B_1_105_c"
-        }
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013"
       }
     ]
   }

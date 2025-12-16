@@ -205,11 +205,13 @@ async function syncPhotos() {
       
       // Extract GPS from context first, fallback to EXIF
       let gps = null;
+      let address = null;
       if (context.lat && context.lng) {
         gps = {
           lat: parseFloat(context.lat),
           lng: parseFloat(context.lng)
         };
+        address = context.address || null; // 주소 정보
       } else if (photo.image_metadata) {
         const exif = photo.image_metadata;
         if (exif.GPSLatitude && exif.GPSLongitude) {
@@ -234,18 +236,19 @@ async function syncPhotos() {
         thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/${publicId}`,
         date: date,
         gps: gps,
+        location: address, // 주소 추가
         caption: {
-          ko: title || filename,
-          en: title || filename
+          ko: title || '',
+          en: title || ''
         },
         alt: description || title || filename
       });
       
       // Log metadata info
       const dateInfo = date ? ` 📅 ${date}` : '';
-      const gpsInfo = gps ? ` 📍 ${gps.lat.toFixed(4)}, ${gps.lng.toFixed(4)}` : '';
+      const locationInfo = address ? ` 📍 ${address}` : (gps ? ` 📍 ${gps.lat.toFixed(4)}, ${gps.lng.toFixed(4)}` : '');
       const titleInfo = title ? ` 💬 "${title}"` : '';
-      console.log(`  ${filename}${dateInfo}${gpsInfo}${titleInfo}`);
+      console.log(`  ${filename}${dateInfo}${locationInfo}${titleInfo}`);
     }
     
     cityPhotos[koreanName] = {

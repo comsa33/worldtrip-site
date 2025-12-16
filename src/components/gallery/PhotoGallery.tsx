@@ -14,6 +14,7 @@ interface Photo {
   gps?: { lat: number; lng: number } | null;
   caption: { ko: string; en: string };
   alt?: string;
+  location?: string;
 }
 
 interface CityPhotoData {
@@ -33,14 +34,26 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
 
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
 
-  // Get photos for the current city
+  // Get photos for the current city, sorted by date (chronological)
   const photos = useMemo(() => {
     if (!cityName || !cityPhotos[cityName]) return [];
-    return cityPhotos[cityName].photos;
+    const cityPhotoList = cityPhotos[cityName].photos;
+    // Sort by date in ascending order (oldest first)
+    return [...cityPhotoList].sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
   }, [cityName, cityPhotos]);
 
   // Derive entering state from cityName (no useEffect needed)
   const isEntering = !!cityName;
+
+  // Reset selected photo when city changes
+  // Reset selected photo when city changes
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSelectedPhoto(null);
+    setIsPhotoZooming(false);
+  }, [cityName]);
 
   // Preload first few thumbnails for instant display
   useEffect(() => {
@@ -149,32 +162,28 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
             />
             <div className="photo-gallery__caption-area">
               <p className="photo-gallery__caption">
-                {selectedPhoto.caption[language as 'ko' | 'en']}
+                {selectedPhoto.caption[language as 'ko' | 'en'] || '\u00A0'}
               </p>
-              {selectedPhoto.alt &&
-                selectedPhoto.alt !== selectedPhoto.caption[language as 'ko' | 'en'] && (
-                  <p className="photo-gallery__alt">{selectedPhoto.alt}</p>
-                )}
               <div className="photo-gallery__meta">
-                {selectedPhoto.date && (
-                  <span className="photo-gallery__date">
-                    {selectedPhoto.date.includes('T')
-                      ? new Date(selectedPhoto.date).toLocaleString(
-                          language === 'ko' ? 'ko-KR' : 'en-US',
-                          {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }
-                        )
-                      : selectedPhoto.date}
-                  </span>
-                )}
-                {selectedPhoto.gps && (
+                <span className="photo-gallery__date">
+                  {selectedPhoto.date && selectedPhoto.date.includes('T')
+                    ? new Date(selectedPhoto.date).toLocaleString(
+                        language === 'ko' ? 'ko-KR' : 'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        }
+                      )
+                    : selectedPhoto.date || ''}
+                </span>
+                {(selectedPhoto.location || selectedPhoto.gps) && (
                   <span className="photo-gallery__location">
-                    📍 {selectedPhoto.gps.lat.toFixed(2)}, {selectedPhoto.gps.lng.toFixed(2)}
+                    📍{' '}
+                    {selectedPhoto.location ||
+                      `${selectedPhoto.gps!.lat.toFixed(2)}, ${selectedPhoto.gps!.lng.toFixed(2)}`}
                   </span>
                 )}
               </div>
