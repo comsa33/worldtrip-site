@@ -1041,26 +1041,32 @@ function JourneyExperienceContent() {
       targetStopIndex = Math.max(currentStop - 1, 0);
     }
     
-    // Find the CENTER of the path range where this stop is displayed
-    // This gives a stable viewing position instead of first/last edge
+    // Find the path index where traveler is exactly AT the stop
+    // Strategy: Find where fromStopId === targetStopId AND segmentProgress is near 0
+    // This is the moment when traveler is AT the stop, about to depart
+    // For the LAST stop (no outgoing segment), find where toStopId === targetStopId AND segmentProgress is near 1
     const targetStopId = stops[targetStopIndex]?.id;
-    let firstIndex = -1;
-    let lastIndex = -1;
+    const isLastStop = targetStopIndex === stops.length - 1;
+    let targetPathIndex = 0;
     
-    for (let i = 0; i < path.length; i++) {
-      const pt = path[i];
-      const displayedStopId = pt.segmentProgress < SEGMENT_THRESHOLD ? pt.fromStopId : pt.toStopId;
-      
-      if (displayedStopId === targetStopId) {
-        if (firstIndex === -1) firstIndex = i;
-        lastIndex = i;
+    if (isLastStop) {
+      // Last stop: find the end of the incoming segment (arrived at final destination)
+      for (let i = path.length - 1; i >= 0; i--) {
+        if (path[i].toStopId === targetStopId) {
+          targetPathIndex = i;
+          break;
+        }
+      }
+    } else {
+      // Normal stops: find where fromStopId matches and segmentProgress is near 0 (at the stop)
+      for (let i = 0; i < path.length; i++) {
+        const pt = path[i];
+        if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
+          targetPathIndex = i;
+          break;
+        }
       }
     }
-    
-    // Use center of range for stable positioning
-    const targetPathIndex = firstIndex !== -1 
-      ? Math.floor((firstIndex + lastIndex) / 2) 
-      : 0;
     
     // Calculate progress from path index
     const targetProgress = targetPathIndex / path.length;
