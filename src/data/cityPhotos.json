@@ -1146,6 +1146,399 @@
       }
     ]
   },
+  "시엠립": {
+    "cityCode": "siemreap",
+    "photos": [
+      {
+        "id": "siemreap-001",
+        "publicId": "cities/siemreap/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo001",
+        "date": "2016-08-30T17:13:19",
+        "gps": {
+          "lat": 13.377905555555555,
+          "lng": 103.87946388888888
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001"
+      },
+      {
+        "id": "siemreap-002",
+        "publicId": "cities/siemreap/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo002",
+        "date": "2016-08-31T11:09:06",
+        "gps": {
+          "lat": 13.443777777777777,
+          "lng": 103.85669722222222
+        },
+        "location": "វង់ធំ / វង់តូច, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002"
+      },
+      {
+        "id": "siemreap-003",
+        "publicId": "cities/siemreap/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo003",
+        "date": "2016-08-30T17:10:42",
+        "gps": {
+          "lat": 13.377975000000001,
+          "lng": 103.8795611111111
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003"
+      },
+      {
+        "id": "siemreap-004",
+        "publicId": "cities/siemreap/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo004",
+        "date": "2016-08-31T10:36:48",
+        "gps": {
+          "lat": 13.433563888888889,
+          "lng": 103.85948055555555
+        },
+        "location": "វង់ធំ / វង់តូច, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004"
+      },
+      {
+        "id": "siemreap-005",
+        "publicId": "cities/siemreap/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo005",
+        "date": "2016-08-30T09:54:13",
+        "gps": {
+          "lat": 13.375097222222223,
+          "lng": 103.86619444444445
+        },
+        "location": "សង្កាត់ស្លក្រាម, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005"
+      },
+      {
+        "id": "siemreap-006",
+        "publicId": "cities/siemreap/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo006",
+        "date": "2016-08-30T17:09:51",
+        "gps": {
+          "lat": 13.377927777777778,
+          "lng": 103.87953888888889
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006"
+      },
+      {
+        "id": "siemreap-007",
+        "publicId": "cities/siemreap/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo007",
+        "date": "2016-08-30T12:22:35",
+        "gps": {
+          "lat": 13.353638888888888,
+          "lng": 103.854675
+        },
+        "location": "ផ្លូវ អេ៣៣, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007"
+      },
+      {
+        "id": "siemreap-008",
+        "publicId": "cities/siemreap/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo008",
+        "date": "",
+        "gps": null,
+        "location": null,
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008"
+      },
+      {
+        "id": "siemreap-009",
+        "publicId": "cities/siemreap/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo009",
+        "date": "2016-08-30T22:06:54",
+        "gps": {
+          "lat": 13.35501388888889,
+          "lng": 103.85514166666665
+        },
+        "location": "ផ្លូវ ៨, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009"
+      },
+      {
+        "id": "siemreap-010",
+        "publicId": "cities/siemreap/photo010",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo010",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo010",
+        "date": "2016-08-29T07:54:33",
+        "gps": {
+          "lat": 13.408075,
+          "lng": 103.81401944444444
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010"
+      },
+      {
+        "id": "siemreap-011",
+        "publicId": "cities/siemreap/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo011",
+        "date": "2016-08-31T10:26:23",
+        "gps": {
+          "lat": 13.42666388888889,
+          "lng": 103.85954166666666
+        },
+        "location": "វង់ធំ / វង់តូច, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011"
+      },
+      {
+        "id": "siemreap-012",
+        "publicId": "cities/siemreap/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo012",
+        "date": "2016-08-30T10:17:06",
+        "gps": {
+          "lat": 13.37588888888889,
+          "lng": 103.8792111111111
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012"
+      },
+      {
+        "id": "siemreap-013",
+        "publicId": "cities/siemreap/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo013",
+        "date": "2016-08-31T11:15:19",
+        "gps": {
+          "lat": 13.44378611111111,
+          "lng": 103.85640833333333
+        },
+        "location": "វង់ធំ / វង់តូច, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013"
+      },
+      {
+        "id": "siemreap-014",
+        "publicId": "cities/siemreap/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo014",
+        "date": "2016-08-31T10:51:42",
+        "gps": {
+          "lat": 13.440341666666667,
+          "lng": 103.85875833333333
+        },
+        "location": "វង់ធំ / វង់តូច, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo014"
+      },
+      {
+        "id": "siemreap-015",
+        "publicId": "cities/siemreap/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo015",
+        "date": "2016-08-30T18:15:14",
+        "gps": {
+          "lat": 13.427313888888888,
+          "lng": 103.84530555555556
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015"
+      },
+      {
+        "id": "siemreap-016",
+        "publicId": "cities/siemreap/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo016",
+        "date": "2016-08-30T21:43:25",
+        "gps": {
+          "lat": 13.355594444444444,
+          "lng": 103.85594999999999
+        },
+        "location": "Little Pub Street, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016"
+      },
+      {
+        "id": "siemreap-017",
+        "publicId": "cities/siemreap/photo017",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo017",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo017",
+        "date": "2016-08-30T11:51:09",
+        "gps": {
+          "lat": 13.35573611111111,
+          "lng": 103.85670555555555
+        },
+        "location": "Little Pub Street, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo017"
+      },
+      {
+        "id": "siemreap-018",
+        "publicId": "cities/siemreap/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo018",
+        "date": "2016-08-30T12:02:34",
+        "gps": {
+          "lat": 13.354075,
+          "lng": 103.85530833333333
+        },
+        "location": "ផ្លូវ ៩, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo018"
+      },
+      {
+        "id": "siemreap-019",
+        "publicId": "cities/siemreap/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo019",
+        "date": "2016-08-30T10:10:48",
+        "gps": {
+          "lat": 13.375744444444445,
+          "lng": 103.87519722222221
+        },
+        "location": "សង្កាត់ស្លក្រាម, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019"
+      },
+      {
+        "id": "siemreap-020",
+        "publicId": "cities/siemreap/photo020",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo020",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo020",
+        "date": "2016-08-29T20:10:09",
+        "gps": {
+          "lat": 13.354327777777778,
+          "lng": 103.85440833333332
+        },
+        "location": "ផ្លូវ អេ៣៣, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo020"
+      },
+      {
+        "id": "siemreap-021",
+        "publicId": "cities/siemreap/photo021",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo021",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo021",
+        "date": "2016-08-30T10:53:11",
+        "gps": {
+          "lat": 13.367547222222223,
+          "lng": 103.8790361111111
+        },
+        "location": "ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo021"
+      },
+      {
+        "id": "siemreap-022",
+        "publicId": "cities/siemreap/photo022",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo022",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo022",
+        "date": "2016-08-31T13:43:23",
+        "gps": {
+          "lat": 13.412447222222223,
+          "lng": 103.86570833333333
+        },
+        "location": "Sandstone Cause Way, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo022"
+      },
+      {
+        "id": "siemreap-023",
+        "publicId": "cities/siemreap/photo023",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siemreap/photo023",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siemreap/photo023",
+        "date": "2016-08-31T13:39:16",
+        "gps": {
+          "lat": 13.412447222222223,
+          "lng": 103.86541666666666
+        },
+        "location": "Sandstone Cause Way, ក្រុងសៀមរាប, ខេត្តសៀមរាប",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo023"
+      }
+    ]
+  },
   "뚝뚝섬": {
     "cityCode": "tuktuk",
     "photos": [
