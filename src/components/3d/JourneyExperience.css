@@ -1017,3 +1017,56 @@
     transform: translateY(-4px);
   }
 }
+
+/* Transport Legend */
+.transport-legend {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: auto;
+  z-index: 100;
+}
+
+.transport-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.transport-legend__color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.transport-legend__label {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+  text-transform: capitalize;
+  font-family: 'Pretendard', sans-serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .transport-legend {
+    bottom: 16px; /* Right at the bottom corner */
+    right: 16px;
+    padding: 10px 14px;
+    gap: 6px;
+    transform: scale(0.8);
+    transform-origin: bottom right;
+  }
+}

@@ -617,6 +617,7 @@ function Scene({
 
   return (
     <>
+      <TransportLegend />
       <ambientLight intensity={1.0} />
       <directionalLight position={[5, 3, 5]} intensity={1.4} />
       <directionalLight position={[-5, -2, -3]} intensity={0.4} />
@@ -1095,6 +1096,36 @@ function MobileSwipeHint() {
         <span>{pinchText}</span>
       </div>
     </div>
+  );
+}
+
+function TransportLegend() {
+  const { language } = useI18n();
+  const transportData = (citiesData as { transport: Record<string, { ko: string; en: string }> })
+    .transport;
+
+  return (
+    <Html
+      fullscreen
+      className="transport-legend-container"
+      style={{
+        pointerEvents: 'none',
+      }}
+      zIndexRange={[100, 0]}
+    >
+      <div className="transport-legend">
+        {Object.entries(TRANSPORT_COLORS).map(([key, color]) => {
+          if (key === 'start') return null;
+          const label = transportData[key] ? transportData[key][language as 'ko' | 'en'] : key;
+          return (
+            <div key={key} className="transport-legend__item">
+              <div className="transport-legend__color" style={{ backgroundColor: color }} />
+              <span className="transport-legend__label">{label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </Html>
   );
 }
 
