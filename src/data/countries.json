@@ -512,19 +512,24 @@
       "stats": { "days": 14, "cities": 3 }
     },
     {
-      "code": "PY",
-      "name": { "en": "Paraguay", "ko": "파라과이", "native": "Paraguay" },
-      "slug": "paraguay",
+      "code": "UY",
+      "name": { "en": "Uruguay", "ko": "우루과이", "native": "Uruguay" },
+      "slug": "uruguay",
       "continent": "south-america",
-      "coordinates": { "lat": -23.4425, "lng": -58.4438 },
+      "coordinates": { "lat": -34.9011, "lng": -56.1645 },
       "theme": {
-        "primary": "#D52B1E",
-        "secondary": "#0038A8",
-        "pattern": "nanduti",
-        "gradient": "linear-gradient(135deg, #D52B1E 0%, #0038A8 100%)"
+        "primary": "#0038A8",
+        "secondary": "#FCD116",
+        "pattern": "sun",
+        "gradient": "linear-gradient(135deg, #0038A8 0%, #FCD116 100%)"
       },
       "visits": [
-        { "order": 27, "startDate": "2017-03-02", "endDate": "2017-03-05", "cities": ["아순시온"] }
+        {
+          "order": 27,
+          "startDate": "2017-03-14",
+          "endDate": "2017-03-17",
+          "cities": ["몬테비데오"]
+        }
       ],
       "stats": { "days": 4, "cities": 1 }
     },
