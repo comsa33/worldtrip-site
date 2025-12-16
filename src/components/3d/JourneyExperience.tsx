@@ -2,7 +2,7 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { ChevronDown, Globe, Languages, Camera as CameraIcon } from 'lucide-react';
+import { ChevronDown, Globe, Languages, Camera as CameraIcon, ZoomIn } from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
 import countryBackgrounds from '../../data/countryBackgrounds.json';
@@ -893,7 +893,7 @@ function MobileSwipeHint() {
         <ChevronDown size={12} style={{ transform: 'rotate(180deg)' }} />
       </div>
       <div className="mobile-swipe-hint__row mobile-swipe-hint__row--pinch">
-        <span>👌</span>
+        <ZoomIn size={12} />
         <span>{pinchText}</span>
       </div>
     </div>
