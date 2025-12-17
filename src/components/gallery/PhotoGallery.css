@@ -10,11 +10,11 @@
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* No transition - let photos animate individually */
 }
 
 .photo-gallery--open {
-  opacity: 1;
+  opacity: 1; /* Show gallery */
   pointer-events: all;
 }
 
@@ -55,124 +55,136 @@
   transform: scale(1.1);
 }
 
-/* Circular thumbnails container - positioned at bottom with scroll */
-.photo-gallery__circle {
+/* Fade gradients for left/right edges */
+.photo-gallery__fade-left,
+.photo-gallery__fade-right {
   position: absolute;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  height: 100%;
+  width: 15%;
+  z-index: 6;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.photo-gallery__fade-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1), transparent);
+}
+
+.photo-gallery__fade-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1), transparent);
+}
+
+/* Vertical scroll container - Instagram-style feed */
+.photo-gallery__scroll-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  gap: 16px;
-  padding: 16px 24px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  max-width: 85vw;
-  overflow-x: auto;
-  overflow-y: hidden;
-  touch-action: pan-x; /* Allow horizontal touch scrolling only */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  flex-direction: column; /* Vertical layout */
+  align-items: center; /* Center horizontally */
+  gap: 40px;
+  padding: 8% 10%;
+  overflow-x: hidden;
+  overflow-y: auto; /* Vertical scroll */
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+  z-index: 5;
+  pointer-events: none; /* Allow clicks to pass through to backdrop */
 }
 
-.photo-gallery__circle::-webkit-scrollbar {
-  height: 6px;
+.photo-gallery__scroll-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
 }
 
-.photo-gallery__circle::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.photo-gallery__circle::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-}
-
-.photo-gallery__circle::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Individual thumbnail - Apple style */
-.photo-gallery__thumbnail {
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
+/* Individual Polaroid photo card */
+.photo-gallery__polaroid {
   flex-shrink: 0;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background: rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  cursor: pointer;
   opacity: 0;
-  animation: thumbnailFadeIn 0.4s ease-out forwards;
-  animation-delay: var(--delay);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(30px);
+  pointer-events: auto;
 }
 
-@keyframes thumbnailFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
+/* Enter animation */
+.photo-gallery--open .photo-gallery__polaroid {
+  animation: polaroidEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Exit animation when closing */
+.photo-gallery:not(.photo-gallery--open) .photo-gallery__polaroid {
+  animation: polaroidExit 0.4s ease-out forwards;
+}
+
+@keyframes polaroidEnter {
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0); /* No rotation */
   }
 }
 
-.photo-gallery__thumbnail:hover {
-  transform: scale(1.08);
+@keyframes polaroidExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
 }
 
-.photo-gallery__thumbnail--selected {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+/* Stagger animation delay only for entrance */
+.photo-gallery--open .photo-gallery__polaroid:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.photo-gallery--open .photo-gallery__polaroid:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.photo-gallery--open .photo-gallery__polaroid:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.photo-gallery--open .photo-gallery__polaroid:nth-child(4) {
+  animation-delay: 0.25s;
+}
+.photo-gallery--open .photo-gallery__polaroid:nth-child(5) {
+  animation-delay: 0.3s;
+}
+.photo-gallery--open .photo-gallery__polaroid:nth-child(n + 6) {
+  animation-delay: 0.35s;
 }
 
-.photo-gallery__thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Center photo viewer - Polaroid instant camera style */
-.photo-gallery__viewer {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
-  z-index: 5;
-  opacity: 0;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.photo-gallery__viewer--zoomed {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1) rotate(-2deg);
-}
-
-/* Polaroid frame - white with larger bottom for caption */
-.photo-gallery__viewer-content {
-  background: #fefefe;
-  border-radius: 4px;
-  padding: 16px; /* 동적 높이를 위해 균등 padding */
-  padding-bottom: 16px; /* caption-area가 공간 차지하도록 */
+/* Polaroid frame - glassmorphism style */
+.photo-gallery__polaroid-content {
+  background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+  backdrop-filter: blur(20px); /* Glass blur effect */
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px; /* More modern rounded corners */
+  padding: 16px;
+  padding-bottom: 16px;
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 20px 50px rgba(0, 0, 0, 0.2);
-  position: relative;
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 12px; /* 이미지와 캡션 영역 사이 간격 */
+  gap: 12px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 632px; /* Fixed frame width (600px image + 32px padding) */
 }
 
-.photo-gallery__viewer-content img {
-  max-width: 60vw;
-  max-height: 45vh;
+.photo-gallery__polaroid:hover .photo-gallery__polaroid-content {
+  transform: translateY(-8px); /* Lift up, no rotation */
+}
+
+.photo-gallery__polaroid-content img {
+  width: 600px; /* Fixed width */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Show full image, don't crop */
   border-radius: 2px;
   display: block;
 }
@@ -180,76 +192,49 @@
 /* Caption area - inside Polaroid frame */
 .photo-gallery__caption-area {
   display: flex;
-  flex-direction: column; /* 세로로 배치 */
+  flex-direction: column;
   gap: 8px;
-  min-height: 48px; /* 최소 높이 보장 */
-  width: 100%; /* 전체 너비 */
+  min-height: 48px;
+  width: 100%;
 }
 
 .photo-gallery__caption {
   color: #333;
   text-align: left;
   margin: 0;
-  font-size: 13px; /* 캡션 크기 약간 증가 */
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
-  min-height: 18px; /* 빈 캡션도 공간 차지 */
+  min-height: 18px;
   font-family:
     'Pretendard',
     -apple-system,
     BlinkMacSystemFont,
+    'Segoe UI',
     sans-serif;
-  letter-spacing: -0.01em;
-}
-
-.photo-gallery__alt {
-  color: rgba(0, 0, 0, 0.6);
-  margin: 4px 0 0 0;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 1.3;
-  font-style: italic;
 }
 
 .photo-gallery__meta {
   display: flex;
-  justify-content: space-between; /* 좌우 배치 */
-  align-items: center;
-  gap: 12px;
+  flex-direction: column; /* Stack vertically */
+  gap: 4px;
+  align-items: flex-start; /* Left align */
 }
 
 .photo-gallery__date {
-  color: #666; /* 약간 더 진하게 */
+  color: #666;
   font-size: 11px;
-  font-family: 'SF Mono', 'Menlo', monospace;
-  letter-spacing: 0.05em;
+  text-align: left;
 }
 
 .photo-gallery__location {
-  color: #666; /* 약간 더 진하게 */
+  color: #666;
   font-size: 11px;
-  text-align: right; /* 우측 정렬 */
+  text-align: left; /* Left align for vertical stack */
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-  .photo-gallery__circle {
-    bottom: 5%;
-    gap: 12px;
-    padding: 12px 16px;
-    max-width: 90vw;
-    overflow-x: auto;
-    justify-content: flex-start;
-  }
-
-  .photo-gallery__thumbnail {
-    width: 56px;
-    height: 56px;
-    min-width: 56px;
-    min-height: 56px;
-    flex-shrink: 0;
-  }
-
   .photo-gallery__close {
     top: 1rem;
     right: 1rem;
@@ -257,28 +242,35 @@
     height: 36px;
   }
 
-  .photo-gallery__viewer {
-    transform: translate(-50%, -60%) scale(0.9);
+  .photo-gallery__scroll-container {
+    padding: 15% 8%;
+    gap: 30px;
   }
 
-  .photo-gallery__viewer--zoomed {
-    transform: translate(-50%, -60%) scale(1);
+  .photo-gallery__fade-left,
+  .photo-gallery__fade-right {
+    width: 10%;
   }
 
-  .photo-gallery__viewer-content {
-    padding: 10px 10px 48px 10px;
+  .photo-gallery__polaroid-content {
+    padding: 10px;
+    padding-bottom: 12px;
+    gap: 10px;
+    width: auto; /* Override fixed width */
   }
 
-  .photo-gallery__viewer-content img {
-    max-width: 85vw;
-    max-height: 60vh; /* Increased for better portrait photo display */
+  .photo-gallery__polaroid-content img {
+    width: 85vw; /* Responsive width for mobile */
+    max-height: 60vh;
+    height: auto;
   }
 
   .photo-gallery__caption {
     font-size: 11px;
   }
 
-  .photo-gallery__date {
+  .photo-gallery__date,
+  .photo-gallery__location {
     font-size: 9px;
   }
 }

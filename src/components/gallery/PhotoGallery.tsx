@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
@@ -29,168 +29,120 @@ interface PhotoGalleryProps {
 
 export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
   const { language } = useI18n();
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [isPhotoZooming, setIsPhotoZooming] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
 
   // Get photos for the current city, sorted by date (chronological)
-  const photos = useMemo(() => {
+  const photos = (() => {
     if (!cityName || !cityPhotos[cityName]) return [];
     const cityPhotoList = cityPhotos[cityName].photos;
     // Sort by date in ascending order (oldest first)
     return [...cityPhotoList].sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
-  }, [cityName, cityPhotos]);
+  })();
 
-  // Derive entering state from cityName (no useEffect needed)
-  const isEntering = !!cityName;
+  // Control the open state - stay open during closing animation
+  const isOpen = !!cityName && !isClosing;
 
-  // Reset selected photo when city changes
-  // Reset selected photo when city changes
+  // Block background scroll when gallery is open
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSelectedPhoto(null);
-    setIsPhotoZooming(false);
+    if (cityName) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [cityName]);
 
-  // Preload first few thumbnails for instant display
-  useEffect(() => {
-    if (photos.length > 0) {
-      photos.slice(0, 4).forEach((photo) => {
-        if (photo.thumbnail) {
-          const img = new Image();
-          img.src = photo.thumbnail;
-        }
-      });
-    }
-  }, [photos]);
-
-  // Handle thumbnail click
-  const handleThumbnailClick = (photo: Photo) => {
-    setIsPhotoZooming(true);
-    setSelectedPhoto(photo);
-
-    // Preload current and adjacent photos for instant switching
-    const currentIndex = photos.findIndex((p) => p.id === photo.id);
-    const photosToPreload = [
-      photo, // Current
-      photos[currentIndex - 1], // Previous
-      photos[currentIndex + 1], // Next
-    ].filter(Boolean);
-
-    photosToPreload.forEach((p) => {
-      if (p?.url) {
-        const img = new Image();
-        img.src = p.url.replace('/f_auto,q_auto/', '/f_auto,q_65,w_700/');
-      }
-    });
-  };
-
-  // Handle close photo
-  const handleClosePhoto = () => {
-    setIsPhotoZooming(false);
-    setTimeout(() => setSelectedPhoto(null), 300);
+  // Handle close with animation
+  const handleClose = () => {
+    setIsClosing(true);
+    // Wait for animation to complete before calling onClose
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 400);
   };
 
   // Handle backdrop click
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      if (selectedPhoto) {
-        handleClosePhoto();
-      } else {
-        onClose();
-      }
+      handleClose();
     }
-  };
-
-  // Handle horizontal scroll with mouse wheel on thumbnail bar
-  const handleThumbnailWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    // Convert vertical wheel to horizontal scroll
-    e.currentTarget.scrollLeft += e.deltaY;
-    e.preventDefault();
   };
 
   if (!cityName || photos.length === 0) return null;
 
   return (
     <div
-      className={`photo-gallery ${isEntering ? 'photo-gallery--open' : ''}`}
+      className={`photo-gallery ${isOpen ? 'photo-gallery--open' : ''}`}
       onClick={handleBackdropClick}
     >
       {/* Glassmorphism backdrop - click to close */}
-      <div className="photo-gallery__backdrop" onClick={onClose} />
+      <div className="photo-gallery__backdrop" onClick={handleClose} />
 
       {/* Close button */}
-      <button className="photo-gallery__close" onClick={onClose}>
+      <button className="photo-gallery__close" onClick={handleClose}>
         <X size={24} />
       </button>
 
-      {/* Horizontal thumbnail bar */}
-      <div className="photo-gallery__circle" onWheel={handleThumbnailWheel}>
-        {photos.map((photo, index) => (
-          <button
-            key={photo.id}
-            className={`photo-gallery__thumbnail ${selectedPhoto?.id === photo.id ? 'photo-gallery__thumbnail--selected' : ''}`}
-            style={{ '--delay': `${index * 0.08}s` } as React.CSSProperties}
-            onClick={() => handleThumbnailClick(photo)}
-          >
-            <img
-              src={photo.thumbnail?.replace('w_200,h_200', 'w_120,h_120')}
-              alt={photo.caption[language as 'ko' | 'en']}
-              loading="lazy"
-            />
-          </button>
-        ))}
-      </div>
+      {/* Left fade gradient */}
+      <div className="photo-gallery__fade-left" />
 
-      {/* Center photo viewer - Polaroid style */}
-      {selectedPhoto && (
-        <div
-          className={`photo-gallery__viewer ${isPhotoZooming ? 'photo-gallery__viewer--zoomed' : ''}`}
-          onClick={handleClosePhoto}
-        >
-          <div className="photo-gallery__viewer-content">
-            <img
-              src={
-                selectedPhoto.url
-                  ? selectedPhoto.url.replace('/f_auto,q_auto/', '/f_auto,q_65,w_700/')
-                  : selectedPhoto.url
-              }
-              alt={selectedPhoto.caption[language as 'ko' | 'en']}
-            />
-            <div className="photo-gallery__caption-area">
-              <p className="photo-gallery__caption">
-                {selectedPhoto.caption[language as 'ko' | 'en'] || '\u00A0'}
-              </p>
-              <div className="photo-gallery__meta">
-                <span className="photo-gallery__date">
-                  {selectedPhoto.date && selectedPhoto.date.includes('T')
-                    ? new Date(selectedPhoto.date).toLocaleString(
-                        language === 'ko' ? 'ko-KR' : 'en-US',
-                        {
+      {/* Right fade gradient */}
+      <div className="photo-gallery__fade-right" />
+
+      {/* Vertical scroll container - Instagram-style feed */}
+      <div
+        className="photo-gallery__scroll-container"
+        ref={scrollContainerRef}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {photos.map((photo) => (
+          <div key={photo.id} className="photo-gallery__polaroid">
+            <div className="photo-gallery__polaroid-content">
+              <img
+                src={
+                  photo.url
+                    ? photo.url.replace('/f_auto,q_auto/', '/f_auto,q_65,w_700/')
+                    : photo.url
+                }
+                alt={photo.caption[language as 'ko' | 'en']}
+              />
+              <div className="photo-gallery__caption-area">
+                <p className="photo-gallery__caption">
+                  {photo.caption[language as 'ko' | 'en'] || '\u00A0'}
+                </p>
+                <div className="photo-gallery__meta">
+                  <span className="photo-gallery__date">
+                    {photo.date && photo.date.includes('T')
+                      ? new Date(photo.date).toLocaleString(language === 'ko' ? 'ko-KR' : 'en-US', {
                           year: 'numeric',
                           month: 'short',
                           day: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit',
-                        }
-                      )
-                    : selectedPhoto.date || ''}
-                </span>
-                {(selectedPhoto.location || selectedPhoto.gps) && (
-                  <span className="photo-gallery__location">
-                    📍{' '}
-                    {selectedPhoto.location ||
-                      `${selectedPhoto.gps!.lat.toFixed(2)}, ${selectedPhoto.gps!.lng.toFixed(2)}`}
+                        })
+                      : photo.date || ''}
                   </span>
-                )}
+                  {(photo.location || photo.gps) && (
+                    <span className="photo-gallery__location">
+                      📍{' '}
+                      {photo.location ||
+                        `${photo.gps!.lat.toFixed(2)}, ${photo.gps!.lng.toFixed(2)}`}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }
