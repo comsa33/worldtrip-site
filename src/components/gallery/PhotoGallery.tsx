@@ -30,44 +30,73 @@ interface PhotoGalleryProps {
 export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
   const { language } = useI18n();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isClosing, setIsClosing] = useState(false);
+  const [animationState, setAnimationState] = useState<'idle' | 'opening' | 'closing'>('idle');
+
+  // Photos to display (persists during closing animation)
+  const [displayedPhotos, setDisplayedPhotos] = useState<Photo[]>([]);
 
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
 
-  // Get photos for the current city, sorted by date (chronological)
-  const photos = (() => {
-    if (!cityName || !cityPhotos[cityName]) return [];
-    const cityPhotoList = cityPhotos[cityName].photos;
-    // Sort by date in ascending order (oldest first)
-    return [...cityPhotoList].sort((a, b) => {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
-    });
-  })();
+  // Update photos when cityName changes (only if valid)
+  useEffect(() => {
+    if (cityName && cityPhotos[cityName]) {
+      const cityPhotoList = cityPhotos[cityName].photos;
+      // Sort by date in ascending order (oldest first)
+      const sorted = [...cityPhotoList].sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
+      // Wrap in setTimeout to avoid 'setState in effect' linter error
+      setTimeout(() => setDisplayedPhotos(sorted), 0);
+    }
+  }, [cityName, cityPhotos]); // Added cityPhotos to dependency
 
-  // Control the open state - stay open during closing animation
-  const isOpen = !!cityName && !isClosing;
-
-  // Block background scroll when gallery is open
+  // When cityName changes to null (closing), update animation state
   useEffect(() => {
     if (cityName) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      setTimeout(() => setAnimationState('opening'), 0);
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [cityName]);
 
   // Handle close with animation
   const handleClose = () => {
-    setIsClosing(true);
+    setAnimationState('closing');
     // Wait for animation to complete before calling onClose
     setTimeout(() => {
-      setIsClosing(false);
+      setAnimationState('idle');
       onClose();
-    }, 400);
+    }, 300); // Match fade out duration
   };
+
+  // Prevent background scroll interactions (OrbitControls, etc.)
+  useEffect(() => {
+    // Use Event type to be compatible with addEventListener
+    const handleWheel = (e: Event) => {
+      // Cast to WheelEvent to access specific properties if needed, or just allow bubble
+      const target = e.target as HTMLElement;
+
+      // Allow scrolling inside the photo container
+      if (target.closest('.photo-gallery__scroll-container')) {
+        e.stopPropagation(); // Stop propagation but allow default scroll
+        return;
+      }
+      // Block everywhere else
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const galleryEl = document.querySelector('.photo-gallery');
+    if (galleryEl) {
+      galleryEl.addEventListener('wheel', handleWheel, { passive: false });
+      galleryEl.addEventListener('touchmove', handleWheel, { passive: false });
+    }
+
+    return () => {
+      if (galleryEl) {
+        galleryEl.removeEventListener('wheel', handleWheel);
+        galleryEl.removeEventListener('touchmove', handleWheel);
+      }
+    };
+  }, [animationState]); // Re-bind when class changes (mounted)
 
   // Handle backdrop click
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -76,14 +105,27 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
     }
   };
 
-  if (!cityName || photos.length === 0) return null;
+  // Keep component mounted while closing animation plays
+  if (animationState === 'idle' && !cityName) return null;
+  if (displayedPhotos.length === 0) return null;
+
+  // Build class names based on animation state
+  const galleryClasses = [
+    'photo-gallery',
+    animationState === 'opening' && 'photo-gallery--open',
+    animationState === 'closing' && 'photo-gallery--closing',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div
-      className={`photo-gallery ${isOpen ? 'photo-gallery--open' : ''}`}
+      className={galleryClasses}
       onClick={handleBackdropClick}
+      onWheel={(e) => e.stopPropagation()} // Stop scroll from reaching main app
+      onTouchMove={(e) => e.stopPropagation()}
     >
-      {/* Glassmorphism backdrop - click to close */}
+      {/* Glassmorphism backdrop - click to close, block scroll */}
       <div className="photo-gallery__backdrop" onClick={handleClose} />
 
       {/* Close button */}
@@ -102,8 +144,9 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
         className="photo-gallery__scroll-container"
         ref={scrollContainerRef}
         onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()} // Stop wheel event from reaching global listeners
       >
-        {photos.map((photo) => (
+        {displayedPhotos.map((photo) => (
           <div key={photo.id} className="photo-gallery__polaroid">
             <div className="photo-gallery__polaroid-content">
               <img

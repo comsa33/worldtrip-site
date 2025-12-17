@@ -10,11 +10,12 @@
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  /* No transition - let photos animate individually */
+  /* Prevent scroll chaining to background */
+  overscroll-behavior: contain;
 }
 
 .photo-gallery--open {
-  opacity: 1; /* Show gallery */
+  opacity: 1; /* Show gallery when open */
   pointer-events: all;
 }
 
@@ -110,15 +111,12 @@
   pointer-events: auto;
 }
 
-/* Enter animation */
+/* Enter animation - explicit opening state */
 .photo-gallery--open .photo-gallery__polaroid {
   animation: polaroidEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Exit animation when closing */
-.photo-gallery:not(.photo-gallery--open) .photo-gallery__polaroid {
-  animation: polaroidExit 0.4s ease-out forwards;
-}
+/* No exit animation for photos - gallery fades out instead */
 
 @keyframes polaroidEnter {
   to {
@@ -183,10 +181,11 @@
 
 .photo-gallery__polaroid-content img {
   width: 600px; /* Fixed width */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Show full image, don't crop */
-  border-radius: 2px;
+  min-height: 200px; /* Ensure visibility even if loading */
+  height: auto; /* Allow height to adjust naturally based on aspect ratio */
   display: block;
+  border-radius: 2px;
+  background-color: #eee; /* Light gray placeholder */
 }
 
 /* Caption area - inside Polaroid frame */
