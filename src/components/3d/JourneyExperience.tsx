@@ -380,14 +380,20 @@ function getProgressiveZoom(stopId: number): number {
   if (stopId === 56) return 2.2; // Sitges (Zoom in tight for short trip)
   if (stopId === 57) return 1.8; // Barcelona 2
 
-  // ITALY: Milan(58) → gradual to Bra(60), maintain, zoom out at end
-  if (stopId === 58) return 1.8; // Milan entry
-  if (stopId === 59) return 1.95; // Torino
-  if (stopId === 60) return 2.1; // Bra - peak
-  if (stopId >= 61 && stopId <= 68) return 2.1; // Maintain through Italy
-  if (stopId === 69) return 1.9; // Milan exit - zoom out
+  // EASTERN EUROPE: Sofia(58) -> Prague(63)
+  if (stopId >= 58 && stopId <= 63) return 2.0;
 
-  // EUROPE (Sofia to Lisbon): maintain 1.5 until leaving for Brazil
+  // ITALY: Milan(64) -> Milan(75) (Shifted by +6)
+  if (stopId === 64) return 1.8; // Milan entry
+  if (stopId >= 65 && stopId <= 74) return 2.2; // Italy detailed tour (Turin...Orta)
+  if (stopId === 75) return 1.8; // Milan exit
+
+  // WESTERN EUROPE: Brussels(76), Paris(77)
+  if (stopId === 76) return 2.0;
+  if (stopId === 77) return 1.5; // Paris wide view
+
+  // MOROCCO: Madrid(78) is transit, Porto(79). Marrakesh(80)...
+  if (stopId >= 78 && stopId <= 79) return 1.5; // Madrid, Porto
   // From Milan(69) to Rio(83) is mostly flight/long bus - keep far zoom
   if (stopId >= 70 && stopId <= 82) return 1.5;
 

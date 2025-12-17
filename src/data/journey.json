@@ -1,14 +1,14 @@
 {
   "journey": {
     "title": "세계일주 배낭여행",
-    "startDate": "2016-07-01",
-    "endDate": "2017-06-15",
-    "totalDays": 345
+    "startDate": "2016-08-13",
+    "endDate": "2017-07-06",
+    "totalDays": 314
   },
-  "totalDays": 345,
+  "totalDays": 314,
   "totalCountries": 29,
-  "startDate": "2016-07-01",
-  "endDate": "2017-06-15",
+  "startDate": "2016-08-13",
+  "endDate": "2017-07-06",
   "stops": [
     {
       "id": 1,
@@ -17,8 +17,8 @@
       "countryCode": "KR",
       "order": 1,
       "transport": "start",
-      "startDate": "2016-07-01",
-      "endDate": "2016-07-01",
+      "startDate": "2016-08-13",
+      "endDate": "2016-08-13",
       "note": "출발"
     },
     {
@@ -28,8 +28,8 @@
       "countryCode": "KR",
       "order": 2,
       "transport": "bus",
-      "startDate": "2016-07-01",
-      "endDate": "2016-07-01"
+      "startDate": "2016-08-13",
+      "endDate": "2016-08-13"
     },
     {
       "id": 3,
@@ -38,8 +38,8 @@
       "countryCode": "VN",
       "order": 3,
       "transport": "flight",
-      "startDate": "2016-07-02",
-      "endDate": "2016-07-10"
+      "startDate": "2016-08-13",
+      "endDate": "2016-08-16"
     },
     {
       "id": 4,
@@ -48,8 +48,8 @@
       "countryCode": "VN",
       "order": 4,
       "transport": "train",
-      "startDate": "2016-07-10",
-      "endDate": "2016-07-15"
+      "startDate": "2016-08-16",
+      "endDate": "2016-08-18"
     },
     {
       "id": 5,
@@ -59,7 +59,7 @@
       "order": 5,
       "transport": "train",
       "startDate": "2016-07-15",
-      "endDate": "2016-07-18"
+      "endDate": "2016-08-22"
     },
     {
       "id": 6,
@@ -68,8 +68,8 @@
       "countryCode": "MY",
       "order": 6,
       "transport": "flight",
-      "startDate": "2016-07-19",
-      "endDate": "2016-07-22"
+      "startDate": "2016-08-22",
+      "endDate": "2016-08-23"
     },
     {
       "id": 7,
@@ -78,8 +78,8 @@
       "countryCode": "ID",
       "order": 7,
       "transport": "flight",
-      "startDate": "2016-07-23",
-      "endDate": "2016-07-25"
+      "startDate": "2016-08-23",
+      "endDate": "2016-08-24"
     },
     {
       "id": 8,
@@ -88,8 +88,8 @@
       "countryCode": "ID",
       "order": 8,
       "transport": "bus",
-      "startDate": "2016-07-25",
-      "endDate": "2016-07-30",
+      "startDate": "2016-08-24",
+      "endDate": "2016-08-25",
       "note": "Lake Toba"
     },
     {
@@ -99,8 +99,8 @@
       "countryCode": "ID",
       "order": 9,
       "transport": "bus",
-      "startDate": "2016-07-30",
-      "endDate": "2016-07-31"
+      "startDate": "2016-08-25",
+      "endDate": "2016-08-27"
     },
     {
       "id": 10,
@@ -109,8 +109,8 @@
       "countryCode": "MY",
       "order": 10,
       "transport": "flight",
-      "startDate": "2016-08-01",
-      "endDate": "2016-08-03"
+      "startDate": "2016-08-27",
+      "endDate": "2016-08-29"
     },
     {
       "id": 11,
@@ -119,8 +119,8 @@
       "countryCode": "KH",
       "order": 11,
       "transport": "flight",
-      "startDate": "2016-08-03",
-      "endDate": "2016-08-04",
+      "startDate": "2016-08-29",
+      "endDate": "2016-08-31",
       "note": "Angkor Wat"
     },
     {
@@ -130,8 +130,8 @@
       "countryCode": "TH",
       "order": 12,
       "transport": "flight",
-      "startDate": "2016-08-04",
-      "endDate": "2016-08-08"
+      "startDate": "2016-09-01",
+      "endDate": "2016-09-06"
     },
     {
       "id": 13,
@@ -140,8 +140,8 @@
       "countryCode": "LA",
       "order": 13,
       "transport": "flight",
-      "startDate": "2016-08-08",
-      "endDate": "2016-08-09",
+      "startDate": "2016-09-06",
+      "endDate": "2016-09-06",
       "note": "Added via script"
     },
     {
@@ -151,8 +151,8 @@
       "countryCode": "LA",
       "order": 14,
       "transport": "bus",
-      "startDate": "2016-08-09",
-      "endDate": "2016-08-12"
+      "startDate": "2016-09-06",
+      "endDate": "2016-09-09"
     },
     {
       "id": 15,
@@ -161,8 +161,8 @@
       "countryCode": "LA",
       "order": 15,
       "transport": "bus",
-      "startDate": "2016-08-12",
-      "endDate": "2016-08-16"
+      "startDate": "2016-09-09",
+      "endDate": "2016-09-12"
     },
     {
       "id": 16,
@@ -171,8 +171,8 @@
       "countryCode": "LA",
       "order": 16,
       "transport": "bus",
-      "startDate": "2016-08-16",
-      "endDate": "2016-08-19"
+      "startDate": "2016-09-12",
+      "endDate": "2016-09-14"
     },
     {
       "id": 17,
@@ -181,8 +181,8 @@
       "countryCode": "TH",
       "order": 17,
       "transport": "bus",
-      "startDate": "2016-08-19",
-      "endDate": "2016-08-20"
+      "startDate": "2016-09-14",
+      "endDate": "2016-09-15"
     },
     {
       "id": 18,
@@ -191,8 +191,8 @@
       "countryCode": "IN",
       "order": 18,
       "transport": "flight",
-      "startDate": "2016-08-21",
-      "endDate": "2016-08-25"
+      "startDate": "2016-09-15",
+      "endDate": "2016-09-18"
     },
     {
       "id": 19,
@@ -201,8 +201,8 @@
       "countryCode": "IN",
       "order": 19,
       "transport": "bus",
-      "startDate": "2016-08-25",
-      "endDate": "2016-08-28"
+      "startDate": "2016-09-18",
+      "endDate": "2016-09-18"
     },
     {
       "id": 20,
@@ -211,8 +211,8 @@
       "countryCode": "IN",
       "order": 20,
       "transport": "bus",
-      "startDate": "2016-08-28",
-      "endDate": "2016-08-28",
+      "startDate": "2016-09-18",
+      "endDate": "2016-09-20",
       "note": "Transit to Bangalore"
     },
     {
@@ -222,8 +222,8 @@
       "countryCode": "IN",
       "order": 21,
       "transport": "train",
-      "startDate": "2016-08-28",
-      "endDate": "2016-09-01"
+      "startDate": "2016-09-20",
+      "endDate": "2016-09-22"
     },
     {
       "id": 22,
@@ -232,8 +232,8 @@
       "countryCode": "IN",
       "order": 22,
       "transport": "train",
-      "startDate": "2016-09-01",
-      "endDate": "2016-09-05"
+      "startDate": "2016-09-23",
+      "endDate": "2016-09-26"
     },
     {
       "id": 23,
@@ -242,8 +242,8 @@
       "countryCode": "IN",
       "order": 23,
       "transport": "bus",
-      "startDate": "2016-09-05",
-      "endDate": "2016-09-08"
+      "startDate": "2016-09-27",
+      "endDate": "2016-09-30"
     },
     {
       "id": 24,
@@ -252,8 +252,8 @@
       "countryCode": "IN",
       "order": 24,
       "transport": "bus",
-      "startDate": "2016-09-08",
-      "endDate": "2016-09-10"
+      "startDate": "2016-10-01",
+      "endDate": "2016-10-03"
     },
     {
       "id": 25,
@@ -262,8 +262,8 @@
       "countryCode": "IN",
       "order": 25,
       "transport": "bus",
-      "startDate": "2016-09-10",
-      "endDate": "2016-09-12"
+      "startDate": "2016-10-03",
+      "endDate": "2016-10-04"
     },
     {
       "id": 26,
@@ -272,8 +272,8 @@
       "countryCode": "IN",
       "order": 26,
       "transport": "bus",
-      "startDate": "2016-09-12",
-      "endDate": "2016-09-14"
+      "startDate": "2016-10-04",
+      "endDate": "2016-10-05"
     },
     {
       "id": 27,
@@ -282,8 +282,8 @@
       "countryCode": "IN",
       "order": 27,
       "transport": "train",
-      "startDate": "2016-09-14",
-      "endDate": "2016-09-17"
+      "startDate": "2016-10-06",
+      "endDate": "2016-10-09"
     },
     {
       "id": 28,
@@ -292,8 +292,8 @@
       "countryCode": "IN",
       "order": 28,
       "transport": "train",
-      "startDate": "2016-09-17",
-      "endDate": "2016-09-19"
+      "startDate": "2016-10-09",
+      "endDate": "2016-10-10"
     },
     {
       "id": 29,
@@ -302,8 +302,8 @@
       "countryCode": "IN",
       "order": 29,
       "transport": "train",
-      "startDate": "2016-09-19",
-      "endDate": "2016-09-21"
+      "startDate": "2016-10-11",
+      "endDate": "2016-10-16"
     },
     {
       "id": 30,
@@ -312,8 +312,8 @@
       "countryCode": "IN",
       "order": 30,
       "transport": "train",
-      "startDate": "2016-09-21",
-      "endDate": "2016-09-24"
+      "startDate": "2016-10-16",
+      "endDate": "2016-10-18"
     },
     {
       "id": 31,
@@ -322,8 +322,8 @@
       "countryCode": "KR",
       "order": 31,
       "transport": "flight",
-      "startDate": "2016-09-24",
-      "endDate": "2016-09-29",
+      "startDate": "2016-10-19",
+      "endDate": "2016-10-25",
       "note": "Temporary Return"
     },
     {
@@ -333,8 +333,8 @@
       "countryCode": "KR",
       "order": 32,
       "transport": "bus",
-      "startDate": "2016-09-29",
-      "endDate": "2016-10-06",
+      "startDate": "2016-10-18",
+      "endDate": "2016-10-24",
       "note": "Home Visit"
     },
     {
@@ -344,8 +344,8 @@
       "countryCode": "KR",
       "order": 33,
       "transport": "bus",
-      "startDate": "2016-10-06",
-      "endDate": "2016-10-07"
+      "startDate": "2016-10-24",
+      "endDate": "2016-10-25"
     },
     {
       "id": 34,
@@ -354,8 +354,8 @@
       "countryCode": "JP",
       "order": 34,
       "transport": "flight",
-      "startDate": "2016-10-07",
-      "endDate": "2016-10-11"
+      "startDate": "2016-10-25",
+      "endDate": "2016-10-26"
     },
     {
       "id": 35,
@@ -364,8 +364,8 @@
       "countryCode": "IN",
       "order": 35,
       "transport": "flight",
-      "startDate": "2016-10-11",
-      "endDate": "2016-10-13",
+      "startDate": "2016-10-26",
+      "endDate": "2016-10-28",
       "note": "Return to India"
     },
     {
@@ -375,8 +375,8 @@
       "countryCode": "IN",
       "order": 36,
       "transport": "bus",
-      "startDate": "2016-10-13",
-      "endDate": "2016-10-15"
+      "startDate": "2016-10-28",
+      "endDate": "2016-10-28"
     },
     {
       "id": 37,
@@ -385,8 +385,8 @@
       "countryCode": "IN",
       "order": 37,
       "transport": "bus",
-      "startDate": "2016-10-15",
-      "endDate": "2016-10-18"
+      "startDate": "2016-10-28",
+      "endDate": "2016-10-31"
     },
     {
       "id": 38,
@@ -395,8 +395,8 @@
       "countryCode": "IN",
       "order": 38,
       "transport": "train",
-      "startDate": "2016-10-18",
-      "endDate": "2016-10-19"
+      "startDate": "2016-10-31",
+      "endDate": "2016-10-31"
     },
     {
       "id": 39,
@@ -405,8 +405,8 @@
       "countryCode": "IN",
       "order": 39,
       "transport": "bus",
-      "startDate": "2016-10-19",
-      "endDate": "2016-10-20",
+      "startDate": "2016-10-31",
+      "endDate": "2016-10-31",
       "note": "Border Crossing (India Side)"
     },
     {
@@ -416,8 +416,8 @@
       "countryCode": "NP",
       "order": 40,
       "transport": "trek",
-      "startDate": "2016-10-20",
-      "endDate": "2016-10-21",
+      "startDate": "2016-10-31",
+      "endDate": "2016-11-01",
       "note": "Border Crossing (Nepal Side)"
     },
     {
@@ -427,8 +427,8 @@
       "countryCode": "NP",
       "order": 41,
       "transport": "bus",
-      "startDate": "2016-10-21",
-      "endDate": "2016-10-25"
+      "startDate": "2016-10-31",
+      "endDate": "2016-11-03"
     },
     {
       "id": 42,
@@ -437,8 +437,8 @@
       "countryCode": "NP",
       "order": 42,
       "transport": "trek",
-      "startDate": "2016-10-25",
-      "endDate": "2016-11-01",
+      "startDate": "2016-11-03",
+      "endDate": "2016-11-06",
       "note": "Trekking"
     },
     {
@@ -448,8 +448,8 @@
       "countryCode": "NP",
       "order": 43,
       "transport": "trek",
-      "startDate": "2016-11-01",
-      "endDate": "2016-11-03"
+      "startDate": "2016-11-06",
+      "endDate": "2016-11-09"
     },
     {
       "id": 44,
@@ -458,8 +458,8 @@
       "countryCode": "NP",
       "order": 44,
       "transport": "bus",
-      "startDate": "2016-11-03",
-      "endDate": "2016-11-06"
+      "startDate": "2016-11-09",
+      "endDate": "2016-11-11"
     },
     {
       "id": 45,
@@ -468,8 +468,8 @@
       "countryCode": "NP",
       "order": 45,
       "transport": "bus",
-      "startDate": "2016-11-06",
-      "endDate": "2016-11-08"
+      "startDate": "2016-11-11",
+      "endDate": "2016-11-15"
     },
     {
       "id": 46,
@@ -478,8 +478,8 @@
       "countryCode": "NP",
       "order": 46,
       "transport": "bus",
-      "startDate": "2016-11-08",
-      "endDate": "2016-11-09"
+      "startDate": "2016-11-15",
+      "endDate": "2016-11-15"
     },
     {
       "id": 47,
@@ -488,8 +488,8 @@
       "countryCode": "IN",
       "order": 47,
       "transport": "trek",
-      "startDate": "2016-11-09",
-      "endDate": "2016-11-10",
+      "startDate": "2016-11-15",
+      "endDate": "2016-11-15",
       "note": "Border Return"
     },
     {
@@ -499,8 +499,8 @@
       "countryCode": "IN",
       "order": 48,
       "transport": "train",
-      "startDate": "2016-11-10",
-      "endDate": "2016-11-12"
+      "startDate": "2016-11-15",
+      "endDate": "2016-11-17"
     },
     {
       "id": 49,
@@ -509,8 +509,8 @@
       "countryCode": "AE",
       "order": 49,
       "transport": "flight",
-      "startDate": "2016-11-12",
-      "endDate": "2016-11-15",
+      "startDate": "2016-11-17",
+      "endDate": "2016-11-17",
       "note": "Dubai arrival"
     },
     {
@@ -520,8 +520,8 @@
       "countryCode": "AE",
       "order": 50,
       "transport": "bus",
-      "startDate": "2016-11-15",
-      "endDate": "2016-11-17",
+      "startDate": "2016-11-17",
+      "endDate": "2016-11-19",
       "note": "Abu Dhabi"
     },
     {
@@ -531,8 +531,8 @@
       "countryCode": "AE",
       "order": 51,
       "transport": "bus",
-      "startDate": "2016-11-17",
-      "endDate": "2016-11-18",
+      "startDate": "2016-11-19",
+      "endDate": "2016-11-19",
       "note": "Sharjah Desert"
     },
     {
@@ -542,8 +542,8 @@
       "countryCode": "AE",
       "order": 52,
       "transport": "bus",
-      "startDate": "2016-11-18",
-      "endDate": "2016-11-19",
+      "startDate": "2016-11-19",
+      "endDate": "2016-11-22",
       "note": "Return for flight"
     },
     {
@@ -553,8 +553,9 @@
       "countryCode": "EG",
       "order": 53,
       "transport": "flight",
-      "startDate": "2016-11-19",
-      "endDate": "2016-11-24"
+      "startDate": "2016-11-22",
+      "endDate": "2016-11-23",
+      "note": "Cairo arrival"
     },
     {
       "id": 54,
@@ -564,7 +565,7 @@
       "order": 54,
       "transport": "bus",
       "startDate": "2016-11-24",
-      "endDate": "2016-11-28",
+      "endDate": "2016-12-01",
       "note": "Dahab, Sinai"
     },
     {
@@ -574,8 +575,8 @@
       "countryCode": "ES",
       "order": 55,
       "transport": "flight",
-      "startDate": "2016-11-30",
-      "endDate": "2016-12-02"
+      "startDate": "2016-12-02",
+      "endDate": "2016-12-06"
     },
     {
       "id": 56,
@@ -596,208 +597,208 @@
       "order": 57,
       "transport": "train",
       "startDate": "2016-12-02",
-      "endDate": "2016-12-04"
+      "endDate": "2016-12-31"
     },
     {
+      "city": "소피아",
+      "country": "BG",
+      "countryCode": "BG",
+      "transport": "flight",
+      "startDate": "2016-12-31",
+      "endDate": "2017-01-02",
       "id": 58,
+      "order": 58
+    },
+    {
+      "city": "베오그라드",
+      "country": "RS",
+      "countryCode": "RS",
+      "transport": "bus",
+      "startDate": "2016-12-??",
+      "endDate": "2016-12-??",
+      "id": 59,
+      "order": 59
+    },
+    {
+      "city": "부다페스트",
+      "country": "HU",
+      "countryCode": "HU",
+      "transport": "bus",
+      "startDate": "2016-12-??",
+      "endDate": "2016-12-??",
+      "id": 60,
+      "order": 60
+    },
+    {
+      "city": "프라하",
+      "country": "CZ",
+      "countryCode": "CZ",
+      "transport": "bus",
+      "startDate": "2017-??-??",
+      "endDate": "2017-??-??",
+      "id": 61,
+      "order": 61
+    },
+    {
+      "city": "크라쿠프",
+      "country": "PL",
+      "countryCode": "PL",
+      "transport": "bus",
+      "startDate": "2017-??-??",
+      "endDate": "2017-??-??",
+      "id": 62,
+      "order": 62
+    },
+    {
+      "city": "프라하",
+      "country": "CZ",
+      "countryCode": "CZ",
+      "transport": "bus",
+      "startDate": "2017-??-??",
+      "endDate": "2017-??-??",
+      "id": 63,
+      "order": 63
+    },
+    {
+      "id": 64,
       "city": "밀라노",
       "country": "IT",
       "countryCode": "IT",
-      "order": 58,
+      "order": 64,
       "transport": "flight",
       "startDate": "2016-12-04",
       "endDate": "2016-12-06"
     },
     {
-      "id": 59,
+      "id": 65,
       "city": "토리노",
       "country": "IT",
       "countryCode": "IT",
-      "order": 59,
+      "order": 65,
       "transport": "bus",
       "startDate": "2016-12-06",
       "endDate": "2016-12-08"
     },
     {
-      "id": 60,
+      "id": 66,
       "city": "브라",
       "country": "IT",
       "countryCode": "IT",
-      "order": 60,
+      "order": 66,
       "transport": "bus",
       "startDate": "2016-12-08",
       "endDate": "2016-12-09",
       "note": "Bra"
     },
     {
-      "id": 61,
+      "id": 67,
       "city": "제노바",
       "country": "IT",
       "countryCode": "IT",
-      "order": 61,
+      "order": 67,
       "transport": "bus",
       "startDate": "2016-12-09",
       "endDate": "2016-12-11"
     },
     {
-      "id": 62,
+      "id": 68,
       "city": "포르토피노",
       "country": "IT",
       "countryCode": "IT",
-      "order": 62,
+      "order": 68,
       "transport": "bus",
       "startDate": "2016-12-11",
       "endDate": "2016-12-12"
     },
     {
-      "id": 63,
+      "id": 69,
       "city": "라스페치아",
       "country": "IT",
       "countryCode": "IT",
-      "order": 63,
+      "order": 69,
       "transport": "bus",
       "startDate": "2016-12-12",
       "endDate": "2016-12-13"
     },
     {
-      "id": 64,
+      "id": 70,
       "city": "피사",
       "country": "IT",
       "countryCode": "IT",
-      "order": 64,
+      "order": 70,
       "transport": "bus",
       "startDate": "2016-12-13",
       "endDate": "2016-12-14"
     },
     {
-      "id": 65,
+      "id": 71,
       "city": "피렌체",
       "country": "IT",
       "countryCode": "IT",
-      "order": 65,
+      "order": 71,
       "transport": "bus",
       "startDate": "2016-12-14",
       "endDate": "2016-12-17"
     },
     {
-      "id": 66,
+      "id": 72,
       "city": "친퀘테레",
       "country": "IT",
       "countryCode": "IT",
-      "order": 66,
+      "order": 72,
       "transport": "bus",
       "startDate": "2016-12-17",
       "endDate": "2016-12-19"
     },
     {
-      "id": 67,
+      "id": 73,
       "city": "오르타 호수",
       "country": "IT",
       "countryCode": "IT",
-      "order": 67,
+      "order": 73,
       "transport": "bus",
       "startDate": "2016-12-19",
       "endDate": "2016-12-21"
     },
     {
-      "id": 68,
+      "id": 74,
       "city": "토리노",
       "country": "IT",
       "countryCode": "IT",
-      "order": 68,
+      "order": 74,
       "transport": "bus",
       "startDate": "2016-12-21",
       "endDate": "2016-12-22"
     },
     {
-      "id": 69,
+      "id": 75,
       "city": "밀라노",
       "country": "IT",
       "countryCode": "IT",
-      "order": 69,
+      "order": 75,
       "transport": "bus",
       "startDate": "2016-12-22",
       "endDate": "2016-12-24"
     },
     {
-      "id": 70,
-      "city": "소피아",
-      "country": "BG",
-      "countryCode": "BG",
-      "order": 70,
-      "transport": "flight",
-      "startDate": "2016-12-24",
-      "endDate": "2016-12-25"
-    },
-    {
-      "id": 71,
-      "city": "베오그라드",
-      "country": "RS",
-      "countryCode": "RS",
-      "order": 71,
-      "transport": "bus",
-      "startDate": "2016-12-25",
-      "endDate": "2016-12-27"
-    },
-    {
-      "id": 72,
-      "city": "부다페스트",
-      "country": "HU",
-      "countryCode": "HU",
-      "order": 72,
-      "transport": "bus",
-      "startDate": "2016-12-27",
-      "endDate": "2016-12-31"
-    },
-    {
-      "id": 73,
-      "city": "카토비세",
-      "country": "PL",
-      "countryCode": "PL",
-      "order": 73,
-      "transport": "bus",
-      "startDate": "2016-12-31",
-      "endDate": "2017-01-01"
-    },
-    {
-      "id": 74,
-      "city": "바르샤바",
-      "country": "PL",
-      "countryCode": "PL",
-      "order": 74,
-      "transport": "bus",
-      "startDate": "2017-01-01",
-      "endDate": "2017-01-04"
-    },
-    {
-      "id": 75,
-      "city": "프라하",
-      "country": "CZ",
-      "countryCode": "CZ",
-      "order": 75,
-      "transport": "bus",
-      "startDate": "2017-01-04",
-      "endDate": "2017-01-08"
-    },
-    {
-      "id": 76,
       "city": "브뤼셀",
       "country": "BE",
       "countryCode": "BE",
-      "order": 76,
       "transport": "flight",
-      "startDate": "2017-01-08",
-      "endDate": "2017-01-10"
+      "startDate": "2017-??-??",
+      "endDate": "2017-??-??",
+      "id": 76,
+      "order": 76
     },
     {
-      "id": 77,
       "city": "파리",
       "country": "FR",
       "countryCode": "FR",
-      "order": 77,
       "transport": "bus",
-      "startDate": "2017-01-10",
-      "endDate": "2017-01-14"
+      "startDate": "2017-??-??",
+      "endDate": "2017-??-??",
+      "id": 77,
+      "order": 77
     },
     {
       "id": 78,

@@ -314,6 +314,28 @@
       "stats": { "days": 18, "cities": 4 }
     },
     {
+      "code": "BG",
+      "name": { "en": "Bulgaria", "ko": "불가리아", "native": "България" },
+      "slug": "bulgaria",
+      "continent": "europe",
+      "coordinates": { "lat": 42.7339, "lng": 25.4858 },
+      "theme": {
+        "primary": "#2D6C26",
+        "secondary": "#D62612",
+        "pattern": "rose",
+        "gradient": "linear-gradient(135deg, #2D6C26 0%, #D62612 100%)"
+      },
+      "visits": [
+        {
+          "order": 17,
+          "startDate": "2016-12-11",
+          "endDate": "2016-12-15",
+          "cities": ["소피아", "플로브디프"]
+        }
+      ],
+      "stats": { "days": 5, "cities": 2 }
+    },
+    {
       "code": "IT",
       "name": { "en": "Italy", "ko": "이탈리아", "native": "Italia" },
       "slug": "italy",
