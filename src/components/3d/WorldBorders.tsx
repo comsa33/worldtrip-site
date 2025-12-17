@@ -139,35 +139,35 @@ export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
     <group>
       {borderPaths.map((path, i) => (
         <group key={i}>
-          {/* Outer Glow: Wide and faint */}
+          {/* Outer Glow: Wide ambient bloom (Very subtle 0.05) */}
           <Line
             points={path}
-            color="#00e5ff"
-            opacity={0.3} // Reduced from 0.15 (additive is brighter)
+            color="#ff8c00"
+            opacity={0.05} // Drastically reduced to hide overlap dots
             transparent
-            lineWidth={6}
+            lineWidth={20}
             depthWrite={false}
             blending={THREE.AdditiveBlending}
           />
-          {/* Inner Glow: Medium and brighter */}
+          {/* Inner Glow: Thicker main body (Subtle 0.15) */}
           <Line
             points={path}
-            color="#00e5ff"
-            opacity={0.6} // Reduced (additive is brighter)
+            color="#ffd700"
+            opacity={0.15} // Reduced
             transparent
-            lineWidth={3}
+            lineWidth={8}
             depthWrite={false}
             blending={THREE.AdditiveBlending}
           />
-          {/* Core Outline: Thin and white-hot */}
+          {/* Core Outline: Defined anchor (Normal Blending prevents hotspot dots) */}
           <Line
             points={path}
-            color="#e0ffff"
-            opacity={1}
+            color="#fffacd"
+            opacity={0.8}
             transparent
-            lineWidth={1}
+            lineWidth={1.5}
             depthWrite={false}
-            blending={THREE.AdditiveBlending}
+            blending={THREE.NormalBlending} // Changed from Additive to Normal
           />
         </group>
       ))}
