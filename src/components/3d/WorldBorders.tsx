@@ -122,9 +122,9 @@ export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
       };
 
       if (geometry.type === 'Polygon') {
-        coordinates.forEach(processRing);
+        (coordinates as number[][][]).forEach(processRing);
       } else if (geometry.type === 'MultiPolygon') {
-        coordinates.forEach((polygon: number[][][]) => {
+        (coordinates as number[][][][]).forEach((polygon: number[][][]) => {
           polygon.forEach(processRing);
         });
       }
