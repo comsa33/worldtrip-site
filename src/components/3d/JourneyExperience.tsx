@@ -1385,9 +1385,12 @@ function JourneyExperienceContent() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      // Allow default scrolling if gallery is open (for thumbnail scroll)
-      if (selectedCityRef.current !== null) return;
+      // Don't handle touch if gallery is open - let gallery handle it naturally
+      if (selectedCityRef.current !== null) {
+        return; // Gallery is open, don't interfere with its scrolling
+      }
 
+      // Only prevent default when gallery is closed and we're handling journey navigation
       if (isDragging.current && e.touches.length === 1) {
         e.preventDefault();
       }

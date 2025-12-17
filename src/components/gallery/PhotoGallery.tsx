@@ -87,13 +87,12 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
     const galleryEl = document.querySelector('.photo-gallery');
     if (galleryEl) {
       galleryEl.addEventListener('wheel', handleWheel, { passive: false });
-      galleryEl.addEventListener('touchmove', handleWheel, { passive: false });
+      // touchmove is handled by JourneyExperience - no need to duplicate here
     }
 
     return () => {
       if (galleryEl) {
         galleryEl.removeEventListener('wheel', handleWheel);
-        galleryEl.removeEventListener('touchmove', handleWheel);
       }
     };
   }, [animationState]); // Re-bind when class changes (mounted)
@@ -123,7 +122,6 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
       className={galleryClasses}
       onClick={handleBackdropClick}
       onWheel={(e) => e.stopPropagation()} // Stop scroll from reaching main app
-      onTouchMove={(e) => e.stopPropagation()}
     >
       {/* Glassmorphism backdrop - click to close, block scroll */}
       <div className="photo-gallery__backdrop" onClick={handleClose} />
@@ -140,12 +138,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
       <div className="photo-gallery__fade-right" />
 
       {/* Vertical scroll container - Instagram-style feed */}
-      <div
-        className="photo-gallery__scroll-container"
-        ref={scrollContainerRef}
-        onClick={(e) => e.stopPropagation()}
-        onWheel={(e) => e.stopPropagation()} // Stop wheel event from reaching global listeners
-      >
+      <div className="photo-gallery__scroll-container" ref={scrollContainerRef}>
         {displayedPhotos.map((photo) => (
           <div key={photo.id} className="photo-gallery__polaroid">
             <div className="photo-gallery__polaroid-content">

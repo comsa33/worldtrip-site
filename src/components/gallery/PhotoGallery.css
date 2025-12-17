@@ -96,7 +96,7 @@
   scrollbar-width: none; /* Hide scrollbar Firefox */
   -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
   z-index: 5;
-  pointer-events: none; /* Allow clicks to pass through to backdrop */
+  /* pointer-events enabled to allow touch scrolling - backdrop handled by z-index */
 }
 
 .photo-gallery__scroll-container::-webkit-scrollbar {
@@ -108,7 +108,7 @@
   flex-shrink: 0;
   opacity: 0;
   transform: translateY(30px);
-  pointer-events: auto;
+  /* pointer-events inherited from parent - no need to override */
 }
 
 /* Enter animation - explicit opening state */
