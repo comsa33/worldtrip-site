@@ -271,7 +271,7 @@
 
   .photo-gallery__viewer-content img {
     max-width: 85vw;
-    max-height: 40vh;
+    max-height: 60vh; /* Increased for better portrait photo display */
   }
 
   .photo-gallery__caption {
