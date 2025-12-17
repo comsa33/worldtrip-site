@@ -504,23 +504,25 @@
     },
     {
       "id": 49,
-      "city": "아부다비",
+      "city": "두바이",
       "country": "AE",
       "countryCode": "AE",
       "order": 49,
       "transport": "flight",
       "startDate": "2016-11-12",
-      "endDate": "2016-11-14"
+      "endDate": "2016-11-15",
+      "note": "Dubai arrival"
     },
     {
       "id": 50,
-      "city": "두바이",
+      "city": "아부다비",
       "country": "AE",
       "countryCode": "AE",
       "order": 50,
       "transport": "bus",
-      "startDate": "2016-11-14",
-      "endDate": "2016-11-17"
+      "startDate": "2016-11-15",
+      "endDate": "2016-11-17",
+      "note": "Abu Dhabi"
     },
     {
       "id": 51,
