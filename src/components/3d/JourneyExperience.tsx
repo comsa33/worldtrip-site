@@ -598,25 +598,29 @@ function Scene({
   const allCountriesData = useMemo(() => {
     const countries = (countriesData as { countries: CountryData[] }).countries;
 
-    // Find visited countries in order
-    const visitedCountryCodes = stops
-      .map((stop) => {
-        const cityData = cities[stop.city];
-        return cityData?.country;
-      })
-      .filter((code, index, self) => code && self.indexOf(code) === index);
+    if (!currentCountryCode) return [];
 
-    const currentIndex = visitedCountryCodes.indexOf(currentCountryCode || '');
-
-    // Show current ±1 countries only (3 total max)
+    // Get prev/next countries from actual stop sequence (not deduplicated)
     const visibleCountryCodes = new Set<string>();
-    if (currentCountryCode) {
-      visibleCountryCodes.add(currentCountryCode);
-      if (currentIndex > 0) {
-        visibleCountryCodes.add(visitedCountryCodes[currentIndex - 1]!);
+    visibleCountryCodes.add(currentCountryCode);
+
+    // Find previous country (different from current)
+    for (let i = currentStopIdx - 1; i >= 0; i--) {
+      const cityData = cities[stops[i].city];
+      const prevCountry = cityData?.country;
+      if (prevCountry && prevCountry !== currentCountryCode) {
+        visibleCountryCodes.add(prevCountry);
+        break;
       }
-      if (currentIndex < visitedCountryCodes.length - 1) {
-        visibleCountryCodes.add(visitedCountryCodes[currentIndex + 1]!);
+    }
+
+    // Find next country (different from current)
+    for (let i = currentStopIdx + 1; i < stops.length; i++) {
+      const cityData = cities[stops[i].city];
+      const nextCountry = cityData?.country;
+      if (nextCountry && nextCountry !== currentCountryCode) {
+        visibleCountryCodes.add(nextCountry);
+        break;
       }
     }
 
@@ -631,7 +635,7 @@ function Scene({
           isCurrent: country.code === currentCountryCode,
         };
       });
-  }, [currentCountryCode, stops, cities]);
+  }, [currentCountryCode, currentStopIdx, stops, cities]);
 
   return (
     <>
