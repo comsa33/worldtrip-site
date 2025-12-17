@@ -446,6 +446,29 @@
       "stats": { "days": 5, "cities": 2 }
     },
     {
+      "code": "FR",
+      "name": { "en": "France", "ko": "프랑스", "native": "France" },
+      "slug": "france",
+      "continent": "europe",
+      "coordinates": { "lat": 46.2276, "lng": 2.2137 },
+      "theme": {
+        "primary": "#0055A4",
+        "secondary": "#EF4135",
+        "pattern": "fleurdelis",
+        "gradient": "linear-gradient(135deg, #0055A4 0%, #EF4135 100%)"
+      },
+      "visits": [
+        {
+          "order": 23,
+          "startDate": "2017-01-10",
+          "endDate": "2017-01-14",
+          "cities": ["파리"],
+          "note": "파리"
+        }
+      ],
+      "stats": { "days": 5, "cities": 1 }
+    },
+    {
       "code": "MA",
       "name": { "en": "Morocco", "ko": "모로코", "native": "المغرب" },
       "slug": "morocco",

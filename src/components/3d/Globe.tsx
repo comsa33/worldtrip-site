@@ -12,7 +12,7 @@ import './Globe.css';
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lng + 180) * (Math.PI / 180);
-  
+
   return new THREE.Vector3(
     -radius * Math.sin(phi) * Math.cos(theta),
     radius * Math.cos(phi),
@@ -21,23 +21,27 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
 }
 
 // Generate arc curve between two points
-function generateArcPoints(start: THREE.Vector3, end: THREE.Vector3, segments: number = 64): THREE.Vector3[] {
+function generateArcPoints(
+  start: THREE.Vector3,
+  end: THREE.Vector3,
+  segments: number = 64
+): THREE.Vector3[] {
   const points: THREE.Vector3[] = [];
   const midPoint = start.clone().add(end).multiplyScalar(0.5);
   const distance = start.distanceTo(end);
   midPoint.normalize().multiplyScalar(2.2 + distance * 0.25);
-  
+
   for (let i = 0; i <= segments; i++) {
     const t = i / segments;
     const point = new THREE.Vector3();
-    
+
     point.x = (1 - t) * (1 - t) * start.x + 2 * (1 - t) * t * midPoint.x + t * t * end.x;
     point.y = (1 - t) * (1 - t) * start.y + 2 * (1 - t) * t * midPoint.y + t * t * end.y;
     point.z = (1 - t) * (1 - t) * start.z + 2 * (1 - t) * t * midPoint.z + t * t * end.z;
-    
+
     points.push(point);
   }
-  
+
   return points;
 }
 
@@ -55,12 +59,12 @@ function CountryMarker({ country, position, onHover, onClick, isHovered, index }
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const [visible, setVisible] = useState(false);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), index * 50);
     return () => clearTimeout(timer);
   }, [index]);
-  
+
   useFrame((state) => {
     if (ringRef.current) {
       ringRef.current.rotation.z = state.clock.elapsedTime * 0.5;
@@ -70,19 +74,24 @@ function CountryMarker({ country, position, onHover, onClick, isHovered, index }
       groupRef.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.1);
     }
   });
-  
+
   const color = new THREE.Color(country.theme.primary);
-  
+
   if (!visible) return null;
-  
+
   return (
     <group ref={groupRef} position={position}>
       {/* Outer ring */}
       <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.045, 0.055, 32]} />
-        <meshBasicMaterial color={color} transparent opacity={isHovered ? 0.8 : 0.4} side={THREE.DoubleSide} />
+        <meshBasicMaterial
+          color={color}
+          transparent
+          opacity={isHovered ? 0.8 : 0.4}
+          side={THREE.DoubleSide}
+        />
       </mesh>
-      
+
       {/* Center dot */}
       <mesh
         onPointerEnter={(e) => {
@@ -102,7 +111,7 @@ function CountryMarker({ country, position, onHover, onClick, isHovered, index }
         <sphereGeometry args={[0.03, 16, 16]} />
         <meshBasicMaterial color={color} />
       </mesh>
-      
+
       {/* Glow effect */}
       {isHovered && (
         <mesh>
@@ -110,7 +119,7 @@ function CountryMarker({ country, position, onHover, onClick, isHovered, index }
           <meshBasicMaterial color={color} transparent opacity={0.2} />
         </mesh>
       )}
-      
+
       {/* Label */}
       {isHovered && (
         <Html distanceFactor={8} style={{ pointerEvents: 'none' }}>
@@ -133,12 +142,12 @@ interface ArcProps {
 
 function TravelArc({ from, to, index }: ArcProps) {
   const [progress, setProgress] = useState(0);
-  
+
   useEffect(() => {
     const delay = index * 100;
     const timer = setTimeout(() => {
       const animate = () => {
-        setProgress(p => {
+        setProgress((p) => {
           if (p >= 1) return 1;
           return p + 0.02;
         });
@@ -148,34 +157,26 @@ function TravelArc({ from, to, index }: ArcProps) {
     }, delay);
     return () => clearTimeout(timer);
   }, [index]);
-  
+
   const points = useMemo(() => {
     const start = latLngToVector3(from.coordinates.lat, from.coordinates.lng, 2);
     const end = latLngToVector3(to.coordinates.lat, to.coordinates.lng, 2);
     return generateArcPoints(start, end);
   }, [from, to]);
-  
+
   const visiblePoints = useMemo(() => {
     const count = Math.floor(points.length * progress);
     return points.slice(0, Math.max(count, 2));
   }, [points, progress]);
-  
-  return (
-    <Line
-      points={visiblePoints}
-      color="#2997ff"
-      lineWidth={1.5}
-      transparent
-      opacity={0.5}
-    />
-  );
+
+  return <Line points={visiblePoints} color="#2997ff" lineWidth={1.5} transparent opacity={0.5} />;
 }
 
 // Earth with realistic texture
 function Earth() {
   const meshRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
-  
+
   useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.0005;
@@ -189,23 +190,14 @@ function Earth() {
     <group>
       {/* Main Earth */}
       <Sphere ref={meshRef} args={[2, 128, 128]}>
-        <meshStandardMaterial
-          color="#1a3a5c"
-          roughness={0.9}
-          metalness={0.1}
-        />
+        <meshStandardMaterial color="#1a3a5c" roughness={0.9} metalness={0.1} />
       </Sphere>
-      
+
       {/* Atmosphere glow */}
       <Sphere args={[2.05, 64, 64]}>
-        <meshBasicMaterial
-          color="#2997ff"
-          transparent
-          opacity={0.05}
-          side={THREE.BackSide}
-        />
+        <meshBasicMaterial color="#2997ff" transparent opacity={0.05} side={THREE.BackSide} />
       </Sphere>
-      
+
       {/* Continents overlay - simplified geometry approach */}
       <Sphere args={[2.01, 64, 64]}>
         <meshStandardMaterial
@@ -226,7 +218,7 @@ function GlobeGrid() {
   const gridLines = useMemo(() => {
     const lines: THREE.Vector3[][] = [];
     const radius = 2.005;
-    
+
     // Only major latitude lines
     for (let lat = -60; lat <= 60; lat += 30) {
       const points: THREE.Vector3[] = [];
@@ -235,7 +227,7 @@ function GlobeGrid() {
       }
       lines.push(points);
     }
-    
+
     // Only major longitude lines
     for (let lng = 0; lng < 360; lng += 30) {
       const points: THREE.Vector3[] = [];
@@ -244,10 +236,10 @@ function GlobeGrid() {
       }
       lines.push(points);
     }
-    
+
     return lines;
   }, []);
-  
+
   return (
     <>
       {gridLines.map((points, index) => (
@@ -268,42 +260,46 @@ function GlobeGrid() {
 function GlobeScene() {
   const navigate = useNavigate();
   const [hoveredCountry, setHoveredCountry] = useState<Country | null>(null);
-  
+
   const countries = countriesData.countries as Country[];
   const stops = journeyData.stops;
-  
+
   const countryPositions = useMemo(() => {
-    return countries.map(country => ({
+    return countries.map((country) => ({
       country,
-      position: latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.08)
+      position: latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.08),
     }));
   }, [countries]);
-  
+
   const arcs = useMemo(() => {
     const result: { from: Country; to: Country }[] = [];
-    
+
     for (let i = 0; i < stops.length - 1; i++) {
-      const fromCountry = countries.find(c => c.code === stops[i].countryCode);
-      const toCountry = countries.find(c => c.code === stops[i + 1].countryCode);
-      
+      const fromCountry = countries.find((c) => c.code === stops[i].countryCode);
+      const toCountry = countries.find((c) => c.code === stops[i + 1].countryCode);
+
       if (fromCountry && toCountry && fromCountry.code !== toCountry.code) {
         const exists = result.some(
-          r => (r.from.code === fromCountry.code && r.to.code === toCountry.code) ||
-               (r.from.code === toCountry.code && r.to.code === fromCountry.code)
+          (r) =>
+            (r.from.code === fromCountry.code && r.to.code === toCountry.code) ||
+            (r.from.code === toCountry.code && r.to.code === fromCountry.code)
         );
         if (!exists) {
           result.push({ from: fromCountry, to: toCountry });
         }
       }
     }
-    
+
     return result;
   }, [countries, stops]);
-  
-  const handleCountryClick = useCallback((country: Country) => {
-    navigate(`/countries/${country.slug}`);
-  }, [navigate]);
-  
+
+  const handleCountryClick = useCallback(
+    (country: Country) => {
+      navigate(`/countries/${country.slug}`);
+    },
+    [navigate]
+  );
+
   return (
     <>
       {/* Lighting */}
@@ -311,19 +307,21 @@ function GlobeScene() {
       <directionalLight position={[5, 3, 5]} intensity={0.8} color="#ffffff" />
       <directionalLight position={[-5, -3, -5]} intensity={0.3} color="#2997ff" />
       <pointLight position={[0, 0, 5]} intensity={0.5} color="#ffffff" />
-      
       {/* Stars */}
       <Stars radius={200} depth={100} count={3000} factor={3} saturation={0} fade speed={0.5} />
-      
+      // ... existing code ...
       {/* Earth */}
       <Earth />
       <GlobeGrid />
-      
       {/* Arcs */}
       {arcs.map((arc, index) => (
-        <TravelArc key={`${arc.from.code}-${arc.to.code}`} from={arc.from} to={arc.to} index={index} />
+        <TravelArc
+          key={`${arc.from.code}-${arc.to.code}`}
+          from={arc.from}
+          to={arc.to}
+          index={index}
+        />
       ))}
-      
       {/* Markers */}
       {countryPositions.map(({ country, position }, index) => (
         <CountryMarker
@@ -336,7 +334,6 @@ function GlobeScene() {
           index={index}
         />
       ))}
-      
       {/* Controls */}
       <OrbitControls
         enableZoom={true}
@@ -355,12 +352,12 @@ function GlobeScene() {
 // Main Globe Component
 export default function Globe() {
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
-  
+
   return (
     <div className={`globe-container ${isLoaded ? 'globe-container--loaded' : ''}`}>
       <Canvas
@@ -370,7 +367,7 @@ export default function Globe() {
       >
         <GlobeScene />
       </Canvas>
-      
+
       {/* Stats Overlay */}
       <div className="globe-stats-panel glass-card">
         <div className="globe-stat">
@@ -388,7 +385,7 @@ export default function Globe() {
           <span className="globe-stat__label">Continents</span>
         </div>
       </div>
-      
+
       {/* Interaction hint */}
       <div className="globe-hint">
         <span>Drag to rotate • Scroll to zoom • Click marker to explore</span>

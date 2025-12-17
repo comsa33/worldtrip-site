@@ -11,6 +11,7 @@ import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../..
 import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import cityPhotosData from '../../data/cityPhotos.json';
+import { WorldBorders } from './WorldBorders';
 import './JourneyExperience.css';
 
 // =============================================================================
@@ -509,7 +510,7 @@ function Scene({
   const cities = citiesData.cities as Record<string, CityData>;
   const { language } = useI18n();
 
-  const path = useMemo(() => generatePath(stops, cities, 2.02), [stops, cities]);
+  const path = useMemo(() => generatePath(stops, cities, 2.003), [stops, cities]);
 
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
 
@@ -558,7 +559,7 @@ function Scene({
 
         const city = cities[stop.city];
         if (!city) return null;
-        const pos = latLngToVector3(city.lat, city.lng, 2.03);
+        const pos = latLngToVector3(city.lat, city.lng, 2.004);
         return {
           id: stop.id,
           position: pos,
@@ -613,7 +614,7 @@ function Scene({
     return countries
       .filter((country) => visibleCountryCodes.has(country.code))
       .map((country) => {
-        const labelPos = latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.08);
+        const labelPos = latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.02);
         return {
           code: country.code,
           name: country.name,
@@ -1550,6 +1551,7 @@ function JourneyExperienceContent() {
             onInteraction={handleUserInteraction}
             onCityClick={handleCityClick}
           />
+          <WorldBorders countryCode={currentCountry} />
         </Canvas>
       </div>
 
