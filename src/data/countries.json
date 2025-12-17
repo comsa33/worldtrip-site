@@ -2,713 +2,561 @@
   "countries": [
     {
       "code": "KR",
-      "name": { "en": "South Korea", "ko": "한국", "native": "대한민국" },
+      "name": {
+        "en": "South Korea",
+        "ko": "한국",
+        "native": "대한민국"
+      },
       "slug": "korea",
       "continent": "asia",
-      "coordinates": { "lat": 37.5665, "lng": 126.978 },
-      "theme": {
-        "primary": "#003478",
-        "secondary": "#C60C30",
-        "pattern": "taegeuk",
-        "gradient": "linear-gradient(135deg, #003478 0%, #C60C30 100%)"
+      "coordinates": {
+        "lat": 37.5665,
+        "lng": 126.978
       },
-      "visits": [
-        {
-          "order": 0,
-          "startDate": "2016-07-01",
-          "endDate": "2016-07-01",
-          "cities": ["서울"],
-          "note": "출발"
-        },
-        {
-          "order": 11,
-          "startDate": "2016-10-15",
-          "endDate": "2016-10-20",
-          "cities": ["서울"],
-          "note": "결혼식 사회로 잠깐 귀국"
-        }
-      ],
-      "stats": { "days": 6, "cities": 1 }
+      "stats": {
+        "days": 6,
+        "cities": 1
+      }
     },
     {
       "code": "VN",
-      "name": { "en": "Vietnam", "ko": "베트남", "native": "Việt Nam" },
+      "name": {
+        "en": "Vietnam",
+        "ko": "베트남",
+        "native": "Việt Nam"
+      },
       "slug": "vietnam",
       "continent": "asia",
-      "coordinates": { "lat": 14.0583, "lng": 108.2772 },
-      "theme": {
-        "primary": "#DA251D",
-        "secondary": "#FFCD00",
-        "pattern": "lotus",
-        "gradient": "linear-gradient(135deg, #DA251D 0%, #FFCD00 100%)"
+      "coordinates": {
+        "lat": 14.0583,
+        "lng": 108.2772
       },
-      "visits": [
-        {
-          "order": 1,
-          "startDate": "2016-07-02",
-          "endDate": "2016-07-15",
-          "cities": ["호치민", "다낭", "하노이"]
-        }
-      ],
-      "stats": { "days": 14, "cities": 3 }
+      "stats": {
+        "days": 14,
+        "cities": 3
+      }
     },
     {
       "code": "MY",
-      "name": { "en": "Malaysia", "ko": "말레이시아", "native": "Malaysia" },
+      "name": {
+        "en": "Malaysia",
+        "ko": "말레이시아",
+        "native": "Malaysia"
+      },
       "slug": "malaysia",
       "continent": "asia",
-      "coordinates": { "lat": 4.2105, "lng": 101.9758 },
-      "theme": {
-        "primary": "#010066",
-        "secondary": "#CC0000",
-        "pattern": "hibiscus",
-        "gradient": "linear-gradient(135deg, #010066 0%, #CC0000 100%)"
+      "coordinates": {
+        "lat": 4.2105,
+        "lng": 101.9758
       },
-      "visits": [
-        {
-          "order": 2,
-          "startDate": "2016-07-16",
-          "endDate": "2016-07-25",
-          "cities": ["쿠알라룸푸르", "말라카"]
-        },
-        {
-          "order": 4,
-          "startDate": "2016-08-05",
-          "endDate": "2016-08-10",
-          "cities": ["페낭", "랑카위"]
-        }
-      ],
-      "stats": { "days": 20, "cities": 4 }
+      "stats": {
+        "days": 20,
+        "cities": 4
+      }
     },
     {
       "code": "ID",
-      "name": { "en": "Indonesia", "ko": "인도네시아", "native": "Indonesia" },
+      "name": {
+        "en": "Indonesia",
+        "ko": "인도네시아",
+        "native": "Indonesia"
+      },
       "slug": "indonesia",
       "continent": "asia",
-      "coordinates": { "lat": -0.7893, "lng": 113.9213 },
-      "theme": {
-        "primary": "#FF0000",
-        "secondary": "#FFFFFF",
-        "pattern": "batik",
-        "gradient": "linear-gradient(135deg, #FF0000 0%, #8B0000 100%)"
+      "coordinates": {
+        "lat": -0.7893,
+        "lng": 113.9213
       },
-      "visits": [
-        {
-          "order": 3,
-          "startDate": "2016-07-26",
-          "endDate": "2016-08-04",
-          "cities": ["발리", "족자카르타"]
-        }
-      ],
-      "stats": { "days": 10, "cities": 2 }
+      "stats": {
+        "days": 10,
+        "cities": 2
+      }
     },
     {
       "code": "LA",
-      "name": { "en": "Laos", "ko": "라오스", "native": "ລາວ" },
+      "name": {
+        "en": "Laos",
+        "ko": "라오스",
+        "native": "ລາວ"
+      },
       "slug": "laos",
       "continent": "asia",
-      "coordinates": { "lat": 19.8563, "lng": 102.4955 },
-      "theme": {
-        "primary": "#002868",
-        "secondary": "#CE1126",
-        "pattern": "plumeria",
-        "gradient": "linear-gradient(135deg, #002868 0%, #CE1126 100%)"
+      "coordinates": {
+        "lat": 19.8563,
+        "lng": 102.4955
       },
-      "visits": [
-        {
-          "order": 5,
-          "startDate": "2016-08-11",
-          "endDate": "2016-08-20",
-          "cities": ["비엔티안", "루앙프라방"]
-        }
-      ],
-      "stats": { "days": 10, "cities": 2 }
+      "stats": {
+        "days": 10,
+        "cities": 2
+      }
     },
     {
       "code": "TH",
-      "name": { "en": "Thailand", "ko": "태국", "native": "ประเทศไทย" },
+      "name": {
+        "en": "Thailand",
+        "ko": "태국",
+        "native": "ประเทศไทย"
+      },
       "slug": "thailand",
       "continent": "asia",
-      "coordinates": { "lat": 15.87, "lng": 100.9925 },
-      "theme": {
-        "primary": "#A51931",
-        "secondary": "#F4F5F8",
-        "pattern": "elephant",
-        "gradient": "linear-gradient(135deg, #A51931 0%, #2D2A4A 100%)"
+      "coordinates": {
+        "lat": 15.87,
+        "lng": 100.9925
       },
-      "visits": [
-        {
-          "order": 6,
-          "startDate": "2016-08-21",
-          "endDate": "2016-09-05",
-          "cities": ["방콕", "치앙마이", "푸켓"]
-        }
-      ],
-      "stats": { "days": 16, "cities": 3 }
+      "stats": {
+        "days": 16,
+        "cities": 3
+      }
     },
     {
       "code": "KH",
-      "name": { "en": "Cambodia", "ko": "캄보디아", "native": "កម្ពុជា" },
+      "name": {
+        "en": "Cambodia",
+        "ko": "캄보디아",
+        "native": "កម្ពុជា"
+      },
       "slug": "cambodia",
       "continent": "asia",
-      "coordinates": { "lat": 12.5657, "lng": 104.991 },
-      "theme": {
-        "primary": "#032EA1",
-        "secondary": "#E00025",
-        "pattern": "angkor",
-        "gradient": "linear-gradient(135deg, #032EA1 0%, #E00025 100%)"
+      "coordinates": {
+        "lat": 12.5657,
+        "lng": 104.991
       },
-      "visits": [
-        { "order": 5, "startDate": "2016-08-01", "endDate": "2016-08-03", "cities": ["시엠립"] }
-      ],
-      "stats": { "days": 3, "cities": 1 }
+      "stats": {
+        "days": 3,
+        "cities": 1
+      }
     },
     {
       "code": "IN",
-      "name": { "en": "India", "ko": "인도", "native": "भारत" },
+      "name": {
+        "en": "India",
+        "ko": "인도",
+        "native": "भारत"
+      },
       "slug": "india",
       "continent": "asia",
-      "coordinates": { "lat": 20.5937, "lng": 78.9629 },
-      "theme": {
-        "primary": "#FF9933",
-        "secondary": "#138808",
-        "pattern": "mandala",
-        "gradient": "linear-gradient(135deg, #FF9933 0%, #138808 100%)"
+      "coordinates": {
+        "lat": 20.5937,
+        "lng": 78.9629
       },
-      "visits": [
-        {
-          "order": 7,
-          "startDate": "2016-09-06",
-          "endDate": "2016-09-25",
-          "cities": ["델리", "아그라", "자이푸르", "바라나시"]
-        },
-        {
-          "order": 9,
-          "startDate": "2016-10-05",
-          "endDate": "2016-10-14",
-          "cities": ["콜카타", "고아"]
-        },
-        {
-          "order": 13,
-          "startDate": "2016-10-28",
-          "endDate": "2016-11-10",
-          "cities": ["뭄바이", "케랄라"]
-        }
-      ],
-      "stats": { "days": 52, "cities": 8 }
+      "stats": {
+        "days": 52,
+        "cities": 8
+      }
     },
     {
       "code": "NP",
-      "name": { "en": "Nepal", "ko": "네팔", "native": "नेपाल" },
+      "name": {
+        "en": "Nepal",
+        "ko": "네팔",
+        "native": "नेपाल"
+      },
       "slug": "nepal",
       "continent": "asia",
-      "coordinates": { "lat": 28.3949, "lng": 84.124 },
-      "theme": {
-        "primary": "#DD2C00",
-        "secondary": "#003366",
-        "pattern": "himalaya",
-        "gradient": "linear-gradient(135deg, #DD2C00 0%, #003366 100%)"
+      "coordinates": {
+        "lat": 28.3949,
+        "lng": 84.124
       },
-      "visits": [
-        {
-          "order": 8,
-          "startDate": "2016-09-26",
-          "endDate": "2016-10-04",
-          "cities": ["카트만두", "포카라"]
-        }
-      ],
-      "stats": { "days": 9, "cities": 2 }
+      "stats": {
+        "days": 9,
+        "cities": 2
+      }
     },
     {
       "code": "JP",
-      "name": { "en": "Japan", "ko": "일본", "native": "日本" },
+      "name": {
+        "en": "Japan",
+        "ko": "일본",
+        "native": "日本"
+      },
       "slug": "japan",
       "continent": "asia",
-      "coordinates": { "lat": 36.2048, "lng": 138.2529 },
-      "theme": {
-        "primary": "#BC002D",
-        "secondary": "#FFFFFF",
-        "pattern": "sakura",
-        "gradient": "linear-gradient(135deg, #BC002D 0%, #FF6B9D 100%)"
+      "coordinates": {
+        "lat": 36.2048,
+        "lng": 138.2529
       },
-      "visits": [
-        {
-          "order": 12,
-          "startDate": "2016-10-21",
-          "endDate": "2016-10-27",
-          "cities": ["도쿄", "오사카"]
-        }
-      ],
-      "stats": { "days": 7, "cities": 2 }
+      "stats": {
+        "days": 7,
+        "cities": 2
+      }
     },
     {
       "code": "AE",
-      "name": { "en": "UAE", "ko": "아랍에미레이트", "native": "الإمارات" },
+      "name": {
+        "en": "UAE",
+        "ko": "아랍에미레이트",
+        "native": "الإمارات"
+      },
       "slug": "uae",
       "continent": "middle-east",
-      "coordinates": { "lat": 23.4241, "lng": 53.8478 },
-      "theme": {
-        "primary": "#00732F",
-        "secondary": "#BF9B30",
-        "pattern": "arabesque",
-        "gradient": "linear-gradient(135deg, #00732F 0%, #BF9B30 100%)"
+      "coordinates": {
+        "lat": 23.4241,
+        "lng": 53.8478
       },
-      "visits": [
-        {
-          "order": 14,
-          "startDate": "2016-11-11",
-          "endDate": "2016-11-14",
-          "cities": ["두바이", "아부다비"]
-        }
-      ],
-      "stats": { "days": 4, "cities": 2 }
+      "stats": {
+        "days": 4,
+        "cities": 2
+      }
     },
     {
       "code": "EG",
-      "name": { "en": "Egypt", "ko": "이집트", "native": "مصر" },
+      "name": {
+        "en": "Egypt",
+        "ko": "이집트",
+        "native": "مصر"
+      },
       "slug": "egypt",
       "continent": "africa",
-      "coordinates": { "lat": 26.8206, "lng": 30.8025 },
-      "theme": {
-        "primary": "#C09300",
-        "secondary": "#000000",
-        "pattern": "pyramid",
-        "gradient": "linear-gradient(135deg, #C09300 0%, #8B6914 100%)"
+      "coordinates": {
+        "lat": 26.8206,
+        "lng": 30.8025
       },
-      "visits": [
-        {
-          "order": 15,
-          "startDate": "2016-11-15",
-          "endDate": "2016-11-28",
-          "cities": ["카이로", "룩소르", "아스완"]
-        }
-      ],
-      "stats": { "days": 14, "cities": 3 }
+      "stats": {
+        "days": 14,
+        "cities": 3
+      }
     },
     {
       "code": "ES",
-      "name": { "en": "Spain", "ko": "스페인", "native": "España" },
+      "name": {
+        "en": "Spain",
+        "ko": "스페인",
+        "native": "España"
+      },
       "slug": "spain",
       "continent": "europe",
-      "coordinates": { "lat": 40.4637, "lng": -3.7492 },
-      "theme": {
-        "primary": "#AA151B",
-        "secondary": "#F1BF00",
-        "pattern": "tiles",
-        "gradient": "linear-gradient(135deg, #AA151B 0%, #F1BF00 100%)"
+      "coordinates": {
+        "lat": 40.4637,
+        "lng": -3.7492
       },
-      "visits": [
-        {
-          "order": 16,
-          "startDate": "2016-11-29",
-          "endDate": "2016-12-10",
-          "cities": ["마드리드", "바르셀로나"]
-        },
-        {
-          "order": 23,
-          "startDate": "2017-01-20",
-          "endDate": "2017-01-25",
-          "cities": ["세비야", "그라나다"]
-        }
-      ],
-      "stats": { "days": 18, "cities": 4 }
+      "stats": {
+        "days": 18,
+        "cities": 4
+      }
     },
     {
       "code": "BG",
-      "name": { "en": "Bulgaria", "ko": "불가리아", "native": "България" },
+      "name": {
+        "en": "Bulgaria",
+        "ko": "불가리아",
+        "native": "България"
+      },
       "slug": "bulgaria",
       "continent": "europe",
-      "coordinates": { "lat": 42.7339, "lng": 25.4858 },
-      "theme": {
-        "primary": "#2D6C26",
-        "secondary": "#D62612",
-        "pattern": "rose",
-        "gradient": "linear-gradient(135deg, #2D6C26 0%, #D62612 100%)"
+      "coordinates": {
+        "lat": 42.7339,
+        "lng": 25.4858
       },
-      "visits": [
-        {
-          "order": 17,
-          "startDate": "2016-12-11",
-          "endDate": "2016-12-15",
-          "cities": ["소피아", "플로브디프"]
-        }
-      ],
-      "stats": { "days": 5, "cities": 2 }
+      "stats": {
+        "days": 5,
+        "cities": 2
+      }
     },
     {
       "code": "IT",
-      "name": { "en": "Italy", "ko": "이탈리아", "native": "Italia" },
+      "name": {
+        "en": "Italy",
+        "ko": "이탈리아",
+        "native": "Italia"
+      },
       "slug": "italy",
       "continent": "europe",
-      "coordinates": { "lat": 41.8719, "lng": 12.5674 },
-      "theme": {
-        "primary": "#009246",
-        "secondary": "#CE2B37",
-        "pattern": "renaissance",
-        "gradient": "linear-gradient(135deg, #009246 0%, #CE2B37 100%)"
+      "coordinates": {
+        "lat": 41.8719,
+        "lng": 12.5674
       },
-      "visits": [
-        {
-          "order": 17,
-          "startDate": "2016-12-11",
-          "endDate": "2016-12-20",
-          "cities": ["로마", "피렌체", "베네치아"]
-        }
-      ],
-      "stats": { "days": 10, "cities": 3 }
+      "stats": {
+        "days": 10,
+        "cities": 3
+      }
     },
     {
       "code": "RS",
-      "name": { "en": "Serbia", "ko": "세르비아", "native": "Србија" },
+      "name": {
+        "en": "Serbia",
+        "ko": "세르비아",
+        "native": "Србија"
+      },
       "slug": "serbia",
       "continent": "europe",
-      "coordinates": { "lat": 44.0165, "lng": 21.0059 },
-      "theme": {
-        "primary": "#C6363C",
-        "secondary": "#0C4076",
-        "pattern": "traditional",
-        "gradient": "linear-gradient(135deg, #C6363C 0%, #0C4076 100%)"
+      "coordinates": {
+        "lat": 44.0165,
+        "lng": 21.0059
       },
-      "visits": [
-        {
-          "order": 18,
-          "startDate": "2016-12-21",
-          "endDate": "2016-12-25",
-          "cities": ["베오그라드"]
-        }
-      ],
-      "stats": { "days": 5, "cities": 1 }
+      "stats": {
+        "days": 5,
+        "cities": 1
+      }
     },
     {
       "code": "HU",
-      "name": { "en": "Hungary", "ko": "헝가리", "native": "Magyarország" },
+      "name": {
+        "en": "Hungary",
+        "ko": "헝가리",
+        "native": "Magyarország"
+      },
       "slug": "hungary",
       "continent": "europe",
-      "coordinates": { "lat": 47.1625, "lng": 19.5033 },
-      "theme": {
-        "primary": "#477050",
-        "secondary": "#CE2939",
-        "pattern": "kalocsai",
-        "gradient": "linear-gradient(135deg, #CE2939 0%, #477050 100%)"
+      "coordinates": {
+        "lat": 47.1625,
+        "lng": 19.5033
       },
-      "visits": [
-        {
-          "order": 19,
-          "startDate": "2016-12-26",
-          "endDate": "2016-12-31",
-          "cities": ["부다페스트"]
-        }
-      ],
-      "stats": { "days": 6, "cities": 1 }
+      "stats": {
+        "days": 6,
+        "cities": 1
+      }
     },
     {
       "code": "PL",
-      "name": { "en": "Poland", "ko": "폴란드", "native": "Polska" },
+      "name": {
+        "en": "Poland",
+        "ko": "폴란드",
+        "native": "Polska"
+      },
       "slug": "poland",
       "continent": "europe",
-      "coordinates": { "lat": 51.9194, "lng": 19.1451 },
-      "theme": {
-        "primary": "#DC143C",
-        "secondary": "#FFFFFF",
-        "pattern": "wycinanki",
-        "gradient": "linear-gradient(135deg, #DC143C 0%, #8B0000 100%)"
+      "coordinates": {
+        "lat": 51.9194,
+        "lng": 19.1451
       },
-      "visits": [
-        {
-          "order": 20,
-          "startDate": "2017-01-01",
-          "endDate": "2017-01-07",
-          "cities": ["크라쿠프", "바르샤바"]
-        }
-      ],
-      "stats": { "days": 7, "cities": 2 }
+      "stats": {
+        "days": 7,
+        "cities": 2
+      }
     },
     {
       "code": "CZ",
-      "name": { "en": "Czech Republic", "ko": "체코", "native": "Česko" },
+      "name": {
+        "en": "Czech Republic",
+        "ko": "체코",
+        "native": "Česko"
+      },
       "slug": "czech",
       "continent": "europe",
-      "coordinates": { "lat": 49.8175, "lng": 15.473 },
-      "theme": {
-        "primary": "#11457E",
-        "secondary": "#D7141A",
-        "pattern": "bohemian",
-        "gradient": "linear-gradient(135deg, #11457E 0%, #D7141A 100%)"
+      "coordinates": {
+        "lat": 49.8175,
+        "lng": 15.473
       },
-      "visits": [
-        {
-          "order": 21,
-          "startDate": "2017-01-08",
-          "endDate": "2017-01-14",
-          "cities": ["프라하", "체스키크롬로프"]
-        }
-      ],
-      "stats": { "days": 7, "cities": 2 }
+      "stats": {
+        "days": 7,
+        "cities": 2
+      }
     },
     {
       "code": "BE",
-      "name": { "en": "Belgium", "ko": "벨기에", "native": "België" },
+      "name": {
+        "en": "Belgium",
+        "ko": "벨기에",
+        "native": "België"
+      },
       "slug": "belgium",
       "continent": "europe",
-      "coordinates": { "lat": 50.5039, "lng": 4.4699 },
-      "theme": {
-        "primary": "#000000",
-        "secondary": "#FDDA24",
-        "pattern": "artnouveau",
-        "gradient": "linear-gradient(135deg, #000000 0%, #FDDA24 100%)"
+      "coordinates": {
+        "lat": 50.5039,
+        "lng": 4.4699
       },
-      "visits": [
-        {
-          "order": 22,
-          "startDate": "2017-01-15",
-          "endDate": "2017-01-19",
-          "cities": ["브뤼셀", "브뤼헤"]
-        }
-      ],
-      "stats": { "days": 5, "cities": 2 }
+      "stats": {
+        "days": 5,
+        "cities": 2
+      }
     },
     {
       "code": "FR",
-      "name": { "en": "France", "ko": "프랑스", "native": "France" },
+      "name": {
+        "en": "France",
+        "ko": "프랑스",
+        "native": "France"
+      },
       "slug": "france",
       "continent": "europe",
-      "coordinates": { "lat": 46.2276, "lng": 2.2137 },
-      "theme": {
-        "primary": "#0055A4",
-        "secondary": "#EF4135",
-        "pattern": "fleurdelis",
-        "gradient": "linear-gradient(135deg, #0055A4 0%, #EF4135 100%)"
+      "coordinates": {
+        "lat": 46.2276,
+        "lng": 2.2137
       },
-      "visits": [
-        {
-          "order": 23,
-          "startDate": "2017-01-10",
-          "endDate": "2017-01-14",
-          "cities": ["파리"],
-          "note": "파리"
-        }
-      ],
-      "stats": { "days": 5, "cities": 1 }
+      "stats": {
+        "days": 5,
+        "cities": 1
+      }
     },
     {
       "code": "MA",
-      "name": { "en": "Morocco", "ko": "모로코", "native": "المغرب" },
+      "name": {
+        "en": "Morocco",
+        "ko": "모로코",
+        "native": "المغرب"
+      },
       "slug": "morocco",
       "continent": "africa",
-      "coordinates": { "lat": 31.7917, "lng": -7.0926 },
-      "theme": {
-        "primary": "#C1272D",
-        "secondary": "#006233",
-        "pattern": "zellige",
-        "gradient": "linear-gradient(135deg, #C1272D 0%, #006233 100%)"
+      "coordinates": {
+        "lat": 31.7917,
+        "lng": -7.0926
       },
-      "visits": [
-        {
-          "order": 24,
-          "startDate": "2017-01-26",
-          "endDate": "2017-02-05",
-          "cities": ["마라케시", "페스", "셰프샤우엔"]
-        }
-      ],
-      "stats": { "days": 11, "cities": 3 }
+      "stats": {
+        "days": 11,
+        "cities": 3
+      }
     },
     {
       "code": "PT",
-      "name": { "en": "Portugal", "ko": "포르투갈", "native": "Portugal" },
+      "name": {
+        "en": "Portugal",
+        "ko": "포르투갈",
+        "native": "Portugal"
+      },
       "slug": "portugal",
       "continent": "europe",
-      "coordinates": { "lat": 39.3999, "lng": -8.2245 },
-      "theme": {
-        "primary": "#006600",
-        "secondary": "#FF0000",
-        "pattern": "azulejo",
-        "gradient": "linear-gradient(135deg, #006600 0%, #FF0000 100%)"
+      "coordinates": {
+        "lat": 39.3999,
+        "lng": -8.2245
       },
-      "visits": [
-        {
-          "order": 25,
-          "startDate": "2017-02-06",
-          "endDate": "2017-02-15",
-          "cities": ["리스본", "포르투"]
-        }
-      ],
-      "stats": { "days": 10, "cities": 2 }
+      "stats": {
+        "days": 10,
+        "cities": 2
+      }
     },
     {
       "code": "BR",
-      "name": { "en": "Brazil", "ko": "브라질", "native": "Brasil" },
+      "name": {
+        "en": "Brazil",
+        "ko": "브라질",
+        "native": "Brasil"
+      },
       "slug": "brazil",
       "continent": "south-america",
-      "coordinates": { "lat": -14.235, "lng": -51.9253 },
-      "theme": {
-        "primary": "#009C3B",
-        "secondary": "#FFDF00",
-        "pattern": "tropical",
-        "gradient": "linear-gradient(135deg, #009C3B 0%, #FFDF00 100%)"
+      "coordinates": {
+        "lat": -14.235,
+        "lng": -51.9253
       },
-      "visits": [
-        {
-          "order": 26,
-          "startDate": "2017-02-16",
-          "endDate": "2017-03-01",
-          "cities": ["리우데자네이루", "상파울루", "이과수"]
-        }
-      ],
-      "stats": { "days": 14, "cities": 3 }
+      "stats": {
+        "days": 14,
+        "cities": 3
+      }
     },
     {
       "code": "UY",
-      "name": { "en": "Uruguay", "ko": "우루과이", "native": "Uruguay" },
+      "name": {
+        "en": "Uruguay",
+        "ko": "우루과이",
+        "native": "Uruguay"
+      },
       "slug": "uruguay",
       "continent": "south-america",
-      "coordinates": { "lat": -34.9011, "lng": -56.1645 },
-      "theme": {
-        "primary": "#0038A8",
-        "secondary": "#FCD116",
-        "pattern": "sun",
-        "gradient": "linear-gradient(135deg, #0038A8 0%, #FCD116 100%)"
+      "coordinates": {
+        "lat": -34.9011,
+        "lng": -56.1645
       },
-      "visits": [
-        {
-          "order": 27,
-          "startDate": "2017-03-14",
-          "endDate": "2017-03-17",
-          "cities": ["몬테비데오"]
-        }
-      ],
-      "stats": { "days": 4, "cities": 1 }
+      "stats": {
+        "days": 4,
+        "cities": 1
+      }
     },
     {
       "code": "AR",
-      "name": { "en": "Argentina", "ko": "아르헨티나", "native": "Argentina" },
+      "name": {
+        "en": "Argentina",
+        "ko": "아르헨티나",
+        "native": "Argentina"
+      },
       "slug": "argentina",
       "continent": "south-america",
-      "coordinates": { "lat": -38.4161, "lng": -63.6167 },
-      "theme": {
-        "primary": "#74ACDF",
-        "secondary": "#FFFFFF",
-        "pattern": "tango",
-        "gradient": "linear-gradient(135deg, #74ACDF 0%, #F6B40E 100%)"
+      "coordinates": {
+        "lat": -38.4161,
+        "lng": -63.6167
       },
-      "visits": [
-        {
-          "order": 28,
-          "startDate": "2017-03-06",
-          "endDate": "2017-03-20",
-          "cities": ["부에노스아이레스", "우수아이아", "엘칼라파테"]
-        }
-      ],
-      "stats": { "days": 15, "cities": 3 }
+      "stats": {
+        "days": 15,
+        "cities": 3
+      }
     },
     {
       "code": "CL",
-      "name": { "en": "Chile", "ko": "칠레", "native": "Chile" },
+      "name": {
+        "en": "Chile",
+        "ko": "칠레",
+        "native": "Chile"
+      },
       "slug": "chile",
       "continent": "south-america",
-      "coordinates": { "lat": -35.6751, "lng": -71.543 },
-      "theme": {
-        "primary": "#D52B1E",
-        "secondary": "#0039A6",
-        "pattern": "mapuche",
-        "gradient": "linear-gradient(135deg, #D52B1E 0%, #0039A6 100%)"
+      "coordinates": {
+        "lat": -35.6751,
+        "lng": -71.543
       },
-      "visits": [
-        {
-          "order": 29,
-          "startDate": "2017-03-21",
-          "endDate": "2017-04-05",
-          "cities": ["산티아고", "발파라이소", "아타카마"]
-        }
-      ],
-      "stats": { "days": 16, "cities": 3 }
+      "stats": {
+        "days": 16,
+        "cities": 3
+      }
     },
     {
       "code": "BO",
-      "name": { "en": "Bolivia", "ko": "볼리비아", "native": "Bolivia" },
+      "name": {
+        "en": "Bolivia",
+        "ko": "볼리비아",
+        "native": "Bolivia"
+      },
       "slug": "bolivia",
       "continent": "south-america",
-      "coordinates": { "lat": -16.2902, "lng": -63.5887 },
-      "theme": {
-        "primary": "#D52B1E",
-        "secondary": "#007934",
-        "pattern": "andean",
-        "gradient": "linear-gradient(135deg, #D52B1E 0%, #007934 100%)"
+      "coordinates": {
+        "lat": -16.2902,
+        "lng": -63.5887
       },
-      "visits": [
-        {
-          "order": 30,
-          "startDate": "2017-04-06",
-          "endDate": "2017-04-18",
-          "cities": ["라파스", "우유니", "수크레"]
-        }
-      ],
-      "stats": { "days": 13, "cities": 3 }
+      "stats": {
+        "days": 13,
+        "cities": 3
+      }
     },
     {
       "code": "PE",
-      "name": { "en": "Peru", "ko": "페루", "native": "Perú" },
+      "name": {
+        "en": "Peru",
+        "ko": "페루",
+        "native": "Perú"
+      },
       "slug": "peru",
       "continent": "south-america",
-      "coordinates": { "lat": -9.19, "lng": -75.0152 },
-      "theme": {
-        "primary": "#D91023",
-        "secondary": "#FFFFFF",
-        "pattern": "inca",
-        "gradient": "linear-gradient(135deg, #D91023 0%, #8B0000 100%)"
+      "coordinates": {
+        "lat": -9.19,
+        "lng": -75.0152
       },
-      "visits": [
-        {
-          "order": 31,
-          "startDate": "2017-04-19",
-          "endDate": "2017-05-05",
-          "cities": ["리마", "쿠스코", "마추픽추"]
-        }
-      ],
-      "stats": { "days": 17, "cities": 3 }
+      "stats": {
+        "days": 17,
+        "cities": 3
+      }
     },
     {
       "code": "EC",
-      "name": { "en": "Ecuador", "ko": "에콰도르", "native": "Ecuador" },
+      "name": {
+        "en": "Ecuador",
+        "ko": "에콰도르",
+        "native": "Ecuador"
+      },
       "slug": "ecuador",
       "continent": "south-america",
-      "coordinates": { "lat": -1.8312, "lng": -78.1834 },
-      "theme": {
-        "primary": "#FFD100",
-        "secondary": "#034EA2",
-        "pattern": "otavalo",
-        "gradient": "linear-gradient(135deg, #FFD100 0%, #034EA2 100%)"
+      "coordinates": {
+        "lat": -1.8312,
+        "lng": -78.1834
       },
-      "visits": [
-        {
-          "order": 32,
-          "startDate": "2017-05-06",
-          "endDate": "2017-05-20",
-          "cities": ["키토", "갈라파고스"]
-        }
-      ],
-      "stats": { "days": 15, "cities": 2 }
+      "stats": {
+        "days": 15,
+        "cities": 2
+      }
     },
     {
       "code": "CO",
-      "name": { "en": "Colombia", "ko": "콜롬비아", "native": "Colombia" },
+      "name": {
+        "en": "Colombia",
+        "ko": "콜롬비아",
+        "native": "Colombia"
+      },
       "slug": "colombia",
       "continent": "south-america",
-      "coordinates": { "lat": 4.5709, "lng": -74.2973 },
-      "theme": {
-        "primary": "#FCD116",
-        "secondary": "#003893",
-        "pattern": "mochica",
-        "gradient": "linear-gradient(135deg, #FCD116 0%, #003893 100%)"
+      "coordinates": {
+        "lat": 4.5709,
+        "lng": -74.2973
       },
-      "visits": [
-        {
-          "order": 33,
-          "startDate": "2017-05-21",
-          "endDate": "2017-06-10",
-          "cities": ["보고타", "메데인", "카르타헤나"]
-        }
-      ],
-      "stats": { "days": 21, "cities": 3 }
+      "stats": {
+        "days": 21,
+        "cities": 3
+      }
     }
   ]
 }
