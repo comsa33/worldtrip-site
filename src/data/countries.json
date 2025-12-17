@@ -7,15 +7,9 @@
         "ko": "한국",
         "native": "대한민국"
       },
-      "slug": "korea",
-      "continent": "asia",
       "coordinates": {
         "lat": 37.5665,
         "lng": 126.978
-      },
-      "stats": {
-        "days": 6,
-        "cities": 1
       }
     },
     {
@@ -25,15 +19,9 @@
         "ko": "베트남",
         "native": "Việt Nam"
       },
-      "slug": "vietnam",
-      "continent": "asia",
       "coordinates": {
         "lat": 14.0583,
         "lng": 108.2772
-      },
-      "stats": {
-        "days": 14,
-        "cities": 3
       }
     },
     {
@@ -43,15 +31,9 @@
         "ko": "말레이시아",
         "native": "Malaysia"
       },
-      "slug": "malaysia",
-      "continent": "asia",
       "coordinates": {
         "lat": 4.2105,
         "lng": 101.9758
-      },
-      "stats": {
-        "days": 20,
-        "cities": 4
       }
     },
     {
@@ -61,15 +43,9 @@
         "ko": "인도네시아",
         "native": "Indonesia"
       },
-      "slug": "indonesia",
-      "continent": "asia",
       "coordinates": {
         "lat": -0.7893,
         "lng": 113.9213
-      },
-      "stats": {
-        "days": 10,
-        "cities": 2
       }
     },
     {
@@ -79,15 +55,9 @@
         "ko": "라오스",
         "native": "ລາວ"
       },
-      "slug": "laos",
-      "continent": "asia",
       "coordinates": {
         "lat": 19.8563,
         "lng": 102.4955
-      },
-      "stats": {
-        "days": 10,
-        "cities": 2
       }
     },
     {
@@ -97,15 +67,9 @@
         "ko": "태국",
         "native": "ประเทศไทย"
       },
-      "slug": "thailand",
-      "continent": "asia",
       "coordinates": {
         "lat": 15.87,
         "lng": 100.9925
-      },
-      "stats": {
-        "days": 16,
-        "cities": 3
       }
     },
     {
@@ -115,15 +79,9 @@
         "ko": "캄보디아",
         "native": "កម្ពុជា"
       },
-      "slug": "cambodia",
-      "continent": "asia",
       "coordinates": {
         "lat": 12.5657,
         "lng": 104.991
-      },
-      "stats": {
-        "days": 3,
-        "cities": 1
       }
     },
     {
@@ -133,15 +91,9 @@
         "ko": "인도",
         "native": "भारत"
       },
-      "slug": "india",
-      "continent": "asia",
       "coordinates": {
         "lat": 20.5937,
         "lng": 78.9629
-      },
-      "stats": {
-        "days": 52,
-        "cities": 8
       }
     },
     {
@@ -151,15 +103,9 @@
         "ko": "네팔",
         "native": "नेपाल"
       },
-      "slug": "nepal",
-      "continent": "asia",
       "coordinates": {
         "lat": 28.3949,
         "lng": 84.124
-      },
-      "stats": {
-        "days": 9,
-        "cities": 2
       }
     },
     {
@@ -169,15 +115,9 @@
         "ko": "일본",
         "native": "日本"
       },
-      "slug": "japan",
-      "continent": "asia",
       "coordinates": {
         "lat": 36.2048,
         "lng": 138.2529
-      },
-      "stats": {
-        "days": 7,
-        "cities": 2
       }
     },
     {
@@ -187,15 +127,9 @@
         "ko": "아랍에미레이트",
         "native": "الإمارات"
       },
-      "slug": "uae",
-      "continent": "middle-east",
       "coordinates": {
         "lat": 23.4241,
         "lng": 53.8478
-      },
-      "stats": {
-        "days": 4,
-        "cities": 2
       }
     },
     {
@@ -205,15 +139,9 @@
         "ko": "이집트",
         "native": "مصر"
       },
-      "slug": "egypt",
-      "continent": "africa",
       "coordinates": {
         "lat": 26.8206,
         "lng": 30.8025
-      },
-      "stats": {
-        "days": 14,
-        "cities": 3
       }
     },
     {
@@ -223,15 +151,9 @@
         "ko": "스페인",
         "native": "España"
       },
-      "slug": "spain",
-      "continent": "europe",
       "coordinates": {
         "lat": 40.4637,
         "lng": -3.7492
-      },
-      "stats": {
-        "days": 18,
-        "cities": 4
       }
     },
     {
@@ -241,15 +163,9 @@
         "ko": "불가리아",
         "native": "България"
       },
-      "slug": "bulgaria",
-      "continent": "europe",
       "coordinates": {
         "lat": 42.7339,
         "lng": 25.4858
-      },
-      "stats": {
-        "days": 5,
-        "cities": 2
       }
     },
     {
@@ -259,15 +175,9 @@
         "ko": "이탈리아",
         "native": "Italia"
       },
-      "slug": "italy",
-      "continent": "europe",
       "coordinates": {
         "lat": 41.8719,
         "lng": 12.5674
-      },
-      "stats": {
-        "days": 10,
-        "cities": 3
       }
     },
     {
@@ -277,15 +187,9 @@
         "ko": "세르비아",
         "native": "Србија"
       },
-      "slug": "serbia",
-      "continent": "europe",
       "coordinates": {
         "lat": 44.0165,
         "lng": 21.0059
-      },
-      "stats": {
-        "days": 5,
-        "cities": 1
       }
     },
     {
@@ -295,15 +199,9 @@
         "ko": "헝가리",
         "native": "Magyarország"
       },
-      "slug": "hungary",
-      "continent": "europe",
       "coordinates": {
         "lat": 47.1625,
         "lng": 19.5033
-      },
-      "stats": {
-        "days": 6,
-        "cities": 1
       }
     },
     {
@@ -313,15 +211,9 @@
         "ko": "폴란드",
         "native": "Polska"
       },
-      "slug": "poland",
-      "continent": "europe",
       "coordinates": {
         "lat": 51.9194,
         "lng": 19.1451
-      },
-      "stats": {
-        "days": 7,
-        "cities": 2
       }
     },
     {
@@ -331,15 +223,9 @@
         "ko": "체코",
         "native": "Česko"
       },
-      "slug": "czech",
-      "continent": "europe",
       "coordinates": {
         "lat": 49.8175,
         "lng": 15.473
-      },
-      "stats": {
-        "days": 7,
-        "cities": 2
       }
     },
     {
@@ -349,15 +235,9 @@
         "ko": "벨기에",
         "native": "België"
       },
-      "slug": "belgium",
-      "continent": "europe",
       "coordinates": {
         "lat": 50.5039,
         "lng": 4.4699
-      },
-      "stats": {
-        "days": 5,
-        "cities": 2
       }
     },
     {
@@ -367,15 +247,9 @@
         "ko": "프랑스",
         "native": "France"
       },
-      "slug": "france",
-      "continent": "europe",
       "coordinates": {
         "lat": 46.2276,
         "lng": 2.2137
-      },
-      "stats": {
-        "days": 5,
-        "cities": 1
       }
     },
     {
@@ -385,15 +259,9 @@
         "ko": "모로코",
         "native": "المغرب"
       },
-      "slug": "morocco",
-      "continent": "africa",
       "coordinates": {
         "lat": 31.7917,
         "lng": -7.0926
-      },
-      "stats": {
-        "days": 11,
-        "cities": 3
       }
     },
     {
@@ -403,15 +271,9 @@
         "ko": "포르투갈",
         "native": "Portugal"
       },
-      "slug": "portugal",
-      "continent": "europe",
       "coordinates": {
         "lat": 39.3999,
         "lng": -8.2245
-      },
-      "stats": {
-        "days": 10,
-        "cities": 2
       }
     },
     {
@@ -421,15 +283,9 @@
         "ko": "브라질",
         "native": "Brasil"
       },
-      "slug": "brazil",
-      "continent": "south-america",
       "coordinates": {
         "lat": -14.235,
         "lng": -51.9253
-      },
-      "stats": {
-        "days": 14,
-        "cities": 3
       }
     },
     {
@@ -439,15 +295,9 @@
         "ko": "우루과이",
         "native": "Uruguay"
       },
-      "slug": "uruguay",
-      "continent": "south-america",
       "coordinates": {
         "lat": -34.9011,
         "lng": -56.1645
-      },
-      "stats": {
-        "days": 4,
-        "cities": 1
       }
     },
     {
@@ -457,15 +307,9 @@
         "ko": "아르헨티나",
         "native": "Argentina"
       },
-      "slug": "argentina",
-      "continent": "south-america",
       "coordinates": {
         "lat": -38.4161,
         "lng": -63.6167
-      },
-      "stats": {
-        "days": 15,
-        "cities": 3
       }
     },
     {
@@ -475,15 +319,9 @@
         "ko": "칠레",
         "native": "Chile"
       },
-      "slug": "chile",
-      "continent": "south-america",
       "coordinates": {
         "lat": -35.6751,
         "lng": -71.543
-      },
-      "stats": {
-        "days": 16,
-        "cities": 3
       }
     },
     {
@@ -493,15 +331,9 @@
         "ko": "볼리비아",
         "native": "Bolivia"
       },
-      "slug": "bolivia",
-      "continent": "south-america",
       "coordinates": {
         "lat": -16.2902,
         "lng": -63.5887
-      },
-      "stats": {
-        "days": 13,
-        "cities": 3
       }
     },
     {
@@ -511,15 +343,9 @@
         "ko": "페루",
         "native": "Perú"
       },
-      "slug": "peru",
-      "continent": "south-america",
       "coordinates": {
         "lat": -9.19,
         "lng": -75.0152
-      },
-      "stats": {
-        "days": 17,
-        "cities": 3
       }
     },
     {
@@ -529,15 +355,9 @@
         "ko": "에콰도르",
         "native": "Ecuador"
       },
-      "slug": "ecuador",
-      "continent": "south-america",
       "coordinates": {
         "lat": -1.8312,
         "lng": -78.1834
-      },
-      "stats": {
-        "days": 15,
-        "cities": 2
       }
     },
     {
@@ -547,15 +367,9 @@
         "ko": "콜롬비아",
         "native": "Colombia"
       },
-      "slug": "colombia",
-      "continent": "south-america",
       "coordinates": {
         "lat": 4.5709,
         "lng": -74.2973
-      },
-      "stats": {
-        "days": 21,
-        "cities": 3
       }
     }
   ]

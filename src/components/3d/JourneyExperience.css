@@ -528,8 +528,8 @@
   /* Radial gradient mask: transparent center → visible edges */
   mask-image: radial-gradient(
     ellipse 60% 60% at center,
-    transparent 0%,
-    transparent 50%,
+    transparent 10%,
+    transparent 30%,
     /* Wider transparent center for globe focus */ rgba(0, 0, 0, 0.15) 65%,
     /* Very gentle transition */ rgba(0, 0, 0, 0.5) 85%,
     rgba(0, 0, 0, 1) 100%
@@ -548,7 +548,7 @@
   position: absolute;
   inset: 0;
   display: flex;
-  opacity: 0.35; /* Further reduced for subtler presence */
+  opacity: 0.55; /* Further reduced for subtler presence */
   transform: scale(1) translateX(0);
   transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
   mix-blend-mode: soft-light; /* Blend naturally with background */
@@ -656,7 +656,7 @@
 @media (max-width: 768px) {
   .country-background {
     /* More visible on mobile */
-    opacity: 0.3;
+    opacity: 0.25;
     mask-image: radial-gradient(
       ellipse 40% 40% at center,
       transparent 0%,

@@ -9,18 +9,10 @@ export interface Coordinates {
   lng: number;
 }
 
-export interface CountryStats {
-  days: number;
-  cities: number;
-}
-
 export interface Country {
   code: string;
   name: CountryName;
-  slug: string;
-  continent: 'asia' | 'middle-east' | 'africa' | 'europe' | 'south-america';
   coordinates: Coordinates;
-  stats: CountryStats;
 }
 
 export interface CountriesData {
