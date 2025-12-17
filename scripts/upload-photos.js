@@ -78,6 +78,7 @@ const folderToKorean = {
   'cairo': '카이로',
   'dahab': '다합',
   'barcelona': '바르셀로나',
+  'sitges': '시체스',
   'milan': '밀라노',
   'turin': '토리노',
   'bra': '브라',

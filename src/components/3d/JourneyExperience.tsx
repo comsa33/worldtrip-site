@@ -368,7 +368,7 @@ function getProgressiveZoom(stopId: number): number {
 
   // UAE: Abu Dhabi(49, 1.3x) -> Dubai(50, 2.0x->2.2x) -> Sharjah(51, 2.2x) -> Abu Dhabi(52, 1.3x)
   if (stopId === 49) return 1.3;
-  if (stopId === 50 || stopId === 51) return 2.2;
+  if (stopId >= 50 && stopId <= 51) return 2.2;
   if (stopId === 52) return 2.0;
 
   // EGYPT: Cairo(53) 1.3, Dahab(54) 1.7
@@ -376,71 +376,74 @@ function getProgressiveZoom(stopId: number): number {
   if (stopId === 54) return 1.7;
 
   // SPAIN: Barcelona(55) 1.5
-  if (stopId === 55) return 1.5;
+  if (stopId === 55) return 1.5; // Barcelona 1
+  if (stopId === 56) return 2.2; // Sitges (Zoom in tight for short trip)
+  if (stopId === 57) return 1.8; // Barcelona 2
 
-  // ITALY: Milan(56) → gradual to Bra(58), maintain, zoom out at end
-  if (stopId === 56) return 1.8; // Milan entry
-  if (stopId === 57) return 1.95; // Torino
-  if (stopId === 58) return 2.1; // Bra - peak
-  if (stopId >= 59 && stopId <= 66) return 2.1; // Maintain through Italy
-  if (stopId === 67) return 1.9; // Milan exit - zoom out to 1.3
+  // ITALY: Milan(58) → gradual to Bra(60), maintain, zoom out at end
+  if (stopId === 58) return 1.8; // Milan entry
+  if (stopId === 59) return 1.95; // Torino
+  if (stopId === 60) return 2.1; // Bra - peak
+  if (stopId >= 61 && stopId <= 68) return 2.1; // Maintain through Italy
+  if (stopId === 69) return 1.9; // Milan exit - zoom out
 
-  // EUROPE (Sofia to Lisbon): maintain 1.3 until leaving for Brazil
-  if (stopId >= 68 && stopId <= 80) return 1.5;
+  // EUROPE (Sofia to Lisbon): maintain 1.5 until leaving for Brazil
+  // From Milan(69) to Rio(83) is mostly flight/long bus - keep far zoom
+  if (stopId >= 70 && stopId <= 82) return 1.5;
 
-  // BRAZIL Coast: Rio(81) → gradual to Paraty(85) = 2.0
-  if (stopId === 81) return 1.1; // Rio de Janeiro
-  if (stopId === 82) return 2.1; // Angra
-  if (stopId === 83) return 2.2; // Ilha Grande
-  if (stopId === 84) return 2.2; // Angra return
-  if (stopId === 85) return 2.1; // Paraty - peak
-  if (stopId >= 86 && stopId <= 89) return 2.0; // Maintain to Santos
+  // BRAZIL Coast: Rio(83) → gradual to Paraty(87) = 2.1
+  if (stopId === 83) return 1.1; // Rio de Janeiro
+  if (stopId === 84) return 2.1; // Angra
+  if (stopId === 85) return 2.2; // Ilha Grande
+  if (stopId === 86) return 2.2; // Angra return
+  if (stopId === 87) return 2.1; // Paraty - peak
+  if (stopId >= 88 && stopId <= 91) return 2.0; // Maintain to Santos
 
-  // São Paulo(90) zoom out to 1.7, maintain to Navegantes(92)
-  if (stopId >= 90 && stopId <= 92) return 1.7;
+  // São Paulo(92) zoom out to 1.7, maintain to Navegantes(94)
+  if (stopId >= 92 && stopId <= 94) return 1.7; // (was 90-92)
 
-  // Bombinhas(93) 1.9, then 2.0 through Imbituba(98)
-  if (stopId === 93) return 1.9;
-  if (stopId >= 94 && stopId <= 98) return 2.0;
+  // Bombinhas(95) 1.9, then 2.0 through Imbituba(100)
+  if (stopId === 95) return 1.9; // (was 93)
+  if (stopId >= 96 && stopId <= 100) return 2.0; // (was 94-98)
 
-  // Iguazu(99) zoom out to 1.5, maintain to Posadas(100)
-  if (stopId === 99 || stopId === 100) return 1.5;
+  // Iguazu(101) zoom out to 1.5, maintain to Posadas(102)
+  if (stopId === 101 || stopId === 102) return 1.5; // (was 99-100)
 
-  // Montevideo(101) and Buenos Aires(102): 1.6
-  if (stopId === 101 || stopId === 102) return 1.6;
+  // Montevideo(103) and Buenos Aires(104): 1.6
+  if (stopId === 103 || stopId === 104) return 1.6; // (was 101-102)
 
-  // Santiago(103): 1.3 zoom out
-  if (stopId === 103) return 1.3;
+  // Santiago(105): 1.3 zoom out
+  if (stopId === 105) return 1.3; // (was 103)
 
-  // Valparaíso(104) to Bahía Inglesa(105): 1.5
-  if (stopId === 104 || stopId === 105) return 1.5;
+  // Valparaíso(106) to Bahía Inglesa(107): 1.5
+  if (stopId === 106 || stopId === 107) return 1.5; // (was 104-105)
 
-  // Atacama(106) to Sucre(111): 2.0 (zoomed in for desert/highlands)
-  if (stopId >= 106 && stopId <= 111) return 2.0;
+  // Atacama(108) to Sucre(113): 2.0 (zoomed in for desert/highlands)
+  if (stopId >= 108 && stopId <= 113) return 2.0; // (was 106-111)
 
-  // El Alto(112) to Machu Picchu(116): 2.0 (maintain zoom through Peru)
-  if (stopId >= 112 && stopId <= 116) return 2.0;
+  // El Alto(114) to Machu Picchu(118): 2.0 (maintain zoom through Peru)
+  if (stopId >= 114 && stopId <= 118) return 2.0; // (was 112-116)
 
-  // Lima(117): 1.5
-  if (stopId === 117) return 1.5;
+  // Lima(119): 1.5
+  if (stopId === 119) return 1.5; // (was 117)
 
-  // Piura(118) to Border(119): 1.7
-  if (stopId >= 118 && stopId <= 119) return 1.7;
+  // Piura(120) to Border(121): 1.7
+  if (stopId >= 120 && stopId <= 121) return 1.7; // (was 118-119)
 
-  // Cajas(120) to Pasto(127): 1.8 (zoomed in for Andes region)
-  if (stopId >= 120 && stopId <= 127) return 1.8;
+  // Cajas(122) to Pasto(129): 1.8 (zoomed in for Andes region)
+  if (stopId >= 122 && stopId <= 129) return 1.8; // (was 120-127)
 
-  // Cali(128): zoom out to 1.5
-  if (stopId === 128) return 1.5;
+  // Cali(130): zoom out to 1.5
+  if (stopId === 130) return 1.5; // (was 128)
 
-  // Bogotá(129) and Medellín(130): 1.5
-  if (stopId === 129 || stopId === 130) return 1.5;
+  // Bogotá(131) and Medellín(132): 1.5
+  if (stopId === 131 || stopId === 132) return 1.5; // (was 129-130)
 
-  // Cartagena(131): 1.7
-  if (stopId === 131) return 1.7;
+  // Cartagena(133): 1.7
+  if (stopId === 133) return 1.7; // (was 131)
 
-  // Barranquilla(132) to Incheon(133): 1.0 zoom out
-  if (stopId >= 132) return 1.0;
+  // Barranquilla(134) to Incheon(135): 1.0 zoom out
+  if (stopId >= 134) return 1.0;
 
   // Everything else - zoomed out
   return 0;
