@@ -300,7 +300,7 @@ function getProgressiveZoom(stopId: number): number {
 
   // First flight onwards - zoomed out (except special sections)
   if (stopId >= 3 && stopId <= 6) {
-    return 0; // Fully zoomed out until Kuala Lumpur 1st
+    return 1; // Fully zoomed out until Kuala Lumpur 1st
   }
 
   // INDONESIA (Lake Toba): Medan(7) → Tuktuk(8) zoom in, then zoom out
@@ -321,41 +321,42 @@ function getProgressiveZoom(stopId: number): number {
   }
 
   // LAOS: Vang Vieng(12), Luang Prabang(13), Vientiane(14) - stay zoomed in
-  if (stopId >= 12 && stopId <= 14) {
+  if (stopId >= 12 && stopId <= 17) {
     return 2.0; // Maximum zoom in Laos
   }
 
-  // Udon Thani(15) - still fairly zoomed
-  if (stopId === 15) {
-    return 1.8;
+  if (stopId === 18) {
+    return 1.3;
   }
 
   // INDIA starts at Chennai(16) - gradual transition handled by India section
 
   // INDIA FIRST LEG: Chennai(16) → Hyderabad(20) → Kolkata(27) → Sonoli(29)
   // Chennai(16): 1.5
-  if (stopId === 16) return 1.5;
+  if (stopId === 18) return 1.5;
   // Pondicherry(17): 1.7
-  if (stopId === 17) return 1.7;
+  if (stopId === 19) return 1.7;
   // Gradual 1.7 → 2.0: Bengaluru(18) to Hyderabad(20)
-  if (stopId === 18) return 1.8;
-  if (stopId === 19) return 1.9;
+  if (stopId === 20) return 1.8;
+  if (stopId === 21) return 1.9;
   if (stopId === 20) return 2.0;
   // Maintain 2.0: Pune(21) to Kolkata(27)
-  if (stopId >= 21 && stopId <= 27) return 2.0;
+  if (stopId >= 21 && stopId <= 24) return 2.0;
+  if (stopId >= 25 && stopId <= 28) return 1.7;
   // Gradual 2.0 → 1.8: Varanasi(28) to Sonoli(29)
-  if (stopId === 28) return 1.9;
-  if (stopId === 29) return 1.8;
+  if (stopId >= 29 && stopId <= 30) return 1.8;
 
   // NEPAL: Pokhara(30) → Annapurna(31) → Kathmandu(32) → Pokhara(33)
   // New Delhi(30) to Incheon(31): Flight - Zoom out to 1.0
-  if (stopId === 30 || stopId === 31) return 1.0;
+  if (stopId === 31) return 1.0;
 
   // Gwangju(32) and Incheon(33) - Zoom in for Korea stay
   if (stopId === 32 || stopId === 33) return 1.5;
 
+  if (stopId >= 34 && stopId <= 35) return 0;
+
   // INDIA RETURN: Varanasi(37) -> Gorakhpur(38) -> Sonauli(39)
-  if (stopId >= 37 && stopId <= 39) return 1.5;
+  if (stopId >= 36 && stopId <= 39) return 1.8;
 
   // NEPAL MAIN: Siddharthanagar(40) to Bhaktapur(45)
   if (stopId >= 40 && stopId <= 45) return 2.2;
