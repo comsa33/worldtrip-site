@@ -223,17 +223,82 @@ const TRANSPORT_COLORS: Record<string, string> = {
   start: '#FF6B9D', // Bright pink
 };
 
+// Animated next segment preview with pulsing glow effect
+function NextSegmentPreview({ points, color }: { points: THREE.Vector3[]; color: string }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const glowRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const lineRef = useRef<any>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+
+    // Pulsing glow effect (breathing animation)
+    const glowPulse = 0.2 + Math.sin(t * 2) * 0.15; // 0.05 to 0.35
+    const linePulse = 0.45 + Math.sin(t * 2) * 0.15; // 0.3 to 0.6
+
+    if (glowRef.current?.material) {
+      glowRef.current.material.opacity = glowPulse;
+    }
+    if (lineRef.current?.material) {
+      lineRef.current.material.opacity = linePulse;
+      // Animate dash offset for flowing effect
+      lineRef.current.material.dashOffset = -t * 0.5;
+    }
+  });
+
+  return (
+    <>
+      {/* Outer pulsing glow */}
+      <Line ref={glowRef} points={points} color={color} lineWidth={6} transparent opacity={0.2} />
+      {/* Inner glow layer */}
+      <Line points={points} color={color} lineWidth={3} transparent opacity={0.1} />
+      {/* Main animated dashed line */}
+      <Line
+        ref={lineRef}
+        points={points}
+        color={color}
+        lineWidth={2}
+        transparent
+        opacity={0.5}
+        dashed
+        dashScale={25}
+        dashSize={0.04}
+        gapSize={0.025}
+      />
+    </>
+  );
+}
+
 function TravelPath({
   points,
   progress,
 }: {
-  points: { point: THREE.Vector3; transport: string }[];
+  points: { point: THREE.Vector3; transport: string; toStopId: number }[];
   progress: number;
 }) {
   const idx = Math.floor(points.length * progress);
   // Only show up to current position (no preview)
   const traveled = points.slice(0, Math.max(idx, 1));
-  const future = points.slice(Math.max(0, idx));
+
+  // Find the next segment only (from current position to next stop)
+  const currentPoint = points[idx];
+  const nextSegmentData = useMemo(() => {
+    const segmentPoints: THREE.Vector3[] = [];
+    let transport = 'bus';
+
+    if (currentPoint && idx < points.length - 1) {
+      const currentToStopId = currentPoint.toStopId;
+      transport = points[idx + 1]?.transport || currentPoint.transport;
+
+      for (let i = idx; i < points.length; i++) {
+        segmentPoints.push(points[i].point);
+        if (points[i].toStopId !== currentToStopId) break;
+      }
+    }
+
+    return { points: segmentPoints, transport };
+  }, [currentPoint, idx, points]);
 
   // Build segments grouped by transport type
   const segments = useMemo(() => {
@@ -256,6 +321,9 @@ function TravelPath({
     return result;
   }, [traveled]);
 
+  // Get color for next segment based on transport type
+  const nextSegmentColor = TRANSPORT_COLORS[nextSegmentData.transport] || '#4ECDC4';
+
   return (
     <>
       {/* Render each segment with its transport color */}
@@ -269,15 +337,10 @@ function TravelPath({
           {seg.pts.length >= 2 && <Line points={seg.pts} color={seg.color} lineWidth={2} />}
         </group>
       ))}
-      {/* Future path */}
-      {future.length >= 2 && (
-        <Line
-          points={future.map((p) => p.point)}
-          color="#666666"
-          lineWidth={0.5}
-          transparent
-          opacity={0.06}
-        />
+
+      {/* Next segment preview - animated dashed line with pulsing glow */}
+      {nextSegmentData.points.length >= 2 && (
+        <NextSegmentPreview points={nextSegmentData.points} color={nextSegmentColor} />
       )}
     </>
   );
@@ -289,17 +352,12 @@ function TravelPath({
 // - Italy: Milan(51)→La Spezia(56) zoom in, back to Milan(62)=snap out
 function getProgressiveZoom(stopId: number): number {
   // START: Gwangju(1) - very zoomed in, Korea focus
-  if (stopId === 1) {
-    return 1.5; // Maximum close-up on Korea
-  }
-
-  // Incheon(2) - still fairly zoomed in
-  if (stopId === 2) {
-    return 0.8;
+  if (stopId <= 2) {
+    return 1.7; // Maximum close-up on Korea
   }
 
   // First flight onwards - zoomed out (except special sections)
-  if (stopId >= 3 && stopId <= 6) {
+  if (stopId >= 4 && stopId <= 6) {
     return 1; // Fully zoomed out until Kuala Lumpur 1st
   }
 
@@ -667,53 +725,52 @@ function Scene({
 
         return (
           <group key={countryData.code} position={pos.toArray()}>
-            <group rotation={[0, Math.atan2(pos.x, pos.z), 0]} scale={[0.05, 0.05, 0.05]}>
-              <Html
-                center
-                transform
-                pointerEvents="none"
+            <Html
+              center
+              distanceFactor={2}
+              sprite
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                pointerEvents: 'none',
+                userSelect: 'none',
+                transition: 'opacity 0.5s ease',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <div
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
+                  fontSize: '14px',
+                  fontWeight: '800',
+                  letterSpacing: '0.08em',
+                  color: `rgba(255, 255, 255, ${mainOpacity})`,
+                  textShadow: '0 0 10px rgba(255,255,255,0.1)',
+                  whiteSpace: 'nowrap',
+                  lineHeight: 1.2,
+                  transition: 'color 0.5s ease',
                   pointerEvents: 'none',
-                  userSelect: 'none',
-                  transition: 'opacity 0.5s ease',
                 }}
               >
-                <div
-                  style={{
-                    fontSize: '32px',
-                    fontWeight: '800',
-                    letterSpacing: '0.08em',
-                    color: `rgba(255, 255, 255, ${mainOpacity})`,
-                    textShadow: '0 0 20px rgba(255,255,255,0.1)',
-                    whiteSpace: 'nowrap',
-                    lineHeight: 1.2,
-                    transition: 'color 0.5s ease',
-                    pointerEvents: 'none',
-                  }}
-                >
-                  {language === 'ko' ? countryData.name.ko : countryData.name.en.toUpperCase()}
-                </div>
-                <div
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: '600',
-                    letterSpacing: '0.02em',
-                    color: `rgba(255, 255, 255, ${nativeOpacity})`,
-                    textShadow: '0 0 10px rgba(255,255,255,0.05)',
-                    whiteSpace: 'nowrap',
-                    marginTop: '4px',
-                    transition: 'color 0.5s ease',
-                    pointerEvents: 'none',
-                  }}
-                >
-                  {countryData.name.native}
-                </div>
-              </Html>
-            </group>
+                {language === 'ko' ? countryData.name.ko : countryData.name.en.toUpperCase()}
+              </div>
+              <div
+                style={{
+                  fontSize: '10px',
+                  fontWeight: '600',
+                  letterSpacing: '0.02em',
+                  color: `rgba(255, 255, 255, ${nativeOpacity})`,
+                  textShadow: '0 0 5px rgba(255,255,255,0.05)',
+                  whiteSpace: 'nowrap',
+                  marginTop: '2px',
+                  transition: 'color 0.5s ease',
+                  pointerEvents: 'none',
+                }}
+              >
+                {countryData.name.native}
+              </div>
+            </Html>
           </group>
         );
       })}
@@ -777,10 +834,15 @@ function Scene({
                   color: baemin,
                   fontSize: '14px',
                   fontWeight: '600',
-                  textShadow: '0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8)',
+                  textShadow:
+                    '0 0 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.9)',
                   whiteSpace: 'nowrap',
                   pointerEvents: cityHasPhotos ? 'auto' : 'none',
                   cursor: cityHasPhotos ? 'pointer' : 'default',
+                  background:
+                    'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%)',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
                 }}
               >
                 <div
@@ -826,11 +888,16 @@ function Scene({
                 style={{
                   color: baemin,
                   fontSize: '14px',
-                  fontWeight: '400', // Normal weight (not bold)
-                  textShadow: '0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8)',
+                  fontWeight: '400',
+                  textShadow:
+                    '0 0 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.9)',
                   whiteSpace: 'nowrap',
                   pointerEvents: 'none',
                   opacity: 0.85,
+                  background:
+                    'radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%)',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
                 }}
               >
                 {stop.name}
@@ -864,10 +931,15 @@ function Scene({
                     color: baemin,
                     fontSize: '10px',
                     fontWeight: '400',
-                    textShadow: '0 2px 6px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.8)',
+                    textShadow:
+                      '0 0 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1)',
                     whiteSpace: 'nowrap',
                     pointerEvents: 'none',
                     opacity: 0.7,
+                    background:
+                      'radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, transparent 70%)',
+                    padding: '2px 6px',
+                    borderRadius: '3px',
                   }}
                 >
                   {stop.name}
