@@ -1465,6 +1465,13 @@
       },
       "continent": "asia"
     },
+    "KH": {
+      "name": {
+        "ko": "캄보디아",
+        "en": "Cambodia"
+      },
+      "continent": "asia"
+    },
     "LA": {
       "name": {
         "ko": "라오스",
