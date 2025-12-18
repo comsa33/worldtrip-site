@@ -10,7 +10,8 @@
       "coordinates": {
         "lat": 37.5665,
         "lng": 126.978
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "VN",
@@ -22,7 +23,8 @@
       "coordinates": {
         "lat": 14.0583,
         "lng": 108.2772
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "MY",
@@ -34,7 +36,8 @@
       "coordinates": {
         "lat": 4.2105,
         "lng": 101.9758
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "ID",
@@ -46,7 +49,8 @@
       "coordinates": {
         "lat": -0.7893,
         "lng": 113.9213
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "LA",
@@ -58,7 +62,8 @@
       "coordinates": {
         "lat": 19.8563,
         "lng": 102.4955
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "TH",
@@ -70,7 +75,8 @@
       "coordinates": {
         "lat": 15.87,
         "lng": 100.9925
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "KH",
@@ -82,7 +88,8 @@
       "coordinates": {
         "lat": 12.5657,
         "lng": 104.991
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "IN",
@@ -94,7 +101,8 @@
       "coordinates": {
         "lat": 20.5937,
         "lng": 78.9629
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "NP",
@@ -106,7 +114,8 @@
       "coordinates": {
         "lat": 28.3949,
         "lng": 84.124
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "JP",
@@ -118,7 +127,8 @@
       "coordinates": {
         "lat": 36.2048,
         "lng": 138.2529
-      }
+      },
+      "continent": "asia"
     },
     {
       "code": "AE",
@@ -130,7 +140,8 @@
       "coordinates": {
         "lat": 23.4241,
         "lng": 53.8478
-      }
+      },
+      "continent": "middle-east"
     },
     {
       "code": "EG",
@@ -142,7 +153,8 @@
       "coordinates": {
         "lat": 26.8206,
         "lng": 30.8025
-      }
+      },
+      "continent": "africa"
     },
     {
       "code": "ES",
@@ -154,7 +166,8 @@
       "coordinates": {
         "lat": 40.4637,
         "lng": -3.7492
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "BG",
@@ -166,7 +179,8 @@
       "coordinates": {
         "lat": 42.7339,
         "lng": 25.4858
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "IT",
@@ -178,7 +192,8 @@
       "coordinates": {
         "lat": 41.8719,
         "lng": 12.5674
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "RS",
@@ -190,7 +205,8 @@
       "coordinates": {
         "lat": 44.0165,
         "lng": 21.0059
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "HU",
@@ -202,7 +218,8 @@
       "coordinates": {
         "lat": 47.1625,
         "lng": 19.5033
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "PL",
@@ -214,7 +231,8 @@
       "coordinates": {
         "lat": 51.9194,
         "lng": 19.1451
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "CZ",
@@ -226,7 +244,8 @@
       "coordinates": {
         "lat": 49.8175,
         "lng": 15.473
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "BE",
@@ -238,7 +257,8 @@
       "coordinates": {
         "lat": 50.5039,
         "lng": 4.4699
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "FR",
@@ -250,7 +270,8 @@
       "coordinates": {
         "lat": 46.2276,
         "lng": 2.2137
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "MA",
@@ -262,7 +283,8 @@
       "coordinates": {
         "lat": 31.7917,
         "lng": -7.0926
-      }
+      },
+      "continent": "africa"
     },
     {
       "code": "PT",
@@ -274,7 +296,8 @@
       "coordinates": {
         "lat": 39.3999,
         "lng": -8.2245
-      }
+      },
+      "continent": "europe"
     },
     {
       "code": "BR",
@@ -286,7 +309,8 @@
       "coordinates": {
         "lat": -14.235,
         "lng": -51.9253
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "UY",
@@ -298,7 +322,8 @@
       "coordinates": {
         "lat": -34.9011,
         "lng": -56.1645
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "AR",
@@ -310,7 +335,8 @@
       "coordinates": {
         "lat": -38.4161,
         "lng": -63.6167
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "CL",
@@ -322,7 +348,8 @@
       "coordinates": {
         "lat": -35.6751,
         "lng": -71.543
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "BO",
@@ -334,7 +361,8 @@
       "coordinates": {
         "lat": -16.2902,
         "lng": -63.5887
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "PE",
@@ -346,7 +374,8 @@
       "coordinates": {
         "lat": -9.19,
         "lng": -75.0152
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "EC",
@@ -358,7 +387,8 @@
       "coordinates": {
         "lat": -1.8312,
         "lng": -78.1834
-      }
+      },
+      "continent": "south-america"
     },
     {
       "code": "CO",
@@ -370,7 +400,8 @@
       "coordinates": {
         "lat": 4.5709,
         "lng": -74.2973
-      }
+      },
+      "continent": "south-america"
     }
   ]
 }

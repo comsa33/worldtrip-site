@@ -53,6 +53,7 @@ interface CountryData {
   code: string;
   name: { en: string; ko: string; native: string };
   coordinates: { lat: number; lng: number };
+  continent?: string;
 }
 
 // =============================================================================
@@ -1118,7 +1119,15 @@ function VerticalTimeline({
 
 function FlipboardCountry({ countryCode }: { countryCode: string }) {
   const { language } = useI18n();
-  const countries = journeyData.countries as Record<string, { name: { ko: string; en: string } }>;
+  // Map consolidated countries data for easy lookup
+  const countries = useMemo(() => {
+    const map: Record<string, { name: { ko: string; en: string } }> = {};
+    (countriesData as { countries: CountryData[] }).countries.forEach((c) => {
+      map[c.code] = { name: c.name };
+    });
+    return map;
+  }, []);
+
   const [displayChars, setDisplayChars] = useState<string[]>([]);
   const [settledCount, setSettledCount] = useState(0);
 
