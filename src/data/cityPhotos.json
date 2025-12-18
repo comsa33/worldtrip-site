@@ -3949,8 +3949,8 @@
         },
         "location": "Đường Hải Phòng, Phường Thanh Khê",
         "caption": {
-          "ko": "",
-          "en": ""
+          "ko": "드디어 다낭 도착!",
+          "en": "We finally reached Danang!"
         },
         "alt": "photo002"
       },
@@ -3983,8 +3983,8 @@
         },
         "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "",
-          "en": ""
+          "ko": "왜 비싸요!",
+          "en": "Why is it so expensive!"
         },
         "alt": "photo004"
       },
@@ -4017,7 +4017,7 @@
         },
         "location": "Thành phố Đà Nẵng",
         "caption": {
-          "ko": "",
+          "ko": "신나는 기차 여행(라고 쓰고, 개고생이라고 읽는다.)",
           "en": ""
         },
         "alt": "photo006"
@@ -4068,8 +4068,8 @@
         },
         "location": "Trần Văn Ðang, Phường Nhiêu Lộc, Thủ Đức",
         "caption": {
-          "ko": "",
-          "en": ""
+          "ko": "다낭가는 열차에서 손인사를 받았습니다.",
+          "en": "Thanks, Zach!"
         },
         "alt": "photo009"
       },
@@ -4085,8 +4085,8 @@
         },
         "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "",
-          "en": ""
+          "ko": "그래도 예뻐요. 이루어져라. 소원.",
+          "en": "It's beautiful though. Let's go. My wish."
         },
         "alt": "photo010"
       },
@@ -4102,8 +4102,8 @@
         },
         "location": "Hai Bà Trưng, Phường Hội An Tây",
         "caption": {
-          "ko": "",
-          "en": ""
+          "ko": "안방 해변입니다.",
+          "en": "This is Anbang Beach."
         },
         "alt": "photo011"
       },
@@ -4119,7 +4119,7 @@
         },
         "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "뻐끔뻐끔",
           "en": ""
         },
         "alt": "photo012"
@@ -4170,8 +4170,8 @@
         },
         "location": "Hai Bà Trưng, Phường Hội An Tây",
         "caption": {
-          "ko": "",
-          "en": ""
+          "ko": "호이안입니다.",
+          "en": "This is Hoi An."
         },
         "alt": "photo015"
       },
@@ -5544,23 +5544,6 @@
           "en": "Vietnamese street market"
         },
         "alt": "photo016"
-      },
-      {
-        "id": "hochiminh-017",
-        "publicId": "cities/hochiminh/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo017",
-        "date": "2016-08-15T21:48:15",
-        "gps": {
-          "lat": 10.782583333333335,
-          "lng": 106.67604166666668
-        },
-        "location": "Trần Văn Ðang, Phường Nhiêu Lộc, Thủ Đức",
-        "caption": {
-          "ko": "다낭가는 열차에서 손인사를 받았습니다.",
-          "en": "Thanks, Zach!"
-        },
-        "alt": "photo017"
       },
       {
         "id": "hochiminh-018",
