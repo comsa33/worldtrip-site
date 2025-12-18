@@ -274,7 +274,13 @@ function TravelPath({
   points,
   progress,
 }: {
-  points: { point: THREE.Vector3; transport: string; toStopId: number }[];
+  points: {
+    point: THREE.Vector3;
+    transport: string;
+    fromStopId: number;
+    toStopId: number;
+    segmentProgress: number;
+  }[];
   progress: number;
 }) {
   const idx = Math.floor(points.length * progress);
@@ -282,23 +288,56 @@ function TravelPath({
   const traveled = points.slice(0, Math.max(idx, 1));
 
   // Find the next segment only (from current position to next stop)
-  const currentPoint = points[idx];
   const nextSegmentData = useMemo(() => {
     const segmentPoints: THREE.Vector3[] = [];
     let transport = 'bus';
 
-    if (currentPoint && idx < points.length - 1) {
-      const currentToStopId = currentPoint.toStopId;
-      transport = points[idx + 1]?.transport || currentPoint.transport;
+    const pt = points[idx];
+    if (!pt || idx >= points.length - 1) {
+      return { points: segmentPoints, transport };
+    }
+
+    // Check if we're near the end of current segment (about to arrive)
+    const isNearArrival = pt.segmentProgress > 0.85;
+
+    if (isNearArrival) {
+      // At arrival: show the NEXT segment (from destination to next city)
+      // Look for points where fromStopId equals current toStopId
+      const destinationId = pt.toStopId;
+      let foundStart = false;
 
       for (let i = idx; i < points.length; i++) {
-        segmentPoints.push(points[i].point);
-        if (points[i].toStopId !== currentToStopId) break;
+        if (points[i].fromStopId === destinationId) {
+          foundStart = true;
+          transport = points[i].transport;
+          segmentPoints.push(points[i].point);
+
+          // Stop when we reach the next destination
+          if (points[i].toStopId !== destinationId + 1 && segmentPoints.length > 1) {
+            // Keep collecting until toStopId changes
+          }
+          if (points[i].segmentProgress >= 0.99 && segmentPoints.length > 5) break;
+        } else if (foundStart) {
+          // We've moved past the next segment
+          break;
+        }
+      }
+    } else {
+      // During travel: show remaining part of current segment
+      const currentToStopId = pt.toStopId;
+      transport = pt.transport;
+
+      for (let i = idx; i < points.length; i++) {
+        if (points[i].toStopId === currentToStopId) {
+          segmentPoints.push(points[i].point);
+        } else {
+          break;
+        }
       }
     }
 
     return { points: segmentPoints, transport };
-  }, [currentPoint, idx, points]);
+  }, [idx, points, progress]); // Use progress instead of currentPoint for stable dependency
 
   // Build segments grouped by transport type
   const segments = useMemo(() => {

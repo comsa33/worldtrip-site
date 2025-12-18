@@ -143,9 +143,10 @@ export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
           <Line
             points={path}
             color="#ff8c00"
-            opacity={0.05} // Drastically reduced to hide overlap dots
+            opacity={0.05}
             transparent
-            lineWidth={20}
+            lineWidth={0.015}
+            worldUnits
             depthWrite={false}
             blending={THREE.AdditiveBlending}
           />
@@ -153,9 +154,10 @@ export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
           <Line
             points={path}
             color="#ffd700"
-            opacity={0.15} // Reduced
+            opacity={0.15}
             transparent
-            lineWidth={8}
+            lineWidth={0.006}
+            worldUnits
             depthWrite={false}
             blending={THREE.AdditiveBlending}
           />
@@ -165,9 +167,10 @@ export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
             color="#fffacd"
             opacity={0.8}
             transparent
-            lineWidth={1.5}
+            lineWidth={0.002}
+            worldUnits
             depthWrite={false}
-            blending={THREE.NormalBlending} // Changed from Additive to Normal
+            blending={THREE.NormalBlending}
           />
         </group>
       ))}
