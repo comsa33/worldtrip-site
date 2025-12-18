@@ -3932,7 +3932,7 @@
         },
         "location": "Nguyễn Hoàng, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "달 뒤, 달 뒤, 달 뒤, 단 밤양갱.",
           "en": ""
         },
         "alt": "photo001"
@@ -3966,7 +3966,7 @@
         },
         "location": "Trần Phú, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "다리 이름은 기억나지 않아요.",
           "en": ""
         },
         "alt": "photo003"
@@ -4000,7 +4000,7 @@
         },
         "location": "Thanh Hà, Phường Hội An Tây",
         "caption": {
-          "ko": "",
+          "ko": "자전거 타고 가다 우연히 발견한 해먹카페",
           "en": ""
         },
         "alt": "photo005"
@@ -4034,7 +4034,7 @@
         },
         "location": "Thanh Hà, Phường Hội An Tây",
         "caption": {
-          "ko": "",
+          "ko": "천국이 따로 없습니다.",
           "en": ""
         },
         "alt": "photo007"
@@ -4051,7 +4051,7 @@
         },
         "location": "Trần Phú, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "호이안 밤시장 뒷골목",
           "en": ""
         },
         "alt": "photo008"
@@ -4136,7 +4136,7 @@
         },
         "location": "Bạch Đằng, Minh An, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "보름달이 뜨는날만 갈 수 있는 호이안 등불축제 입니다.",
           "en": ""
         },
         "alt": "photo013"
@@ -4153,7 +4153,7 @@
         },
         "location": "Nguyễn Hoàng, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "고퀄 드래곤",
           "en": ""
         },
         "alt": "photo014"
@@ -4187,7 +4187,7 @@
         },
         "location": "Cẩm Châu, Phường Hội An Đông",
         "caption": {
-          "ko": "",
+          "ko": "호이안 숙소, 귀여운 도룡뇽을 볼 수 있어요.",
           "en": ""
         },
         "alt": "photo016"
@@ -4204,7 +4204,7 @@
         },
         "location": "Nguyễn Hoàng, Cẩm Phô, Phường Hội An",
         "caption": {
-          "ko": "",
+          "ko": "그냥 예쁘네요.",
           "en": ""
         },
         "alt": "photo017"
@@ -5546,7 +5546,7 @@
         "alt": "photo016"
       },
       {
-        "id": "hochiminh-018",
+        "id": "hochiminh-017",
         "publicId": "cities/hochiminh/photo018",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo018",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo018",
@@ -5563,7 +5563,7 @@
         "alt": "photo018"
       },
       {
-        "id": "hochiminh-019",
+        "id": "hochiminh-018",
         "publicId": "cities/hochiminh/photo019",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo019",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo019",
@@ -5580,7 +5580,7 @@
         "alt": "photo019"
       },
       {
-        "id": "hochiminh-020",
+        "id": "hochiminh-019",
         "publicId": "cities/hochiminh/photo020",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo020",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo020",
@@ -5597,7 +5597,7 @@
         "alt": "photo020"
       },
       {
-        "id": "hochiminh-021",
+        "id": "hochiminh-020",
         "publicId": "cities/hochiminh/photo021",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo021",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo021",
@@ -5614,7 +5614,7 @@
         "alt": "photo021"
       },
       {
-        "id": "hochiminh-022",
+        "id": "hochiminh-021",
         "publicId": "cities/hochiminh/photo022",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/hochiminh/photo022",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/hochiminh/photo022",
@@ -5623,7 +5623,7 @@
           "lat": 10.765030555555555,
           "lng": 106.69586944444445
         },
-        "location": "Phường Cầu Ông Lãnh, Thủ Đức",
+        "location": "Bùi Viện, Phường Bến Thành, Thủ Đức",
         "caption": {
           "ko": "사이공 맥주",
           "en": "Cheers! Ho Chi Minh City!"
@@ -6395,7 +6395,7 @@
         },
         "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "",
+          "ko": "사진이 마음에 드는군요.",
           "en": ""
         },
         "alt": "photo001"
@@ -6412,7 +6412,7 @@
         },
         "location": "Jalan Tun Sambanthan 4, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "볶음밥, 제가 한번 먹어보겠습니다.",
           "en": ""
         },
         "alt": "photo002"
@@ -6429,7 +6429,7 @@
         },
         "location": "Jalan Alor, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "을지로 느낌",
           "en": ""
         },
         "alt": "photo003"
@@ -6446,7 +6446,7 @@
         },
         "location": "Jalan Tun Tan Cheng Lock, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "치킨은 못 참지.",
           "en": ""
         },
         "alt": "photo004"
@@ -6460,7 +6460,7 @@
         "gps": null,
         "location": null,
         "caption": {
-          "ko": "",
+          "ko": "아저씨, 여기서 주무시면 안되요.",
           "en": ""
         },
         "alt": "photo005"
@@ -6477,7 +6477,7 @@
         },
         "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "",
+          "ko": "계단이 많은 곳을 갈땐, 짐은 맡겨두세요. 제발요.",
           "en": ""
         },
         "alt": "photo006"
@@ -6494,7 +6494,7 @@
         },
         "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "",
+          "ko": "빈부격차",
           "en": ""
         },
         "alt": "photo007"
@@ -6511,7 +6511,7 @@
         },
         "location": "Gombak, Majlis Perbandaran Selayang, Selangor",
         "caption": {
-          "ko": "",
+          "ko": "멋있는 척",
           "en": ""
         },
         "alt": "photo008"
@@ -6528,7 +6528,7 @@
         },
         "location": "Jalan Hang Lekir, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "숙소 밖 풍경. 차이나타운.",
           "en": ""
         },
         "alt": "photo009"
@@ -6545,7 +6545,7 @@
         },
         "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "말레이시아 국기가 자주 보여, 찾아보니 8월 31일이 곧 독립기념일이라네요.",
           "en": ""
         },
         "alt": "photo010"
@@ -6562,7 +6562,7 @@
         },
         "location": "Jalan Tun Sambanthan 4, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "뭐... 그냥 심심합니다.",
           "en": ""
         },
         "alt": "photo011"
@@ -6576,7 +6576,7 @@
         "gps": null,
         "location": null,
         "caption": {
-          "ko": "",
+          "ko": "더울땐, 쿠알라룸푸르에서 버스타고 한참 북쪽으로 가면, 시원한 바투동굴이 있습니다.",
           "en": ""
         },
         "alt": "photo012"
@@ -6593,7 +6593,7 @@
         },
         "location": "Jalan P. Ramlee, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "랜드마크, 페트로나스 트윈 타워",
           "en": ""
         },
         "alt": "photo013"
@@ -6610,7 +6610,7 @@
         },
         "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "담배 한대 피우러 나왔다가, 낮부터 맥주 마시며 5시간 넘게 수다를 떨었다. 여행은 사람을 만나는 거구나.",
           "en": ""
         },
         "alt": "photo014"
@@ -6627,7 +6627,7 @@
         },
         "location": "Persiaran KLCC, Bukit Bintang, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "KLCC 수리아몰",
           "en": ""
         },
         "alt": "photo015"
@@ -6641,7 +6641,7 @@
         "gps": null,
         "location": null,
         "caption": {
-          "ko": "",
+          "ko": "숙소 근처. 차이나타운.",
           "en": ""
         },
         "alt": "photo016"
@@ -6658,7 +6658,7 @@
         },
         "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "또 의미없이 찰칵",
           "en": ""
         },
         "alt": "photo017"
@@ -6675,7 +6675,7 @@
         },
         "location": "Jalan Thambipillay, Brickfields, Kuala Lumpur, Kuala Lumpur",
         "caption": {
-          "ko": "",
+          "ko": "걷다가 찰칵.",
           "en": ""
         },
         "alt": "photo018"
@@ -6692,7 +6692,7 @@
         },
         "location": "Sepang, Selangor",
         "caption": {
-          "ko": "",
+          "ko": "쿠알라룸푸르에 도착!",
           "en": ""
         },
         "alt": "photo019"
@@ -7021,7 +7021,7 @@
         },
         "location": "Jalan Parapat, Tiga Dolok, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "그래도 밝게 웃어주시는 사람들 덕분에 배낭여행이 즐거웠습니다.",
           "en": ""
         },
         "alt": "photo001"
@@ -7038,7 +7038,7 @@
         },
         "location": "Jalan Raya Medan-Tebing Tinggi, Tualang, Tualang, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "나는 아무 생각이 없다.",
           "en": ""
         },
         "alt": "photo002"
@@ -7055,7 +7055,7 @@
         },
         "location": "Jalan Guru Patimpus, Kesawan, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "시내 도로에 차선이 없어도 안전하게 운전할 수 있습니다.",
           "en": ""
         },
         "alt": "photo003"
@@ -7072,7 +7072,7 @@
         },
         "location": "Jalan Tengku Amir Hamzah, Sei Sikambing, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "폭우로 회항했던 비행기. 창밖 번개가 복선처럼 느껴졌다. 위험한 밤길에서 만난 친절한 사람 덕분에 무사히 숙소 도착.",
           "en": ""
         },
         "alt": "photo004"
@@ -7089,7 +7089,7 @@
         },
         "location": "Jalan Komodor Laut Yos Sudarso, Kota Tebing Tinggi, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "하아... 나도 한대 필까 하는데, 곧 닭들이 버스에 올라탐. 비포장 도로를 8시간 달리는 버스 안에서.",
           "en": ""
         },
         "alt": "photo005"
@@ -7106,7 +7106,7 @@
         },
         "location": "Jalan Guru Patimpus, Kesawan, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "길을 걷다 공동묘지.",
           "en": ""
         },
         "alt": "photo006"
@@ -7123,7 +7123,7 @@
         },
         "location": "Jalan Raya Medan-Tebing Tinggi, Tualang, Tualang, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "메단에서 토바 호수(뚝뚝섬)으로 향하는 길. 개고생의 시작.",
           "en": ""
         },
         "alt": "photo007"
@@ -7140,7 +7140,7 @@
         },
         "location": "Jalan Guru Patimpus, Kesawan, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "숙소에서 알바하는 착한 대학생 친구들. 한글도 알려줌. 국위선양함.",
           "en": ""
         },
         "alt": "photo008"
@@ -7157,7 +7157,7 @@
         },
         "location": "Jalan Jenderal Gatot Subroto, Petisah, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "20,000이라더니 50,000 달라는 오토바이 기사. 바가지 쓰고 시비 붙었더니 사람들 20명 몰려듦. 결국 30,000 주고 마무리. 구경꾼한테 구경값까지 줌. 바가지 쓰고 화났지만, 이것도 여행이지 뭐.",
           "en": ""
         },
         "alt": "photo009"
@@ -9482,7 +9482,7 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "이 친구는 잘 살고 있을까.",
           "en": ""
         },
         "alt": "photo001"
@@ -9496,7 +9496,7 @@
         "gps": null,
         "location": null,
         "caption": {
-          "ko": "",
+          "ko": "이거 너구리 아니에요?",
           "en": ""
         },
         "alt": "photo002"
@@ -9513,7 +9513,7 @@
         },
         "location": "Jalan Haji Adam Malik, Petisah, Kota Medan, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "메단에서 먹은 볶음면인데, 헷갈려서 여기에 올림.",
           "en": ""
         },
         "alt": "photo003"
@@ -9530,7 +9530,7 @@
         },
         "location": "Tuk Tuk, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "안녕, Uncle Bond.",
           "en": ""
         },
         "alt": "photo004"
@@ -9547,7 +9547,7 @@
         },
         "location": "Tiga Raja, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "멋지게 찰칵.",
           "en": ""
         },
         "alt": "photo005"
@@ -9564,7 +9564,7 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "Toba cats garden의 주인, Uncle Bond. 8년간 정글에서 살며 자연으로부터 모든 것을 배웠다는 남자.",
           "en": ""
         },
         "alt": "photo006"
@@ -9581,7 +9581,7 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "산책 2",
           "en": ""
         },
         "alt": "photo007"
@@ -9598,7 +9598,7 @@
         },
         "location": "Jalan Sisingamangaraja, Parapat, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "뚝뚝섬 가는 빠랏빳 선착장, 하루에 2번 밖에 없음.",
           "en": ""
         },
         "alt": "photo008"
@@ -9615,7 +9615,7 @@
         },
         "location": "Tuk Tuk, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "이제 조금씩 배낭의 무게에 적응이 되고 있다.",
           "en": ""
         },
         "alt": "photo009"
@@ -9632,7 +9632,7 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "여기로 오세요.",
           "en": ""
         },
         "alt": "photo010"
@@ -9649,7 +9649,7 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "은퇴 후, 이곳에서 살고 싶어 왔다는 미국인.",
           "en": ""
         },
         "alt": "photo011"
@@ -9666,7 +9666,7 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "얘도 잘 살고 있을까.",
           "en": ""
         },
         "alt": "photo012"
@@ -9683,10 +9683,27 @@
         },
         "location": "Jalan Lumban Nangka, Ambarita, Sumatera Utara",
         "caption": {
-          "ko": "",
+          "ko": "산책",
           "en": ""
         },
         "alt": "photo013"
+      },
+      {
+        "id": "tuktuk-014",
+        "publicId": "cities/tuktuk/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/tuktuk/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/tuktuk/photo014",
+        "date": "2016-08-24T17:37:34",
+        "gps": {
+          "lat": 2.6609583333333333,
+          "lng": 98.93039722222223
+        },
+        "location": "Tiga Raja, Sumatera Utara",
+        "caption": {
+          "ko": "버스에서 만난 Final, Dem, Hipkim. 잘 곳 없다길래 내 방에서 함께 지냈다. 여행이 나를 조금씩 바꾸고 있다.",
+          "en": ""
+        },
+        "alt": "photo014"
       }
     ]
   },
