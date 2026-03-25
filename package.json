@@ -13,7 +13,8 @@
     "prepare": "husky",
     "create-folders": "node scripts/create-photo-folders.js",
     "upload-photos": "node scripts/upload-photos.js",
-    "sync-photos": "node scripts/sync-cloudinary-photos.js"
+    "sync-photos": "node scripts/sync-cloudinary-photos.js",
+    "fetch-routes": "node scripts/fetch-osrm-routes.js"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

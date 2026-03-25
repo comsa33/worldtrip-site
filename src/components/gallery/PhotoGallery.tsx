@@ -24,10 +24,11 @@ interface CityPhotoData {
 
 interface PhotoGalleryProps {
   cityName: string | null;
+  photoIds?: string[] | null;
   onClose: () => void;
 }
 
-export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
+export default function PhotoGallery({ cityName, photoIds, onClose }: PhotoGalleryProps) {
   const { language } = useI18n();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [animationState, setAnimationState] = useState<'idle' | 'opening' | 'closing'>('idle');
@@ -40,7 +41,12 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
   // Update photos when cityName changes (only if valid)
   useEffect(() => {
     if (cityName && cityPhotos[cityName]) {
-      const cityPhotoList = cityPhotos[cityName].photos;
+      let cityPhotoList = cityPhotos[cityName].photos;
+      // Filter by specific photo IDs if provided (from cluster clicks)
+      if (photoIds && photoIds.length > 0) {
+        const idSet = new Set(photoIds);
+        cityPhotoList = cityPhotoList.filter((p) => idSet.has(p.id));
+      }
       // Sort by date in ascending order (oldest first)
       const sorted = [...cityPhotoList].sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -48,7 +54,7 @@ export default function PhotoGallery({ cityName, onClose }: PhotoGalleryProps) {
       // Wrap in setTimeout to avoid 'setState in effect' linter error
       setTimeout(() => setDisplayedPhotos(sorted), 0);
     }
-  }, [cityName, cityPhotos]); // Added cityPhotos to dependency
+  }, [cityName, photoIds, cityPhotos]);
 
   // When cityName changes to null (closing), update animation state
   useEffect(() => {

@@ -2,7 +2,18 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { ChevronDown, Globe, Languages, Camera as CameraIcon, ZoomIn } from 'lucide-react';
+import {
+  ChevronDown,
+  Globe,
+  Languages,
+  Camera as CameraIcon,
+  ZoomIn,
+  Plane,
+  Bus,
+  TrainFront,
+  Ship,
+  Mountain,
+} from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
 import countryBackgrounds from '../../data/countryBackgrounds.json';
@@ -12,6 +23,8 @@ import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { WorldBorders } from './WorldBorders';
+import { PhotoMarkers } from './PhotoMarkers';
+import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
 
 // =============================================================================
@@ -98,36 +111,58 @@ function generatePath(stops: Stop[], cities: Record<string, CityData>, radius: n
     segmentProgress: number;
   }[] = [];
 
+  const routes = osrmRoutes as Record<string, number[][]>;
+
   for (let i = 0; i < stops.length - 1; i++) {
     const currentCity = cities[stops[i].city];
     const nextCity = cities[stops[i + 1].city];
 
     if (!currentCity || !nextCity) continue;
 
-    const start = latLngToVector3(currentCity.lat, currentCity.lng, radius);
-    const end = latLngToVector3(nextCity.lat, nextCity.lng, radius);
     const transport = stops[i + 1].transport;
+    const routeKey = `${stops[i].id}-${stops[i + 1].id}`;
+    const osrmCoords = routes[routeKey];
 
-    const segments = transport === 'flight' ? 80 : 30; // Flight has more segments = slower line drawing
-    for (let j = 0; j <= segments; j++) {
-      const t = j / segments;
-      const point = new THREE.Vector3().lerpVectors(start, end, t);
+    // Use OSRM route data for bus/train if available
+    if (osrmCoords && osrmCoords.length > 2 && (transport === 'bus' || transport === 'train')) {
+      for (let j = 0; j <= osrmCoords.length - 1; j++) {
+        const t = j / (osrmCoords.length - 1);
+        const [lng, lat] = osrmCoords[j];
+        const point = latLngToVector3(lat, lng, radius);
 
-      if (transport === 'flight') {
-        const arc = Math.sin(t * Math.PI) * 0.15;
-        point.normalize().multiplyScalar(radius + arc);
-      } else {
-        point.normalize().multiplyScalar(radius);
+        points.push({
+          point,
+          transport,
+          fromStopId: stops[i].id,
+          toStopId: stops[i + 1].id,
+          segmentProgress: t,
+        });
       }
+    } else {
+      // Fallback: lerp for flights, boats, treks, or missing OSRM data
+      const start = latLngToVector3(currentCity.lat, currentCity.lng, radius);
+      const end = latLngToVector3(nextCity.lat, nextCity.lng, radius);
 
-      // Track both source and destination stop, plus progress within segment
-      points.push({
-        point,
-        transport,
-        fromStopId: stops[i].id,
-        toStopId: stops[i + 1].id,
-        segmentProgress: t,
-      });
+      const segments = transport === 'flight' ? 80 : 30;
+      for (let j = 0; j <= segments; j++) {
+        const t = j / segments;
+        const point = new THREE.Vector3().lerpVectors(start, end, t);
+
+        if (transport === 'flight') {
+          const arc = Math.sin(t * Math.PI) * 0.15;
+          point.normalize().multiplyScalar(radius + arc);
+        } else {
+          point.normalize().multiplyScalar(radius);
+        }
+
+        points.push({
+          point,
+          transport,
+          fromStopId: stops[i].id,
+          toStopId: stops[i + 1].id,
+          segmentProgress: t,
+        });
+      }
     }
   }
 
@@ -167,49 +202,79 @@ function Earth() {
   );
 }
 
-function Traveler({ position, zoomScale }: { position: THREE.Vector3; zoomScale: number }) {
-  // Red pulsing indicator - always visible and distinct
-  const pulseRef = useRef<THREE.Mesh>(null);
+const TRANSPORT_ICONS: Record<
+  string,
+  React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>
+> = {
+  flight: Plane,
+  bus: Bus,
+  train: TrainFront,
+  boat: Ship,
+  trek: Mountain,
+  start: Plane,
+};
+
+function Traveler({
+  position,
+  zoomScale,
+  transport,
+}: {
+  position: THREE.Vector3;
+  zoomScale: number;
+  transport: string;
+}) {
   const outerPulseRef = useRef<THREE.Mesh>(null);
 
-  // Scale inversely with zoom to maintain consistent visual size
   const scale = 1 / Math.max(zoomScale, 0.5);
+  const color = TRANSPORT_COLORS[transport] || '#FF4757';
+  const IconComponent = TRANSPORT_ICONS[transport] || Plane;
 
-  // Pulse animation
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    const pulse = 0.9 + Math.sin(t * 4) * 0.3; // Fast pulse between 0.6-1.2
     const outerPulse = 0.8 + Math.sin(t * 2) * 0.4;
 
-    if (pulseRef.current) {
-      pulseRef.current.scale.setScalar(pulse);
-    }
     if (outerPulseRef.current) {
       outerPulseRef.current.scale.setScalar(outerPulse);
       (outerPulseRef.current.material as THREE.MeshBasicMaterial).opacity =
-        0.3 - Math.sin(t * 2) * 0.15;
+        0.25 - Math.sin(t * 2) * 0.12;
     }
   });
 
   return (
     <group position={position} scale={[scale, scale, scale]}>
-      {/* Bright red core - always visible */}
-      <mesh>
-        <sphereGeometry args={[0.01, 32, 32]} />
-        <meshBasicMaterial color="#FF3B3B" />
-      </mesh>
-
-      {/* Pulsing inner glow - smaller */}
-      <mesh ref={pulseRef}>
-        <sphereGeometry args={[0.018, 32, 32]} />
-        <meshBasicMaterial color="#FF6B6B" transparent opacity={0.5} />
-      </mesh>
-
-      {/* Pulsing outer halo - smaller */}
+      {/* Pulsing outer halo with transport color */}
       <mesh ref={outerPulseRef}>
         <sphereGeometry args={[0.028, 32, 32]} />
-        <meshBasicMaterial color="#FF4757" transparent opacity={0.2} />
+        <meshBasicMaterial color={color} transparent opacity={0.2} />
       </mesh>
+
+      {/* Transport icon */}
+      <Html
+        center
+        sprite
+        style={{
+          pointerEvents: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${color}dd 0%, ${color}44 70%, transparent 100%)`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: `0 0 12px ${color}88, 0 0 24px ${color}44`,
+            animation: 'travelerPulse 2s ease-in-out infinite',
+          }}
+        >
+          <IconComponent size={14} color="#ffffff" strokeWidth={2.5} />
+        </div>
+      </Html>
     </group>
   );
 }
@@ -607,12 +672,14 @@ function Scene({
   isUserInteracting,
   onInteraction,
   onCityClick,
+  onPhotoClusterClick,
 }: {
   progress: number;
   zoom: number;
   isUserInteracting: boolean;
   onInteraction: () => void;
   onCityClick: (cityName: string) => void;
+  onPhotoClusterClick: (cityName: string, photoIds: string[]) => void;
 }) {
   const stops = journeyData.stops as Stop[];
   const cities = citiesData.cities as Record<string, CityData>;
@@ -622,7 +689,7 @@ function Scene({
 
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
 
-  const { position, displayStopId, fromStopId } = useMemo(() => {
+  const { position, displayStopId, fromStopId, currentTransport } = useMemo(() => {
     const pt = path[pathIdx] || {
       point: new THREE.Vector3(0, 2, 0),
       transport: 'bus',
@@ -632,7 +699,12 @@ function Scene({
     };
     // Show current stop when stationary (t < 0.15), destination when moving
     const showStopId = pt.segmentProgress < SEGMENT_THRESHOLD ? pt.fromStopId : pt.toStopId;
-    return { position: pt.point, displayStopId: showStopId, fromStopId: pt.fromStopId };
+    return {
+      position: pt.point,
+      displayStopId: showStopId,
+      fromStopId: pt.fromStopId,
+      currentTransport: pt.transport,
+    };
   }, [path, pathIdx]);
 
   // Calculate current stop index from displayStopId
@@ -990,7 +1062,15 @@ function Scene({
         }
       })}
 
-      <Traveler position={position} zoomScale={zoomScale} />
+      <PhotoMarkers
+        currentStopIdx={currentStopIdx}
+        stops={stops}
+        cities={cities}
+        cameraPosition={position}
+        zoomScale={zoomScale}
+        onPhotoClusterClick={onPhotoClusterClick}
+      />
+      <Traveler position={position} zoomScale={zoomScale} transport={currentTransport} />
       <Camera
         target={position}
         zoom={zoom}
@@ -1260,9 +1340,20 @@ function TransportLegend() {
         {Object.entries(TRANSPORT_COLORS).map(([key, color]) => {
           if (key === 'start') return null;
           const label = transportData[key] ? transportData[key][language as 'ko' | 'en'] : key;
+          const Icon = TRANSPORT_ICONS[key];
           return (
             <div key={key} className="transport-legend__item">
-              <div className="transport-legend__color" style={{ backgroundColor: color }} />
+              <div
+                className="transport-legend__color"
+                style={{
+                  backgroundColor: color,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {Icon && <Icon size={7} color="#fff" strokeWidth={2.5} />}
+              </div>
               <span className="transport-legend__label">{label}</span>
             </div>
           );
@@ -1373,6 +1464,7 @@ function JourneyExperienceContent() {
   const [zoom, setZoom] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[] | null>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
 
   const stops = journeyData.stops as Stop[];
@@ -1409,13 +1501,21 @@ function JourneyExperienceContent() {
     }, 3000);
   };
 
-  // Handle city click for photo gallery
+  // Handle city click for photo gallery (from city markers - show all photos)
   const handleCityClick = (cityName: string) => {
     setSelectedCity(cityName);
+    setSelectedPhotoIds(null);
+  };
+
+  // Handle photo cluster click (from PhotoMarkers - show only cluster photos)
+  const handlePhotoClusterClick = (cityName: string, photoIds: string[]) => {
+    setSelectedCity(cityName);
+    setSelectedPhotoIds(photoIds);
   };
 
   const handleCloseGallery = () => {
     setSelectedCity(null);
+    setSelectedPhotoIds(null);
   };
 
   useEffect(() => {
@@ -1687,6 +1787,7 @@ function JourneyExperienceContent() {
             isUserInteracting={isUserInteracting}
             onInteraction={handleUserInteraction}
             onCityClick={handleCityClick}
+            onPhotoClusterClick={handlePhotoClusterClick}
           />
           <WorldBorders countryCode={currentCountry} />
         </Canvas>
@@ -1704,7 +1805,11 @@ function JourneyExperienceContent() {
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
 
       {/* Photo gallery overlay */}
-      <PhotoGallery cityName={selectedCity} onClose={handleCloseGallery} />
+      <PhotoGallery
+        cityName={selectedCity}
+        photoIds={selectedPhotoIds}
+        onClose={handleCloseGallery}
+      />
     </div>
   );
 }
