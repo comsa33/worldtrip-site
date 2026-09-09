@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Line, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,6 +11,8 @@ import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { DotGlobe } from './DotGlobe';
+import { WorldBorders } from './WorldBorders';
+import { Scrubber } from './Scrubber';
 import { PhotoMarkers } from './PhotoMarkers';
 import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
@@ -723,9 +725,11 @@ function LanguageToggle() {
 function VerticalTimeline({
   currentStopIndex,
   stops,
+  onSelect,
 }: {
   currentStopIndex: number;
   stops: Stop[];
+  onSelect: (index: number) => void;
 }) {
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
@@ -763,7 +767,13 @@ function VerticalTimeline({
           const cityName = city ? city[language as 'ko' | 'en'] : stop.city;
           const Icon = TRANSPORT_ICONS[stop.transport] || Bus;
           return (
-            <div key={stop.id} className={`timeline-stop timeline-stop--${state}`}>
+            <div
+              key={stop.id}
+              className={`timeline-stop timeline-stop--${state}`}
+              role="button"
+              tabIndex={-1}
+              onClick={() => onSelect(actualIdx)}
+            >
               <span className="timeline-stop__icon" aria-hidden="true">
                 <Icon size={13} strokeWidth={1.75} />
               </span>
@@ -825,6 +835,7 @@ function Header() {
 // =============================================================================
 
 function JourneyExperienceContent() {
+  const { language } = useI18n();
   const [progress, setProgress] = useState(0);
   const [zoom, setZoom] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
@@ -852,6 +863,75 @@ function JourneyExperienceContent() {
 
   const city = stops[currentStop];
   const currentCountry = city?.country || 'KR';
+
+  // Where each stop begins on the 0..1 progress line (last stop = end of the path)
+  const stopProgress = useMemo(
+    () =>
+      stops.map((s, i) => {
+        if (i === stops.length - 1) return 1;
+        const idx = path.findIndex((pt) => pt.fromStopId === s.id && pt.segmentProgress < 0.05);
+        return idx < 0 ? 0 : idx / path.length;
+      }),
+    [stops, path]
+  );
+
+  // Every control (scrubber, rail, keys, autoplay) moves the page scroll; `progress` derives from it
+  const seek = useCallback((p: number, mode: 'drag' | 'jump') => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({
+      top: Math.max(0, Math.min(1, p)) * maxScroll,
+      behavior: mode === 'drag' ? 'auto' : 'smooth',
+    });
+  }, []);
+
+  const [playing, setPlaying] = useState(false);
+  const goToStop = useCallback(
+    (idx: number) => seek(stopProgress[Math.max(0, Math.min(stops.length - 1, idx))], 'jump'),
+    [seek, stopProgress, stops.length]
+  );
+
+  // Autoplay: one stop per beat, a longer beat for flights; any manual scroll stops it
+  useEffect(() => {
+    if (!playing) return;
+    const atEnd = currentStop >= stops.length - 1;
+    const next = stops[currentStop + 1];
+    const beat = next?.transport === 'flight' ? 2000 : 1200;
+    const t = window.setTimeout(
+      () => (atEnd ? setPlaying(false) : goToStop(currentStop + 1)),
+      atEnd ? 0 : beat
+    );
+    const stop = () => setPlaying(false);
+    window.addEventListener('wheel', stop, { passive: true });
+    window.addEventListener('touchmove', stop, { passive: true });
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener('wheel', stop);
+      window.removeEventListener('touchmove', stop);
+    };
+  }, [playing, currentStop, stops, goToStop]);
+
+  // Keyboard: ← → stops, Space play/pause, Esc closes the gallery
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && ['INPUT', 'TEXTAREA', 'BUTTON'].includes(target.tagName)) return;
+      if (selectedCity !== null) return;
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setPlaying(false);
+        goToStop(currentStop + 1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setPlaying(false);
+        goToStop(currentStop - 1);
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        setPlaying((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [currentStop, goToStop, selectedCity]);
 
   // Countries the journey has reached so far (lights their land dots on the globe)
   const visitedCountries = useMemo(() => {
@@ -1170,13 +1250,39 @@ function JourneyExperienceContent() {
             onPhotoClusterClick={handlePhotoClusterClick}
           />
           <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} />
+          <WorldBorders countryCode={currentCountry} />
         </Canvas>
       </div>
 
       <Header />
 
-      <VerticalTimeline currentStopIndex={currentStop} stops={stops} />
+      <VerticalTimeline
+        currentStopIndex={currentStop}
+        stops={stops}
+        onSelect={(i) => {
+          setPlaying(false);
+          goToStop(i);
+        }}
+      />
       {city && <StopMeta stop={city} />}
+      <Scrubber
+        stops={stops}
+        stopProgress={stopProgress}
+        progress={progress}
+        currentStopIdx={currentStop}
+        cityName={cities[city?.city]?.[language as 'ko' | 'en'] ?? city?.city ?? ''}
+        countryName={
+          (countriesData as { countries: CountryData[] }).countries.find(
+            (c) => c.code === currentCountry
+          )?.name[language as 'ko' | 'en'] ?? currentCountry
+        }
+        playing={playing}
+        onSeek={(p, mode) => {
+          setPlaying(false);
+          seek(p, mode);
+        }}
+        onTogglePlay={() => setPlaying((v) => !v)}
+      />
 
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />

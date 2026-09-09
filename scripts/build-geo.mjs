@@ -1,10 +1,11 @@
-// Builds src/data/landDots.json from Natural Earth 110m (world-atlas):
-// a 1° land dot grid, each dot tagged with the visited country it falls in.
+// Builds from Natural Earth 110m (world-atlas):
+//  - src/data/landDots.json: a 1° land dot grid, each dot tagged with the visited country it falls in
+//  - src/data/worldBorders.json: every boundary line, plus rings of the visited countries
 // Run: node scripts/build-geo.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { geoContains } from 'd3-geo';
-import { feature } from 'topojson-client';
+import { feature, mesh } from 'topojson-client';
 
 const require = createRequire(import.meta.url);
 const land = JSON.parse(readFileSync(require.resolve('world-atlas/land-110m.json'), 'utf8'));
@@ -45,4 +46,17 @@ for (let lat = -88; lat <= 88; lat += STEP) {
 }
 writeFileSync('src/data/landDots.json', JSON.stringify({ countries: visited, dots }));
 const tagged = dots.filter((_, i) => i % 3 === 2 && dots[i] >= 0).length;
-console.log(`landDots: ${dots.length / 3} dots, ${tagged} in visited countries`);
+
+// --- borders: every boundary (coastlines + country borders) as line strings
+const round = (c) => [+c[0].toFixed(2), +c[1].toFixed(2)];
+const borders = mesh(countries, countries.objects.countries).coordinates.map((line) => line.map(round));
+const byCode = {};
+visited.forEach((code, i) => {
+  const f = countryFeatures[i];
+  if (!f) return;
+  const rings = f.geometry.type === 'Polygon' ? f.geometry.coordinates : f.geometry.coordinates.flat();
+  byCode[code] = rings.map((r) => r.map(round));
+});
+writeFileSync('src/data/worldBorders.json', JSON.stringify({ borders, countries: byCode }));
+
+console.log(`landDots: ${dots.length / 3} dots, ${tagged} in visited countries · borders: ${borders.length} lines · countries: ${Object.keys(byCode).length}`);
