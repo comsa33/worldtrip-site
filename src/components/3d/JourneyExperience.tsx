@@ -37,13 +37,6 @@ const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
 const ACCENT = '#ff670d';
 
-// Route colour under comparison (/?route=accent|ink). The travelled line is the one coloured
-// thing on a monochrome map (accent), or ink lifted off the map by an underlay (ink).
-type RouteStyle = 'accent' | 'ink';
-function readRouteStyle(): RouteStyle {
-  return new URLSearchParams(window.location.search).get('route') === 'ink' ? 'ink' : 'accent';
-}
-
 function haversineKm(a: CityData, b: CityData): number {
   const R = 6371;
   const toRad = (d: number) => (d * Math.PI) / 180;
@@ -333,7 +326,6 @@ function TravelPath({
   progress,
   ink,
   bg,
-  style,
   moving,
   hoveredLeg,
   onHoverLeg,
@@ -342,13 +334,13 @@ function TravelPath({
   progress: number;
   ink: string;
   bg: string;
-  style: RouteStyle;
   moving: boolean;
   hoveredLeg: Leg | null;
   onHoverLeg: (leg: Leg | null, at?: THREE.Vector3) => void;
 }) {
   const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
-  const pastColor = style === 'ink' ? ink : ACCENT;
+  // The travelled line is the one coloured thing on a monochrome map
+  const pastColor = ACCENT;
 
   // One segment per leg (stop -> stop), keeping its index range in `points`
   const segments = useMemo(() => {
@@ -713,7 +705,6 @@ function Scene({
   onHoverCity,
   onSelectCity,
   theme,
-  routeStyle,
   playing,
 }: {
   progress: number;
@@ -726,7 +717,6 @@ function Scene({
   onHoverCity: (cityName: string | null) => void;
   onSelectCity: (cityName: string) => void;
   theme: Theme;
-  routeStyle: RouteStyle;
   playing: boolean;
 }) {
   const INK = GLOBE[theme].ink;
@@ -817,7 +807,6 @@ function Scene({
         progress={progress}
         ink={INK}
         bg={BG}
-        style={routeStyle}
         moving={playing}
         hoveredLeg={hoveredLeg?.leg ?? null}
         onHoverLeg={onHoverLeg}
@@ -1118,7 +1107,6 @@ function Header() {
 function JourneyExperienceContent() {
   const { language } = useI18n();
   const theme = useTheme();
-  const [routeStyle] = useState<RouteStyle>(readRouteStyle);
   const [progress, setProgress] = useState(0);
   const [railOpen, setRailOpen] = useState(false);
 
@@ -1606,7 +1594,6 @@ function JourneyExperienceContent() {
         <Canvas camera={{ position: [-2.5, 3, -3.5], fov: 45 }} gl={{ antialias: true }}>
           <Scene
             progress={smoothProgress}
-            routeStyle={routeStyle}
             playing={playing}
             zoom={zoom}
             isUserInteracting={isUserInteracting}
