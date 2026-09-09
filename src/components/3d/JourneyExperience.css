@@ -76,8 +76,41 @@
   color: var(--ink-3);
 }
 
-.lang-toggle {
+.journey-header__nav {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 13px;
+}
+
+.journey-header__nav a {
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-3);
+  transition:
+    color var(--t-fast) var(--ease),
+    background-color var(--t-fast) var(--ease);
+}
+
+.journey-header__nav a:hover {
+  color: var(--ink);
+  background: var(--bg-hover);
+}
+
+.journey-header__nav a:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.journey-header__sep {
+  width: 1px;
+  height: 14px;
+  margin: 0 6px;
+  background: var(--line-strong);
+}
+
+.lang-toggle {
   display: flex;
   gap: 2px;
   font-family: var(--mono);

@@ -824,6 +824,11 @@ function Header() {
         <span>{t('journey.title')}</span>
       </div>
       <span className="journey-header__period mono">2016.08.13 — 2017.07.06</span>
+      <nav className="journey-header__nav mono" aria-label="Sites">
+        <a href="https://po24lio.com">{t('nav.portfolio')}</a>
+        <a href="https://blog.po24lio.com">{t('nav.blog')}</a>
+        <span className="journey-header__sep" aria-hidden="true" />
+      </nav>
       <LanguageToggle />
     </header>
   );
