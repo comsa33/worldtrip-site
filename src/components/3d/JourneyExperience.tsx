@@ -505,6 +505,9 @@ function Scene({
   onInteraction,
   onCityClick,
   onPhotoClusterClick,
+  hoveredCity,
+  onHoverCity,
+  onSelectCity,
 }: {
   progress: number;
   zoom: number;
@@ -512,6 +515,9 @@ function Scene({
   onInteraction: () => void;
   onCityClick: (cityName: string) => void;
   onPhotoClusterClick: (cityName: string, photoIds: string[]) => void;
+  hoveredCity: string | null;
+  onHoverCity: (cityName: string | null) => void;
+  onSelectCity: (cityName: string) => void;
 }) {
   const stops = journeyData.stops as Stop[];
   const cities = citiesData.cities as Record<string, CityData>;
@@ -552,114 +558,98 @@ function Scene({
     return 1 + progressiveZoom * 0.5;
   }, [displayStopId]);
 
-  // Get visited stops (only show stops we've actually reached)
-  const visitedStops = useMemo(() => {
+  // One marker per city. State: current, from (departure of the leg in progress), past, or next.
+  const cityMarkers = useMemo(() => {
     const currentCityName = stops[currentStopIdx]?.city;
-
-    // Show stops up to and including the one we're currently at
-    return stops
-      .slice(0, currentStopIdx + 1)
-      .map((stop, idx) => {
-        const isCurrentStop = idx === currentStopIdx;
-
-        // If this is a past stop but for the same city as current stop, skip it
-        // This prevents double rendering (small label under big label)
-        if (!isCurrentStop && stop.city === currentCityName) {
-          return null;
-        }
-
-        const city = cities[stop.city];
-        if (!city) return null;
-        const pos = latLngToVector3(city.lat, city.lng, 2.004);
-        return {
-          id: stop.id,
-          position: pos,
-          name: city[language as 'ko' | 'en'],
-          isCurrentStop,
-          isFromStop: stop.id === fromStopId && fromStopId !== displayStopId, // Departure city (not the same as destination)
-        };
-      })
-      .filter(Boolean) as {
-      id: number;
+    const fromCityName = stops.find((st) => st.id === fromStopId)?.city;
+    const seen = new Set<string>();
+    const out: {
+      city: string;
       position: THREE.Vector3;
       name: string;
-      isCurrentStop: boolean;
-      isFromStop: boolean;
-    }[];
+      state: 'current' | 'from' | 'past' | 'next';
+    }[] = [];
+    stops.forEach((stop, idx) => {
+      if (seen.has(stop.city)) return;
+      seen.add(stop.city);
+      const city = cities[stop.city];
+      if (!city) return;
+      const visitedIdx = stops.findIndex((st, k) => st.city === stop.city && k <= currentStopIdx);
+      const state =
+        stop.city === currentCityName
+          ? 'current'
+          : stop.city === fromCityName && fromStopId !== displayStopId
+            ? 'from'
+            : visitedIdx >= 0 || idx <= currentStopIdx
+              ? 'past'
+              : 'next';
+      out.push({
+        city: stop.city,
+        position: latLngToVector3(city.lat, city.lng, 2.004),
+        name: city[language as 'ko' | 'en'],
+        state,
+      });
+    });
+    return out;
   }, [stops, cities, currentStopIdx, language, fromStopId, displayStopId]);
 
   return (
     <>
       <TravelPath points={path} progress={progress} />
 
-      {/* City markers for visited stops */}
-      {visitedStops.map((stop) => {
-        const markerDir = stop.position.clone().normalize();
-        const cameraDir = position.clone().normalize();
-        const dotProduct = markerDir.dot(cameraDir);
+      {/* City markers: one per city, hover-linked with the rail */}
+      {cityMarkers.map((m) => {
+        const dotProduct = m.position.clone().normalize().dot(position.clone().normalize());
         if (dotProduct < -0.3) return null;
-
         const markerScale = 1 / Math.max(zoomScale, 0.5);
-
-        if (stop.isCurrentStop) {
-          const originalCityName = stops[currentStopIdx]?.city;
-          const cityHasPhotos = Boolean(
-            originalCityName && cityPhotosData[originalCityName as keyof typeof cityPhotosData]
-          );
-          return (
-            <group
-              key={stop.id}
-              position={stop.position}
-              scale={[markerScale, markerScale, markerScale]}
+        const hovered = hoveredCity === m.city;
+        const isCurrent = m.state === 'current';
+        const cityHasPhotos = Boolean(cityPhotosData[m.city as keyof typeof cityPhotosData]);
+        const radius = isCurrent
+          ? 0.007
+          : m.state === 'from'
+            ? 0.005
+            : m.state === 'past'
+              ? 0.004
+              : 0.003;
+        const opacity = isCurrent ? 1 : m.state === 'from' ? 0.8 : m.state === 'past' ? 0.55 : 0.3;
+        const showLabel =
+          hovered || isCurrent || m.state === 'from' || (m.state === 'past' && dotProduct > 0.8);
+        return (
+          <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
+            <mesh>
+              <sphereGeometry args={[hovered ? radius * 1.6 : radius, 16, 16]} />
+              <meshBasicMaterial color={INK} transparent opacity={hovered ? 1 : opacity} />
+            </mesh>
+            {/* hit area for hover / click */}
+            <mesh
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                onHoverCity(m.city);
+                document.body.style.cursor = 'pointer';
+              }}
+              onPointerOut={() => {
+                onHoverCity(null);
+                document.body.style.cursor = '';
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (isCurrent && cityHasPhotos) onCityClick(m.city);
+                else onSelectCity(m.city);
+              }}
             >
-              <mesh>
-                <sphereGeometry args={[0.007, 16, 16]} />
-                <meshBasicMaterial color={INK} />
-              </mesh>
+              <sphereGeometry args={[0.022, 8, 8]} />
+              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+            </mesh>
+            {showLabel && (
               <Html center style={{ pointerEvents: 'none' }}>
                 <div
-                  className={`city-label city-label--current${cityHasPhotos ? ' city-label--link' : ''}`}
-                  onClick={cityHasPhotos ? () => onCityClick(originalCityName!) : undefined}
+                  className={`city-label city-label--${m.state}${hovered ? ' is-hover' : ''}${isCurrent && cityHasPhotos ? ' city-label--link' : ''}`}
+                  onClick={isCurrent && cityHasPhotos ? () => onCityClick(m.city) : undefined}
                 >
-                  {stop.name}
-                  {cityHasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
+                  {m.name}
+                  {isCurrent && cityHasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
                 </div>
-              </Html>
-            </group>
-          );
-        }
-
-        if (stop.isFromStop) {
-          return (
-            <group
-              key={stop.id}
-              position={stop.position}
-              scale={[markerScale, markerScale, markerScale]}
-            >
-              <mesh>
-                <sphereGeometry args={[0.005, 12, 12]} />
-                <meshBasicMaterial color={INK} transparent opacity={0.8} />
-              </mesh>
-              <Html center style={{ pointerEvents: 'none' }}>
-                <div className="city-label city-label--from">{stop.name}</div>
-              </Html>
-            </group>
-          );
-        }
-
-        return (
-          <group
-            key={stop.id}
-            position={stop.position}
-            scale={[markerScale, markerScale, markerScale]}
-          >
-            <mesh>
-              <sphereGeometry args={[0.004, 12, 12]} />
-              <meshBasicMaterial color={INK} transparent opacity={0.55} />
-            </mesh>
-            {dotProduct > 0.8 && (
-              <Html center style={{ pointerEvents: 'none' }}>
-                <div className="city-label city-label--past">{stop.name}</div>
               </Html>
             )}
           </group>
@@ -728,10 +718,14 @@ function VerticalTimeline({
   currentStopIndex,
   stops,
   onSelect,
+  hoveredCity,
+  onHover,
 }: {
   currentStopIndex: number;
   stops: Stop[];
   onSelect: (index: number) => void;
+  hoveredCity: string | null;
+  onHover: (cityName: string | null) => void;
 }) {
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
@@ -771,10 +765,12 @@ function VerticalTimeline({
           return (
             <div
               key={stop.id}
-              className={`timeline-stop timeline-stop--${state}`}
+              className={`timeline-stop timeline-stop--${state}${hoveredCity === stop.city ? ' is-hover' : ''}`}
               role="button"
               tabIndex={-1}
               onClick={() => onSelect(actualIdx)}
+              onMouseEnter={() => onHover(stop.city)}
+              onMouseLeave={() => onHover(null)}
             >
               <span className="timeline-stop__icon" aria-hidden="true">
                 <Icon size={13} strokeWidth={1.75} />
@@ -899,9 +895,32 @@ function JourneyExperienceContent() {
   }, []);
 
   const [playing, setPlaying] = useState(false);
+  const [hoveredCity, setHoveredCity] = useState<string | null>(null);
+
   const goToStop = useCallback(
     (idx: number) => seek(stopProgress[Math.max(0, Math.min(stops.length - 1, idx))], 'jump'),
     [seek, stopProgress, stops.length]
+  );
+
+  // Jump to a city: the stop of that city nearest to where we are now
+  const goToCity = useCallback(
+    (cityName: string) => {
+      let best = -1;
+      let bestD = Infinity;
+      stops.forEach((st, i) => {
+        if (st.city !== cityName) return;
+        const d = Math.abs(i - currentStop);
+        if (d < bestD) {
+          bestD = d;
+          best = i;
+        }
+      });
+      if (best >= 0) {
+        setPlaying(false);
+        goToStop(best);
+      }
+    },
+    [stops, currentStop, goToStop]
   );
 
   // Autoplay: one stop per beat, a longer beat for flights; any manual scroll stops it
@@ -1262,6 +1281,9 @@ function JourneyExperienceContent() {
             onInteraction={handleUserInteraction}
             onCityClick={handleCityClick}
             onPhotoClusterClick={handlePhotoClusterClick}
+            hoveredCity={hoveredCity}
+            onHoverCity={setHoveredCity}
+            onSelectCity={goToCity}
           />
           <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} />
           <WorldBorders countryCode={currentCountry} />
@@ -1277,6 +1299,8 @@ function JourneyExperienceContent() {
           setPlaying(false);
           goToStop(i);
         }}
+        hoveredCity={hoveredCity}
+        onHover={setHoveredCity}
       />
       {city && <StopMeta stop={city} />}
       <Minimap
