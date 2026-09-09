@@ -732,8 +732,14 @@
 
 @media (max-width: 768px) {
   .filmstrip {
-    top: 132px;
+    top: 150px;
     right: 20px;
+  }
+
+  /* While the opening story is up on a phone, give it the screen: rail and minimap step aside */
+  .journey-experience:has(.about-overlay) .stop-rail,
+  .journey-experience:has(.about-overlay) .minimap {
+    display: none;
   }
 
   .filmstrip__thumb {

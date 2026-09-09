@@ -1,8 +1,8 @@
+/* About — a plain text block beside the globe. No box, no centring: eyebrow, title, story, quote. */
 .about-overlay {
   position: fixed;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 312px; /* rail (280px) + gutter */
+  bottom: 152px; /* scrubber (120px) + gutter */
   z-index: 100;
   pointer-events: none;
   opacity: 0;
@@ -12,66 +12,81 @@
 @keyframes aboutFadeIn {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(6px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 }
 
 .about-overlay__card {
-  max-width: 440px;
-  padding: 20px 28px 22px;
-  background: var(--bg-card);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  text-align: center;
+  max-width: 400px;
   font-family: var(--sans);
+  text-align: left;
+  text-shadow:
+    0 0 4px var(--bg),
+    0 0 12px var(--bg);
+}
+
+.about-overlay__subtitle {
+  order: -1;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin: 0 0 10px;
+}
+
+.about-overlay__card {
+  display: flex;
+  flex-direction: column;
 }
 
 .about-overlay__title {
   font-size: 15px;
   font-weight: 500;
   color: var(--ink);
-  margin: 0 0 4px;
+  margin: 0 0 12px;
   letter-spacing: -0.01em;
-}
-
-.about-overlay__subtitle {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-3);
-  margin: 0 0 14px;
 }
 
 .about-overlay__story {
   font-size: 13px;
   color: var(--ink-2);
   line-height: 1.7;
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   white-space: pre-line;
   text-wrap: pretty;
 }
 
 .about-overlay__quote {
+  position: relative;
   font-size: 13px;
   font-style: italic;
   color: var(--ink);
   margin: 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.about-overlay__quote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 1px;
+  background: var(--line-strong);
 }
 
 @media (max-width: 768px) {
   .about-overlay {
-    bottom: 14%;
+    left: 20px;
+    bottom: 124px;
+    right: 20px;
   }
 
   .about-overlay__card {
-    width: 78vw;
-    max-width: 78vw;
-    padding: 16px 18px;
+    max-width: none;
   }
 
   .about-overlay__story {
