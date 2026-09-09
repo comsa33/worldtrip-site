@@ -2,13 +2,10 @@ import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import landDots from '../../data/landDots.json';
+import { GLOBE, type Theme } from '../../theme';
 
 export const GLOBE_RADIUS = 2;
 
-// Dot colours: land is quiet, countries the trip has reached stay lit, the current one is full ink.
-const DOT_BASE = new THREE.Color('#5c5c5c');
-const DOT_VISITED = new THREE.Color('#a6a6a6');
-const DOT_CURRENT = new THREE.Color('#f2f2f2');
 const DOT_SIZE = 0.035; // world units at distance 1
 // visited / current dots also grow a little, so a lit country reads at a glance
 const SIZE_BASE = 1;
@@ -72,11 +69,18 @@ interface LandDotsData {
 export function DotGlobe({
   countryCode,
   visitedCodes,
+  theme,
 }: {
   countryCode?: string | null;
   visitedCodes: ReadonlySet<string>;
+  theme: Theme;
 }) {
   const data = landDots as LandDotsData;
+  // Dot colours: land is quiet, countries the trip has reached stay lit, the current one is full ink.
+  const palette = GLOBE[theme];
+  const DOT_BASE = useMemo(() => new THREE.Color(palette.dotBase), [palette.dotBase]);
+  const DOT_VISITED = useMemo(() => new THREE.Color(palette.dotVisited), [palette.dotVisited]);
+  const DOT_CURRENT = useMemo(() => new THREE.Color(palette.dotCurrent), [palette.dotCurrent]);
   const { size, gl } = useThree();
 
   const { geometry, tags } = useMemo(() => {
@@ -88,7 +92,7 @@ export function DotGlobe({
     for (let i = 0; i < n; i++) {
       const v = latLngToVector3(data.dots[i * 3], data.dots[i * 3 + 1], GLOBE_RADIUS + 0.002);
       positions.set([v.x, v.y, v.z], i * 3);
-      colors.set([DOT_BASE.r, DOT_BASE.g, DOT_BASE.b], i * 3);
+      colors.set([0.4, 0.4, 0.4], i * 3); // recoloured by the effect below
       tags[i] = data.dots[i * 3 + 2];
     }
     const g = new THREE.BufferGeometry();
@@ -122,7 +126,16 @@ export function DotGlobe({
     }
     attr.needsUpdate = true;
     sizeAttr.needsUpdate = true;
-  }, [geometry, tags, data.countries, countryCode, visitedCodes]);
+  }, [
+    geometry,
+    tags,
+    data.countries,
+    countryCode,
+    visitedCodes,
+    DOT_BASE,
+    DOT_VISITED,
+    DOT_CURRENT,
+  ]);
 
   const uniforms = useMemo(
     () => ({
@@ -142,7 +155,7 @@ export function DotGlobe({
     <group>
       <mesh>
         <sphereGeometry args={[GLOBE_RADIUS, 96, 96]} />
-        <meshBasicMaterial color="#111111" />
+        <meshBasicMaterial color={palette.sphere} />
       </mesh>
       <points geometry={geometry}>
         <shaderMaterial

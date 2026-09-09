@@ -20,7 +20,7 @@
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(13, 13, 13, 0.94);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
 }
 
 .lightbox__top {

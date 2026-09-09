@@ -8,6 +8,7 @@ const browser = await puppeteer.launch({
   args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--hide-scrollbars'],
 });
 const page = await browser.newPage();
+if (process.env.THEME) await page.evaluateOnNewDocument((t) => localStorage.setItem('theme', t), process.env.THEME);
 await page.setViewport({ width: +w, height: +h, deviceScaleFactor: 1 });
 const errors = [];
 page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') errors.push(`${m.type()}: ${m.text()}`); });

@@ -15,6 +15,7 @@ import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
 import { Minimap } from './Minimap';
+import { GLOBE, useTheme, useToggleTheme, type Theme } from '../../theme';
 import { PhotoMarkers } from './PhotoMarkers';
 import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
@@ -26,8 +27,6 @@ import './JourneyExperience.css';
 const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
 const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
-
-const INK = '#f2f2f2';
 
 // Route line style per transport: flights dash, ground solid, boats dot, treks fine dots
 const TRANSPORT_DASH: Record<string, { dashSize: number; gapSize: number } | null> = {
@@ -215,17 +214,19 @@ function RouteLine({
   points,
   transport,
   opacity,
+  color,
 }: {
   points: THREE.Vector3[];
   transport: string;
   opacity: number;
+  color: string;
 }) {
   if (points.length < 2) return null;
   const dash = TRANSPORT_DASH[transport] ?? null;
   return (
     <Line
       points={points}
-      color={INK}
+      color={color}
       lineWidth={1.25}
       transparent
       opacity={opacity}
@@ -238,7 +239,15 @@ function RouteLine({
   );
 }
 
-function TravelPath({ points, progress }: { points: PathPoint[]; progress: number }) {
+function TravelPath({
+  points,
+  progress,
+  color,
+}: {
+  points: PathPoint[];
+  progress: number;
+  color: string;
+}) {
   const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
 
   // One segment per leg (stop -> stop), keeping its index range in `points`
@@ -264,19 +273,41 @@ function TravelPath({ points, progress }: { points: PathPoint[]; progress: numbe
       {segments.map((seg) => {
         if (seg.end <= idx) {
           return (
-            <RouteLine key={seg.start} points={seg.pts} transport={seg.transport} opacity={1} />
+            <RouteLine
+              color={color}
+              key={seg.start}
+              points={seg.pts}
+              transport={seg.transport}
+              opacity={1}
+            />
           );
         }
         if (seg.start >= idx) {
           return (
-            <RouteLine key={seg.start} points={seg.pts} transport={seg.transport} opacity={0.22} />
+            <RouteLine
+              color={color}
+              key={seg.start}
+              points={seg.pts}
+              transport={seg.transport}
+              opacity={0.22}
+            />
           );
         }
         const split = idx - seg.start;
         return (
           <group key={seg.start}>
-            <RouteLine points={seg.pts.slice(0, split + 1)} transport={seg.transport} opacity={1} />
-            <RouteLine points={seg.pts.slice(split)} transport={seg.transport} opacity={0.22} />
+            <RouteLine
+              color={color}
+              points={seg.pts.slice(0, split + 1)}
+              transport={seg.transport}
+              opacity={1}
+            />
+            <RouteLine
+              color={color}
+              points={seg.pts.slice(split)}
+              transport={seg.transport}
+              opacity={0.22}
+            />
           </group>
         );
       })}
@@ -509,6 +540,7 @@ function Scene({
   hoveredCity,
   onHoverCity,
   onSelectCity,
+  theme,
 }: {
   progress: number;
   zoom: number;
@@ -519,7 +551,9 @@ function Scene({
   hoveredCity: string | null;
   onHoverCity: (cityName: string | null) => void;
   onSelectCity: (cityName: string) => void;
+  theme: Theme;
 }) {
+  const INK = GLOBE[theme].ink;
   const stops = journeyData.stops as Stop[];
   const cities = citiesData.cities as Record<string, CityData>;
   const { language } = useI18n();
@@ -596,7 +630,7 @@ function Scene({
 
   return (
     <>
-      <TravelPath points={path} progress={progress} />
+      <TravelPath points={path} progress={progress} color={INK} />
 
       {/* City markers: one per city, hover-linked with the rail */}
       {cityMarkers.map((m) => {
@@ -664,6 +698,7 @@ function Scene({
         cameraPosition={position}
         zoomScale={zoomScale}
         onPhotoClusterClick={onPhotoClusterClick}
+        theme={theme}
       />
       <Traveler position={position} zoomScale={zoomScale} />
       <Camera
@@ -815,13 +850,31 @@ function StopMeta({ stop }: { stop: Stop }) {
   );
 }
 
+function ThemeToggle() {
+  const { language } = useI18n();
+  const theme = useTheme();
+  const toggle = useToggleTheme();
+  const label = language === 'ko' ? '테마 전환' : 'Toggle theme';
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={toggle}
+      aria-label={label}
+      title={label}
+    >
+      {theme === 'dark' ? '○' : '●'}
+    </button>
+  );
+}
+
 function Header() {
   const { t } = useI18n();
   return (
     <header className="journey-header">
       <div className="journey-header__brand">
         <span className="journey-header__dot" aria-hidden="true" />
-        <span>{t('journey.title')}</span>
+        <span>{t('journey.brand')}</span>
       </div>
       <span className="journey-header__period mono">2016.08.13 — 2017.07.06</span>
       <nav className="journey-header__nav mono" aria-label="Sites">
@@ -830,6 +883,8 @@ function Header() {
         <span className="journey-header__sep" aria-hidden="true" />
       </nav>
       <LanguageToggle />
+      <span className="journey-header__sep" aria-hidden="true" />
+      <ThemeToggle />
     </header>
   );
 }
@@ -840,6 +895,7 @@ function Header() {
 
 function JourneyExperienceContent() {
   const { language } = useI18n();
+  const theme = useTheme();
   const [progress, setProgress] = useState(0);
   const [zoom, setZoom] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
@@ -1301,9 +1357,10 @@ function JourneyExperienceContent() {
             hoveredCity={hoveredCity}
             onHoverCity={setHoveredCity}
             onSelectCity={goToCity}
+            theme={theme}
           />
-          <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} />
-          <WorldBorders countryCode={currentCountry} />
+          <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} theme={theme} />
+          <WorldBorders countryCode={currentCountry} theme={theme} />
         </Canvas>
       </div>
 
