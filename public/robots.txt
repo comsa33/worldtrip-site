@@ -1,4 +1,19 @@
 User-agent: *
 Allow: /
 
+# AI / answer-engine crawlers are welcome. Text summary: /llms.txt
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: Yeti
+Allow: /
+
 Sitemap: https://backpacking.po24lio.com/sitemap.xml
