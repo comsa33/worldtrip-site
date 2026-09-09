@@ -140,7 +140,7 @@
   position: absolute;
   left: 32px;
   right: 20px;
-  top: 0;
+  top: 50%;
   display: flex;
   flex-direction: column;
   transition: transform var(--t-base) var(--ease);
@@ -253,6 +253,7 @@
 }
 
 .city-label {
+  transform: translateY(-16px);
   font-family: var(--sans);
   white-space: nowrap;
   color: var(--ink);

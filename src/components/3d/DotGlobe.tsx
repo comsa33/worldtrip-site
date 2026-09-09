@@ -25,6 +25,7 @@ const vertexShader = /* glsl */ `
   attribute vec3 aColor;
   uniform float uSize;
   uniform float uScale;
+  uniform float uDpr;
   varying vec3 vColor;
   varying float vFacing;
   void main() {
@@ -32,7 +33,8 @@ const vertexShader = /* glsl */ `
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     // dots sit on a sphere centred at the origin, so the position is the surface normal
     vFacing = normalize(normalMatrix * normalize(position)).z;
-    gl_PointSize = uSize * (uScale / -mv.z);
+    // perspective-scaled, but capped so a zoomed-in globe stays a dot map, not polka dots
+    gl_PointSize = clamp(uSize * (uScale / -mv.z), 1.5 * uDpr, 4.5 * uDpr);
     gl_Position = projectionMatrix * mv;
   }
 `;
@@ -108,7 +110,10 @@ export function DotGlobe({
     attr.needsUpdate = true;
   }, [geometry, tags, data.countries, countryCode, visitedCodes]);
 
-  const uniforms = useMemo(() => ({ uSize: { value: DOT_SIZE }, uScale: { value: 1 } }), []);
+  const uniforms = useMemo(
+    () => ({ uSize: { value: DOT_SIZE }, uScale: { value: 1 }, uDpr: { value: 1 } }),
+    []
+  );
   // three's point-size scale: half the viewport height in device pixels
   const scale = size.height * 0.5 * gl.getPixelRatio();
 
@@ -124,6 +129,7 @@ export function DotGlobe({
           fragmentShader={fragmentShader}
           uniforms={uniforms}
           uniforms-uScale-value={scale}
+          uniforms-uDpr-value={gl.getPixelRatio()}
           transparent
           depthWrite={false}
         />

@@ -612,7 +612,7 @@ function Scene({
                 <sphereGeometry args={[0.007, 16, 16]} />
                 <meshBasicMaterial color={INK} />
               </mesh>
-              <Html position={[0, 0.03, 0]} center style={{ pointerEvents: 'none' }}>
+              <Html center style={{ pointerEvents: 'none' }}>
                 <div
                   className={`city-label city-label--current${cityHasPhotos ? ' city-label--link' : ''}`}
                   onClick={cityHasPhotos ? () => onCityClick(originalCityName!) : undefined}
@@ -636,7 +636,7 @@ function Scene({
                 <sphereGeometry args={[0.005, 12, 12]} />
                 <meshBasicMaterial color={INK} transparent opacity={0.8} />
               </mesh>
-              <Html position={[0, 0.024, 0]} center style={{ pointerEvents: 'none' }}>
+              <Html center style={{ pointerEvents: 'none' }}>
                 <div className="city-label city-label--from">{stop.name}</div>
               </Html>
             </group>
@@ -654,7 +654,7 @@ function Scene({
               <meshBasicMaterial color={INK} transparent opacity={0.55} />
             </mesh>
             {dotProduct > 0.8 && (
-              <Html position={[0, 0.018, 0]} center style={{ pointerEvents: 'none' }}>
+              <Html center style={{ pointerEvents: 'none' }}>
                 <div className="city-label city-label--past">{stop.name}</div>
               </Html>
             )}
@@ -748,7 +748,7 @@ function VerticalTimeline({
       <div
         className="stop-rail__list"
         style={{
-          transform: `translateY(calc(50% - ${(centerOffset + 0.5) * TIMELINE_ITEM_HEIGHT}px))`,
+          transform: `translateY(${-(centerOffset + 0.5) * TIMELINE_ITEM_HEIGHT}px)`,
         }}
       >
         {visibleStops.map((stop, idx) => {
@@ -889,6 +889,16 @@ function JourneyExperienceContent() {
     setSelectedCity(null);
     setSelectedPhotoIds(null);
   };
+
+  // Deep link: /?stop=53 opens the journey at that stop
+  useEffect(() => {
+    const id = Number(new URLSearchParams(window.location.search).get('stop'));
+    if (!id) return;
+    const idx = path.findIndex((pt) => pt.fromStopId === id && pt.segmentProgress < 0.05);
+    if (idx < 0) return;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: (idx / path.length) * maxScroll });
+  }, [path]);
 
   useEffect(() => {
     let rafId: number | null = null;

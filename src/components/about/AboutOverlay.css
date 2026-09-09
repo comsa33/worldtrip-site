@@ -2,18 +2,17 @@
   position: fixed;
   bottom: 15%;
   left: 50%;
-  right: auto;
   transform: translateX(-50%);
   z-index: 100;
   pointer-events: none;
   opacity: 0;
-  animation: aboutFadeIn 0.8s ease-out 0.3s forwards;
+  animation: aboutFadeIn var(--t-base) var(--ease-out) 0.3s forwards;
 }
 
 @keyframes aboutFadeIn {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(15px);
+    transform: translateX(-50%) translateY(6px);
   }
   to {
     opacity: 1;
@@ -22,70 +21,60 @@
 }
 
 .about-overlay__card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 1.25rem 2.5rem;
-  max-width: 480px;
+  max-width: 440px;
+  padding: 20px 28px 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
   text-align: center;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--sans);
 }
 
 .about-overlay__title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2AC1BC;
-  margin: 0 0 0.15rem 0;
-  letter-spacing: 0.02em;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
 }
 
 .about-overlay__subtitle {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.45);
-  margin: 0 0 0.75rem 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin: 0 0 14px;
 }
 
 .about-overlay__story {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.65;
-  margin: 0 0 0.75rem 0;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0 0 14px;
   white-space: pre-line;
+  text-wrap: pretty;
 }
 
 .about-overlay__quote {
-  font-size: 0.85rem;
+  font-size: 13px;
   font-style: italic;
-  color: #2AC1BC;
+  color: var(--ink);
   margin: 0;
-  padding: 0.75rem 0 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
 }
 
-/* Mobile responsive */
 @media (max-width: 768px) {
   .about-overlay {
     bottom: 14%;
   }
-  
+
   .about-overlay__card {
-    width: 70vw;
-    max-width: 70vw;
-    padding: 1rem 1.25rem;
+    width: 78vw;
+    max-width: 78vw;
+    padding: 16px 18px;
   }
-  
-  .about-overlay__title {
-    font-size: 1rem;
-  }
-  
+
   .about-overlay__story {
-    font-size: 0.75rem;
-  }
-  
-  .about-overlay__quote {
-    font-size: 0.8rem;
+    font-size: 12.5px;
   }
 }
