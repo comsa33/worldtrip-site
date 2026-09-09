@@ -60,3 +60,33 @@ visited.forEach((code, i) => {
 writeFileSync('src/data/worldBorders.json', JSON.stringify({ borders, countries: byCode }));
 
 console.log(`landDots: ${dots.length / 3} dots, ${tagged} in visited countries · borders: ${borders.length} lines · countries: ${Object.keys(byCode).length}`);
+
+// --- minimap: land silhouette + per-leg route, pre-projected (Natural Earth I) into a 1000×500 box
+import { geoNaturalEarth1, geoPath, geoInterpolate } from 'd3-geo';
+const W = 1000;
+const H = 500;
+const projection = geoNaturalEarth1().fitSize([W, H], { type: 'Sphere' });
+const pathGen = geoPath(projection);
+const journey = JSON.parse(readFileSync('src/data/journey.json', 'utf8')).stops;
+const cities = JSON.parse(readFileSync('src/data/cities.json', 'utf8')).cities;
+const legs = [];
+for (let i = 0; i < journey.length - 1; i++) {
+  const a = cities[journey[i].city];
+  const b = cities[journey[i + 1].city];
+  const ip = geoInterpolate([a.lng, a.lat], [b.lng, b.lat]);
+  const pts = Array.from({ length: 17 }, (_, k) => ip(k / 16));
+  legs.push(pathGen({ type: 'LineString', coordinates: pts }) || '');
+}
+const round1 = (d) => d.replace(/(\d+\.\d{1})\d+/g, '$1');
+writeFileSync(
+  'src/data/minimap.json',
+  JSON.stringify({
+    w: W,
+    h: H,
+    scale: projection.scale(),
+    translate: projection.translate(),
+    land: round1(pathGen(landFeature)),
+    legs: legs.map(round1),
+  })
+);
+console.log(`minimap: land path ${pathGen(landFeature).length} chars · ${legs.length} legs`);

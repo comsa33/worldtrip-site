@@ -13,6 +13,7 @@ import cityPhotosData from '../../data/cityPhotos.json';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
+import { Minimap } from './Minimap';
 import { PhotoMarkers } from './PhotoMarkers';
 import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
@@ -865,6 +866,18 @@ function JourneyExperienceContent() {
   const city = stops[currentStop];
   const currentCountry = city?.country || 'KR';
 
+  // Current position back in lat/lng (inverse of latLngToVector3) for the minimap
+  const currentLatLng = useMemo(() => {
+    const idx = Math.min(Math.floor(progress * path.length), path.length - 1);
+    const pt = path[idx]?.point;
+    if (!pt) return { lat: 35.16, lng: 126.85 };
+    const r = pt.length();
+    const lat = 90 - (Math.acos(pt.y / r) * 180) / Math.PI;
+    let lng = (Math.atan2(pt.z, -pt.x) * 180) / Math.PI - 180;
+    if (lng < -180) lng += 360;
+    return { lat, lng };
+  }, [path, progress]);
+
   // Where each stop begins on the 0..1 progress line (last stop = end of the path)
   const stopProgress = useMemo(
     () =>
@@ -1266,6 +1279,17 @@ function JourneyExperienceContent() {
         }}
       />
       {city && <StopMeta stop={city} />}
+      <Minimap
+        stops={stops}
+        cities={cities}
+        currentStopIdx={currentStop}
+        lat={currentLatLng.lat}
+        lng={currentLatLng.lng}
+        onSelect={(i) => {
+          setPlaying(false);
+          goToStop(i);
+        }}
+      />
       <Scrubber
         stops={stops}
         stopProgress={stopProgress}
