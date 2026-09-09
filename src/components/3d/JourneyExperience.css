@@ -697,6 +697,12 @@
   z-index: 55;
   cursor: pointer;
   overflow: visible;
+  /* a faint plate so the map separates from the globe behind it, in both themes */
+  padding: 8px;
+  box-sizing: content-box;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
 }
 
 .minimap__land {
