@@ -1,8 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import * as THREE from 'three';
 import { Line } from '@react-three/drei';
+import worldBorders from '../../data/worldBorders.json';
 
-// Extracted from Globe.tsx to solve import issues
+const RADIUS = 2.003;
+const INK = '#f2f2f2';
+
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lng + 180) * (Math.PI / 180);
@@ -13,166 +16,54 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
   );
 }
 
-// Chaikin's smoothing algorithm
-function smoothRing(points: number[][], iterations: number = 3): number[][] {
-  let current = points;
-
-  for (let iter = 0; iter < iterations; iter++) {
-    if (current.length < 3) break;
-    const next: number[][] = [];
-    // Handle closed loop property (GeoJSON rings are closed)
-    // We process segments. For a closed loop of N points (0..N-1 where 0==N-1),
-    // we effectively have N-1 segments.
-
-    for (let i = 0; i < current.length - 1; i++) {
-      const p0 = current[i];
-      const p1 = current[i + 1];
-
-      // Cut corner at 25% and 75%
-      next.push([0.75 * p0[0] + 0.25 * p1[0], 0.75 * p0[1] + 0.25 * p1[1]]);
-      next.push([0.25 * p0[0] + 0.75 * p1[0], 0.25 * p0[1] + 0.75 * p1[1]]);
-    }
-
-    // Close the loop explicitly by connecting last generated point to first?
-    // GeoJSON polygons must have first point == last point.
-    // Our 'next' array generated points along the segments.
-    // The last segment (N-2 to N-1) generated 2 points.
-    // To close it properly, we just need to ensure the ring starts and ends effectively.
-    // Simple approach: Close the ring by appending the first point.
-    next.push(next[0]);
-    current = next;
-  }
-  return current;
+interface BorderData {
+  borders: number[][][]; // every boundary line as [lng, lat][]
+  countries: Record<string, number[][][]>; // visited countries: rings as [lng, lat][]
 }
 
-interface FeatureProperties {
-  ISO_A2?: string;
-  ISO_A3?: string;
-  ADM0_A3?: string;
-  [key: string]: unknown;
-}
-
-interface GeoJsonFeature {
-  type: string;
-  properties: FeatureProperties;
-  geometry: {
-    type: string;
-    coordinates: number[][][] | number[][][][];
-  };
-}
-
-interface GeoJsonData {
-  type: string;
-  features: GeoJsonFeature[];
-}
-
-// World Borders Component
+/**
+ * Country outlines from Natural Earth 110m (src/data/worldBorders.json, built by
+ * scripts/build-geo.mjs). Every boundary is drawn as a faint hairline; the current
+ * country is drawn again at full ink.
+ */
 export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
-  const [data, setData] = useState<GeoJsonData | null>(null);
+  const data = worldBorders as BorderData;
 
-  useEffect(() => {
-    // Try primary source (GitHub Raw)
-    fetch(
-      'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson'
-    )
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        return res.json();
-      })
-      .then((d: GeoJsonData) => setData(d))
-      .catch((err) => {
-        console.warn('Failed to load borders fallback...', err);
-        fetch(
-          'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
-        )
-          .then((res) => res.json())
-          .then(setData)
-          .catch((e) => console.error('Border fallback failed', e));
-      });
-  }, []);
-
-  const borderPaths = useMemo(() => {
-    if (!data || !countryCode) return [];
-
-    const paths: THREE.Vector3[][] = [];
-    const radius = 2.002; // Close to surface
-
-    const ISO2_TO_3: Record<string, string> = { FR: 'FRA', NO: 'NOR' };
-    const targetISO3 = countryCode ? ISO2_TO_3[countryCode] || countryCode : null;
-
-    data.features.forEach((feature: GeoJsonFeature) => {
-      const props = feature.properties;
-      const matches =
-        props.ISO_A2 === countryCode ||
-        props.ISO_A3 === countryCode ||
-        props.ADM0_A3 === countryCode ||
-        (targetISO3 && (props.ISO_A3 === targetISO3 || props.ADM0_A3 === targetISO3));
-
-      if (!matches) return;
-
-      const geometry = feature.geometry;
-      const coordinates = geometry.coordinates;
-
-      const processRing = (ring: number[][]) => {
-        // Reduced smoothing for less vertices -> less dots? or more smoothing for curves?
-        // 2 iterations is good balance
-        const smoothed = smoothRing(ring, 2);
-        const points = smoothed.map(([lng, lat]) => latLngToVector3(lat, lng, radius));
-        paths.push(points);
-      };
-
-      if (geometry.type === 'Polygon') {
-        (coordinates as number[][][]).forEach(processRing);
-      } else if (geometry.type === 'MultiPolygon') {
-        (coordinates as number[][][][]).forEach((polygon: number[][][]) => {
-          polygon.forEach(processRing);
-        });
+  const bordersGeometry = useMemo(() => {
+    const pts: number[] = [];
+    for (const line of data.borders) {
+      for (let i = 0; i < line.length - 1; i++) {
+        const a = latLngToVector3(line[i][1], line[i][0], RADIUS);
+        const b = latLngToVector3(line[i + 1][1], line[i + 1][0], RADIUS);
+        pts.push(a.x, a.y, a.z, b.x, b.y, b.z);
       }
-    });
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+    return g;
+  }, [data.borders]);
 
-    return paths;
-  }, [data, countryCode]);
-
-  if (borderPaths.length === 0) return null;
+  const highlight = useMemo(() => {
+    const rings = countryCode ? data.countries[countryCode] : undefined;
+    if (!rings) return [];
+    return rings.map((ring) => ring.map(([lng, lat]) => latLngToVector3(lat, lng, RADIUS + 0.002)));
+  }, [data.countries, countryCode]);
 
   return (
     <group>
-      {borderPaths.map((path, i) => (
-        <group key={i}>
-          {/* Outer Glow: Wide ambient bloom (Very subtle 0.05) */}
-          <Line
-            points={path}
-            color="#ff8c00"
-            opacity={0.05}
-            transparent
-            lineWidth={0.015}
-            worldUnits
-            depthWrite={false}
-            blending={THREE.AdditiveBlending}
-          />
-          {/* Inner Glow: Thicker main body (Subtle 0.15) */}
-          <Line
-            points={path}
-            color="#ffd700"
-            opacity={0.15}
-            transparent
-            lineWidth={0.006}
-            worldUnits
-            depthWrite={false}
-            blending={THREE.AdditiveBlending}
-          />
-          {/* Core Outline: Defined anchor (Normal Blending prevents hotspot dots) */}
-          <Line
-            points={path}
-            color="#fffacd"
-            opacity={0.8}
-            transparent
-            lineWidth={0.002}
-            worldUnits
-            depthWrite={false}
-            blending={THREE.NormalBlending}
-          />
-        </group>
+      <lineSegments geometry={bordersGeometry}>
+        <lineBasicMaterial color={INK} transparent opacity={0.16} depthWrite={false} />
+      </lineSegments>
+      {highlight.map((path, i) => (
+        <Line
+          key={`${countryCode}-${i}`}
+          points={path}
+          color={INK}
+          lineWidth={1.25}
+          transparent
+          opacity={0.9}
+          depthWrite={false}
+        />
       ))}
     </group>
   );

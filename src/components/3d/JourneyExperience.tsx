@@ -1,28 +1,17 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
-import { OrbitControls, Sphere, Line, Stars, Html } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { OrbitControls, Line, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import {
-  ChevronDown,
-  Globe,
-  Languages,
-  Camera as CameraIcon,
-  ZoomIn,
-  Plane,
-  Bus,
-  TrainFront,
-  Ship,
-  Mountain,
-} from 'lucide-react';
+import { Camera as CameraIcon, Plane, Bus, TrainFront, Ship, Mountain } from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
-import countryBackgrounds from '../../data/countryBackgrounds.json';
 import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { WorldBorders } from './WorldBorders';
+import { DotGlobe } from './DotGlobe';
 import { PhotoMarkers } from './PhotoMarkers';
 import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
@@ -32,7 +21,27 @@ import './JourneyExperience.css';
 // =============================================================================
 
 const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
-const TIMELINE_ITEM_HEIGHT = 52; // Must match CSS .timeline-stop height
+const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
+const JOURNEY_START = new Date('2016-08-13T00:00:00');
+
+const INK = '#f2f2f2';
+
+// Route line style per transport: flights dash, ground solid, boats dot, treks fine dots
+const TRANSPORT_DASH: Record<string, { dashSize: number; gapSize: number } | null> = {
+  flight: { dashSize: 0.05, gapSize: 0.035 },
+  boat: { dashSize: 0.012, gapSize: 0.03 },
+  trek: { dashSize: 0.006, gapSize: 0.02 },
+  bus: null,
+  train: null,
+  start: null,
+};
+
+function dayNumber(dateStr?: string): number | null {
+  if (!dateStr || dateStr.includes('?')) return null;
+  const d = new Date(`${dateStr}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return null;
+  return Math.round((d.getTime() - JOURNEY_START.getTime()) / 86400000) + 1;
+}
 
 // =============================================================================
 // Types
@@ -54,12 +63,6 @@ interface CityData {
   lat: number;
   lng: number;
   country: string;
-}
-
-interface BackgroundImage {
-  flag: string;
-  landmark: string;
-  landmarkName: { ko: string; en: string };
 }
 
 interface CountryData {
@@ -173,35 +176,6 @@ function generatePath(stops: Stop[], cities: Record<string, CityData>, radius: n
 // 3D Components
 // =============================================================================
 
-function Earth() {
-  // Use 8K high-resolution texture
-  const hiresTexture = useLoader(THREE.TextureLoader, '/assets/textures/earth_8k.jpg');
-
-  return (
-    <group>
-      {/* Beautiful blue ocean base */}
-      <Sphere args={[1.99, 128, 128]}>
-        <meshStandardMaterial color="#0277bd" roughness={0.3} metalness={0.5} />
-      </Sphere>
-
-      {/* High-res Earth texture */}
-      <Sphere args={[2, 128, 128]}>
-        <meshStandardMaterial map={hiresTexture} roughness={0.5} metalness={0.1} />
-      </Sphere>
-
-      {/* Atmosphere glow */}
-      <Sphere args={[2.05, 64, 64]}>
-        <meshBasicMaterial color="#4fc3f7" transparent opacity={0.08} side={THREE.BackSide} />
-      </Sphere>
-
-      {/* Outer glow */}
-      <Sphere args={[2.1, 64, 64]}>
-        <meshBasicMaterial color="#81d4fa" transparent opacity={0.04} side={THREE.BackSide} />
-      </Sphere>
-    </group>
-  );
-}
-
 const TRANSPORT_ICONS: Record<
   string,
   React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>
@@ -214,239 +188,94 @@ const TRANSPORT_ICONS: Record<
   start: Plane,
 };
 
-function Traveler({
-  position,
-  zoomScale,
-  transport,
-}: {
-  position: THREE.Vector3;
-  zoomScale: number;
-  transport: string;
-}) {
-  const outerPulseRef = useRef<THREE.Mesh>(null);
-
+function Traveler({ position, zoomScale }: { position: THREE.Vector3; zoomScale: number }) {
   const scale = 1 / Math.max(zoomScale, 0.5);
-  const color = TRANSPORT_COLORS[transport] || '#FF4757';
-  const IconComponent = TRANSPORT_ICONS[transport] || Plane;
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    const outerPulse = 0.8 + Math.sin(t * 2) * 0.4;
-
-    if (outerPulseRef.current) {
-      outerPulseRef.current.scale.setScalar(outerPulse);
-      (outerPulseRef.current.material as THREE.MeshBasicMaterial).opacity =
-        0.25 - Math.sin(t * 2) * 0.12;
-    }
-  });
-
   return (
     <group position={position} scale={[scale, scale, scale]}>
-      {/* Pulsing outer halo with transport color */}
-      <mesh ref={outerPulseRef}>
-        <sphereGeometry args={[0.028, 32, 32]} />
-        <meshBasicMaterial color={color} transparent opacity={0.2} />
-      </mesh>
-
-      {/* Transport icon */}
-      <Html
-        center
-        sprite
-        style={{
-          pointerEvents: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            width: '28px',
-            height: '28px',
-            borderRadius: '50%',
-            background: `radial-gradient(circle, ${color}dd 0%, ${color}44 70%, transparent 100%)`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: `0 0 12px ${color}88, 0 0 24px ${color}44`,
-            animation: 'travelerPulse 2s ease-in-out infinite',
-          }}
-        >
-          <IconComponent size={14} color="#ffffff" strokeWidth={2.5} />
-        </div>
+      <Html center sprite style={{ pointerEvents: 'none' }}>
+        <div className="traveler-dot" />
       </Html>
     </group>
   );
 }
 
-// Transport color palette - bright neon colors for high visibility
-const TRANSPORT_COLORS: Record<string, string> = {
-  flight: '#FF4757', // Bright red-coral
-  bus: '#00D9FF', // Bright cyan
-  train: '#C56CF0', // Bright purple
-  boat: '#FFD93D', // Bright yellow
-  trek: '#6BCB77', // Bright green
-  start: '#FF6B9D', // Bright pink
+type PathPoint = {
+  point: THREE.Vector3;
+  transport: string;
+  fromStopId: number;
+  toStopId: number;
+  segmentProgress: number;
 };
 
-// Animated next segment preview with pulsing glow effect
-function NextSegmentPreview({ points, color }: { points: THREE.Vector3[]; color: string }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const glowRef = useRef<any>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const lineRef = useRef<any>(null);
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-
-    // Pulsing glow effect (breathing animation)
-    const glowPulse = 0.2 + Math.sin(t * 2) * 0.15; // 0.05 to 0.35
-    const linePulse = 0.45 + Math.sin(t * 2) * 0.15; // 0.3 to 0.6
-
-    if (glowRef.current?.material) {
-      glowRef.current.material.opacity = glowPulse;
-    }
-    if (lineRef.current?.material) {
-      lineRef.current.material.opacity = linePulse;
-      // Animate dash offset for flowing effect
-      lineRef.current.material.dashOffset = -t * 0.5;
-    }
-  });
-
+function RouteLine({
+  points,
+  transport,
+  opacity,
+}: {
+  points: THREE.Vector3[];
+  transport: string;
+  opacity: number;
+}) {
+  if (points.length < 2) return null;
+  const dash = TRANSPORT_DASH[transport] ?? null;
   return (
-    <>
-      {/* Outer pulsing glow */}
-      <Line ref={glowRef} points={points} color={color} lineWidth={6} transparent opacity={0.2} />
-      {/* Inner glow layer */}
-      <Line points={points} color={color} lineWidth={3} transparent opacity={0.1} />
-      {/* Main animated dashed line */}
-      <Line
-        ref={lineRef}
-        points={points}
-        color={color}
-        lineWidth={2}
-        transparent
-        opacity={0.5}
-        dashed
-        dashScale={25}
-        dashSize={0.04}
-        gapSize={0.025}
-      />
-    </>
+    <Line
+      points={points}
+      color={INK}
+      lineWidth={1.25}
+      transparent
+      opacity={opacity}
+      depthWrite={false}
+      dashed={dash !== null}
+      dashSize={dash?.dashSize ?? 1}
+      gapSize={dash?.gapSize ?? 0}
+      dashScale={1}
+    />
   );
 }
 
-function TravelPath({
-  points,
-  progress,
-}: {
-  points: {
-    point: THREE.Vector3;
-    transport: string;
-    fromStopId: number;
-    toStopId: number;
-    segmentProgress: number;
-  }[];
-  progress: number;
-}) {
-  const idx = Math.floor(points.length * progress);
-  // Only show up to current position (no preview)
-  const traveled = points.slice(0, Math.max(idx, 1));
+function TravelPath({ points, progress }: { points: PathPoint[]; progress: number }) {
+  const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
 
-  // Find the next segment only (from current position to next stop)
-  const nextSegmentData = useMemo(() => {
-    const segmentPoints: THREE.Vector3[] = [];
-    let transport = 'bus';
-
-    const pt = points[idx];
-    if (!pt || idx >= points.length - 1) {
-      return { points: segmentPoints, transport };
-    }
-
-    // Check if we're near the end of current segment (about to arrive)
-    const isNearArrival = pt.segmentProgress > 0.85;
-
-    if (isNearArrival) {
-      // At arrival: show the NEXT segment (from destination to next city)
-      // Look for points where fromStopId equals current toStopId
-      const destinationId = pt.toStopId;
-      let foundStart = false;
-
-      for (let i = idx; i < points.length; i++) {
-        if (points[i].fromStopId === destinationId) {
-          foundStart = true;
-          transport = points[i].transport;
-          segmentPoints.push(points[i].point);
-
-          // Stop when we reach the next destination
-          if (points[i].toStopId !== destinationId + 1 && segmentPoints.length > 1) {
-            // Keep collecting until toStopId changes
-          }
-          if (points[i].segmentProgress >= 0.99 && segmentPoints.length > 5) break;
-        } else if (foundStart) {
-          // We've moved past the next segment
-          break;
-        }
-      }
-    } else {
-      // During travel: show remaining part of current segment
-      const currentToStopId = pt.toStopId;
-      transport = pt.transport;
-
-      for (let i = idx; i < points.length; i++) {
-        if (points[i].toStopId === currentToStopId) {
-          segmentPoints.push(points[i].point);
-        } else {
-          break;
-        }
-      }
-    }
-
-    return { points: segmentPoints, transport };
-  }, [idx, points, progress]); // Use progress instead of currentPoint for stable dependency
-
-  // Build segments grouped by transport type
+  // One segment per leg (stop -> stop), keeping its index range in `points`
   const segments = useMemo(() => {
-    const result: { pts: THREE.Vector3[]; color: string }[] = [];
-    let lastColor = '';
-
-    for (const p of traveled) {
-      const color = TRANSPORT_COLORS[p.transport] || '#4ECDC4';
-      if (color !== lastColor) {
-        // Start new segment, connect with previous if exists
-        if (result.length > 0) {
-          result[result.length - 1].pts.push(p.point);
-        }
-        result.push({ pts: [p.point], color });
-        lastColor = color;
+    const result: { pts: THREE.Vector3[]; transport: string; start: number; end: number }[] = [];
+    let key = '';
+    points.forEach((p, i) => {
+      const k = `${p.fromStopId}-${p.toStopId}`;
+      if (k !== key) {
+        result.push({ pts: [p.point], transport: p.transport, start: i, end: i });
+        key = k;
       } else {
-        result[result.length - 1].pts.push(p.point);
+        const seg = result[result.length - 1];
+        seg.pts.push(p.point);
+        seg.end = i;
       }
-    }
+    });
     return result;
-  }, [traveled]);
-
-  // Get color for next segment based on transport type
-  const nextSegmentColor = TRANSPORT_COLORS[nextSegmentData.transport] || '#4ECDC4';
+  }, [points]);
 
   return (
     <>
-      {/* Render each segment with its transport color */}
-      {segments.map((seg, i) => (
-        <group key={i}>
-          {/* Soft glow layer */}
-          {seg.pts.length >= 2 && (
-            <Line points={seg.pts} color={seg.color} lineWidth={6} transparent opacity={0.25} />
-          )}
-          {/* Main solid line - fully visible */}
-          {seg.pts.length >= 2 && <Line points={seg.pts} color={seg.color} lineWidth={2} />}
-        </group>
-      ))}
-
-      {/* Next segment preview - animated dashed line with pulsing glow */}
-      {nextSegmentData.points.length >= 2 && (
-        <NextSegmentPreview points={nextSegmentData.points} color={nextSegmentColor} />
-      )}
+      {segments.map((seg) => {
+        if (seg.end <= idx) {
+          return (
+            <RouteLine key={seg.start} points={seg.pts} transport={seg.transport} opacity={1} />
+          );
+        }
+        if (seg.start >= idx) {
+          return (
+            <RouteLine key={seg.start} points={seg.pts} transport={seg.transport} opacity={0.22} />
+          );
+        }
+        const split = idx - seg.start;
+        return (
+          <group key={seg.start}>
+            <RouteLine points={seg.pts.slice(0, split + 1)} transport={seg.transport} opacity={1} />
+            <RouteLine points={seg.pts.slice(split)} transport={seg.transport} opacity={0.22} />
+          </group>
+        );
+      })}
     </>
   );
 }
@@ -689,7 +518,7 @@ function Scene({
 
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
 
-  const { position, displayStopId, fromStopId, currentTransport } = useMemo(() => {
+  const { position, displayStopId, fromStopId } = useMemo(() => {
     const pt = path[pathIdx] || {
       point: new THREE.Vector3(0, 2, 0),
       transport: 'bus',
@@ -703,7 +532,6 @@ function Scene({
       position: pt.point,
       displayStopId: showStopId,
       fromStopId: pt.fromStopId,
-      currentTransport: pt.transport,
     };
   }, [path, pathIdx]);
 
@@ -757,309 +585,83 @@ function Scene({
     }[];
   }, [stops, cities, currentStopIdx, language, fromStopId, displayStopId]);
 
-  // Get current country code for highlighting
-  const currentCountryCode = useMemo(() => {
-    const currentCity = stops[currentStopIdx];
-    if (!currentCity) return null;
-    const cityData = cities[currentCity.city];
-    return cityData?.country || null;
-  }, [stops, currentStopIdx, cities]);
-
-  // Get nearby countries data for labels on globe (current ±1 for performance)
-  const allCountriesData = useMemo(() => {
-    const countries = (countriesData as { countries: CountryData[] }).countries;
-
-    if (!currentCountryCode) return [];
-
-    // Get prev/next countries from actual stop sequence (not deduplicated)
-    const visibleCountryCodes = new Set<string>();
-    visibleCountryCodes.add(currentCountryCode);
-
-    // Find previous country (different from current)
-    for (let i = currentStopIdx - 1; i >= 0; i--) {
-      const cityData = cities[stops[i].city];
-      const prevCountry = cityData?.country;
-      if (prevCountry && prevCountry !== currentCountryCode) {
-        visibleCountryCodes.add(prevCountry);
-        break;
-      }
-    }
-
-    // Find next country (different from current)
-    for (let i = currentStopIdx + 1; i < stops.length; i++) {
-      const cityData = cities[stops[i].city];
-      const nextCountry = cityData?.country;
-      if (nextCountry && nextCountry !== currentCountryCode) {
-        visibleCountryCodes.add(nextCountry);
-        break;
-      }
-    }
-
-    return countries
-      .filter((country) => visibleCountryCodes.has(country.code))
-      .map((country) => {
-        const labelPos = latLngToVector3(country.coordinates.lat, country.coordinates.lng, 2.02);
-        return {
-          code: country.code,
-          name: country.name,
-          position: labelPos,
-          isCurrent: country.code === currentCountryCode,
-        };
-      });
-  }, [currentCountryCode, currentStopIdx, stops, cities]);
-
   return (
     <>
-      <TransportLegend />
-      <ambientLight intensity={1.0} />
-      <directionalLight position={[5, 3, 5]} intensity={1.4} />
-      <directionalLight position={[-5, -2, -3]} intensity={0.4} />
-      <pointLight position={[0, 0, 5]} intensity={0.7} />
-      <Stars radius={200} depth={100} count={1500} factor={3} fade speed={0.2} />
-      <Earth />
+      <DotGlobe />
       <TravelPath points={path} progress={progress} />
-
-      {/* Country name labels on globe surface */}
-      {allCountriesData.map((countryData) => {
-        const pos = countryData.position;
-
-        // Check if label is facing camera (dot product check)
-        const labelDir = pos.clone().normalize();
-        const cameraDir = position.clone().normalize();
-        const dotProduct = labelDir.dot(cameraDir);
-        const isVisible = dotProduct > -0.2; // Hide if on back of globe
-
-        if (!isVisible) return null;
-
-        const isCurrent = countryData.isCurrent;
-        const mainOpacity = isCurrent ? 0.35 : 0.1;
-        const nativeOpacity = isCurrent ? 0.25 : 0.08;
-
-        return (
-          <group key={countryData.code} position={pos.toArray()}>
-            <Html
-              center
-              distanceFactor={2}
-              sprite
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                pointerEvents: 'none',
-                userSelect: 'none',
-                transition: 'opacity 0.5s ease',
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              <div
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '800',
-                  letterSpacing: '0.08em',
-                  color: `rgba(255, 255, 255, ${mainOpacity})`,
-                  textShadow: '0 0 10px rgba(255,255,255,0.1)',
-                  whiteSpace: 'nowrap',
-                  lineHeight: 1.2,
-                  transition: 'color 0.5s ease',
-                  pointerEvents: 'none',
-                }}
-              >
-                {language === 'ko' ? countryData.name.ko : countryData.name.en.toUpperCase()}
-              </div>
-              <div
-                style={{
-                  fontSize: '10px',
-                  fontWeight: '600',
-                  letterSpacing: '0.02em',
-                  color: `rgba(255, 255, 255, ${nativeOpacity})`,
-                  textShadow: '0 0 5px rgba(255,255,255,0.05)',
-                  whiteSpace: 'nowrap',
-                  marginTop: '2px',
-                  transition: 'color 0.5s ease',
-                  pointerEvents: 'none',
-                }}
-              >
-                {countryData.name.native}
-              </div>
-            </Html>
-          </group>
-        );
-      })}
 
       {/* City markers for visited stops */}
       {visitedStops.map((stop) => {
-        // Calculate if marker is facing camera (simple dot product check)
         const markerDir = stop.position.clone().normalize();
         const cameraDir = position.clone().normalize();
         const dotProduct = markerDir.dot(cameraDir);
-        const isVisible = dotProduct > -0.3; // Show if roughly facing same hemisphere as current position
+        if (dotProduct < -0.3) return null;
 
-        if (!isVisible) return null;
-
-        // Calculate marker scale (inverse of zoom)
         const markerScale = 1 / Math.max(zoomScale, 0.5);
 
-        // Baedal Minjok mint color for all markers
-        const baemin = '#2AC1BC';
-        const baeminGlow = '#3DD8D4';
-
         if (stop.isCurrentStop) {
-          // Check if this city has photos - use original Korean city name from journey data
           const originalCityName = stops[currentStopIdx]?.city;
           const cityHasPhotos = Boolean(
             originalCityName && cityPhotosData[originalCityName as keyof typeof cityPhotosData]
           );
-
-          // DESTINATION: Ring (empty circle) + glow effect
           return (
             <group
               key={stop.id}
               position={stop.position}
               scale={[markerScale, markerScale, markerScale]}
             >
-              {/* Outer glow */}
               <mesh>
-                <sphereGeometry args={[0.022, 16, 16]} />
-                <meshBasicMaterial color={baeminGlow} transparent opacity={0.3} />
+                <sphereGeometry args={[0.007, 16, 16]} />
+                <meshBasicMaterial color={INK} />
               </mesh>
-              {/* Ring - larger sphere with transparent center illusion */}
-              <mesh>
-                <ringGeometry args={[0.012, 0.016, 24]} />
-                <meshBasicMaterial color={baemin} side={THREE.DoubleSide} />
-              </mesh>
-              {/* Inner glow for ring */}
-              <mesh>
-                <ringGeometry args={[0.008, 0.02, 24]} />
-                <meshBasicMaterial
-                  color={baeminGlow}
-                  transparent
-                  opacity={0.4}
-                  side={THREE.DoubleSide}
-                />
-              </mesh>
-              {/* City name label - clickable for current stop */}
-              <Html
-                position={[0, 0.035, 0]}
-                center
-                style={{
-                  color: baemin,
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  textShadow:
-                    '0 0 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.9)',
-                  whiteSpace: 'nowrap',
-                  pointerEvents: cityHasPhotos ? 'auto' : 'none',
-                  cursor: cityHasPhotos ? 'pointer' : 'default',
-                  background:
-                    'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%)',
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                }}
-              >
+              <Html position={[0, 0.03, 0]} center style={{ pointerEvents: 'none' }}>
                 <div
+                  className={`city-label city-label--current${cityHasPhotos ? ' city-label--link' : ''}`}
                   onClick={cityHasPhotos ? () => onCityClick(originalCityName!) : undefined}
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
                 >
                   {stop.name}
-                  {cityHasPhotos && (
-                    <CameraIcon
-                      size={12}
-                      style={{
-                        animation: 'floatBounce 1.5s ease-in-out infinite',
-                        opacity: 0.9,
-                      }}
-                    />
-                  )}
+                  {cityHasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
                 </div>
               </Html>
             </group>
           );
-        } else if (stop.isFromStop) {
-          // FROM STOP (departure): Same size as destination but not bold
+        }
+
+        if (stop.isFromStop) {
           return (
             <group
               key={stop.id}
               position={stop.position}
               scale={[markerScale, markerScale, markerScale]}
             >
-              {/* White core for visibility */}
               <mesh>
                 <sphereGeometry args={[0.005, 12, 12]} />
-                <meshBasicMaterial color="#ffffff" />
+                <meshBasicMaterial color={INK} transparent opacity={0.8} />
               </mesh>
-              {/* Mint glow outer */}
-              <mesh>
-                <sphereGeometry args={[0.01, 12, 12]} />
-                <meshBasicMaterial color={baemin} transparent opacity={0.6} />
-              </mesh>
-              {/* City name label - same size as destination, but normal weight */}
-              <Html
-                position={[0, 0.025, 0]}
-                center
-                style={{
-                  color: baemin,
-                  fontSize: '14px',
-                  fontWeight: '400',
-                  textShadow:
-                    '0 0 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.9)',
-                  whiteSpace: 'nowrap',
-                  pointerEvents: 'none',
-                  opacity: 0.85,
-                  background:
-                    'radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%)',
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                }}
-              >
-                {stop.name}
+              <Html position={[0, 0.024, 0]} center style={{ pointerEvents: 'none' }}>
+                <div className="city-label city-label--from">{stop.name}</div>
               </Html>
             </group>
           );
-        } else {
-          // PAST STOPS: Small filled circle with white core
-          return (
-            <group
-              key={stop.id}
-              position={stop.position}
-              scale={[markerScale, markerScale, markerScale]}
-            >
-              {/* White core for visibility */}
-              <mesh>
-                <sphereGeometry args={[0.003, 12, 12]} />
-                <meshBasicMaterial color="#ffffff" />
-              </mesh>
-              {/* Mint glow outer */}
-              <mesh>
-                <sphereGeometry args={[0.006, 12, 12]} />
-                <meshBasicMaterial color={baemin} transparent opacity={0.7} />
-              </mesh>
-              {/* Show label only when very close */}
-              {dotProduct > 0.8 && (
-                <Html
-                  position={[0, 0.02, 0]}
-                  center
-                  style={{
-                    color: baemin,
-                    fontSize: '10px',
-                    fontWeight: '400',
-                    textShadow:
-                      '0 0 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1)',
-                    whiteSpace: 'nowrap',
-                    pointerEvents: 'none',
-                    opacity: 0.7,
-                    background:
-                      'radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, transparent 70%)',
-                    padding: '2px 6px',
-                    borderRadius: '3px',
-                  }}
-                >
-                  {stop.name}
-                </Html>
-              )}
-            </group>
-          );
         }
+
+        return (
+          <group
+            key={stop.id}
+            position={stop.position}
+            scale={[markerScale, markerScale, markerScale]}
+          >
+            <mesh>
+              <sphereGeometry args={[0.004, 12, 12]} />
+              <meshBasicMaterial color={INK} transparent opacity={0.55} />
+            </mesh>
+            {dotProduct > 0.8 && (
+              <Html position={[0, 0.018, 0]} center style={{ pointerEvents: 'none' }}>
+                <div className="city-label city-label--past">{stop.name}</div>
+              </Html>
+            )}
+          </group>
+        );
       })}
 
       <PhotoMarkers
@@ -1070,7 +672,7 @@ function Scene({
         zoomScale={zoomScale}
         onPhotoClusterClick={onPhotoClusterClick}
       />
-      <Traveler position={position} zoomScale={zoomScale} transport={currentTransport} />
+      <Traveler position={position} zoomScale={zoomScale} />
       <Camera
         target={position}
         zoom={zoom}
@@ -1104,30 +706,19 @@ function Scene({
 
 function LanguageToggle() {
   const { language, setLanguage } = useI18n();
-  const [open, setOpen] = useState(false);
-
   return (
-    <div className="lang-toggle">
-      <button className="lang-toggle__btn" onClick={() => setOpen(!open)}>
-        <Languages size={16} />
-        <span>{language.toUpperCase()}</span>
-      </button>
-      {open && (
-        <div className="lang-toggle__menu">
-          {SUPPORTED_LANGUAGES.map((lang) => (
-            <button
-              key={lang.code}
-              className={`lang-toggle__item ${language === lang.code ? 'active' : ''}`}
-              onClick={() => {
-                setLanguage(lang.code as Language);
-                setOpen(false);
-              }}
-            >
-              {lang.name}
-            </button>
-          ))}
-        </div>
-      )}
+    <div className="lang-toggle" role="group" aria-label="Language">
+      {SUPPORTED_LANGUAGES.map((lang) => (
+        <button
+          key={lang.code}
+          type="button"
+          className={`lang-toggle__item${language === lang.code ? ' is-active' : ''}`}
+          onClick={() => setLanguage(lang.code as Language)}
+          aria-pressed={language === lang.code}
+        >
+          {lang.code.toUpperCase()}
+        </button>
+      ))}
     </div>
   );
 }
@@ -1141,225 +732,79 @@ function VerticalTimeline({
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
 
-  // Show 7 stops centered on current (3 before, current, 3 after)
-  const visibleRange = 3;
+  const visibleRange = 6;
   const startIdx = Math.max(0, currentStopIndex - visibleRange);
   const endIdx = Math.min(stops.length - 1, currentStopIndex + visibleRange);
-
   const visibleStops = stops.slice(startIdx, endIdx + 1);
   const centerOffset = currentStopIndex - startIdx;
 
-  // Item height for positioning - use constant
-  const itemHeight = TIMELINE_ITEM_HEIGHT;
-
-  // Format date: "2016-09-15" -> "'16.09.15"
+  // "2016-09-15" -> "09.15"
   const formatDate = (dateStr?: string) => {
-    if (!dateStr) return '';
+    if (!dateStr || dateStr.includes('?')) return '';
     const parts = dateStr.split('-');
-    return `'${parts[0].slice(2)}.${parts[1]}.${parts[2]}`;
+    return `${parts[1]}.${parts[2]}`;
   };
 
   return (
-    <div className="vertical-timeline">
-      <div className="vertical-timeline__track" />
+    <nav className="stop-rail" aria-label="Stops">
       <div
-        className="vertical-timeline__stops"
+        className="stop-rail__list"
         style={{
-          transform: `translateY(calc(50% - ${centerOffset * itemHeight}px))`,
+          transform: `translateY(calc(50% - ${(centerOffset + 0.5) * TIMELINE_ITEM_HEIGHT}px))`,
         }}
       >
         {visibleStops.map((stop, idx) => {
           const actualIdx = startIdx + idx;
-          const isVisited = actualIdx < currentStopIndex;
-          const isCurrent = actualIdx === currentStopIndex;
+          const state =
+            actualIdx === currentStopIndex
+              ? 'current'
+              : actualIdx < currentStopIndex
+                ? 'past'
+                : 'next';
           const city = cities[stop.city];
           const cityName = city ? city[language as 'ko' | 'en'] : stop.city;
-
+          const Icon = TRANSPORT_ICONS[stop.transport] || Bus;
           return (
-            <div
-              key={stop.id}
-              className={`timeline-stop ${isCurrent ? 'timeline-stop--current' : ''} ${isVisited ? 'timeline-stop--visited' : ''}`}
-            >
-              <div className="timeline-stop__dot">
-                {isCurrent && <div className="timeline-stop__pulse" />}
-              </div>
-              <div className="timeline-stop__info">
-                <span className="timeline-stop__city">{cityName}</span>
-                <span className="timeline-stop__date">
-                  {formatDate(stop.startDate) || formatDate(stop.endDate)}
-                </span>
-              </div>
+            <div key={stop.id} className={`timeline-stop timeline-stop--${state}`}>
+              <span className="timeline-stop__icon" aria-hidden="true">
+                <Icon size={13} strokeWidth={1.75} />
+              </span>
+              <span className="timeline-stop__city">{cityName}</span>
+              <span className="timeline-stop__code mono">{stop.country}</span>
+              <span className="timeline-stop__date mono">
+                {formatDate(stop.startDate) || formatDate(stop.endDate)}
+              </span>
             </div>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }
 
-function FlipboardCountry({ countryCode }: { countryCode: string }) {
+function StopMeta({ stop }: { stop: Stop }) {
   const { language } = useI18n();
-  // Map consolidated countries data for easy lookup
-  const countries = useMemo(() => {
-    const map: Record<string, { name: { ko: string; en: string } }> = {};
-    (countriesData as { countries: CountryData[] }).countries.forEach((c) => {
-      map[c.code] = { name: c.name };
-    });
-    return map;
-  }, []);
-
-  const [displayChars, setDisplayChars] = useState<string[]>([]);
-  const [settledCount, setSettledCount] = useState(0);
-
-  const countryName = (
-    countries[countryCode]?.name?.[language as 'ko' | 'en'] ||
-    (countries[countryCode]?.name as unknown as string) ||
-    countryCode
-  ).toUpperCase();
-
-  useEffect(() => {
-    // Compute targetChars inside effect to avoid stale closure
-    const targetChars = countryName.split('');
-
-    // Reset with exact length
-    setSettledCount(0);
-    setDisplayChars(new Array(targetChars.length).fill(' '));
-
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ가나다라마바사아자차카타파하';
-    let currentSettled = 0;
-
-    // Progressive reveal: settle one character at a time
-    const settleInterval = setInterval(() => {
-      if (currentSettled >= targetChars.length) {
-        clearInterval(settleInterval);
-        // Ensure final state is exact
-        setDisplayChars([...targetChars]);
-        return;
-      }
-
-      // Flip animation for current character
-      let flipCount = 0;
-      const maxFlips = 6;
-
-      const flipChar = setInterval(() => {
-        setDisplayChars(() => {
-          const newChars = new Array(targetChars.length).fill(' ');
-          // Already settled characters stay fixed
-          for (let i = 0; i < currentSettled; i++) {
-            newChars[i] = targetChars[i];
-          }
-          // Current flipping character
-          if (flipCount >= maxFlips) {
-            newChars[currentSettled] = targetChars[currentSettled];
-          } else {
-            newChars[currentSettled] = chars[Math.floor(Math.random() * chars.length)];
-          }
-          // Remaining characters show random
-          for (let i = currentSettled + 1; i < targetChars.length; i++) {
-            newChars[i] = chars[Math.floor(Math.random() * chars.length)];
-          }
-          return newChars;
-        });
-
-        flipCount++;
-        if (flipCount > maxFlips) {
-          clearInterval(flipChar);
-          currentSettled++;
-          setSettledCount(currentSettled);
-        }
-      }, 50);
-    }, 150);
-
-    return () => clearInterval(settleInterval);
-  }, [countryName]);
-
-  // Slice to exact length to prevent extra empty flipboards
-  const visibleChars = displayChars.slice(0, countryName.length);
-
-  return (
-    <div className="flipboard-country">
-      <div className="flipboard-country__text">
-        {visibleChars.map((char, idx) => (
-          <span
-            key={idx}
-            className={`flipboard-char ${idx < settledCount ? 'flipboard-char--settled' : 'flipboard-char--flipping'}`}
-          >
-            {char || countryName[idx]}
-          </span>
-        ))}
-      </div>
-    </div>
+  const cities = citiesData.cities as Record<string, CityData>;
+  const city = cities[stop.city];
+  const country = (countriesData as { countries: CountryData[] }).countries.find(
+    (c) => c.code === stop.country
   );
-}
+  const day = dayNumber(stop.startDate) ?? dayNumber(stop.endDate);
+  const lang = language as 'ko' | 'en';
+  const cityName = city ? city[lang] : stop.city;
+  const countryName = country ? country.name[lang] : stop.country;
+  const coords = city
+    ? `${Math.abs(city.lat).toFixed(2)}°${city.lat >= 0 ? 'N' : 'S'} ${Math.abs(city.lng).toFixed(2)}°${city.lng >= 0 ? 'E' : 'W'}`
+    : '';
 
-function ScrollHint() {
-  const { t } = useI18n();
   return (
-    <div className="scroll-hint">
-      <span>{t('journey.scrollToExplore')}</span>
-      <ChevronDown size={24} />
+    <div className="stop-meta" aria-live="polite">
+      <span className="stop-meta__day mono">{day !== null ? `DAY ${day}` : `STOP ${stop.id}`}</span>
+      <span className="stop-meta__place">
+        {cityName}, {countryName}
+      </span>
+      <span className="stop-meta__coords mono">{coords}</span>
     </div>
-  );
-}
-
-function MobileSwipeHint() {
-  const { language } = useI18n();
-  const swipeText = language === 'ko' ? '스와이프로 탐색' : 'Swipe to navigate';
-  const pinchText = language === 'ko' ? '핀치로 확대/축소' : 'Pinch to zoom';
-
-  return (
-    <div className="mobile-swipe-hint">
-      <div className="mobile-swipe-hint__row">
-        <ChevronDown size={12} />
-        <span>{swipeText}</span>
-        <ChevronDown size={12} style={{ transform: 'rotate(180deg)' }} />
-      </div>
-      <div className="mobile-swipe-hint__row mobile-swipe-hint__row--pinch">
-        <ZoomIn size={12} />
-        <span>{pinchText}</span>
-      </div>
-    </div>
-  );
-}
-
-function TransportLegend() {
-  const { language } = useI18n();
-  const transportData = (citiesData as { transport: Record<string, { ko: string; en: string }> })
-    .transport;
-
-  return (
-    <Html
-      fullscreen
-      className="transport-legend-container"
-      style={{
-        pointerEvents: 'none',
-      }}
-      zIndexRange={[100, 0]}
-    >
-      <div className="transport-legend">
-        {Object.entries(TRANSPORT_COLORS).map(([key, color]) => {
-          if (key === 'start') return null;
-          const label = transportData[key] ? transportData[key][language as 'ko' | 'en'] : key;
-          const Icon = TRANSPORT_ICONS[key];
-          return (
-            <div key={key} className="transport-legend__item">
-              <div
-                className="transport-legend__color"
-                style={{
-                  backgroundColor: color,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                {Icon && <Icon size={7} color="#fff" strokeWidth={2.5} />}
-              </div>
-              <span className="transport-legend__label">{label}</span>
-            </div>
-          );
-        })}
-      </div>
-    </Html>
   );
 }
 
@@ -1368,90 +813,12 @@ function Header() {
   return (
     <header className="journey-header">
       <div className="journey-header__brand">
-        <Globe size={20} />
+        <span className="journey-header__dot" aria-hidden="true" />
         <span>{t('journey.title')}</span>
       </div>
+      <span className="journey-header__period mono">2016.08.13 — 2017.07.06</span>
       <LanguageToggle />
     </header>
-  );
-}
-
-// =============================================================================
-// Country Background Component
-// =============================================================================
-
-function CountryBackground({ countryCode }: { countryCode: string }) {
-  const [currentCode, setCurrentCode] = useState<string>(countryCode);
-  const [previousCode, setPreviousCode] = useState<string | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
-  const prevCodeRef = useRef<string>(countryCode);
-
-  const backgrounds = countryBackgrounds as Record<string, BackgroundImage>;
-
-  useEffect(() => {
-    // Only trigger transition if country actually changed
-    if (countryCode !== prevCodeRef.current) {
-      const oldCode = prevCodeRef.current;
-      prevCodeRef.current = countryCode;
-
-      // Use requestAnimationFrame to defer state updates
-      requestAnimationFrame(() => {
-        setPreviousCode(oldCode);
-        setCurrentCode(countryCode);
-        setTransitioning(true);
-      });
-
-      // Match CSS animation duration (1.2s) + buffer
-      const timer = setTimeout(() => {
-        setTransitioning(false);
-        setPreviousCode(null);
-      }, 1500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [countryCode]);
-
-  const currentBg = backgrounds[currentCode] || null;
-  const previousBg = previousCode ? backgrounds[previousCode] : null;
-
-  if (!currentBg) return null;
-
-  return (
-    <div className="country-background">
-      {/* Previous background - exits */}
-      {previousBg && transitioning && (
-        <div
-          key={`out-${previousCode}`}
-          className="country-background__layer country-background__layer--out"
-        >
-          <div
-            className="country-background__flag"
-            style={{ backgroundImage: `url(${previousBg.flag})` }}
-          />
-          <div
-            className="country-background__landmark"
-            style={{ backgroundImage: `url(${previousBg.landmark})` }}
-          />
-        </div>
-      )}
-
-      {/* Current background - enters */}
-      <div
-        key={`in-${currentCode}-${transitioning}`}
-        className={`country-background__layer ${transitioning ? 'country-background__layer--in' : ''}`}
-      >
-        <div
-          className="country-background__flag"
-          style={{ backgroundImage: `url(${currentBg.flag})` }}
-        />
-        <div
-          className="country-background__landmark"
-          style={{ backgroundImage: `url(${currentBg.landmark})` }}
-        />
-      </div>
-
-      <div className="country-background__blend" />
-    </div>
   );
 }
 
@@ -1777,8 +1144,6 @@ function JourneyExperienceContent() {
     >
       <div className="scroll-spacer" style={{ height: `${stops.length * 100}vh` }} />
 
-      <CountryBackground countryCode={currentCountry} />
-
       <div className="canvas-container">
         <Canvas camera={{ position: [-2.5, 3, -3.5], fov: 45 }} gl={{ antialias: true }}>
           <Scene
@@ -1796,10 +1161,7 @@ function JourneyExperienceContent() {
       <Header />
 
       <VerticalTimeline currentStopIndex={currentStop} stops={stops} />
-      <FlipboardCountry countryCode={currentCountry} />
-
-      {progress < 0.02 && <ScrollHint />}
-      {progress < 0.05 && <MobileSwipeHint />}
+      {city && <StopMeta stop={city} />}
 
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
