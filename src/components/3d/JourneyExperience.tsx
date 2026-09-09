@@ -1,8 +1,16 @@
 import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Line, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { Camera as CameraIcon, Plane, Bus, TrainFront, Ship, Mountain } from 'lucide-react';
+import {
+  Camera as CameraIcon,
+  ChevronUp,
+  Plane,
+  Bus,
+  TrainFront,
+  Ship,
+  Mountain,
+} from 'lucide-react';
 import journeyData from '../../data/journey.json';
 import citiesData from '../../data/cities.json';
 import countriesData from '../../data/countries.json';
@@ -27,6 +35,25 @@ import './JourneyExperience.css';
 const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
 const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
+const ACCENT = '#ff670d';
+
+// Route colour under comparison (/?route=accent|ink). The travelled line is the one coloured
+// thing on a monochrome map (accent), or ink lifted off the map by an underlay (ink).
+type RouteStyle = 'accent' | 'ink';
+function readRouteStyle(): RouteStyle {
+  return new URLSearchParams(window.location.search).get('route') === 'ink' ? 'ink' : 'accent';
+}
+
+function haversineKm(a: CityData, b: CityData): number {
+  const R = 6371;
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(b.lat - a.lat);
+  const dLng = toRad(b.lng - a.lng);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
 
 // Route line style per transport: flights dash, ground solid, boats dot, treks fine dots
 const TRANSPORT_DASH: Record<string, { dashSize: number; gapSize: number } | null> = {
@@ -210,54 +237,139 @@ type PathPoint = {
   segmentProgress: number;
 };
 
+type Leg = { fromStopId: number; toStopId: number; transport: string };
+
 function RouteLine({
   points,
   transport,
   opacity,
   color,
+  width = 1.5,
+  underlay,
+  onOver,
+  onOut,
 }: {
   points: THREE.Vector3[];
   transport: string;
   opacity: number;
   color: string;
+  width?: number;
+  underlay?: string; // a wider line in the page colour beneath, so the route lifts off borders and dots
+  onOver?: (e: ThreeEvent<PointerEvent>) => void;
+  onOut?: () => void;
 }) {
   if (points.length < 2) return null;
   const dash = TRANSPORT_DASH[transport] ?? null;
   return (
+    <>
+      {underlay && (
+        <Line
+          points={points}
+          color={underlay}
+          lineWidth={width + 3}
+          transparent
+          opacity={0.92}
+          depthWrite={false}
+        />
+      )}
+      <Line
+        points={points}
+        color={color}
+        lineWidth={width}
+        transparent
+        opacity={opacity}
+        depthWrite={false}
+        dashed={dash !== null}
+        dashSize={dash?.dashSize ?? 1}
+        gapSize={dash?.gapSize ?? 0}
+        dashScale={1}
+        onPointerOver={onOver}
+        onPointerOut={onOut}
+      />
+    </>
+  );
+}
+
+// The remainder of the leg in progress. While autoplay runs the dash drifts forward; otherwise it holds still.
+function FlowLine({
+  points,
+  color,
+  opacity,
+  moving,
+}: {
+  points: THREE.Vector3[];
+  color: string;
+  opacity: number;
+  moving: boolean;
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ref = useRef<any>(null);
+  useFrame(({ clock }) => {
+    if (!moving || !ref.current?.material) return;
+    ref.current.material.dashOffset = -clock.getElapsedTime() * 0.03;
+  });
+  if (points.length < 2) return null;
+  return (
     <Line
+      ref={ref}
       points={points}
       color={color}
-      lineWidth={1.25}
+      lineWidth={1.5}
       transparent
       opacity={opacity}
       depthWrite={false}
-      dashed={dash !== null}
-      dashSize={dash?.dashSize ?? 1}
-      gapSize={dash?.gapSize ?? 0}
+      dashed
+      dashSize={0.02}
+      gapSize={0.018}
       dashScale={1}
     />
   );
 }
 
+const TAIL_LEGS = 14; // legs behind the head over which the travelled line fades from full to half
+
 function TravelPath({
   points,
   progress,
-  color,
+  ink,
+  bg,
+  style,
+  moving,
+  hoveredLeg,
+  onHoverLeg,
 }: {
   points: PathPoint[];
   progress: number;
-  color: string;
+  ink: string;
+  bg: string;
+  style: RouteStyle;
+  moving: boolean;
+  hoveredLeg: Leg | null;
+  onHoverLeg: (leg: Leg | null, at?: THREE.Vector3) => void;
 }) {
   const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
+  const pastColor = style === 'ink' ? ink : ACCENT;
 
   // One segment per leg (stop -> stop), keeping its index range in `points`
   const segments = useMemo(() => {
-    const result: { pts: THREE.Vector3[]; transport: string; start: number; end: number }[] = [];
+    const result: {
+      pts: THREE.Vector3[];
+      transport: string;
+      start: number;
+      end: number;
+      leg: Leg;
+    }[] = [];
     let key = '';
     points.forEach((p, i) => {
       const k = `${p.fromStopId}-${p.toStopId}`;
       if (k !== key) {
-        result.push({ pts: [p.point], transport: p.transport, start: i, end: i });
+        result.push({
+          pts: [p.point],
+          transport: p.transport,
+          start: i,
+          end: i,
+          leg: { fromStopId: p.fromStopId, toStopId: p.toStopId, transport: p.transport },
+        });
         key = k;
       } else {
         const seg = result[result.length - 1];
@@ -268,28 +380,49 @@ function TravelPath({
     return result;
   }, [points]);
 
+  const currentSeg = segments.findIndex((sg) => sg.start <= idx && idx <= sg.end);
+
   return (
     <>
-      {segments.map((seg) => {
+      {segments.map((seg, n) => {
+        const isHovered =
+          hoveredLeg !== null &&
+          hoveredLeg.fromStopId === seg.leg.fromStopId &&
+          hoveredLeg.toStopId === seg.leg.toStopId;
+        const hover = {
+          onOver: (e: ThreeEvent<PointerEvent>) => {
+            e.stopPropagation();
+            onHoverLeg(seg.leg, e.point);
+          },
+          onOut: () => onHoverLeg(null),
+        };
         if (seg.end <= idx) {
+          // travelled: full at the head, easing back to half over the last few legs
+          const back = Math.max(0, currentSeg - n);
+          const fade = 1 - 0.5 * Math.min(1, back / TAIL_LEGS);
           return (
             <RouteLine
-              color={color}
               key={seg.start}
               points={seg.pts}
               transport={seg.transport}
-              opacity={1}
+              color={pastColor}
+              opacity={isHovered ? 1 : fade}
+              width={isHovered ? 2.25 : 1.75}
+              underlay={bg}
+              {...hover}
             />
           );
         }
         if (seg.start >= idx) {
           return (
             <RouteLine
-              color={color}
               key={seg.start}
               points={seg.pts}
               transport={seg.transport}
-              opacity={0.22}
+              color={ink}
+              opacity={isHovered ? 0.6 : 0.22}
+              width={1.25}
+              {...hover}
             />
           );
         }
@@ -297,17 +430,15 @@ function TravelPath({
         return (
           <group key={seg.start}>
             <RouteLine
-              color={color}
               points={seg.pts.slice(0, split + 1)}
               transport={seg.transport}
+              color={pastColor}
               opacity={1}
+              width={1.75}
+              underlay={bg}
+              {...hover}
             />
-            <RouteLine
-              color={color}
-              points={seg.pts.slice(split)}
-              transport={seg.transport}
-              opacity={0.22}
-            />
+            <FlowLine points={seg.pts.slice(split)} color={ink} opacity={0.35} moving={moving} />
           </group>
         );
       })}
@@ -530,6 +661,47 @@ function Camera({
   return null;
 }
 
+function LegTooltip({
+  leg,
+  at,
+  stops,
+  cities,
+}: {
+  leg: Leg;
+  at: THREE.Vector3;
+  stops: Stop[];
+  cities: Record<string, CityData>;
+}) {
+  const { language } = useI18n();
+  const lang = language as 'ko' | 'en';
+  const from = stops.find((s) => s.id === leg.fromStopId);
+  const to = stops.find((s) => s.id === leg.toStopId);
+  if (!from || !to) return null;
+  const a = cities[from.city];
+  const b = cities[to.city];
+  const km = a && b ? Math.round(haversineKm(a, b)) : null;
+  const transportLabel =
+    (citiesData as { transport?: Record<string, { ko: string; en: string }> }).transport?.[
+      leg.transport
+    ]?.[lang] ?? leg.transport;
+  const date =
+    to.startDate && !to.startDate.includes('?') ? to.startDate.slice(5).replace('-', '.') : '';
+  return (
+    <Html position={at} center style={{ pointerEvents: 'none' }}>
+      <div className="leg-tip">
+        <span className="leg-tip__route">
+          {a ? a[lang] : from.city} → {b ? b[lang] : to.city}
+        </span>
+        <span className="leg-tip__meta mono">
+          {transportLabel}
+          {km !== null ? ` · ${km.toLocaleString()} km` : ''}
+          {date ? ` · ${date}` : ''}
+        </span>
+      </div>
+    </Html>
+  );
+}
+
 function Scene({
   progress,
   zoom,
@@ -541,6 +713,8 @@ function Scene({
   onHoverCity,
   onSelectCity,
   theme,
+  routeStyle,
+  playing,
 }: {
   progress: number;
   zoom: number;
@@ -552,8 +726,16 @@ function Scene({
   onHoverCity: (cityName: string | null) => void;
   onSelectCity: (cityName: string) => void;
   theme: Theme;
+  routeStyle: RouteStyle;
+  playing: boolean;
 }) {
   const INK = GLOBE[theme].ink;
+  const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
+  const [hoveredLeg, setHoveredLeg] = useState<{ leg: Leg; at: THREE.Vector3 } | null>(null);
+  const onHoverLeg = useCallback((leg: Leg | null, at?: THREE.Vector3) => {
+    setHoveredLeg(leg && at ? { leg, at: at.clone() } : null);
+    document.body.style.cursor = leg ? 'crosshair' : '';
+  }, []);
   const stops = journeyData.stops as Stop[];
   const cities = citiesData.cities as Record<string, CityData>;
   const { language } = useI18n();
@@ -630,7 +812,19 @@ function Scene({
 
   return (
     <>
-      <TravelPath points={path} progress={progress} color={INK} />
+      <TravelPath
+        points={path}
+        progress={progress}
+        ink={INK}
+        bg={BG}
+        style={routeStyle}
+        moving={playing}
+        hoveredLeg={hoveredLeg?.leg ?? null}
+        onHoverLeg={onHoverLeg}
+      />
+      {hoveredLeg && (
+        <LegTooltip leg={hoveredLeg.leg} at={hoveredLeg.at} stops={stops} cities={cities} />
+      )}
 
       {/* City markers: one per city, hover-linked with the rail */}
       {cityMarkers.map((m) => {
@@ -649,7 +843,7 @@ function Scene({
               : 0.003;
         const opacity = isCurrent ? 1 : m.state === 'from' ? 0.8 : m.state === 'past' ? 0.55 : 0.3;
         const showLabel =
-          hovered || isCurrent || m.state === 'from' || (m.state === 'past' && dotProduct > 0.8);
+          hovered || isCurrent || m.state === 'from' || (m.state === 'past' && dotProduct > 0.9);
         return (
           <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
             <mesh>
@@ -756,12 +950,18 @@ function VerticalTimeline({
   onSelect,
   hoveredCity,
   onHover,
+  sheet,
+  open,
+  onToggle,
 }: {
   currentStopIndex: number;
   stops: Stop[];
   onSelect: (index: number) => void;
   hoveredCity: string | null;
   onHover: (cityName: string | null) => void;
+  sheet: boolean; // phone: a collapsed one-row sheet above the scrubber, tap to expand
+  open: boolean;
+  onToggle: () => void;
 }) {
   const { language } = useI18n();
   const cities = citiesData.cities as Record<string, CityData>;
@@ -780,7 +980,25 @@ function VerticalTimeline({
   };
 
   return (
-    <nav className="stop-rail" aria-label="Stops">
+    <nav
+      className={`stop-rail${sheet ? ' stop-rail--sheet' : ''}${sheet && open ? ' is-open' : ''}`}
+      aria-label="Stops"
+      onClick={sheet && !open ? onToggle : undefined}
+    >
+      {sheet && (
+        <button
+          type="button"
+          className="stop-rail__handle"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggle();
+          }}
+          aria-expanded={open}
+          aria-label={open ? 'Collapse stops' : 'Expand stops'}
+        >
+          <ChevronUp size={14} strokeWidth={1.75} />
+        </button>
+      )}
       <div
         className="stop-rail__list"
         style={{
@@ -804,7 +1022,11 @@ function VerticalTimeline({
               className={`timeline-stop timeline-stop--${state}${hoveredCity === stop.city ? ' is-hover' : ''}`}
               role="button"
               tabIndex={-1}
-              onClick={() => onSelect(actualIdx)}
+              onClick={() => {
+                if (sheet && !open) return; // the sheet's own click opens it
+                onSelect(actualIdx);
+                if (sheet) onToggle();
+              }}
               onMouseEnter={() => onHover(stop.city)}
               onMouseLeave={() => onHover(null)}
             >
@@ -842,7 +1064,7 @@ function StopMeta({ stop }: { stop: Stop }) {
   return (
     <div className="stop-meta" aria-live="polite">
       <span className="stop-meta__day mono">{day !== null ? `DAY ${day}` : `STOP ${stop.id}`}</span>
-      <span className="stop-meta__place">
+      <span className="stop-meta__place" key={stop.id}>
         {cityName}, {countryName}
       </span>
       <span className="stop-meta__coords mono">{coords}</span>
@@ -896,7 +1118,42 @@ function Header() {
 function JourneyExperienceContent() {
   const { language } = useI18n();
   const theme = useTheme();
+  const [routeStyle] = useState<RouteStyle>(readRouteStyle);
   const [progress, setProgress] = useState(0);
+  const [railOpen, setRailOpen] = useState(false);
+
+  // The scene follows `progress` on a critically damped spring, so scrubbing and keys glide
+  const [reducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  const [eased, setEased] = useState(0);
+  const springRef = useRef({ x: 0, v: 0, last: 0 });
+  const smoothProgress = reducedMotion ? progress : eased;
+  useEffect(() => {
+    if (reducedMotion) return;
+    let raf = 0;
+    const K = 170; // stiffness
+    const D = 2 * Math.sqrt(K); // critical damping
+    springRef.current.last = performance.now();
+    const tick = (now: number) => {
+      const sp = springRef.current;
+      const dt = Math.min(0.05, (now - sp.last) / 1000);
+      sp.last = now;
+      const a = (progress - sp.x) * K - sp.v * D;
+      sp.v += a * dt;
+      sp.x += sp.v * dt;
+      if (Math.abs(progress - sp.x) < 0.00002 && Math.abs(sp.v) < 0.0005) {
+        sp.x = progress;
+        sp.v = 0;
+        setEased(progress);
+        return;
+      }
+      setEased(sp.x);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [progress, reducedMotion]);
   const [zoom, setZoom] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
@@ -927,7 +1184,7 @@ function JourneyExperienceContent() {
 
   // Current position back in lat/lng (inverse of latLngToVector3) for the minimap
   const currentLatLng = useMemo(() => {
-    const idx = Math.min(Math.floor(progress * path.length), path.length - 1);
+    const idx = Math.min(Math.floor(smoothProgress * path.length), path.length - 1);
     const pt = path[idx]?.point;
     if (!pt) return { lat: 35.16, lng: 126.85 };
     const r = pt.length();
@@ -935,7 +1192,7 @@ function JourneyExperienceContent() {
     let lng = (Math.atan2(pt.z, -pt.x) * 180) / Math.PI - 180;
     if (lng < -180) lng += 360;
     return { lat, lng };
-  }, [path, progress]);
+  }, [path, smoothProgress]);
 
   // Where each stop begins on the 0..1 progress line (last stop = end of the path)
   const stopProgress = useMemo(
@@ -1348,7 +1605,9 @@ function JourneyExperienceContent() {
       <div className="canvas-container">
         <Canvas camera={{ position: [-2.5, 3, -3.5], fov: 45 }} gl={{ antialias: true }}>
           <Scene
-            progress={progress}
+            progress={smoothProgress}
+            routeStyle={routeStyle}
+            playing={playing}
             zoom={zoom}
             isUserInteracting={isUserInteracting}
             onInteraction={handleUserInteraction}
@@ -1375,6 +1634,9 @@ function JourneyExperienceContent() {
         }}
         hoveredCity={hoveredCity}
         onHover={setHoveredCity}
+        sheet={isMobile}
+        open={railOpen}
+        onToggle={() => setRailOpen((v) => !v)}
       />
       {city && <StopMeta stop={city} />}
       {city && (
