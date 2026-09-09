@@ -364,6 +364,14 @@
   transition: left var(--t-fast) var(--ease);
 }
 
+.scrubber__label.is-start {
+  transform: translateX(0);
+}
+
+.scrubber__label.is-end {
+  transform: translateX(-100%);
+}
+
 .scrubber__date {
   color: var(--ink);
 }

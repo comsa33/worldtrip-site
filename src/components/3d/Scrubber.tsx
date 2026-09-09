@@ -132,7 +132,10 @@ export function Scrubber({
 
   return (
     <div className="scrubber" role="group" aria-label="Timeline">
-      <div className="scrubber__label mono" style={{ left: `${pct}%` }}>
+      <div
+        className={`scrubber__label mono${pct < 10 ? ' is-start' : pct > 90 ? ' is-end' : ''}`}
+        style={{ left: `${pct}%` }}
+      >
         {date && <span className="scrubber__date">{date.replaceAll('-', '.')}</span>}
         <span className="scrubber__place">
           {cityName} · {countryName}

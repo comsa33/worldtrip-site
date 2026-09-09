@@ -41,7 +41,8 @@ function dayNumber(dateStr?: string): number | null {
   if (!dateStr || dateStr.includes('?')) return null;
   const d = new Date(`${dateStr}T00:00:00`);
   if (Number.isNaN(d.getTime())) return null;
-  return Math.round((d.getTime() - JOURNEY_START.getTime()) / 86400000) + 1;
+  const day = Math.round((d.getTime() - JOURNEY_START.getTime()) / 86400000) + 1;
+  return day >= 1 ? day : null; // a date before departure is a data typo, not a day
 }
 
 // =============================================================================

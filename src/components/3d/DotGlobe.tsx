@@ -6,10 +6,14 @@ import landDots from '../../data/landDots.json';
 export const GLOBE_RADIUS = 2;
 
 // Dot colours: land is quiet, countries the trip has reached stay lit, the current one is full ink.
-const DOT_BASE = new THREE.Color('#3a3a3a');
-const DOT_VISITED = new THREE.Color('#8c8c8c');
+const DOT_BASE = new THREE.Color('#5c5c5c');
+const DOT_VISITED = new THREE.Color('#a6a6a6');
 const DOT_CURRENT = new THREE.Color('#f2f2f2');
 const DOT_SIZE = 0.035; // world units at distance 1
+// visited / current dots also grow a little, so a lit country reads at a glance
+const SIZE_BASE = 1;
+const SIZE_VISITED = 1.2;
+const SIZE_CURRENT = 1.45;
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -23,6 +27,7 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
 
 const vertexShader = /* glsl */ `
   attribute vec3 aColor;
+  attribute float aSize;
   uniform float uSize;
   uniform float uScale;
   uniform float uDpr;
@@ -34,7 +39,7 @@ const vertexShader = /* glsl */ `
     // dots sit on a sphere centred at the origin, so the position is the surface normal
     vFacing = normalize(normalMatrix * normalize(position)).z;
     // perspective-scaled, but capped so a zoomed-in globe stays a dot map, not polka dots
-    gl_PointSize = clamp(uSize * (uScale / -mv.z), 1.5 * uDpr, 4.5 * uDpr);
+    gl_PointSize = clamp(uSize * (uScale / -mv.z), 1.75 * uDpr, 4.5 * uDpr) * aSize;
     gl_Position = projectionMatrix * mv;
   }
 `;
@@ -43,10 +48,11 @@ const fragmentShader = /* glsl */ `
   varying vec3 vColor;
   varying float vFacing;
   void main() {
-    vec2 p = gl_PointCoord - 0.5;
-    if (dot(p, p) > 0.25) discard;
+    // anti-aliased disc
+    float d = length(gl_PointCoord - 0.5);
+    float disc = 1.0 - smoothstep(0.38, 0.5, d);
     // fade dots out toward the limb so the edge of the globe stays clean
-    float a = smoothstep(0.0, 0.5, vFacing);
+    float a = disc * smoothstep(0.0, 0.5, vFacing);
     if (a < 0.02) discard;
     gl_FragColor = vec4(vColor, a);
   }
@@ -76,6 +82,7 @@ export function DotGlobe({
     const n = data.dots.length / 3;
     const positions = new Float32Array(n * 3);
     const colors = new Float32Array(n * 3);
+    const sizes = new Float32Array(n).fill(SIZE_BASE);
     const tags = new Int16Array(n);
     for (let i = 0; i < n; i++) {
       const v = latLngToVector3(data.dots[i * 3], data.dots[i * 3 + 1], GLOBE_RADIUS + 0.002);
@@ -86,6 +93,7 @@ export function DotGlobe({
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     g.setAttribute('aColor', new THREE.BufferAttribute(colors, 3));
+    g.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
     return { geometry: g, tags };
   }, [data.dots]);
 
@@ -93,6 +101,8 @@ export function DotGlobe({
   useEffect(() => {
     const attr = geometry.getAttribute('aColor') as THREE.BufferAttribute;
     const arr = attr.array as Float32Array;
+    const sizeAttr = geometry.getAttribute('aSize') as THREE.BufferAttribute;
+    const sizes = sizeAttr.array as Float32Array;
     const currentIdx = countryCode ? data.countries.indexOf(countryCode) : -1;
     const visitedIdx = new Set<number>();
     visitedCodes.forEach((code) => {
@@ -101,13 +111,16 @@ export function DotGlobe({
     });
     for (let i = 0; i < tags.length; i++) {
       const t = tags[i];
-      const c =
-        t === currentIdx ? DOT_CURRENT : t >= 0 && visitedIdx.has(t) ? DOT_VISITED : DOT_BASE;
+      const isCurrent = t === currentIdx;
+      const isVisited = t >= 0 && visitedIdx.has(t);
+      const c = isCurrent ? DOT_CURRENT : isVisited ? DOT_VISITED : DOT_BASE;
+      sizes[i] = isCurrent ? SIZE_CURRENT : isVisited ? SIZE_VISITED : SIZE_BASE;
       arr[i * 3] = c.r;
       arr[i * 3 + 1] = c.g;
       arr[i * 3 + 2] = c.b;
     }
     attr.needsUpdate = true;
+    sizeAttr.needsUpdate = true;
   }, [geometry, tags, data.countries, countryCode, visitedCodes]);
 
   const uniforms = useMemo(

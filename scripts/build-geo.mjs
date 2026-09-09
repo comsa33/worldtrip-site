@@ -1,5 +1,5 @@
 // Builds from Natural Earth 110m (world-atlas):
-//  - src/data/landDots.json: a 1° land dot grid, each dot tagged with the visited country it falls in
+//  - src/data/landDots.json: a 0.8° land dot grid, each dot tagged with the visited country it falls in
 //  - src/data/worldBorders.json: every boundary line, plus rings of the visited countries
 // Run: node scripts/build-geo.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -28,7 +28,7 @@ const countryFeatures = visited.map((code) => {
   return f;
 });
 
-const STEP = 1.0;
+const STEP = 0.8;
 const dots = []; // flat triples: lat, lng, countryIndex (-1 = not a visited country)
 for (let lat = -88; lat <= 88; lat += STEP) {
   const n = Math.max(1, Math.round((360 / STEP) * Math.cos((lat * Math.PI) / 180)));
