@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://backpacking.po24lio.com/sitemap.xml
