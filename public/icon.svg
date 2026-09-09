@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+    Third mark in the po24lio series: same ink tile, same accent, same flip on
+    dark UIs. The portfolio carries a dot, the blog a dot on its guide line;
+    here the dot has gone round — a 190° orbit of the same radius, the dot
+    sitting where the trip ends. Two shapes only; the gaps between arc ends
+    and dot stay above 11 units so they separate at 16px.
+  -->
+  <style>
+    .tile { fill: #0f0f0f; }
+    @media (prefers-color-scheme: dark) { .tile { fill: #f2f2f2; } }
+  </style>
+  <rect class="tile" width="64" height="64" rx="16"/>
+  <path d="M40.5 46.72 A17 17 0 1 1 26.19 16.03" fill="none" stroke="#ff6a00" stroke-width="6.5" stroke-linecap="round"/>
+  <circle cx="46.72" cy="23.5" r="8.5" fill="#ff6a00"/>
+</svg>

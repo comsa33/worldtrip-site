@@ -1,4 +1,4 @@
-import { useMemo, useRef, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import * as THREE from 'three';
 import { Html } from '@react-three/drei';
 import cityPhotosData from '../../data/cityPhotos.json';
@@ -36,8 +36,8 @@ interface PhotoPoint {
 // Constants
 // =============================================================================
 
-const BAEMIN = '#2AC1BC';
-const BAEMIN_GLOW = '#3DD8D4';
+const INK = '#f2f2f2';
+const INK_2 = '#9a9a9a';
 const PHOTO_RADIUS = 2.006; // Slightly above city markers (2.004)
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
@@ -67,7 +67,6 @@ function PhotoCluster({
   cameraPosition: THREE.Vector3;
   onClick: () => void;
 }) {
-  const glowRef = useRef<THREE.Mesh>(null);
   const count = photos.length;
 
   // Visibility check
@@ -77,60 +76,37 @@ function PhotoCluster({
   if (dotProduct < -0.2) return null;
 
   const isCluster = count > 1;
-  const size = isCluster ? Math.min(0.004 + count * 0.0005, 0.008) : 0.002;
-  const glowSize = size * 2.5;
+  const size = isCluster ? Math.min(0.003 + count * 0.0004, 0.006) : 0.002;
 
   return (
     <group position={center} scale={[markerScale, markerScale, markerScale]}>
-      {/* Outer glow */}
-      <mesh ref={glowRef}>
-        <sphereGeometry args={[glowSize, 10, 10]} />
-        <meshBasicMaterial color={BAEMIN_GLOW} transparent opacity={0.18} />
-      </mesh>
-      {/* Core */}
       <mesh>
         <sphereGeometry args={[size, 10, 10]} />
-        <meshBasicMaterial color={isCluster ? BAEMIN : '#ffffff'} />
+        <meshBasicMaterial color={INK} transparent opacity={isCluster ? 0.8 : 0.55} />
       </mesh>
-      {/* Count badge + click area */}
       {dotProduct > 0.5 && (
-        <Html
-          center
-          position={[0, size + 0.008, 0]}
-          style={{
-            pointerEvents: 'auto',
-            cursor: 'pointer',
-          }}
-        >
-          <div
+        <Html center position={[0, size + 0.008, 0]} style={{ pointerEvents: 'auto' }}>
+          <button
+            type="button"
             onClick={onClick}
+            aria-label={`${count} photos`}
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
               gap: '3px',
-              background: 'rgba(0, 0, 0, 0.7)',
-              borderRadius: '10px',
-              padding: '2px 6px',
+              padding: '2px 4px',
+              color: INK_2,
+              fontFamily: 'var(--mono)',
+              fontSize: '10px',
+              lineHeight: 1,
               whiteSpace: 'nowrap',
-              border: `1px solid rgba(42, 193, 188, 0.3)`,
-              backdropFilter: 'blur(4px)',
-              transition: 'opacity 0.3s ease',
+              cursor: 'pointer',
+              textShadow: '0 0 2px #0d0d0d, 0 1px 2px #0d0d0d',
             }}
           >
-            <Camera size={9} color={BAEMIN} strokeWidth={2.5} />
-            {isCluster && (
-              <span
-                style={{
-                  color: BAEMIN,
-                  fontSize: '9px',
-                  fontWeight: '600',
-                  lineHeight: 1,
-                }}
-              >
-                {count}
-              </span>
-            )}
-          </div>
+            <Camera size={10} strokeWidth={1.75} />
+            {isCluster && <span>{count}</span>}
+          </button>
         </Html>
       )}
     </group>
