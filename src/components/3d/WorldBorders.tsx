@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import * as THREE from 'three';
 import { Line } from '@react-three/drei';
 import worldBorders from '../../data/worldBorders.json';
+import { GLOBE, type Theme } from '../../theme';
 
 const RADIUS = 2.003;
-const INK = '#f2f2f2';
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -26,8 +26,15 @@ interface BorderData {
  * scripts/build-geo.mjs). Every boundary is drawn as a faint hairline; the current
  * country is drawn again at full ink.
  */
-export function WorldBorders({ countryCode }: { countryCode?: string | null }) {
+export function WorldBorders({
+  countryCode,
+  theme,
+}: {
+  countryCode?: string | null;
+  theme: Theme;
+}) {
   const data = worldBorders as BorderData;
+  const INK = GLOBE[theme].ink;
 
   const bordersGeometry = useMemo(() => {
     const pts: number[] = [];

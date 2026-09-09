@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Html } from '@react-three/drei';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { Camera } from 'lucide-react';
+import { GLOBE, type Theme } from '../../theme';
 
 // =============================================================================
 // Types
@@ -36,8 +37,6 @@ interface PhotoPoint {
 // Constants
 // =============================================================================
 
-const INK = '#f2f2f2';
-const INK_2 = '#9a9a9a';
 const PHOTO_RADIUS = 2.006; // Slightly above city markers (2.004)
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
@@ -60,14 +59,17 @@ function PhotoCluster({
   markerScale,
   cameraPosition,
   onClick,
+  theme,
 }: {
   photos: PhotoPoint[];
   center: THREE.Vector3;
   markerScale: number;
   cameraPosition: THREE.Vector3;
   onClick: () => void;
+  theme: Theme;
 }) {
   const count = photos.length;
+  const { ink: INK, ink2: INK_2 } = GLOBE[theme];
 
   // Visibility check
   const markerDir = center.clone().normalize();
@@ -101,7 +103,7 @@ function PhotoCluster({
               lineHeight: 1,
               whiteSpace: 'nowrap',
               cursor: 'pointer',
-              textShadow: '0 0 2px #0d0d0d, 0 1px 2px #0d0d0d',
+              textShadow: '0 0 2px var(--bg), 0 1px 2px var(--bg)',
             }}
           >
             <Camera size={10} strokeWidth={1.75} />
@@ -124,6 +126,7 @@ export function PhotoMarkers({
   cameraPosition,
   zoomScale,
   onPhotoClusterClick,
+  theme,
 }: {
   currentStopIdx: number;
   stops: Stop[];
@@ -131,6 +134,7 @@ export function PhotoMarkers({
   cameraPosition: THREE.Vector3;
   zoomScale: number;
   onPhotoClusterClick: (cityName: string, photoIds: string[]) => void;
+  theme: Theme;
 }) {
   // Get the set of visited city names (cities the traveler has reached)
   const visitedCities = useMemo(() => {
@@ -256,6 +260,7 @@ export function PhotoMarkers({
           center={cluster.center}
           markerScale={markerScale}
           cameraPosition={cameraPosition}
+          theme={theme}
           onClick={() =>
             handleClusterClick(
               cluster.cityName,

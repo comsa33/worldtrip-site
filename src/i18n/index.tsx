@@ -28,6 +28,7 @@ export const translations: Record<Language, Record<string, string>> = {
     // Journey
     'nav.portfolio': '포트폴리오',
     'nav.blog': '블로그',
+    'journey.brand': '세계일주',
     'journey.title': '세계일주 배낭여행',
     'journey.subtitle': '314일간의 여정',
     'journey.scrollToExplore': '스크롤하여 탐험하기',
@@ -73,6 +74,7 @@ export const translations: Record<Language, Record<string, string>> = {
     // Journey
     'nav.portfolio': 'Portfolio',
     'nav.blog': 'Blog',
+    'journey.brand': 'World Trip',
     'journey.title': 'World Backpacking Trip',
     'journey.subtitle': '314 Days Around the World',
     'journey.scrollToExplore': 'Scroll to explore',
