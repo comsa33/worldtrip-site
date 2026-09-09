@@ -44,6 +44,9 @@
   gap: 12px;
   padding: 0 32px;
   border-bottom: 1px solid var(--line);
+  background: rgba(13, 13, 13, 0.85);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
   pointer-events: none;
 }
 
@@ -300,8 +303,16 @@
 
   .stop-rail {
     top: 48px;
-    width: 150px;
+    width: 170px;
     border-right: none;
+    background: linear-gradient(90deg, var(--bg) 0%, rgba(13, 13, 13, 0.85) 70%, transparent 100%);
+  }
+
+  .stop-meta__day,
+  .stop-meta__place {
+    text-shadow:
+      0 0 4px var(--bg),
+      0 0 12px var(--bg);
   }
 
   .stop-rail__list {
@@ -580,7 +591,7 @@
 
   .scrubber__tick--month:first-of-type .scrubber__month,
   .scrubber__tick--month:last-of-type .scrubber__month {
-    display: block;
+    display: none; /* the head label already carries the date on a phone */
   }
 }
 
@@ -636,6 +647,9 @@
 
 @media (max-width: 768px) {
   .minimap {
-    display: none;
+    right: 20px;
+    bottom: 116px;
+    width: 140px;
+    height: 70px;
   }
 }

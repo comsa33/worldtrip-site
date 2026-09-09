@@ -31,6 +31,7 @@ const vertexShader = /* glsl */ `
   uniform float uSize;
   uniform float uScale;
   uniform float uDpr;
+  uniform float uMax;
   varying vec3 vColor;
   varying float vFacing;
   void main() {
@@ -39,7 +40,7 @@ const vertexShader = /* glsl */ `
     // dots sit on a sphere centred at the origin, so the position is the surface normal
     vFacing = normalize(normalMatrix * normalize(position)).z;
     // perspective-scaled, but capped so a zoomed-in globe stays a dot map, not polka dots
-    gl_PointSize = clamp(uSize * (uScale / -mv.z), 1.75 * uDpr, 4.5 * uDpr) * aSize;
+    gl_PointSize = clamp(uSize * (uScale / -mv.z), 1.75 * uDpr, uMax * uDpr) * aSize;
     gl_Position = projectionMatrix * mv;
   }
 `;
@@ -124,11 +125,18 @@ export function DotGlobe({
   }, [geometry, tags, data.countries, countryCode, visitedCodes]);
 
   const uniforms = useMemo(
-    () => ({ uSize: { value: DOT_SIZE }, uScale: { value: 1 }, uDpr: { value: 1 } }),
+    () => ({
+      uSize: { value: DOT_SIZE },
+      uScale: { value: 1 },
+      uDpr: { value: 1 },
+      uMax: { value: 4.5 },
+    }),
     []
   );
   // three's point-size scale: half the viewport height in device pixels
   const scale = size.height * 0.5 * gl.getPixelRatio();
+  // phones sit much closer to the surface: keep dots small so text stays readable over them
+  const maxPx = size.width < 768 ? 3 : 4.5;
 
   return (
     <group>
@@ -143,6 +151,7 @@ export function DotGlobe({
           uniforms={uniforms}
           uniforms-uScale-value={scale}
           uniforms-uDpr-value={gl.getPixelRatio()}
+          uniforms-uMax-value={maxPx}
           transparent
           depthWrite={false}
         />
