@@ -9,6 +9,7 @@ import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
+import { Filmstrip } from '../gallery/Filmstrip';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
@@ -839,6 +840,7 @@ function JourneyExperienceContent() {
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[] | null>(null);
+  const [initialPhotoId, setInitialPhotoId] = useState<string | null>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
 
   const stops = journeyData.stops as Stop[];
@@ -990,18 +992,28 @@ function JourneyExperienceContent() {
   const handleCityClick = (cityName: string) => {
     setSelectedCity(cityName);
     setSelectedPhotoIds(null);
+    setInitialPhotoId(null);
+  };
+
+  // From the filmstrip: open the gallery on that photo
+  const handleOpenPhoto = (cityName: string, photoId: string) => {
+    setSelectedCity(cityName);
+    setSelectedPhotoIds(null);
+    setInitialPhotoId(photoId);
   };
 
   // Handle photo cluster click (from PhotoMarkers - show only cluster photos)
   const handlePhotoClusterClick = (cityName: string, photoIds: string[]) => {
     setSelectedCity(cityName);
     setSelectedPhotoIds(photoIds);
+    setInitialPhotoId(null);
   };
 
-  const handleCloseGallery = () => {
+  const handleCloseGallery = useCallback(() => {
     setSelectedCity(null);
     setSelectedPhotoIds(null);
-  };
+    setInitialPhotoId(null);
+  }, []);
 
   // Deep link: /?stop=53 opens the journey at that stop
   useEffect(() => {
@@ -1303,6 +1315,13 @@ function JourneyExperienceContent() {
         onHover={setHoveredCity}
       />
       {city && <StopMeta stop={city} />}
+      {city && (
+        <Filmstrip
+          cityName={city.city}
+          language={language as 'ko' | 'en'}
+          onOpen={handleOpenPhoto}
+        />
+      )}
       <Minimap
         stops={stops}
         cities={cities}
@@ -1340,6 +1359,7 @@ function JourneyExperienceContent() {
       <PhotoGallery
         cityName={selectedCity}
         photoIds={selectedPhotoIds}
+        initialPhotoId={initialPhotoId}
         onClose={handleCloseGallery}
       />
     </div>

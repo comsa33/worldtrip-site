@@ -666,3 +666,82 @@
     height: 70px;
   }
 }
+
+/* =============================================================================
+   Filmstrip — the current city's photos under the DAY meta
+   ============================================================================= */
+.filmstrip {
+  position: fixed;
+  top: 232px;
+  right: 32px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.filmstrip__count {
+  font-size: 12px;
+  color: var(--ink-3);
+  text-shadow:
+    0 0 4px var(--bg),
+    0 0 10px var(--bg);
+  padding: 2px 6px;
+  margin-right: -6px;
+  border-radius: var(--radius-sm);
+  transition: color var(--t-fast) var(--ease);
+}
+
+.filmstrip__count:hover {
+  color: var(--ink);
+}
+
+.filmstrip__row {
+  display: flex;
+  gap: 6px;
+}
+
+.filmstrip__thumb {
+  width: 64px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--bg-card);
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+.filmstrip__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.filmstrip__thumb:hover {
+  border-color: var(--ink-2);
+}
+
+.filmstrip__thumb:focus-visible,
+.filmstrip__count:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .filmstrip {
+    top: 132px;
+    right: 20px;
+  }
+
+  .filmstrip__thumb {
+    width: 48px;
+    height: 36px;
+  }
+
+  .filmstrip__row > :nth-child(n + 4) {
+    display: none;
+  }
+}
