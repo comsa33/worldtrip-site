@@ -10,7 +10,6 @@ import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../..
 import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import cityPhotosData from '../../data/cityPhotos.json';
-import { WorldBorders } from './WorldBorders';
 import { DotGlobe } from './DotGlobe';
 import { PhotoMarkers } from './PhotoMarkers';
 import osrmRoutes from '../../data/osrmRoutes.json';
@@ -587,7 +586,6 @@ function Scene({
 
   return (
     <>
-      <DotGlobe />
       <TravelPath points={path} progress={progress} />
 
       {/* City markers for visited stops */}
@@ -854,6 +852,13 @@ function JourneyExperienceContent() {
 
   const city = stops[currentStop];
   const currentCountry = city?.country || 'KR';
+
+  // Countries the journey has reached so far (lights their land dots on the globe)
+  const visitedCountries = useMemo(() => {
+    const set = new Set<string>();
+    for (let i = 0; i <= currentStop; i++) set.add(stops[i].country);
+    return set;
+  }, [stops, currentStop]);
 
   // Handle user interaction - pause auto-follow for 3 seconds
   const handleUserInteraction = () => {
@@ -1154,7 +1159,7 @@ function JourneyExperienceContent() {
             onCityClick={handleCityClick}
             onPhotoClusterClick={handlePhotoClusterClick}
           />
-          <WorldBorders countryCode={currentCountry} />
+          <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} />
         </Canvas>
       </div>
 
