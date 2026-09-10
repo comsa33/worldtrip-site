@@ -47,10 +47,24 @@ export function useTheme(): Theme {
 }
 
 export function useToggleTheme() {
-  return useCallback(() => {
+  return useCallback((origin?: DOMRect) => {
     const root = document.documentElement;
     const next: Theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    // Hold hover transitions while the document cross-fades, as the sibling sites do
+
+    // The new theme spreads out from the control that was pressed (see
+    // themeSpread in styles/index.css), as it does on the sibling sites — so
+    // the transition needs to know where that was and how far the farthest
+    // corner of the viewport is from it.
+    if (origin) {
+      const x = origin.left + origin.width / 2;
+      const y = origin.top + origin.height / 2;
+      const far = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      root.style.setProperty('--theme-x', `${Math.round(x)}px`);
+      root.style.setProperty('--theme-y', `${Math.round(y)}px`);
+      root.style.setProperty('--theme-r', `${Math.ceil(far)}px`);
+    }
+
+    // Hold hover transitions while the document switches, as the sibling sites do
     root.setAttribute('data-theme-switching', '');
     const commit = () => {
       root.dataset.theme = next;

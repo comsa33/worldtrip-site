@@ -121,9 +121,11 @@
     background-color var(--t-fast) var(--ease);
 }
 
+/* No plate. The control is a mark that fills and hollows, and a panel behind
+   it sat in the corner of the screen as a faint grey box whether or not
+   anything was being pressed. The mark taking full ink is the feedback. */
 .theme-toggle:hover {
   color: var(--ink);
-  background: var(--bg-hover);
 }
 
 .theme-toggle:focus-visible {

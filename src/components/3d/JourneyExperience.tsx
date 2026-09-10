@@ -1070,7 +1070,7 @@ function ThemeToggle() {
     <button
       type="button"
       className="theme-toggle"
-      onClick={toggle}
+      onClick={(e) => toggle(e.currentTarget.getBoundingClientRect())}
       aria-label={label}
       title={label}
     >
