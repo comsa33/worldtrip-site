@@ -16,11 +16,18 @@ type Spot = { x: number; y: number; size: number };
  * the dot (the photo book), the mark becomes the ring it left behind and the
  * dot flies out of the map and into it.
  *
- * Nothing here knows about the gallery: whatever element carries
+ * Nothing here knows about the gallery or the globe: whatever element carries
  * `data-dot-active` is where the dot goes, and the host decides the size and
  * the seating by declaring `--dot-size` / `--dot-below`. A host that also
  * carries `data-dot-end` is a final arrival — the dot stands up into a caret
  * there, blinks, and folds back into the full stop it was always going to be.
+ * A host that carries `data-dot-follow` is one that moves on its own (the
+ * head of the route on the globe): the dot flies to it once, lands, and from
+ * then on is pinned to it every frame with no easing of its own — the motion
+ * is the host's. Such a host may also say what the dot should be doing there
+ * through `data-dot-carry`: `ribbon` while something else is drawing the mark
+ * in motion, `land:<n>` when it has just come to rest, `hidden` when it is
+ * round the back of the world.
  */
 export function TravelingDot() {
   const ref = useRef<HTMLSpanElement>(null);
@@ -38,6 +45,9 @@ export function TravelingDot() {
     let currentHost: HTMLElement | null = null;
     let lastX = NaN;
     let lastY = NaN;
+    let following = 0;
+    let followStart = 0;
+    let lastCarry = '';
 
     const homeEl = () => document.querySelector<HTMLElement>('[data-dot-home]');
     const activeEl = () => document.querySelector<HTMLElement>('[data-dot-active]');
@@ -122,10 +132,63 @@ export function TravelingDot() {
       ball.style.setProperty('--caret-shift', `${((-(size - width) / 2) * 100) / size}%`);
     };
 
+    /** Come to rest with a bounce — flattened, up, down, still. 통 · 통 */
+    const bounce = () => {
+      if (!ball) return;
+      ball.removeAttribute('data-squish');
+      ball.removeAttribute('data-drop');
+      void ball.offsetWidth;
+      ball.setAttribute('data-drop', '');
+    };
+
+    /**
+     * Pinned to a moving host. One rect read a frame; the transform is written
+     * without transition, so the dot is exactly where the host is, not where
+     * it was 500ms ago. The host's `data-dot-carry` says whether the dot
+     * itself should be drawn right now.
+     */
+    const stopFollowing = () => {
+      if (following) cancelAnimationFrame(following);
+      following = 0;
+      followStart = 0;
+      lastCarry = '';
+      dot.removeAttribute('data-hidden');
+    };
+    const follow = (host: HTMLElement) => {
+      stopFollowing();
+      const tick = () => {
+        if (currentHost !== host || !host.isConnected) {
+          stopFollowing();
+          return;
+        }
+        const s = spotOf(host);
+        dot.style.setProperty('--size', `${s.size}px`);
+        setTransform(s.x, s.y);
+        const carry = host.getAttribute('data-dot-carry') ?? '';
+        if (carry !== lastCarry) {
+          if (carry === 'ribbon' || carry === 'hidden') dot.setAttribute('data-hidden', '');
+          else dot.removeAttribute('data-hidden');
+          if (carry.startsWith('land')) bounce();
+          lastCarry = carry;
+        }
+        following = requestAnimationFrame(tick);
+      };
+      following = requestAnimationFrame(tick);
+    };
+
     /** The one arrival that is not on the way to somewhere else. */
     const scheduleLand = (host: HTMLElement) => {
       window.clearTimeout(landing);
       ball?.removeAttribute('data-land');
+      if (host.hasAttribute('data-dot-follow')) {
+        // fly there once, land with a bounce, then stay pinned
+        followStart = window.setTimeout(() => {
+          bounce();
+          dot.removeAttribute('data-ready');
+          follow(host);
+        }, FLIGHT_MS);
+        return;
+      }
       if (!ball || !host.hasAttribute('data-dot-end')) return;
       sizeCaret(host, spotOf(host).size);
       landing = window.setTimeout(() => {
@@ -142,10 +205,13 @@ export function TravelingDot() {
       homeEl()?.removeAttribute('data-dot-state');
     };
 
-    /** Fly back to the mark on the map, then hand over to it. */
+    /** Fly back to the mark in the header, then hand over to it. */
     const goHome = () => {
       if (atHome || returning) return;
       window.clearTimeout(landing);
+      window.clearTimeout(followStart);
+      stopFollowing();
+      dot.setAttribute('data-ready', 'true');
       ball?.removeAttribute('data-land');
       currentHost = null;
       const home = homeEl();
@@ -195,10 +261,14 @@ export function TravelingDot() {
         return;
       }
       if (host !== currentHost) {
+        window.clearTimeout(followStart);
+        stopFollowing();
+        dot.setAttribute('data-ready', 'true');
         currentHost = host;
         scheduleLand(host);
       }
-      goTo(spotOf(host));
+      // while pinned, the frame loop owns the transform
+      if (!following) goTo(spotOf(host));
       ready = true;
     };
 
@@ -217,7 +287,7 @@ export function TravelingDot() {
       subtree: true,
       childList: true,
       attributes: true,
-      attributeFilter: ['data-dot-active', 'data-dot-end', 'cx', 'cy', 'class'],
+      attributeFilter: ['data-dot-active', 'data-dot-end', 'data-dot-follow', 'cx', 'cy', 'class'],
     });
     const ro = new ResizeObserver(schedule);
     ro.observe(document.documentElement);
@@ -232,6 +302,8 @@ export function TravelingDot() {
       document.removeEventListener('scroll', schedule, true);
       if (frame) cancelAnimationFrame(frame);
       window.clearTimeout(landing);
+      window.clearTimeout(followStart);
+      stopFollowing();
       if (returning) window.clearTimeout(returning);
       homeEl()?.removeAttribute('data-dot-state');
     };

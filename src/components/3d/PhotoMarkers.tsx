@@ -69,7 +69,7 @@ function PhotoCluster({
   theme: Theme;
 }) {
   const count = photos.length;
-  const { ink: INK, ink2: INK_2 } = GLOBE[theme];
+  const { ink2: INK_2 } = GLOBE[theme];
 
   // Visibility check
   const markerDir = center.clone().normalize();
@@ -80,12 +80,11 @@ function PhotoCluster({
   const isCluster = count > 1;
   const size = isCluster ? Math.min(0.003 + count * 0.0004, 0.006) : 0.002;
 
+  // A place where photos were taken draws no mark of its own: the city's ring
+  // is already there, and two rings a few pixels apart read as a bug. What
+  // says "photos here" is the camera glyph, which is also the thing to click.
   return (
     <group position={center} scale={[markerScale, markerScale, markerScale]}>
-      <mesh>
-        <sphereGeometry args={[size, 10, 10]} />
-        <meshBasicMaterial color={INK} transparent opacity={isCluster ? 0.8 : 0.55} />
-      </mesh>
       {dotProduct > 0.5 && (
         <Html center position={[0, size + 0.008, 0]} style={{ pointerEvents: 'auto' }}>
           <button

@@ -65,10 +65,20 @@
 }
 
 .journey-header__dot {
+  --dot-size: 7px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--accent);
+  transition:
+    background-color 240ms var(--ease),
+    box-shadow 240ms var(--ease);
+}
+
+/* The dot has left for the globe: what stays is the ring it left behind. */
+.journey-header__dot[data-dot-state='away'] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--accent);
 }
 
 .journey-header__period {
@@ -285,14 +295,39 @@
 /* =============================================================================
    Globe overlays (rendered through drei <Html>)
    ============================================================================= */
-.traveler-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow:
-    0 0 0 4px var(--bg),
-    0 0 0 5px var(--accent);
+/*
+ * Where the head of the route is on screen, for the travelling dot to sit on.
+ * It draws nothing itself. HeadTracker moves it every frame; the dot follows.
+ */
+.journey-seat {
+  --dot-size: 7px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* The mark on the move. Under the dot (210) and over everything else. */
+.route-ribbon {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 209;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.route-ribbon polygon {
+  fill: var(--accent);
+  opacity: 0;
+}
+
+.route-ribbon polygon[data-on] {
+  opacity: 1;
 }
 
 .city-label {
@@ -808,18 +843,7 @@
 }
 
 .minimap__head {
-  /* the size the travelling dot takes while it is sitting here */
-  --dot-size: 5px;
   fill: var(--accent);
-  transition: fill var(--t-fast) var(--ease);
-}
-
-/* The dot has left for the photo book: what stays is the ring it left behind. */
-.minimap__head[data-dot-state='away'] {
-  fill: transparent;
-  stroke: var(--line-strong);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
 }
 
 .minimap__ring {
@@ -879,6 +903,43 @@
 .filmstrip__row {
   display: flex;
   gap: 6px;
+  /* a new city's strip winds in from the side */
+  animation: filmWind var(--t-base) var(--ease) both;
+}
+
+@keyframes filmWind {
+  from {
+    transform: translateX(18px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* the tail: how many more, said once, as a strip of film would show it */
+.filmstrip__more {
+  position: relative;
+  width: 30px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  overflow: hidden;
+  color: var(--ink-3);
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+  background: repeating-linear-gradient(90deg, var(--bg-card) 0 4px, var(--bg) 4px 8px);
+  transition:
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.filmstrip__more:hover {
+  color: var(--ink);
+  border-color: var(--ink-2);
 }
 
 .filmstrip__thumb {
@@ -889,7 +950,10 @@
   border-radius: 3px;
   overflow: hidden;
   background: var(--bg-card);
-  transition: border-color var(--t-fast) var(--ease);
+  transform-origin: 50% 100%;
+  transition:
+    border-color var(--t-fast) var(--ease),
+    transform 240ms var(--ease);
 }
 
 .filmstrip__thumb img {
@@ -924,6 +988,11 @@
 
   .filmstrip__thumb {
     width: 48px;
+    height: 36px;
+  }
+
+  .filmstrip__more {
+    width: 24px;
     height: 36px;
   }
 

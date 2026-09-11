@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
-import { OrbitControls, Line, Html } from '@react-three/drei';
+import { OrbitControls, Line, Html, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 import {
   Camera as CameraIcon,
@@ -22,6 +22,7 @@ import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
+import { HeadTracker, JourneyDotOverlay } from './JourneyDot';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
@@ -51,16 +52,6 @@ function haversineKm(a: CityData, b: CityData): number {
     Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
 }
-
-// Route line style per transport: flights dash, ground solid, boats dot, treks fine dots
-const TRANSPORT_DASH: Record<string, { dashSize: number; gapSize: number } | null> = {
-  flight: { dashSize: 0.05, gapSize: 0.035 },
-  boat: { dashSize: 0.012, gapSize: 0.03 },
-  trek: { dashSize: 0.006, gapSize: 0.02 },
-  bus: null,
-  train: null,
-  start: null,
-};
 
 function dayNumber(dateStr?: string): number | null {
   if (!dateStr || dateStr.includes('?')) return null;
@@ -215,17 +206,6 @@ const TRANSPORT_ICONS: Record<
   start: Plane,
 };
 
-function Traveler({ position, zoomScale }: { position: THREE.Vector3; zoomScale: number }) {
-  const scale = 1 / Math.max(zoomScale, 0.5);
-  return (
-    <group position={position} scale={[scale, scale, scale]}>
-      <Html center sprite style={{ pointerEvents: 'none' }}>
-        <div className="traveler-dot" />
-      </Html>
-    </group>
-  );
-}
-
 type PathPoint = {
   point: THREE.Vector3;
   transport: string;
@@ -236,27 +216,142 @@ type PathPoint = {
 
 type Leg = { fromStopId: number; toStopId: number; transport: string };
 
+type Segment = { pts: THREE.Vector3[]; transport: string; start: number; end: number; leg: Leg };
+
+/**
+ * A city is a ring, flat and always facing you — the dot is the only solid
+ * mark on the map. Where the dot has sat the ring is accent, the way the mark
+ * in the header is once the dot has left it; where it has not yet been, the
+ * ring is a hairline in ink. The current city wears no ring: the dot is there.
+ *
+ * The moment the dot leaves a city, that city's ring pops in from small — a
+ * body pulling out of a socket, not a colour change.
+ */
+function CityRing({
+  radius,
+  state,
+  hovered,
+  ink,
+}: {
+  radius: number;
+  state: 'past' | 'next';
+  hovered: boolean;
+  ink: string;
+}) {
+  const ref = useRef<THREE.Mesh>(null);
+  const spring = useRef({ s: 1, v: 0 });
+  const wasNext = useRef(state === 'next');
+  useEffect(() => {
+    if (wasNext.current && state !== 'next') spring.current = { s: 0.45, v: 0 };
+    wasNext.current = state === 'next';
+  }, [state]);
+  useFrame(() => {
+    const sp = spring.current;
+    if (!ref.current || (Math.abs(1 - sp.s) < 0.002 && Math.abs(sp.v) < 0.002)) return;
+    sp.v += (1 - sp.s) * 0.22;
+    sp.v *= 0.72;
+    sp.s += sp.v;
+    ref.current.scale.setScalar(sp.s);
+  });
+  const been = state !== 'next';
+  const r = hovered ? radius * 1.3 : radius;
+  const thick = been ? 0.24 : 0.16;
+  return (
+    <Billboard>
+      <mesh ref={ref}>
+        <ringGeometry args={[r * (1 - thick), r, 40]} />
+        <meshBasicMaterial
+          color={been ? ACCENT : ink}
+          transparent
+          opacity={hovered ? 1 : been ? 0.9 : 0.35}
+          depthWrite={false}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+    </Billboard>
+  );
+}
+
+/** One segment per leg (stop -> stop), keeping its index range in `points`. */
+function buildSegments(points: PathPoint[]): Segment[] {
+  const result: Segment[] = [];
+  let key = '';
+  points.forEach((p, i) => {
+    const k = `${p.fromStopId}-${p.toStopId}`;
+    if (k !== key) {
+      result.push({
+        pts: [p.point],
+        transport: p.transport,
+        start: i,
+        end: i,
+        leg: { fromStopId: p.fromStopId, toStopId: p.toStopId, transport: p.transport },
+      });
+      key = k;
+    } else {
+      const seg = result[result.length - 1];
+      seg.pts.push(p.point);
+      seg.end = i;
+    }
+  });
+  return result;
+}
+
+/**
+ * The line a leg leaves behind is the line the mark drew while it was on it,
+ * so it never changes on arrival. A flight leaves a finer, fainter one — a
+ * fast thing high up leaves less of a trace than a bus does on a road.
+ */
+const trail = (transport: string) =>
+  transport === 'flight' ? { width: 0.8, opacity: 0.55 } : { width: 1.5, opacity: 0.92 };
+
+const pathLength = (pts: THREE.Vector3[]) => {
+  let l = 0;
+  for (let i = 1; i < pts.length; i++) l += pts[i].distanceTo(pts[i - 1]);
+  return l;
+};
+
+/**
+ * One leg of the route. Every leg is the same line whatever it was travelled
+ * by — the dash-per-transport code was three kinds of noise on top of the
+ * one thing that matters, which is where the line has been.
+ *
+ * A future leg can be `reveal`ed: on the opening the whole route is drawn out
+ * of the dot, and this is how a leg knows how much of itself to show. The
+ * length is fed to the dash pattern each frame rather than through React, so
+ * a hundred and fifty legs do not re-render while the pen moves.
+ */
 function RouteLine({
   points,
-  transport,
   opacity,
   color,
   width = 1.5,
   underlay,
   onOver,
   onOut,
+  reveal,
 }: {
   points: THREE.Vector3[];
-  transport: string;
   opacity: number;
   color: string;
   width?: number;
   underlay?: string; // a wider line in the page colour beneath, so the route lifts off borders and dots
   onOver?: (e: ThreeEvent<PointerEvent>) => void;
   onOut?: () => void;
+  reveal?: { ref: React.MutableRefObject<number>; start: number; end: number };
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ref = useRef<any>(null);
+  const len = useMemo(() => pathLength(points), [points]);
+  useFrame(() => {
+    if (!reveal || !ref.current?.material) return;
+    const r = reveal.ref.current;
+    const span = Math.max(1, reveal.end - reveal.start);
+    const frac = r === Infinity ? 1 : Math.max(0, Math.min(1, (r - reveal.start) / span));
+    ref.current.material.dashSize = Math.max(0.0001, frac * len);
+    ref.current.material.gapSize = 1e6;
+    ref.current.visible = frac > 0;
+  });
   if (points.length < 2) return null;
-  const dash = TRANSPORT_DASH[transport] ?? null;
   return (
     <>
       {underlay && (
@@ -270,15 +365,16 @@ function RouteLine({
         />
       )}
       <Line
+        ref={ref}
         points={points}
         color={color}
         lineWidth={width}
         transparent
         opacity={opacity}
         depthWrite={false}
-        dashed={dash !== null}
-        dashSize={dash?.dashSize ?? 1}
-        gapSize={dash?.gapSize ?? 0}
+        dashed={!!reveal}
+        dashSize={reveal ? 0.0001 : 1}
+        gapSize={reveal ? 1e6 : 0}
         dashScale={1}
         onPointerOver={onOver}
         onPointerOut={onOut}
@@ -287,100 +383,72 @@ function RouteLine({
   );
 }
 
-// The remainder of the leg in progress. While autoplay runs the dash drifts forward; otherwise it holds still.
-function FlowLine({
-  points,
-  color,
-  opacity,
-  moving,
+/**
+ * The opening: the route comes out of the dot, one leg at a time. Each leg runs
+ * out with its own ease and the next starts as it lands — a beat per leg rather
+ * than one even pour — with time shared by length so the long flights take
+ * longer, floored so the short hops still register.
+ */
+function RevealDriver({
+  segments,
+  run,
+  reveal: revealRef,
 }: {
-  points: THREE.Vector3[];
-  color: string;
-  opacity: number;
-  moving: boolean;
+  segments: Segment[];
+  run: boolean;
+  reveal: React.MutableRefObject<number>;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref = useRef<any>(null);
+  const st = useRef<{ i: number; t0: number; durs: number[] } | null>(null);
   useFrame(({ clock }) => {
-    if (!moving || !ref.current?.material) return;
-    ref.current.material.dashOffset = -clock.getElapsedTime() * 0.03;
+    if (!run || revealRef.current === Infinity) return;
+    const now = clock.elapsedTime * 1000;
+    if (!st.current) {
+      const lens = segments.map((sg) => pathLength(sg.pts));
+      const total = lens.reduce((a, b) => a + b, 0) || 1;
+      st.current = { i: 0, t0: now, durs: lens.map((l) => Math.max(14, (l / total) * 2600)) };
+    }
+    const s = st.current;
+    while (s.i < segments.length) {
+      const sg = segments[s.i];
+      const k = Math.min(1, (now - s.t0) / s.durs[s.i]);
+      const e = 1 - Math.pow(1 - k, 3);
+      revealRef.current = sg.start + e * (sg.end - sg.start);
+      if (k < 1) return;
+      s.i += 1;
+      s.t0 = now;
+    }
+    revealRef.current = Infinity;
   });
-  if (points.length < 2) return null;
-  return (
-    <Line
-      ref={ref}
-      points={points}
-      color={color}
-      lineWidth={1.5}
-      transparent
-      opacity={opacity}
-      depthWrite={false}
-      dashed
-      dashSize={0.02}
-      gapSize={0.018}
-      dashScale={1}
-    />
-  );
+  return null;
 }
-
-const TAIL_LEGS = 14; // legs behind the head over which the travelled line fades from full to half
 
 function TravelPath({
   points,
+  segments,
   progress,
   ink,
   bg,
-  moving,
+  reveal,
   hoveredLeg,
   onHoverLeg,
 }: {
   points: PathPoint[];
+  segments: Segment[];
   progress: number;
   ink: string;
   bg: string;
-  moving: boolean;
+  reveal: React.MutableRefObject<number>;
   hoveredLeg: Leg | null;
   onHoverLeg: (leg: Leg | null, at?: THREE.Vector3) => void;
 }) {
   const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
-  // The travelled line is the one coloured thing on a monochrome map
+  // The travelled line is the one coloured thing on a monochrome map — and it
+  // all stays, at one weight, however long ago it was walked.
   const pastColor = ACCENT;
-
-  // One segment per leg (stop -> stop), keeping its index range in `points`
-  const segments = useMemo(() => {
-    const result: {
-      pts: THREE.Vector3[];
-      transport: string;
-      start: number;
-      end: number;
-      leg: Leg;
-    }[] = [];
-    let key = '';
-    points.forEach((p, i) => {
-      const k = `${p.fromStopId}-${p.toStopId}`;
-      if (k !== key) {
-        result.push({
-          pts: [p.point],
-          transport: p.transport,
-          start: i,
-          end: i,
-          leg: { fromStopId: p.fromStopId, toStopId: p.toStopId, transport: p.transport },
-        });
-        key = k;
-      } else {
-        const seg = result[result.length - 1];
-        seg.pts.push(p.point);
-        seg.end = i;
-      }
-    });
-    return result;
-  }, [points]);
-
-  const currentSeg = segments.findIndex((sg) => sg.start <= idx && idx <= sg.end);
 
   return (
     <>
-      {segments.map((seg, n) => {
+      {segments.map((seg) => {
         const isHovered =
           hoveredLeg !== null &&
           hoveredLeg.fromStopId === seg.leg.fromStopId &&
@@ -393,17 +461,14 @@ function TravelPath({
           onOut: () => onHoverLeg(null),
         };
         if (seg.end <= idx) {
-          // travelled: full at the head, easing back to half over the last few legs
-          const back = Math.max(0, currentSeg - n);
-          const fade = 1 - 0.5 * Math.min(1, back / TAIL_LEGS);
+          const t = trail(seg.transport);
           return (
             <RouteLine
               key={seg.start}
               points={seg.pts}
-              transport={seg.transport}
               color={pastColor}
-              opacity={isHovered ? 1 : fade}
-              width={isHovered ? 2.25 : 1.75}
+              opacity={isHovered ? 1 : t.opacity}
+              width={isHovered ? t.width + 0.75 : t.width}
               underlay={bg}
               {...hover}
             />
@@ -414,10 +479,10 @@ function TravelPath({
             <RouteLine
               key={seg.start}
               points={seg.pts}
-              transport={seg.transport}
               color={ink}
               opacity={isHovered ? 0.6 : 0.22}
               width={1.25}
+              reveal={{ ref: reveal, start: seg.start, end: seg.end }}
               {...hover}
             />
           );
@@ -427,14 +492,19 @@ function TravelPath({
           <group key={seg.start}>
             <RouteLine
               points={seg.pts.slice(0, split + 1)}
-              transport={seg.transport}
               color={pastColor}
-              opacity={1}
-              width={1.75}
+              opacity={trail(seg.transport).opacity}
+              width={trail(seg.transport).width}
               underlay={bg}
               {...hover}
             />
-            <FlowLine points={seg.pts.slice(split)} color={ink} opacity={0.35} moving={moving} />
+            <RouteLine
+              points={seg.pts.slice(split)}
+              color={ink}
+              opacity={0.35}
+              width={1.25}
+              reveal={{ ref: reveal, start: seg.start + split, end: seg.end }}
+            />
           </group>
         );
       })}
@@ -686,7 +756,11 @@ function Scene({
   onHoverCity,
   onSelectCity,
   theme,
-  playing,
+  seat,
+  ribbon,
+  dotActive,
+  reveal,
+  revealRun,
 }: {
   progress: number;
   zoom: number;
@@ -698,7 +772,11 @@ function Scene({
   onHoverCity: (cityName: string | null) => void;
   onSelectCity: (cityName: string) => void;
   theme: Theme;
-  playing: boolean;
+  seat: React.RefObject<HTMLSpanElement | null>;
+  ribbon: React.RefObject<SVGPolygonElement | null>;
+  dotActive: boolean;
+  reveal: React.MutableRefObject<number>;
+  revealRun: boolean;
 }) {
   const INK = GLOBE[theme].ink;
   const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
@@ -712,10 +790,11 @@ function Scene({
   const { language } = useI18n();
 
   const path = useMemo(() => generatePath(stops, cities, 2.003), [stops, cities]);
+  const segments = useMemo(() => buildSegments(path), [path]);
 
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
 
-  const { position, displayStopId, fromStopId } = useMemo(() => {
+  const { position, displayStopId, fromStopId, segProgress } = useMemo(() => {
     const pt = path[pathIdx] || {
       point: new THREE.Vector3(0, 2, 0),
       transport: 'bus',
@@ -729,8 +808,31 @@ function Scene({
       position: pt.point,
       displayStopId: showStopId,
       fromStopId: pt.fromStopId,
+      segProgress: pt.segmentProgress,
     };
   }, [path, pathIdx]);
+
+  /*
+   * What ring a city wears follows the dot's actual position, not the label
+   * logic above (which names the destination as soon as a leg is 15% along).
+   * A city the dot has sat on wears the accent ring it left behind; one it has
+   * not reached yet wears a hairline; the one it is sitting on right now wears
+   * nothing — the dot is there.
+   */
+  const fromStopIdx = useMemo(
+    () => stops.findIndex((st) => st.id === fromStopId),
+    [stops, fromStopId]
+  );
+  const resting = segProgress < 0.03;
+  const ringFor = (cityName: string): 'past' | 'next' | 'none' => {
+    const firstIdx = stops.findIndex(
+      (st) => st.city === cityName && stops.indexOf(st) <= fromStopIdx
+    );
+    const satOn = firstIdx >= 0;
+    if (!satOn) return 'next';
+    if (resting && stops[fromStopIdx]?.city === cityName) return 'none';
+    return 'past';
+  };
 
   // Calculate current stop index from displayStopId
   const currentStopIdx = useMemo(() => {
@@ -785,12 +887,22 @@ function Scene({
     <>
       <TravelPath
         points={path}
+        segments={segments}
         progress={progress}
         ink={INK}
         bg={BG}
-        moving={playing}
+        reveal={reveal}
         hoveredLeg={hoveredLeg?.leg ?? null}
         onHoverLeg={onHoverLeg}
+      />
+      <RevealDriver segments={segments} run={revealRun} reveal={reveal} />
+      <HeadTracker
+        path={path}
+        progress={progress}
+        seat={seat}
+        ribbon={ribbon}
+        active={dotActive}
+        markerRadius={0.007 / Math.max(zoomScale, 0.5)}
       />
       {hoveredLeg && (
         <LegTooltip leg={hoveredLeg.leg} at={hoveredLeg.at} stops={stops} cities={cities} />
@@ -804,22 +916,18 @@ function Scene({
         const hovered = hoveredCity === m.city;
         const isCurrent = m.state === 'current';
         const cityHasPhotos = Boolean(cityPhotosData[m.city as keyof typeof cityPhotosData]);
-        const radius = isCurrent
-          ? 0.007
-          : m.state === 'from'
-            ? 0.005
-            : m.state === 'past'
-              ? 0.004
-              : 0.003;
-        const opacity = isCurrent ? 1 : m.state === 'from' ? 0.8 : m.state === 'past' ? 0.55 : 0.3;
+        // a city the dot has sat on wears a ring the dot's own size; one it has
+        // not reached yet is a smaller hairline
+        const ring = ringFor(m.city);
+        const radius = ring === 'next' ? 0.005 : 0.007;
         const showLabel =
           hovered || isCurrent || m.state === 'from' || (m.state === 'past' && dotProduct > 0.9);
         return (
           <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
-            <mesh>
-              <sphereGeometry args={[hovered ? radius * 1.6 : radius, 16, 16]} />
-              <meshBasicMaterial color={INK} transparent opacity={hovered ? 1 : opacity} />
-            </mesh>
+            {/* the city the dot is sitting on has no mark of its own; every other city is a ring */}
+            {ring !== 'none' && (
+              <CityRing radius={radius} state={ring} hovered={hovered} ink={INK} />
+            )}
             {/* hit area for hover / click */}
             <mesh
               onPointerOver={(e) => {
@@ -864,7 +972,6 @@ function Scene({
         onPhotoClusterClick={onPhotoClusterClick}
         theme={theme}
       />
-      <Traveler position={position} zoomScale={zoomScale} />
       <Camera
         target={position}
         zoom={zoom}
@@ -1068,7 +1175,7 @@ function Header() {
   return (
     <header className="journey-header">
       <div className="journey-header__brand">
-        <span className="journey-header__dot" aria-hidden="true" />
+        <span className="journey-header__dot" data-dot-home aria-hidden="true" />
         <span>{t('journey.brand')}</span>
       </div>
       <span className="journey-header__period mono">{journeyPeriod}</span>
@@ -1297,6 +1404,31 @@ function JourneyExperienceContent() {
     setSelectedPhotoIds(photoIds);
     setInitialPhotoId(null);
   };
+
+  /* ── the opening ─────────────────────────────────────────────────────────
+     Fresh at the top of the page, the mark in the header leaves for the globe,
+     lands on the first stop, and the route comes out of it. Anyone who arrived
+     scrolled, deep-linked, or asking for less motion gets the page as it is. */
+  const seatRef = useRef<HTMLSpanElement>(null);
+  const ribbonRef = useRef<SVGPolygonElement>(null);
+  const openingWanted = () =>
+    typeof window !== 'undefined' &&
+    window.scrollY < 8 &&
+    !new URLSearchParams(window.location.search).get('stop') &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealRef = useRef<number>(openingWanted() ? 0 : Infinity);
+  const [dotOut, setDotOut] = useState(() => !openingWanted());
+  const [revealRun, setRevealRun] = useState(false);
+  useEffect(() => {
+    if (dotOut) return;
+    const leave = window.setTimeout(() => setDotOut(true), 700); // the mark leaves the header
+    const draw = window.setTimeout(() => setRevealRun(true), 700 + 560 + 420); // landed; the route comes out of it
+    return () => {
+      window.clearTimeout(leave);
+      window.clearTimeout(draw);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCloseGallery = useCallback(() => {
     setSelectedCity(null);
@@ -1577,7 +1709,6 @@ function JourneyExperienceContent() {
         <Canvas camera={{ position: [-2.5, 3, -3.5], fov: 45 }} gl={{ antialias: true }}>
           <Scene
             progress={smoothProgress}
-            playing={playing}
             zoom={zoom}
             isUserInteracting={isUserInteracting}
             onInteraction={handleUserInteraction}
@@ -1587,6 +1718,11 @@ function JourneyExperienceContent() {
             onHoverCity={setHoveredCity}
             onSelectCity={goToCity}
             theme={theme}
+            seat={seatRef}
+            ribbon={ribbonRef}
+            dotActive={dotOut && selectedCity === null}
+            reveal={revealRef}
+            revealRun={revealRun}
           />
           <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} theme={theme} />
           <WorldBorders countryCode={currentCountry} theme={theme} />
@@ -1649,8 +1785,14 @@ function JourneyExperienceContent() {
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
 
-      {/* One dot for the whole site: it rests on the minimap's current position
-          and flies into the photo book when one opens. */}
+      {/* One dot for the whole site. Its home is the mark in the header; it
+          rides the head of the route on the globe, and flies into the photo
+          book when one opens. */}
+      <JourneyDotOverlay
+        seat={seatRef}
+        ribbon={ribbonRef}
+        active={dotOut && selectedCity === null}
+      />
       <TravelingDot />
 
       {/* Photo gallery overlay */}

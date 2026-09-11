@@ -41,9 +41,7 @@ function project(lat: number, lng: number): [number, number] {
 
 /**
  * The whole 330-day line at a glance: a flat monochrome world with the route,
- * past legs in ink, the rest faint, and the current position as the one accent —
- * which is the travelling dot's home. When the dot leaves for the photo book
- * this mark becomes the ring it left behind.
+ * past legs in ink, the rest faint, and the current position as the one accent.
  * Click anywhere to jump to the nearest stop.
  */
 export function Minimap({
@@ -107,8 +105,7 @@ export function Minimap({
         />
       ))}
       <circle cx={cx} cy={cy} r={22} className="minimap__ring" />
-      {/* The travelling dot lives here while nothing else wants it. */}
-      <circle cx={cx} cy={cy} r={11} className="minimap__head" data-dot-home />
+      <circle cx={cx} cy={cy} r={11} className="minimap__head" />
     </svg>
   );
 }
