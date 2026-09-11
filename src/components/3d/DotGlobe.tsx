@@ -7,10 +7,11 @@ import { GLOBE, type Theme } from '../../theme';
 export const GLOBE_RADIUS = 2;
 
 const DOT_SIZE = 0.035; // world units at distance 1
-// visited / current dots also grow a little, so a lit country reads at a glance
+// The dots are a tone, not marks: a country the trip has reached reads as a
+// lighter surface, never as bigger dots. Only the current one grows, barely.
 const SIZE_BASE = 1;
-const SIZE_VISITED = 1.2;
-const SIZE_CURRENT = 1.45;
+const SIZE_VISITED = 1;
+const SIZE_CURRENT = 1.05;
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -148,8 +149,10 @@ export function DotGlobe({
   );
   // three's point-size scale: half the viewport height in device pixels
   const scale = size.height * 0.5 * gl.getPixelRatio();
-  // phones sit much closer to the surface: keep dots small so text stays readable over them
-  const maxPx = size.width < 768 ? 3 : 4.5;
+  // Small enough that no single dot is a thing you look at — the surface is a
+  // halftone, and the travelling dot is the only dot on it. Phones sit closer
+  // to the surface, so smaller still.
+  const maxPx = size.width < 768 ? 2.2 : 3;
 
   return (
     <group>

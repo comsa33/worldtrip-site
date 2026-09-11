@@ -18,17 +18,17 @@ export const GLOBE: Record<
     sphere: '#111111',
     ink: '#f2f2f2',
     ink2: '#9a9a9a',
-    dotBase: '#5c5c5c',
-    dotVisited: '#a6a6a6',
-    dotCurrent: '#f2f2f2',
+    dotBase: '#5a5a5a',
+    dotVisited: '#8c8c8c',
+    dotCurrent: '#b4b4b4',
   },
   light: {
     sphere: '#f3f3f3',
     ink: '#0f0f0f',
     ink2: '#6b6b6b',
-    dotBase: '#d2d2d2',
-    dotVisited: '#7c7c7c',
-    dotCurrent: '#0f0f0f',
+    dotBase: '#b4b4b4',
+    dotVisited: '#8a8a8a',
+    dotCurrent: '#5c5c5c',
   },
 };
 

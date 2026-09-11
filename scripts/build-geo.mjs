@@ -1,5 +1,5 @@
-// Builds from Natural Earth 110m (world-atlas):
-//  - src/data/landDots.json: a 0.8° land dot grid, each dot tagged with the visited country it falls in
+// Builds from Natural Earth 50m (globe) and 110m (minimap), via world-atlas:
+//  - src/data/landDots.json: a 0.7° land dot grid, each dot tagged with the visited country it falls in
 //  - src/data/worldBorders.json: every boundary line, plus rings of the visited countries
 // Run: node scripts/build-geo.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -8,8 +8,12 @@ import { geoContains } from 'd3-geo';
 import { feature, mesh } from 'topojson-client';
 
 const require = createRequire(import.meta.url);
+// Dots and the 240px minimap come from 110m, which is all they can show and is
+// quick to test points against. The lines drawn on the globe come from 50m: at
+// 110m a coastline is a handful of straight segments and reads as crude.
 const land = JSON.parse(readFileSync(require.resolve('world-atlas/land-110m.json'), 'utf8'));
 const countries = JSON.parse(readFileSync(require.resolve('world-atlas/countries-110m.json'), 'utf8'));
+const countries50 = JSON.parse(readFileSync(require.resolve('world-atlas/countries-50m.json'), 'utf8'));
 const visited = JSON.parse(readFileSync('src/data/countries.json', 'utf8')).countries.map((c) => c.code);
 
 // ISO 3166-1 alpha-2 -> numeric (world-atlas feature ids)
@@ -21,6 +25,7 @@ const NUMERIC = {
 
 const landFeature = feature(land, land.objects.land);
 const feats = feature(countries, countries.objects.countries).features;
+const feats50 = feature(countries50, countries50.objects.countries).features;
 const countryFeatures = visited.map((code) => {
   const id = String(NUMERIC[code]).padStart(3, '0');
   const f = feats.find((x) => x.id === id);
@@ -28,7 +33,7 @@ const countryFeatures = visited.map((code) => {
   return f;
 });
 
-const STEP = 0.8;
+const STEP = 0.7;
 const dots = []; // flat triples: lat, lng, countryIndex (-1 = not a visited country)
 for (let lat = -88; lat <= 88; lat += STEP) {
   const n = Math.max(1, Math.round((360 / STEP) * Math.cos((lat * Math.PI) / 180)));
@@ -49,10 +54,11 @@ const tagged = dots.filter((_, i) => i % 3 === 2 && dots[i] >= 0).length;
 
 // --- borders: every boundary (coastlines + country borders) as line strings
 const round = (c) => [+c[0].toFixed(2), +c[1].toFixed(2)];
-const borders = mesh(countries, countries.objects.countries).coordinates.map((line) => line.map(round));
+const borders = mesh(countries50, countries50.objects.countries).coordinates.map((line) => line.map(round));
+// the current country's outline is drawn beside the 50m borders, so it is 50m too
 const byCode = {};
-visited.forEach((code, i) => {
-  const f = countryFeatures[i];
+visited.forEach((code) => {
+  const f = feats50.find((x) => x.id === String(NUMERIC[code]).padStart(3, '0'));
   if (!f) return;
   const rings = f.geometry.type === 'Polygon' ? f.geometry.coordinates : f.geometry.coordinates.flat();
   byCode[code] = rings.map((r) => r.map(round));

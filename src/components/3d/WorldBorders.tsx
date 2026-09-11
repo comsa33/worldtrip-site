@@ -59,7 +59,15 @@ export function WorldBorders({
   return (
     <group>
       <lineSegments geometry={bordersGeometry}>
-        <lineBasicMaterial color={INK} transparent opacity={0.22} depthWrite={false} />
+        {/* Every border, legible on its own: the map has to read as a map before
+            the current country reads as the current one. Hairlines lose a lot of
+            ink on a light ground, so light mode gets more. */}
+        <lineBasicMaterial
+          color={INK}
+          transparent
+          opacity={theme === 'light' ? 0.55 : 0.42}
+          depthWrite={false}
+        />
       </lineSegments>
       {highlight.map((path, i) => (
         <Line
