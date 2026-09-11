@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react';
 import { useI18n } from '../../i18n';
+import { typewrite } from './typewriter';
 import './AboutOverlay.css';
 
 /**
@@ -7,10 +9,49 @@ import './AboutOverlay.css';
  * cursor at the head of the eyebrow, writes the lines, and folds down into the
  * full stop of the last one — and stays there, in accent. The words are all in
  * the document from the first byte; only their paint waits for the hand.
- * TravelingDot does the writing; this component only lays the paper.
+ * The hand is the same one the opening uses. What moves through the text is
+ * an inline seat — in the flow of the line, so it is exactly where a cursor
+ * would be — and the travelling dot is pinned to that seat, shaped as a caret
+ * while it writes and as the full stop once it has.
  */
+let written = false;
+
 export default function FinaleOverlay({ visible }: { visible: boolean }) {
   const { language } = useI18n();
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const host = ref.current;
+    if (!host || !visible) return;
+    const chars = Array.from(host.querySelectorAll<HTMLElement>('[data-ch]'));
+    const seat = host.querySelector<HTMLElement>('.about-overlay__seat');
+    if (!seat || chars.length === 0) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sitDown = () => {
+      chars[chars.length - 1].after(seat);
+      seat.setAttribute('data-dot-carry', 'land:1');
+      host.classList.add('is-done');
+      host.setAttribute('data-dot-sitting', '');
+    };
+    if (written || reduced) {
+      sitDown();
+      return;
+    }
+    written = true;
+    // the dot arrives first; the hand starts once it is standing
+    seat.setAttribute('data-dot-carry', 'caret-blink');
+    const stop = typewrite(chars, {
+      at: (el, after) => (after ? el.after(seat) : el.before(seat)),
+      blink: (on) => seat.setAttribute('data-dot-carry', on ? 'caret-blink' : 'caret'),
+      done: sitDown,
+    });
+    return () => {
+      stop();
+      host.classList.add('is-done');
+      host.removeAttribute('data-dot-sitting');
+    };
+  }, [visible, language]);
+
   if (!visible) return null;
 
   const content = {
@@ -52,8 +93,16 @@ than with how I took the place I was in.`,
 
   return (
     <div className="about-overlay about-overlay--finale">
-      {/* the dot's host: it flies here, writes, and sits down at the end */}
-      <div className="about-overlay__card" data-dot-active="" data-dot-write="">
+      <div className="about-overlay__card" ref={ref}>
+        {/* the seat: in the flow of the line, moved through the text by the hand.
+            The dot is pinned to it. */}
+        <span
+          className="about-overlay__seat"
+          data-dot-active=""
+          data-dot-follow=""
+          data-dot-carry="caret-blink"
+          aria-hidden="true"
+        />
         <h2 className="about-overlay__title">{typed(t.title)}</h2>
         <p className="about-overlay__subtitle">{typed(t.subtitle)}</p>
         <p className="about-overlay__story">{typed(t.story)}</p>

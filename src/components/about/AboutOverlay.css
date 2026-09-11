@@ -229,6 +229,17 @@
   background: var(--accent);
 }
 
+/* the seat the dot rides through the finale: the size and place of a period,
+   drawing nothing itself */
+.about-overlay__seat {
+  --dot-size: 5px;
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+}
+
 .about-overlay--finale .is-done:not([data-dot-sitting]) .about-overlay__period {
   opacity: 1;
 }
