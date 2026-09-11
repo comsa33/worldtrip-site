@@ -839,7 +839,18 @@
 }
 
 .minimap__head {
+  /* the size the travelling dot takes while it is sitting here */
+  --dot-size: 5px;
   fill: var(--accent);
+  transition: fill var(--t-fast) var(--ease);
+}
+
+/* The dot has left for the photo book: what stays is the ring it left behind. */
+.minimap__head[data-dot-state='away'] {
+  fill: transparent;
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 
 .minimap__ring {

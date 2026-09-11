@@ -1,14 +1,22 @@
-/* Lightbox — one photo in a 1px frame, everything else is text */
-.lightbox {
+/* =============================================================================
+   Photo book — one photo in a frame that is the photo's own shape, everything
+   else is text. The accent belongs to the travelling dot, so nothing else in
+   here is allowed to use it.
+   ============================================================================= */
+.pb {
   position: fixed;
   inset: 0;
   z-index: 200;
   display: grid;
-  grid-template-rows: 56px 1fr 84px;
-  animation: lightboxIn var(--t-fast) var(--ease) forwards;
+  grid-template-rows: 56px 1fr 92px;
+  animation: pbIn var(--t-fast) var(--ease) forwards;
+  /* the whole surface is a gesture target; the strip opts back in below */
+  touch-action: none;
+  overscroll-behavior: contain;
+  transform-origin: 50% 100%;
 }
 
-@keyframes lightboxIn {
+@keyframes pbIn {
   from {
     opacity: 0;
   }
@@ -17,13 +25,14 @@
   }
 }
 
-.lightbox__backdrop {
+.pb__backdrop {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  background: var(--bg);
 }
 
-.lightbox__top {
+/* ── header ────────────────────────────────────────────────────────────── */
+.pb__top {
   position: relative;
   display: flex;
   align-items: center;
@@ -34,19 +43,19 @@
   font-size: 12px;
 }
 
-.lightbox__city {
+.pb__city {
   color: var(--ink);
   font-family: var(--sans);
   font-size: 14px;
   font-weight: 500;
 }
 
-.lightbox__counter {
+.pb__counter {
   color: var(--ink-3);
 }
 
-.lightbox__btn,
-.lightbox__nav {
+.pb__btn,
+.pb__nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -59,161 +68,324 @@
     background-color var(--t-fast) var(--ease);
 }
 
-.lightbox__btn {
+.pb__btn {
   margin-left: auto;
 }
 
-.lightbox__btn:hover,
-.lightbox__nav:hover {
+.pb__btn:hover,
+.pb__nav:hover {
   color: var(--ink);
   background: var(--bg-hover);
 }
 
-.lightbox__btn:focus-visible,
-.lightbox__nav:focus-visible,
-.lightbox__thumb:focus-visible {
+.pb__btn:focus-visible,
+.pb__nav:focus-visible,
+.pb__thumb:focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
 }
 
-.lightbox__nav {
+.pb__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
 }
 
-.lightbox__nav--prev {
+.pb__nav--prev {
   left: 24px;
 }
 
-.lightbox__nav--next {
+.pb__nav--next {
   right: 24px;
 }
 
-.lightbox__figure {
+/* ── stage: the picture, then the line that names it ───────────────────── */
+.pb__stage {
   position: relative;
-  margin: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  row-gap: 14px;
   min-height: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 24px 80px;
+  padding: 22px 80px 16px;
 }
 
-.lightbox__frame {
+.pb__slot {
+  position: relative;
+  display: grid;
+  place-items: center;
   min-height: 0;
-  max-height: 100%;
+}
+
+/*
+ * The frame is sized from the photo's own width and height, which are in the
+ * data — so it is the right shape before a single byte of the picture has
+ * arrived, and nothing moves when it does. The border is on the frame, which
+ * means it is always exactly the picture's edge.
+ */
+.pb__frame {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: 3px;
   padding: 1px;
-  background: var(--bg);
+  background: var(--bg-card);
+  cursor: none;
+  transition:
+    width var(--t-base) var(--ease),
+    height var(--t-base) var(--ease);
 }
 
-.lightbox__frame img {
-  display: block;
-  max-width: min(1100px, 100%);
-  max-height: calc(100vh - 56px - 84px - 48px - 60px);
-  width: auto;
-  height: auto;
+.pb__img {
+  position: absolute;
+  inset: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  object-fit: cover;
   border-radius: 2px;
+  display: block;
+  animation: pbFade 320ms var(--ease-out) both;
 }
 
-.lightbox__caption {
+/* the photo on its way out: it holds the frame until the new one has decoded */
+.pb__img.is-out {
+  z-index: 0;
+  animation: none;
+}
+
+@keyframes pbFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+ * Which half of the picture the pointer is on, drawn on the picture's own
+ * edge. It replaces a cursor with an arrow glyph in it: the cursor here is the
+ * accent dot, and this is what tells you which way it will go.
+ */
+.pb__frame::before,
+.pb__frame::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  width: 1px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pb__frame::before {
+  left: 1px;
+}
+
+.pb__frame::after {
+  right: 1px;
+}
+
+.pb__frame[data-side='l']:hover::before,
+.pb__frame[data-side='r']:hover::after {
+  opacity: 1;
+}
+
+/* the pointer, as the same dot everything else in the site uses */
+.pb__cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms var(--ease);
+}
+
+.pb__frame:hover .pb__cursor {
+  opacity: 1;
+}
+
+/* ── caption ───────────────────────────────────────────────────────────── */
+.pb__cap {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   text-align: center;
   max-width: 64ch;
+  justify-self: center;
 }
 
-.lightbox__text {
+.pb__text {
   font-size: 14px;
   color: var(--ink);
   text-wrap: pretty;
 }
 
-.lightbox__meta {
+.pb__meta {
   font-size: 11.5px;
   color: var(--ink-3);
 }
 
-.lightbox__strip {
+/*
+ * The seat for the dot on the last photo of a city: the full stop of the line
+ * that ends it. The dot stands up out of this into a caret as tall as the type
+ * it is ending — stated here, beside the mark, and turned into scale factors
+ * by TravelingDot, which measures this element's own font size.
+ */
+.pb__seat {
+  --dot-size: 5px;
+  --caret-height: 1;
+  --caret-width: 1.4px;
+  display: inline-block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  margin-left: 0.12em;
+  vertical-align: 0.06em;
+}
+
+/* ── strip ─────────────────────────────────────────────────────────────── */
+.pb__strip {
   position: relative;
   display: flex;
   gap: 6px;
-  align-items: center;
-  padding: 0 32px;
+  align-items: flex-start;
+  justify-content: safe center;
+  padding: 20px 32px 0;
   border-top: 1px solid var(--line);
   background: var(--bg);
   overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-x;
+  /* the ends fade rather than stop, so it reads as a strip that continues */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 28px,
+    #000 calc(100% - 28px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 28px,
+    #000 calc(100% - 28px),
+    transparent 100%
+  );
 }
 
-.lightbox__strip::-webkit-scrollbar {
+.pb__strip::-webkit-scrollbar {
   display: none;
 }
 
-.lightbox__thumb {
+.pb__strip.is-drag {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+/*
+ * No accent ring on the current thumbnail: the dot standing under it is what
+ * says which one it is, and two marks for one fact is one too many.
+ */
+.pb__thumb {
+  --dot-size: 5px;
+  --dot-below: 8px;
+  position: relative;
   flex: 0 0 auto;
-  width: 56px;
-  height: 42px;
+  width: 62px;
+  height: 46px;
   padding: 0;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line);
   border-radius: 3px;
   overflow: hidden;
-  opacity: 0.55;
+  background: var(--bg-card);
+  scroll-snap-align: center;
   transition:
     opacity var(--t-fast) var(--ease),
     border-color var(--t-fast) var(--ease);
 }
 
-.lightbox__thumb img {
+.pb__thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  pointer-events: none;
 }
 
-.lightbox__thumb:hover {
-  opacity: 0.85;
+.pb__thumb:hover {
+  opacity: 0.92 !important;
 }
 
-.lightbox__thumb.is-current {
-  opacity: 1;
-  border-color: var(--accent);
+.pb__thumb.is-current {
+  border-color: var(--line-strong);
 }
 
+/* ── phone ─────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .lightbox {
-    grid-template-rows: 48px 1fr 64px;
+  .pb {
+    grid-template-rows: 48px 1fr 84px;
   }
 
-  .lightbox__top,
-  .lightbox__strip {
+  .pb__top {
     padding: 0 16px;
   }
 
-  .lightbox__figure {
-    padding: 12px 16px;
+  .pb__strip {
+    padding: 16px 16px 0;
   }
 
-  .lightbox__frame img {
-    max-height: calc(100vh - 48px - 64px - 24px - 72px);
+  .pb__stage {
+    padding: 12px 16px 10px;
   }
 
-  .lightbox__nav {
+  /* the picture is swiped, not clicked: the arrows would only be in the way */
+  .pb__nav {
     display: none;
   }
 
-  .lightbox__thumb {
-    width: 44px;
-    height: 33px;
+  .pb__frame {
+    cursor: default;
   }
 
-  .lightbox__text {
+  .pb__cursor {
+    display: none;
+  }
+
+  .pb__thumb {
+    /* 44px is the smallest a thumb can reliably hit */
+    width: 58px;
+    height: 44px;
+  }
+
+  .pb__text {
     font-size: 13px;
+  }
+
+  .pb__meta {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb__frame,
+  .pb__img {
+    transition-duration: 1ms;
+    animation-duration: 1ms;
   }
 }

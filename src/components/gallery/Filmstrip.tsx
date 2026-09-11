@@ -9,9 +9,19 @@ interface FilmPhoto {
 
 const photos = cityPhotosData as Record<string, { photos: FilmPhoto[] }>;
 
-// Cloudinary thumb: 4:3 crop instead of the square marker thumb
-const thumb4x3 = (url?: string) =>
-  url ? url.replace('w_200,h_200,c_fill', 'w_192,h_144,c_fill') : undefined;
+/**
+ * Cloudinary thumb: a 4:3 crop at the size it is actually drawn (64x48 CSS px,
+ * 48x36 on a phone) for this screen's density, instead of the square 200x200
+ * marker thumb scaled down in the browser.
+ */
+const thumb4x3 = (url?: string) => {
+  if (!url) return undefined;
+  const dpr = Math.min(typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1, 3);
+  return url.replace(
+    'w_200,h_200,c_fill',
+    `w_${Math.round(64 * dpr)},h_${Math.round(48 * dpr)},c_fill`
+  );
+};
 
 /**
  * The current city's photos, pinned under the DAY meta. Click one to open it in the gallery.

@@ -21,6 +21,7 @@ import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../..
 import AboutOverlay from '../about/AboutOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
+import { TravelingDot } from '../gallery/TravelingDot';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
@@ -1645,6 +1646,10 @@ function JourneyExperienceContent() {
 
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
+
+      {/* One dot for the whole site: it rests on the minimap's current position
+          and flies into the photo book when one opens. */}
+      <TravelingDot />
 
       {/* Photo gallery overlay */}
       <PhotoGallery
