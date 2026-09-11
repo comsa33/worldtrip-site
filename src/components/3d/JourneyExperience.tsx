@@ -12,6 +12,9 @@ import {
   Mountain,
 } from 'lucide-react';
 import journeyData from '../../data/journey.json';
+
+// 헤더 기간 표시: journey.json에서 유도한다 (데이터가 바뀌면 같이 따라간다)
+const journeyPeriod = `${journeyData.startDate.replace(/-/g, '.')} — ${journeyData.endDate.replace(/-/g, '.')}`;
 import citiesData from '../../data/cities.json';
 import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
@@ -1087,7 +1090,7 @@ function Header() {
         <span className="journey-header__dot" aria-hidden="true" />
         <span>{t('journey.brand')}</span>
       </div>
-      <span className="journey-header__period mono">2016.08.13 — 2017.07.06</span>
+      <span className="journey-header__period mono">{journeyPeriod}</span>
       <nav className="journey-header__nav mono" aria-label="Sites">
         <a href="https://po24lio.com">{t('nav.portfolio')}</a>
         <a href="https://blog.po24lio.com">{t('nav.blog')}</a>

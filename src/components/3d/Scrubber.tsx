@@ -124,6 +124,14 @@ export function Scrubber({
   const date = knownDate(stop?.startDate) ?? knownDate(stop?.endDate);
   const pct = progress * 100;
   const countries = useMemo(() => new Set(stops.map((s) => s.country)).size, [stops]);
+  // 여정 일수: 첫 출발일 ~ 마지막 도착일 (stops가 바뀌면 같이 따라간다)
+  const totalDays = useMemo(() => {
+    const first = stops[0]?.startDate;
+    const last = stops[stops.length - 1]?.endDate ?? stops[stops.length - 1]?.startDate;
+    if (!first || !last) return 0;
+    const ms = new Date(last).getTime() - new Date(first).getTime();
+    return Math.round(ms / 86400000) + 1;
+  }, [stops]);
 
   const hint =
     language === 'ko'
@@ -186,7 +194,7 @@ export function Scrubber({
         <span className="scrubber__hint">{hint}</span>
         <span className="scrubber__stats">
           <span>
-            <b>314</b> days
+            <b>{totalDays}</b> days
           </span>
           <span>
             <b>{countries}</b> countries

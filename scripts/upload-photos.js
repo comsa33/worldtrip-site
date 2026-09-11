@@ -32,6 +32,16 @@ cloudinary.config({
 const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 const PHOTOS_DIR = path.join(__dirname, '../photos/cities');
 
+// 사이드카 메타데이터 (Apple 사진 보관함에서 추출한 촬영일시/GPS/주소)
+// EXIF가 없는 파일을 보완한다. photos/metadata.json, 파일명(확장자 포함)이 키.
+const SIDECAR_PATH = path.join(__dirname, '../photos/metadata.json');
+const sidecar = fs.existsSync(SIDECAR_PATH)
+  ? JSON.parse(fs.readFileSync(SIDECAR_PATH, 'utf-8'))
+  : {};
+if (Object.keys(sidecar).length > 0) {
+  console.log(`📎 사이드카 메타데이터 ${Object.keys(sidecar).length}건 로드\n`);
+}
+
 // 영문 폴더명 -> 한글 도시명 매핑 (전체 여정)
 const folderToKorean = {
   'gwangju': '광주',
@@ -102,23 +112,23 @@ const folderToKorean = {
   'casablanca': '카사블랑카',
   'lisbon': '리스본',
   'rio': '리우데자네이루',
-  'angradosreis': '앙그라 도스 헤이스',
-  'ilhagrande': '이야 그란지',
-  'paraty': '파라치',
-  'itaguai': '이타과이',
-  'caraguatatuba': '카라과타투바',
+  'angradosreis': '앙그라도스헤이스',
+  'ilhagrande': '일랴 그란지 섬',
+  'paraty': '파라티',
+  'itaguai': '이타구아',
+  'caraguatatuba': '카라구아타투바',
   'saosebastiao': '사웅 세바스치앙',
-  'santos': '산투스',
-  'saopaulo': '상파울루',
+  'santos': '산토스',
+  'saopaulo': '상파울로',
   'curitiba': '쿠리치바',
   'navegantes': '나베간치스',
   'bombinhas': '봄비냐스',
-  'saojose': '상주제',
+  'saojose': '상조제',
   'florianopolis': '플로리아노폴리스',
   'guardadoembau': '과르다 두 엠바우',
   'garopaba': '가로파바',
   'imbituba': '임비투바',
-  'iguazu': '이과수',
+  'iguazu': '이과수 폭포',
   'posadas': '포사다스',
   'montevideo': '몬테비데오',
   'buenosaires': '부에노스아이레스',
@@ -151,7 +161,22 @@ const folderToKorean = {
   'bogota': '보고타',
   'medellin': '메데진',
   'cartagena': '카르타헤나',
-  'barranquilla': '바랑키야'
+  'barranquilla': '바랑키야',
+  'cusco': '쿠스코',
+  'ubatuba': '우바투바',
+  'arraialdocabo': '아라이알두카부',
+  'buzios': '부지오스',
+  'montserrat': '몬세라트',
+  'sintra': '신트라',
+  'guatape': '과타페',
+  'santamarta': '산타마르타',
+  'savona': '사보나',
+  'cannobio': '칸노비오',
+  'bergamo': '베르가모',
+  'jablonka': '야블론카',
+  'retsag': '레트샤그',
+  'laguna': '라구나',
+  'chascomus': '차스코무스'
 };
 
 // EXIF 메타데이터 추출
@@ -226,14 +251,18 @@ async function uploadPhoto(filePath, cityCode, index) {
   const photoName = `photo${String(index).padStart(3, '0')}`;
   const publicId = `${folder}/${photoName}`;
   
-  // EXIF 추출
+  // EXIF 추출 (없으면 사이드카로 보완)
   const exif = extractExif(filePath);
+  const side = sidecar[originalFilename];
+  if (side) {
+    if (!exif.date && side.date) exif.date = side.date;
+    if (!exif.gps && side.lat != null) exif.gps = { lat: side.lat, lng: side.lng };
+  }
   
-  // GPS가 있으면 주소 변환 (도로명/구/시/도)
-  let address = null;
-  if (exif.gps) {
+  // 주소: 사이드카에 있으면 그대로 쓰고, 없을 때만 역지오코딩 (Nominatim 1 req/sec)
+  let address = side && side.address ? side.address : null;
+  if (!address && exif.gps) {
     address = await getAddressFromGPS(exif.gps.lat, exif.gps.lng);
-    // API rate limit (1 req/sec)
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
   
@@ -296,7 +325,14 @@ async function main() {
     return fs.statSync(fullPath).isDirectory();
   });
   
-  for (const cityCode of cityFolders) {
+  // 인자로 도시코드를 주면 그 도시만 처리 (예: node scripts/upload-photos.js buzios)
+  const only = process.argv.slice(2).filter(a => !a.startsWith('-'));
+  const targets = only.length ? cityFolders.filter(c => only.includes(c)) : cityFolders;
+  if (only.length) {
+    console.log(`🎯 지정 도시만 처리: ${targets.join(', ') || '(일치 없음)'}\n`);
+  }
+  
+  for (const cityCode of targets) {
     const cityPath = path.join(PHOTOS_DIR, cityCode);
     const koreanName = folderToKorean[cityCode];
     
@@ -318,6 +354,7 @@ async function main() {
     // Cloudinary에서 이미 업로드된 사진의 원본 파일명 확인
     let existingFilenames = [];
     let existingCount = 0;
+    let maxIndex = 0;
     try {
       const resources = await cloudinary.api.resources({
         type: 'upload',
@@ -328,6 +365,12 @@ async function main() {
       });
       
       existingCount = resources.resources.length;
+      // 번호는 개수가 아니라 기존 최대 번호 기준으로 매긴다.
+      // (중간에 빠진 번호가 있으면 개수+1이 기존 파일과 충돌해 덮어쓴다)
+      maxIndex = resources.resources.reduce((m, r) => {
+        const n = parseInt((r.public_id.split('/').pop().match(/^photo(\d+)$/) || [])[1], 10);
+        return Number.isFinite(n) && n > m ? n : m;
+      }, 0);
       
       // context에서 원본 파일명 추출
       existingFilenames = resources.resources
@@ -362,14 +405,13 @@ async function main() {
       
       const imagePath = path.join(cityPath, currentFilename);
       // 기존 개수 + 새로 추가되는 순서로 번호 부여
-      const result = await uploadPhoto(imagePath, cityCode, existingCount + photos.length + 1);
+      const result = await uploadPhoto(imagePath, cityCode, maxIndex + photos.length + 1);
       
       if (result) {
         photos.push(result);
         const gpsInfo = result.gps ? ` 📍 ${result.gps.lat.toFixed(4)}, ${result.gps.lng.toFixed(4)}` : '';
         const dateInfo = result.date ? ` 📅 ${result.date}` : '';
         console.log(`  ✅ ${currentFilename}${dateInfo}${gpsInfo}`);
-        totalUploaded++;
       }
     }
     

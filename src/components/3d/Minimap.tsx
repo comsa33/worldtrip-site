@@ -40,7 +40,7 @@ function project(lat: number, lng: number): [number, number] {
 }
 
 /**
- * The whole 314-day line at a glance: a flat monochrome world with the route,
+ * The whole 330-day line at a glance: a flat monochrome world with the route,
  * past legs in ink, the rest faint, and the current position as the one accent.
  * Click anywhere to jump to the nearest stop.
  */

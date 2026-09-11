@@ -145,7 +145,22 @@ const folderToKorean = {
   'bogota': '보고타',
   'medellin': '메데진',
   'cartagena': '카르타헤나',
-  'barranquilla': '바랑키야'
+  'barranquilla': '바랑키야',
+  'cusco': '쿠스코',
+  'ubatuba': '우바투바',
+  'arraialdocabo': '아라이알두카부',
+  'buzios': '부지오스',
+  'montserrat': '몬세라트',
+  'sintra': '신트라',
+  'guatape': '과타페',
+  'santamarta': '산타마르타',
+  'savona': '사보나',
+  'cannobio': '칸노비오',
+  'bergamo': '베르가모',
+  'jablonka': '야블론카',
+  'retsag': '레트샤그',
+  'laguna': '라구나',
+  'chascomus': '차스코무스'
 };
 
 async function syncPhotos() {
