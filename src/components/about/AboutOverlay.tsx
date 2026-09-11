@@ -12,24 +12,24 @@ interface AboutOverlayProps {
  * reader who scrolls back up later finds it simply there. */
 let written = false;
 
-const CHAR_MS = 30;
-const JITTER_MS = 12;
+const CHAR_MS = 55;
+const JITTER_MS = 20;
 /** A space is a beat; punctuation is a breath; a new line is a new thought. */
 const PAUSE: Record<string, number> = {
-  ' ': 20,
-  ',': 170,
-  '.': 460,
-  '!': 460,
-  '?': 460,
-  '\n': 300,
-  '"': 60,
+  ' ': 40,
+  ',': 260,
+  '.': 700,
+  '!': 700,
+  '?': 700,
+  '\n': 420,
+  '"': 90,
 };
-const BLOCK_PAUSE_MS = 560;
+const BLOCK_PAUSE_MS = 900;
 /** The cursor waits at the start, the way a hand does before the first word. */
 const LEAD_MS = 1200;
 /** Now and then, at the start of a word, the hand stops to think. */
-const THINK_CHANCE = 0.09;
-const THINK_MS: [number, number] = [350, 900];
+const THINK_CHANCE = 0.12;
+const THINK_MS: [number, number] = [450, 1100];
 
 function Typed({ text }: { text: string }) {
   return (

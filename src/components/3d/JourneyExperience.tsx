@@ -19,6 +19,7 @@ import citiesData from '../../data/cities.json';
 import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
+import FinaleOverlay from '../about/FinaleOverlay';
 import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
@@ -1430,6 +1431,9 @@ function JourneyExperienceContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // the last stop: the dot leaves the globe to write the closing block
+  const finale = currentStop === stops.length - 1 && selectedCity === null;
+
   const handleCloseGallery = useCallback(() => {
     setSelectedCity(null);
     setSelectedPhotoIds(null);
@@ -1720,7 +1724,7 @@ function JourneyExperienceContent() {
             theme={theme}
             seat={seatRef}
             ribbon={ribbonRef}
-            dotActive={dotOut && selectedCity === null}
+            dotActive={dotOut && selectedCity === null && !finale}
             reveal={revealRef}
             revealRun={revealRun}
           />
@@ -1784,6 +1788,8 @@ function JourneyExperienceContent() {
 
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
+      {/* And the last word, back where it started — written by the dot itself */}
+      <FinaleOverlay visible={finale} />
 
       {/* One dot for the whole site. Its home is the mark in the header; it
           rides the head of the route on the globe, and flies into the photo
@@ -1791,7 +1797,7 @@ function JourneyExperienceContent() {
       <JourneyDotOverlay
         seat={seatRef}
         ribbon={ribbonRef}
-        active={dotOut && selectedCity === null}
+        active={dotOut && selectedCity === null && !finale}
       />
       <TravelingDot />
 

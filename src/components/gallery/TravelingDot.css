@@ -225,9 +225,75 @@
   }
 }
 
+/*
+ * dot → caret, for writing. It takes its own weight, gathers, and is thrown —
+ * well past the caret it is heading for, recoiling back through it before it
+ * stands still. Round the whole way up: a ball drawn out by its own speed is a
+ * capsule; squaring off happens once it has stopped.
+ */
+.tdot__ball[data-caret-in] {
+  transform-origin: 50% 100%;
+  animation: tdotCaretIn 460ms var(--ease-out) forwards;
+}
+
+@keyframes tdotCaretIn {
+  0% {
+    transform: scale(1.04, 0.97);
+    border-radius: 50%;
+  }
+  12% {
+    transform: scale(1.34, 0.7);
+    border-radius: 50%;
+  }
+  26% {
+    transform: scale(1.12, 0.84);
+    border-radius: 50%;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0.4);
+  }
+  56% {
+    transform: scale(var(--cx-over, 0.16), var(--cy-over, 2.75));
+    border-radius: 50%;
+  }
+  76% {
+    transform: scale(var(--cx-under, 0.29), var(--cy-under, 1.7));
+    border-radius: 25%;
+  }
+  100% {
+    transform: scale(var(--cx, 0.25), var(--cy, 1.84));
+    border-radius: 0.5px;
+  }
+}
+
+/* standing, between letters */
+.tdot__ball[data-caret] {
+  transform-origin: 50% 100%;
+  transform: scale(var(--cx, 0.25), var(--cy, 1.84));
+  border-radius: 0.5px;
+}
+
+/* a cursor blinks while the hand pauses; it steps, never fades */
+.tdot__ball[data-blink] {
+  animation: tdotBlink 1.06s step-end infinite;
+}
+
+@keyframes tdotBlink {
+  0%,
+  49.99% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tdot[data-ready='true'] {
     transition: none;
+  }
+  .tdot__ball[data-caret-in],
+  .tdot__ball[data-blink] {
+    animation: none;
   }
   .tdot__ball[data-squish],
   .tdot__ball[data-land],

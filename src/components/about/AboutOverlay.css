@@ -212,3 +212,23 @@
     display: none;
   }
 }
+
+/* ---- the finale, written by the travelling dot ------------------------------
+   Same paper. The period it leaves is the dot itself, so the stand-in is accent
+   too, and it shows only while the dot is away. */
+.about-overlay--finale [data-ch] {
+  opacity: 0;
+}
+
+.about-overlay--finale [data-ch].is-on,
+.about-overlay--finale .is-done [data-ch] {
+  opacity: 1;
+}
+
+.about-overlay__period--accent {
+  background: var(--accent);
+}
+
+.about-overlay--finale .is-done:not([data-dot-sitting]) .about-overlay__period {
+  opacity: 1;
+}
