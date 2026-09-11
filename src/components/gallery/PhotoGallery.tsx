@@ -110,7 +110,7 @@ export default function PhotoGallery({
   const atEnd = count > 0 && safeIndex === count - 1;
 
   const go = useCallback(
-    (d: number) => setIndex((i) => (count ? (i + d + count) % count : 0)),
+    (d: number) => setIndex((i) => Math.max(0, Math.min(count - 1, i + d))),
     [count]
   );
 
@@ -137,12 +137,57 @@ export default function PhotoGallery({
   /* ── the outgoing photo keeps its place until the new one has decoded ── */
   const [holding, setHolding] = useState<Photo | null>(null);
   const [shownId, setShownId] = useState<string | undefined>(photo?.id);
+  const [dir, setDir] = useState(1);
   if (photo && shownId !== photo.id) {
     // the photo changed this render: keep the old one on screen until the new
     // one reports it has decoded (state reset during render, per React guidance)
+    const prevIdx = photos.findIndex((p) => p.id === shownId);
+    setDir(prevIdx >= 0 && prevIdx > safeIndex ? -1 : 1);
     setHolding(photos.find((p) => p.id === shownId) ?? null);
     setShownId(photo.id);
   }
+
+  // the whole city at once, as a contact sheet — G toggles, a tile opens it there
+  const [sheet, setSheet] = useState(false);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  // where the tile was, relative to where the frame will be — measured in the
+  // click, so the render only reads state
+  const [zoomFrom, setZoomFrom] = useState<{ zx: number; zy: number; zs: number } | null>(null);
+  const openFromTile = (i: number, el: HTMLElement) => {
+    const r = el.getBoundingClientRect();
+    const sr = slotRef.current?.getBoundingClientRect();
+    const target = photos[i];
+    if (sr && target && slot.w && slot.h) {
+      const fw = frameWidth(target, slot.w, slot.h);
+      setZoomFrom({
+        zx: r.left + r.width / 2 - (sr.left + sr.width / 2),
+        zy: r.top + r.height / 2 - (sr.top + sr.height / 2),
+        zs: Math.max(0.05, r.width / fw),
+      });
+    }
+    setIndex(i);
+    setSheet(false);
+  };
+  useEffect(() => {
+    if (!zoomFrom) return;
+    const t = window.setTimeout(() => setZoomFrom(null), 460);
+    return () => window.clearTimeout(t);
+  }, [zoomFrom]);
+
+  // the key hints show for a moment on each open, then get out of the way
+  const [hintGone, setHintGone] = useState(false);
+  const [hintFor, setHintFor] = useState(cityName);
+  if (hintFor !== cityName) {
+    // a new open: the hints come back (state reset during render, per React guidance)
+    setHintFor(cityName);
+    setHintGone(false);
+  }
+  useEffect(() => {
+    if (!cityName) return;
+    const t = window.setTimeout(() => setHintGone(true), 3600);
+    return () => window.clearTimeout(t);
+  }, [cityName]);
 
   /* ── fetch the neighbours before they are asked for ──────────────────── */
   useEffect(() => {
@@ -168,7 +213,8 @@ export default function PhotoGallery({
     // the globe behind the lightbox, which is how the wheel "stopped working".
     const block = (e: Event) => {
       const t = e.target;
-      if (t instanceof Node && stripRef.current?.contains(t)) return;
+      if (t instanceof Node && (stripRef.current?.contains(t) || sheetRef.current?.contains(t)))
+        return;
       e.preventDefault();
     };
     window.addEventListener('wheel', block, { passive: false });
@@ -186,16 +232,51 @@ export default function PhotoGallery({
   useEffect(() => {
     if (!cityName) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      else if (e.key === 'ArrowRight') go(1);
+      if (e.key === 'Escape') {
+        if (sheet) setSheet(false);
+        else onClose();
+      } else if (e.key === 'ArrowRight') go(1);
       else if (e.key === 'ArrowLeft') go(-1);
+      else if (e.key === 'g' || e.key === 'G') setSheet((v) => !v);
       else return;
       e.preventDefault();
       e.stopPropagation();
     };
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
-  }, [cityName, onClose, go]);
+  }, [cityName, onClose, go, sheet]);
+
+  /* ── the wheel over the picture: down is out (the sheet), up is back in ── */
+  const wheelAcc = useRef(0);
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      const t = e.target as Node;
+      if (stripRef.current?.contains(t)) return; // the strip scrolls itself
+      const inSheet = sheetRef.current?.contains(t) ?? false;
+      if (inSheet) {
+        // at the top of the sheet, a further push up goes back into the photo
+        if (sheetRef.current!.scrollTop <= 0 && e.deltaY < 0) {
+          wheelAcc.current += e.deltaY;
+          if (wheelAcc.current < -160) {
+            wheelAcc.current = 0;
+            setSheet(false);
+          }
+        } else wheelAcc.current = 0;
+        return;
+      }
+      if (e.deltaY > 0) {
+        wheelAcc.current += e.deltaY;
+        if (wheelAcc.current > 160) {
+          wheelAcc.current = 0;
+          setSheet(true);
+        }
+      } else wheelAcc.current = 0;
+    };
+    el.addEventListener('wheel', onWheel, { passive: true });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [cityName]);
 
   /* ── the strip: a plain wheel moves it sideways, and it can be dragged ── */
   useEffect(() => {
@@ -269,7 +350,6 @@ export default function PhotoGallery({
   }, [safeIndex, cityName]);
 
   /* ── touch: swipe across, pull down to close ─────────────────────────── */
-  const rootRef = useRef<HTMLDivElement>(null);
   const gesture = useRef({ down: false, sx: 0, sy: 0, axis: '' as '' | 'x' | 'y', dy: 0, t0: 0 });
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === 'mouse') return;
@@ -284,7 +364,14 @@ export default function PhotoGallery({
       if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
       g.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
     }
-    if (g.axis !== 'y') return;
+    if (g.axis === 'x') {
+      const slotEl = slotRef.current;
+      if (!slotEl) return;
+      const atEnd = (dx > 0 && safeIndex === 0) || (dx < 0 && safeIndex === count - 1);
+      slotEl.style.transition = 'none';
+      slotEl.style.transform = `translateX(${atEnd ? dx * 0.32 : dx * 0.9}px)`;
+      return;
+    }
     g.dy = Math.max(0, dy);
     const k = Math.min(g.dy / 700, 1);
     const el = rootRef.current;
@@ -300,8 +387,27 @@ export default function PhotoGallery({
     const dx = e.clientX - g.sx;
     const ms = Date.now() - g.t0;
     if (g.axis === 'x') {
+      const slotEl = slotRef.current;
+      if (slotEl) {
+        slotEl.style.transition = 'transform 320ms var(--ease)';
+        slotEl.style.transform = '';
+        window.setTimeout(() => {
+          slotEl.style.transition = '';
+        }, 340);
+      }
       const fling = Math.abs(dx) / Math.max(ms, 1) > 0.45;
-      if (Math.abs(dx) > 60 || fling) go(dx < 0 ? 1 : -1);
+      const moved = Math.abs(dx) > 60 || fling;
+      const next = safeIndex + (dx < 0 ? 1 : -1);
+      if (moved && next >= 0 && next < count) {
+        go(dx < 0 ? 1 : -1);
+        if (navigator.vibrate) {
+          try {
+            navigator.vibrate(8);
+          } catch {
+            /* no haptics here */
+          }
+        }
+      }
     } else if (g.axis === 'y') {
       if (g.dy > 150) {
         onClose();
@@ -376,7 +482,7 @@ export default function PhotoGallery({
     <span
       className="pb__seat"
       data-dot-end=""
-      data-dot-active={atEnd ? '' : undefined}
+      data-dot-active={atEnd && !sheet ? '' : undefined}
       aria-hidden="true"
     />
   );
@@ -398,8 +504,39 @@ export default function PhotoGallery({
       <div className="pb__top mono">
         <span className="pb__city">{cityName}</span>
         <span className="pb__counter">
-          {safeIndex + 1} / {count}
+          <span className="pb__roll" aria-live="polite">
+            <b key={safeIndex} className={dir > 0 ? 'is-up' : 'is-down'}>
+              {String(safeIndex + 1).padStart(2, '0')}
+            </b>
+          </span>
+          &nbsp;/&nbsp;
+          <button
+            type="button"
+            className={`pb__all${sheet ? ' is-on' : ''}`}
+            onClick={() => setSheet((v) => !v)}
+            aria-pressed={sheet}
+            title={lang === 'ko' ? '전부 보기 (G)' : 'See them all (G)'}
+          >
+            {String(count).padStart(2, '0')}
+          </button>
         </span>
+        <span className={`pb__keys${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
+          <kbd>←</kbd>
+          <kbd>→</kbd>
+          <span>{lang === 'ko' ? '넘기기' : 'browse'}</span>
+          <kbd>G</kbd>
+          <span>{lang === 'ko' ? '전체' : 'all'}</span>
+          <kbd>ESC</kbd>
+          <span>{lang === 'ko' ? '닫기' : 'close'}</span>
+        </span>
+        <button
+          type="button"
+          className={`pb__sheetbtn mono${sheet ? ' is-on' : ''}`}
+          onClick={() => setSheet((v) => !v)}
+          aria-pressed={sheet}
+        >
+          {lang === 'ko' ? '전체' : 'all'}
+        </button>
         <button type="button" className="pb__btn" onClick={onClose} aria-label="Close">
           <X size={16} strokeWidth={1.5} />
         </button>
@@ -408,9 +545,23 @@ export default function PhotoGallery({
       <div className="pb__stage">
         <div className="pb__slot" ref={slotRef}>
           <figure
-            className="pb__frame"
+            className={`pb__frame${zoomFrom ? ' is-zooming' : ''}`}
             ref={figRef}
-            style={box ? { width: box.w, height: box.h } : undefined}
+            style={
+              box
+                ? ({
+                    width: box.w,
+                    height: box.h,
+                    ...(zoomFrom
+                      ? {
+                          '--zx': `${zoomFrom.zx}px`,
+                          '--zy': `${zoomFrom.zy}px`,
+                          '--zs': String(zoomFrom.zs),
+                        }
+                      : {}),
+                  } as React.CSSProperties)
+                : undefined
+            }
             onPointerMove={onFigureMove}
             onClick={onFigureClick}
           >
@@ -437,7 +588,7 @@ export default function PhotoGallery({
           </figure>
         </div>
 
-        <figcaption className="pb__cap">
+        <figcaption className="pb__cap" key={photo.id}>
           {text && (
             <span className="pb__text">
               {text}
@@ -469,6 +620,47 @@ export default function PhotoGallery({
         </button>
       </div>
 
+      {sheet && (
+        <div
+          className="pb__sheet"
+          ref={sheetRef}
+          role="grid"
+          aria-label={`${cityName} — all photos`}
+        >
+          {(() => {
+            const perRow = typeof window !== 'undefined' && window.innerWidth < 768 ? 3 : 6;
+            const rows: Photo[][] = [];
+            for (let i = 0; i < photos.length; i += perRow) rows.push(photos.slice(i, i + perRow));
+            return rows.map((row, r) => (
+              <div className="pb__sheetrow" role="row" key={r}>
+                {row.map((p, j) => {
+                  const i = r * perRow + j;
+                  return (
+                    <button
+                      type="button"
+                      key={p.id}
+                      role="gridcell"
+                      className={`pb__cell${i === safeIndex ? ' is-current' : ''}`}
+                      style={{ '--ar': String(arOf(p)) } as React.CSSProperties}
+                      data-dot-active={i === safeIndex ? '' : undefined}
+                      onClick={(e) => openFromTile(i, e.currentTarget)}
+                      aria-label={`${i + 1}`}
+                    >
+                      <img src={srcFor(p, 320)} alt="" loading="lazy" decoding="async" />
+                      <span className="pb__cellno mono">{String(i + 1).padStart(2, '0')}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ));
+          })()}
+        </div>
+      )}
+
+      <span className={`pb__touchhint mono${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
+        {lang === 'ko' ? '← 쓸어 넘기기 · 아래로 당겨 닫기 ↓' : '← swipe · pull down to close ↓'}
+      </span>
+
       <div className="pb__strip" ref={stripRef}>
         {photos.map((p, i) => {
           const d = Math.abs(i - safeIndex);
@@ -478,7 +670,7 @@ export default function PhotoGallery({
               type="button"
               className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
               style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
-              data-dot-active={!atEnd && i === safeIndex ? '' : undefined}
+              data-dot-active={!sheet && !atEnd && i === safeIndex ? '' : undefined}
               onClick={() => {
                 if (stripRef.current?.dataset.moved) return;
                 setIndex(i);

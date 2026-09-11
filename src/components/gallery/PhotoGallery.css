@@ -215,8 +215,109 @@
   opacity: 1;
 }
 
+/* the counter rolls like an odometer, the new number coming from the side it went */
+.pb__roll {
+  position: relative;
+  display: inline-block;
+  width: 2ch;
+  height: 1.3em;
+  overflow: hidden;
+  vertical-align: -0.35em;
+}
+
+.pb__roll b {
+  position: absolute;
+  inset: 0;
+  font-weight: 400;
+  color: var(--ink);
+  animation: pbRoll 260ms var(--ease) both;
+}
+
+.pb__roll b.is-down {
+  animation-name: pbRollDown;
+}
+
+@keyframes pbRoll {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes pbRollDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* key hints: there on open, gone once you have had a moment to see them */
+.pb__keys {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-left: 6px;
+  font-size: 10.5px;
+  color: var(--ink-3);
+  transition: opacity 420ms var(--ease-out);
+}
+
+.pb__keys > span {
+  margin: 0 4px 0 2px;
+}
+
+.pb__keys.is-gone {
+  opacity: 0;
+}
+
+.pb__keys kbd {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 5px 3px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  color: var(--ink-2);
+  background: var(--bg-card);
+}
+
+/* the total is the way to all of them: it fills with ink when you reach for it */
+.pb__all {
+  padding: 2px 3px;
+  margin: -2px -3px;
+  border-radius: 3px;
+  color: var(--ink-3);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition:
+    color var(--t-fast) var(--ease),
+    text-decoration-color var(--t-fast) var(--ease);
+}
+
+.pb__all:hover,
+.pb__all.is-on {
+  color: var(--ink);
+  text-decoration-color: var(--ink-2);
+}
+
+.pb__touchhint {
+  display: none;
+}
+
 /* ── caption ───────────────────────────────────────────────────────────── */
 .pb__cap {
+  animation: pbFade 200ms var(--ease-out) both;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -252,6 +353,110 @@
   height: var(--dot-size);
   margin-left: 0.12em;
   vertical-align: 0.06em;
+}
+
+/* ── contact sheet ─────────────────────────────────────────────────────── */
+.pb__sheet {
+  position: absolute;
+  top: 56px;
+  bottom: 92px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 22px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: var(--bg);
+  animation: pbFade 200ms var(--ease-out) both;
+  touch-action: pan-y;
+}
+
+.pb__sheet::-webkit-scrollbar {
+  display: none;
+}
+
+/* one row, photos at one height, each as wide as its shape */
+.pb__sheetrow {
+  display: flex;
+  gap: 5px;
+}
+
+.pb__cell {
+  --dot-size: 5px;
+  --dot-below: 6px;
+  position: relative;
+  flex: var(--ar) 1 0;
+  min-width: 0;
+  padding: 0;
+  aspect-ratio: var(--ar);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--bg-card);
+  cursor: zoom-in;
+  transition:
+    border-color 200ms var(--ease),
+    transform 260ms var(--ease),
+    opacity 260ms var(--ease);
+}
+
+.pb__cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pb__cell.is-current {
+  border-color: var(--line-strong);
+}
+
+/* the rest step back for the one under the pointer */
+.pb__sheet:hover .pb__cell {
+  opacity: 0.55;
+}
+
+.pb__sheet:hover .pb__cell:hover {
+  opacity: 1;
+  transform: scale(1.02);
+  border-color: var(--line-strong);
+  z-index: 2;
+}
+
+.pb__cellno {
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  font-size: 10px;
+  color: rgba(242, 242, 242, 0.7);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+}
+
+.pb__cell:hover .pb__cellno {
+  opacity: 1;
+}
+
+.pb__sheetbtn {
+  display: none;
+}
+
+/* opened from a tile: the frame grows out of that tile's spot */
+.pb__frame.is-zooming {
+  animation: pbZoom 440ms var(--ease) both;
+}
+
+@keyframes pbZoom {
+  from {
+    transform: translate(var(--zx, 0), var(--zy, 0)) scale(var(--zs, 0.2));
+  }
+  to {
+    transform: none;
+  }
 }
 
 /* ── strip ─────────────────────────────────────────────────────────────── */
@@ -379,6 +584,61 @@
 
   .pb__meta {
     font-size: 11px;
+  }
+
+  .pb__keys {
+    display: none;
+  }
+
+  .pb__sheetbtn {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .pb__sheetbtn.is-on {
+    color: var(--ink);
+  }
+
+  .pb__btn {
+    margin-left: 0;
+  }
+
+  .pb__sheet {
+    top: 48px;
+    bottom: 84px;
+    padding: 12px 16px 20px;
+    gap: 4px;
+  }
+
+  .pb__sheetrow {
+    gap: 4px;
+  }
+
+  .pb__touchhint {
+    position: absolute;
+    left: 50%;
+    bottom: 100px;
+    transform: translateX(-50%);
+    display: inline-flex;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    font-size: 10.5px;
+    color: var(--ink-2);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity 420ms var(--ease-out);
+  }
+
+  .pb__touchhint.is-gone {
+    opacity: 0;
   }
 }
 
