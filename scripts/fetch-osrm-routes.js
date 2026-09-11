@@ -98,7 +98,10 @@ async function main() {
       continue;
     }
 
-    const key = `${from.id}-${to.id}`;
+    // 키는 stop 번호가 아니라 도시 이름 쌍으로 잡는다.
+    // 번호로 잡으면 stop을 추가·재정렬했을 때 캐시가 엉뚱한 구간에 붙어
+    // 경로가 전혀 다른 곳으로 이어진다.
+    const key = `${from.city}\u2192${to.city}`;
 
     // Skip if already cached
     if (existing[key] && existing[key].length > 0) {

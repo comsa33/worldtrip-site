@@ -149,7 +149,7 @@ function generatePath(stops: Stop[], cities: Record<string, CityData>, radius: n
     if (!currentCity || !nextCity) continue;
 
     const transport = stops[i + 1].transport;
-    const routeKey = `${stops[i].id}-${stops[i + 1].id}`;
+    const routeKey = `${stops[i].city}\u2192${stops[i + 1].city}`;
     const osrmCoords = routes[routeKey];
 
     // Use OSRM route data for bus/train if available
@@ -445,168 +445,145 @@ function TravelPath({
 // - Start: Gwangju(1) very zoomed in → Incheon(2) zooming out → flight = fully out
 // - India 1st: Chennai(16)→Mumbai(22) zoom in, Mumbai(22)→Varanasi(28) zoom out, Sonoli(29)=snap out
 // - Italy: Milan(51)→La Spezia(56) zoom in, back to Milan(62)=snap out
+// 도시별 카메라 줌(0 = 완전히 축소, 2.2 = 최대 접근).
+// 예전에는 stop id 기준으로 하드코딩돼 있었다. stop을 추가하거나 순서를 바꾸면
+// 값이 통째로 다른 도시에 걸려 카메라가 엉뚱한 배율로 튀었다. 도시 이름을 키로 잡아
+// 번호와 무관하게 만들고, 같은 도시를 다시 방문해도 배율이 흔들리지 않게 한다.
+const CITY_ZOOM: Record<string, number> = {
+  광주: 1.7,
+  인천: 1.7,
+  호치민: 0,
+  다낭: 1,
+  쿠알라룸푸르: 1,
+  메단: 1.5,
+  뚝뚝섬: 2,
+  시엠립: 1.5,
+  방콕: 2,
+  비엔티안: 2,
+  방비엥: 2,
+  루앙프라방: 2,
+  우돈타니: 2,
+  첸나이: 1.3,
+  퐁디셰리: 1.7,
+  벵갈루루: 1.9,
+  함피: 2,
+  뭄바이: 2,
+  아우랑가바드: 2,
+  나그푸르: 1.7,
+  자발푸르: 1.7,
+  콜카타: 1.7,
+  러크나우: 1.7,
+  아그라: 1.8,
+  뉴델리: 1.8,
+  도쿄: 0,
+  프라야그라지: 1.8,
+  바라나시: 1.8,
+  고라크푸르: 1.8,
+  소놀리: 1.8,
+  싯다르타나가르: 2.2,
+  포카라: 2.2,
+  안나푸르나: 2.2,
+  카트만두: 2.2,
+  박타푸르: 2.2,
+  두바이: 1.3,
+  아부다비: 2.2,
+  샤르자: 2.2,
+  카이로: 1.3,
+  다합: 1.7,
+  바르셀로나: 1.5,
+  시체스: 2.2,
+  몬세라트: 1.5,
+  소피아: 2,
+  베오그라드: 2,
+  부다페스트: 2,
+  레트샤그: 2,
+  야블론카: 2,
+  크라쿠프: 2,
+  프라하: 2,
+  베르가모: 1.8,
+  밀라노: 1.8,
+  토리노: 2.2,
+  '오르타 호수': 2.2,
+  칸노비오: 2.2,
+  피사: 2.2,
+  제노바: 2.2,
+  포르토피노: 2.2,
+  친퀘테레: 2.2,
+  라스페치아: 2.2,
+  브라: 2.2,
+  사보나: 2.2,
+  브뤼셀: 2,
+  파리: 1.5,
+  마드리드: 1.5,
+  마라케쉬: 1.5,
+  카사블랑카: 1.5,
+  리스본: 1.5,
+  신트라: 1.5,
+  리우데자네이루: 1.1,
+  부지오스: 2.0,
+  아라이알두카부: 2.0,
+  앙그라도스헤이스: 2.1,
+  '일랴 그란지 섬': 2.2,
+  파라티: 2.1,
+  우바투바: 2,
+  '사웅 세바스치앙': 2,
+  카라구아타투바: 2,
+  산토스: 2,
+  상파울로: 1.7,
+  쿠리치바: 1.7,
+  나베간치스: 1.7,
+  상조제: 2,
+  봄비냐스: 1.9,
+  플로리아노폴리스: 2,
+  '과르다 두 엠바우': 2,
+  가로파바: 2,
+  임비투바: 2,
+  라구나: 2,
+  '이과수 폭포': 1.5,
+  포사다스: 1.5,
+  부에노스아이레스: 1.6,
+  차스코무스: 2.0,
+  몬테비데오: 1.6,
+  산티아고: 1.3,
+  발파라이소: 1.5,
+  '바히아 잉글레사': 1.5,
+  '산 페드로 데 아타카마': 2,
+  '라구나 베르데': 2,
+  '살바도르 달리 사막': 2,
+  우유니: 2,
+  포토시: 2,
+  수크레: 2,
+  엘알토: 2,
+  코파카바나: 2,
+  푸노: 2,
+  줄리아카: 2,
+  쿠스코: 2,
+  마추픽추: 2,
+  리마: 1.5,
+  피우라: 1.7,
+  국경: 1.7,
+  쿠엔카: 1.8,
+  '카하스 국립공원': 1.8,
+  바뇨스: 1.8,
+  푸힐리: 1.8,
+  키토: 1.8,
+  툴칸: 1.8,
+  이피알레스: 1.8,
+  파스토: 1.8,
+  칼리: 1.5,
+  메데진: 1.5,
+  과타페: 1.5,
+  카르타헤나: 1.7,
+  바랑키야: 1,
+  산타마르타: 1.7,
+};
+
+const STOP_CITY: Record<number, string> = Object.fromEntries(
+  journeyData.stops.map((s) => [s.id, s.city])
+);
+
 function getProgressiveZoom(stopId: number): number {
-  // START: Gwangju(1) - very zoomed in, Korea focus
-  if (stopId <= 2) {
-    return 1.7; // Maximum close-up on Korea
-  }
-
-  // First flight onwards - zoomed out (except special sections)
-  if (stopId >= 4 && stopId <= 6) {
-    return 1; // Fully zoomed out until Kuala Lumpur 1st
-  }
-
-  // INDONESIA (Lake Toba): Medan(7) → Tuktuk(8) zoom in, then zoom out
-  if (stopId === 7) {
-    return 1.5; // Very strong zoom for Medan
-  }
-  if (stopId === 8) {
-    return 2.0; // Extreme zoom at Tuktuk (Lake Toba)
-  }
-  if (stopId === 9) {
-    return 2.0; // Stay zoomed in at Medan return
-  }
-  if (stopId === 10) {
-    return 0.5; // Continuing zoom out at Kuala Lumpur 2nd
-  }
-  if (stopId === 11) {
-    return 1.5; // Zoom in heading to Laos (Bangkok → Vang Vieng)
-  }
-
-  // LAOS: Vang Vieng(12), Luang Prabang(13), Vientiane(14) - stay zoomed in
-  if (stopId >= 12 && stopId <= 17) {
-    return 2.0; // Maximum zoom in Laos
-  }
-
-  if (stopId === 18) {
-    return 1.3;
-  }
-
-  // INDIA starts at Chennai(16) - gradual transition handled by India section
-
-  // INDIA FIRST LEG: Chennai(16) → Hyderabad(20) → Kolkata(27) → Sonoli(29)
-  // Chennai(16): 1.5
-  if (stopId === 18) return 1.5;
-  // Pondicherry(17): 1.7
-  if (stopId === 19) return 1.7;
-  // Gradual 1.7 → 2.0: Bengaluru(18) to Hyderabad(20)
-  if (stopId === 20) return 1.8;
-  if (stopId === 21) return 1.9;
-  if (stopId === 20) return 2.0;
-  // Maintain 2.0: Pune(21) to Kolkata(27)
-  if (stopId >= 21 && stopId <= 24) return 2.0;
-  if (stopId >= 25 && stopId <= 28) return 1.7;
-  // Gradual 2.0 → 1.8: Varanasi(28) to Sonoli(29)
-  if (stopId >= 29 && stopId <= 30) return 1.8;
-
-  // NEPAL: Pokhara(30) → Annapurna(31) → Kathmandu(32) → Pokhara(33)
-  // New Delhi(30) to Incheon(31): Flight - Zoom out to 1.0
-  if (stopId === 31) return 1.0;
-
-  // Gwangju(32) and Incheon(33) - Zoom in for Korea stay
-  if (stopId === 32 || stopId === 33) return 1.5;
-
-  if (stopId >= 34 && stopId <= 35) return 0;
-
-  // INDIA RETURN: Varanasi(37) -> Gorakhpur(38) -> Sonauli(39)
-  if (stopId >= 36 && stopId <= 39) return 1.8;
-
-  // NEPAL MAIN: Siddharthanagar(40) to Bhaktapur(45)
-  if (stopId >= 40 && stopId <= 45) return 2.2;
-
-  // NEPAL RETURN: Siddharthanagar(46) -> Sonauli(47)
-  if (stopId === 46 || stopId === 47) return 1.9;
-
-  // INDIA RE-ENTRY: Varanasi(48) -> Abu Dhabi (Flight): Zoom out to 1.5
-  if (stopId === 48) return 1.5;
-
-  // UAE: Abu Dhabi(49, 1.3x) -> Dubai(50, 2.0x->2.2x) -> Sharjah(51, 2.2x) -> Abu Dhabi(52, 1.3x)
-  if (stopId === 49) return 1.3;
-  if (stopId >= 50 && stopId <= 51) return 2.2;
-  if (stopId === 52) return 2.0;
-
-  // EGYPT: Cairo(53) 1.3, Dahab(54) 1.7
-  if (stopId === 53) return 1.3;
-  if (stopId === 54) return 1.7;
-
-  // SPAIN: Barcelona(55) 1.5
-  if (stopId === 55) return 1.5; // Barcelona 1
-  if (stopId === 56) return 2.2; // Sitges (Zoom in tight for short trip)
-  if (stopId === 57) return 1.8; // Barcelona 2
-
-  // EASTERN EUROPE: Sofia(58) -> Prague(63)
-  if (stopId >= 58 && stopId <= 63) return 2.0;
-
-  // ITALY: Milan(64) -> Milan(75) (Shifted by +6)
-  if (stopId === 64) return 1.8; // Milan entry
-  if (stopId >= 65 && stopId <= 74) return 2.2; // Italy detailed tour (Turin...Orta)
-  if (stopId === 75) return 1.8; // Milan exit
-
-  // WESTERN EUROPE: Brussels(76), Paris(77)
-  if (stopId === 76) return 2.0;
-  if (stopId === 77) return 1.5; // Paris wide view
-
-  // MOROCCO: Madrid(78) is transit, Porto(79). Marrakesh(80)...
-  if (stopId >= 78 && stopId <= 79) return 1.5; // Madrid, Porto
-  // From Milan(69) to Rio(83) is mostly flight/long bus - keep far zoom
-  if (stopId >= 70 && stopId <= 82) return 1.5;
-
-  // BRAZIL Coast: Rio(83) → gradual to Paraty(87) = 2.1
-  if (stopId === 83) return 1.1; // Rio de Janeiro
-  if (stopId === 84) return 2.1; // Angra
-  if (stopId === 85) return 2.2; // Ilha Grande
-  if (stopId === 86) return 2.2; // Angra return
-  if (stopId === 87) return 2.1; // Paraty - peak
-  if (stopId >= 88 && stopId <= 91) return 2.0; // Maintain to Santos
-
-  // São Paulo(92) zoom out to 1.7, maintain to Navegantes(94)
-  if (stopId >= 92 && stopId <= 94) return 1.7; // (was 90-92)
-
-  // Bombinhas(95) 1.9, then 2.0 through Imbituba(100)
-  if (stopId === 95) return 1.9; // (was 93)
-  if (stopId >= 96 && stopId <= 100) return 2.0; // (was 94-98)
-
-  // Iguazu(101) zoom out to 1.5, maintain to Posadas(102)
-  if (stopId === 101 || stopId === 102) return 1.5; // (was 99-100)
-
-  // Montevideo(103) and Buenos Aires(104): 1.6
-  if (stopId === 103 || stopId === 104) return 1.6; // (was 101-102)
-
-  // Santiago(105): 1.3 zoom out
-  if (stopId === 105) return 1.3; // (was 103)
-
-  // Valparaíso(106) to Bahía Inglesa(107): 1.5
-  if (stopId === 106 || stopId === 107) return 1.5; // (was 104-105)
-
-  // Atacama(108) to Sucre(113): 2.0 (zoomed in for desert/highlands)
-  if (stopId >= 108 && stopId <= 113) return 2.0; // (was 106-111)
-
-  // El Alto(114) to Machu Picchu(118): 2.0 (maintain zoom through Peru)
-  if (stopId >= 114 && stopId <= 118) return 2.0; // (was 112-116)
-
-  // Lima(119): 1.5
-  if (stopId === 119) return 1.5; // (was 117)
-
-  // Piura(120) to Border(121): 1.7
-  if (stopId >= 120 && stopId <= 121) return 1.7; // (was 118-119)
-
-  // Cajas(122) to Pasto(129): 1.8 (zoomed in for Andes region)
-  if (stopId >= 122 && stopId <= 129) return 1.8; // (was 120-127)
-
-  // Cali(130): zoom out to 1.5
-  if (stopId === 130) return 1.5; // (was 128)
-
-  // Bogotá(131) and Medellín(132): 1.5
-  if (stopId === 131 || stopId === 132) return 1.5; // (was 129-130)
-
-  // Cartagena(133): 1.7
-  if (stopId === 133) return 1.7; // (was 131)
-
-  // Barranquilla(134) to Incheon(135): 1.0 zoom out
-  if (stopId >= 134) return 1.0;
-
-  // Everything else - zoomed out
-  return 0;
+  return CITY_ZOOM[STOP_CITY[stopId]] ?? 0;
 }
 
 function Camera({
