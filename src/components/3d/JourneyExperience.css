@@ -84,7 +84,8 @@
   font-size: 13px;
 }
 
-.journey-header__nav a {
+.journey-header__nav a,
+.journey-header__nav button {
   padding: 5px 8px;
   border-radius: var(--radius-sm);
   color: var(--ink-3);
@@ -93,12 +94,14 @@
     background-color var(--t-fast) var(--ease);
 }
 
-.journey-header__nav a:hover {
+.journey-header__nav a:hover,
+.journey-header__nav button:hover {
   color: var(--ink);
   background: var(--bg-hover);
 }
 
-.journey-header__nav a:focus-visible {
+.journey-header__nav a:focus-visible,
+.journey-header__nav button:focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
 }
@@ -129,39 +132,6 @@
 }
 
 .theme-toggle:focus-visible {
-  outline: 1px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.lang-toggle {
-  display: flex;
-  gap: 2px;
-  font-family: var(--mono);
-  font-size: 13px;
-}
-
-.lang-toggle__item {
-  padding: 5px 8px;
-  border-radius: var(--radius-sm);
-  color: var(--ink-3);
-  transition:
-    color var(--t-fast) var(--ease),
-    background-color var(--t-fast) var(--ease);
-}
-
-.lang-toggle__item:hover {
-  color: var(--ink);
-  background: var(--bg-hover);
-}
-
-.lang-toggle__item.is-active {
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-}
-
-.lang-toggle__item:focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
 }
@@ -443,13 +413,12 @@
   }
 
   .journey-header__nav,
-  .lang-toggle,
   .theme-toggle {
     font-size: 12px;
   }
 
   .journey-header__nav a,
-  .lang-toggle__item,
+  .journey-header__nav button,
   .theme-toggle {
     padding: 5px 6px;
   }

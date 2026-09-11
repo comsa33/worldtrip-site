@@ -896,22 +896,25 @@ function Scene({
 // UI Components
 // =============================================================================
 
+/**
+ * The language switch names the one you are not reading in — "EN" while the
+ * page is Korean — the way the portfolio and the blog do, rather than listing
+ * both and underlining the current one. With more languages it would step
+ * through them in order.
+ */
 function LanguageToggle() {
   const { language, setLanguage } = useI18n();
+  const i = SUPPORTED_LANGUAGES.findIndex((l) => l.code === language);
+  const next = SUPPORTED_LANGUAGES[(i + 1) % SUPPORTED_LANGUAGES.length];
   return (
-    <div className="lang-toggle" role="group" aria-label="Language">
-      {SUPPORTED_LANGUAGES.map((lang) => (
-        <button
-          key={lang.code}
-          type="button"
-          className={`lang-toggle__item${language === lang.code ? ' is-active' : ''}`}
-          onClick={() => setLanguage(lang.code as Language)}
-          aria-pressed={language === lang.code}
-        >
-          {lang.code.toUpperCase()}
-        </button>
-      ))}
-    </div>
+    <button
+      type="button"
+      onClick={() => setLanguage(next.code as Language)}
+      aria-label={next.nativeName}
+      lang={next.code}
+    >
+      {next.code.toUpperCase()}
+    </button>
   );
 }
 function VerticalTimeline({
@@ -1072,10 +1075,9 @@ function Header() {
       <nav className="journey-header__nav mono" aria-label="Sites">
         <a href="https://po24lio.com">{t('nav.portfolio')}</a>
         <a href="https://blog.po24lio.com">{t('nav.blog')}</a>
+        <LanguageToggle />
         <span className="journey-header__sep" aria-hidden="true" />
       </nav>
-      <LanguageToggle />
-      <span className="journey-header__sep" aria-hidden="true" />
       <ThemeToggle />
     </header>
   );
