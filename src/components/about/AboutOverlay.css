@@ -93,3 +93,122 @@
     font-size: 12.5px;
   }
 }
+
+/* ---- typing ---------------------------------------------------------------
+   Every character is in the document; only its paint waits for the cursor.
+   Opacity rather than visibility, so the block stays whole for assistive tech. */
+.about-overlay [data-ch] {
+  opacity: 0;
+}
+
+.about-overlay [data-ch].is-on,
+.about-overlay.is-done [data-ch] {
+  opacity: 1;
+}
+
+/* the cursor: a sliver the height of the type it is writing, in accent —
+   the one coloured thing in the block until it becomes the full stop */
+.about-overlay__caret {
+  --period: 4px;
+  display: inline-block;
+  width: 1.4px;
+  height: 1em;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  border-radius: 0.5px;
+  background: var(--accent);
+  transform-origin: 50% 100%;
+  transition: opacity 320ms var(--ease);
+}
+
+/*
+ * The end: the cursor folds down onto its foot into a period — a squash, a
+ * small hop, still — and then, sitting there, takes the ink of the line. Two
+ * things in sequence, not one: first it becomes punctuation, then it stops
+ * being coloured.
+ */
+.about-overlay__caret.is-period {
+  animation: aboutCaretLand 520ms var(--ease-out) forwards;
+  transition: background-color 900ms var(--ease) 620ms;
+  background: var(--ink);
+}
+
+@keyframes aboutCaretLand {
+  0% {
+    width: 1.4px;
+    height: 1em;
+    border-radius: 0.5px;
+    transform: none;
+  }
+  38% {
+    width: var(--period);
+    height: var(--period);
+    border-radius: 50%;
+    transform: scale(1.3, 0.7);
+  }
+  62% {
+    width: var(--period);
+    height: var(--period);
+    border-radius: 50%;
+    transform: translateY(-55%) scale(0.92, 1.1);
+  }
+  82% {
+    width: var(--period);
+    height: var(--period);
+    border-radius: 50%;
+    transform: translateY(0) scale(1.1, 0.9);
+  }
+  100% {
+    width: var(--period);
+    height: var(--period);
+    border-radius: 50%;
+    transform: none;
+  }
+}
+
+/* it blinks while the hand pauses, not while it writes — and steps, never fades */
+.about-overlay__caret.is-blink {
+  animation: aboutCaretBlink 1.06s step-end infinite;
+}
+
+.about-overlay__caret.is-out {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes aboutCaretBlink {
+  0%,
+  49.99% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* the same period, already there, for a block that was not typed this time */
+.about-overlay__period {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0;
+}
+
+.about-overlay.is-done:not(.is-typed) .about-overlay__period {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-overlay [data-ch],
+  .about-overlay__period {
+    opacity: 1;
+  }
+  .about-overlay__caret {
+    display: none;
+  }
+}
