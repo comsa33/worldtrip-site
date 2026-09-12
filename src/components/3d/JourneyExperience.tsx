@@ -730,12 +730,13 @@ function Camera({
   target,
   zoom,
   isUserInteracting,
-  currentStopId,
+  progressiveZoom,
 }: {
   target: THREE.Vector3;
   zoom: number;
   isUserInteracting: boolean;
-  currentStopId: number;
+  /** the city's own zoom, already eased along the leg — never a step */
+  progressiveZoom: number;
 }) {
   const { camera } = useThree();
   const cameraTarget = useRef(new THREE.Vector3(-2.5, 3, -3.5));
@@ -752,16 +753,13 @@ function Camera({
       initialized.current = true;
     }
 
-    // Get progressive zoom based on current stop
-    const progressiveZoom = getProgressiveZoom(currentStopId);
-
     // Combine base zoom with progressive zoom
     const effectiveZoom = Math.max(zoom, progressiveZoom);
     const distance = 5.5 - effectiveZoom * 1.5; // Range: 4.0 to 5.5
 
     const dir = target.clone().normalize();
     cameraTarget.current.copy(dir.multiplyScalar(distance));
-  }, [target, zoom, isUserInteracting, currentStopId]);
+  }, [target, zoom, isUserInteracting, progressiveZoom]);
 
   useFrame(() => {
     // Only auto-follow when not interacting
@@ -874,7 +872,7 @@ function Scene({
 
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
 
-  const { position, displayStopId, fromStopId, segProgress } = useMemo(() => {
+  const { position, displayStopId, fromStopId, toStopId, segProgress } = useMemo(() => {
     const pt = path[pathIdx] || {
       point: new THREE.Vector3(0, 2, 0),
       transport: 'bus',
@@ -888,9 +886,22 @@ function Scene({
       position: pt.point,
       displayStopId: showStopId,
       fromStopId: pt.fromStopId,
+      toStopId: pt.toStopId,
       segProgress: pt.segmentProgress,
     };
   }, [path, pathIdx]);
+
+  // The camera's distance is each city's own, but between two cities it is
+  // never one or the other: it runs from the one left to the one ahead across
+  // the middle of the leg, level at both ends. A step here — the label's 15%
+  // flip — was the lurch in and out on every stop.
+  const legZoom = useMemo(() => {
+    const a = getProgressiveZoom(fromStopId);
+    const b = getProgressiveZoom(toStopId);
+    const t = Math.max(0, Math.min(1, (segProgress - 0.15) / 0.7));
+    const k = t * t * (3 - 2 * t);
+    return a + (b - a) * k;
+  }, [fromStopId, toStopId, segProgress]);
 
   /*
    * What ring a city wears follows the dot's actual position, not the label
@@ -1077,7 +1088,7 @@ function Scene({
         target={position}
         zoom={zoom}
         isUserInteracting={isUserInteracting}
-        currentStopId={displayStopId}
+        progressiveZoom={legZoom}
       />
       {(() => {
         const isMobile =
@@ -1398,23 +1409,39 @@ function JourneyExperienceContent() {
 
   /** When the hand last turned the wheel. A control that moves the page clears it. */
   const wheelAtRef = useRef(0);
+  /** The page's own glide (set up by the snap effect below), for controls to use. */
+  const glideRef = useRef<((to: number, ms?: number) => void) | null>(null);
+  /** Where the last jump was headed, while it is still on its way. */
+  const jumpTargetRef = useRef<number | null>(null);
 
   // Every control (scrubber, rail, keys, autoplay) moves the page scroll; `progress` derives from it
   const seek = useCallback((p: number, mode: 'drag' | 'jump') => {
     // a control already chose where this stops, so the rest-snap below stays out of it
     wheelAtRef.current = 0;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    window.scrollTo({
-      top: Math.max(0, Math.min(1, p)) * maxScroll,
-      behavior: mode === 'drag' ? 'auto' : 'smooth',
-    });
+    const to = Math.max(0, Math.min(1, p));
+    // A jump is one move with one easing — the page's own glide, not the
+    // browser's smooth scroll on top of the spring on top of the camera. Its
+    // length grows with the distance, gently: a leg is quick, a far jump is
+    // not a blur. A jump that starts mid-glide retargets from where it is.
+    if (mode === 'jump' && glideRef.current) {
+      const px = Math.abs(to * maxScroll - window.scrollY);
+      const ms = Math.min(900, 360 + px / 8);
+      glideRef.current(to, ms);
+      return;
+    }
+    window.scrollTo({ top: to * maxScroll, behavior: mode === 'drag' ? 'auto' : 'smooth' });
   }, []);
 
   const [playing, setPlaying] = useState(false);
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
 
   const goToStop = useCallback(
-    (idx: number) => seek(stopProgress[Math.max(0, Math.min(stops.length - 1, idx))], 'jump'),
+    (idx: number) => {
+      const i = Math.max(0, Math.min(stops.length - 1, idx));
+      jumpTargetRef.current = i;
+      seek(stopProgress[i], 'jump');
+    },
     [seek, stopProgress, stops.length]
   );
 
@@ -1467,12 +1494,14 @@ function JourneyExperienceContent() {
       if (selectedCity !== null) return;
       if (e.key === 'ArrowRight') {
         e.preventDefault();
+        if (e.repeat) return;
         setPlaying(false);
-        goToStop(currentStop + 1);
+        goToStop((jumpTargetRef.current ?? currentStop) + 1);
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
+        if (e.repeat) return;
         setPlaying(false);
-        goToStop(currentStop - 1);
+        goToStop((jumpTargetRef.current ?? currentStop) - 1);
       } else if (e.key === ' ') {
         e.preventDefault();
         setPlaying((v) => !v);
@@ -1699,6 +1728,7 @@ function JourneyExperienceContent() {
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
       gliding = false;
+      jumpTargetRef.current = null;
       const seat = seatRef.current;
       seat?.removeAttribute('data-dot-gliding');
       window.clearTimeout(quietTimer);
@@ -1713,7 +1743,8 @@ function JourneyExperienceContent() {
     };
     const drop = () => stopGlide(true);
 
-    const glide = (to: number, maxScroll: number) => {
+    const glide = (to: number, maxScroll: number, ms: number = SNAP_MS) => {
+      if (raf) cancelAnimationFrame(raf);
       const from = window.scrollY;
       const target = Math.max(0, Math.min(maxScroll, to * maxScroll));
       const t0 = performance.now();
@@ -1731,7 +1762,7 @@ function JourneyExperienceContent() {
         }
       }
       const step = (now: number) => {
-        const t = Math.min(1, (now - t0) / SNAP_MS);
+        const t = Math.min(1, (now - t0) / ms);
         window.scrollTo(0, from + (target - from) * (1 - Math.pow(1 - t, 3)));
         if (t < 1) {
           raf = requestAnimationFrame(step);
@@ -1741,6 +1772,10 @@ function JourneyExperienceContent() {
       };
       raf = requestAnimationFrame(step);
     };
+
+    // controls (keys, rail, minimap, scrubber) jump with this same glide
+    glideRef.current = (to, ms) =>
+      glide(to, document.documentElement.scrollHeight - window.innerHeight, ms);
 
     const settle = () => {
       if (gliding || held || playing || selectedCity !== null) return;
@@ -1802,6 +1837,7 @@ function JourneyExperienceContent() {
     window.addEventListener('pointerup', onUp, { passive: true });
     window.addEventListener('pointercancel', onUp, { passive: true });
     return () => {
+      glideRef.current = null;
       window.clearTimeout(restTimer);
       window.clearTimeout(quietTimer);
       drop();
