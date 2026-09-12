@@ -26,6 +26,8 @@ interface PhotoGalleryProps {
   cityName: string | null;
   photoIds?: string[] | null;
   initialPhotoId?: string | null;
+  /** Open straight into the contact sheet instead of a single photo. */
+  initialSheet?: boolean;
   onClose: () => void;
 }
 
@@ -78,6 +80,7 @@ export default function PhotoGallery({
   cityName,
   photoIds,
   initialPhotoId,
+  initialSheet,
   onClose,
 }: PhotoGalleryProps) {
   const { language } = useI18n();
@@ -95,13 +98,16 @@ export default function PhotoGallery({
   }, [cityName, photoIds, cityPhotos]);
 
   const [index, setIndex] = useState(0);
-  const openKey = `${cityName}:${initialPhotoId ?? ''}:${photoIds?.join(',') ?? ''}`;
+  // the whole set at once, as a contact sheet — G toggles, a tile opens it there
+  const [sheet, setSheet] = useState(Boolean(initialSheet));
+  const openKey = `${cityName}:${initialPhotoId ?? ''}:${photoIds?.join(',') ?? ''}:${initialSheet ? 'sheet' : ''}`;
   const [lastKey, setLastKey] = useState(openKey);
   if (openKey !== lastKey) {
     // a new open: start at the requested photo (state reset during render, per React guidance)
     setLastKey(openKey);
     const i = initialPhotoId ? photos.findIndex((p) => p.id === initialPhotoId) : 0;
     setIndex(i >= 0 ? i : 0);
+    setSheet(Boolean(initialSheet));
   }
 
   const count = photos.length;
@@ -147,8 +153,6 @@ export default function PhotoGallery({
     setShownId(photo.id);
   }
 
-  // the whole city at once, as a contact sheet — G toggles, a tile opens it there
-  const [sheet, setSheet] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   // where the tile was, relative to where the frame will be — measured in the

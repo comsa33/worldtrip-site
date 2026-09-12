@@ -24,7 +24,7 @@ import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay } from './JourneyDot';
-import cityPhotosData from '../../data/cityPhotos.json';
+import { photosForStop, photoIdsForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
@@ -916,7 +916,11 @@ function Scene({
         const markerScale = 1 / Math.max(zoomScale, 0.5);
         const hovered = hoveredCity === m.city;
         const isCurrent = m.state === 'current';
-        const cityHasPhotos = Boolean(cityPhotosData[m.city as keyof typeof cityPhotosData]);
+        // the camera on the label belongs to this visit: a city passed through
+        // twice can have a roll for one stop and nothing for the other
+        const hasPhotos = isCurrent
+          ? photosForStop(stops[currentStopIdx]?.id).length > 0
+          : cityHasPhotos(m.city);
         // a city the dot has sat on wears a ring the dot's own size; one it has
         // not reached yet is a smaller hairline
         const ring = ringFor(m.city);
@@ -942,7 +946,7 @@ function Scene({
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                if (isCurrent && cityHasPhotos) onCityClick(m.city);
+                if (isCurrent && hasPhotos) onCityClick(m.city);
                 else onSelectCity(m.city);
               }}
             >
@@ -952,11 +956,11 @@ function Scene({
             {showLabel && (
               <Html center style={{ pointerEvents: 'none' }}>
                 <div
-                  className={`city-label city-label--${m.state}${hovered ? ' is-hover' : ''}${isCurrent && cityHasPhotos ? ' city-label--link' : ''}`}
-                  onClick={isCurrent && cityHasPhotos ? () => onCityClick(m.city) : undefined}
+                  className={`city-label city-label--${m.state}${hovered ? ' is-hover' : ''}${isCurrent && hasPhotos ? ' city-label--link' : ''}`}
+                  onClick={isCurrent && hasPhotos ? () => onCityClick(m.city) : undefined}
                 >
                   {m.name}
-                  {isCurrent && cityHasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
+                  {isCurrent && hasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
                 </div>
               </Html>
             )}
@@ -1237,6 +1241,7 @@ function JourneyExperienceContent() {
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[] | null>(null);
+  const [sheetFirst, setSheetFirst] = useState(false);
   const [initialPhotoId, setInitialPhotoId] = useState<string | null>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
 
@@ -1385,25 +1390,31 @@ function JourneyExperienceContent() {
     }, 3000);
   };
 
-  // Handle city click for photo gallery (from city markers - show all photos)
+  // From the city marker the dot is sitting on: this visit's roll, in order.
+  // Only the current city's label is clickable, so the stop is always this one.
   const handleCityClick = (cityName: string) => {
     setSelectedCity(cityName);
-    setSelectedPhotoIds(null);
+    setSelectedPhotoIds(photoIdsForStop(city?.id));
     setInitialPhotoId(null);
+    setSheetFirst(false);
   };
 
-  // From the filmstrip: open the gallery on that photo
+  // From the filmstrip: the same roll, opened on the frame that was clicked
   const handleOpenPhoto = (cityName: string, photoId: string) => {
     setSelectedCity(cityName);
-    setSelectedPhotoIds(null);
+    setSelectedPhotoIds(photoIdsForStop(city?.id));
     setInitialPhotoId(photoId);
+    setSheetFirst(false);
   };
 
-  // Handle photo cluster click (from PhotoMarkers - show only cluster photos)
+  // From a camera on the globe: that place's photos, as a contact sheet. The
+  // mark already speaks in counts, so a single photo would say less than the
+  // number did.
   const handlePhotoClusterClick = (cityName: string, photoIds: string[]) => {
     setSelectedCity(cityName);
     setSelectedPhotoIds(photoIds);
     setInitialPhotoId(null);
+    setSheetFirst(true);
   };
 
   /* ── the opening ─────────────────────────────────────────────────────────
@@ -1438,6 +1449,7 @@ function JourneyExperienceContent() {
     setSelectedCity(null);
     setSelectedPhotoIds(null);
     setInitialPhotoId(null);
+    setSheetFirst(false);
   }, []);
 
   // Deep link: /?stop=53 opens the journey at that stop
@@ -1752,6 +1764,7 @@ function JourneyExperienceContent() {
       {city && (
         <Filmstrip
           cityName={city.city}
+          stopId={city.id}
           language={language as 'ko' | 'en'}
           onOpen={handleOpenPhoto}
         />
@@ -1806,6 +1819,7 @@ function JourneyExperienceContent() {
         cityName={selectedCity}
         photoIds={selectedPhotoIds}
         initialPhotoId={initialPhotoId}
+        initialSheet={sheetFirst}
         onClose={handleCloseGallery}
       />
     </div>

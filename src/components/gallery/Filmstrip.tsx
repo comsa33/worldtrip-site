@@ -1,14 +1,5 @@
 import { useRef } from 'react';
-import cityPhotosData from '../../data/cityPhotos.json';
-
-interface FilmPhoto {
-  id: string;
-  thumbnail?: string;
-  date: string;
-  caption: { ko: string; en: string };
-}
-
-const photos = cityPhotosData as Record<string, { photos: FilmPhoto[] }>;
+import { photosForStop } from '../../lib/visitPhotos';
 
 /** How many frames the strip shows before the tail takes over. */
 const SHOWN = 4;
@@ -28,25 +19,31 @@ const thumb4x3 = (url?: string) => {
 };
 
 /**
- * The current city's photos, pinned under the DAY meta: a short piece of film.
+ * The photos from the visit being shown, pinned under the DAY meta: a short
+ * piece of film. A city passed through twice keeps its two rolls apart — the
+ * strip is the stop's, not the city's, so standing in Varanasi in October is
+ * no longer handed the photos from the return in November.
  * The frame nearest the pointer lifts a little, the way a dock does — kept
- * small on purpose. The tail says how many more there are, once. When the city
- * changes the strip is keyed on it, so the new one winds in from the side.
+ * small on purpose. The tail says how many more there are, once. The strip is
+ * keyed on the stop, so each arrival winds the new roll in from the side.
  * Click anything to open the photo book there.
  */
 export function Filmstrip({
   cityName,
+  stopId,
   language,
   onOpen,
 }: {
   cityName: string;
+  stopId: number;
   language: 'ko' | 'en';
   onOpen: (cityName: string, photoId: string) => void;
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
-  const list = photos[cityName]?.photos;
-  if (!list || list.length === 0) return null;
-  const sorted = [...list].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  // already in date order, and empty for a stop nobody photographed: six of the
+  // 155 are border runs and one-night returns, and they simply show no strip
+  const sorted = photosForStop(stopId);
+  if (sorted.length === 0) return null;
   const shown = sorted.slice(0, SHOWN);
   const rest = sorted.length - shown.length;
 
@@ -80,7 +77,7 @@ export function Filmstrip({
         {sorted.length} photos
       </button>
       <div
-        key={cityName}
+        key={stopId}
         className="filmstrip__row"
         ref={rowRef}
         onPointerMove={onMove}

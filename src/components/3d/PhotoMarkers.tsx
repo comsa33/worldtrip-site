@@ -14,6 +14,7 @@ interface Stop {
   city: string;
   country: string;
   transport: string;
+  endDate?: string;
 }
 
 interface CityData {
@@ -152,6 +153,9 @@ export function PhotoMarkers({
     return cityData?.country || null;
   }, [stops, currentStopIdx, cities]);
 
+  // How far the journey has got: the last day of the stop being shown
+  const takenBy = stops[currentStopIdx]?.endDate;
+
   // Build photo points for current and adjacent countries only
   const clusteredPhotos = useMemo(() => {
     if (!currentCountryCode) return [];
@@ -178,6 +182,7 @@ export function PhotoMarkers({
         photos: Array<{
           id: string;
           thumbnail: string;
+          date: string;
           gps?: { lat: number; lng: number };
         }>;
       }
@@ -190,6 +195,9 @@ export function PhotoMarkers({
 
       for (const photo of data.photos) {
         if (!photo.gps || !photo.gps.lat || !photo.gps.lng) continue;
+        // the globe shows the trail behind the dot, never ahead of it: a city
+        // visited twice used to put its second roll on the map during the first
+        if (takenBy && photo.date && photo.date.slice(0, 10) > takenBy) continue;
         allPhotos.push({
           position: latLngToVector3(photo.gps.lat, photo.gps.lng, PHOTO_RADIUS),
           thumbnail: photo.thumbnail,
@@ -239,7 +247,7 @@ export function PhotoMarkers({
       center: latLngToVector3(cluster.centerLat, cluster.centerLng, PHOTO_RADIUS),
       cityName: cluster.cityName,
     }));
-  }, [currentCountryCode, currentStopIdx, visitedCities, cities, stops]);
+  }, [currentCountryCode, currentStopIdx, visitedCities, cities, stops, takenBy]);
 
   const markerScale = 1 / Math.max(zoomScale, 0.5);
 
