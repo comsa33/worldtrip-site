@@ -888,6 +888,7 @@
 }
 
 .minimap__aim text {
+  transition: opacity var(--t-base) var(--ease-out);
   font-family: var(--mono);
   font-size: 19px;
   fill: var(--ink);

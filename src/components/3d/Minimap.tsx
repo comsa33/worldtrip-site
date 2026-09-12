@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import minimap from '../../data/minimap.json';
 
 interface MinimapData {
@@ -66,7 +66,9 @@ function project(lat: number, lng: number): [number, number] {
 /** A mouse crossing the corner on its way elsewhere should not open it. */
 const OPEN_DELAY_MS = 140;
 /** How finely the route is sampled for aiming, in viewBox units. */
-const SAMPLE = 4;
+const SAMPLE = 3;
+/** How long the hand has to be still before the name of the place comes up. */
+const LABEL_REST_MS = 180;
 
 /**
  * The whole 330-day line at a glance: the route in the globe's own two tenses —
@@ -143,10 +145,70 @@ export function Minimap({
   }, []);
 
   const [open, setOpen] = useState(false);
-  const [aim, setAim] = useState<Aim | null>(null);
   const openTimer = useRef(0);
   const moveRaf = useRef(0);
   const byTouch = useRef(false);
+
+  /**
+   * The aim is not React's.
+   *
+   * A pointer crossing the map moves every frame, and a state change every
+   * frame means a render every frame — on a page already giving the globe all
+   * sixty of them. So the mark is moved by hand: three attributes written
+   * straight onto the nodes, and the name only when the name changes. React
+   * hears about none of it, and the ring rides the line without catching.
+   */
+  const aimRef = useRef<Aim | null>(null);
+  const gRef = useRef<SVGGElement>(null);
+  const ringRef = useRef<SVGCircleElement>(null);
+  const labelRef = useRef<SVGTextElement>(null);
+  const shownStop = useRef(-1);
+  const labelTimer = useRef(0);
+
+  const paintAim = useCallback(
+    (a: Aim | null) => {
+      aimRef.current = a;
+      const g = gRef.current;
+      const label = labelRef.current;
+      if (!g) return;
+      window.clearTimeout(labelTimer.current);
+      if (!a) {
+        g.style.display = 'none';
+        if (label) label.style.opacity = '0';
+        shownStop.current = -1;
+        return;
+      }
+      g.style.display = '';
+      ringRef.current?.setAttribute('cx', String(a.x));
+      ringRef.current?.setAttribute('cy', String(a.y));
+      if (!label) return;
+
+      /*
+       * The ring keeps up with the hand; the name does not try to. A hundred and
+       * fifty names flickering past under a moving mark is noise, and nobody is
+       * reading them on the way — they are reading the one they stopped at. So
+       * the name goes out while the hand moves and comes back, softly, once it
+       * has been still for a moment.
+       */
+      label.style.opacity = '0';
+      labelTimer.current = window.setTimeout(() => {
+        // placed only now: moving a text node every frame costs a layout, and
+        // nobody is reading it on the way
+        const flip = a.x > data.w * 0.72;
+        label.setAttribute('x', String(a.x + (flip ? -15 : 15)));
+        label.setAttribute('y', String(a.y + 6));
+        label.setAttribute('text-anchor', flip ? 'end' : 'start');
+        if (shownStop.current !== a.stop) {
+          shownStop.current = a.stop;
+          const st = stops[a.stop];
+          const when = st?.startDate ? `  ${st.startDate.slice(0, 7).replace('-', '.')}` : '';
+          label.textContent = (st?.city ?? '') + when;
+        }
+        label.style.opacity = '1';
+      }, LABEL_REST_MS);
+    },
+    [stops]
+  );
 
   // an opened map closes again on the next press elsewhere, like any other sheet
   useEffect(() => {
@@ -154,24 +216,52 @@ export function Minimap({
     const away = (e: PointerEvent) => {
       if (!svgRef.current?.contains(e.target as Node)) {
         setOpen(false);
-        setAim(null);
+        paintAim(null);
       }
     };
     document.addEventListener('pointerdown', away, { passive: true });
     return () => document.removeEventListener('pointerdown', away);
-  }, [open]);
+  }, [open, paintAim]);
 
   useEffect(
     () => () => {
       window.clearTimeout(openTimer.current);
+      window.clearTimeout(labelTimer.current);
       if (moveRaf.current) cancelAnimationFrame(moveRaf.current);
     },
     []
   );
 
+  /**
+   * The globe behind this listens for touches on the whole page and reads them
+   * as its own swipe — a finger aiming at the map was also, to the globe, a
+   * finger throwing the journey somewhere. Its listeners are native and sit on
+   * an ancestor, so a synthetic handler cannot stop them; this one can, and the
+   * touch that starts on the map stays the map's.
+   */
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
+    const keep = (e: Event) => e.stopPropagation();
+    const kinds = ['touchstart', 'touchmove', 'touchend', 'touchcancel'] as const;
+    kinds.forEach((k) => el.addEventListener(k, keep, { passive: true }));
+    return () => kinds.forEach((k) => el.removeEventListener(k, keep));
+  }, []);
+
   // a mouse resting on it opens it; a finger has no resting, so its tap does
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    // A finger that slides is a drag, and a drag the element has not claimed is
+    // the browser's to cancel — which it did, quietly, so the aim was drawn all
+    // the way and then went nowhere on the lift. Claiming it keeps the moves and
+    // the lift coming here.
+    if (e.pointerType === 'touch') {
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch {
+        /* a pointer already gone */
+      }
+    }
   };
   const onEnter = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
@@ -185,47 +275,61 @@ export function Minimap({
     if (e.pointerType === 'touch') return;
     window.clearTimeout(openTimer.current);
     setOpen(false);
-    setAim(null);
+    paintAim(null);
   };
 
-  /** the point of the route under the pointer, and the stop it would land on */
-  const aimAt = (clientX: number, clientY: number): Aim | null => {
+  /**
+   * Where on the route the hand is, read straight off its sideways position.
+   *
+   * Nearest-point could not do it. A hand sweeping at one height only ever found
+   * the legs that happened to lie near that height, so most of the journey was
+   * unreachable — it skipped. Reading the hand's distance along the route
+   * instead passes through every leg in order, however the line wanders, and
+   * where two legs cross there is nothing to choose between: there is one place
+   * that far along.
+   *
+   * The reading runs right to left because the journey does. It leaves Korea
+   * westward and spends most of a year going that way, so «further right» has to
+   * mean «further back along the line» for the mark to travel the same direction
+   * as the hand pushing it.
+   *
+   * No search: the samples are evenly spaced, so this is an index and a
+   * fraction, and the mark slides between two of them rather than stepping.
+   */
+  const aimAt = (clientX: number): Aim | null => {
     const r = svgRef.current?.getBoundingClientRect();
-    if (!r || rail.length === 0) return null;
-    const x = ((clientX - r.left) / r.width) * data.w;
-    const y = ((clientY - r.top) / r.height) * data.h;
-    let best = rail[0];
-    let bestD = Infinity;
-    for (let i = 0; i < rail.length; i++) {
-      const d = (rail[i].x - x) ** 2 + (rail[i].y - y) ** 2;
-      if (d < bestD) {
-        bestD = d;
-        best = rail[i];
-      }
-    }
-    // the nearer end of the leg the point fell on
-    const a = stopPoints[best.leg];
-    const b = stopPoints[best.leg + 1] ?? a;
-    const da = (a[0] - best.x) ** 2 + (a[1] - best.y) ** 2;
-    const db = (b[0] - best.x) ** 2 + (b[1] - best.y) ** 2;
-    return { x: best.x, y: best.y, stop: da <= db ? best.leg : best.leg + 1 };
+    if (!r || rail.length < 2) return null;
+    const u = 1 - Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    const f = u * (rail.length - 1);
+    const i = Math.min(rail.length - 2, Math.floor(f));
+    const t = f - i;
+    const a = rail[i];
+    const b = rail[i + 1];
+    const joined = a.leg === b.leg;
+    const x = joined ? a.x + (b.x - a.x) * t : a.x;
+    const y = joined ? a.y + (b.y - a.y) * t : a.y;
+    const ends = stopPoints[a.leg];
+    const next = stopPoints[a.leg + 1] ?? ends;
+    const da = (ends[0] - x) ** 2 + (ends[1] - y) ** 2;
+    const db = (next[0] - x) ** 2 + (next[1] - y) ** 2;
+    return { x, y, stop: da <= db ? a.leg : a.leg + 1 };
   };
 
   // a pointer can fire faster than the screen draws; one aim per frame is plenty
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
-    const { clientX, clientY } = e;
+    const { clientX } = e;
     if (moveRaf.current) return;
     moveRaf.current = requestAnimationFrame(() => {
       moveRaf.current = 0;
-      setAim(aimAt(clientX, clientY));
+      paintAim(aimAt(clientX));
     });
   };
 
   const commit = (a: Aim | null) => {
     // a finger is done with it; a mouse is still resting on it and may pick again
     if (byTouch.current) setOpen(false);
-    setAim(null);
+    paintAim(null);
     if (a) onSelect(a.stop);
   };
 
@@ -236,11 +340,16 @@ export function Minimap({
    */
   const onUp = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.pointerType !== 'touch') return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {
+      /* already released */
+    }
     if (!open) {
       setOpen(true);
       return;
     }
-    commit(aim ?? aimAt(e.clientX, e.clientY));
+    commit(aimRef.current ?? aimAt(e.clientX));
   };
 
   const onClick = (e: React.MouseEvent<SVGSVGElement>) => {
@@ -251,17 +360,8 @@ export function Minimap({
       setOpen(true);
       return;
     }
-    commit(aimAt(e.clientX, e.clientY));
+    commit(aimRef.current ?? aimAt(e.clientX));
   };
-  // the aim, with the name it would land on already resolved
-  const aimed = useMemo(() => {
-    if (!aim) return null;
-    const stop = stops[aim.stop];
-    if (!stop) return null;
-    const when = stop.startDate ? `  ${stop.startDate.slice(0, 7).replace('-', '.')}` : '';
-    return { x: aim.x, y: aim.y, label: stop.city + when };
-  }, [aim, stops]);
-
   return (
     <svg
       ref={svgRef}
@@ -272,7 +372,7 @@ export function Minimap({
       onPointerEnter={onEnter}
       onPointerMove={onMove}
       onPointerUp={onUp}
-      onPointerCancel={() => setAim(null)}
+      onPointerCancel={() => paintAim(null)}
       onPointerLeave={onLeave}
       role="img"
       aria-label="Route overview"
@@ -280,18 +380,10 @@ export function Minimap({
       <World currentStopIdx={currentStopIdx} />
       <circle cx={cx} cy={cy} r={17} className="minimap__ring" />
       <circle cx={cx} cy={cy} r={11} className="minimap__head" />
-      {open && aimed && (
-        <g className="minimap__aim">
-          <circle cx={aimed.x} cy={aimed.y} r={9} />
-          <text
-            x={aimed.x + (aimed.x > data.w * 0.72 ? -15 : 15)}
-            y={aimed.y + 6}
-            textAnchor={aimed.x > data.w * 0.72 ? 'end' : 'start'}
-          >
-            {aimed.label}
-          </text>
-        </g>
-      )}
+      <g className="minimap__aim" ref={gRef} style={{ display: 'none' }}>
+        <circle ref={ringRef} r={9} />
+        <text ref={labelRef} style={{ opacity: 0 }} />
+      </g>
     </svg>
   );
 }
