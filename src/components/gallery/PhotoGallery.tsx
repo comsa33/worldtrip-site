@@ -145,8 +145,16 @@ export default function PhotoGallery({
   const photo: Photo | undefined = photos[safeIndex];
   const atEnd = count > 0 && safeIndex === count - 1;
 
+  /* ── how the next photo arrives ─────────────────────────────────────────
+     A swipe hands over where the finger left the picture and how fast it was
+     going, and the incoming photo picks the movement up from exactly there.
+     A key or a click has no such handover, so it gets the house default. */
+  const [entry, setEntry] = useState<{ from: number; ms: number } | null>(null);
   const go = useCallback(
-    (d: number) => setIndex((i) => Math.max(0, Math.min(count - 1, i + d))),
+    (d: number, handoff?: { from: number; ms: number }) => {
+      setEntry(handoff ?? null);
+      setIndex((i) => Math.max(0, Math.min(count - 1, i + d)));
+    },
     [count]
   );
 
@@ -480,18 +488,33 @@ export default function PhotoGallery({
     const ms = Date.now() - g.t0;
     if (g.axis === 'x') {
       const slotEl = slotRef.current;
-      if (slotEl) {
-        slotEl.style.transition = 'transform 320ms var(--ease)';
-        slotEl.style.transform = '';
-        window.setTimeout(() => {
-          slotEl.style.transition = '';
-        }, 340);
-      }
       const fling = Math.abs(dx) / Math.max(ms, 1) > 0.45;
       const moved = Math.abs(dx) > 60 || fling;
       const next = safeIndex + (dx < 0 ? 1 : -1);
-      if (moved && next >= 0 && next < count) {
-        go(dx < 0 ? 1 : -1);
+      const turning = moved && next >= 0 && next < count;
+      if (slotEl) {
+        if (turning) {
+          // the frame snaps home with no transition and the incoming photo
+          // slides in from the side the finger came from — one movement, not
+          // a spring-back racing a fade
+          slotEl.style.transition = '';
+          slotEl.style.transform = '';
+        } else {
+          slotEl.style.transition = 'transform 320ms var(--ease)';
+          slotEl.style.transform = '';
+          window.setTimeout(() => {
+            slotEl.style.transition = '';
+          }, 340);
+        }
+      }
+      if (turning) {
+        // the frame is sitting at dx; the photo continues from there, and the
+        // faster the throw the shorter the rest of the trip
+        const v = Math.abs(dx) / Math.max(ms, 1);
+        go(dx < 0 ? 1 : -1, {
+          from: dx,
+          ms: Math.round(Math.max(170, Math.min(320, 320 - v * 150))),
+        });
         if (navigator.vibrate) {
           try {
             navigator.vibrate(8);
@@ -669,6 +692,12 @@ export default function PhotoGallery({
             <img
               key={photo.id}
               className="pb__img"
+              style={
+                {
+                  '--from': `${entry ? entry.from : dir > 0 ? 22 : -22}px`,
+                  '--in-ms': `${entry ? entry.ms : 300}ms`,
+                } as React.CSSProperties
+              }
               src={srcFor(photo, box?.w ?? 800)}
               alt={text}
               decoding="async"

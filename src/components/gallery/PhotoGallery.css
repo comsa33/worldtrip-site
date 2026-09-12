@@ -145,7 +145,22 @@
   object-fit: cover;
   border-radius: 2px;
   display: block;
-  animation: pbFade 320ms var(--ease-out) both;
+  /* It arrives from the side the finger came from. The fade alone was there
+     before, and it read as random: the outgoing photo is held until the new
+     one decodes, so a cached neighbour swapped instantly and an uncached one
+     lingered. The movement is the same either way. */
+  animation: pbIn var(--in-ms, 300ms) var(--ease-out) both;
+}
+
+@keyframes pbIn {
+  from {
+    opacity: 0;
+    transform: translateX(var(--from, 0));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* the photo on its way out: it holds the frame until the new one has decoded */
