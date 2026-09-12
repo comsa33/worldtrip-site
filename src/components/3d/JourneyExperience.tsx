@@ -27,7 +27,7 @@ import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd } from './FirstStep';
-import { ZOOM_DEFAULTS, restZooms, zoomAlong, zoomForKm } from './cityZoom';
+import { ZOOM_DEFAULTS, fitZoom, restZooms, zoomAlong } from './cityZoom';
 import { CityBounds, PlaceGlyph } from './CityBounds';
 import { PLACE_GLYPH } from './placeGlyphs';
 import { useOutlines } from './cityOutlines';
@@ -809,13 +809,11 @@ function Scene({
   const legZoom = useMemo(() => {
     const a = stopIndex.get(fromStopId) ?? 0;
     const b = stopIndex.get(toStopId) ?? a;
-    const travel = zoomForKm(legsKm[a] ?? 0, zoomParams);
-    return zoomAlong(
-      rest[a] ?? zoomParams.zMax,
-      travel,
-      rest[b] ?? rest[a] ?? zoomParams.zMax,
-      segProgress
-    );
+    // on the way the camera steps back only as far as the leg needs to fit
+    const restA = rest[a] ?? zoomParams.zMax;
+    const restB = rest[b] ?? restA;
+    const travel = Math.min(restA, restB, fitZoom(legsKm[a] ?? 0, zoomParams));
+    return zoomAlong(restA, travel, restB, segProgress);
   }, [stopIndex, fromStopId, toStopId, legsKm, rest, zoomParams, segProgress]);
 
   /*

@@ -59,6 +59,30 @@ export function restZooms(legsKm: number[], p: ZoomParams): number[] {
   return held;
 }
 
+/**
+ * How far the camera stands, and how much of the globe that shows. The
+ * camera sits at 5.5 − 1.5·zoom from the centre of a sphere of radius 2
+ * (6,371 km) with a 45° lens, so the height of the view at the surface is
+ * about 0.828·(d − 2) units.
+ */
+const KM_PER_UNIT = 6371 / 2;
+const VIEW = 2 * Math.tan((45 / 2) * (Math.PI / 180));
+/** how much of the view a leg may take before the camera has to step back */
+const FIT = 0.8;
+
+/**
+ * The closest zoom at which a leg of `km` still fits on screen. On the way
+ * the camera is never closer than this — and never further than it rests at
+ * either end, so a leg that already fits is travelled without the camera
+ * moving at all. That was the seasickness: every leg drew the camera out and
+ * back, whether or not there was anything to show by it.
+ */
+export function fitZoom(km: number, p: ZoomParams): number {
+  const need = km / (FIT * VIEW * KM_PER_UNIT); // (d − 2) that shows the leg
+  const z = (5.5 - 2 - need) / 1.5;
+  return Math.max(p.zMin, Math.min(p.zMax, z));
+}
+
 const smoothstep = (t: number) => {
   const x = Math.max(0, Math.min(1, t));
   return x * x * (3 - 2 * x);
