@@ -85,6 +85,21 @@ export function fitZoom(km: number, p: ZoomParams): number {
   return Math.max(p.zMin, Math.min(p.zMax, z));
 }
 
+/**
+ * How much ground the screen shows at a zoom, in km. The height comes from the
+ * same figures `fitZoom` works back from; the width is the window's shape.
+ *
+ * It is a smaller number than it sounds. The camera rests at `zMax` almost
+ * everywhere — a stay is fitted to its own stops and inside a country those sit
+ * close together — and at 2.25 that is 528 × 330km on a 1440 × 900 screen,
+ * 152 × 330km on a phone. Every country the journey entered is bigger than
+ * that except Belgium, which is what the corner inset exists for.
+ */
+export function viewKm(zoom: number, aspect: number): { w: number; h: number } {
+  const h = (5.5 - 1.5 * zoom - 2) * VIEW * KM_PER_UNIT;
+  return { w: h * aspect, h };
+}
+
 /** a country whose visited ground spans more than this is looked at in parts */
 const BIG_COUNTRY_KM = 1000;
 

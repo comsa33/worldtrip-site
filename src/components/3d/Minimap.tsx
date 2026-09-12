@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import minimap from '../../data/minimap.json';
 
 interface MinimapData {
@@ -97,6 +97,8 @@ export function Minimap({
   currentStopIdx,
   lat,
   lng,
+  open,
+  onOpenChange,
   onSelect,
 }: {
   stops: MinimapStop[];
@@ -104,6 +106,13 @@ export function Minimap({
   currentStopIdx: number;
   lat: number;
   lng: number;
+  /**
+   * Open is not this map's own any more: only one map is open at a time, so the
+   * page holds which. Two open maps means two rings saying where the hand is,
+   * and the cursor is put away while either of them is being aimed.
+   */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   onSelect: (index: number) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -144,7 +153,7 @@ export function Minimap({
     return out;
   }, []);
 
-  const [open, setOpen] = useState(false);
+  const setOpen = onOpenChange;
   const openTimer = useRef(0);
   const moveRaf = useRef(0);
   const byTouch = useRef(false);
@@ -221,7 +230,7 @@ export function Minimap({
     };
     document.addEventListener('pointerdown', away, { passive: true });
     return () => document.removeEventListener('pointerdown', away);
-  }, [open, paintAim]);
+  }, [open, setOpen, paintAim]);
 
   useEffect(
     () => () => {

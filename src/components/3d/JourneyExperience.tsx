@@ -37,6 +37,7 @@ import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
 import { Minimap } from './Minimap';
+import { CountryInset } from './CountryInset';
 import { GLOBE, useTheme, useToggleTheme, type Theme } from '../../theme';
 import { RouteTuner } from './RouteTuner';
 import { TUNE_ON, defaults, useTuning, type Tuning } from './routeTuning';
@@ -702,6 +703,47 @@ function LegTooltip({
   );
 }
 
+/**
+ * How close the camera stands comes from the journey's own distances (see
+ * cityZoom.ts): each stop rests at a zoom, each leg is travelled at its own, and
+ * between them the value runs level–out–in–level, never a step.
+ *
+ * Two things ask: the camera, which points itself with it, and the country inset,
+ * which asks whether the country would fit on the screen at that height. They
+ * have to get the same answer — including under `?tune=1`, where the bench is
+ * moving the numbers around.
+ */
+function useRestZooms(stops: Stop[], cities: Record<string, CityData>) {
+  const tuned = useTuning();
+  const zoomParams = useMemo(
+    () =>
+      TUNE_ON
+        ? {
+            zMax: tuned.zMax,
+            zMin: tuned.zMin,
+            slope: tuned.zSlope,
+            near: tuned.zNear,
+            hold: tuned.zHold,
+          }
+        : ZOOM_DEFAULTS,
+    [tuned.zMax, tuned.zMin, tuned.zSlope, tuned.zNear, tuned.zHold]
+  );
+  const legsKm = useMemo(
+    () => stops.slice(1).map((st, i) => haversineKm(cities[stops[i].city], cities[st.city])),
+    [stops, cities]
+  );
+  const rest = useMemo(
+    () =>
+      restZoomsByCountry(
+        stops.map((st) => ({ ...cities[st.city], country: st.country })),
+        legsKm,
+        zoomParams
+      ),
+    [stops, cities, legsKm, zoomParams]
+  );
+  return { zoomParams, legsKm, rest };
+}
+
 function Scene({
   progress,
   zoom,
@@ -790,35 +832,7 @@ function Scene({
     };
   }, [path, pathIdx]);
 
-  // How close the camera stands comes from the journey's own distances (see
-  // cityZoom.ts): each stop rests at a zoom, each leg is travelled at its own,
-  // and between them the value runs level–out–in–level, never a step.
-  const zoomParams = useMemo(
-    () =>
-      TUNE_ON
-        ? {
-            zMax: tuned.zMax,
-            zMin: tuned.zMin,
-            slope: tuned.zSlope,
-            near: tuned.zNear,
-            hold: tuned.zHold,
-          }
-        : ZOOM_DEFAULTS,
-    [tuned.zMax, tuned.zMin, tuned.zSlope, tuned.zNear, tuned.zHold]
-  );
-  const legsKm = useMemo(
-    () => stops.slice(1).map((st, i) => haversineKm(cities[stops[i].city], cities[st.city])),
-    [stops, cities]
-  );
-  const rest = useMemo(
-    () =>
-      restZoomsByCountry(
-        stops.map((st) => ({ ...cities[st.city], country: st.country })),
-        legsKm,
-        zoomParams
-      ),
-    [stops, cities, legsKm, zoomParams]
-  );
+  const { zoomParams, legsKm, rest } = useRestZooms(stops, cities);
   const stopIndex = useMemo(() => new Map(stops.map((st, i) => [st.id, i])), [stops]);
   const { legZoom, look, staged } = useMemo(() => {
     const a = stopIndex.get(fromStopId) ?? 0;
@@ -1589,6 +1603,17 @@ function JourneyExperienceContent() {
   const finale = currentStop === stops.length - 1 && selectedCity === null;
 
   // the stop the reader has actually come to rest on, a beat after they stop
+  // the same zoom the camera will rest at here — the inset measures the screen
+  // against it (see useRestZooms)
+  const { rest: restZooms, zoomParams: insetZoomParams } = useRestZooms(stops, cities);
+  const restZoom = restZooms[currentStop] ?? insetZoomParams.zMax;
+
+  /**
+   * Which map is open, if either. Held here rather than in each map because
+   * only one may be: both put the cursor away and draw a ring where the hand
+   * is, and two rings is two answers to one question.
+   */
+  const [openMap, setOpenMap] = useState<'world' | 'country' | null>(null);
   const settledStop = useSettledStop(currentStop, progress);
 
   // The first step. Once the opening has been written and nothing has been
@@ -2106,12 +2131,27 @@ function JourneyExperienceContent() {
           onOpen={handleOpenPhoto}
         />
       )}
+      <CountryInset
+        countryCode={currentCountry}
+        stops={stops}
+        cities={cities}
+        currentStopIdx={currentStop}
+        restZoom={restZoom}
+        open={openMap === 'country'}
+        onOpenChange={(v) => setOpenMap(v ? 'country' : null)}
+        onSelect={(i) => {
+          setPlaying(false);
+          goToStop(i);
+        }}
+      />
       <Minimap
         stops={stops}
         cities={cities}
         currentStopIdx={currentStop}
         lat={currentLatLng.lat}
         lng={currentLatLng.lng}
+        open={openMap === 'world'}
+        onOpenChange={(v) => setOpenMap(v ? 'world' : null)}
         onSelect={(i) => {
           setPlaying(false);
           goToStop(i);

@@ -926,6 +926,220 @@
 }
 
 /* =============================================================================
+   Country inset — where in this country, top-left
+   ============================================================================= */
+
+/*
+ * The world's map sits bottom-right; this one takes the corner across from it,
+ * clear of the rail. Same plate, same materials, same two states — a second map
+ * that behaved differently would be a third thing to learn. It is square because
+ * countries are not all wide: Chile has to be allowed to be a thread.
+ */
+.country-inset {
+  position: fixed;
+  left: 332px; /* past the 280px rail and the fade at its edge */
+  top: 88px;
+  width: 200px;
+  aspect-ratio: 1;
+  z-index: 65;
+  cursor: pointer;
+  overflow: visible;
+  transition:
+    width var(--t-base) var(--ease),
+    opacity var(--t-base) var(--ease);
+  padding: 8px;
+  box-sizing: content-box;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+/* It grows from its own corner — down and right — so nothing else moves. */
+.country-inset.is-open {
+  width: 420px;
+  cursor: none;
+  touch-action: none;
+}
+
+/* The country is already on screen whole: the inset would say it twice. */
+.country-inset.is-away {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.country-inset__land {
+  fill: var(--map-land);
+  animation: inset-land var(--t-base) var(--ease) both;
+}
+
+/*
+ * The outline, traced once on arrival and then gone. A new country is not the
+ * old one bending into it, and nothing here grows or slides in — the camera is
+ * often still turning when this lands, and two motions at once is the
+ * seasickness this map is supposed to relieve.
+ */
+.country-inset__trace {
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1 1;
+  animation: inset-trace var(--t-base) var(--ease) both;
+  pointer-events: none;
+}
+
+@keyframes inset-land {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes inset-trace {
+  from {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .country-inset__land,
+  .country-inset__trace {
+    animation: none;
+  }
+  .country-inset__trace {
+    opacity: 0;
+  }
+}
+
+/*
+ * What the globe is showing, on the country — the frame an atlas draws on a
+ * locator map. It is an extent, so it grows with the map; the line that draws
+ * it is a hairline at any size, like everything else here.
+ *
+ * Under the route on purpose: it is the question, not the answer.
+ */
+.country-inset__view {
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  stroke-opacity: 0.75;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+/* The route's two tenses, in the globe's own colours — and a hairline at any
+   size, like the world map: more map, not a thicker drawing. */
+.country-inset__leg {
+  fill: none;
+  stroke: var(--route-ahead);
+  stroke-opacity: var(--route-ahead-o);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.country-inset__leg.is-past {
+  stroke: var(--route-past);
+  stroke-opacity: 0.95;
+}
+
+/*
+ * Each map marks where the reader is, in its own frame. This was briefly the
+ * only one allowed to — the world map gave up its head while the inset was up,
+ * on the reading that one filled mark means one on the screen. What that
+ * actually leaves down there is the hole the head used to sit in: a white spot
+ * on the light theme that reads as a fault, not as restraint. The two maps are
+ * answering different questions, so they each get to point.
+ */
+.country-inset__head {
+  fill: var(--accent);
+}
+
+.country-inset__ring {
+  fill: var(--bg);
+  stroke: none;
+}
+
+.country-inset__aim circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.country-inset__aim text {
+  transition: opacity var(--t-base) var(--ease-out);
+  font-family: var(--mono);
+  font-size: 28px;
+  fill: var(--ink);
+  stroke: var(--bg);
+  stroke-width: 8;
+  paint-order: stroke fill;
+  pointer-events: none;
+  white-space: pre;
+}
+
+@media (max-width: 1100px) {
+  .country-inset {
+    left: 300px;
+    width: 160px;
+  }
+
+  .country-inset.is-open {
+    width: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* The rail is a sheet here, so the corner is free from the edge in. */
+  .country-inset {
+    left: 16px;
+    top: 64px;
+    width: 104px;
+    padding: 6px;
+  }
+
+  /* At 104px the shape reads and the route does not — 26px of Brazil, 19px of
+     Italy. The route is what opening is for; the same bargain the world map
+     already makes on a phone.
+     `width` is the map alone: the plate adds 6px of padding either side and a
+     1px border, so the 14px comes off before the 16px gutters, or the map sits
+     against the right edge with all the air on the left. */
+  .country-inset.is-open {
+    width: min(358px, calc(100vw - 46px));
+  }
+
+  /* Out of the way of the opening story and the rail's sheet, exactly as the
+     world map goes (see .minimap above) — one screen, one thing on it. */
+  .journey-experience:has(.stop-rail--sheet.is-open) .country-inset {
+    display: none;
+  }
+
+  .journey-experience:has(.about-overlay) .country-inset {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .journey-experience:has(.about-overlay.is-done) .country-inset {
+    opacity: 0.4;
+    pointer-events: auto;
+  }
+
+  .journey-experience:has(.about-overlay) .country-inset.is-open {
+    opacity: 1;
+    background: var(--bg);
+  }
+}
+
+/* =============================================================================
    Filmstrip — the current city's photos under the DAY meta
    ============================================================================= */
 .filmstrip {
