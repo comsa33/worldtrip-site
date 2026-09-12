@@ -20,6 +20,8 @@ export type Tuning = {
   aheadAir: number;
   aheadColor: string;
   aheadOpacity: number;
+  borderBase: number;
+  borderActive: number;
 };
 
 export const TUNE_ON =
@@ -27,14 +29,18 @@ export const TUNE_ON =
 
 export function defaults(theme: Theme): Tuning {
   return {
-    pastLand: 1.5,
-    pastAir: 0.8,
-    pastLandOpacity: 0.92,
-    pastAirOpacity: 0.55,
-    aheadLand: 0.4,
-    aheadAir: 0.25,
+    pastLand: 3,
+    pastAir: 0.85,
+    pastLandOpacity: 0.95,
+    pastAirOpacity: 0.75,
+    // a line receding towards white has to be wider than one receding towards
+    // black to stay a line at all, so this is the theme's too
+    aheadLand: theme === 'light' ? 0.85 : 0.4,
+    aheadAir: theme === 'light' ? 0.45 : 0.25,
     aheadColor: GLOBE[theme].routeAhead,
     aheadOpacity: GLOBE[theme].routeAheadOpacity,
+    borderBase: 1.5,
+    borderActive: 2.2,
   };
 }
 

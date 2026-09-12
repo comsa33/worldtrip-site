@@ -40,6 +40,10 @@ const trail = (transport: string) =>
 const trailAhead = (transport: string) =>
   transport === 'flight' ? ${t.aheadAir} : ${t.aheadLand};
 
+// src/components/3d/WorldBorders.tsx
+lineWidth={${t.borderBase}}   // 일반
+lineWidth={${t.borderActive}}   // 활성
+
 // src/styles/index.css — :root${theme === 'light' ? "[data-theme='light']" : ''}
 --route-ahead: ${t.aheadColor};
 --route-ahead-o: ${t.aheadOpacity};`;
@@ -69,6 +73,10 @@ const trailAhead = (transport: string) =>
         />
         <b className="tuner__v">{t.aheadColor}</b>
       </label>
+
+      <div className="tuner__group">국경선</div>
+      {num('borderBase', '일반 굵기', 0.5, 5, 0.1)}
+      {num('borderActive', '활성 굵기', 0.5, 6, 0.1)}
 
       <div className="tuner__group">화면에 찍히는 값</div>
       <div className="tuner__swatches">

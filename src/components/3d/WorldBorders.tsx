@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Line } from '@react-three/drei';
 import worldBorders from '../../data/worldBorders.json';
 import { GLOBE, type Theme } from '../../theme';
+import { TUNE_ON, defaults, useTuning } from './routeTuning';
 
 const RADIUS = 2.003;
 
@@ -23,8 +24,14 @@ interface BorderData {
 
 /**
  * Country outlines from Natural Earth 110m (src/data/worldBorders.json, built by
- * scripts/build-geo.mjs). Every boundary is drawn as a faint hairline; the current
- * country is drawn again at full ink.
+ * scripts/build-geo.mjs). Every boundary is drawn faintly; the current country is
+ * drawn again at full ink and heavier still.
+ *
+ * Both are drawn as fat lines rather than as raw `lineSegments`, because WebGL
+ * ignores a line material's width — everything came out one device pixel however
+ * thin the screen's pixels were, which is a hairline on a laptop and a thread on
+ * anything retina. 78,658 boundary segments is one instanced draw, which the GPU
+ * does not notice; the cost is the geometry built once at mount.
  */
 export function WorldBorders({
   countryCode,
@@ -35,19 +42,20 @@ export function WorldBorders({
 }) {
   const data = worldBorders as BorderData;
   const INK = GLOBE[theme].ink;
+  const tuned = useTuning();
+  const w = TUNE_ON ? tuned : defaults(theme);
 
-  const bordersGeometry = useMemo(() => {
-    const pts: number[] = [];
+  // pairs of points: every boundary segment, laid end to end for `segments`
+  const borderPoints = useMemo(() => {
+    const pts: [number, number, number][] = [];
     for (const line of data.borders) {
       for (let i = 0; i < line.length - 1; i++) {
         const a = latLngToVector3(line[i][1], line[i][0], RADIUS);
         const b = latLngToVector3(line[i + 1][1], line[i + 1][0], RADIUS);
-        pts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+        pts.push([a.x, a.y, a.z], [b.x, b.y, b.z]);
       }
     }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-    return g;
+    return pts;
   }, [data.borders]);
 
   const highlight = useMemo(() => {
@@ -58,23 +66,24 @@ export function WorldBorders({
 
   return (
     <group>
-      <lineSegments geometry={bordersGeometry}>
-        {/* Every border, legible on its own: the map has to read as a map before
-            the current country reads as the current one. Hairlines lose a lot of
-            ink on a light ground, so light mode gets more. */}
-        <lineBasicMaterial
-          color={INK}
-          transparent
-          opacity={theme === 'light' ? 0.55 : 0.42}
-          depthWrite={false}
-        />
-      </lineSegments>
+      {/* Every border, legible on its own: the map has to read as a map before
+          the current country reads as the current one. Hairlines lose a lot of
+          ink on a light ground, so light mode gets more. */}
+      <Line
+        points={borderPoints}
+        segments
+        color={INK}
+        lineWidth={w.borderBase}
+        transparent
+        opacity={theme === 'light' ? 0.55 : 0.42}
+        depthWrite={false}
+      />
       {highlight.map((path, i) => (
         <Line
           key={`${countryCode}-${i}`}
           points={path}
           color={INK}
-          lineWidth={1.25}
+          lineWidth={w.borderActive}
           transparent
           opacity={0.9}
           depthWrite={false}

@@ -466,6 +466,7 @@ function TravelPath({
   segments,
   progress,
   bg,
+  theme,
   past,
   ahead,
   aheadOpacity,
@@ -477,6 +478,7 @@ function TravelPath({
   segments: Segment[];
   progress: number;
   bg: string;
+  theme: Theme;
   past: string;
   ahead: string;
   aheadOpacity: number;
@@ -492,7 +494,7 @@ function TravelPath({
 
   // off the bench (`?tune=1`) these are the shipped numbers; on it, the sliders
   const tuned = useTuning();
-  const t: Tuning = TUNE_ON ? tuned : { ...defaults('dark'), aheadColor: ahead, aheadOpacity };
+  const t: Tuning = TUNE_ON ? tuned : { ...defaults(theme), aheadColor: ahead, aheadOpacity };
 
   return (
     <>
@@ -936,6 +938,7 @@ function Scene({
         segments={segments}
         progress={progress}
         bg={BG}
+        theme={theme}
         past={GLOBE[theme].routePast}
         ahead={
           // TEMP: ?t= 로 앞길 투명도 비교 (평가 후 제거)

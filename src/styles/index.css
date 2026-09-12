@@ -18,7 +18,7 @@
      the globe and the minimap have to say the same thing the same way. */
   --route-past: #ff670d;
   --route-ahead: #926f53;
-  --route-ahead-o: 0.85;
+  --route-ahead-o: 0.73;
 
   --sans:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
@@ -51,7 +51,7 @@
   --map-land: #c9c9c9;
   --route-past: #e2560a;
   --route-ahead: #987b60;
-  --route-ahead-o: 0.85;
+  --route-ahead-o: 0.7;
   color-scheme: light;
 }
 
@@ -68,7 +68,7 @@
     --map-land: #c9c9c9;
     --route-past: #e2560a;
     --route-ahead: #987b60;
-    --route-ahead-o: 0.85;
+    --route-ahead-o: 0.7;
     color-scheme: light;
   }
 }

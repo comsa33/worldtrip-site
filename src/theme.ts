@@ -21,7 +21,7 @@ export const GLOBE: Record<
      * in the same material as the borders, which is what made it confusing.
      *
      * These are the colours BEFORE the opacity below, so they say little on
-     * their own. What lands on the screen is #7f6149 in the dark and #a68d76 in
+     * their own. What lands on the screen is #6f5641 in the dark and #b39f8c in
      * the light, and both follow one rule: the line already walked steps away
      * from the ground, the line not yet walked steps back towards it. Which
      * direction that is flips with the theme — towards black in the dark,
@@ -47,7 +47,7 @@ export const GLOBE: Record<
     dotCurrent: '#b4b4b4',
     routePast: '#ff670d',
     routeAhead: '#926f53',
-    routeAheadOpacity: 0.85,
+    routeAheadOpacity: 0.73,
   },
   light: {
     sphere: '#f3f3f3',
@@ -58,7 +58,7 @@ export const GLOBE: Record<
     dotCurrent: '#5c5c5c',
     routePast: '#e2560a',
     routeAhead: '#987b60',
-    routeAheadOpacity: 0.85,
+    routeAheadOpacity: 0.7,
   },
 };
 
