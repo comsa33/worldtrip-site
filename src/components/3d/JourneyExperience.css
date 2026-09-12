@@ -1176,3 +1176,14 @@ kbd.key {
 .first-hint__sep {
   color: var(--line-strong);
 }
+
+/* the phone has no keys, and no room on the stats line for every number */
+@media (max-width: 768px) {
+  .scrubber__hint {
+    display: none;
+  }
+
+  .scrubber__stats span:nth-child(2) {
+    display: none;
+  }
+}
