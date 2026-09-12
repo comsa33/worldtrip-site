@@ -1177,7 +1177,7 @@
       "country": "AR",
       "countryCode": "AR",
       "order": 114,
-      "transport": "flight",
+      "transport": "bus",
       "startDate": "2017-04-08",
       "endDate": "2017-04-10"
     },
@@ -1247,7 +1247,7 @@
       "country": "CL",
       "countryCode": "CL",
       "order": 121,
-      "transport": "flight",
+      "transport": "bus",
       "startDate": "2017-05-03",
       "endDate": "2017-05-03"
     },
@@ -1257,7 +1257,7 @@
       "country": "CL",
       "countryCode": "CL",
       "order": 122,
-      "transport": "flight",
+      "transport": "bus",
       "startDate": "2017-05-03",
       "endDate": "2017-05-06",
       "note": "Atacama Desert"
@@ -1402,7 +1402,7 @@
       "country": "PE",
       "countryCode": "PE",
       "order": 136,
-      "transport": "flight",
+      "transport": "bus",
       "startDate": "2017-06-01",
       "endDate": "2017-06-01"
     },
