@@ -280,6 +280,64 @@ export default function PhotoGallery({
     return () => window.removeEventListener('keydown', onKey, true);
   }, [cityName, onClose, go, sheet]);
 
+  /* ── pulling the sheet shut ─────────────────────────────────────────────
+     The picture is closed by the root's pointer gesture, but the sheet is a
+     scroller: the browser claimed every downward drag and cancelled the
+     pointer after one move, so the sheet could not be pulled away. At the top
+     there is nothing left to scroll up into, so the pull is taken here — the
+     first move calls preventDefault before any scroll has begun, and the rest
+     of the drag stays ours. Anywhere below the top it is a scroll, untouched. */
+  useEffect(() => {
+    const el = sheetRef.current;
+    const root = rootRef.current;
+    if (!sheet || !el || !root) return;
+    let y0 = 0;
+    let dy = 0;
+    let mine = false;
+    const start = (e: TouchEvent) => {
+      y0 = e.touches[0]?.clientY ?? 0;
+      dy = 0;
+      mine = el.scrollTop <= 0;
+    };
+    const move = (e: TouchEvent) => {
+      if (!mine) return;
+      const d = (e.touches[0]?.clientY ?? 0) - y0;
+      if (d <= 0) {
+        mine = false; // going up is a scroll after all
+        return;
+      }
+      e.preventDefault();
+      dy = d;
+      const k = Math.min(dy / 700, 1);
+      root.style.transform = `translateY(${dy}px) scale(${1 - k * 0.1})`;
+      root.style.opacity = String(1 - k * 0.45);
+    };
+    const end = () => {
+      if (!mine) return;
+      mine = false;
+      if (dy > 150) {
+        onClose();
+        return;
+      }
+      root.style.transition = 'transform 320ms var(--ease), opacity 320ms var(--ease)';
+      root.style.transform = '';
+      root.style.opacity = '';
+      window.setTimeout(() => {
+        root.style.transition = '';
+      }, 340);
+    };
+    el.addEventListener('touchstart', start, { passive: true });
+    el.addEventListener('touchmove', move, { passive: false });
+    el.addEventListener('touchend', end);
+    el.addEventListener('touchcancel', end);
+    return () => {
+      el.removeEventListener('touchstart', start);
+      el.removeEventListener('touchmove', move);
+      el.removeEventListener('touchend', end);
+      el.removeEventListener('touchcancel', end);
+    };
+  }, [sheet, onClose]);
+
   /* ── the wheel over the picture: down is out (the sheet), up is back in ── */
   const wheelAcc = useRef(0);
   useEffect(() => {
