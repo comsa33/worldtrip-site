@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import minimap from '../../data/minimap.json';
 
 interface MinimapData {
@@ -9,6 +9,8 @@ interface MinimapData {
   land: string; // pre-projected land silhouette (SVG path)
   legs: string[]; // pre-projected route, one path per leg (stop i -> stop i+1)
 }
+
+type Aim = { x: number; y: number; stop: number };
 
 interface MinimapStop {
   id: number;
@@ -35,6 +37,27 @@ function naturalEarth1(lambda: number, phi: number): [number, number] {
 const data = minimap as MinimapData;
 const RAD = Math.PI / 180;
 
+/**
+ * The map itself: land and 154 legs, which only change when the journey moves
+ * one stop on. Kept out of the aiming so a pointer crossing the open map does
+ * not ask React to look at every leg again sixty times a second — that is what
+ * made following the route stutter.
+ */
+const World = memo(function World({ currentStopIdx }: { currentStopIdx: number }) {
+  return (
+    <>
+      <path d={data.land} className="minimap__land" />
+      {data.legs.map((d, i) => (
+        <path
+          key={i}
+          d={d}
+          className={`minimap__leg${i + 1 <= currentStopIdx ? ' is-past' : ''}`}
+        />
+      ))}
+    </>
+  );
+});
+
 function project(lat: number, lng: number): [number, number] {
   const [x, y] = naturalEarth1(lng * RAD, lat * RAD);
   return [data.translate[0] + data.scale * x, data.translate[1] - data.scale * y];
@@ -42,6 +65,8 @@ function project(lat: number, lng: number): [number, number] {
 
 /** A mouse crossing the corner on its way elsewhere should not open it. */
 const OPEN_DELAY_MS = 140;
+/** How finely the route is sampled for aiming, in viewBox units. */
+const SAMPLE = 4;
 
 /**
  * The whole 330-day line at a glance: the route in the globe's own two tenses —
@@ -90,9 +115,37 @@ export function Minimap({
   );
   const [cx, cy] = project(lat, lng);
 
+  /**
+   * The route as points on itself, sampled once.
+   *
+   * Aiming at the nearest stop meant matching both axes at a city, which is
+   * aiming at a dot. Aiming at the nearest point of the LINE means the mark
+   * slides along the route as the hand moves across it, and a hand that only
+   * moves sideways still travels the whole journey. The stop it would land on
+   * is the nearer end of whichever leg the point fell on.
+   */
+  const rail = useMemo(() => {
+    const out: { x: number; y: number; leg: number }[] = [];
+    if (typeof document === 'undefined') return out;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    svg.appendChild(path);
+    data.legs.forEach((d, leg) => {
+      path.setAttribute('d', d);
+      const total = path.getTotalLength();
+      const steps = Math.max(1, Math.ceil(total / SAMPLE));
+      for (let i = 0; i <= steps; i++) {
+        const pt = path.getPointAtLength((total * i) / steps);
+        out.push({ x: pt.x, y: pt.y, leg });
+      }
+    });
+    return out;
+  }, []);
+
   const [open, setOpen] = useState(false);
-  const [aim, setAim] = useState<number | null>(null);
+  const [aim, setAim] = useState<Aim | null>(null);
   const openTimer = useRef(0);
+  const moveRaf = useRef(0);
   const byTouch = useRef(false);
 
   // an opened map closes again on the next press elsewhere, like any other sheet
@@ -108,7 +161,13 @@ export function Minimap({
     return () => document.removeEventListener('pointerdown', away);
   }, [open]);
 
-  useEffect(() => () => window.clearTimeout(openTimer.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(openTimer.current);
+      if (moveRaf.current) cancelAnimationFrame(moveRaf.current);
+    },
+    []
+  );
 
   // a mouse resting on it opens it; a finger has no resting, so its tap does
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -129,34 +188,45 @@ export function Minimap({
     setAim(null);
   };
 
-  /** which stop a point on the map would land on */
-  const aimAt = (clientX: number, clientY: number): number | null => {
+  /** the point of the route under the pointer, and the stop it would land on */
+  const aimAt = (clientX: number, clientY: number): Aim | null => {
     const r = svgRef.current?.getBoundingClientRect();
-    if (!r) return null;
+    if (!r || rail.length === 0) return null;
     const x = ((clientX - r.left) / r.width) * data.w;
     const y = ((clientY - r.top) / r.height) * data.h;
-    let best = 0;
+    let best = rail[0];
     let bestD = Infinity;
-    stopPoints.forEach(([px, py], i) => {
-      const d = (px - x) ** 2 + (py - y) ** 2;
+    for (let i = 0; i < rail.length; i++) {
+      const d = (rail[i].x - x) ** 2 + (rail[i].y - y) ** 2;
       if (d < bestD) {
         bestD = d;
-        best = i;
+        best = rail[i];
       }
-    });
-    return best;
+    }
+    // the nearer end of the leg the point fell on
+    const a = stopPoints[best.leg];
+    const b = stopPoints[best.leg + 1] ?? a;
+    const da = (a[0] - best.x) ** 2 + (a[1] - best.y) ** 2;
+    const db = (b[0] - best.x) ** 2 + (b[1] - best.y) ** 2;
+    return { x: best.x, y: best.y, stop: da <= db ? best.leg : best.leg + 1 };
   };
 
+  // a pointer can fire faster than the screen draws; one aim per frame is plenty
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
-    setAim(aimAt(e.clientX, e.clientY));
+    const { clientX, clientY } = e;
+    if (moveRaf.current) return;
+    moveRaf.current = requestAnimationFrame(() => {
+      moveRaf.current = 0;
+      setAim(aimAt(clientX, clientY));
+    });
   };
 
-  const commit = (best: number | null) => {
+  const commit = (a: Aim | null) => {
     // a finger is done with it; a mouse is still resting on it and may pick again
     if (byTouch.current) setOpen(false);
     setAim(null);
-    if (best !== null) onSelect(best);
+    if (a) onSelect(a.stop);
   };
 
   /**
@@ -198,26 +268,21 @@ export function Minimap({
       role="img"
       aria-label="Route overview"
     >
-      <path d={data.land} className="minimap__land" />
-      {data.legs.map((d, i) => (
-        <path
-          key={i}
-          d={d}
-          className={`minimap__leg${i + 1 <= currentStopIdx ? ' is-past' : ''}`}
-        />
-      ))}
+      <World currentStopIdx={currentStopIdx} />
       <circle cx={cx} cy={cy} r={17} className="minimap__ring" />
       <circle cx={cx} cy={cy} r={11} className="minimap__head" />
-      {open && aim !== null && stopPoints[aim] && (
+      {open && aim && stops[aim.stop] && (
         <g className="minimap__aim">
-          <circle cx={stopPoints[aim][0]} cy={stopPoints[aim][1]} r={10} />
+          <circle cx={aim.x} cy={aim.y} r={9} />
           <text
-            x={stopPoints[aim][0] + (stopPoints[aim][0] > data.w * 0.72 ? -16 : 16)}
-            y={stopPoints[aim][1] + 6}
-            textAnchor={stopPoints[aim][0] > data.w * 0.72 ? 'end' : 'start'}
+            x={aim.x + (aim.x > data.w * 0.72 ? -15 : 15)}
+            y={aim.y + 6}
+            textAnchor={aim.x > data.w * 0.72 ? 'end' : 'start'}
           >
-            {stops[aim].city}
-            {stops[aim].startDate ? `  ${stops[aim].startDate.slice(0, 7).replace('-', '.')}` : ''}
+            {stops[aim.stop].city}
+            {stops[aim.stop].startDate
+              ? `  ${stops[aim.stop].startDate.slice(0, 7).replace('-', '.')}`
+              : ''}
           </text>
         </g>
       )}
