@@ -5,7 +5,7 @@ import { Line } from '@react-three/drei';
 import type { Line2 } from 'three-stdlib';
 import worldBorders from '../../data/worldBorders.json';
 import { GLOBE, type Theme } from '../../theme';
-import { TUNE_ON, defaults, useTuning } from './routeTuning';
+import { TUNE_ON, defaults, mix, useTuning } from './routeTuning';
 
 const RADIUS = 2.003;
 /**
@@ -26,20 +26,47 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
   );
 }
 
+/**
+ * A line is its first point followed by the step to each next one, in whole
+ * units of `unit` degrees: `[-48613, -27614, 3, -13, …]`. Written out as pairs
+ * of decimals the 10m outlines were 390KB of gzip on top of a bundle that was
+ * already too big; as small repeating steps they are less than the 50m ones they
+ * replaced, carrying nine times the vertices. `run` walks one back.
+ */
+interface Encoded {
+  unit: number;
+}
 interface BorderData {
-  borders: number[][][]; // every boundary line as [lng, lat][]
-  countries: Record<string, number[][][]>; // visited countries: rings as [lng, lat][]
+  /** every boundary with no visited country on either side, at 50m */
+  borders: Encoded & { lines: number[][] };
+  /** the visited countries, at 10m, as closed rings */
+  countries: Encoded & { rings: Record<string, number[][]> };
+}
+
+/** Walks a delta-encoded line, handing each segment over in whole units. */
+function run(line: number[], onSegment: (ax: number, ay: number, bx: number, by: number) => void) {
+  let x = line[0];
+  let y = line[1];
+  for (let i = 2; i < line.length; i += 2) {
+    const nx = x + line[i];
+    const ny = y + line[i + 1];
+    onSegment(x, y, nx, ny);
+    x = nx;
+    y = ny;
+  }
 }
 
 /**
- * Country outlines from Natural Earth 110m (src/data/worldBorders.json, built by
- * scripts/build-geo.mjs). Every boundary is drawn faintly; the current country is
- * drawn again at full ink and heavier still.
+ * Country outlines from src/data/worldBorders.json, built by scripts/build-geo.mjs:
+ * the countries we never entered at Natural Earth 50m, the 31 we did at 10m,
+ * because those are the only ones the camera ever gets close enough to catch out.
+ * Every boundary is drawn faintly; the current country is drawn again at full ink
+ * and heavier still, over exactly the same vertices, so the two cannot disagree.
  *
  * Both are drawn as fat lines rather than as raw `lineSegments`, because WebGL
  * ignores a line material's width — everything came out one device pixel however
  * thin the screen's pixels were, which is a hairline on a laptop and a thread on
- * anything retina. 78,658 boundary segments is one instanced draw, which the GPU
+ * anything retina. ~165,000 boundary segments is one instanced draw, which the GPU
  * does not notice; the cost is the geometry built once at mount.
  */
 /** How far the borders step back while a city is speaking. */
@@ -61,33 +88,87 @@ export function WorldBorders({
   const w = TUNE_ON ? tuned : defaults(theme);
   const baseOpacity = theme === 'light' ? 0.55 : 0.42;
 
+  /**
+   * A fat line is a run of quads, one per segment, each with a round cap at both
+   * ends — so a faint line laid over a coast whose vertices are closer together
+   * than a pixel blends with itself, once per overlap, and comes out darker than
+   * the same colour asked for. At 50m that cost a shade. At 10m the vertices are
+   * nine times closer and Japan turned black beside a grey Russia: the base layer
+   * had started saying "visited", which is the one thing only the current
+   * country's outline may say.
+   *
+   * So the transparency is done in advance instead. The colour is what 42% ink
+   * over the globe actually lands on, drawn at full alpha, and no overlap can add
+   * to it — the line weighs the same at every zoom and on every coastline.
+   */
+  const [loud, quiet] = useMemo(() => {
+    const over = GLOBE[theme].sphere;
+    return [
+      new THREE.Color(mix(INK, baseOpacity, over)),
+      new THREE.Color(mix(INK, baseOpacity * HUSH, over)),
+    ];
+  }, [INK, baseOpacity, theme]);
+
   // the step back is eased, not switched — the world settles a shade further
   // away over a few frames, the same pace the note fades in
   const base = useRef<Line2>(null);
+  const hushed = useRef(0);
   useFrame(() => {
     const m = base.current?.material;
     if (!m) return;
-    const target = baseOpacity * (hush ? HUSH : 1);
-    m.opacity += (target - m.opacity) * 0.12;
+    hushed.current += ((hush ? 1 : 0) - hushed.current) * 0.12;
+    m.color.copy(loud).lerp(quiet, hushed.current);
   });
 
   // pairs of points: every boundary segment, laid end to end for `segments`
   const borderPoints = useMemo(() => {
     const pts: [number, number, number][] = [];
-    for (const line of data.borders) {
-      for (let i = 0; i < line.length - 1; i++) {
-        const a = latLngToVector3(line[i][1], line[i][0], RADIUS);
-        const b = latLngToVector3(line[i + 1][1], line[i + 1][0], RADIUS);
-        pts.push([a.x, a.y, a.z], [b.x, b.y, b.z]);
+    const seg = (ax: number, ay: number, bx: number, by: number, unit: number, radius: number) => {
+      const a = latLngToVector3(ay * unit, ax * unit, radius);
+      const b = latLngToVector3(by * unit, bx * unit, radius);
+      pts.push([a.x, a.y, a.z], [b.x, b.y, b.z]);
+    };
+    const { unit: bu, lines } = data.borders;
+    for (const line of lines) run(line, (ax, ay, bx, by) => seg(ax, ay, bx, by, bu, RADIUS));
+    // The visited countries carry their own boundary at 10m — including the part
+    // they share with a visited neighbour, which therefore arrives twice with the
+    // same vertices. Inked twice through a transparent material it would come out
+    // a stop brighter than every other border on the map, so a segment already
+    // laid down is skipped. The whole units are exact, so they are what is
+    // compared.
+    const { unit: cu, rings } = data.countries;
+    const seen = new Set<string>();
+    for (const country of Object.values(rings)) {
+      for (const ring of country) {
+        run(ring, (ax, ay, bx, by) => {
+          const key =
+            ax < bx || (ax === bx && ay <= by)
+              ? `${ax},${ay},${bx},${by}`
+              : `${bx},${by},${ax},${ay}`;
+          if (seen.has(key)) return;
+          seen.add(key);
+          seg(ax, ay, bx, by, cu, RADIUS);
+        });
       }
     }
     return pts;
-  }, [data.borders]);
+  }, [data.borders, data.countries]);
 
+  // one draw for the whole country: Indonesia is 264 rings and Chile 163, and a
+  // `<Line>` apiece was that many materials built on the frame you arrive
   const highlight = useMemo(() => {
-    const rings = countryCode ? data.countries[countryCode] : undefined;
-    if (!rings) return [];
-    return rings.map((ring) => ring.map(([lng, lat]) => latLngToVector3(lat, lng, RADIUS + LIFT)));
+    const { unit, rings } = data.countries;
+    const country = countryCode ? rings[countryCode] : undefined;
+    if (!country) return null;
+    const pts: [number, number, number][] = [];
+    for (const ring of country) {
+      run(ring, (ax, ay, bx, by) => {
+        const a = latLngToVector3(ay * unit, ax * unit, RADIUS + LIFT);
+        const b = latLngToVector3(by * unit, bx * unit, RADIUS + LIFT);
+        pts.push([a.x, a.y, a.z], [b.x, b.y, b.z]);
+      });
+    }
+    return pts.length ? pts : null;
   }, [data.countries, countryCode]);
 
   return (
@@ -99,23 +180,23 @@ export function WorldBorders({
         ref={base}
         points={borderPoints}
         segments
-        color={INK}
+        color={loud}
         lineWidth={w.borderBase}
         transparent
-        opacity={baseOpacity}
+        opacity={1}
         depthWrite={false}
       />
-      {highlight.map((path, i) => (
+      {highlight && (
         <Line
-          key={`${countryCode}-${i}`}
-          points={path}
-          color={INK}
+          points={highlight}
+          segments
+          color={mix(INK, 0.9, GLOBE[theme].sphere)}
           lineWidth={w.borderActive}
           transparent
-          opacity={0.9}
+          opacity={1}
           depthWrite={false}
         />
-      ))}
+      )}
     </group>
   );
 }

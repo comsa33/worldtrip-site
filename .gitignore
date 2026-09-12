@@ -36,3 +36,8 @@ photos/cities/**/*.webp
 *.njsproj
 *.sln
 *.sw?
+# Added by code-review-graph
+.code-review-graph/
+
+# Natural Earth 10m source for scripts/build-geo.mjs
+.cache/
