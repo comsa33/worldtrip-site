@@ -1392,13 +1392,15 @@ function JourneyExperienceContent() {
     }, 3000);
   };
 
-  // From the city marker the dot is sitting on: this visit's roll, in order.
-  // Only the current city's label is clickable, so the stop is always this one.
+  // From the camera on the city label: this visit's whole roll, as a contact
+  // sheet. Both cameras on the globe open the same way — one is the place, the
+  // other is the city — and a camera is a thing you expect to hand you all of
+  // them. The filmstrip is the other door: it opens on the frame you clicked.
   const handleCityClick = (cityName: string) => {
     setSelectedCity(cityName);
     setSelectedPhotoIds(photoIdsForStop(city?.id));
     setInitialPhotoId(null);
-    setSheetFirst(false);
+    setSheetFirst(true);
   };
 
   // From the filmstrip: the same roll, opened on the frame that was clicked

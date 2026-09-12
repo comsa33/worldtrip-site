@@ -84,15 +84,20 @@ function PhotoCluster({
   // A place where photos were taken draws no mark of its own: the city's ring
   // is already there, and two rings a few pixels apart read as a bug. What
   // says "photos here" is the camera glyph, which is also the thing to click.
+  //
+  // The Html wrapper lets clicks through: it is a box around a glyph, and it
+  // was sitting over the city labels and eating their clicks. Only the glyph
+  // itself takes the pointer.
   return (
     <group position={center} scale={[markerScale, markerScale, markerScale]}>
       {dotProduct > 0.5 && (
-        <Html center position={[0, size + 0.008, 0]} style={{ pointerEvents: 'auto' }}>
+        <Html center position={[0, size + 0.008, 0]} style={{ pointerEvents: 'none' }}>
           <button
             type="button"
             onClick={onClick}
             aria-label={`${count} photos`}
             style={{
+              pointerEvents: 'auto',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '3px',
