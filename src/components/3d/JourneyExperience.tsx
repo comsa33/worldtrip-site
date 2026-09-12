@@ -26,7 +26,7 @@ import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay } from './JourneyDot';
-import { photosForStop, photoIdsForStop, cityHasPhotos } from '../../lib/visitPhotos';
+import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
@@ -1244,6 +1244,7 @@ function JourneyExperienceContent() {
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[] | null>(null);
   const [sheetFirst, setSheetFirst] = useState(false);
+  const [focusStopId, setFocusStopId] = useState<number | null>(null);
   const [initialPhotoId, setInitialPhotoId] = useState<string | null>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
 
@@ -1398,16 +1399,20 @@ function JourneyExperienceContent() {
   // them. The filmstrip is the other door: it opens on the frame you clicked.
   const handleCityClick = (cityName: string) => {
     setSelectedCity(cityName);
-    setSelectedPhotoIds(photoIdsForStop(city?.id));
+    setSelectedPhotoIds(null);
     setInitialPhotoId(null);
+    setFocusStopId(city?.id ?? null);
     setSheetFirst(true);
   };
 
-  // From the filmstrip: the same roll, opened on the frame that was clicked
+  // From the filmstrip: the city's whole book, opened on the frame clicked.
+  // The seam keeps the stays apart, so paging on lands in the next one rather
+  // than in a shuffle of both.
   const handleOpenPhoto = (cityName: string, photoId: string) => {
     setSelectedCity(cityName);
-    setSelectedPhotoIds(photoIdsForStop(city?.id));
+    setSelectedPhotoIds(null);
     setInitialPhotoId(photoId);
+    setFocusStopId(city?.id ?? null);
     setSheetFirst(false);
   };
 
@@ -1418,6 +1423,7 @@ function JourneyExperienceContent() {
     setSelectedCity(cityName);
     setSelectedPhotoIds(photoIds);
     setInitialPhotoId(null);
+    setFocusStopId(null);
     setSheetFirst(true);
   };
 
@@ -1457,6 +1463,7 @@ function JourneyExperienceContent() {
     setSelectedPhotoIds(null);
     setInitialPhotoId(null);
     setSheetFirst(false);
+    setFocusStopId(null);
   }, []);
 
   // Deep link: /?stop=53 opens the journey at that stop
@@ -1839,6 +1846,7 @@ function JourneyExperienceContent() {
         photoIds={selectedPhotoIds}
         initialPhotoId={initialPhotoId}
         initialSheet={sheetFirst}
+        focusStopId={focusStopId}
         onClose={handleCloseGallery}
       />
     </div>

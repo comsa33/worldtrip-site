@@ -17,6 +17,9 @@ export interface VisitPhoto {
 interface Visit {
   id: number;
   city: string;
+  country: string;
+  order: number;
+  transport: string;
   startDate: string;
   endDate: string;
 }
@@ -106,4 +109,75 @@ export function photoIdsForStop(stopId: number | undefined): string[] {
 /** Whether any stop at this city has photos — the globe's per-city test. */
 export function cityHasPhotos(city: string): boolean {
   return Boolean(cityPhotos[city]?.photos.length);
+}
+
+export interface CityVisit {
+  stopId: number;
+  startDate: string;
+  endDate: string;
+  photos: VisitPhoto[];
+}
+
+/**
+ * A city's whole roll, split into the visits it was taken on, in order.
+ *
+ * A city passed through twice has two rolls weeks apart, and mixing them in one
+ * sheet loses what the journey is about. Cities visited once come back as a
+ * single group, and the caller can then ignore the split entirely.
+ */
+export function visitsForCity(city: string | null): CityVisit[] {
+  if (!city) return [];
+  const here = stops.filter((s) => s.city === city);
+  if (!here.length) return [];
+  return here
+    .map((s) => ({
+      stopId: s.id,
+      startDate: s.startDate,
+      endDate: s.endDate,
+      photos: photosForStop(s.id),
+    }))
+    .filter((v) => v.photos.length > 0);
+}
+
+export interface Leg {
+  city: string;
+  country: string;
+  startDate: string;
+  endDate: string;
+  transport: string;
+}
+
+export interface Interlude {
+  /** Nights between leaving and coming back. */
+  days: number;
+  /** Every stop passed through, in order. */
+  legs: Leg[];
+  /** Countries entered on the way, in order, excluding the city's own. */
+  countries: string[];
+}
+
+/**
+ * What happened between two visits to the same city.
+ *
+ * A city visited twice is not the same thing twice — there is a reason the
+ * journey came back, and the reason is in the stops between. Varanasi's two
+ * visits have fifteen days of Nepal and the Annapurna trek between them;
+ * Cusco's have Machu Picchu. That is what the seam in the photo book says.
+ */
+export function interludeBetween(fromStopId: number, toStopId: number): Interlude | null {
+  const a = stops.find((s) => s.id === fromStopId);
+  const b = stops.find((s) => s.id === toStopId);
+  if (!a || !b) return null;
+  const legs = stops
+    .filter((s) => s.order > a.order && s.order < b.order)
+    .map((s) => ({
+      city: s.city,
+      country: s.country,
+      startDate: s.startDate,
+      endDate: s.endDate,
+      transport: s.transport,
+    }));
+  const days = Math.round((+new Date(b.startDate) - +new Date(a.endDate)) / DAY);
+  const countries = [...new Set(legs.map((l) => l.country))].filter((c) => c !== a.country);
+  return { days, legs, countries };
 }

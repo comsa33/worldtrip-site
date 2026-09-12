@@ -1,7 +1,17 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
+import { visitsForCity } from '../../lib/visitPhotos';
+import { VisitSeam } from './VisitSeam';
 import './PhotoGallery.css';
 
 interface Photo {
@@ -28,6 +38,8 @@ interface PhotoGalleryProps {
   initialPhotoId?: string | null;
   /** Open straight into the contact sheet instead of a single photo. */
   initialSheet?: boolean;
+  /** Which stay to land on, for a city the journey passed through twice. */
+  focusStopId?: number | null;
   onClose: () => void;
 }
 
@@ -81,6 +93,7 @@ export default function PhotoGallery({
   photoIds,
   initialPhotoId,
   initialSheet,
+  focusStopId,
   onClose,
 }: PhotoGalleryProps) {
   const { language } = useI18n();
@@ -97,16 +110,39 @@ export default function PhotoGallery({
     return [...list].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }, [cityName, photoIds, cityPhotos]);
 
+  /* ── the city's stays, in order ─────────────────────────────────────────
+     `photos` is already in date order and so are the visits, so each stay is
+     a run inside it. A city the journey saw once returns null and the sheet
+     renders exactly as it did before. */
+  const groups = useMemo(() => {
+    const visits = visitsForCity(cityName);
+    if (visits.length < 2) return null;
+    const here = new Set(photos.map((p) => p.id));
+    const out: { visit: (typeof visits)[number]; start: number; count: number }[] = [];
+    let start = 0;
+    for (const v of visits) {
+      const n = v.photos.filter((p) => here.has(p.id)).length;
+      if (!n) continue;
+      out.push({ visit: v, start, count: n });
+      start += n;
+    }
+    return out.length > 1 ? out : null;
+  }, [cityName, photos]);
+
   const [index, setIndex] = useState(0);
   // the whole set at once, as a contact sheet — G toggles, a tile opens it there
   const [sheet, setSheet] = useState(Boolean(initialSheet));
-  const openKey = `${cityName}:${initialPhotoId ?? ''}:${photoIds?.join(',') ?? ''}:${initialSheet ? 'sheet' : ''}`;
+  const openKey = `${cityName}:${initialPhotoId ?? ''}:${photoIds?.join(',') ?? ''}:${initialSheet ? 'sheet' : ''}:${focusStopId ?? ''}`;
   const [lastKey, setLastKey] = useState(openKey);
   if (openKey !== lastKey) {
     // a new open: start at the requested photo (state reset during render, per React guidance)
     setLastKey(openKey);
-    const i = initialPhotoId ? photos.findIndex((p) => p.id === initialPhotoId) : 0;
-    setIndex(i >= 0 ? i : 0);
+    const byPhoto = initialPhotoId ? photos.findIndex((p) => p.id === initialPhotoId) : -1;
+    const byVisit = focusStopId
+      ? (groups?.find((g) => g.visit.stopId === focusStopId)?.start ?? -1)
+      : -1;
+    const i = byPhoto >= 0 ? byPhoto : byVisit >= 0 ? byVisit : 0;
+    setIndex(i);
     setSheet(Boolean(initialSheet));
   }
 
@@ -633,30 +669,43 @@ export default function PhotoGallery({
         >
           {(() => {
             const perRow = typeof window !== 'undefined' && window.innerWidth < 768 ? 3 : 6;
-            const rows: Photo[][] = [];
-            for (let i = 0; i < photos.length; i += perRow) rows.push(photos.slice(i, i + perRow));
-            return rows.map((row, r) => (
-              <div className="pb__sheetrow" role="row" key={r}>
-                {row.map((p, j) => {
-                  const i = r * perRow + j;
-                  return (
-                    <button
-                      type="button"
-                      key={p.id}
-                      role="gridcell"
-                      className={`pb__cell${i === safeIndex ? ' is-current' : ''}`}
-                      style={{ '--ar': String(arOf(p)) } as React.CSSProperties}
-                      data-dot-active={i === safeIndex ? '' : undefined}
-                      onClick={(e) => openFromTile(i, e.currentTarget)}
-                      aria-label={`${i + 1}`}
-                    >
-                      <img src={srcFor(p, 320)} alt="" loading="lazy" decoding="async" />
-                      <span className="pb__cellno mono">{String(i + 1).padStart(2, '0')}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            ));
+            const blocks = groups ?? [{ visit: null, start: 0, count: photos.length }];
+            return blocks.map((b, bi) => {
+              const mine = photos.slice(b.start, b.start + b.count);
+              const rows: Photo[][] = [];
+              for (let i = 0; i < mine.length; i += perRow) rows.push(mine.slice(i, i + perRow));
+              return (
+                <Fragment key={b.visit?.stopId ?? 'all'}>
+                  {bi > 0 && groups && (
+                    <VisitSeam from={groups[bi - 1].visit} to={groups[bi].visit} lang={lang} />
+                  )}
+                  {rows.map((row, r) => (
+                    <div className="pb__sheetrow" role="row" key={r}>
+                      {row.map((p, j) => {
+                        const i = b.start + r * perRow + j;
+                        return (
+                          <button
+                            type="button"
+                            key={p.id}
+                            role="gridcell"
+                            className={`pb__cell${i === safeIndex ? ' is-current' : ''}`}
+                            style={{ '--ar': String(arOf(p)) } as React.CSSProperties}
+                            data-dot-active={i === safeIndex ? '' : undefined}
+                            onClick={(e) => openFromTile(i, e.currentTarget)}
+                            aria-label={`${i + 1}`}
+                          >
+                            <img src={srcFor(p, 320)} alt="" loading="lazy" decoding="async" />
+                            <span className="pb__cellno mono">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </Fragment>
+              );
+            });
           })()}
         </div>
       )}
