@@ -6,6 +6,13 @@ import { GLOBE, type Theme } from '../../theme';
 import { TUNE_ON, defaults, useTuning } from './routeTuning';
 
 const RADIUS = 2.003;
+/**
+ * How far the current country's outline sits above the rest, so the two do not
+ * fight for the same depth. It has to be enough to win the depth test and no
+ * more: at 0.002 the parallax was a visible gap at close zoom and the one
+ * border read as two lines side by side.
+ */
+const LIFT = 0.0004;
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -61,7 +68,7 @@ export function WorldBorders({
   const highlight = useMemo(() => {
     const rings = countryCode ? data.countries[countryCode] : undefined;
     if (!rings) return [];
-    return rings.map((ring) => ring.map(([lng, lat]) => latLngToVector3(lat, lng, RADIUS + 0.002)));
+    return rings.map((ring) => ring.map(([lng, lat]) => latLngToVector3(lat, lng, RADIUS + LIFT)));
   }, [data.countries, countryCode]);
 
   return (

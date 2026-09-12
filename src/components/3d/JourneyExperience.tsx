@@ -350,6 +350,21 @@ const pathLength = (pts: THREE.Vector3[]) => {
 };
 
 /**
+ * Where the route sits in the paint, above the map and above its own backing.
+ *
+ * Both the backing and the line are transparent, and three.js sorts transparent
+ * objects by how far they are from the camera. On a globe every leg is the same
+ * distance away to within rounding, so that order is a coin toss that lands
+ * differently depending on where the camera came from — and a backing that
+ * lands after its neighbour's line paints the page colour straight over it. A
+ * route that was there before a jump would simply be gone after one, and only
+ * ever going backwards, because that is when the camera arrives from the far
+ * side. Saying the order out loud costs nothing and settles it.
+ */
+const UNDERLAY_ORDER = 1;
+const ROUTE_ORDER = 2;
+
+/**
  * One leg of the route. Every leg is the same line whatever it was travelled
  * by — the dash-per-transport code was three kinds of noise on top of the
  * one thing that matters, which is where the line has been.
@@ -401,6 +416,7 @@ function RouteLine({
           transparent
           opacity={0.92}
           depthWrite={false}
+          renderOrder={UNDERLAY_ORDER}
         />
       )}
       <Line
@@ -408,6 +424,7 @@ function RouteLine({
         points={points}
         color={color}
         lineWidth={width}
+        renderOrder={ROUTE_ORDER}
         transparent
         opacity={opacity}
         depthWrite={false}
@@ -940,12 +957,7 @@ function Scene({
         bg={BG}
         theme={theme}
         past={GLOBE[theme].routePast}
-        ahead={
-          // TEMP: ?t= 로 앞길 투명도 비교 (평가 후 제거)
-          { T1: '#806249', T2: '#6f5540', LA: '#aa8d73', LB: '#987b60' }[
-            new URLSearchParams(window.location.search).get('t') ?? ''
-          ] ?? GLOBE[theme].routeAhead
-        }
+        ahead={GLOBE[theme].routeAhead}
         aheadOpacity={GLOBE[theme].routeAheadOpacity}
         reveal={reveal}
         hoveredLeg={hoveredLeg?.leg ?? null}
