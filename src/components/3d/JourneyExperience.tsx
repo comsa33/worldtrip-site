@@ -25,7 +25,7 @@ import { useSettledStop } from '../about/useSettledStop';
 import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
-import { HeadTracker, JourneyDotOverlay } from './JourneyDot';
+import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
@@ -827,6 +827,8 @@ function Scene({
   dotActive,
   reveal,
   revealRun,
+  noteStop,
+  onNoteSide,
 }: {
   progress: number;
   zoom: number;
@@ -842,6 +844,9 @@ function Scene({
   dotActive: boolean;
   reveal: React.MutableRefObject<number>;
   revealRun: boolean;
+  /** the stop whose note is about to be written, or null */
+  noteStop: number | null;
+  onNoteSide: (side: 'below' | 'above') => void;
 }) {
   const INK = GLOBE[theme].ink;
   const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
@@ -971,6 +976,12 @@ function Scene({
         ribbon={ribbon}
         active={dotActive}
         markerRadius={0.007 / Math.max(zoomScale, 0.5)}
+      />
+      <NoteSideProbe
+        path={path}
+        stopIds={stops.map((s) => s.id)}
+        stopIdx={noteStop}
+        onSide={onNoteSide}
       />
       {hoveredLeg && (
         <LegTooltip leg={hoveredLeg.leg} at={hoveredLeg.at} stops={stops} cities={cities} />
@@ -1520,6 +1531,17 @@ function JourneyExperienceContent() {
   // the stop the reader has actually come to rest on, a beat after they stop
   const settledStop = useSettledStop(currentStop, progress);
 
+  // Which side of the dot the city's note sits on — decided on the globe, in
+  // screen space, once the reader has settled (NoteSideProbe)
+  const [noteSide, setNoteSide] = useState<'below' | 'above'>('below');
+  const noteStop =
+    settledStop === currentStop && currentStop !== 0 && !finale && selectedCity === null
+      ? currentStop
+      : null;
+  // a block is up over the map — the opening, a city's note, or the closing —
+  // and the world steps back a shade so the words sit above it
+  const noteUp = noteStop !== null || (currentStop === 0 && progress < 0.03) || finale;
+
   const handleCloseGallery = useCallback(() => {
     setSelectedCity(null);
     setInitialPhotoId(null);
@@ -1964,9 +1986,16 @@ function JourneyExperienceContent() {
             dotActive={dotOut && selectedCity === null && !finale}
             reveal={revealRef}
             revealRun={revealRun}
+            noteStop={noteStop}
+            onNoteSide={setNoteSide}
           />
-          <DotGlobe countryCode={currentCountry} visitedCodes={visitedCountries} theme={theme} />
-          <WorldBorders countryCode={currentCountry} theme={theme} />
+          <DotGlobe
+            countryCode={currentCountry}
+            visitedCodes={visitedCountries}
+            theme={theme}
+            hush={noteUp}
+          />
+          <WorldBorders countryCode={currentCountry} theme={theme} hush={noteUp} />
         </Canvas>
       </div>
 
@@ -2034,9 +2063,8 @@ function JourneyExperienceContent() {
           stopId={city.id}
           city={cities[city.city]?.[language as 'ko' | 'en'] ?? city.city}
           startDate={city.startDate ?? ''}
-          visible={
-            settledStop === currentStop && currentStop !== 0 && !finale && selectedCity === null
-          }
+          side={noteSide}
+          visible={noteStop !== null && !isUserInteracting}
         />
       )}
       {/* And the last word, back where it started — written by the dot itself */}

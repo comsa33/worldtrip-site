@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useI18n } from '../../i18n';
 import { NoteCard, type Note } from './NoteCard';
 import { useSelfTyped } from './useSelfTyped';
+import { useDotAnchor, useLinger, type Side } from './useDotAnchor';
 import type { Pace } from './typewriter';
 import notesData from '../../data/cityNotes.json';
 import './AboutOverlay.css';
@@ -27,11 +28,14 @@ export default function StopNote({
   city,
   startDate,
   visible,
+  side = 'below',
 }: {
   stopId: number;
   city: string;
   startDate: string;
   visible: boolean;
+  /** which side of the dot the words sit on — above when the next leg heads down */
+  side?: Side;
 }) {
   const { language } = useI18n();
   const lang = language as 'ko' | 'en';
@@ -40,12 +44,16 @@ export default function StopNote({
   const written = entry ? (entry[lang] ?? entry.ko) : null;
   const key = `${stopId}:${lang}`;
   const active = visible && Boolean(written);
+  // gone means fading, not vanishing: a beat in the document on the way out
+  const { mounted, leaving } = useLinger(active, 240);
 
   // a note is read in the gap between two scrolls, and the reader has already
   // waited out the dwell — this hand moves at about twice the opening's
   useSelfTyped(ref, active, key, seen, QUICK);
+  // on a wide screen the note hangs off the dot, where the reader is looking
+  useDotAnchor(ref, active, side);
 
-  if (!active || !written) return null;
+  if (!mounted || !written) return null;
 
   const [y, m] = startDate.split('-');
   const note: Note = {
@@ -58,7 +66,7 @@ export default function StopNote({
   };
 
   return (
-    <div className="about-overlay" ref={ref}>
+    <div className={`about-overlay${leaving ? ' is-away' : ''}`} ref={ref}>
       <NoteCard note={note} />
     </div>
   );

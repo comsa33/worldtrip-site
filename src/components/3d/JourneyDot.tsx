@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { NOTE_GAP, NOTE_H, NOTE_W } from '../about/useDotAnchor';
 
 /** The mark is never smaller than the header mark it comes from, nor larger than this. */
 const DOT_MIN = 8;
@@ -252,4 +253,77 @@ export function JourneyDotOverlay({
       />
     </>
   );
+}
+
+/**
+ * Which side of the dot a city's note should sit on: below, unless the route
+ * runs under the words there and not above.
+ *
+ * Decided in screen space, once, on the frame after the journey has settled on
+ * a stop: the last two legs walked and the one ahead are projected, and each
+ * of the two seats — the note's footprint under the dot, and over it — is
+ * charged for every route point that falls inside it. The line already walked
+ * is orange and the eye follows it in, so it counts double; the dull line
+ * ahead counts once. Ties go below. The note never moves after this.
+ */
+export function NoteSideProbe({
+  path,
+  stopIds,
+  stopIdx,
+  onSide,
+}: {
+  path: { point: THREE.Vector3; fromStopId: number }[];
+  /** stop ids in journey order */
+  stopIds: number[];
+  /** the stop the reader has settled on, or null while moving */
+  stopIdx: number | null;
+  onSide: (side: 'below' | 'above') => void;
+}) {
+  const { camera, size, gl } = useThree();
+  const pending = useRef<number | null>(null);
+  const v = useRef(new THREE.Vector3());
+  const lastCam = useRef(new THREE.Vector3());
+
+  useEffect(() => {
+    pending.current = stopIdx;
+  }, [stopIdx]);
+
+  useFrame(() => {
+    const i = pending.current;
+    if (i === null) return;
+    // not while the camera is still gliding in: the lines have not landed yet
+    const moved = lastCam.current.distanceToSquared(camera.position);
+    lastCam.current.copy(camera.position);
+    if (moved > 1e-6) return;
+    pending.current = null;
+
+    const rect = gl.domElement.getBoundingClientRect();
+    const toScreen = (p: THREE.Vector3) => {
+      v.current.copy(p).project(camera);
+      return {
+        x: rect.left + ((v.current.x + 1) / 2) * size.width,
+        y: rect.top + ((1 - v.current.y) / 2) * size.height,
+      };
+    };
+
+    const id = stopIds[i];
+    const headIdx = path.findIndex((p) => p.fromStopId === id);
+    const head = toScreen((path[headIdx] ?? path[path.length - 1]).point);
+    const past = new Set([stopIds[i - 1], stopIds[i - 2]].filter((x) => x !== undefined));
+
+    let below = 0;
+    let above = 0;
+    for (const p of path) {
+      const weight = past.has(p.fromStopId) ? 2 : p.fromStopId === id ? 1 : 0;
+      if (!weight) continue;
+      const s = toScreen(p.point);
+      if (s.x < head.x || s.x > head.x + NOTE_W) continue;
+      const dy = s.y - head.y;
+      if (dy > NOTE_GAP && dy < NOTE_GAP + NOTE_H) below += weight;
+      else if (dy < -NOTE_GAP && dy > -(NOTE_GAP + NOTE_H)) above += weight;
+    }
+    onSide(above < below ? 'above' : 'below');
+  });
+
+  return null;
 }

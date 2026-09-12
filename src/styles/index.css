@@ -13,6 +13,8 @@
   --line: #222222;
   --line-strong: #3a3a3a;
   --map-land: #2a2a2a;
+  /* the globe's own surface — keep in step with GLOBE.sphere in src/theme.ts */
+  --globe: #111111;
   --accent: #ff670d;
   /* The route, in the two tenses. Keep in step with GLOBE in src/theme.ts —
      the globe and the minimap have to say the same thing the same way. */
@@ -24,6 +26,12 @@
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
     'Noto Sans KR', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* The prose a city leaves behind — the blog's serif, so a note here and a post
+     there read as the same hand. At one declared size the serif draws taller and
+     wider than Pretendard; the scale puts the two on the same optical size
+     (measured on the blog, see ruo-blog globals.css). */
+  --serif: 'Noto Serif KR', ui-serif, Georgia, 'Apple SD Gothic Neo', serif;
+  --serif-scale: 0.92;
 
   --radius: 10px;
   --radius-sm: 6px;
@@ -49,6 +57,7 @@
   --line: #e8e8e8;
   --line-strong: #cfcfcf;
   --map-land: #c9c9c9;
+  --globe: #f3f3f3;
   --route-past: #e2560a;
   --route-ahead: #987b60;
   --route-ahead-o: 0.7;
@@ -66,6 +75,7 @@
     --line: #e8e8e8;
     --line-strong: #cfcfcf;
     --map-land: #c9c9c9;
+    --globe: #f3f3f3;
     --route-past: #e2560a;
     --route-ahead: #987b60;
     --route-ahead-o: 0.7;

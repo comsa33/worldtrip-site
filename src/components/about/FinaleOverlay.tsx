@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useI18n } from '../../i18n';
 import { typewrite } from './typewriter';
+import { useDotAnchor } from './useDotAnchor';
 import './AboutOverlay.css';
 
 /**
@@ -19,6 +20,9 @@ let written = false;
 export default function FinaleOverlay({ visible }: { visible: boolean }) {
   const { language } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
+  // under the dot's last place on the globe — it steps down from there into the words
+  useDotAnchor(root, visible);
 
   useEffect(() => {
     const host = ref.current;
@@ -92,7 +96,7 @@ than with how I took the place I was in.`,
     ));
 
   return (
-    <div className="about-overlay about-overlay--finale">
+    <div className="about-overlay about-overlay--finale" ref={root}>
       <div className="about-overlay__card" ref={ref}>
         {/* the seat: in the flow of the line, moved through the text by the hand.
             The dot is pinned to it. */}
@@ -103,8 +107,8 @@ than with how I took the place I was in.`,
           data-dot-carry="caret-blink"
           aria-hidden="true"
         />
-        <h2 className="about-overlay__title">{typed(t.title)}</h2>
         <p className="about-overlay__subtitle">{typed(t.subtitle)}</p>
+        <h2 className="about-overlay__title">{typed(t.title)}</h2>
         <p className="about-overlay__story">{typed(t.story)}</p>
         <blockquote className="about-overlay__quote">
           {typed(`"${t.quote}"`)}

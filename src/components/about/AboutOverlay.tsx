@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useI18n } from '../../i18n';
 import { NoteCard } from './NoteCard';
 import { useSelfTyped } from './useSelfTyped';
+import { useDotAnchor } from './useDotAnchor';
 import './AboutOverlay.css';
 
 interface AboutOverlayProps {
@@ -15,6 +16,8 @@ export default function AboutOverlay({ visible }: AboutOverlayProps) {
   const { language } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   useSelfTyped(ref, visible, 'about', seen);
+  // beside the dot, where it lands — the same seat every city's note takes
+  useDotAnchor(ref, visible);
 
   if (!visible) return null;
 

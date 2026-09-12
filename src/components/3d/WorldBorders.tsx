@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
+import type { Line2 } from 'three-stdlib';
 import worldBorders from '../../data/worldBorders.json';
 import { GLOBE, type Theme } from '../../theme';
 import { TUNE_ON, defaults, useTuning } from './routeTuning';
@@ -40,17 +42,34 @@ interface BorderData {
  * anything retina. 78,658 boundary segments is one instanced draw, which the GPU
  * does not notice; the cost is the geometry built once at mount.
  */
+/** How far the borders step back while a city is speaking. */
+const HUSH = 0.38;
+
 export function WorldBorders({
   countryCode,
   theme,
+  hush = false,
 }: {
   countryCode?: string | null;
   theme: Theme;
+  /** a note is up over the map: the lines under it go quieter */
+  hush?: boolean;
 }) {
   const data = worldBorders as BorderData;
   const INK = GLOBE[theme].ink;
   const tuned = useTuning();
   const w = TUNE_ON ? tuned : defaults(theme);
+  const baseOpacity = theme === 'light' ? 0.55 : 0.42;
+
+  // the step back is eased, not switched — the world settles a shade further
+  // away over a few frames, the same pace the note fades in
+  const base = useRef<Line2>(null);
+  useFrame(() => {
+    const m = base.current?.material;
+    if (!m) return;
+    const target = baseOpacity * (hush ? HUSH : 1);
+    m.opacity += (target - m.opacity) * 0.12;
+  });
 
   // pairs of points: every boundary segment, laid end to end for `segments`
   const borderPoints = useMemo(() => {
@@ -77,12 +96,13 @@ export function WorldBorders({
           the current country reads as the current one. Hairlines lose a lot of
           ink on a light ground, so light mode gets more. */}
       <Line
+        ref={base}
         points={borderPoints}
         segments
         color={INK}
         lineWidth={w.borderBase}
         transparent
-        opacity={theme === 'light' ? 0.55 : 0.42}
+        opacity={baseOpacity}
         depthWrite={false}
       />
       {highlight.map((path, i) => (

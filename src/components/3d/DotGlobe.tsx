@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { useThree } from '@react-three/fiber';
+import { useThree, useFrame } from '@react-three/fiber';
 import landDots from '../../data/landDots.json';
 import { GLOBE, type Theme } from '../../theme';
 
@@ -44,6 +44,7 @@ const vertexShader = /* glsl */ `
 `;
 
 const fragmentShader = /* glsl */ `
+  uniform float uHush;
   varying vec3 vColor;
   varying float vFacing;
   void main() {
@@ -51,7 +52,7 @@ const fragmentShader = /* glsl */ `
     float d = length(gl_PointCoord - 0.5);
     float disc = 1.0 - smoothstep(0.38, 0.5, d);
     // fade dots out toward the limb so the edge of the globe stays clean
-    float a = disc * smoothstep(0.0, 0.5, vFacing);
+    float a = disc * smoothstep(0.0, 0.5, vFacing) * uHush;
     if (a < 0.02) discard;
     gl_FragColor = vec4(vColor, a);
   }
@@ -67,14 +68,20 @@ interface LandDotsData {
  * (src/data/landDots.json, built by scripts/build-geo.mjs). Dots of visited countries
  * brighten as the journey reaches them; the current country renders in full ink.
  */
+/** How far the land steps back while a city is speaking. */
+const HUSH = 0.38;
+
 export function DotGlobe({
   countryCode,
   visitedCodes,
   theme,
+  hush = false,
 }: {
   countryCode?: string | null;
   visitedCodes: ReadonlySet<string>;
   theme: Theme;
+  /** a note is up over the map: the land under it goes quieter */
+  hush?: boolean;
 }) {
   const data = landDots as LandDotsData;
   // Dot colours: land is quiet, countries the trip has reached stay lit, the current one is full ink.
@@ -144,9 +151,16 @@ export function DotGlobe({
       uScale: { value: 1 },
       uDpr: { value: 1 },
       uMax: { value: 4.5 },
+      uHush: { value: 1 },
     }),
     []
   );
+  // eased like the borders, so the two layers step back as one
+  const material = useRef<THREE.ShaderMaterial>(null);
+  useFrame(() => {
+    const u = material.current?.uniforms.uHush;
+    if (u) u.value += ((hush ? HUSH : 1) - u.value) * 0.12;
+  });
   // three's point-size scale: half the viewport height in device pixels
   const scale = size.height * 0.5 * gl.getPixelRatio();
   // Small enough that no single dot is a thing you look at — the surface is a
@@ -162,6 +176,7 @@ export function DotGlobe({
       </mesh>
       <points geometry={geometry}>
         <shaderMaterial
+          ref={material}
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
           uniforms={uniforms}
