@@ -32,6 +32,8 @@ import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
 import { Minimap } from './Minimap';
 import { GLOBE, useTheme, useToggleTheme, type Theme } from '../../theme';
+import { RouteTuner } from './RouteTuner';
+import { TUNE_ON, defaults, useTuning, type Tuning } from './routeTuning';
 import { PhotoMarkers } from './PhotoMarkers';
 import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
@@ -327,8 +329,19 @@ function buildSegments(points: PathPoint[]): Segment[] {
  * so it never changes on arrival. A flight leaves a finer, fainter one — a
  * fast thing high up leaves less of a trace than a bus does on a road.
  */
-const trail = (transport: string) =>
-  transport === 'flight' ? { width: 0.8, opacity: 0.55 } : { width: 1.5, opacity: 0.92 };
+const trail = (transport: string, t: Tuning) =>
+  transport === 'flight'
+    ? { width: t.pastAir, opacity: t.pastAirOpacity }
+    : { width: t.pastLand, opacity: t.pastLandOpacity };
+
+/**
+ * The same rule for a leg not yet walked. It used to be one width for
+ * everything, so a flight ahead was drawn as heavily as a bus — the line
+ * changed weight on arrival, which is exactly what the trail above promises
+ * never to do.
+ */
+const trailAhead = (transport: string, t: Tuning) =>
+  transport === 'flight' ? t.aheadAir : t.aheadLand;
 
 const pathLength = (pts: THREE.Vector3[]) => {
   let l = 0;
@@ -452,8 +465,10 @@ function TravelPath({
   points,
   segments,
   progress,
-  ink,
   bg,
+  past,
+  ahead,
+  aheadOpacity,
   reveal,
   hoveredLeg,
   onHoverLeg,
@@ -461,16 +476,23 @@ function TravelPath({
   points: PathPoint[];
   segments: Segment[];
   progress: number;
-  ink: string;
   bg: string;
+  past: string;
+  ahead: string;
+  aheadOpacity: number;
   reveal: React.MutableRefObject<number>;
   hoveredLeg: Leg | null;
   onHoverLeg: (leg: Leg | null, at?: THREE.Vector3) => void;
 }) {
   const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
   // The travelled line is the one coloured thing on a monochrome map — and it
-  // all stays, at one weight, however long ago it was walked.
-  const pastColor = ACCENT;
+  // all stays, at one weight, however long ago it was walked. The shade comes
+  // from the theme: the same orange sits differently on paper than on ink.
+  const pastColor = past;
+
+  // off the bench (`?tune=1`) these are the shipped numbers; on it, the sliders
+  const tuned = useTuning();
+  const t: Tuning = TUNE_ON ? tuned : { ...defaults('dark'), aheadColor: ahead, aheadOpacity };
 
   return (
     <>
@@ -487,14 +509,14 @@ function TravelPath({
           onOut: () => onHoverLeg(null),
         };
         if (seg.end <= idx) {
-          const t = trail(seg.transport);
+          const w = trail(seg.transport, t);
           return (
             <RouteLine
               key={seg.start}
               points={seg.pts}
               color={pastColor}
-              opacity={isHovered ? 1 : t.opacity}
-              width={isHovered ? t.width + 0.75 : t.width}
+              opacity={isHovered ? 1 : w.opacity}
+              width={isHovered ? w.width + 0.75 : w.width}
               underlay={bg}
               {...hover}
             />
@@ -505,9 +527,9 @@ function TravelPath({
             <RouteLine
               key={seg.start}
               points={seg.pts}
-              color={ink}
-              opacity={isHovered ? 0.6 : 0.22}
-              width={1.25}
+              color={t.aheadColor}
+              opacity={isHovered ? Math.min(1, t.aheadOpacity + 0.35) : t.aheadOpacity}
+              width={trailAhead(seg.transport, t)}
               reveal={{ ref: reveal, start: seg.start, end: seg.end }}
               {...hover}
             />
@@ -519,16 +541,16 @@ function TravelPath({
             <RouteLine
               points={seg.pts.slice(0, split + 1)}
               color={pastColor}
-              opacity={trail(seg.transport).opacity}
-              width={trail(seg.transport).width}
+              opacity={trail(seg.transport, t).opacity}
+              width={trail(seg.transport, t).width}
               underlay={bg}
               {...hover}
             />
             <RouteLine
               points={seg.pts.slice(split)}
-              color={ink}
-              opacity={0.35}
-              width={1.25}
+              color={t.aheadColor}
+              opacity={Math.min(1, t.aheadOpacity + 0.12)}
+              width={trailAhead(seg.transport, t)}
               reveal={{ ref: reveal, start: seg.start + split, end: seg.end }}
             />
           </group>
@@ -913,8 +935,15 @@ function Scene({
         points={path}
         segments={segments}
         progress={progress}
-        ink={INK}
         bg={BG}
+        past={GLOBE[theme].routePast}
+        ahead={
+          // TEMP: ?t= 로 앞길 투명도 비교 (평가 후 제거)
+          { T1: '#806249', T2: '#6f5540', LA: '#aa8d73', LB: '#987b60' }[
+            new URLSearchParams(window.location.search).get('t') ?? ''
+          ] ?? GLOBE[theme].routeAhead
+        }
+        aheadOpacity={GLOBE[theme].routeAheadOpacity}
         reveal={reveal}
         hoveredLeg={hoveredLeg?.leg ?? null}
         onHoverLeg={onHoverLeg}
@@ -1982,6 +2011,7 @@ function JourneyExperienceContent() {
 
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
+      {TUNE_ON && <RouteTuner theme={theme} />}
       {/* What a city has to say — only once the journey has actually stopped
           there. Scrubbing past a dozen of them says nothing. */}
       {city && (

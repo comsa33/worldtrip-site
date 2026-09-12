@@ -1,0 +1,119 @@
+/* =============================================================================
+   Route tuner — dev only (?tune=1), not shipped
+   ============================================================================= */
+.tuner {
+  position: fixed;
+  left: 16px;
+  top: 64px;
+  z-index: 300;
+  width: 300px;
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  padding: 14px;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.tuner__head {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.tuner__head span {
+  color: var(--ink-3);
+}
+.tuner__group {
+  margin: 12px 0 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+}
+.tuner__row {
+  display: grid;
+  grid-template-columns: 66px 1fr 44px;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+.tuner__row input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.tuner__k {
+  color: var(--ink-3);
+}
+.tuner__v {
+  text-align: right;
+  color: var(--ink);
+  font-weight: 400;
+}
+.tuner__swatches {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tuner__sw {
+  display: grid;
+  grid-template-columns: 18px 40px 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.tuner__sw i {
+  width: 18px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+}
+.tuner__sw b {
+  color: var(--ink);
+  font-weight: 400;
+}
+.tuner__sw em {
+  font-style: normal;
+  color: var(--ink-3);
+}
+.tuner__sw em.is-warn {
+  color: #e2560a;
+}
+.tuner__note {
+  margin: 10px 0;
+  line-height: 1.6;
+  color: var(--ink-3);
+  font-family: var(--sans);
+  font-size: 11.5px;
+}
+.tuner__buttons {
+  display: flex;
+  gap: 6px;
+}
+.tuner__buttons button {
+  flex: 1;
+  padding: 6px 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-2);
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.tuner__buttons button:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.tuner__code {
+  margin: 10px 0 0;
+  padding: 8px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  white-space: pre-wrap;
+  word-break: break-all;
+}

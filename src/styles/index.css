@@ -14,6 +14,11 @@
   --line-strong: #3a3a3a;
   --map-land: #2a2a2a;
   --accent: #ff670d;
+  /* The route, in the two tenses. Keep in step with GLOBE in src/theme.ts —
+     the globe and the minimap have to say the same thing the same way. */
+  --route-past: #ff670d;
+  --route-ahead: #926f53;
+  --route-ahead-o: 0.85;
 
   --sans:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
@@ -44,6 +49,9 @@
   --line: #e8e8e8;
   --line-strong: #cfcfcf;
   --map-land: #c9c9c9;
+  --route-past: #e2560a;
+  --route-ahead: #987b60;
+  --route-ahead-o: 0.85;
   color-scheme: light;
 }
 
@@ -58,6 +66,9 @@
     --line: #e8e8e8;
     --line-strong: #cfcfcf;
     --map-land: #c9c9c9;
+    --route-past: #e2560a;
+    --route-ahead: #987b60;
+    --route-ahead-o: 0.85;
     color-scheme: light;
   }
 }

@@ -12,6 +12,30 @@ export const GLOBE: Record<
     dotBase: string;
     dotVisited: string;
     dotCurrent: string;
+    /** The line a leg left behind. Orange loses contrast on a light ground, so
+        light mode gets a deeper one — the same colour, further down. */
+    routePast: string;
+    /**
+     * A leg not yet walked. Warm, so it belongs to the journey rather than the
+     * map, and dull, so it reads as not yet rather than been — neutral ink put it
+     * in the same material as the borders, which is what made it confusing.
+     *
+     * These are the colours BEFORE the opacity below, so they say little on
+     * their own. What lands on the screen is #7f6149 in the dark and #a68d76 in
+     * the light, and both follow one rule: the line already walked steps away
+     * from the ground, the line not yet walked steps back towards it. Which
+     * direction that is flips with the theme — towards black in the dark,
+     * towards white in the light — and getting it the same way round in both is
+     * how the light one came to look like a road already travelled.
+     *
+     * Against the borders (#6f6f6f dark, #757575 light) it is told apart by
+     * warmth, not by weight, so keep some chroma in the mixed value: at 45% the
+     * dark one once landed on #493e38, and a brown with 17 between its channels
+     * is not a brown a person can see. `?tune=1` shows the mixed value and
+     * warns below 25.
+     */
+    routeAhead: string;
+    routeAheadOpacity: number;
   }
 > = {
   dark: {
@@ -21,6 +45,9 @@ export const GLOBE: Record<
     dotBase: '#5a5a5a',
     dotVisited: '#8c8c8c',
     dotCurrent: '#b4b4b4',
+    routePast: '#ff670d',
+    routeAhead: '#926f53',
+    routeAheadOpacity: 0.85,
   },
   light: {
     sphere: '#f3f3f3',
@@ -29,6 +56,9 @@ export const GLOBE: Record<
     dotBase: '#b4b4b4',
     dotVisited: '#8a8a8a',
     dotCurrent: '#5c5c5c',
+    routePast: '#e2560a',
+    routeAhead: '#987b60',
+    routeAheadOpacity: 0.85,
   },
 };
 
