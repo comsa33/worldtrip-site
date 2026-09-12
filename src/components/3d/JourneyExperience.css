@@ -741,6 +741,16 @@
   color: var(--ink-2);
 }
 
+/* the map's makers — city outlines are OpenStreetMap's (ODbL) */
+.scrubber__credit {
+  color: var(--ink-3);
+  text-decoration: none;
+}
+
+.scrubber__credit:hover {
+  color: var(--ink-2);
+}
+
 .stop-rail {
   bottom: 120px;
 }

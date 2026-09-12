@@ -28,6 +28,8 @@ import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd } from './FirstStep';
 import { ZOOM_DEFAULTS, restZooms, zoomAlong, zoomForKm } from './cityZoom';
+import { CityBounds } from './CityBounds';
+import { useOutlines } from './cityOutlines';
 import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { DotGlobe } from './DotGlobe';
@@ -263,6 +265,7 @@ function CityRing({
   hovered,
   ink,
   been: beenColor,
+  handoff,
 }: {
   radius: number;
   state: 'past' | 'next';
@@ -270,6 +273,18 @@ function CityRing({
   ink: string;
   /** the colour of the line already walked — the ring a visited city wears is that line's */
   been: string;
+  /**
+   * The city's outline, when it has one. As the camera comes close enough for
+   * the outline to be read, the ring opens out to the outline's size and
+   * fades, and the outline takes over inside it (see CityBounds).
+   */
+  handoff?: {
+    blend: React.MutableRefObject<Map<string, number>>;
+    city: string;
+    /** the outline's reach in world units, and the marker group's scale, to meet it */
+    reach: number;
+    markerScale: number;
+  };
 }) {
   const ref = useRef<THREE.Mesh>(null);
   const spring = useRef({ s: 1, v: 0 });
@@ -278,16 +293,25 @@ function CityRing({
     if (wasNext.current && state !== 'next') spring.current = { s: 0.45, v: 0 };
     wasNext.current = state === 'next';
   }, [state]);
-  useFrame(() => {
-    const sp = spring.current;
-    if (!ref.current || (Math.abs(1 - sp.s) < 0.002 && Math.abs(sp.v) < 0.002)) return;
-    sp.v += (1 - sp.s) * 0.22;
-    sp.v *= 0.72;
-    sp.s += sp.v;
-    ref.current.scale.setScalar(sp.s);
-  });
   const been = state !== 'next';
   const r = hovered ? radius * 1.3 : radius;
+  const baseOpacity = hovered ? 1 : been ? 0.9 : 0.35;
+  useFrame(() => {
+    const mesh = ref.current;
+    if (!mesh) return;
+    const sp = spring.current;
+    if (Math.abs(1 - sp.s) >= 0.002 || Math.abs(sp.v) >= 0.002) {
+      sp.v += (1 - sp.s) * 0.22;
+      sp.v *= 0.72;
+      sp.s += sp.v;
+    }
+    const k = handoff ? (handoff.blend.current.get(handoff.city) ?? 0) : 0;
+    // opening out: the ring grows to where the outline's edge is, thinning as
+    // it goes, so the outline arrives inside a ring that has become its size
+    const meet = handoff ? handoff.reach / handoff.markerScale / r : 1;
+    mesh.scale.setScalar(sp.s * (1 + (meet - 1) * k));
+    (mesh.material as THREE.MeshBasicMaterial).opacity = baseOpacity * (1 - k) * (1 - k);
+  });
   const thick = been ? 0.24 : 0.16;
   return (
     <Billboard>
@@ -296,7 +320,7 @@ function CityRing({
         <meshBasicMaterial
           color={been ? beenColor : ink}
           transparent
-          opacity={hovered ? 1 : been ? 0.9 : 0.35}
+          opacity={baseOpacity}
           depthWrite={false}
           side={THREE.DoubleSide}
         />
@@ -727,6 +751,11 @@ function Scene({
   const path = useMemo(() => generatePath(stops, cities, 2.003), [stops, cities]);
   const segments = useMemo(() => buildSegments(path), [path]);
   const tuned = useTuning();
+  const widths = TUNE_ON ? tuned : defaults(theme);
+  // every city that is a shape on the map, and how far each has handed over
+  // from its ring to that shape this frame
+  const outlines = useOutlines(cities);
+  const blendRef = useRef(new Map<string, number>());
   // how many path steps the first leg is — what the dot leans along
   const firstLeg = useMemo(() => {
     const i = path.findIndex((p) => p.fromStopId === stops[1]?.id);
@@ -890,6 +919,17 @@ function Scene({
         <LegTooltip leg={hoveredLeg.leg} at={hoveredLeg.at} stops={stops} cities={cities} />
       )}
 
+      {/* Cities as their own outlines, where the camera is close enough to read them */}
+      <CityBounds
+        outlines={outlines}
+        been={(c) => ringFor(c) !== 'next'}
+        hoveredCity={hoveredCity}
+        theme={theme}
+        widthBeen={widths.borderBase}
+        widthAhead={widths.aheadLand}
+        blend={blendRef}
+      />
+
       {/* City markers: one per city, hover-linked with the rail */}
       {cityMarkers.map((m) => {
         const dotProduct = m.position.clone().normalize().dot(position.clone().normalize());
@@ -918,6 +958,16 @@ function Scene({
                 hovered={hovered}
                 ink={INK}
                 been={GLOBE[theme].routePast}
+                handoff={
+                  outlines.has(m.city)
+                    ? {
+                        blend: blendRef,
+                        city: m.city,
+                        reach: outlines.get(m.city)!.reach,
+                        markerScale,
+                      }
+                    : undefined
+                }
               />
             )}
             {/* hit area for hover / click */}

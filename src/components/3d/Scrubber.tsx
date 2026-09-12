@@ -212,6 +212,9 @@ export function Scrubber({
           <span>
             <b>82,100</b> km
           </span>
+          <a className="scrubber__credit" href="https://www.openstreetmap.org/copyright">
+            © OpenStreetMap
+          </a>
         </span>
       </div>
     </div>

@@ -82,7 +82,7 @@ lineWidth={${t.borderActive}}   // 활성
       {num('borderActive', '활성 굵기', 0.5, 6, 0.1)}
 
       <div className="tuner__group">카메라 거리</div>
-      {num('zMax', '가장 가까이', 1, 2.6, 0.05)}
+      {num('zMax', '가장 가까이', 1, 2.3, 0.05)}
       {num('zMin', '가장 멀리', 0, 1.6, 0.05)}
       {num('zSlope', '10배마다 물러남', 0.2, 1.2, 0.05)}
       {num('zNear', '다 당기는 거리 km', 5, 200, 5)}
