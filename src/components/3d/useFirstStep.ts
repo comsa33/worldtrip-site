@@ -7,15 +7,18 @@ import { useEffect, useState, type RefObject } from 'react';
 
 const MOVED_KEY = 'first-move';
 
+// Remembered for this tab only. A reader who comes back tomorrow has forgotten
+// how the page moves as surely as a new one, and the hint costs nothing before
+// the first input — it only ever plays in the pause before the reader acts.
 const readMoved = () => {
   try {
-    return localStorage.getItem(MOVED_KEY) === '1';
+    return sessionStorage.getItem(MOVED_KEY) === '1';
   } catch {
     return false;
   }
 };
 
-/** True once the reader has moved the journey themselves — this visit or any before. */
+/** True once the reader has moved the journey themselves, in this tab. */
 export function useFirstMove(): boolean {
   const [moved, setMoved] = useState(readMoved);
   useEffect(() => {
@@ -23,7 +26,7 @@ export function useFirstMove(): boolean {
     const done = () => {
       setMoved(true);
       try {
-        localStorage.setItem(MOVED_KEY, '1');
+        sessionStorage.setItem(MOVED_KEY, '1');
       } catch {
         /* private mode */
       }
