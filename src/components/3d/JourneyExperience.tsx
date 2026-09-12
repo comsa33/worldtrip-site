@@ -47,7 +47,6 @@ import './JourneyExperience.css';
 const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
 const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
-const ACCENT = '#ff670d';
 
 /**
  * How long the page has to be still before a stop may claim it.
@@ -262,11 +261,14 @@ function CityRing({
   state,
   hovered,
   ink,
+  been: beenColor,
 }: {
   radius: number;
   state: 'past' | 'next';
   hovered: boolean;
   ink: string;
+  /** the colour of the line already walked — the ring a visited city wears is that line's */
+  been: string;
 }) {
   const ref = useRef<THREE.Mesh>(null);
   const spring = useRef({ s: 1, v: 0 });
@@ -291,7 +293,7 @@ function CityRing({
       <mesh ref={ref}>
         <ringGeometry args={[r * (1 - thick), r, 40]} />
         <meshBasicMaterial
-          color={been ? ACCENT : ink}
+          color={been ? beenColor : ink}
           transparent
           opacity={hovered ? 1 : been ? 0.9 : 0.35}
           depthWrite={false}
@@ -1032,7 +1034,13 @@ function Scene({
           <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
             {/* the city the dot is sitting on has no mark of its own; every other city is a ring */}
             {ring !== 'none' && (
-              <CityRing radius={radius} state={ring} hovered={hovered} ink={INK} />
+              <CityRing
+                radius={radius}
+                state={ring}
+                hovered={hovered}
+                ink={INK}
+                been={GLOBE[theme].routePast}
+              />
             )}
             {/* hit area for hover / click */}
             <mesh
