@@ -34,7 +34,6 @@ interface CityPhotoData {
 
 interface PhotoGalleryProps {
   cityName: string | null;
-  photoIds?: string[] | null;
   initialPhotoId?: string | null;
   /** Open straight into the contact sheet instead of a single photo. */
   initialSheet?: boolean;
@@ -90,7 +89,6 @@ function frameWidth(p: Photo, slotW: number, slotH: number): number {
  */
 export default function PhotoGallery({
   cityName,
-  photoIds,
   initialPhotoId,
   initialSheet,
   focusStopId,
@@ -102,13 +100,9 @@ export default function PhotoGallery({
 
   const photos = useMemo(() => {
     if (!cityName || !cityPhotos[cityName]) return [] as Photo[];
-    let list = cityPhotos[cityName].photos;
-    if (photoIds && photoIds.length > 0) {
-      const ids = new Set(photoIds);
-      list = list.filter((p) => ids.has(p.id));
-    }
+    const list = cityPhotos[cityName].photos;
     return [...list].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }, [cityName, photoIds, cityPhotos]);
+  }, [cityName, cityPhotos]);
 
   /* ── the city's stays, in order ─────────────────────────────────────────
      `photos` is already in date order and so are the visits, so each stay is
@@ -132,7 +126,7 @@ export default function PhotoGallery({
   const [index, setIndex] = useState(0);
   // the whole set at once, as a contact sheet — G toggles, a tile opens it there
   const [sheet, setSheet] = useState(Boolean(initialSheet));
-  const openKey = `${cityName}:${initialPhotoId ?? ''}:${photoIds?.join(',') ?? ''}:${initialSheet ? 'sheet' : ''}:${focusStopId ?? ''}`;
+  const openKey = `${cityName}:${initialPhotoId ?? ''}:${initialSheet ? 'sheet' : ''}:${focusStopId ?? ''}`;
   const [lastKey, setLastKey] = useState(openKey);
   if (openKey !== lastKey) {
     // a new open: start at the requested photo (state reset during render, per React guidance)

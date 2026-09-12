@@ -1,8 +1,7 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import * as THREE from 'three';
 import { Html } from '@react-three/drei';
 import cityPhotosData from '../../data/cityPhotos.json';
-import { Camera } from 'lucide-react';
 import { GLOBE, type Theme } from '../../theme';
 
 // =============================================================================
@@ -59,14 +58,12 @@ function PhotoCluster({
   center,
   markerScale,
   cameraPosition,
-  onClick,
   theme,
 }: {
   photos: PhotoPoint[];
   center: THREE.Vector3;
   markerScale: number;
   cameraPosition: THREE.Vector3;
-  onClick: () => void;
   theme: Theme;
 }) {
   const count = photos.length;
@@ -78,42 +75,29 @@ function PhotoCluster({
   const dotProduct = markerDir.dot(cameraDir);
   if (dotProduct < -0.2) return null;
 
-  const isCluster = count > 1;
-  const size = isCluster ? Math.min(0.003 + count * 0.0004, 0.006) : 0.002;
+  // A place where photos were taken says only that: a dot, the size of how
+  // many. It used to be a camera glyph you could click, and it sat one pixel
+  // from the city's own label — two cameras a hair apart, neither of them
+  // 44px, and no way to tell which one you were about to press. The door is
+  // the city label now; this is the map telling you where the pictures are.
+  const px = Math.min(3 + Math.log2(count + 1) * 0.9, 6.5);
 
-  // A place where photos were taken draws no mark of its own: the city's ring
-  // is already there, and two rings a few pixels apart read as a bug. What
-  // says "photos here" is the camera glyph, which is also the thing to click.
-  //
-  // The Html wrapper lets clicks through: it is a box around a glyph, and it
-  // was sitting over the city labels and eating their clicks. Only the glyph
-  // itself takes the pointer.
   return (
     <group position={center} scale={[markerScale, markerScale, markerScale]}>
-      {dotProduct > 0.5 && (
-        <Html center position={[0, size + 0.008, 0]} style={{ pointerEvents: 'none' }}>
-          <button
-            type="button"
-            onClick={onClick}
-            aria-label={`${count} photos`}
+      {dotProduct > 0.4 && (
+        <Html center style={{ pointerEvents: 'none' }}>
+          <span
+            aria-hidden="true"
             style={{
-              pointerEvents: 'auto',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '3px',
-              padding: '2px 4px',
-              color: INK_2,
-              fontFamily: 'var(--mono)',
-              fontSize: '10px',
-              lineHeight: 1,
-              whiteSpace: 'nowrap',
-              cursor: 'pointer',
-              textShadow: '0 0 2px var(--bg), 0 1px 2px var(--bg)',
+              display: 'block',
+              width: `${px.toFixed(1)}px`,
+              height: `${px.toFixed(1)}px`,
+              borderRadius: '50%',
+              background: INK_2,
+              opacity: 0.5,
+              boxShadow: '0 0 0 1.5px var(--bg)',
             }}
-          >
-            <Camera size={10} strokeWidth={1.75} />
-            {isCluster && <span>{count}</span>}
-          </button>
+          />
         </Html>
       )}
     </group>
@@ -130,7 +114,6 @@ export function PhotoMarkers({
   cities,
   cameraPosition,
   zoomScale,
-  onPhotoClusterClick,
   theme,
 }: {
   currentStopIdx: number;
@@ -138,7 +121,6 @@ export function PhotoMarkers({
   cities: Record<string, CityData>;
   cameraPosition: THREE.Vector3;
   zoomScale: number;
-  onPhotoClusterClick: (cityName: string, photoIds: string[]) => void;
   theme: Theme;
 }) {
   // Get the set of visited city names (cities the traveler has reached)
@@ -256,13 +238,6 @@ export function PhotoMarkers({
 
   const markerScale = 1 / Math.max(zoomScale, 0.5);
 
-  const handleClusterClick = useCallback(
-    (cityName: string, photoIds: string[]) => {
-      onPhotoClusterClick(cityName, photoIds);
-    },
-    [onPhotoClusterClick]
-  );
-
   return (
     <>
       {clusteredPhotos.map((cluster, idx) => (
@@ -273,12 +248,6 @@ export function PhotoMarkers({
           markerScale={markerScale}
           cameraPosition={cameraPosition}
           theme={theme}
-          onClick={() =>
-            handleClusterClick(
-              cluster.cityName,
-              cluster.photos.map((p) => p.id)
-            )
-          }
         />
       ))}
     </>

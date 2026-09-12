@@ -754,7 +754,6 @@ function Scene({
   isUserInteracting,
   onInteraction,
   onCityClick,
-  onPhotoClusterClick,
   hoveredCity,
   onHoverCity,
   onSelectCity,
@@ -770,7 +769,6 @@ function Scene({
   isUserInteracting: boolean;
   onInteraction: () => void;
   onCityClick: (cityName: string) => void;
-  onPhotoClusterClick: (cityName: string, photoIds: string[]) => void;
   hoveredCity: string | null;
   onHoverCity: (cityName: string | null) => void;
   onSelectCity: (cityName: string) => void;
@@ -962,7 +960,14 @@ function Scene({
                   onClick={isCurrent && hasPhotos ? () => onCityClick(m.city) : undefined}
                 >
                   {m.name}
-                  {isCurrent && hasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
+                  {isCurrent && hasPhotos && (
+                    <>
+                      <CameraIcon size={11} strokeWidth={1.75} />
+                      <span className="city-label__n mono">
+                        {photosForStop(stops[currentStopIdx]?.id).length}
+                      </span>
+                    </>
+                  )}
                 </div>
               </Html>
             )}
@@ -976,7 +981,6 @@ function Scene({
         cities={cities}
         cameraPosition={position}
         zoomScale={zoomScale}
-        onPhotoClusterClick={onPhotoClusterClick}
         theme={theme}
       />
       <Camera
@@ -1242,7 +1246,6 @@ function JourneyExperienceContent() {
   const [zoom, setZoom] = useState(0);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[] | null>(null);
   const [sheetFirst, setSheetFirst] = useState(false);
   const [focusStopId, setFocusStopId] = useState<number | null>(null);
   const [initialPhotoId, setInitialPhotoId] = useState<string | null>(null);
@@ -1399,7 +1402,6 @@ function JourneyExperienceContent() {
   // them. The filmstrip is the other door: it opens on the frame you clicked.
   const handleCityClick = (cityName: string) => {
     setSelectedCity(cityName);
-    setSelectedPhotoIds(null);
     setInitialPhotoId(null);
     setFocusStopId(city?.id ?? null);
     setSheetFirst(true);
@@ -1410,21 +1412,9 @@ function JourneyExperienceContent() {
   // than in a shuffle of both.
   const handleOpenPhoto = (cityName: string, photoId: string) => {
     setSelectedCity(cityName);
-    setSelectedPhotoIds(null);
     setInitialPhotoId(photoId);
     setFocusStopId(city?.id ?? null);
     setSheetFirst(false);
-  };
-
-  // From a camera on the globe: that place's photos, as a contact sheet. The
-  // mark already speaks in counts, so a single photo would say less than the
-  // number did.
-  const handlePhotoClusterClick = (cityName: string, photoIds: string[]) => {
-    setSelectedCity(cityName);
-    setSelectedPhotoIds(photoIds);
-    setInitialPhotoId(null);
-    setFocusStopId(null);
-    setSheetFirst(true);
   };
 
   /* ── the opening ─────────────────────────────────────────────────────────
@@ -1460,7 +1450,6 @@ function JourneyExperienceContent() {
 
   const handleCloseGallery = useCallback(() => {
     setSelectedCity(null);
-    setSelectedPhotoIds(null);
     setInitialPhotoId(null);
     setSheetFirst(false);
     setFocusStopId(null);
@@ -1743,7 +1732,6 @@ function JourneyExperienceContent() {
             isUserInteracting={isUserInteracting}
             onInteraction={handleUserInteraction}
             onCityClick={handleCityClick}
-            onPhotoClusterClick={handlePhotoClusterClick}
             hoveredCity={hoveredCity}
             onHoverCity={setHoveredCity}
             onSelectCity={goToCity}
@@ -1843,7 +1831,6 @@ function JourneyExperienceContent() {
       {/* Photo gallery overlay */}
       <PhotoGallery
         cityName={selectedCity}
-        photoIds={selectedPhotoIds}
         initialPhotoId={initialPhotoId}
         initialSheet={sheetFirst}
         focusStopId={focusStopId}

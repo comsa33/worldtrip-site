@@ -1000,3 +1000,14 @@
     display: none;
   }
 }
+
+/* how many photos this stay has — the camera alone never read as a door */
+.city-label__n {
+  font-size: 10px;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+}
+
+.city-label--link:hover .city-label__n {
+  color: var(--ink);
+}
