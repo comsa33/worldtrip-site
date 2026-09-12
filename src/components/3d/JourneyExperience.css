@@ -1134,22 +1134,25 @@
   }
 
   /* Out of the way of the opening story and the rail's sheet, exactly as the
-     world map goes (see .minimap above) — one screen, one thing on it. */
+     world map goes (see .minimap above) — one screen, one thing on it.
+     A city's note is not the opening: it comes and goes at every stop, and a
+     map that ducked out for each one read as a blink, not as deference. The
+     opening happens once, so it still gets the screen to itself. */
   .journey-experience:has(.stop-rail--sheet.is-open) .country-inset {
     display: none;
   }
 
-  .journey-experience:has(.about-overlay) .country-inset {
+  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .country-inset {
     opacity: 0;
     pointer-events: none;
   }
 
-  .journey-experience:has(.about-overlay.is-done) .country-inset {
+  .journey-experience:has(.about-overlay.is-done:not(.about-overlay--note)) .country-inset {
     opacity: 0.4;
     pointer-events: auto;
   }
 
-  .journey-experience:has(.about-overlay) .country-inset.is-open {
+  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .country-inset.is-open {
     opacity: 1;
   }
 }
@@ -1263,34 +1266,40 @@
     right: 20px;
   }
 
-  /* While the opening story is up on a phone, give it the screen: rail and minimap step aside */
-  .journey-experience:has(.about-overlay) .stop-rail,
+  /* While the opening story is up on a phone, give it the screen: rail and
+     minimap step aside. A city's note is not the opening — it comes and goes at
+     every stop, and the rail leaving for each one read as a blink, so it stays. */
+  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .stop-rail,
   .journey-experience:has(.stop-rail--sheet.is-open) .minimap {
     display: none;
   }
 
   /*
-   * A phone has one screen and the city's note wants all of it, so the map gets
-   * out of the way while the hand is writing. But it used to leave for good —
-   * gone for as long as the note stood, which on a city with something to say is
-   * until the reader moves, and they had no way of knowing it was still there.
+   * A phone has one screen and the opening story wants all of it, so the map
+   * gets out of the way while the hand is writing. But it used to leave for
+   * good — gone for as long as the words stood, and the reader had no way of
+   * knowing it was still there.
    *
    * So it waits for the last letter and then comes back faint: enough to say
-   * where in the world this is, light enough to read the note straight through.
-   * Opened by a tap it is the thing being used, and comes back to full.
+   * where in the world this is, light enough to read the words straight
+   * through. Opened by a tap it is the thing being used, and comes back to full.
+   *
+   * The opening only happens once. A city's note happens at every stop, and a
+   * map that ducked out and faded back for each one read as a blink — so notes
+   * are excluded (.about-overlay--note) and the maps simply stay put.
    */
-  .journey-experience:has(.about-overlay) .minimap {
+  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .minimap {
     opacity: 0;
     pointer-events: none;
   }
 
-  .journey-experience:has(.about-overlay.is-done) .minimap {
+  .journey-experience:has(.about-overlay.is-done:not(.about-overlay--note)) .minimap {
     opacity: 0.4;
     pointer-events: auto;
   }
 
   /* opened, it is the thing being used, and comes back to full ink */
-  .journey-experience:has(.about-overlay) .minimap.is-open {
+  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .minimap.is-open {
     opacity: 1;
   }
 

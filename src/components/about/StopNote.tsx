@@ -66,7 +66,7 @@ export default function StopNote({
   };
 
   return (
-    <div className={`about-overlay${leaving ? ' is-away' : ''}`} ref={ref}>
+    <div className={`about-overlay about-overlay--note${leaving ? ' is-away' : ''}`} ref={ref}>
       <NoteCard note={note} />
     </div>
   );
