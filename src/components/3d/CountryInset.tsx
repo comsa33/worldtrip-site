@@ -145,9 +145,11 @@ export function CountryInset({
    * able to reach a place the reader can see; a rail built only from drawn legs
    * would strand Madrid.
    */
-  const rail = useMemo(() => {
+  const { rail, mark } = useMemo(() => {
     const out: { x: number; y: number; a: number; b: number }[] = [];
-    if (mine.length === 1) return [{ x: mine[0].x, y: mine[0].y, a: 0, b: 0 }];
+    // where along the rail each stop stands, so the aim can start from one
+    const mark: number[] = [];
+    if (mine.length === 1) return { rail: [{ x: mine[0].x, y: mine[0].y, a: 0, b: 0 }], mark: [0] };
     for (let i = 0; i < mine.length - 1; i++) {
       const a = mine[i];
       const b = mine[i + 1];
@@ -155,6 +157,7 @@ export function CountryInset({
       // the journey left and came back to the same place: nothing to walk along
       if (span < 1) continue;
       const steps = Math.max(1, Math.ceil(span / SAMPLE));
+      mark[i] = out.length;
       for (let s = 0; s <= steps; s++) {
         out.push({
           x: a.x + ((b.x - a.x) * s) / steps,
@@ -163,11 +166,27 @@ export function CountryInset({
           b: i + 1,
         });
       }
+      mark[i + 1] = out.length - 1;
     }
-    return out;
+    return { rail: out, mark };
   }, [mine]);
 
   const here = mine.find((m) => m.idx === currentStopIdx) ?? mine[mine.length - 1];
+
+  /**
+   * Where the reader already is, as a share of the map's width — the place the
+   * aim starts from.
+   *
+   * A stop whose every leg was a return to the same spot has no mark of its own;
+   * the nearest one that does is the same place on the map anyway.
+   */
+  const anchorAcross = useMemo(() => {
+    if (rail.length < 2 || !here) return 0.5;
+    const k = mine.indexOf(here);
+    let at = mark[k];
+    for (let d = 1; at === undefined && d < mine.length; d++) at = mark[k - d] ?? mark[k + d];
+    return 1 - (at ?? 0) / (rail.length - 1);
+  }, [rail.length, mark, mine, here]);
 
   /* ── whether it is wanted at all ────────────────────────────────────────── */
   const [aspect, setAspect] = useState(16 / 10);
@@ -240,6 +259,8 @@ export function CountryInset({
   const openTimer = useRef(0);
   const moveRaf = useRef(0);
   const lastX = useRef<number | null>(null);
+  /** where the hand was when it took hold, and where the reader was then */
+  const grip = useRef<{ x: number; across: number } | null>(null);
   const byTouch = useRef(false);
 
   const paintAim = useCallback(
@@ -291,6 +312,7 @@ export function CountryInset({
     const away = (e: PointerEvent) => {
       if (!svgRef.current?.contains(e.target as Node)) {
         onOpenChange(false);
+        grip.current = null;
         paintAim(null);
       }
     };
@@ -318,14 +340,31 @@ export function CountryInset({
     return () => kinds.forEach((k) => el.removeEventListener(k, keep));
   }, []);
 
+  /**
+   * Where on the route the hand is — counted FROM where the reader already
+   * stands, not from the left edge of the map.
+   *
+   * Read absolutely, the ring jumped somewhere unrelated the instant a finger
+   * landed, and the journey the reader was on had nothing to do with where the
+   * hand happened to touch down. A gesture carries on from where it was put
+   * down; that is the whole of it.
+   *
+   * The map's width is still the whole country, so the hand moves at the same
+   * rate it always did — it simply starts counting from here. Reaching an end
+   * from near the same end means running out of map, and a finger can carry on
+   * past the edge (the pointer is captured); a cursor leaves and the map shuts,
+   * which is its own way of starting over. Left is the road ahead and right the
+   * road behind, the world minimap's reading, and not a per-country one.
+   */
   const aimAt = (clientX: number): Aim | null => {
     const r = svgRef.current?.getBoundingClientRect();
     if (!r || rail.length === 0) return null;
-    // Left is the road ahead, right is the road behind — the world minimap's
-    // reading, and not a per-country one. It read the journey's own direction
-    // once and that is the answer everywhere: two maps on one screen that
-    // answer the same push differently are two things to learn.
-    const u = 1 - Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    const hold = grip.current ?? { x: clientX, across: anchorAcross };
+    const x = clientX - r.left;
+    const at = hold.x - r.left;
+    const a0 = hold.across;
+    const across = a0 + (x - at) / r.width;
+    const u = 1 - Math.max(0, Math.min(1, across));
     if (rail.length === 1) return { x: rail[0].x, y: rail[0].y, stop: nearestVisit(mine[0]) };
     const f = u * (rail.length - 1);
     const i = Math.min(rail.length - 2, Math.floor(f));
@@ -333,13 +372,13 @@ export function CountryInset({
     const p = rail[i];
     const q = rail[i + 1];
     const joined = p.a === q.a;
-    const x = joined ? p.x + (q.x - p.x) * t : p.x;
-    const y = joined ? p.y + (q.y - p.y) * t : p.y;
+    const px = joined ? p.x + (q.x - p.x) * t : p.x;
+    const py = joined ? p.y + (q.y - p.y) * t : p.y;
     const a = mine[p.a];
     const b = mine[p.b];
-    const da = (a.x - x) ** 2 + (a.y - y) ** 2;
-    const db = (b.x - x) ** 2 + (b.y - y) ** 2;
-    return { x, y, stop: nearestVisit(da <= db ? a : b) };
+    const da = (a.x - px) ** 2 + (a.y - py) ** 2;
+    const db = (b.x - px) ** 2 + (b.y - py) ** 2;
+    return { x: px, y: py, stop: nearestVisit(da <= db ? a : b) };
   };
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -349,6 +388,7 @@ export function CountryInset({
     // painting waits for a frame, and a lift landing on last frame's aim is a
     // lift landing on the stop next door
     lastX.current = clientX;
+    if (!grip.current) grip.current = { x: clientX, across: anchorAcross };
     if (moveRaf.current) return;
     moveRaf.current = requestAnimationFrame(() => {
       moveRaf.current = 0;
@@ -358,6 +398,8 @@ export function CountryInset({
 
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    // a new hold starts where it starts, wherever the last one ended
+    grip.current = null;
     if (e.pointerType === 'touch') {
       try {
         e.currentTarget.setPointerCapture(e.pointerId);
@@ -376,11 +418,13 @@ export function CountryInset({
     if (e.pointerType === 'touch') return;
     window.clearTimeout(openTimer.current);
     onOpenChange(false);
+    grip.current = null;
     paintAim(null);
   };
 
   const commit = (a: Aim | null) => {
     if (byTouch.current) onOpenChange(false);
+    grip.current = null;
     paintAim(null);
     if (a) onSelect(a.stop);
   };

@@ -135,27 +135,43 @@ export function Minimap({
    * moves sideways still travels the whole journey. The stop it would land on
    * is the nearer end of whichever leg the point fell on.
    */
-  const rail = useMemo(() => {
+  const { rail, mark } = useMemo(() => {
     const out: { x: number; y: number; leg: number }[] = [];
-    if (typeof document === 'undefined') return out;
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    svg.appendChild(path);
+    // where along the rail each stop stands, so the aim can start from one
+    const mark: number[] = [];
+    const svg =
+      typeof document === 'undefined'
+        ? null
+        : document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const path = svg && document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    if (svg && path) svg.appendChild(path);
     data.legs.forEach((d, leg) => {
+      if (!path) return;
       path.setAttribute('d', d);
       const total = path.getTotalLength();
       const steps = Math.max(1, Math.ceil(total / SAMPLE));
+      mark[leg] = out.length;
       for (let i = 0; i <= steps; i++) {
         const pt = path.getPointAtLength((total * i) / steps);
         out.push({ x: pt.x, y: pt.y, leg });
       }
+      mark[leg + 1] = out.length - 1;
     });
-    return out;
+    return { rail: out, mark };
   }, []);
+
+  /** where the reader already is, as a share of the map's width */
+  const anchorAcross = useMemo(() => {
+    if (rail.length < 2) return 0.5;
+    const at = mark[currentStopIdx] ?? rail.length - 1;
+    return 1 - at / (rail.length - 1);
+  }, [rail.length, mark, currentStopIdx]);
 
   const setOpen = onOpenChange;
   const openTimer = useRef(0);
   const moveRaf = useRef(0);
+  /** where the hand was when it took hold, and where the reader was then */
+  const grip = useRef<{ x: number; across: number } | null>(null);
   const byTouch = useRef(false);
 
   /**
@@ -225,6 +241,7 @@ export function Minimap({
     const away = (e: PointerEvent) => {
       if (!svgRef.current?.contains(e.target as Node)) {
         setOpen(false);
+        grip.current = null;
         paintAim(null);
       }
     };
@@ -260,6 +277,8 @@ export function Minimap({
   // a mouse resting on it opens it; a finger has no resting, so its tap does
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    // a new hold starts where it starts, wherever the last one ended
+    grip.current = null;
     // A finger that slides is a drag, and a drag the element has not claimed is
     // the browser's to cancel — which it did, quietly, so the aim was drawn all
     // the way and then went nowhere on the lift. Claiming it keeps the moves and
@@ -284,6 +303,7 @@ export function Minimap({
     if (e.pointerType === 'touch') return;
     window.clearTimeout(openTimer.current);
     setOpen(false);
+    grip.current = null;
     paintAim(null);
   };
 
@@ -304,11 +324,23 @@ export function Minimap({
    *
    * No search: the samples are evenly spaced, so this is an index and a
    * fraction, and the mark slides between two of them rather than stepping.
+   *
+   * And it is counted FROM where the reader already stands. Read from the left
+   * edge instead, the ring jumped three months away the instant a hand landed
+   * on the map, which is not what a hand put down on a place is asking for —
+   * a gesture carries on from where it was put down. The width still spans the
+   * whole journey, so the hand moves at the rate it always did; it simply starts
+   * counting from here.
    */
   const aimAt = (clientX: number): Aim | null => {
     const r = svgRef.current?.getBoundingClientRect();
     if (!r || rail.length < 2) return null;
-    const u = 1 - Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    const hold = grip.current ?? { x: clientX, across: anchorAcross };
+    const hx = clientX - r.left;
+    const at = hold.x - r.left;
+    const a0 = hold.across;
+    const across = a0 + (hx - at) / r.width;
+    const u = 1 - Math.max(0, Math.min(1, across));
     const f = u * (rail.length - 1);
     const i = Math.min(rail.length - 2, Math.floor(f));
     const t = f - i;
@@ -328,6 +360,7 @@ export function Minimap({
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
     const { clientX } = e;
+    if (!grip.current) grip.current = { x: clientX, across: anchorAcross };
     if (moveRaf.current) return;
     moveRaf.current = requestAnimationFrame(() => {
       moveRaf.current = 0;
@@ -338,6 +371,7 @@ export function Minimap({
   const commit = (a: Aim | null) => {
     // a finger is done with it; a mouse is still resting on it and may pick again
     if (byTouch.current) setOpen(false);
+    grip.current = null;
     paintAim(null);
     if (a) onSelect(a.stop);
   };
