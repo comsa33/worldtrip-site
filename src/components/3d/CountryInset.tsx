@@ -169,24 +169,6 @@ export function CountryInset({
 
   const here = mine.find((m) => m.idx === currentStopIdx) ?? mine[mine.length - 1];
 
-  /**
-   * Which way the hand pushes the ring forwards.
-   *
-   * The ring follows the hand — that is the whole rule, and it is the world
-   * map's too. All that changes is which end of the line is on the left, and a
-   * country answers that for itself: this is the slope of the stops' sideways
-   * position against their order, so a route that drifts east reads left to
-   * right and one that drifts west reads right to left. A route that comes back
-   * where it started (Vietnam is Ho Chi Minh, Da Nang, Ho Chi Minh) has no
-   * answer, and neither sign is wrong for it.
-   */
-  const forwardIsRight = useMemo(() => {
-    if (mine.length < 2) return true;
-    const mid = (mine.length - 1) / 2;
-    const mx = mine.reduce((sum, m) => sum + m.x, 0) / mine.length;
-    return mine.reduce((cov, m, i) => cov + (i - mid) * (m.x - mx), 0) >= 0;
-  }, [mine]);
-
   /* ── whether it is wanted at all ────────────────────────────────────────── */
   const [aspect, setAspect] = useState(16 / 10);
   useEffect(() => {
@@ -339,8 +321,11 @@ export function CountryInset({
   const aimAt = (clientX: number): Aim | null => {
     const r = svgRef.current?.getBoundingClientRect();
     if (!r || rail.length === 0) return null;
-    const across = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
-    const u = forwardIsRight ? across : 1 - across;
+    // Left is the road ahead, right is the road behind — the world minimap's
+    // reading, and not a per-country one. It read the journey's own direction
+    // once and that is the answer everywhere: two maps on one screen that
+    // answer the same push differently are two things to learn.
+    const u = 1 - Math.max(0, Math.min(1, (clientX - r.left) / r.width));
     if (rail.length === 1) return { x: rail[0].x, y: rail[0].y, stop: nearestVisit(mine[0]) };
     const f = u * (rail.length - 1);
     const i = Math.min(rail.length - 2, Math.floor(f));
