@@ -27,6 +27,7 @@ import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd } from './FirstStep';
+import { ZOOM_DEFAULTS, restZooms, zoomAlong, zoomForKm } from './cityZoom';
 import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { DotGlobe } from './DotGlobe';
@@ -583,151 +584,6 @@ function TravelPath({
   );
 }
 
-// Progressive zoom logic:
-// - Start: Gwangju(1) very zoomed in → Incheon(2) zooming out → flight = fully out
-// - India 1st: Chennai(16)→Mumbai(22) zoom in, Mumbai(22)→Varanasi(28) zoom out, Sonoli(29)=snap out
-// - Italy: Milan(51)→La Spezia(56) zoom in, back to Milan(62)=snap out
-// 도시별 카메라 줌(0 = 완전히 축소, 2.2 = 최대 접근).
-// 예전에는 stop id 기준으로 하드코딩돼 있었다. stop을 추가하거나 순서를 바꾸면
-// 값이 통째로 다른 도시에 걸려 카메라가 엉뚱한 배율로 튀었다. 도시 이름을 키로 잡아
-// 번호와 무관하게 만들고, 같은 도시를 다시 방문해도 배율이 흔들리지 않게 한다.
-const CITY_ZOOM: Record<string, number> = {
-  광주: 1.7,
-  인천: 1.7,
-  호치민: 0,
-  다낭: 1,
-  쿠알라룸푸르: 1,
-  메단: 1.5,
-  뚝뚝섬: 2,
-  시엠립: 1.5,
-  방콕: 2,
-  비엔티안: 2,
-  방비엥: 2,
-  루앙프라방: 2,
-  우돈타니: 2,
-  첸나이: 1.3,
-  퐁디셰리: 1.7,
-  벵갈루루: 1.9,
-  함피: 2,
-  뭄바이: 2,
-  아우랑가바드: 2,
-  나그푸르: 1.7,
-  자발푸르: 1.7,
-  콜카타: 1.7,
-  러크나우: 1.7,
-  아그라: 1.8,
-  뉴델리: 1.8,
-  도쿄: 0,
-  프라야그라지: 1.8,
-  바라나시: 1.8,
-  고라크푸르: 1.8,
-  소놀리: 1.8,
-  싯다르타나가르: 2.2,
-  포카라: 2.2,
-  안나푸르나: 2.2,
-  카트만두: 2.2,
-  박타푸르: 2.2,
-  두바이: 1.3,
-  아부다비: 2.2,
-  샤르자: 2.2,
-  카이로: 1.3,
-  다합: 1.7,
-  바르셀로나: 1.5,
-  시체스: 2.2,
-  몬세라트: 1.5,
-  소피아: 2,
-  베오그라드: 2,
-  부다페스트: 2,
-  레트샤그: 2,
-  야블론카: 2,
-  크라쿠프: 2,
-  프라하: 2,
-  베르가모: 1.8,
-  밀라노: 1.8,
-  토리노: 2.2,
-  '오르타 호수': 2.2,
-  칸노비오: 2.2,
-  피사: 2.2,
-  제노바: 2.2,
-  포르토피노: 2.2,
-  친퀘테레: 2.2,
-  라스페치아: 2.2,
-  브라: 2.2,
-  사보나: 2.2,
-  브뤼셀: 2,
-  파리: 1.5,
-  마드리드: 1.5,
-  마라케쉬: 1.5,
-  카사블랑카: 1.5,
-  리스본: 1.5,
-  신트라: 1.5,
-  리우데자네이루: 1.1,
-  부지오스: 2.0,
-  아라이알두카부: 2.0,
-  앙그라도스헤이스: 2.1,
-  '일랴 그란지 섬': 2.2,
-  파라티: 2.1,
-  우바투바: 2,
-  '사웅 세바스치앙': 2,
-  카라구아타투바: 2,
-  산토스: 2,
-  상파울로: 1.7,
-  쿠리치바: 1.7,
-  나베간치스: 1.7,
-  상조제: 2,
-  봄비냐스: 1.9,
-  플로리아노폴리스: 2,
-  '과르다 두 엠바우': 2,
-  가로파바: 2,
-  임비투바: 2,
-  라구나: 2,
-  '이과수 폭포': 1.5,
-  포사다스: 1.5,
-  부에노스아이레스: 1.6,
-  차스코무스: 2.0,
-  몬테비데오: 1.6,
-  산티아고: 1.3,
-  발파라이소: 1.5,
-  '바히아 잉글레사': 1.5,
-  '산 페드로 데 아타카마': 2,
-  '라구나 베르데': 2,
-  '살바도르 달리 사막': 2,
-  우유니: 2,
-  포토시: 2,
-  수크레: 2,
-  엘알토: 2,
-  코파카바나: 2,
-  푸노: 2,
-  줄리아카: 2,
-  쿠스코: 2,
-  마추픽추: 2,
-  리마: 1.5,
-  피우라: 1.7,
-  국경: 1.7,
-  쿠엔카: 1.8,
-  '카하스 국립공원': 1.8,
-  바뇨스: 1.8,
-  푸힐리: 1.8,
-  키토: 1.8,
-  툴칸: 1.8,
-  이피알레스: 1.8,
-  파스토: 1.8,
-  칼리: 1.5,
-  메데진: 1.5,
-  과타페: 1.5,
-  카르타헤나: 1.7,
-  바랑키야: 1,
-  산타마르타: 1.7,
-};
-
-const STOP_CITY: Record<number, string> = Object.fromEntries(
-  journeyData.stops.map((s) => [s.id, s.city])
-);
-
-function getProgressiveZoom(stopId: number): number {
-  return CITY_ZOOM[STOP_CITY[stopId]] ?? 0;
-}
-
 function Camera({
   target,
   zoom,
@@ -764,9 +620,13 @@ function Camera({
   }, [target, zoom, isUserInteracting, progressiveZoom]);
 
   useFrame(() => {
-    // Only auto-follow when not interacting
+    // Only auto-follow when not interacting. The turn towards a city and the
+    // change of distance are eased apart: the turn is quick, the distance is
+    // slow — a zoom that takes its time is a zoom the stomach does not notice.
     if (!isUserInteracting) {
-      camera.position.lerp(cameraTarget.current, 0.15);
+      const wantDist = cameraTarget.current.length();
+      const dist = camera.position.length() + (wantDist - camera.position.length()) * 0.05;
+      camera.position.lerp(cameraTarget.current, 0.15).setLength(dist);
     }
     camera.lookAt(0, 0, 0);
   });
@@ -866,6 +726,7 @@ function Scene({
 
   const path = useMemo(() => generatePath(stops, cities, 2.003), [stops, cities]);
   const segments = useMemo(() => buildSegments(path), [path]);
+  const tuned = useTuning();
   // how many path steps the first leg is — what the dot leans along
   const firstLeg = useMemo(() => {
     const i = path.findIndex((p) => p.fromStopId === stops[1]?.id);
@@ -893,17 +754,39 @@ function Scene({
     };
   }, [path, pathIdx]);
 
-  // The camera's distance is each city's own, but between two cities it is
-  // never one or the other: it runs from the one left to the one ahead across
-  // the middle of the leg, level at both ends. A step here — the label's 15%
-  // flip — was the lurch in and out on every stop.
+  // How close the camera stands comes from the journey's own distances (see
+  // cityZoom.ts): each stop rests at a zoom, each leg is travelled at its own,
+  // and between them the value runs level–out–in–level, never a step.
+  const zoomParams = useMemo(
+    () =>
+      TUNE_ON
+        ? {
+            zMax: tuned.zMax,
+            zMin: tuned.zMin,
+            slope: tuned.zSlope,
+            near: tuned.zNear,
+            hold: tuned.zHold,
+          }
+        : ZOOM_DEFAULTS,
+    [tuned.zMax, tuned.zMin, tuned.zSlope, tuned.zNear, tuned.zHold]
+  );
+  const legsKm = useMemo(
+    () => stops.slice(1).map((st, i) => haversineKm(cities[stops[i].city], cities[st.city])),
+    [stops, cities]
+  );
+  const rest = useMemo(() => restZooms(legsKm, zoomParams), [legsKm, zoomParams]);
+  const stopIndex = useMemo(() => new Map(stops.map((st, i) => [st.id, i])), [stops]);
   const legZoom = useMemo(() => {
-    const a = getProgressiveZoom(fromStopId);
-    const b = getProgressiveZoom(toStopId);
-    const t = Math.max(0, Math.min(1, (segProgress - 0.15) / 0.7));
-    const k = t * t * (3 - 2 * t);
-    return a + (b - a) * k;
-  }, [fromStopId, toStopId, segProgress]);
+    const a = stopIndex.get(fromStopId) ?? 0;
+    const b = stopIndex.get(toStopId) ?? a;
+    const travel = zoomForKm(legsKm[a] ?? 0, zoomParams);
+    return zoomAlong(
+      rest[a] ?? zoomParams.zMax,
+      travel,
+      rest[b] ?? rest[a] ?? zoomParams.zMax,
+      segProgress
+    );
+  }, [stopIndex, fromStopId, toStopId, legsKm, rest, zoomParams, segProgress]);
 
   /*
    * What ring a city wears follows the dot's actual position, not the label
@@ -933,13 +816,8 @@ function Scene({
     return Math.max(stopIdx, 0);
   }, [stops, displayStopId]);
 
-  // Calculate zoom scale for markers (inverse of progressive zoom)
-  const zoomScale = useMemo(() => {
-    const progressiveZoom = getProgressiveZoom(displayStopId);
-    // Convert zoom level to scale: higher zoom = smaller scale
-    // 0 zoom = scale 1, 2 zoom = scale ~0.5
-    return 1 + progressiveZoom * 0.5;
-  }, [displayStopId]);
+  // Marker size follows the camera's distance: closer camera, smaller marker
+  const zoomScale = 1 + legZoom * 0.5;
 
   // One marker per city. State: current, from (departure of the leg in progress), past, or next.
   const cityMarkers = useMemo(() => {

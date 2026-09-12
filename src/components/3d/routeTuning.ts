@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { GLOBE, type Theme } from '../../theme';
+import { ZOOM_DEFAULTS } from './cityZoom';
 
 /**
  * A bench for the route's two tenses. Dev only — `?tune=1` — and not shipped.
@@ -22,6 +23,12 @@ export type Tuning = {
   aheadOpacity: number;
   borderBase: number;
   borderActive: number;
+  /** the camera's distance curve — see cityZoom.ts */
+  zMax: number;
+  zMin: number;
+  zSlope: number;
+  zNear: number;
+  zHold: number;
 };
 
 export const TUNE_ON =
@@ -41,6 +48,11 @@ export function defaults(theme: Theme): Tuning {
     aheadOpacity: GLOBE[theme].routeAheadOpacity,
     borderBase: 1.5,
     borderActive: 2.2,
+    zMax: ZOOM_DEFAULTS.zMax,
+    zMin: ZOOM_DEFAULTS.zMin,
+    zSlope: ZOOM_DEFAULTS.slope,
+    zNear: ZOOM_DEFAULTS.near,
+    zHold: ZOOM_DEFAULTS.hold,
   };
 }
 

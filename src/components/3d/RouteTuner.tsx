@@ -37,6 +37,9 @@ const trail = (transport: string) =>
   transport === 'flight'
     ? { width: ${t.pastAir}, opacity: ${t.pastAirOpacity} }
     : { width: ${t.pastLand}, opacity: ${t.pastLandOpacity} };
+// src/components/3d/cityZoom.ts
+export const ZOOM_DEFAULTS = { zMax: ${t.zMax}, zMin: ${t.zMin}, slope: ${t.zSlope}, near: ${t.zNear}, hold: ${t.zHold} };
+
 const trailAhead = (transport: string) =>
   transport === 'flight' ? ${t.aheadAir} : ${t.aheadLand};
 
@@ -77,6 +80,13 @@ lineWidth={${t.borderActive}}   // 활성
       <div className="tuner__group">국경선</div>
       {num('borderBase', '일반 굵기', 0.5, 5, 0.1)}
       {num('borderActive', '활성 굵기', 0.5, 6, 0.1)}
+
+      <div className="tuner__group">카메라 거리</div>
+      {num('zMax', '가장 가까이', 1, 2.6, 0.05)}
+      {num('zMin', '가장 멀리', 0, 1.6, 0.05)}
+      {num('zSlope', '10배마다 물러남', 0.2, 1.2, 0.05)}
+      {num('zNear', '다 당기는 거리 km', 5, 200, 5)}
+      {num('zHold', '무시하는 차이', 0, 0.6, 0.05)}
 
       <div className="tuner__group">화면에 찍히는 값</div>
       <div className="tuner__swatches">
