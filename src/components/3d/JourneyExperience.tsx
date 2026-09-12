@@ -45,6 +45,29 @@ const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
 const ACCENT = '#ff670d';
 
+/**
+ * How long the page has to be still before a stop may claim it.
+ *
+ * This has a ceiling the mark sets, not taste. The scene rides a critically
+ * damped spring (K below), which takes 470–780ms to come to rest depending on
+ * how hard the page was thrown, and the mark bounces when it lands — a bounce
+ * that restarts rather than catches. Fire after the mark has already landed and
+ * it lands a second time. Staying well under that keeps the snap inside the one
+ * movement, so the glide is the tail of the same journey and there is one
+ * landing at the end of it.
+ */
+const SNAP_REST_MS = 120;
+/** How near a stop has to be to claim the rest, as a share of the leg stood on. */
+const SNAP_ZONE = 0.3;
+/** The glide itself. The spring is doing the smoothing; this only sets the reach. */
+const SNAP_MS = 320;
+/** A hand's scroll that ended longer ago than this was not what moved the page. */
+const SNAP_HAND_MS = 600;
+/** Nearer than this the page is already there, and moving would be a twitch. */
+const SNAP_MIN_PX = 2;
+/** How long after a correction arrives the mark is still settling into it. */
+const SNAP_QUIET_MS = 500;
+
 function haversineKm(a: CityData, b: CityData): number {
   const R = 6371;
   const toRad = (d: number) => (d * Math.PI) / 180;
@@ -1295,8 +1318,13 @@ function JourneyExperienceContent() {
     [stops, path]
   );
 
+  /** When the hand last turned the wheel. A control that moves the page clears it. */
+  const wheelAtRef = useRef(0);
+
   // Every control (scrubber, rail, keys, autoplay) moves the page scroll; `progress` derives from it
   const seek = useCallback((p: number, mode: 'drag' | 'jump') => {
+    // a control already chose where this stops, so the rest-snap below stays out of it
+    wheelAtRef.current = 0;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     window.scrollTo({
       top: Math.max(0, Math.min(1, p)) * maxScroll,
@@ -1532,6 +1560,157 @@ function JourneyExperienceContent() {
 
   // Detect mobile for touch-action - using hook for proper reactivity
   const isMobile = useIsMobile();
+
+  /**
+   * Where a scroll comes to rest.
+   *
+   * A hand that stops a little short leaves the globe mid-leg, the ribbon half
+   * drawn and the city with nothing to say. So once the hand and its momentum
+   * are both done, a stop near enough gets the rest of the way: the page scroll
+   * glides there, and the mark stretches into it and lands, the same travel as
+   * any other — the snap is not drawn, it is the mark doing what it always does.
+   *
+   * Nothing is taken while the hand is on it. This only ever runs from rest, and
+   * the first turn of the wheel or press of a pointer drops it where it is.
+   *
+   * Only for a wheel or a trackpad. The phone lands on a stop of its own (the
+   * touch handlers below), and a reader asking for less motion gets the page
+   * left exactly where they put it.
+   */
+  useEffect(() => {
+    if (reducedMotion || isMobile) return;
+
+    let restTimer = 0;
+    let quietTimer = 0;
+    let raf = 0;
+    let gliding = false;
+    let held = false;
+
+    /**
+     * `cancelled` is the difference between the hand coming back and the glide
+     * simply arriving. Either way the page stops being put down. But a glide the
+     * hand interrupted is no longer a correction — whatever the mark does next is
+     * its own — while one that arrived has to keep saying so until the mark has
+     * actually settled, which is a few hundred milliseconds after the last pixel
+     * of scroll, once the spring behind it has caught up.
+     */
+    const stopGlide = (cancelled: boolean) => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      gliding = false;
+      const seat = seatRef.current;
+      seat?.removeAttribute('data-dot-gliding');
+      window.clearTimeout(quietTimer);
+      if (cancelled) {
+        seat?.removeAttribute('data-dot-correcting');
+      } else if (seat?.hasAttribute('data-dot-correcting')) {
+        quietTimer = window.setTimeout(
+          () => seat.removeAttribute('data-dot-correcting'),
+          SNAP_QUIET_MS
+        );
+      }
+    };
+    const drop = () => stopGlide(true);
+
+    const glide = (to: number, maxScroll: number) => {
+      const from = window.scrollY;
+      const target = Math.max(0, Math.min(maxScroll, to * maxScroll));
+      const t0 = performance.now();
+      gliding = true;
+
+      // If the mark is still drawn out it is still travelling, and the glide is
+      // simply the tail of that journey — it lands once, at the city. If it has
+      // already come to rest the page is being tidied up behind the reader, and
+      // the mark is told to arrive without a second landing.
+      const seat = seatRef.current;
+      if (seat) {
+        seat.setAttribute('data-dot-gliding', '');
+        if (seat.getAttribute('data-dot-carry') !== 'ribbon') {
+          seat.setAttribute('data-dot-correcting', '');
+        }
+      }
+      const step = (now: number) => {
+        const t = Math.min(1, (now - t0) / SNAP_MS);
+        window.scrollTo(0, from + (target - from) * (1 - Math.pow(1 - t, 3)));
+        if (t < 1) {
+          raf = requestAnimationFrame(step);
+          return;
+        }
+        stopGlide(false);
+      };
+      raf = requestAnimationFrame(step);
+    };
+
+    const settle = () => {
+      if (gliding || held || playing || selectedCity !== null) return;
+      // a page that moved on its own already chose where to stop
+      if (performance.now() - wheelAtRef.current > SNAP_HAND_MS) return;
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll <= 0) return;
+      const p = window.scrollY / maxScroll;
+
+      let best = -1;
+      let bestD = Infinity;
+      stopProgress.forEach((sp, i) => {
+        const d = Math.abs(sp - p);
+        if (d < bestD) {
+          bestD = d;
+          best = i;
+        }
+      });
+      if (best < 0 || bestD * maxScroll < SNAP_MIN_PX) return;
+
+      // near enough is measured against the leg being stood on, not the route:
+      // legs run 0.498 to 1.300 viewports, and a share of each keeps the reach
+      // the same wherever you are
+      const fromIdx = stopProgress[best] > p ? best - 1 : best;
+      const leg = Math.abs((stopProgress[fromIdx + 1] ?? 1) - (stopProgress[fromIdx] ?? 0));
+      if (!leg || bestD > SNAP_ZONE * leg) return;
+
+      glide(stopProgress[best], maxScroll);
+    };
+
+    const rest = () => {
+      window.clearTimeout(restTimer);
+      restTimer = window.setTimeout(settle, SNAP_REST_MS);
+    };
+
+    const onScroll = () => {
+      if (gliding) return;
+      rest();
+    };
+    const onWheel = () => {
+      wheelAtRef.current = performance.now();
+      drop();
+      rest();
+    };
+    const onDown = () => {
+      held = true;
+      drop();
+      window.clearTimeout(restTimer);
+    };
+    const onUp = () => {
+      held = false;
+      rest();
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('wheel', onWheel, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
+    window.addEventListener('pointercancel', onUp, { passive: true });
+    return () => {
+      window.clearTimeout(restTimer);
+      window.clearTimeout(quietTimer);
+      drop();
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [reducedMotion, isMobile, playing, selectedCity, stopProgress]);
 
   // Setup non-passive touch event listeners
   useEffect(() => {

@@ -158,6 +158,26 @@ export function HeadTracker({
 
     if (len < REST_PX) {
       poly.removeAttribute('data-on');
+
+      // A snap tidying up after a reader who has already stopped is a correction,
+      // not a journey: the mark bounced once where they left it, and bouncing
+      // again at the city reads as a hiccup rather than an arrival. It arrives
+      // quietly, the way a move too short to be travel does.
+      if (seatEl.hasAttribute('data-dot-correcting')) {
+        setCarry('');
+        travelled.current = 0;
+        return;
+      }
+
+      // While the page is still being put down, a ribbon that dips below resting
+      // length for a frame is not an arrival — it is the middle of one. The
+      // distance already run stays on the clock so the landing that does come
+      // still counts as travel and bounces.
+      if (seatEl.hasAttribute('data-dot-gliding')) {
+        setCarry('');
+        return;
+      }
+
       if (travelled.current >= JOURNEY_PX) {
         landings.current += 1;
         setCarry(`land:${landings.current}`);
