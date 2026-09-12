@@ -1082,3 +1082,87 @@
 .city-label--link:hover .city-label__n {
   color: var(--ink);
 }
+
+/* =============================================================================
+   The first step — keys where the hand is, a hint the pointer carries
+   ============================================================================= */
+/* a key, drawn the way a keyboard hint is: hairline, mono, no fill */
+kbd.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 17px;
+  padding: 0 5px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1;
+  color: var(--ink-2);
+  background: var(--bg);
+}
+
+.scrubber__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scrubber__hint-sep {
+  color: var(--line-strong);
+  margin: 0 2px;
+}
+
+/* On the rail, the key that goes to a row sits beside it — only while the
+   pointer is on the rail, and never on the phone's sheet. */
+.timeline-stop__key {
+  display: inline-flex;
+  margin-left: 6px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+.stop-rail:not(.stop-rail--sheet):hover .timeline-stop__key {
+  opacity: 1;
+  transform: none;
+}
+
+.stop-rail--sheet .timeline-stop__key {
+  display: none;
+}
+
+/* the hint beside the cursor, over the globe, before the first move */
+.first-hint {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-fast) var(--ease);
+  will-change: transform;
+}
+
+.first-hint.is-on {
+  opacity: 1;
+}
+
+.first-hint__sep {
+  color: var(--line-strong);
+}

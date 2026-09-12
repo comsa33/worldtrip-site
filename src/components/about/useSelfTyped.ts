@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 import { typewrite, type Pace } from './typewriter';
 
 /**
@@ -13,8 +13,14 @@ export function useSelfTyped(
   active: boolean,
   key: string,
   seen: Set<string>,
-  pace?: Pace
+  pace?: Pace,
+  onDone?: () => void
 ) {
+  // read through a ref: a fresh callback from a parent render must not restart the hand
+  const doneRef = useRef(onDone);
+  useEffect(() => {
+    doneRef.current = onDone;
+  }, [onDone]);
   useEffect(() => {
     const root = ref.current;
     if (!root || !active) return;
@@ -22,6 +28,7 @@ export function useSelfTyped(
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (seen.has(key) || reduced || chars.length === 0) {
       root.classList.add('is-done');
+      doneRef.current?.();
       return;
     }
     const caret = document.createElement('span');
@@ -43,6 +50,7 @@ export function useSelfTyped(
           caret.classList.remove('is-blink');
           caret.classList.add('is-period');
           root.classList.add('is-done', 'is-typed');
+          doneRef.current?.();
         },
       },
       pace

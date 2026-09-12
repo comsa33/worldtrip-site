@@ -7,15 +7,17 @@ import './AboutOverlay.css';
 
 interface AboutOverlayProps {
   visible: boolean;
+  /** the full stop has landed — the page may do what comes after the opening */
+  onWritten?: () => void;
 }
 
 /* typed once per load — the card is NoteCard, the hand useSelfTyped */
 const seen = new Set<string>();
 
-export default function AboutOverlay({ visible }: AboutOverlayProps) {
+export default function AboutOverlay({ visible, onWritten }: AboutOverlayProps) {
   const { language } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
-  useSelfTyped(ref, visible, 'about', seen);
+  useSelfTyped(ref, visible, 'about', seen, undefined, onWritten);
   // beside the dot, where it lands — the same seat every city's note takes
   useDotAnchor(ref, visible);
 

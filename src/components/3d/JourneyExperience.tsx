@@ -26,6 +26,8 @@ import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
+import { CursorHint, Kbd } from './FirstStep';
+import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { DotGlobe } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
@@ -829,6 +831,7 @@ function Scene({
   revealRun,
   noteStop,
   onNoteSide,
+  lean,
 }: {
   progress: number;
   zoom: number;
@@ -847,6 +850,8 @@ function Scene({
   /** the stop whose note is about to be written, or null */
   noteStop: number | null;
   onNoteSide: (side: 'below' | 'above') => void;
+  /** the first-step hint: how far up the first leg the dot leans right now */
+  lean: React.RefObject<number>;
 }) {
   const INK = GLOBE[theme].ink;
   const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
@@ -861,6 +866,11 @@ function Scene({
 
   const path = useMemo(() => generatePath(stops, cities, 2.003), [stops, cities]);
   const segments = useMemo(() => buildSegments(path), [path]);
+  // how many path steps the first leg is — what the dot leans along
+  const firstLeg = useMemo(() => {
+    const i = path.findIndex((p) => p.fromStopId === stops[1]?.id);
+    return i < 0 ? 0 : i;
+  }, [path, stops]);
 
   const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
 
@@ -976,6 +986,8 @@ function Scene({
         ribbon={ribbon}
         active={dotActive}
         markerRadius={0.007 / Math.max(zoomScale, 0.5)}
+        lean={lean}
+        leanSpan={firstLeg}
       />
       <NoteSideProbe
         path={path}
@@ -1204,6 +1216,17 @@ function VerticalTimeline({
               </span>
               <span className="timeline-stop__city">{cityName}</span>
               <span className="timeline-stop__code mono">{stop.country}</span>
+              {/* the key that goes here, shown while the hand is on the rail */}
+              {actualIdx === currentStopIndex + 1 && (
+                <span className="timeline-stop__key">
+                  <Kbd>→</Kbd>
+                </span>
+              )}
+              {actualIdx === currentStopIndex - 1 && (
+                <span className="timeline-stop__key">
+                  <Kbd>←</Kbd>
+                </span>
+              )}
               <span className="timeline-stop__date mono">
                 {formatDate(stop.startDate) || formatDate(stop.endDate)}
               </span>
@@ -1530,6 +1553,18 @@ function JourneyExperienceContent() {
 
   // the stop the reader has actually come to rest on, a beat after they stop
   const settledStop = useSettledStop(currentStop, progress);
+
+  // The first step. Once the opening has been written and nothing has been
+  // touched, the dot leans up the first leg and settles back; on a desktop the
+  // pointer carries a one-line hint over the globe. The first real input ends
+  // both, for this visit and the next.
+  const moved = useFirstMove();
+  const [openingWritten, setOpeningWritten] = useState(false);
+  const leanRef = useRef(0);
+  const firstStep =
+    openingWritten && !moved && currentStop === 0 && dotOut && selectedCity === null;
+  useLean(firstStep, leanRef);
+  const nextCityName = cities[stops[1]?.city]?.[language as 'ko' | 'en'] ?? stops[1]?.city ?? '';
 
   // Which side of the dot the city's note sits on — decided on the globe, in
   // screen space, once the reader has settled (NoteSideProbe)
@@ -1988,6 +2023,7 @@ function JourneyExperienceContent() {
             revealRun={revealRun}
             noteStop={noteStop}
             onNoteSide={setNoteSide}
+            lean={leanRef}
           />
           <DotGlobe
             countryCode={currentCountry}
@@ -2054,7 +2090,11 @@ function JourneyExperienceContent() {
       />
 
       {/* About section at starting point */}
-      <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
+      <AboutOverlay
+        visible={currentStop === 0 && progress < 0.03}
+        onWritten={() => setOpeningWritten(true)}
+      />
+      <CursorHint active={firstStep} next={nextCityName} />
       {TUNE_ON && <RouteTuner theme={theme} />}
       {/* What a city has to say — only once the journey has actually stopped
           there. Scrubbing past a dozen of them says nothing. */}

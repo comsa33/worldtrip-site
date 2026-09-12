@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
+import { Kbd } from './FirstStep';
 import { useI18n } from '../../i18n';
 
 interface ScrubberStop {
@@ -133,10 +134,7 @@ export function Scrubber({
     return Math.round(ms / 86400000) + 1;
   }, [stops]);
 
-  const hint =
-    language === 'ko'
-      ? '← → 이동 · Space 자동 재생 · 드래그로 스크럽'
-      : '← → move · Space play · drag to scrub';
+  const ko = language === 'ko';
 
   return (
     <div className="scrubber" role="group" aria-label="Timeline">
@@ -191,7 +189,16 @@ export function Scrubber({
         >
           {playing ? (language === 'ko' ? '정지' : 'Stop') : language === 'ko' ? '재생' : 'Play'}
         </button>
-        <span className="scrubber__hint">{hint}</span>
+        <span className="scrubber__hint">
+          <Kbd>space</Kbd>
+          <span>{ko ? '자동 재생' : 'play'}</span>
+          <span className="scrubber__hint-sep">·</span>
+          <Kbd>←</Kbd>
+          <Kbd>→</Kbd>
+          <span>{ko ? '이동' : 'move'}</span>
+          <span className="scrubber__hint-sep">·</span>
+          <span>{ko ? '드래그로 스크럽' : 'drag to scrub'}</span>
+        </span>
         <span className="scrubber__stats">
           <span>
             <b>{totalDays}</b> days

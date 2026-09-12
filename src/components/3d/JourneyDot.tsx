@@ -49,6 +49,8 @@ export function HeadTracker({
   ribbon: ribbonRef,
   active,
   markerRadius,
+  lean,
+  leanSpan = 0,
 }: {
   path: PathPoint[];
   progress: number;
@@ -58,6 +60,9 @@ export function HeadTracker({
   active: boolean;
   /** the current city marker's radius in world units, at the current zoom */
   markerRadius: number;
+  /** a share of `leanSpan` path steps the head is pushed ahead — the first-step hint */
+  lean?: React.RefObject<number>;
+  leanSpan?: number;
 }) {
   const { camera, size, gl } = useThree();
   const tail = useRef<number | null>(null);
@@ -94,7 +99,10 @@ export function HeadTracker({
       return out.lerpVectors(path[a].point, path[b].point, i - a);
     };
 
-    const head = progress * (path.length - 1);
+    const head = Math.min(
+      path.length - 1,
+      progress * (path.length - 1) + (lean?.current ?? 0) * leanSpan
+    );
     if (tail.current === null) tail.current = head;
 
     // in the air the mark is faster, and a faster mark is drawn out longer:
