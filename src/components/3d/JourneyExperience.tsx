@@ -614,12 +614,15 @@ function Camera({
   zoom,
   isUserInteracting,
   progressiveZoom,
+  unhurried = false,
 }: {
   target: THREE.Vector3;
   zoom: number;
   isUserInteracting: boolean;
   /** the city's own zoom, already eased along the leg — never a step */
   progressiveZoom: number;
+  /** a flight across the world turns the globe slowly, not at a scroll's pace */
+  unhurried?: boolean;
 }) {
   const { camera } = useThree();
   const cameraTarget = useRef(new THREE.Vector3(-2.5, 3, -3.5));
@@ -651,7 +654,7 @@ function Camera({
     if (!isUserInteracting) {
       const wantDist = cameraTarget.current.length();
       const dist = camera.position.length() + (wantDist - camera.position.length()) * 0.05;
-      camera.position.lerp(cameraTarget.current, 0.15).setLength(dist);
+      camera.position.lerp(cameraTarget.current, unhurried ? 0.045 : 0.15).setLength(dist);
     }
     camera.lookAt(0, 0, 0);
   });
@@ -814,7 +817,7 @@ function Scene({
     [stops, cities, legsKm, zoomParams]
   );
   const stopIndex = useMemo(() => new Map(stops.map((st, i) => [st.id, i])), [stops]);
-  const { legZoom, look } = useMemo(() => {
+  const { legZoom, look, staged } = useMemo(() => {
     const a = stopIndex.get(fromStopId) ?? 0;
     const b = stopIndex.get(toStopId) ?? a;
     // a leg across a border, or one too long for the view, is staged: out,
@@ -824,14 +827,14 @@ function Scene({
     const crosses = stops[a]?.country !== stops[b]?.country;
     const { travel, staged } = legProfile(restA, restB, legsKm[a] ?? 0, crosses, zoomParams);
     const legZoom = zoomAlong(restA, travel, restB, segProgress, staged);
-    if (!staged) return { legZoom, look: position };
+    if (!staged) return { legZoom, look: position, staged };
     const ca = cities[stops[a]?.city];
     const cb = cities[stops[b]?.city];
-    if (!ca || !cb) return { legZoom, look: position };
+    if (!ca || !cb) return { legZoom, look: position, staged };
     const A = latLngToVector3(ca.lat, ca.lng, 1);
     const B = latLngToVector3(cb.lat, cb.lng, 1);
     const [x, y, z] = lookAlong(A, B, segProgress);
-    return { legZoom, look: new THREE.Vector3(x, y, z) };
+    return { legZoom, look: new THREE.Vector3(x, y, z), staged };
   }, [
     stopIndex,
     fromStopId,
@@ -873,8 +876,12 @@ function Scene({
     return Math.max(stopIdx, 0);
   }, [stops, displayStopId]);
 
-  // Marker size follows the camera's distance: closer camera, smaller marker
+  // Marker size follows the camera's distance: closer camera, smaller marker.
+  // Below the design height (0.2 above the surface, zoom 2.2) the marks shrink
+  // with the height too, so a camera skimming the ground does not blow them up.
   const zoomScale = 1 + legZoom * 0.5;
+  const above = Math.max(0.02, 3.5 - 1.5 * legZoom);
+  const skim = Math.min(1, above / 0.2);
 
   // One marker per city. State: current, from (departure of the leg in progress), past, or next.
   const cityMarkers = useMemo(() => {
@@ -962,7 +969,7 @@ function Scene({
       {cityMarkers.map((m) => {
         const dotProduct = m.position.clone().normalize().dot(position.clone().normalize());
         if (dotProduct < -0.3) return null;
-        const markerScale = 1 / Math.max(zoomScale, 0.5);
+        const markerScale = skim / Math.max(zoomScale, 0.5);
         const hovered = hoveredCity === m.city;
         const isCurrent = m.state === 'current';
         // the camera on the label belongs to this visit: a city passed through
@@ -980,7 +987,7 @@ function Scene({
           <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
             {/* the city the dot is sitting on has no mark of its own; every other
                 place is a ring — or, where the map has no shape for it, a glyph */}
-            {ring !== 'none' && PLACE_GLYPH[m.city] && (
+            {PLACE_GLYPH[m.city] && (
               <PlaceGlyph
                 glyph={PLACE_GLYPH[m.city]}
                 size={radius * 1.9}
@@ -1064,6 +1071,7 @@ function Scene({
         zoom={zoom}
         isUserInteracting={isUserInteracting}
         progressiveZoom={legZoom}
+        unhurried={staged}
       />
       {(() => {
         const isMobile =
@@ -1384,29 +1392,51 @@ function JourneyExperienceContent() {
 
   /** When the hand last turned the wheel. A control that moves the page clears it. */
   const wheelAtRef = useRef(0);
+  /** the km of every leg between two points of the route, for pacing a jump */
+  const legsKmBetween = useCallback(
+    (p0: number, p1: number) => {
+      let km = 0;
+      for (let i = 0; i < stops.length - 1; i++) {
+        const a = stopProgress[i];
+        const b = stopProgress[i + 1];
+        if (b <= p0 || a >= p1) continue;
+        const ca = cities[stops[i].city];
+        const cb = cities[stops[i + 1].city];
+        if (ca && cb) km += haversineKm(ca, cb);
+      }
+      return km;
+    },
+    [stops, stopProgress, cities]
+  );
   /** The page's own glide (set up by the snap effect below), for controls to use. */
   const glideRef = useRef<((to: number, ms?: number) => void) | null>(null);
   /** Where the last jump was headed, while it is still on its way. */
   const jumpTargetRef = useRef<number | null>(null);
 
   // Every control (scrubber, rail, keys, autoplay) moves the page scroll; `progress` derives from it
-  const seek = useCallback((p: number, mode: 'drag' | 'jump') => {
-    // a control already chose where this stops, so the rest-snap below stays out of it
-    wheelAtRef.current = 0;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const to = Math.max(0, Math.min(1, p));
-    // A jump is one move with one easing — the page's own glide, not the
-    // browser's smooth scroll on top of the spring on top of the camera. Its
-    // length grows with the distance, gently: a leg is quick, a far jump is
-    // not a blur. A jump that starts mid-glide retargets from where it is.
-    if (mode === 'jump' && glideRef.current) {
-      const px = Math.abs(to * maxScroll - window.scrollY);
-      const ms = Math.min(900, 360 + px / 8);
-      glideRef.current(to, ms);
-      return;
-    }
-    window.scrollTo({ top: to * maxScroll, behavior: mode === 'drag' ? 'auto' : 'smooth' });
-  }, []);
+  const seek = useCallback(
+    (p: number, mode: 'drag' | 'jump') => {
+      // a control already chose where this stops, so the rest-snap below stays out of it
+      wheelAtRef.current = 0;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const to = Math.max(0, Math.min(1, p));
+      // A jump is one move with one easing — the page's own glide, not the
+      // browser's smooth scroll on top of the spring on top of the camera. Its
+      // length grows with the distance, gently: a leg is quick, a far jump is
+      // not a blur. A jump that starts mid-glide retargets from where it is.
+      if (mode === 'jump' && glideRef.current) {
+        const px = Math.abs(to * maxScroll - window.scrollY);
+        // a hop between countries is given room to be seen: the further, the longer
+        const fromP = window.scrollY / Math.max(1, maxScroll);
+        const kmAcross = legsKmBetween(Math.min(fromP, to), Math.max(fromP, to));
+        const ms = Math.min(2400, 360 + px / 8 + kmAcross / 5);
+        glideRef.current(to, ms);
+        return;
+      }
+      window.scrollTo({ top: to * maxScroll, behavior: mode === 'drag' ? 'auto' : 'smooth' });
+    },
+    [legsKmBetween]
+  );
 
   const [playing, setPlaying] = useState(false);
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
@@ -2016,7 +2046,10 @@ function JourneyExperienceContent() {
       <div className="scroll-spacer" style={{ height: `${stops.length * 100}vh` }} />
 
       <div className="canvas-container">
-        <Canvas camera={{ position: [-2.5, 3, -3.5], fov: 45 }} gl={{ antialias: true }}>
+        <Canvas
+          camera={{ position: [-2.5, 3, -3.5], fov: 45, near: 0.01 }}
+          gl={{ antialias: true }}
+        >
           <Scene
             progress={smoothProgress}
             zoom={zoom}

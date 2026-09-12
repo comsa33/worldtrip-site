@@ -29,7 +29,7 @@ export type ZoomParams = {
   hold: number;
 };
 
-export const ZOOM_DEFAULTS: ZoomParams = { zMax: 2.2, zMin: 0.8, slope: 0.6, near: 30, hold: 0.25 };
+export const ZOOM_DEFAULTS: ZoomParams = { zMax: 2.3, zMin: 0.8, slope: 0.6, near: 30, hold: 0.25 };
 
 /** The zoom a leg of `km` is looked at with. */
 export function zoomForKm(km: number, p: ZoomParams): number {
@@ -43,11 +43,13 @@ export function zoomForKm(km: number, p: ZoomParams): number {
  */
 export function restZooms(legsKm: number[], p: ZoomParams): number[] {
   const n = legsKm.length + 1;
+  // a stop is looked at as closely as its shorter leg allows — the whole leg
+  // in view, and no further back than that
   const raw: number[] = [];
   for (let i = 0; i < n; i++) {
     const before = legsKm[i - 1] ?? Infinity;
     const after = legsKm[i] ?? Infinity;
-    raw.push(zoomForKm(Math.min(before, after), p));
+    raw.push(fitZoom(Math.min(before, after), p));
   }
   const smooth = raw.map((z, i) => 0.25 * (raw[i - 1] ?? z) + 0.5 * z + 0.25 * (raw[i + 1] ?? z));
   const held: number[] = [];
