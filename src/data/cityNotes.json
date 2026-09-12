@@ -59,14 +59,6 @@
       "story": "Rode the canal boat. Fourteen baht.\nClimbed the Golden Mount and rang the bells.\nWalked along the palace walls,\nat night stood in the noise of Khao San."
     }
   },
-  "16": {
-    "ko": {
-      "story": "메콩강 너머로 태국이 보였습니다.\n비 오는 날 차창에 LAO 스티커가 붙어 있었습니다.\n벌레에 물린 다리 사진이 여러 장 남아 있습니다."
-    },
-    "en": {
-      "story": "Thailand was visible across the Mekong.\nA LAO sticker on a rainy windscreen.\nSeveral photos of my legs, covered in bites."
-    }
-  },
   "14": {
     "ko": {
       "story": "블루 라군의 나무에 매달린 밧줄을 타고\n물에 뛰어들었습니다.\n오토바이로 산길을 넘다 굽은 길에서 소 떼를 만나 넘어졌습니다.\n약국도 병원도 멀어서,\n쓸린 자리에 두루마리 휴지를 감고 다녔습니다."
@@ -81,6 +73,14 @@
     },
     "en": {
       "story": "The Mekong was the colour of mud.\nI sat by the river with my feet out.\nAt the morning market, fish on banana leaves,\nsausages hung along a wall to dry."
+    }
+  },
+  "16": {
+    "ko": {
+      "story": "메콩강 너머로 태국이 보였습니다.\n비 오는 날 차창에 LAO 스티커가 붙어 있었습니다.\n벌레에 물린 다리 사진이 여러 장 남아 있습니다."
+    },
+    "en": {
+      "story": "Thailand was visible across the Mekong.\nA LAO sticker on a rainy windscreen.\nSeveral photos of my legs, covered in bites."
     }
   },
   "18": {
@@ -193,6 +193,32 @@
       "story": "Went out on the river in a boat at dawn.\nPeople washed themselves on the ghats,\nfirewood was stacked high.\nIt was the night of Diwali.\nFireworks went off along the river."
     }
   },
+  "38": {
+    "ko": {
+      "story": "바라나시에서 기차로 왔습니다.\n국경까지는 시골 버스였습니다.\n짐칸까지 사람이 찼습니다."
+    },
+    "en": {
+      "story": "Came from Varanasi by train.\nA country bus the rest of the way to the border.\nPeople filled it up to the luggage racks."
+    }
+  },
+  "39": {
+    "ko": {
+      "title": "국경",
+      "story": "\"인도 국경 끝\"이라는 파란 표지판을 지났습니다.\n걸어서 문을 통과했습니다.\n건너편 가게 앞에 교복 입은 아이들이 모여 있었습니다.\n배낭을 옆에 두고 벤치에 앉아 있었습니다.\n보름달이 떴습니다."
+    },
+    "en": {
+      "title": "Border",
+      "story": "Passed a blue sign that said \"Indian Border Ends\".\nWalked through the gate.\nOutside a shop on the other side, kids in school uniform had gathered.\nSat on a bench with the backpack beside me.\nThe moon was full."
+    }
+  },
+  "40": {
+    "ko": {
+      "story": "네팔 첫 밤이었습니다.\n카트만두 맥주 한 병.\n포카라행 야간 버스를 탔습니다."
+    },
+    "en": {
+      "story": "First night in Nepal.\nA bottle of Kathmandu beer.\nCaught the night bus to Pokhara."
+    }
+  },
   "41": {
     "ko": {
       "story": "페와 호수 위로 패러글라이더가 떠 있었습니다.\n트레킹 허가증을 받았습니다.\n밤거리에 아이들이 옷을 차려입고 모여 노래했습니다."
@@ -225,6 +251,32 @@
     },
     "en": {
       "story": "In the square, bamboo scaffolding stood\nwhere the earthquake had brought things down.\nIn the morning the snow peaks showed in the distance.\nAt night I sat beside people tending a fire.\nThe moon was full."
+    }
+  },
+  "46": {
+    "ko": {
+      "story": "새벽에 국경 마을에 내렸습니다.\n보름 만에 같은 문 앞에 다시 섰습니다."
+    },
+    "en": {
+      "story": "Got off in the border town before dawn.\nStood in front of the same gate, two weeks later."
+    }
+  },
+  "47": {
+    "ko": {
+      "story": "반대 방향으로 문을 지났습니다.\n네팔에서 인도로.\n해 뜨는 길에 자전거 릭샤가 지나갔습니다.\n바라나시로 가는 버스를 탔습니다."
+    },
+    "en": {
+      "story": "Through the gate the other way.\nNepal to India.\nA cycle rickshaw went by in the sunrise.\nCaught the bus for Varanasi."
+    }
+  },
+  "48": {
+    "ko": {
+      "title": "다시 갠지스",
+      "story": "네팔에서 돌아와 이틀을 더 있었습니다.\n새벽 여섯 시에 강에 나갔습니다.\n안개 속에 해가 떴고, 새 떼가 물 위를 돌았습니다.\n가트에 강아지들이 자고 있었습니다.\n한글로 이름을 쓴 배가 묶여 있었습니다.\n여기서 인도를 떠났습니다."
+    },
+    "en": {
+      "title": "The Ganges Again",
+      "story": "Back from Nepal, two more days here.\nOut on the river at six in the morning.\nThe sun came up through the haze, birds circled over the water.\nPuppies slept on the ghat.\nA boat with its name painted in Korean was tied up.\nThis is where I left India."
     }
   },
   "49": {
@@ -269,16 +321,6 @@
       "story": "Stayed eight days.\nGot my Open Water, then Advanced three days later.\nEvery morning the sun came up over the sea.\nEvenings were spent in restaurants lit by candles."
     }
   },
-  "58": {
-    "ko": {
-      "title": "한 달",
-      "story": "12월을 통째로 여기서 보냈습니다.\n사그라다 파밀리아를 몇 번이나 찍었습니다.\n카탈루냐 광장의 비둘기, 몬주익의 분수,\n거리에 크리스마스 조명이 켜졌습니다.\n해를 넘기고 떠났습니다."
-    },
-    "en": {
-      "title": "A Month",
-      "story": "Spent the whole of December here.\nPhotographed the Sagrada Família again and again.\nPigeons at Plaça de Catalunya, the fountain at Montjuïc,\nChristmas lights came on in the streets.\nLeft after the year had turned."
-    }
-  },
   "56": {
     "ko": {
       "story": "바다 위에 패들보드가 떠 있었습니다.\n바위 위 성당, 인어 동상, 야자수.\n기차로 왔다가 저녁에 돌아갔습니다."
@@ -293,6 +335,16 @@
     },
     "en": {
       "story": "Went up by cable car.\nThe monastery sat under the serrated rocks.\nSaw the organ inside the basilica.\nBack to Barcelona the same day."
+    }
+  },
+  "58": {
+    "ko": {
+      "title": "한 달",
+      "story": "12월을 통째로 여기서 보냈습니다.\n사그라다 파밀리아를 몇 번이나 찍었습니다.\n카탈루냐 광장의 비둘기, 몬주익의 분수,\n거리에 크리스마스 조명이 켜졌습니다.\n해를 넘기고 떠났습니다."
+    },
+    "en": {
+      "title": "A Month",
+      "story": "Spent the whole of December here.\nPhotographed the Sagrada Família again and again.\nPigeons at Plaça de Catalunya, the fountain at Montjuïc,\nChristmas lights came on in the streets.\nLeft after the year had turned."
     }
   },
   "59": {
