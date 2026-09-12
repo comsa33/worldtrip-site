@@ -253,6 +253,15 @@ export function Minimap({
     }
     commit(aimAt(e.clientX, e.clientY));
   };
+  // the aim, with the name it would land on already resolved
+  const aimed = useMemo(() => {
+    if (!aim) return null;
+    const stop = stops[aim.stop];
+    if (!stop) return null;
+    const when = stop.startDate ? `  ${stop.startDate.slice(0, 7).replace('-', '.')}` : '';
+    return { x: aim.x, y: aim.y, label: stop.city + when };
+  }, [aim, stops]);
+
   return (
     <svg
       ref={svgRef}
@@ -271,18 +280,15 @@ export function Minimap({
       <World currentStopIdx={currentStopIdx} />
       <circle cx={cx} cy={cy} r={17} className="minimap__ring" />
       <circle cx={cx} cy={cy} r={11} className="minimap__head" />
-      {open && aim && stops[aim.stop] && (
+      {open && aimed && (
         <g className="minimap__aim">
-          <circle cx={aim.x} cy={aim.y} r={9} />
+          <circle cx={aimed.x} cy={aimed.y} r={9} />
           <text
-            x={aim.x + (aim.x > data.w * 0.72 ? -15 : 15)}
-            y={aim.y + 6}
-            textAnchor={aim.x > data.w * 0.72 ? 'end' : 'start'}
+            x={aimed.x + (aimed.x > data.w * 0.72 ? -15 : 15)}
+            y={aimed.y + 6}
+            textAnchor={aimed.x > data.w * 0.72 ? 'end' : 'start'}
           >
-            {stops[aim.stop].city}
-            {stops[aim.stop].startDate
-              ? `  ${stops[aim.stop].startDate.slice(0, 7).replace('-', '.')}`
-              : ''}
+            {aimed.label}
           </text>
         </g>
       )}
