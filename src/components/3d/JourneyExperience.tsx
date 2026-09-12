@@ -1736,12 +1736,21 @@ function JourneyExperienceContent() {
    * Nothing is taken while the hand is on it. This only ever runs from rest, and
    * the first turn of the wheel or press of a pointer drops it where it is.
    *
-   * Only for a wheel or a trackpad. The phone lands on a stop of its own (the
-   * touch handlers below), and a reader asking for less motion gets the page
-   * left exactly where they put it.
+   * The SNAP is for a wheel or a trackpad only — the phone lands on a stop of
+   * its own (the touch handlers below), and a reader asking for less motion gets
+   * the page left exactly where they put it.
+   *
+   * The GLIDE is not. Every control jumps with it — keys, the rail, both maps,
+   * the scrubber — and it was shut away in here behind the phone's early return,
+   * so `seek` found no glide on a phone and fell through to the browser's smooth
+   * scroll. That is the one thing this was written to avoid: a smooth scroll is
+   * abandoned the moment any scroll input arrives, and on Android the tail of the
+   * finger that asked for the jump is exactly that. The page went nowhere, or
+   * stopped halfway — a jump from Marrakesh came to rest in Portugal. So the
+   * glide is built on every device and only the snap listeners are held back.
    */
   useEffect(() => {
-    if (reducedMotion || isMobile) return;
+    if (reducedMotion) return;
 
     let restTimer = 0;
     let quietTimer = 0;
@@ -1806,9 +1815,22 @@ function JourneyExperienceContent() {
       raf = requestAnimationFrame(step);
     };
 
-    // controls (keys, rail, minimap, scrubber) jump with this same glide
+    // controls (keys, rail, both maps, scrubber) jump with this same glide
     glideRef.current = (to, ms) =>
       glide(to, document.documentElement.scrollHeight - window.innerHeight, ms);
+
+    // A phone takes the glide and one listener: a hand laid on the page still
+    // puts it down where it is. What it does not take is the rest-snap, which
+    // is the wheel's, and the finger that ASKED for the jump cannot cancel it —
+    // that press came and went before the glide existed.
+    if (isMobile) {
+      window.addEventListener('pointerdown', drop, { passive: true });
+      return () => {
+        window.removeEventListener('pointerdown', drop);
+        glideRef.current = null;
+        drop();
+      };
+    }
 
     const settle = () => {
       if (gliding || held || playing || selectedCity !== null) return;
