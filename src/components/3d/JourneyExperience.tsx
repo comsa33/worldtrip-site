@@ -20,6 +20,8 @@ import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
 import FinaleOverlay from '../about/FinaleOverlay';
+import StopNote from '../about/StopNote';
+import { useSettledStop } from '../about/useSettledStop';
 import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
@@ -1445,6 +1447,9 @@ function JourneyExperienceContent() {
   // the last stop: the dot leaves the globe to write the closing block
   const finale = currentStop === stops.length - 1 && selectedCity === null;
 
+  // the stop the reader has actually come to rest on, a beat after they stop
+  const settledStop = useSettledStop(currentStop, progress);
+
   const handleCloseGallery = useCallback(() => {
     setSelectedCity(null);
     setSelectedPhotoIds(null);
@@ -1801,6 +1806,18 @@ function JourneyExperienceContent() {
 
       {/* About section at starting point */}
       <AboutOverlay visible={currentStop === 0 && progress < 0.03} />
+      {/* What a city has to say — only once the journey has actually stopped
+          there. Scrubbing past a dozen of them says nothing. */}
+      {city && (
+        <StopNote
+          stopId={city.id}
+          city={cities[city.city]?.[language as 'ko' | 'en'] ?? city.city}
+          startDate={city.startDate ?? ''}
+          visible={
+            settledStop === currentStop && currentStop !== 0 && !finale && selectedCity === null
+          }
+        />
+      )}
       {/* And the last word, back where it started — written by the dot itself */}
       <FinaleOverlay visible={finale} />
 
