@@ -1,10 +1,12 @@
-import { useRef, type MutableRefObject } from 'react';
+import { useMemo, useRef, type MutableRefObject } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
 import type { Line2 } from 'three-stdlib';
 import * as THREE from 'three';
 import { GLOBE, type Theme } from '../../theme';
 import { handoff, type Outline } from './cityOutlines';
+import { GLYPH_STROKES, type Glyph } from './placeGlyphs';
+import { Billboard } from '@react-three/drei';
 
 /**
  * A city drawn as itself: its administrative outline on the globe, from
@@ -116,5 +118,53 @@ export function CityBounds({
         />
       ))}
     </group>
+  );
+}
+
+/**
+ * A place drawn as a glyph, in the ring's place and the ring's two inks: a
+ * lake, a desert, a pass — or a city with no outline to draw. Thinner than
+ * any route line, so it reads as a mark on the map, not a road.
+ */
+export function PlaceGlyph({
+  glyph,
+  size,
+  been,
+  hovered,
+  theme,
+  width,
+}: {
+  glyph: Glyph;
+  /** half the glyph's extent, in the marker group's units */
+  size: number;
+  been: boolean;
+  hovered: boolean;
+  theme: Theme;
+  width: number;
+}) {
+  const pairs = useMemo(() => {
+    const out: [number, number, number][] = [];
+    for (const stroke of GLYPH_STROKES[glyph]) {
+      for (let i = 0; i < stroke.length - 1; i++) {
+        out.push(
+          [stroke[i][0] * size, stroke[i][1] * size, 0],
+          [stroke[i + 1][0] * size, stroke[i + 1][1] * size, 0]
+        );
+      }
+    }
+    return out;
+  }, [glyph, size]);
+  return (
+    <Billboard>
+      <Line
+        points={pairs}
+        segments
+        color={been ? GLOBE[theme].routePast : GLOBE[theme].ink}
+        lineWidth={width}
+        transparent
+        opacity={hovered ? 1 : been ? 0.9 : 0.35}
+        depthWrite={false}
+      />
+    </Billboard>
   );
 }

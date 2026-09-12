@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import * as THREE from 'three';
 import cityBounds from '../../data/cityBounds.json';
+import { PLACE_GLYPH } from './placeGlyphs';
 
 /**
  * The cities' outlines as geometry on the globe, and the rule for when a ring
@@ -46,7 +47,8 @@ export function useOutlines(
     const out = new Map<string, Outline>();
     for (const [city, b] of Object.entries(data)) {
       const c = cities[city];
-      if (!c) continue;
+      // a lake, a pass, a border post: a shape says the wrong thing there
+      if (!c || PLACE_GLYPH[city]) continue;
       const center = toSphere(c.lat, c.lng, RADIUS + LIFT);
       const pairs: [number, number, number][] = [];
       let reach = 0;

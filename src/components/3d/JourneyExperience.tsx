@@ -28,7 +28,8 @@ import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd } from './FirstStep';
 import { ZOOM_DEFAULTS, restZooms, zoomAlong, zoomForKm } from './cityZoom';
-import { CityBounds } from './CityBounds';
+import { CityBounds, PlaceGlyph } from './CityBounds';
+import { PLACE_GLYPH } from './placeGlyphs';
 import { useOutlines } from './cityOutlines';
 import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
@@ -925,7 +926,7 @@ function Scene({
         been={(c) => ringFor(c) !== 'next'}
         hoveredCity={hoveredCity}
         theme={theme}
-        widthBeen={widths.borderBase}
+        widthBeen={widths.cityBeen}
         widthAhead={widths.aheadLand}
         blend={blendRef}
       />
@@ -950,8 +951,19 @@ function Scene({
           hovered || isCurrent || m.state === 'from' || (m.state === 'past' && dotProduct > 0.9);
         return (
           <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
-            {/* the city the dot is sitting on has no mark of its own; every other city is a ring */}
-            {ring !== 'none' && (
+            {/* the city the dot is sitting on has no mark of its own; every other
+                place is a ring — or, where the map has no shape for it, a glyph */}
+            {ring !== 'none' && PLACE_GLYPH[m.city] && (
+              <PlaceGlyph
+                glyph={PLACE_GLYPH[m.city]}
+                size={radius * 1.9}
+                been={ring !== 'next'}
+                hovered={hovered}
+                theme={theme}
+                width={widths.glyph}
+              />
+            )}
+            {ring !== 'none' && !PLACE_GLYPH[m.city] && (
               <CityRing
                 radius={radius}
                 state={ring}
