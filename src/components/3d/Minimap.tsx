@@ -277,8 +277,12 @@ export function Minimap({
   // a mouse resting on it opens it; a finger has no resting, so its tap does
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
-    // a new hold starts where it starts, wherever the last one ended
-    grip.current = null;
+    // A FINGER taking hold again starts a new one, wherever the last ended. A
+    // MOUSE does not: it has been aiming by hovering all along, and the press
+    // that is about to become a click is the end of that aim, not a new one.
+    // Clearing it here re-anchored on the click itself, so every click landed
+    // back on the stop the reader was already standing on.
+    if (e.pointerType === 'touch') grip.current = null;
     // A finger that slides is a drag, and a drag the element has not claimed is
     // the browser's to cancel — which it did, quietly, so the aim was drawn all
     // the way and then went nowhere on the lift. Claiming it keeps the moves and

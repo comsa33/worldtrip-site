@@ -398,8 +398,12 @@ export function CountryInset({
 
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
-    // a new hold starts where it starts, wherever the last one ended
-    grip.current = null;
+    // A FINGER taking hold again starts a new one, wherever the last ended. A
+    // MOUSE does not: it has been aiming by hovering all along, and the press
+    // that is about to become a click is the end of that aim, not a new one.
+    // Clearing it here re-anchored on the click itself, so every click landed
+    // back on the stop the reader was already standing on.
+    if (e.pointerType === 'touch') grip.current = null;
     if (e.pointerType === 'touch') {
       try {
         e.currentTarget.setPointerCapture(e.pointerId);
