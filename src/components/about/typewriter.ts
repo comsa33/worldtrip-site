@@ -22,6 +22,17 @@ export const BLOCK_PAUSE_MS = 720;
 export const LEAD_MS = 1100;
 const THINK_MS: [number, number] = [600, 1000];
 
+/**
+ * How fast this particular hand is.
+ *
+ * The opening is read by someone who has just arrived and has time; a city's
+ * note is read in the pause between two scrolls, and the reader has already
+ * waited a beat for it to appear. `pace` scales every duration below — a
+ * smaller number is a quicker hand — and `lead` is how long the cursor stands
+ * there before starting.
+ */
+export type Pace = { pace?: number; lead?: number };
+
 export type Hooks = {
   /** the cursor is waiting (blinking) or writing (steady) */
   blink: (on: boolean) => void;
@@ -33,7 +44,9 @@ export type Hooks = {
 const between = (a: number, b: number) => a + Math.random() * (b - a);
 
 /** Runs the hand over `chars`; returns a stop function. */
-export function typewrite(chars: HTMLElement[], hooks: Hooks): () => void {
+export function typewrite(chars: HTMLElement[], hooks: Hooks, opts: Pace = {}): () => void {
+  const rate = opts.pace ?? 1;
+  const lead = opts.lead ?? LEAD_MS;
   const timers: number[] = [];
   const wait = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
 
@@ -75,7 +88,7 @@ export function typewrite(chars: HTMLElement[], hooks: Hooks): () => void {
       if (thinkAt.has(i) && !thought) {
         thought = true;
         hooks.blink(true);
-        wait(between(THINK_MS[0], THINK_MS[1]), step);
+        wait(between(THINK_MS[0], THINK_MS[1]) * rate, step);
         return;
       }
       thought = false;
@@ -85,14 +98,14 @@ export function typewrite(chars: HTMLElement[], hooks: Hooks): () => void {
     hooks.at(el, true);
     const next = chars[i + 1];
     const blockChange = next && next.parentElement !== el.parentElement;
-    const pause = (PAUSE[ch] ?? 0) + (blockChange ? BLOCK_PAUSE_MS : 0);
+    const pause = ((PAUSE[ch] ?? 0) + (blockChange ? BLOCK_PAUSE_MS : 0)) * rate;
     hooks.blink(pause > 200);
     i += 1;
-    wait(Math.max(8, CHAR_MS * pace + (Math.random() * 2 - 1) * JITTER_MS + pause), step);
+    wait(Math.max(8, (CHAR_MS * pace + (Math.random() * 2 - 1) * JITTER_MS) * rate + pause), step);
   };
 
   hooks.at(chars[0], false);
   hooks.blink(true);
-  wait(LEAD_MS, step);
+  wait(lead, step);
   return () => timers.forEach((t) => window.clearTimeout(t));
 }

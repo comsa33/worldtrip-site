@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useI18n } from '../../i18n';
 import { NoteCard, type Note } from './NoteCard';
 import { useSelfTyped } from './useSelfTyped';
+import type { Pace } from './typewriter';
 import notesData from '../../data/cityNotes.json';
 import './AboutOverlay.css';
 
@@ -9,6 +10,8 @@ type Written = { title?: string; story: string; quote?: string };
 // the file leads with a `_형식` block so the shape is visible when you open it
 // to write; only numeric stop ids are ever looked up
 const notes = notesData as unknown as Record<string, { ko: Written; en?: Written }>;
+
+const QUICK: Pace = { pace: 0.45, lead: 300 };
 
 /** Cities read once stay read: coming back to one does not retype it. */
 const seen = new Set<string>();
@@ -38,7 +41,9 @@ export default function StopNote({
   const key = `${stopId}:${lang}`;
   const active = visible && Boolean(written);
 
-  useSelfTyped(ref, active, key, seen);
+  // a note is read in the gap between two scrolls, and the reader has already
+  // waited out the dwell — this hand moves at about twice the opening's
+  useSelfTyped(ref, active, key, seen, QUICK);
 
   if (!active || !written) return null;
 

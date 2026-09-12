@@ -1,5 +1,5 @@
 import { useEffect, type RefObject } from 'react';
-import { typewrite } from './typewriter';
+import { typewrite, type Pace } from './typewriter';
 
 /**
  * The hand that writes a card, with its own cursor.
@@ -12,7 +12,8 @@ export function useSelfTyped(
   ref: RefObject<HTMLDivElement | null>,
   active: boolean,
   key: string,
-  seen: Set<string>
+  seen: Set<string>,
+  pace?: Pace
 ) {
   useEffect(() => {
     const root = ref.current;
@@ -23,28 +24,38 @@ export function useSelfTyped(
       root.classList.add('is-done');
       return;
     }
-    seen.add(key);
-
     const caret = document.createElement('span');
     caret.className = 'about-overlay__caret';
     caret.setAttribute('aria-hidden', 'true');
-    const stop = typewrite(chars, {
-      at: (el, after) => (after ? el.after(caret) : el.before(caret)),
-      blink: (on) => caret.classList.toggle('is-blink', on),
-      done: () => {
-        // the cursor folds down into the full stop of the last line and takes
-        // the ink of the type around it — the sentence's own period
-        caret.classList.remove('is-blink');
-        caret.classList.add('is-period');
-        root.classList.add('is-done', 'is-typed');
+    const stop = typewrite(
+      chars,
+      {
+        at: (el, after) => (after ? el.after(caret) : el.before(caret)),
+        blink: (on) => caret.classList.toggle('is-blink', on),
+        done: () => {
+          // marked read only once it has actually been written: StrictMode mounts
+          // an effect twice in development, and marking it at the start meant the
+          // first pass claimed the block and the second found it already claimed,
+          // so nothing was ever typed
+          seen.add(key);
+          // the cursor folds down into the full stop of the last line and takes
+          // the ink of the type around it — the sentence's own period
+          caret.classList.remove('is-blink');
+          caret.classList.add('is-period');
+          root.classList.add('is-done', 'is-typed');
+        },
       },
-    });
+      pace
+    );
 
     return () => {
       stop();
       caret.remove();
-      // leaving mid-sentence: the words are simply there
-      root.classList.add('is-done');
+      // Nothing else. `is-done` paints every glyph at once, and StrictMode tears
+      // an effect down once before the real run — marking it here meant the
+      // block was fully lit before the hand had written a word, and the cursor
+      // just travelled over text that was already there. Leaving mid-sentence
+      // unmounts the block anyway; coming back writes it from the start.
     };
-  }, [ref, active, key, seen]);
+  }, [ref, active, key, seen, pace]);
 }
