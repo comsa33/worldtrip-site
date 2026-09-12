@@ -925,6 +925,22 @@
   }
 }
 
+/*
+ * Opened, a map is the thing being used, so it comes above the city's note
+ * instead of under it (the note is z-index 100 — AboutOverlay.css), and takes a
+ * solid plate while one is up. A note read through a map and a map read through
+ * a note are two half-legible things where there should be one whole one.
+ */
+.minimap.is-open,
+.country-inset.is-open {
+  z-index: 110;
+}
+
+.journey-experience:has(.about-overlay) .minimap.is-open,
+.journey-experience:has(.about-overlay) .country-inset.is-open {
+  background: var(--bg);
+}
+
 /* =============================================================================
    Country inset — where in this country, top-left
    ============================================================================= */
@@ -1135,7 +1151,6 @@
 
   .journey-experience:has(.about-overlay) .country-inset.is-open {
     opacity: 1;
-    background: var(--bg);
   }
 }
 
@@ -1274,11 +1289,9 @@
     pointer-events: auto;
   }
 
+  /* opened, it is the thing being used, and comes back to full ink */
   .journey-experience:has(.about-overlay) .minimap.is-open {
     opacity: 1;
-    /* opened over the note, a see-through plate leaves two things half readable
-       instead of one whole one */
-    background: var(--bg);
   }
 
   .filmstrip__thumb {
