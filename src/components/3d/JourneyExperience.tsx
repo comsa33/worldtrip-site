@@ -766,7 +766,10 @@ function Scene({
     return i < 0 ? 0 : i;
   }, [path, stops]);
 
-  const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+  // rounded, not floored: a glide lands on whole pixels, and a scroll a hair
+  // short of a stop must still count as that stop, not the last point of the
+  // leg before it — that left the city it had arrived at drawn as not yet
+  const pathIdx = Math.min(Math.round(progress * path.length), path.length - 1);
 
   const { position, displayStopId, fromStopId, toStopId, segProgress } = useMemo(() => {
     const pt = path[pathIdx] || {
@@ -1354,7 +1357,7 @@ function JourneyExperienceContent() {
 
   // Calculate current stop to display
   const currentStop = useMemo(() => {
-    const pathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+    const pathIdx = Math.min(Math.round(progress * path.length), path.length - 1);
     const pt = path[pathIdx];
     if (!pt) return 0;
 
@@ -1369,7 +1372,7 @@ function JourneyExperienceContent() {
 
   // Current position back in lat/lng (inverse of latLngToVector3) for the minimap
   const currentLatLng = useMemo(() => {
-    const idx = Math.min(Math.floor(smoothProgress * path.length), path.length - 1);
+    const idx = Math.min(Math.round(smoothProgress * path.length), path.length - 1);
     const pt = path[idx]?.point;
     if (!pt) return { lat: 35.16, lng: 126.85 };
     const r = pt.length();
@@ -1900,7 +1903,7 @@ function JourneyExperienceContent() {
       const currentStop = currentStopRef.current;
       const stops = stopsRef.current;
 
-      const currentPathIdx = Math.min(Math.floor(progress * path.length), path.length - 1);
+      const currentPathIdx = Math.min(Math.round(progress * path.length), path.length - 1);
       const currentPt = path[currentPathIdx];
 
       let targetPathIndex = currentPathIdx;
