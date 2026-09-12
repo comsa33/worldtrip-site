@@ -881,3 +881,25 @@
 .pb__waystop {
   cursor: default;
 }
+
+/* the rule must never widen the sheet: a long summary shortens instead */
+.pb__seambar {
+  min-width: 0;
+}
+
+.pb__seamsum {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pb__seamrule {
+  min-width: 8px;
+}
+
+/* the one place the journey turns a year */
+.pb__wayyear {
+  font-size: 8.5px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}

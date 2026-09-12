@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react';
 import { interludeBetween, type CityVisit, type Leg } from '../../lib/visitPhotos';
+import countriesData from '../../data/countries.json';
+
+const NAMES = Object.fromEntries(
+  (
+    countriesData as { countries: { code: string; name: { ko: string; en: string } }[] }
+  ).countries.map((c) => [c.code, c.name])
+);
+const countryName = (code: string, lang: 'ko' | 'en') => NAMES[code]?.[lang] ?? code;
+
+/** Past this many stops the walk stops being a walk and becomes the journey. */
+const TOO_MANY = 12;
 
 /** The rail's spelling: 10.31, 05.24 — month kept at two digits. */
 const MD = (d: string) => d.slice(5).replace('-', '.');
@@ -55,13 +66,22 @@ export function VisitSeam({
       : days === 0
         ? 'same day'
         : `${days} ${days === 1 ? 'day' : 'days'}`;
-  const where = countries.length
-    ? countries.join(', ')
-    : legs.length
-      ? legs[0].city
-      : lang === 'ko'
-        ? '바로'
-        : 'straight back';
+  /* Gwangju's second and third stays have 257 days, 122 stops and 24 countries
+     between them — the whole journey, essentially. Listing those countries ran
+     the rule off the screen and took the sheet's rows with it. So past three
+     they are counted, not named. */
+  const where =
+    countries.length > 3
+      ? lang === 'ko'
+        ? `${countries.length}개 나라`
+        : `${countries.length} countries`
+      : countries.length
+        ? countries.map((c) => countryName(c, lang)).join(', ')
+        : legs.length
+          ? legs[0].city
+          : lang === 'ko'
+            ? '바로'
+            : 'straight back';
   const summary = legs.length
     ? `${spanLabel} · ${where}${legs.length > 1 ? ` · ${legs.length}${lang === 'ko' ? '곳' : ' stops'}` : ''}`
     : spanLabel;
@@ -72,8 +92,18 @@ export function VisitSeam({
      day are nudged apart so they read as separate marks. */
   const t0 = +new Date(from.endDate);
   const span = Math.max(1, (+new Date(to.startDate) - t0) / 86400000);
+  // one mark per country crossed, keeping the order the journey took them in
+  const byCountry: Leg[] = [];
+  for (const l of legs) {
+    const last = byCountry[byCountry.length - 1];
+    if (last && last.country === l.country) last.endDate = l.endDate;
+    else byCountry.push({ ...l, city: countryName(l.country, lang) });
+  }
+  const folded = legs.length > TOO_MANY;
+  const walk = folded ? byCountry : legs;
+
   const seenOn: Record<string, number> = {};
-  const marks = legs.map((l, i) => {
+  const marks = walk.map((l, i) => {
     const base = ((+new Date(l.startDate) - t0) / 86400000 / span) * 100;
     const n = (seenOn[l.startDate] = (seenOn[l.startDate] ?? -1) + 1);
     return {
@@ -82,7 +112,15 @@ export function VisitSeam({
       left: `${Math.min(99, Math.max(1, base + n * 2.6)).toFixed(2)}%`,
       walked: l.transport === 'trek',
       crossed:
-        i > 0 && legs[i - 1].country !== l.country ? `${legs[i - 1].country} → ${l.country}` : null,
+        !folded && i > 0 && walk[i - 1].country !== l.country
+          ? `${walk[i - 1].country} → ${l.country}`
+          : null,
+      // the journey turns a year once and turns it mid-stay: Bulgaria's
+      // 12.31–01.02 reads backwards unless the year is said somewhere
+      turned:
+        l.endDate.slice(0, 4) !== (i > 0 ? walk[i - 1].endDate : l.startDate).slice(0, 4)
+          ? l.endDate.slice(0, 4)
+          : null,
     };
   });
 
@@ -90,9 +128,9 @@ export function VisitSeam({
      so a leg reached on foot wins over a longer one reached by bus — otherwise
      Bhaktapur's four nights outrank the six days of Annapurna. */
   const nights = (l: Leg) => (+new Date(l.endDate) - +new Date(l.startDate)) / 86400000;
-  const pool = legs.filter((l) => l.transport === 'trek');
-  const peakIdx = legs.indexOf(
-    (pool.length ? pool : legs).reduce((b, l) => (nights(l) > nights(b) ? l : b))
+  const pool = folded ? walk : walk.filter((l) => l.transport === 'trek');
+  const peakIdx = walk.indexOf(
+    (pool.length ? pool : walk).reduce((b, l) => (nights(l) > nights(b) ? l : b))
   );
 
   const label = `${MD(from.endDate)} → ${MD(to.startDate)}, ${summary}`;
@@ -116,7 +154,7 @@ export function VisitSeam({
         </span>
       </button>
 
-      {open && legs.length > 0 && (
+      {open && walk.length > 0 && (
         <div className={`pb__way${narrow ? ' is-down' : ''}`}>
           {narrow ? (
             <ol className="pb__waylist">
@@ -125,7 +163,8 @@ export function VisitSeam({
                   <span className="pb__waydot" />
                   <span className="pb__wayname mono">{m.city}</span>
                   <span className="pb__waywhen mono">{MDD(m.startDate, m.endDate)}</span>
-                  {m.walked && (
+                  {m.turned && <span className="pb__wayyear mono">{m.turned}</span>}
+                  {!folded && m.walked && (
                     <span className="pb__waywalk mono">{lang === 'ko' ? '걸어서' : 'on foot'}</span>
                   )}
                   {m.crossed && <span className="pb__waywalk mono">{m.crossed}</span>}
