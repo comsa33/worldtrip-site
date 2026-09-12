@@ -807,15 +807,23 @@
 /* =============================================================================
    Minimap — the whole route, bottom right above the scrubber
    ============================================================================= */
+/*
+ * The whole journey at a thumbnail's size, which is too small to aim at. So it
+ * opens under the hand — hovered on a mouse, tapped on a finger — and the aim
+ * is taken at the larger one. It grows from its own corner, so nothing else on
+ * the page moves, and the route stays a hairline however big it gets
+ * (non-scaling-stroke below): more map, not a thicker drawing.
+ */
 .minimap {
   position: fixed;
   right: 32px;
   bottom: 136px;
   width: 240px;
-  height: 120px;
-  z-index: 55;
+  aspect-ratio: 2 / 1;
+  z-index: 65;
   cursor: pointer;
   overflow: visible;
+  transition: width var(--t-base) var(--ease);
   /* a faint plate so the map separates from the globe behind it, in both themes */
   padding: 8px;
   box-sizing: content-box;
@@ -824,21 +832,31 @@
   border-radius: var(--radius-sm);
 }
 
+/* Open is the component's to decide — a mouse resting, or a finger's first tap.
+   Only the open map answers a click; see Minimap.tsx. */
+.minimap.is-open {
+  width: min(620px, calc(100vw - 56px));
+}
+
 .minimap__land {
   fill: var(--map-land);
 }
 
+/* A leg not yet walked, in the same warm dull tone the globe uses for it, so
+   the two maps say «아직» the same way. */
 .minimap__leg {
   fill: none;
-  stroke: var(--ink);
-  stroke-opacity: 0.22;
+  stroke: var(--route-ahead);
+  stroke-opacity: var(--route-ahead-o);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
+/* The line already walked, in the globe's orange. The two maps are one map. */
 .minimap__leg.is-past {
+  stroke: var(--route-past);
   stroke-opacity: 0.95;
 }
 
@@ -846,17 +864,16 @@
   fill: var(--accent);
 }
 
+/* Not a second accent mark saying the same thing as the dot — a hole in the map
+   beneath it, so the one filled mark is findable wherever it sits. */
 .minimap__ring {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
+  fill: var(--bg);
+  stroke: none;
 }
 
 @media (max-width: 1100px) {
   .minimap {
     width: 180px;
-    height: 90px;
   }
 }
 
@@ -865,7 +882,6 @@
     right: 20px;
     bottom: 160px;
     width: 140px;
-    height: 70px;
     padding: 6px;
   }
 }
