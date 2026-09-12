@@ -163,11 +163,42 @@ const folderToKorean = {
   'chascomus': '차스코무스'
 };
 
+/**
+ * 이미 써 둔 캡션을 publicId 로 기억해 둔다.
+ *
+ * 이 스크립트는 Cloudinary 를 기준으로 cityPhotos.json 을 통째로 다시 쓴다.
+ * 캡션은 Cloudinary 가 아니라 이 JSON 에만 있어서, 손으로 써 넣은 글이
+ * 사진을 추가할 때마다 빈 문자열로 덮여 사라졌다 — 2024년 12월에 쓴 126장이
+ * 2026년 9월 동기화 한 번에 그렇게 없어졌다. 이제는 먼저 읽어두고 돌려준다.
+ */
+function readExistingCaptions() {
+  const outputPath = path.join(__dirname, '../src/data/cityPhotos.json');
+  if (!fs.existsSync(outputPath)) return new Map();
+  try {
+    const prev = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
+    const kept = new Map();
+    for (const city of Object.values(prev)) {
+      for (const p of city.photos || []) {
+        const ko = (p.caption?.ko || '').trim();
+        const en = (p.caption?.en || '').trim();
+        if (p.publicId && (ko || en)) kept.set(p.publicId, { ko, en });
+      }
+    }
+    return kept;
+  } catch {
+    return new Map();
+  }
+}
+
 async function syncPhotos() {
   console.log('🚀 Cloudinary 사진 동기화 시작...\n');
   
   const cityPhotos = {};
   let totalPhotos = 0;
+  const existingCaptions = readExistingCaptions();
+  if (existingCaptions.size > 0) {
+    console.log(`💬 기존 캡션 ${existingCaptions.size}건을 지키며 진행합니다\n`);
+  }
   
   // Get all folders
   const folders = await cloudinary.api.sub_folders('cities');
@@ -257,10 +288,14 @@ async function syncPhotos() {
         date: date,
         gps: gps,
         location: address, // 주소 추가
-        caption: {
-          ko: title || '',
-          en: title || ''
-        },
+        caption: (() => {
+          // Cloudinary 에 적어 둔 것이 있으면 그것을, 없으면 쓰던 글을 그대로
+          const mine = existingCaptions.get(publicId);
+          return {
+            ko: title || mine?.ko || '',
+            en: title || mine?.en || ''
+          };
+        })(),
         alt: description || title || filename
       });
       
