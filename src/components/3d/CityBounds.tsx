@@ -1,7 +1,6 @@
 import { useMemo, useRef, type MutableRefObject } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
-import type { Line2 } from 'three-stdlib';
 import * as THREE from 'three';
 import { GLOBE, type Theme } from '../../theme';
 import { handoff, type Outline } from './cityOutlines';
@@ -9,10 +8,15 @@ import { GLYPH_STROKES, type Glyph } from './placeGlyphs';
 import { Billboard } from '@react-three/drei';
 
 /**
- * A city drawn as itself: its administrative outline on the globe, from
- * OpenStreetMap. One the journey has been to wears the line already walked —
- * the border's weight, in the route's orange; one still ahead is a hairline in
- * the ink the unvisited ring uses.
+ * A city drawn as itself: the ground its administrative boundary covers, from
+ * OpenStreetMap, washed over the globe. One the journey has been to is tinted in
+ * the route's orange; one still ahead is a breath of ink.
+ *
+ * It was an outline once, and the outline was the problem: a hairline round a
+ * city and a hairline for the road between cities are the same material, and
+ * telling them apart by weight alone asked more of the eye than it should. A
+ * wash is not a line at all, so there is nothing to confuse it with — and the
+ * route, drawn over it, has the only lines on the map to itself.
  *
  * An outline is true to scale, and a ring is not. Close up a city is a shape
  * you can read; from a long hop's height it is a few pixels, and there the
@@ -28,38 +32,45 @@ function CityOutline({
   been,
   hovered,
   theme,
-  widthBeen,
-  widthAhead,
+  fillBeen,
+  fillAhead,
+  fillHover,
   blend,
 }: {
   outline: Outline;
   been: boolean;
   hovered: boolean;
   theme: Theme;
-  widthBeen: number;
-  widthAhead: number;
+  /** how much ink a wash carries — set by eye in the `?tune=1` bench */
+  fillBeen: number;
+  fillAhead: number;
+  fillHover: number;
   blend: MutableRefObject<Map<string, number>>;
 }) {
-  const ref = useRef<Line2>(null);
-  const base = hovered ? 1 : been ? 0.9 : 0.35;
+  const ref = useRef<THREE.Mesh>(null);
+  const base = hovered ? fillHover : been ? fillBeen : fillAhead;
+  const geometry = useMemo(() => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(outline.fill, 3));
+    return g;
+  }, [outline.fill]);
   useFrame(() => {
-    const m = ref.current?.material;
+    const m = ref.current?.material as THREE.Material | undefined;
     if (!m) return;
     const k = blend.current.get(outline.city) ?? 0;
     m.opacity = base * k;
     m.visible = k > 0.001;
   });
   return (
-    <Line
-      ref={ref}
-      points={outline.pairs}
-      segments
-      color={been ? GLOBE[theme].routePast : GLOBE[theme].ink}
-      lineWidth={been ? widthBeen : widthAhead}
-      transparent
-      opacity={0}
-      depthWrite={false}
-    />
+    <mesh ref={ref} geometry={geometry} renderOrder={-1}>
+      <meshBasicMaterial
+        color={been ? GLOBE[theme].routePast : GLOBE[theme].ink}
+        transparent
+        opacity={0}
+        depthWrite={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
   );
 }
 
@@ -68,8 +79,9 @@ export function CityBounds({
   been,
   hoveredCity,
   theme,
-  widthBeen,
-  widthAhead,
+  fillBeen,
+  fillAhead,
+  fillHover,
   blend,
 }: {
   outlines: Map<string, Outline>;
@@ -77,10 +89,10 @@ export function CityBounds({
   been: (city: string) => boolean;
   hoveredCity: string | null;
   theme: Theme;
-  /** the border's base weight — what a visited city's outline is drawn with */
-  widthBeen: number;
-  /** the weight of the line not yet walked — what a city ahead is drawn with */
-  widthAhead: number;
+  /** how much ink the wash carries — a city been to, one ahead, one under the hand */
+  fillBeen: number;
+  fillAhead: number;
+  fillHover: number;
   /** written every frame: city → how far it has handed over from ring to outline */
   blend: MutableRefObject<Map<string, number>>;
 }) {
@@ -112,8 +124,9 @@ export function CityBounds({
           been={been(o.city)}
           hovered={hoveredCity === o.city}
           theme={theme}
-          widthBeen={widthBeen}
-          widthAhead={widthAhead}
+          fillBeen={fillBeen}
+          fillAhead={fillAhead}
+          fillHover={fillHover}
           blend={blend}
         />
       ))}

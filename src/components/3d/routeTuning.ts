@@ -23,9 +23,12 @@ export type Tuning = {
   aheadOpacity: number;
   borderBase: number;
   borderActive: number;
-  /** a visited city's outline, and a place glyph — both under the route's weight */
-  cityBeen: number;
+  /** a place glyph, the one city mark that is still a line */
   glyph: number;
+  /** the wash a city's ground carries — been to, still ahead, under the hand */
+  cityFill: number;
+  cityFillAhead: number;
+  cityFillHover: number;
   /** the camera's distance curve — see cityZoom.ts */
   zMax: number;
   zMin: number;
@@ -51,8 +54,10 @@ export function defaults(theme: Theme): Tuning {
     aheadOpacity: GLOBE[theme].routeAheadOpacity,
     borderBase: 1.5,
     borderActive: 2.2,
-    cityBeen: 1,
     glyph: 1.5,
+    cityFill: 0.2,
+    cityFillAhead: 0.075,
+    cityFillHover: 0.34,
     zMax: ZOOM_DEFAULTS.zMax,
     zMin: ZOOM_DEFAULTS.zMin,
     zSlope: ZOOM_DEFAULTS.slope,

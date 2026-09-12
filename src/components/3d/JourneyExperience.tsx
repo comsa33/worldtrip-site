@@ -977,8 +977,9 @@ function Scene({
         been={(c) => ringFor(c) !== 'next'}
         hoveredCity={hoveredCity}
         theme={theme}
-        widthBeen={widths.cityBeen}
-        widthAhead={widths.aheadLand}
+        fillBeen={widths.cityFill}
+        fillAhead={widths.cityFillAhead}
+        fillHover={widths.cityFillHover}
         blend={blendRef}
       />
 

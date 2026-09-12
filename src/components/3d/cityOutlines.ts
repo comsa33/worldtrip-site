@@ -32,12 +32,33 @@ function toSphere(lat: number, lng: number, radius: number): THREE.Vector3 {
 
 export type Outline = {
   city: string;
-  /** every ring, as segment pairs, for one Line in `segments` mode */
-  pairs: [number, number, number][];
+  /** the ground the city covers, as triangles — one mesh per city */
+  fill: Float32Array;
   center: THREE.Vector3;
   /** how far the outline reaches from the city's point, in world units */
   reach: number;
 };
+
+/**
+ * A ring cut into triangles.
+ *
+ * The cutting is done in degrees, before the points are put on the globe: a
+ * city is at most 126km across and over that much ground the sphere is flat
+ * enough that a triangulation made on the map holds when the corners are lifted
+ * onto it. Doing it in three dimensions would be the same answer and a great
+ * deal more arithmetic.
+ */
+function triangles(ring: [number, number][], radius: number): number[] {
+  const flat = ring.map(([lng, lat]) => new THREE.Vector2(lng, lat));
+  const out: number[] = [];
+  for (const face of THREE.ShapeUtils.triangulateShape(flat, [])) {
+    for (const i of face) {
+      const v = toSphere(ring[i][1], ring[i][0], radius);
+      out.push(v.x, v.y, v.z);
+    }
+  }
+  return out;
+}
 
 /** Which cities have an outline, and how far each reaches — for the rings' handoff. */
 export function useOutlines(
@@ -50,18 +71,17 @@ export function useOutlines(
       // a lake, a pass, a border post: a shape says the wrong thing there
       if (!c || PLACE_GLYPH[city] || OUTLINE_SKIP.has(city)) continue;
       const center = toSphere(c.lat, c.lng, RADIUS + LIFT);
-      const pairs: [number, number, number][] = [];
+      const fill: number[] = [];
       let reach = 0;
       for (const ring of b.rings) {
-        const pts = ring.map(([lng, lat]) => toSphere(lat, lng, RADIUS + LIFT));
-        for (let i = 0; i < pts.length; i++) {
-          const a = pts[i];
-          const z = pts[(i + 1) % pts.length];
-          pairs.push([a.x, a.y, a.z], [z.x, z.y, z.z]);
-          reach = Math.max(reach, a.distanceTo(center));
+        if (ring.length < 3) continue;
+        fill.push(...triangles(ring, RADIUS + LIFT));
+        for (const [lng, lat] of ring) {
+          reach = Math.max(reach, toSphere(lat, lng, RADIUS + LIFT).distanceTo(center));
         }
       }
-      out.set(city, { city, pairs, center, reach });
+      if (!fill.length) continue;
+      out.set(city, { city, fill: new Float32Array(fill), center, reach });
     }
     return out;
   }, [cities]);
