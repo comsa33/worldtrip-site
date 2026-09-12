@@ -27,7 +27,14 @@ import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd } from './FirstStep';
-import { ZOOM_DEFAULTS, fitZoom, restZooms, zoomAlong } from './cityZoom';
+import {
+  ZOOM_DEFAULTS,
+  fitZoom,
+  lookAlong,
+  restZoomsByCountry,
+  stepsBack,
+  zoomAlong,
+} from './cityZoom';
 import { CityBounds, PlaceGlyph } from './CityBounds';
 import { PLACE_GLYPH } from './placeGlyphs';
 import { useOutlines } from './cityOutlines';
@@ -804,17 +811,46 @@ function Scene({
     () => stops.slice(1).map((st, i) => haversineKm(cities[stops[i].city], cities[st.city])),
     [stops, cities]
   );
-  const rest = useMemo(() => restZooms(legsKm, zoomParams), [legsKm, zoomParams]);
+  const rest = useMemo(
+    () =>
+      restZoomsByCountry(
+        stops.map((st) => ({ ...cities[st.city], country: st.country })),
+        legsKm,
+        zoomParams
+      ),
+    [stops, cities, legsKm, zoomParams]
+  );
   const stopIndex = useMemo(() => new Map(stops.map((st, i) => [st.id, i])), [stops]);
-  const legZoom = useMemo(() => {
+  const { legZoom, look } = useMemo(() => {
     const a = stopIndex.get(fromStopId) ?? 0;
     const b = stopIndex.get(toStopId) ?? a;
     // on the way the camera steps back only as far as the leg needs to fit
     const restA = rest[a] ?? zoomParams.zMax;
     const restB = rest[b] ?? restA;
     const travel = Math.min(restA, restB, fitZoom(legsKm[a] ?? 0, zoomParams));
-    return zoomAlong(restA, travel, restB, segProgress);
-  }, [stopIndex, fromStopId, toStopId, legsKm, rest, zoomParams, segProgress]);
+    const legZoom = zoomAlong(restA, travel, restB, segProgress);
+    // a leg the camera steps back for is done in acts: out on the city left,
+    // across at height, in on the city ahead. Any other leg follows the dot.
+    if (!stepsBack(restA, travel, restB)) return { legZoom, look: position };
+    const ca = cities[stops[a]?.city];
+    const cb = cities[stops[b]?.city];
+    if (!ca || !cb) return { legZoom, look: position };
+    const A = latLngToVector3(ca.lat, ca.lng, 1);
+    const B = latLngToVector3(cb.lat, cb.lng, 1);
+    const [x, y, z] = lookAlong(A, B, segProgress);
+    return { legZoom, look: new THREE.Vector3(x, y, z) };
+  }, [
+    stopIndex,
+    fromStopId,
+    toStopId,
+    legsKm,
+    rest,
+    zoomParams,
+    segProgress,
+    position,
+    stops,
+    cities,
+  ]);
 
   /*
    * What ring a city wears follows the dot's actual position, not the label
@@ -1031,7 +1067,7 @@ function Scene({
         theme={theme}
       />
       <Camera
-        target={position}
+        target={look}
         zoom={zoom}
         isUserInteracting={isUserInteracting}
         progressiveZoom={legZoom}

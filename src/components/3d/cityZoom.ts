@@ -83,18 +83,91 @@ export function fitZoom(km: number, p: ZoomParams): number {
   return Math.max(p.zMin, Math.min(p.zMax, z));
 }
 
+/** a country whose visited ground spans more than this is looked at in parts */
+const BIG_COUNTRY_KM = 1000;
+
+/**
+ * The zoom each stop rests at, by the run of stops in one country. A stay in
+ * a country is one view — the zoom that fits everywhere the journey went
+ * there — so nothing moves between its cities. A country too big for one
+ * view (India, Chile) is looked at in parts, by the cluster rule above. The
+ * sequence keeps a value until the next differs by more than `hold`.
+ */
+export function restZoomsByCountry(
+  stops: { lat: number; lng: number; country: string }[],
+  legsKm: number[],
+  p: ZoomParams
+): number[] {
+  const clustered = restZooms(legsKm, p);
+  const out: number[] = new Array(stops.length).fill(p.zMax);
+  let i = 0;
+  while (i < stops.length) {
+    let j = i;
+    while (j + 1 < stops.length && stops[j + 1].country === stops[i].country) j++;
+    const run = stops.slice(i, j + 1);
+    const lats = run.map((s) => s.lat);
+    const lngs = run.map((s) => s.lng);
+    const midLat = ((Math.max(...lats) + Math.min(...lats)) / 2) * (Math.PI / 180);
+    const spanKm = Math.hypot(
+      (Math.max(...lngs) - Math.min(...lngs)) * 111 * Math.cos(midLat),
+      (Math.max(...lats) - Math.min(...lats)) * 111
+    );
+    for (let k = i; k <= j; k++)
+      out[k] = spanKm > BIG_COUNTRY_KM ? clustered[k] : fitZoom(spanKm, p);
+    i = j + 1;
+  }
+  const held: number[] = [];
+  let cur = out[0] ?? p.zMax;
+  for (const z of out) {
+    if (Math.abs(z - cur) >= p.hold) cur = z;
+    held.push(cur);
+  }
+  return held;
+}
+
 const smoothstep = (t: number) => {
   const x = Math.max(0, Math.min(1, t));
   return x * x * (3 - 2 * x);
 };
 
+/** whether a leg makes the camera step back on the way */
+export const stepsBack = (restFrom: number, travel: number, restTo: number) =>
+  travel < Math.min(restFrom, restTo) - 0.15;
+
 /**
- * The zoom at a point along a leg: level at the city left, easing out to the
- * leg's own zoom across the first half, easing in to the next city's across
- * the second, level again on arrival. For a short leg in a cluster all three
- * are the same number and nothing moves.
+ * The zoom at a point along a leg. A leg that fits the screen runs from the
+ * zoom it left at to the one it arrives at across the middle, and for most
+ * legs those are the same number and nothing moves. A leg the camera has to
+ * step back for is done in three acts, never at once: the camera pulls out
+ * over the first part with its eye still on the city left, the move happens
+ * at that height, and only then does it come back in on the city ahead.
  */
 export function zoomAlong(restFrom: number, travel: number, restTo: number, t: number): number {
-  if (t < 0.5) return restFrom + (travel - restFrom) * smoothstep((t - 0.12) / 0.33);
-  return travel + (restTo - travel) * smoothstep((t - 0.55) / 0.33);
+  if (stepsBack(restFrom, travel, restTo)) {
+    if (t < 0.5) return restFrom + (travel - restFrom) * smoothstep((t - 0.04) / 0.26);
+    return travel + (restTo - travel) * smoothstep((t - 0.7) / 0.26);
+  }
+  return restFrom + (restTo - restFrom) * smoothstep((t - 0.3) / 0.4);
+}
+
+/**
+ * Where the camera looks along a leg: at the dot, unless the leg is one the
+ * camera steps back for — then it stays on the city left while it pulls out,
+ * turns to the city ahead across the middle, and is already there when it
+ * comes back in. `t` is the share of the leg; the result is a unit direction.
+ */
+export function lookAlong(
+  from: { x: number; y: number; z: number },
+  to: { x: number; y: number; z: number },
+  t: number
+): [number, number, number] {
+  const k = smoothstep((t - 0.3) / 0.4);
+  // slerp between the two unit directions
+  const dot = Math.max(-1, Math.min(1, from.x * to.x + from.y * to.y + from.z * to.z));
+  const ang = Math.acos(dot);
+  if (ang < 1e-4) return [to.x, to.y, to.z];
+  const sa = Math.sin(ang);
+  const wa = Math.sin((1 - k) * ang) / sa;
+  const wb = Math.sin(k * ang) / sa;
+  return [from.x * wa + to.x * wb, from.y * wa + to.y * wb, from.z * wa + to.z * wb];
 }
