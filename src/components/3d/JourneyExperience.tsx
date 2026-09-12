@@ -993,11 +993,11 @@ function Scene({
             {PLACE_GLYPH[m.city] && (
               <PlaceGlyph
                 glyph={PLACE_GLYPH[m.city]}
-                size={radius * 1.9}
+                size={radius}
                 been={ring !== 'next'}
                 hovered={hovered}
                 theme={theme}
-                width={widths.glyph}
+                width={ring === 'next' ? widths.glyph * 0.6 : widths.glyph}
               />
             )}
             {ring !== 'none' && !PLACE_GLYPH[m.city] && (

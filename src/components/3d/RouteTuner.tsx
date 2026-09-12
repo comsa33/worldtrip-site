@@ -83,7 +83,7 @@ lineWidth={${t.borderActive}}   // 활성
 
       <div className="tuner__group">도시</div>
       {num('cityBeen', '지나온 윤곽 굵기', 0.3, 3, 0.05)}
-      {num('glyph', '장소 아이콘 굵기', 0.3, 2, 0.05)}
+      {num('glyph', '장소 기호 굵기', 0.3, 3, 0.05)}
 
       <div className="tuner__group">카메라 거리</div>
       {num('zMax', '가장 가까이', 1, 2.3, 0.05)}

@@ -52,7 +52,7 @@ export function defaults(theme: Theme): Tuning {
     borderBase: 1.5,
     borderActive: 2.2,
     cityBeen: 1,
-    glyph: 0.7,
+    glyph: 1.5,
     zMax: ZOOM_DEFAULTS.zMax,
     zMin: ZOOM_DEFAULTS.zMin,
     zSlope: ZOOM_DEFAULTS.slope,
