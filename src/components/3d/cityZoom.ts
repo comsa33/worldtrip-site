@@ -130,22 +130,51 @@ const smoothstep = (t: number) => {
   return x * x * (3 - 2 * x);
 };
 
-/** whether a leg makes the camera step back on the way */
-export const stepsBack = (restFrom: number, travel: number, restTo: number) =>
-  travel < Math.min(restFrom, restTo) - 0.15;
+/** the least a staged leg pulls out, so the move reads as a move */
+const STAGE_OUT = 0.35;
+/** a border crossed on foot or by a short bus is not a journey between countries */
+const BORDER_STAGE_KM = 150;
 
 /**
- * The zoom at a point along a leg. A leg that fits the screen runs from the
- * zoom it left at to the one it arrives at across the middle, and for most
- * legs those are the same number and nothing moves. A leg the camera has to
- * step back for is done in three acts, never at once: the camera pulls out
- * over the first part with its eye still on the city left, the move happens
- * at that height, and only then does it come back in on the city ahead.
+ * How a leg is travelled. A leg that crosses a border, or one the camera
+ * would have to step back for anyway, is staged — out, across, in — and
+ * pulls out by at least `STAGE_OUT` so the hop can be seen as a hop. Any
+ * other leg is a plain move at the height it rests at.
  */
-export function zoomAlong(restFrom: number, travel: number, restTo: number, t: number): number {
-  if (stepsBack(restFrom, travel, restTo)) {
-    if (t < 0.5) return restFrom + (travel - restFrom) * smoothstep((t - 0.04) / 0.26);
-    return travel + (restTo - travel) * smoothstep((t - 0.7) / 0.26);
+export function legProfile(
+  restFrom: number,
+  restTo: number,
+  legKm: number,
+  crosses: boolean,
+  p: ZoomParams
+): { travel: number; staged: boolean } {
+  const near = Math.min(restFrom, restTo);
+  const fit = Math.min(near, fitZoom(legKm, p));
+  if ((crosses && legKm >= BORDER_STAGE_KM) || fit < near - 0.15) {
+    return { travel: Math.max(p.zMin, Math.min(fit, near - STAGE_OUT)), staged: true };
+  }
+  return { travel: near, staged: false };
+}
+
+/**
+ * The zoom at a point along a leg. A plain leg runs from the zoom it left at
+ * to the one it arrives at across the middle — for most legs the same number,
+ * and nothing moves. A staged leg is three acts, never at once: the camera
+ * pulls out quickly over the first part with its eye still on the city left,
+ * the move happens at that height, and then it comes back in on the city
+ * ahead — slowly, over the last third and a bit, which is what keeps the
+ * arrival from swimming.
+ */
+export function zoomAlong(
+  restFrom: number,
+  travel: number,
+  restTo: number,
+  t: number,
+  staged: boolean
+): number {
+  if (staged) {
+    if (t < 0.45) return restFrom + (travel - restFrom) * smoothstep((t - 0.03) / 0.22);
+    return travel + (restTo - travel) * smoothstep((t - 0.58) / 0.4);
   }
   return restFrom + (restTo - restFrom) * smoothstep((t - 0.3) / 0.4);
 }
@@ -161,7 +190,7 @@ export function lookAlong(
   to: { x: number; y: number; z: number },
   t: number
 ): [number, number, number] {
-  const k = smoothstep((t - 0.3) / 0.4);
+  const k = smoothstep((t - 0.25) / 0.36);
   // slerp between the two unit directions
   const dot = Math.max(-1, Math.min(1, from.x * to.x + from.y * to.y + from.z * to.z));
   const ang = Math.acos(dot);
