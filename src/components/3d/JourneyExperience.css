@@ -871,6 +871,32 @@
   stroke: none;
 }
 
+/* Open, the pointer is put away: the aim is drawn on the route itself. A ring,
+   never a second filled mark — the one filled mark is where you are. */
+.minimap.is-open {
+  cursor: none;
+  touch-action: none;
+}
+
+.minimap__aim circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.minimap__aim text {
+  font-family: var(--mono);
+  font-size: 19px;
+  fill: var(--ink);
+  /* a halo rather than a plate: the map stays readable under the name */
+  stroke: var(--bg);
+  stroke-width: 5;
+  paint-order: stroke fill;
+  pointer-events: none;
+  white-space: pre;
+}
+
 @media (max-width: 1100px) {
   .minimap {
     width: 180px;
