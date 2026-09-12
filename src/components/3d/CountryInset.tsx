@@ -82,16 +82,47 @@ export function CountryInset({
   /** every stop in this country, in the order the journey took them */
   const mine = useMemo(() => {
     if (!countryCode) return [];
-    const out: { idx: number; x: number; y: number }[] = [];
+    const out: { idx: number; x: number; y: number; place: string }[] = [];
     stops.forEach((s, idx) => {
       if (s.country !== countryCode) return;
       const c = cities[s.city];
       if (!c || !shape) return;
       const [x, y] = shape.project(c.lat, c.lng);
-      out.push({ idx, x, y });
+      out.push({ idx, x, y, place: s.city });
     });
     return out;
   }, [stops, cities, countryCode, shape]);
+
+  /**
+   * Every visit to each place, because a map cannot tell them apart.
+   *
+   * Casablanca is two stops with Portugal in between; Turin is four. On the
+   * globe they are one point, so aiming at it has to mean something, and the
+   * page already has the answer for exactly this — `goToCity` takes «the stop of
+   * that city nearest to where we are now». Without it, half the time Casablanca
+   * meant the one on the far side of Portugal and the journey flew across a
+   * border to get there.
+   */
+  const visits = useMemo(() => {
+    const byPlace = new Map<string, number[]>();
+    for (const m of mine) {
+      const seen = byPlace.get(m.place);
+      if (seen) seen.push(m.idx);
+      else byPlace.set(m.place, [m.idx]);
+    }
+    return byPlace;
+  }, [mine]);
+
+  const nearestVisit = useCallback(
+    (m: { idx: number; place: string }) => {
+      const all = visits.get(m.place);
+      if (!all || all.length < 2) return m.idx;
+      return all.reduce((best, i) =>
+        Math.abs(i - currentStopIdx) < Math.abs(best - currentStopIdx) ? i : best
+      );
+    },
+    [visits, currentStopIdx]
+  );
 
   /**
    * The legs drawn are the ones actually walked here: two stops in this country
@@ -120,7 +151,10 @@ export function CountryInset({
     for (let i = 0; i < mine.length - 1; i++) {
       const a = mine[i];
       const b = mine[i + 1];
-      const steps = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / SAMPLE));
+      const span = Math.hypot(b.x - a.x, b.y - a.y);
+      // the journey left and came back to the same place: nothing to walk along
+      if (span < 1) continue;
+      const steps = Math.max(1, Math.ceil(span / SAMPLE));
       for (let s = 0; s <= steps; s++) {
         out.push({
           x: a.x + ((b.x - a.x) * s) / steps,
@@ -223,6 +257,7 @@ export function CountryInset({
   const labelTimer = useRef(0);
   const openTimer = useRef(0);
   const moveRaf = useRef(0);
+  const lastX = useRef<number | null>(null);
   const byTouch = useRef(false);
 
   const paintAim = useCallback(
@@ -306,7 +341,7 @@ export function CountryInset({
     if (!r || rail.length === 0) return null;
     const across = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
     const u = forwardIsRight ? across : 1 - across;
-    if (rail.length === 1) return { x: rail[0].x, y: rail[0].y, stop: mine[0].idx };
+    if (rail.length === 1) return { x: rail[0].x, y: rail[0].y, stop: nearestVisit(mine[0]) };
     const f = u * (rail.length - 1);
     const i = Math.min(rail.length - 2, Math.floor(f));
     const t = f - i;
@@ -319,12 +354,16 @@ export function CountryInset({
     const b = mine[p.b];
     const da = (a.x - x) ** 2 + (a.y - y) ** 2;
     const db = (b.x - x) ** 2 + (b.y - y) ** 2;
-    return { x, y, stop: da <= db ? a.idx : b.idx };
+    return { x, y, stop: nearestVisit(da <= db ? a : b) };
   };
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
     const { clientX } = e;
+    // where the finger is, kept apart from where the ring has been drawn to:
+    // painting waits for a frame, and a lift landing on last frame's aim is a
+    // lift landing on the stop next door
+    lastX.current = clientX;
     if (moveRaf.current) return;
     moveRaf.current = requestAnimationFrame(() => {
       moveRaf.current = 0;
@@ -372,7 +411,9 @@ export function CountryInset({
       onOpenChange(true);
       return;
     }
-    commit(aimRef.current ?? aimAt(e.clientX));
+    const x = lastX.current ?? e.clientX;
+    lastX.current = null;
+    commit(aimAt(x) ?? aimRef.current);
   };
 
   const onClick = (e: React.MouseEvent<SVGSVGElement>) => {
@@ -382,7 +423,7 @@ export function CountryInset({
       onOpenChange(true);
       return;
     }
-    commit(aimRef.current ?? aimAt(e.clientX));
+    commit(aimAt(e.clientX) ?? aimRef.current);
   };
 
   if (!shape || !here) return null;
