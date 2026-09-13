@@ -1573,10 +1573,15 @@ function JourneyExperienceContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // the last stop: the dot leaves the globe to write the closing block
-  const finale = currentStop === stops.length - 1 && selectedCity === null;
-
   // the stop the reader has actually come to rest on, a beat after they stop
+  const settledStop = useSettledStop(currentStop, progress);
+
+  // The last stop: the dot leaves the globe to write the closing block — once
+  // it has actually landed there. `currentStop` names the destination from a
+  // sixth of the way into the leg, and taking that as the end sent the dot off
+  // the globe with most of the last flight still to fly.
+  const finale = settledStop === stops.length - 1 && selectedCity === null;
+
   // the same zoom the camera will rest at here — the inset measures the screen
   // against it (see useRestZooms)
   const { rest: restZooms, zoomParams: insetZoomParams } = useRestZooms(stops, cities);
@@ -1588,7 +1593,6 @@ function JourneyExperienceContent() {
    * is, and two rings is two answers to one question.
    */
   const [openMap, setOpenMap] = useState<'world' | 'country' | null>(null);
-  const settledStop = useSettledStop(currentStop, progress);
 
   // The first step. Once the opening has been written and nothing has been
   // touched, the dot leans up the first leg and settles back; on a desktop the
