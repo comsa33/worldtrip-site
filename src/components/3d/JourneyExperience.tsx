@@ -117,6 +117,23 @@ interface CityData {
   country: string;
 }
 
+/** How long the dot sits landed in Gwangju before it gets up to write. */
+const FINALE_BEAT_MS = 900;
+
+/** `on`, but only once it has held for `ms`; off at once. */
+function useAfterBeat(on: boolean, ms: number): boolean {
+  const [held, setHeld] = useState(false);
+  // dropping is done in render (the useSettledStop pattern): an effect would
+  // show one frame of «held» after `on` had already gone
+  if (!on && held) setHeld(false);
+  useEffect(() => {
+    if (!on) return;
+    const t = window.setTimeout(() => setHeld(true), ms);
+    return () => window.clearTimeout(t);
+  }, [on, ms]);
+  return on && held;
+}
+
 // =============================================================================
 // Hooks
 // =============================================================================
@@ -609,6 +626,7 @@ function Camera({
   isUserInteracting,
   progressiveZoom,
   unhurried = false,
+  onRest,
 }: {
   target: THREE.Vector3;
   zoom: number;
@@ -617,10 +635,13 @@ function Camera({
   progressiveZoom: number;
   /** a flight across the world turns the globe slowly, not at a scroll's pace */
   unhurried?: boolean;
+  /** whether the camera has arrived where it is going — false while it glides */
+  onRest?: (resting: boolean) => void;
 }) {
   const { camera } = useThree();
   const cameraTarget = useRef(new THREE.Vector3(-2.5, 3, -3.5));
   const initialized = useRef(false);
+  const resting = useRef(true);
 
   useEffect(() => {
     // Skip auto-positioning when user is manually interacting
@@ -651,6 +672,15 @@ function Camera({
       camera.position.lerp(cameraTarget.current, unhurried ? 0.045 : 0.15).setLength(dist);
     }
     camera.lookAt(0, 0, 0);
+    // The glide is asymptotic, so «arrived» is a threshold: under 0.002 world
+    // units at this distance is under a pixel, and the last of a long flight
+    // takes a couple of seconds to get there — which is exactly the part the
+    // finale must not talk over.
+    const arrived = isUserInteracting || camera.position.distanceTo(cameraTarget.current) < 0.002;
+    if (arrived !== resting.current) {
+      resting.current = arrived;
+      onRest?.(arrived);
+    }
   });
   return null;
 }
@@ -754,6 +784,7 @@ function Scene({
   revealRun,
   noteStop,
   onNoteSide,
+  onCameraRest,
   lean,
 }: {
   progress: number;
@@ -773,6 +804,7 @@ function Scene({
   /** the stop whose note is about to be written, or null */
   noteStop: number | null;
   onNoteSide: (side: 'below' | 'above') => void;
+  onCameraRest: (resting: boolean) => void;
   /** the first-step hint: how far up the first leg the dot leans right now */
   lean: React.RefObject<number>;
 }) {
@@ -1081,6 +1113,7 @@ function Scene({
         isUserInteracting={isUserInteracting}
         progressiveZoom={legZoom}
         unhurried={staged}
+        onRest={onCameraRest}
       />
       {(() => {
         const isMobile =
@@ -1577,10 +1610,17 @@ function JourneyExperienceContent() {
   const settledStop = useSettledStop(currentStop, progress);
 
   // The last stop: the dot leaves the globe to write the closing block — once
-  // it has actually landed there. `currentStop` names the destination from a
-  // sixth of the way into the leg, and taking that as the end sent the dot off
-  // the globe with most of the last flight still to fly.
-  const finale = settledStop === stops.length - 1 && selectedCity === null;
+  // it has actually landed there, the camera has finished gliding in, and the
+  // reader has had a beat to see it land. `currentStop` names the destination
+  // from a sixth of the way into the leg, and taking that as the end sent the
+  // dot off the globe with most of the last flight still to fly; going on the
+  // dot alone still talked over the camera's last seconds, and the dot leaving
+  // the globe for the words is the one move the whole page has been for.
+  const [cameraResting, setCameraResting] = useState(true);
+  const finale = useAfterBeat(
+    settledStop === stops.length - 1 && cameraResting && selectedCity === null,
+    FINALE_BEAT_MS
+  );
 
   // the same zoom the camera will rest at here — the inset measures the screen
   // against it (see useRestZooms)
@@ -2100,6 +2140,7 @@ function JourneyExperienceContent() {
             revealRun={revealRun}
             noteStop={noteStop}
             onNoteSide={setNoteSide}
+            onCameraRest={setCameraResting}
             lean={leanRef}
           />
           <DotGlobe
