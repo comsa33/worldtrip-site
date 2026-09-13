@@ -53852,25 +53852,6 @@
         "h": 1024
       },
       {
-        "id": "turin-003",
-        "publicId": "cities/turin/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo003",
-        "date": "2017-01-23T20:53:39",
-        "gps": {
-          "lat": 45.08190555555556,
-          "lng": 7.673475000000001
-        },
-        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1022,
-        "h": 768
-      },
-      {
         "id": "turin-004",
         "publicId": "cities/turin/photo005",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo005",
@@ -53888,44 +53869,6 @@
         "alt": "photo005",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "turin-005",
-        "publicId": "cities/turin/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo006",
-        "date": "2017-01-23T20:49:11",
-        "gps": {
-          "lat": 45.08188611111112,
-          "lng": 7.673713888888889
-        },
-        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "turin-006",
-        "publicId": "cities/turin/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo007",
-        "date": "2017-01-23T20:52:57",
-        "gps": {
-          "lat": 45.08186388888889,
-          "lng": 7.673533333333333
-        },
-        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1022,
-        "h": 768
       },
       {
         "id": "turin-007",
@@ -54042,25 +53985,6 @@
         "h": 768
       },
       {
-        "id": "turin-014",
-        "publicId": "cities/turin/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo016",
-        "date": "2017-01-23T20:53:39",
-        "gps": {
-          "lat": 45.08190555555556,
-          "lng": 7.673475000000001
-        },
-        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 886,
-        "h": 886
-      },
-      {
         "id": "turin-016",
         "publicId": "cities/turin/photo018",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo018",
@@ -54077,25 +54001,6 @@
         },
         "alt": "photo018",
         "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-017",
-        "publicId": "cities/turin/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo019",
-        "date": "2017-01-23T20:52:29",
-        "gps": {
-          "lat": 45.08188333333334,
-          "lng": 7.673922222222222
-        },
-        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1022,
         "h": 768
       },
       {
@@ -54191,25 +54096,6 @@
         },
         "alt": "photo026",
         "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-023",
-        "publicId": "cities/turin/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo027",
-        "date": "2017-01-23T20:51:16",
-        "gps": {
-          "lat": 45.08178055555556,
-          "lng": 7.674075
-        },
-        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1022,
         "h": 768
       },
       {
