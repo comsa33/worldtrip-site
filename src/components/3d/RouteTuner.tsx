@@ -39,6 +39,8 @@ const trail = (transport: string) =>
     : { width: ${t.pastLand}, opacity: ${t.pastLandOpacity} };
 // src/components/3d/cityZoom.ts
 export const ZOOM_DEFAULTS = { zMax: ${t.zMax}, zMin: ${t.zMin}, slope: ${t.zSlope}, near: ${t.zNear}, hold: ${t.zHold} };
+// src/components/3d/pace.ts
+export const PACE_DEFAULTS: PaceParams = { base: ${t.paceBase}, perPx: ${t.pacePx}, perKm: ${t.paceKm}, max: ${t.paceMax} };
 
 const trailAhead = (transport: string) =>
   transport === 'flight' ? ${t.aheadAir} : ${t.aheadLand};
@@ -93,6 +95,19 @@ lineWidth={${t.borderActive}}   // 활성
       {num('zSlope', '10배마다 물러남', 0.2, 1.2, 0.05)}
       {num('zNear', '다 당기는 거리 km', 5, 200, 5)}
       {num('zHold', '무시하는 차이', 0, 0.6, 0.05)}
+
+      <div className="tuner__group">이동 시간 · 키·스와이프·레일·자동재생</div>
+      {num('paceBase', '기본 ms', 200, 1200, 10)}
+      {num('pacePx', 'px 당 1ms', 2, 16, 0.1)}
+      {num('paceKm', 'km 당 1ms', 1, 12, 0.05)}
+      {num('paceMax', '최대 ms', 1200, 6000, 50)}
+      <div className="tuner__note">
+        광주→인천 {Math.round(Math.min(t.paceMax, t.paceBase + 815 / t.pacePx + 256 / t.paceKm))}ms
+        · 인천→호치민{' '}
+        {Math.round(Math.min(t.paceMax, t.paceBase + 1100 / t.pacePx + 3577 / t.paceKm))}ms · 가장
+        긴 비행 {Math.round(Math.min(t.paceMax, t.paceBase + 1100 / t.pacePx + 14400 / t.paceKm))}ms
+        (폰 기준 px). 도착 뒤 스프링이 0.5초쯤 더 붙습니다.
+      </div>
 
       <div className="tuner__group">화면에 찍히는 값</div>
       <div className="tuner__swatches">

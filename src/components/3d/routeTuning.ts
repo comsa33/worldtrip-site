@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
 import { GLOBE, type Theme } from '../../theme';
 import { ZOOM_DEFAULTS } from './cityZoom';
+import { PACE_DEFAULTS } from './pace';
 
 /**
  * A bench for the route's two tenses. Dev only — `?tune=1` — and not shipped.
@@ -35,6 +36,11 @@ export type Tuning = {
   zSlope: number;
   zNear: number;
   zHold: number;
+  /** how long a jump takes — see pace.ts */
+  paceBase: number;
+  pacePx: number;
+  paceKm: number;
+  paceMax: number;
 };
 
 export const TUNE_ON =
@@ -63,6 +69,10 @@ export function defaults(theme: Theme): Tuning {
     zSlope: ZOOM_DEFAULTS.slope,
     zNear: ZOOM_DEFAULTS.near,
     zHold: ZOOM_DEFAULTS.hold,
+    paceBase: PACE_DEFAULTS.base,
+    pacePx: PACE_DEFAULTS.perPx,
+    paceKm: PACE_DEFAULTS.perKm,
+    paceMax: PACE_DEFAULTS.max,
   };
 }
 

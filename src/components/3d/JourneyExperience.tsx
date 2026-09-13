@@ -41,6 +41,7 @@ import { CountryInset } from './CountryInset';
 import { GLOBE, useTheme, useToggleTheme, type Theme } from '../../theme';
 import { RouteTuner } from './RouteTuner';
 import { TUNE_ON, defaults, useTuning, type Tuning } from './routeTuning';
+import { AUTOPLAY_BEAT_MS, PACE_DEFAULTS, jumpMs, type PaceParams } from './pace';
 import { PhotoMarkers } from './PhotoMarkers';
 import { GlobeLabelDriver, GlobeViewToggle } from './GlobeView';
 import {
@@ -1674,6 +1675,21 @@ function JourneyExperienceContent() {
   /** Where the last jump was headed, while it is still on its way. */
   const jumpTargetRef = useRef<number | null>(null);
 
+  // off the bench these are the shipped numbers; on it, the sliders
+  const tunedPace = useTuning();
+  const pace = useMemo<PaceParams>(
+    () =>
+      TUNE_ON
+        ? {
+            base: tunedPace.paceBase,
+            perPx: tunedPace.pacePx,
+            perKm: tunedPace.paceKm,
+            max: tunedPace.paceMax,
+          }
+        : PACE_DEFAULTS,
+    [tunedPace.paceBase, tunedPace.pacePx, tunedPace.paceKm, tunedPace.paceMax]
+  );
+
   // Every control (scrubber, rail, keys, autoplay) moves the page scroll; `progress` derives from it
   const seek = useCallback(
     (p: number, mode: 'drag' | 'jump') => {
@@ -1692,13 +1708,12 @@ function JourneyExperienceContent() {
         // a hop between countries is given room to be seen: the further, the longer
         const fromP = window.scrollY / Math.max(1, maxScroll);
         const kmAcross = legsKmBetween(Math.min(fromP, to), Math.max(fromP, to));
-        const ms = Math.min(2400, 360 + px / 8 + kmAcross / 5);
-        glideRef.current(to, ms);
+        glideRef.current(to, jumpMs(px, kmAcross, pace));
         return;
       }
       window.scrollTo({ top: to * maxScroll, behavior: mode === 'drag' ? 'auto' : 'smooth' });
     },
-    [legsKmBetween]
+    [legsKmBetween, pace]
   );
 
   const [playing, setPlaying] = useState(false);
@@ -1763,7 +1778,7 @@ function JourneyExperienceContent() {
     if (!playing) return;
     const atEnd = currentStop >= stops.length - 1;
     const next = stops[currentStop + 1];
-    const beat = next?.transport === 'flight' ? 2000 : 1200;
+    const beat = next?.transport === 'flight' ? AUTOPLAY_BEAT_MS.flight : AUTOPLAY_BEAT_MS.land;
     const t = window.setTimeout(
       () => (atEnd ? setPlaying(false) : goToStop(currentStop + 1)),
       atEnd ? 0 : beat
@@ -2068,20 +2083,16 @@ function JourneyExperienceContent() {
   const isDragging = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Store path and progress in refs for use in event handlers
-  const pathRef = useRef(path);
-  const progressRef = useRef(progress);
+  // What the touch handlers read, kept current without re-binding them
   const currentStopRef = useRef(currentStop);
-  const stopsRef = useRef(stops);
+  const goToStopRef = useRef(goToStop);
   const selectedCityRef = useRef<string | null>(null);
 
   useEffect(() => {
-    pathRef.current = path;
-    progressRef.current = progress;
     currentStopRef.current = currentStop;
-    stopsRef.current = stops;
+    goToStopRef.current = goToStop;
     selectedCityRef.current = selectedCity;
-  }, [path, progress, currentStop, stops, selectedCity]);
+  }, [currentStop, goToStop, selectedCity]);
 
   // Detect mobile for touch-action - using hook for proper reactivity
   const isMobile = useIsMobile();
@@ -2320,132 +2331,14 @@ function JourneyExperienceContent() {
       const deltaY = touchStartY.current - touchEndY;
       const swipeThreshold = 40;
 
-      const path = pathRef.current;
-      const progress = progressRef.current;
-      const currentStop = currentStopRef.current;
-      const stops = stopsRef.current;
-
-      const currentPathIdx = Math.min(Math.round(progress * path.length), path.length - 1);
-      const currentPt = path[currentPathIdx];
-
-      let targetPathIndex = currentPathIdx;
-
-      if (deltaY > swipeThreshold) {
-        // Swiped UP = go FORWARD
-        const isMidFlight =
-          currentPt &&
-          currentPt.transport === 'flight' &&
-          currentPt.segmentProgress > 0.2 &&
-          currentPt.segmentProgress < 0.8;
-
-        if (isMidFlight) {
-          for (let i = currentPathIdx; i < path.length; i++) {
-            const pt = path[i];
-            if (pt.fromStopId === currentPt.toStopId && pt.segmentProgress < 0.05) {
-              targetPathIndex = i;
-              break;
-            }
-            if (pt.toStopId === currentPt.toStopId && pt.segmentProgress > 0.95) {
-              targetPathIndex = i;
-            }
-          }
-        } else {
-          const nextStopIndex = Math.min(currentStop + 1, stops.length - 1);
-          const nextStop = stops[nextStopIndex];
-          const isNextFlight = nextStop?.transport === 'flight';
-
-          if (isNextFlight) {
-            for (let i = currentPathIdx; i < path.length; i++) {
-              const pt = path[i];
-              if (
-                pt.toStopId === nextStop.id &&
-                pt.segmentProgress >= 0.45 &&
-                pt.segmentProgress <= 0.55
-              ) {
-                targetPathIndex = i;
-                break;
-              }
-            }
-          } else {
-            const targetStopIndex = nextStopIndex;
-            const targetStopId = stops[targetStopIndex]?.id;
-            const isLastStop = targetStopIndex === stops.length - 1;
-
-            if (isLastStop) {
-              for (let i = path.length - 1; i >= 0; i--) {
-                if (path[i].toStopId === targetStopId) {
-                  targetPathIndex = i;
-                  break;
-                }
-              }
-            } else {
-              for (let i = 0; i < path.length; i++) {
-                const pt = path[i];
-                if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
-                  targetPathIndex = i;
-                  break;
-                }
-              }
-            }
-          }
-        }
-      } else if (deltaY < -swipeThreshold) {
-        // Swiped DOWN = go BACKWARD
-        const isMidFlight =
-          currentPt &&
-          currentPt.transport === 'flight' &&
-          currentPt.segmentProgress > 0.2 &&
-          currentPt.segmentProgress < 0.8;
-
-        if (isMidFlight) {
-          const departureStopId = currentPt.fromStopId;
-          for (let i = 0; i < path.length; i++) {
-            const pt = path[i];
-            if (pt.fromStopId === departureStopId && pt.segmentProgress < 0.05) {
-              targetPathIndex = i;
-              break;
-            }
-          }
-        } else {
-          const prevStopIndex = Math.max(currentStop - 1, 0);
-          const currentStopData = stops[currentStop];
-          const wasPrevFlight = currentStopData?.transport === 'flight';
-
-          if (wasPrevFlight && currentStop > 0) {
-            for (let i = currentPathIdx; i >= 0; i--) {
-              const pt = path[i];
-              if (
-                pt.toStopId === currentStopData.id &&
-                pt.segmentProgress >= 0.45 &&
-                pt.segmentProgress <= 0.55
-              ) {
-                targetPathIndex = i;
-                break;
-              }
-            }
-          } else {
-            const targetStopIndex = prevStopIndex;
-            const targetStopId = stops[targetStopIndex]?.id;
-
-            for (let i = 0; i < path.length; i++) {
-              const pt = path[i];
-              if (pt.fromStopId === targetStopId && pt.segmentProgress < 0.05) {
-                targetPathIndex = i;
-                break;
-              }
-            }
-          }
-        }
+      // One swipe is one stop, whatever the leg — a flight included — and it
+      // travels the way the keys do: the page's own glide, paced by distance.
+      // Short of the threshold nothing moves (keep in step with SWIPE_PX in
+      // FirstStep.tsx, whose words are gone exactly here).
+      if (Math.abs(deltaY) > swipeThreshold) {
+        const from = jumpTargetRef.current ?? currentStopRef.current;
+        goToStopRef.current(from + (deltaY > 0 ? 1 : -1));
       }
-
-      const targetProgress = targetPathIndex / path.length;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const targetScrollY = targetProgress * maxScroll;
-
-      window.scrollTo({
-        top: targetScrollY,
-        behavior: 'smooth',
-      });
 
       isDragging.current = false;
       touchStartY.current = null;
