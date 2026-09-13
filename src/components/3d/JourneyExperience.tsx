@@ -1204,6 +1204,14 @@ function VerticalTimeline({
             <div
               key={stop.id}
               className={`timeline-stop timeline-stop--${state}${hoveredCity === stop.city ? ' is-hover' : ''}`}
+              // how far from the current row, and which way — the sheet unfolds
+              // from where you are (see .stop-rail--sheet .timeline-stop)
+              style={
+                {
+                  '--d': Math.abs(actualIdx - currentStopIndex),
+                  '--s': Math.sign(actualIdx - currentStopIndex),
+                } as React.CSSProperties
+              }
               role="button"
               tabIndex={-1}
               onClick={() => {

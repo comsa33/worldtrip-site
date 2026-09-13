@@ -428,12 +428,14 @@
     mask-image: none;
     -webkit-mask-image: none;
     pointer-events: auto;
-    transition: height var(--t-base) var(--ease);
+    /* closing is the way back, and quicker */
+    transition: height var(--t-fast) var(--ease);
   }
 
   .stop-rail--sheet.is-open {
     height: 52vh;
     border-top-color: var(--line);
+    transition: height var(--t-base) var(--ease);
     mask-image: linear-gradient(
       to bottom,
       transparent 0,
@@ -464,8 +466,32 @@
     display: inline;
   }
 
-  .stop-rail--sheet:not(.is-open) .timeline-stop:not(.timeline-stop--current) {
+  /*
+   * The sheet unfolds from the row you are on. The current row rides the top
+   * edge up as the sheet grows; every other row comes in from its side of it —
+   * the ones above from just below their seat, the ones below from just above —
+   * a beat later for each row further out. Closing takes them all back at once,
+   * the way they came, quicker.
+   */
+  .stop-rail--sheet .timeline-stop:not(.timeline-stop--current) {
+    opacity: 0;
     visibility: hidden;
+    transform: translateY(calc(var(--s) * -6px));
+    transition:
+      opacity var(--t-fast) var(--ease),
+      transform var(--t-fast) var(--ease),
+      visibility 0s var(--t-fast);
+  }
+
+  .stop-rail--sheet.is-open .timeline-stop:not(.timeline-stop--current) {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity var(--t-base) var(--ease-out),
+      transform var(--t-base) var(--ease-out),
+      visibility 0s;
+    transition-delay: calc(60ms + var(--d) * 22ms);
   }
 
   .timeline-stop__city {
@@ -1131,7 +1157,8 @@
      map that ducked out for each one read as a blink, not as deference. The
      opening happens once, so it still gets the screen to itself. */
   .journey-experience:has(.stop-rail--sheet.is-open) .country-inset {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .journey-experience:has(.about-overlay:not(.about-overlay--note)) .country-inset {
@@ -1261,9 +1288,14 @@
   /* While the opening story is up on a phone, give it the screen: rail and
      minimap step aside. A city's note is not the opening — it comes and goes at
      every stop, and the rail leaving for each one read as a blink, so it stays. */
-  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .stop-rail,
-  .journey-experience:has(.stop-rail--sheet.is-open) .minimap {
+  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .stop-rail {
     display: none;
+  }
+
+  /* the maps step back for the list, on the same transition they already have */
+  .journey-experience:has(.stop-rail--sheet.is-open) .minimap {
+    opacity: 0;
+    pointer-events: none;
   }
 
   /* The list up, it is the thing being used: the city's note under it steps
@@ -1273,6 +1305,7 @@
     animation: none;
     opacity: 0;
     pointer-events: none;
+    transition: opacity var(--t-fast) var(--ease);
   }
 
   /*
