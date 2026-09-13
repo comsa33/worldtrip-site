@@ -53,7 +53,16 @@ export const GLOBE: Record<
     sphere: '#f3f3f3',
     ink: '#0f0f0f',
     ink2: '#6b6b6b',
-    dotBase: '#b4b4b4',
+    /*
+     * The dot shader writes these without converting back to sRGB, so what
+     * lands on the screen is darker than the hex: #b4 shows as 116, #dc as
+     * 183. The dark theme sets land the trip never reached almost into the
+     * ground (26 on 17) and lets the visited countries stand up out of it;
+     * at #b4 the light theme's untouched land was already a firm grey, and
+     * the visited countries (65) did not read apart from it. #dc puts it back
+     * towards the paper.
+     */
+    dotBase: '#dcdcdc',
     dotVisited: '#8a8a8a',
     dotCurrent: '#5c5c5c',
     routePast: '#e2560a',
