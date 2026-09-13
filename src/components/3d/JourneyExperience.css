@@ -942,7 +942,9 @@
   top: 216px; /* 88 + the world map's 100 + 16 padding + 2 border + 10 gap */
   width: 200px;
   aspect-ratio: 1;
-  z-index: 65;
+  /* above the world map: the frame of what the globe shows runs past this
+     plate's edge for a small country, and must not go under the map above */
+  z-index: 66;
   cursor: pointer;
   overflow: visible;
   transition:

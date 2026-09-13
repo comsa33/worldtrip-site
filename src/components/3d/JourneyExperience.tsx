@@ -1697,6 +1697,11 @@ function JourneyExperienceContent() {
 
   // Detect mobile for touch-action - using hook for proper reactivity
   const isMobile = useIsMobile();
+  // Where the one dot is: on the globe, unless a photo book has it, the finale
+  // has it, or — on a phone — the stop list is up. The list covers the globe,
+  // and a dot floating over a list reads as belonging to some row; it goes
+  // home to the header's ring while the list is up and flies back after.
+  const dotOnGlobe = dotOut && selectedCity === null && !finale && !(isMobile && railOpen);
 
   /**
    * Where a scroll comes to rest.
@@ -2086,7 +2091,7 @@ function JourneyExperienceContent() {
             theme={theme}
             seat={seatRef}
             ribbon={ribbonRef}
-            dotActive={dotOut && selectedCity === null && !finale}
+            dotActive={dotOnGlobe}
             reveal={revealRef}
             revealRun={revealRun}
             noteStop={noteStop}
@@ -2195,11 +2200,7 @@ function JourneyExperienceContent() {
       {/* One dot for the whole site. Its home is the mark in the header; it
           rides the head of the route on the globe, and flies into the photo
           book when one opens. */}
-      <JourneyDotOverlay
-        seat={seatRef}
-        ribbon={ribbonRef}
-        active={dotOut && selectedCity === null && !finale}
-      />
+      <JourneyDotOverlay seat={seatRef} ribbon={ribbonRef} active={dotOnGlobe} />
       <TravelingDot />
 
       {/* Photo gallery overlay */}
