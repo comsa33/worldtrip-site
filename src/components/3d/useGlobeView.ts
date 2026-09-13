@@ -17,6 +17,16 @@ export type GlobeMode = 'off' | 'on' | 'leaving';
 const HASH = '#globe';
 
 /**
+ * A phone on its side. Three hundred and ninety pixels of height leave no room
+ * for the rail, the maps and the scrubber, and a globe is the one thing that
+ * gets better for a wide screen — so turning the phone is a way in, and
+ * turning it back is the way out. A tablet or a desktop window keeps its HUD.
+ */
+const SIDEWAYS =
+  '(hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px)';
+const sideways = () => typeof window !== 'undefined' && window.matchMedia(SIDEWAYS).matches;
+
+/**
  * The mode, and the address that goes with it. `#globe` opens straight into it
  * and the browser's back is a way out, so entering pushes an entry and leaving
  * pops the one it pushed. `leaving` lasts while the camera comes home — the
@@ -26,6 +36,19 @@ export function useGlobeView() {
   const [mode, setMode] = useState<GlobeMode>(() =>
     typeof window !== 'undefined' && window.location.hash === HASH ? 'on' : 'off'
   );
+
+  // held open by the phone lying on its side — not an entry in the history
+  const [forced, setForced] = useState(sideways);
+  useEffect(() => {
+    const mq = window.matchMedia(SIDEWAYS);
+    const onChange = () => {
+      setForced(mq.matches);
+      // stood back up: a globe the reader did not open themselves goes home
+      if (!mq.matches) setMode((m) => (m === 'off' ? 'leaving' : m));
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   useEffect(() => {
     const onPop = () => {
@@ -63,7 +86,11 @@ export function useGlobeView() {
 
   const settled = useCallback(() => setMode((m) => (m === 'leaving' ? 'off' : m)), []);
 
-  return useMemo(() => ({ mode, enter, exit, settled }), [mode, enter, exit, settled]);
+  const shown: GlobeMode = forced ? 'on' : mode;
+  return useMemo(
+    () => ({ mode: shown, forced, enter, exit, settled }),
+    [shown, forced, enter, exit, settled]
+  );
 }
 
 /**

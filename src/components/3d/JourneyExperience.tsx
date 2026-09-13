@@ -1480,7 +1480,16 @@ function ThemeToggle() {
   );
 }
 
-function Header({ globe, onToggleGlobe }: { globe: boolean; onToggleGlobe: () => void }) {
+function Header({
+  globe,
+  forced,
+  onToggleGlobe,
+}: {
+  globe: boolean;
+  /** held open by the phone on its side: there is no journey to go back to at that size */
+  forced: boolean;
+  onToggleGlobe: () => void;
+}) {
   const { t, language } = useI18n();
   return (
     <header className="journey-header">
@@ -1494,19 +1503,21 @@ function Header({ globe, onToggleGlobe }: { globe: boolean; onToggleGlobe: () =>
         <a href="https://blog.po24lio.com">{t('nav.blog')}</a>
         <LanguageToggle />
         <span className="journey-header__sep" aria-hidden="true" />
-        <GlobeViewToggle
-          on={globe}
-          onToggle={onToggleGlobe}
-          label={
-            globe
-              ? language === 'ko'
-                ? '여정으로 돌아가기'
-                : 'Back to the journey'
-              : language === 'ko'
-                ? '지구본 둘러보기'
-                : 'Explore the globe'
-          }
-        />
+        {!forced && (
+          <GlobeViewToggle
+            on={globe}
+            onToggle={onToggleGlobe}
+            label={
+              globe
+                ? language === 'ko'
+                  ? '여정으로 돌아가기'
+                  : 'Back to the journey'
+                : language === 'ko'
+                  ? '지구본 둘러보기'
+                  : 'Explore the globe'
+            }
+          />
+        )}
       </nav>
       <ThemeToggle />
     </header>
@@ -2014,6 +2025,44 @@ function JourneyExperienceContent() {
     };
   }, [selectedCity]);
 
+  /**
+   * Where the reader is, kept across a change of screen size.
+   *
+   * The page is a hundred viewports per stop, and where the journey is comes
+   * from the scroll as a share of the page. Turning a phone on its side takes
+   * the page from ~130,000px to ~60,000px: the browser clamps the scroll to the
+   * new end, and the share it leaves is 1 — the last stop, which is home, so
+   * it read as going back to the start, by way of a flight round the world and
+   * the finale. Every turn did it again, until the tab gave up.
+   *
+   * So the share is remembered while the page keeps its length, and put back
+   * when the length changes by more than a toolbar's worth. A phone's address
+   * bar folding away moves the length by a hundred pixels or so, and the hand
+   * that is scrolling keeps its scroll.
+   */
+  useEffect(() => {
+    const maxOf = () => document.documentElement.scrollHeight - window.innerHeight;
+    let max = maxOf();
+    let share = max > 0 ? window.scrollY / max : 0;
+    const check = () => {
+      const now = maxOf();
+      if (now <= 0) return;
+      if (Math.abs(now - max) / Math.max(1, max) > 0.05) {
+        max = now;
+        window.scrollTo(0, share * now);
+        return;
+      }
+      max = now;
+      share = window.scrollY / now;
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, []);
+
   // Mobile fullscreen swipe handling - using refs for non-passive event listeners
   const touchStartY = useRef<number | null>(null);
   const isDragging = useRef(false);
@@ -2460,7 +2509,11 @@ function JourneyExperienceContent() {
         </Canvas>
       </div>
 
-      <Header globe={globeOn} onToggleGlobe={globeOn ? exitGlobe : enterGlobe} />
+      <Header
+        globe={globeOn}
+        forced={globeView.forced}
+        onToggleGlobe={globeOn ? exitGlobe : enterGlobe}
+      />
       {/* the names of the cities walked, while looking around (GlobeLabelDriver places them) */}
       {globeOn && (
         <div className="globe-labels" ref={labelLayerRef} aria-hidden="true">
