@@ -713,46 +713,58 @@ function Camera({
     cameraTarget.current.copy(dir.multiplyScalar(distance));
   }, [target, zoom, isUserInteracting, progressiveZoom]);
 
-  useFrame((state) => {
-    // The near plane follows the camera out. Depth precision falls with the
-    // square of the distance over `near`, and at 0.01 a phone standing back for
-    // the whole globe (≈13 units) could no longer tell the route (2.003) from
-    // the ground under it: the line lost the depth test in patches and only
-    // its wider page-coloured backing showed. The margin keeps the highest
-    // flight arcs (0.15 up) well in front of the plane.
+  useFrame((state, delta) => {
+    // The near plane follows the camera out, so depth keeps its precision when
+    // it stands back for the whole globe (≈13 units on a phone). The margin
+    // keeps the highest flight arcs (0.15 up) well in front of the plane.
     const persp = state.camera as THREE.PerspectiveCamera;
     const wantNear = Math.max(0.01, (camera.position.length() - GLOBE_RADIUS - 1.2) * 0.5);
     if (Math.abs(wantNear - persp.near) > persp.near * 0.05) {
       persp.near = wantNear;
       persp.updateProjectionMatrix();
     }
+
+    // Looking around is paced by the clock, not by frames. A share of the way
+    // per frame took a phone dropping to 20fps three times as long, and coming
+    // home from 13 units away ran past ten seconds with the HUD waiting on it.
+    // Each move closes on its target with a time constant instead, so it takes
+    // about as long on any device: ~1.1s out, ~0.6s round, ~0.8s down.
+    const dt = Math.min(delta, 0.1);
+    const ease = (tau: number) => 1 - Math.exp(-dt / tau);
     const ph = phase.current;
     if (ph === 'back' || ph === 'free') {
       if (held?.current) phase.current = 'free';
       if (phase.current === 'back') {
         const len = camera.position.length();
-        const next = len + (fit - len) * 0.06;
-        camera.position.setLength(Math.abs(fit - next) < 0.002 ? fit : next);
+        const next = len + (fit - len) * ease(0.16);
+        camera.position.setLength(Math.abs(fit - next) < 0.01 ? fit : next);
         if (camera.position.length() === fit) phase.current = 'free';
       }
       camera.lookAt(0, 0, 0);
       return;
     }
-    if (ph === 'turn') {
-      // at the height it was left at, round to where the journey is looking
-      const len = camera.position.length();
+    if (ph === 'turn' || ph === 'down') {
       const want = cameraTarget.current.clone().normalize();
       const dir = camera.position.clone().normalize();
-      if (dir.dot(want) < -0.999) dir.add(new THREE.Vector3(0, 0.01, 0));
-      dir.lerp(want, 0.06).normalize();
+      if (dir.dot(want) < -0.999) dir.add(new THREE.Vector3(0, 0.01, 0)).normalize();
+      // round along the great circle, a share of the angle left
+      const turn = new THREE.Quaternion().setFromUnitVectors(dir, want);
+      const step = new THREE.Quaternion().slerp(turn, ease(ph === 'turn' ? 0.14 : 0.1));
+      dir.applyQuaternion(step);
+      let len = camera.position.length();
+      const wantLen = cameraTarget.current.length();
+      // at the height it was left at first; only once it faces home does it come down
+      if (ph === 'down') len += (wantLen - len) * ease(0.14);
       camera.position.copy(dir.multiplyScalar(len));
       camera.lookAt(0, 0, 0);
-      if (camera.position.clone().normalize().angleTo(want) < 0.01) phase.current = 'down';
+      if (ph === 'turn' && camera.position.clone().normalize().angleTo(want) < 0.01) {
+        phase.current = 'down';
+      } else if (ph === 'down' && Math.abs(len - wantLen) < wantLen * 0.03) {
+        // near enough to read as arrived: the journey's own follow takes the last hair
+        phase.current = 'none';
+        onHome?.();
+      }
       return;
-    }
-    if (ph === 'down' && camera.position.distanceTo(cameraTarget.current) < 0.02) {
-      phase.current = 'none';
-      onHome?.();
     }
     // Only auto-follow when not interacting. The turn towards a city and the
     // change of distance are eased apart: the turn is quick, the distance is
@@ -1150,8 +1162,10 @@ function Scene({
       {cityMarkers.map((m) => {
         const dotProduct = m.position.clone().normalize().dot(position.clone().normalize());
         // Looking around, the names mark the cities: a ring is under a pixel from
-        // that far, and a hundred and twenty of them cost a phone its frame rate
-        if (looking || dotProduct < -0.3) return null;
+        // that far, and a hundred and twenty of them cost a phone its frame rate.
+        // They come back once the camera is home — mounting them all as it set
+        // off held the turn back by a second on a phone.
+        if (globe !== 'off' || dotProduct < -0.3) return null;
         const markerScale = skim / Math.max(zoomScale, 0.5);
         const hovered = hoveredCity === m.city;
         const isCurrent = m.state === 'current';
@@ -1241,7 +1255,7 @@ function Scene({
         );
       })}
 
-      {!looking && (
+      {globe === 'off' && (
         <PhotoMarkers
           currentStopIdx={currentStopIdx}
           stops={stops}

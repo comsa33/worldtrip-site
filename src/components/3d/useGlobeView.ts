@@ -50,7 +50,10 @@ export function useGlobeView() {
   const exit = useCallback(() => {
     if (window.location.hash === HASH) {
       if ((history.state as { globe?: boolean } | null)?.globe) {
-        history.back(); // popstate turns it to leaving
+        // pop the entry we pushed, but don't wait for its popstate to leave —
+        // on a phone that arrived a second after the tap
+        history.back();
+        setMode((m) => (m === 'on' ? 'leaving' : m));
         return;
       }
       history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
