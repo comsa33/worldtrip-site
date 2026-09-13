@@ -1785,9 +1785,12 @@ function JourneyExperienceContent() {
     [stops, currentStop, goToStop]
   );
 
-  // Autoplay: one stop per beat, a longer beat for flights; any manual scroll stops it
+  // Autoplay: one stop per beat, a longer beat for flights; any manual scroll stops it.
+  // Looking around the globe — a phone turned on its side — only holds it: the
+  // journey cannot move while the globe is the hand's, and a finger turning the
+  // globe is not a scroll. Back from it, the beat starts again where it was.
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || globeView.mode !== 'off') return;
     const atEnd = currentStop >= stops.length - 1;
     const next = stops[currentStop + 1];
     const beat = next?.transport === 'flight' ? AUTOPLAY_BEAT_MS.flight : AUTOPLAY_BEAT_MS.land;
@@ -1803,7 +1806,7 @@ function JourneyExperienceContent() {
       window.removeEventListener('wheel', stop);
       window.removeEventListener('touchmove', stop);
     };
-  }, [playing, currentStop, stops, goToStop]);
+  }, [playing, currentStop, stops, goToStop, globeView.mode]);
 
   // Keyboard: ← → stops, Space play/pause, Esc closes the gallery
   useEffect(() => {
