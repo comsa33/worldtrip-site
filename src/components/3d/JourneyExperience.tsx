@@ -28,7 +28,7 @@ import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd, SwipeHint } from './FirstStep';
 import { SoundToggle } from './SoundToggle';
-import { landOn, setDucked, setFlying } from '../../lib/sound';
+import { landOn, setDucked, setFlying, setMood } from '../../lib/sound';
 import { composeJourney } from '../../lib/journeyScore';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
 import { CityBounds, PlaceGlyph } from './CityBounds';
@@ -2127,6 +2127,8 @@ function JourneyExperienceContent() {
     legUnder.segmentProgress < 0.98;
   useEffect(() => setFlying(airborne), [airborne]);
   useEffect(() => setDucked(selectedCity !== null), [selectedCity]);
+  // the way the reader travels picks the song: letting it play is the bright one
+  useEffect(() => setMood(playing ? 'bright' : 'calm'), [playing]);
   const restingOnRef = useRef({ progress, stop: currentStop, stopProgress, steps: path.length });
   useEffect(() => {
     restingOnRef.current = { progress, stop: currentStop, stopProgress, steps: path.length };
