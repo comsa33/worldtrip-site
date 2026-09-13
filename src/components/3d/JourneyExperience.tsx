@@ -16,7 +16,6 @@ import journeyData from '../../data/journey.json';
 // 헤더 기간 표시: journey.json에서 유도한다 (데이터가 바뀌면 같이 따라간다)
 const journeyPeriod = `${journeyData.startDate.replace(/-/g, '.')} — ${journeyData.endDate.replace(/-/g, '.')}`;
 import citiesData from '../../data/cities.json';
-import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
 import FinaleOverlay from '../about/FinaleOverlay';
@@ -115,13 +114,6 @@ interface CityData {
   lat: number;
   lng: number;
   country: string;
-}
-
-interface CountryData {
-  code: string;
-  name: { en: string; ko: string; native: string };
-  coordinates: { lat: number; lng: number };
-  continent?: string;
 }
 
 // =============================================================================
@@ -1001,6 +993,7 @@ function Scene({
         const radius = ring === 'next' ? 0.005 : 0.007;
         const showLabel =
           hovered || isCurrent || m.state === 'from' || (m.state === 'past' && dotProduct > 0.9);
+        const visits = stops.filter((s) => s.city === m.city).length;
         return (
           <group key={m.city} position={m.position} scale={[markerScale, markerScale, markerScale]}>
             {/* the city the dot is sitting on has no mark of its own; every other
@@ -1061,14 +1054,11 @@ function Scene({
                   onClick={isCurrent && hasPhotos ? () => onCityClick(m.city) : undefined}
                 >
                   {m.name}
-                  {isCurrent && hasPhotos && (
-                    <>
-                      <CameraIcon size={11} strokeWidth={1.75} />
-                      <span className="city-label__n mono">
-                        {photosForStop(stops[currentStopIdx]?.id).length}
-                      </span>
-                    </>
-                  )}
+                  {/* how many times the journey came here — only worth saying past once.
+                      Not the photo count: the filmstrip says that, and the same number
+                      in two places reads as the same thing */}
+                  {isCurrent && visits > 1 && <span className="city-label__x mono">×{visits}</span>}
+                  {isCurrent && hasPhotos && <CameraIcon size={11} strokeWidth={1.75} />}
                 </div>
               </Html>
             )}
@@ -1247,32 +1237,6 @@ function VerticalTimeline({
         })}
       </div>
     </nav>
-  );
-}
-
-function StopMeta({ stop }: { stop: Stop }) {
-  const { language } = useI18n();
-  const cities = citiesData.cities as Record<string, CityData>;
-  const city = cities[stop.city];
-  const country = (countriesData as { countries: CountryData[] }).countries.find(
-    (c) => c.code === stop.country
-  );
-  const day = dayNumber(stop.startDate) ?? dayNumber(stop.endDate);
-  const lang = language as 'ko' | 'en';
-  const cityName = city ? city[lang] : stop.city;
-  const countryName = country ? country.name[lang] : stop.country;
-  const coords = city
-    ? `${Math.abs(city.lat).toFixed(2)}°${city.lat >= 0 ? 'N' : 'S'} ${Math.abs(city.lng).toFixed(2)}°${city.lng >= 0 ? 'E' : 'W'}`
-    : '';
-
-  return (
-    <div className="stop-meta" aria-live="polite">
-      <span className="stop-meta__day mono">{day !== null ? `DAY ${day}` : `STOP ${stop.id}`}</span>
-      <span className="stop-meta__place" key={stop.id}>
-        {cityName}, {countryName}
-      </span>
-      <span className="stop-meta__coords mono">{coords}</span>
-    </div>
   );
 }
 
@@ -2145,7 +2109,6 @@ function JourneyExperienceContent() {
         open={railOpen}
         onToggle={() => setRailOpen((v) => !v)}
       />
-      {city && <StopMeta stop={city} />}
       {city && (
         <Filmstrip
           cityName={city.city}
@@ -2185,12 +2148,9 @@ function JourneyExperienceContent() {
         stopProgress={stopProgress}
         progress={progress}
         currentStopIdx={currentStop}
-        cityName={cities[city?.city]?.[language as 'ko' | 'en'] ?? city?.city ?? ''}
-        countryName={
-          (countriesData as { countries: CountryData[] }).countries.find(
-            (c) => c.code === currentCountry
-          )?.name[language as 'ko' | 'en'] ?? currentCountry
-        }
+        day={dayNumber(city?.startDate) ?? dayNumber(city?.endDate)}
+        listOpen={isMobile ? railOpen : null}
+        onToggleList={() => setRailOpen((v) => !v)}
         playing={playing}
         onSeek={(p, mode) => {
           setPlaying(false);
@@ -2211,8 +2171,6 @@ function JourneyExperienceContent() {
       {city && (
         <StopNote
           stopId={city.id}
-          city={cities[city.city]?.[language as 'ko' | 'en'] ?? city.city}
-          startDate={city.startDate ?? ''}
           side={noteSide}
           visible={noteStop !== null && !isUserInteracting}
         />

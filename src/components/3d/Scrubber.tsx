@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
+import { ChevronUp } from 'lucide-react';
 import { Kbd } from './FirstStep';
 import { useI18n } from '../../i18n';
 
@@ -43,8 +44,9 @@ export function Scrubber({
   stopProgress,
   progress,
   currentStopIdx,
-  cityName,
-  countryName,
+  day,
+  listOpen,
+  onToggleList,
   playing,
   onSeek,
   onTogglePlay,
@@ -53,8 +55,11 @@ export function Scrubber({
   stopProgress: number[];
   progress: number;
   currentStopIdx: number;
-  cityName: string;
-  countryName: string;
+  /** which day of the journey this is — the head's label, next to the date */
+  day: number | null;
+  /** phone: whether the stop list is up; null where the list is a rail of its own */
+  listOpen: boolean | null;
+  onToggleList: () => void;
   playing: boolean;
   onSeek: (progress: number, mode: 'drag' | 'jump') => void;
   onTogglePlay: () => void;
@@ -142,11 +147,24 @@ export function Scrubber({
         className={`scrubber__label mono${pct < 10 ? ' is-start' : pct > 90 ? ' is-end' : ''}`}
         style={{ left: `${pct}%` }}
       >
+        {/* what the track measures, and only that: the day, the date. The place is
+            the label on the globe — said there, not again here */}
+        {day !== null && <span className="scrubber__day">DAY {day}</span>}
         {date && <span className="scrubber__date">{date.replaceAll('-', '.')}</span>}
-        <span className="scrubber__place">
-          {cityName} · {countryName}
-        </span>
       </div>
+      {listOpen !== null && (
+        <button
+          type="button"
+          className={`scrubber__list${listOpen ? ' is-open' : ''}`}
+          onClick={onToggleList}
+          aria-expanded={listOpen}
+          aria-label={
+            listOpen ? (ko ? '정거장 목록 닫기' : 'Close stops') : ko ? '정거장 목록' : 'Stops'
+          }
+        >
+          <ChevronUp size={14} strokeWidth={1.75} />
+        </button>
+      )}
 
       <div
         ref={hitRef}

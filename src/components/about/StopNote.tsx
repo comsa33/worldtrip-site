@@ -25,14 +25,10 @@ const seen = new Set<string>();
  */
 export default function StopNote({
   stopId,
-  city,
-  startDate,
   visible,
   side = 'below',
 }: {
   stopId: number;
-  city: string;
-  startDate: string;
   visible: boolean;
   /** which side of the dot the words sit on — above when the next leg heads down */
   side?: Side;
@@ -55,11 +51,9 @@ export default function StopNote({
 
   if (!mounted || !written) return null;
 
-  const [y, m] = startDate.split('-');
+  // No eyebrow: the date is on the scrubber's head and the city on the globe's
+  // label, so a line saying both again was the third place for each.
   const note: Note = {
-    // the eyebrow writes itself from the journey — only the words are yours
-    subtitle:
-      lang === 'ko' ? `${y}년 ${Number(m)}월, ${city}` : `${MONTHS[Number(m) - 1]} ${y}, ${city}`,
     title: written.title,
     story: written.story,
     quote: written.quote,
@@ -71,18 +65,3 @@ export default function StopNote({
     </div>
   );
 }
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];

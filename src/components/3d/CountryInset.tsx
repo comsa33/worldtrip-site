@@ -38,7 +38,7 @@ const HYSTERESIS = 1.05;
  * Belgium. So a corner of Brazil looks like a corner of anywhere, and the world
  * minimap cannot help — down there Brazil is a thumbnail.
  *
- * So: the current country in the opposite corner from the world, at 10m, with
+ * So: the current country under the world's map, at 10m, with
  * the journey's own two tenses on it, the frame of what the globe is showing,
  * and a filled mark for now. It says nothing new — every material in it is
  * already on the screen somewhere else.

@@ -250,49 +250,6 @@
 }
 
 /* =============================================================================
-   Stop meta — top right: DAY, place, coordinates
-   ============================================================================= */
-.stop-meta {
-  position: fixed;
-  top: 96px;
-  right: 32px;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  text-align: right;
-  pointer-events: none;
-}
-
-.stop-meta__day,
-.stop-meta__place,
-.stop-meta__coords {
-  text-shadow:
-    0 0 4px var(--bg),
-    0 0 12px var(--bg);
-}
-
-.stop-meta__day {
-  font-size: 40px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-
-.stop-meta__place {
-  margin-top: 8px;
-  font-size: 14px;
-  color: var(--ink-2);
-}
-
-.stop-meta__coords {
-  font-size: 12px;
-  color: var(--ink-3);
-}
-
-/* =============================================================================
    Globe overlays (rendered through drei <Html>)
    ============================================================================= */
 /*
@@ -356,10 +313,6 @@
     opacity: 1;
     transform: translateY(-17px);
   }
-}
-
-.stop-meta__place {
-  animation: metaIn var(--t-fast) var(--ease-out);
 }
 
 @keyframes metaIn {
@@ -468,9 +421,9 @@
     right: 0;
     bottom: 104px;
     width: auto;
-    height: 44px;
+    height: 0;
     border-right: none;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid transparent;
     background: var(--bg);
     mask-image: none;
     -webkit-mask-image: none;
@@ -480,6 +433,7 @@
 
   .stop-rail--sheet.is-open {
     height: 52vh;
+    border-top-color: var(--line);
     mask-image: linear-gradient(
       to bottom,
       transparent 0,
@@ -501,23 +455,9 @@
     right: 48px;
   }
 
+  /* the handle is on the bar now (.scrubber__list) */
   .stop-rail__handle {
-    position: absolute;
-    right: 8px;
-    top: 5px;
-    z-index: 1;
-    width: 34px;
-    height: 34px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-sm);
-    color: var(--ink-3);
-    transition: transform var(--t-base) var(--ease);
-  }
-
-  .stop-rail--sheet.is-open .stop-rail__handle {
-    transform: rotate(180deg);
+    display: none;
   }
 
   .stop-rail--sheet .timeline-stop__date {
@@ -534,23 +474,6 @@
 
   .timeline-stop__code,
   .timeline-stop__date {
-    display: none;
-  }
-
-  .stop-meta {
-    top: 64px;
-    right: 20px;
-  }
-
-  .stop-meta__day {
-    font-size: 28px;
-  }
-
-  .stop-meta__place {
-    font-size: 13px;
-  }
-
-  .stop-meta__coords {
     display: none;
   }
 }
@@ -591,12 +514,41 @@
   transform: translateX(-100%);
 }
 
-.scrubber__date {
+.scrubber__day {
   color: var(--ink);
 }
 
-.scrubber__place {
+.scrubber__date {
   color: var(--ink-2);
+}
+
+/* The stop list's handle, on a phone: the sheet used to keep a 44px row of its
+   own above the bar, saying the city's name once more. The bar has the corner. */
+.scrubber__list {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--ink-3);
+  transition:
+    transform var(--t-base) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+.scrubber__list.is-open {
+  transform: rotate(180deg);
+  color: var(--ink);
+}
+
+.scrubber__list:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .scrubber__hit {
@@ -815,7 +767,7 @@
 }
 
 /* =============================================================================
-   Minimap — the whole route, bottom right above the scrubber
+   Minimap — the whole route, top left past the rail, above the country
    ============================================================================= */
 /*
  * The whole journey at a thumbnail's size, which is too small to aim at. So it
@@ -826,9 +778,9 @@
  */
 .minimap {
   position: fixed;
-  right: 32px;
-  bottom: 136px;
-  width: 240px;
+  left: 332px; /* past the 280px rail and the fade at its edge */
+  top: 88px;
+  width: 200px;
   aspect-ratio: 2 / 1;
   z-index: 65;
   cursor: pointer;
@@ -912,16 +864,21 @@
 
 @media (max-width: 1100px) {
   .minimap {
-    width: 180px;
+    left: 300px;
+    width: 160px;
   }
 }
 
 @media (max-width: 768px) {
   .minimap {
-    right: 20px;
-    bottom: 160px;
-    width: 140px;
+    left: 16px;
+    top: 64px;
+    width: 104px;
     padding: 6px;
+  }
+
+  .minimap.is-open {
+    width: min(358px, calc(100vw - 46px));
   }
 }
 
@@ -946,15 +903,17 @@
    ============================================================================= */
 
 /*
- * The world's map sits bottom-right; this one takes the corner across from it,
- * clear of the rail. Same plate, same materials, same two states — a second map
- * that behaved differently would be a third thing to learn. It is square because
+ * Under the world's map, in the same corner: the two scales stacked the way an
+ * atlas puts a locator beside a sheet. They used to sit in opposite corners, and
+ * on a phone the world's corner was the city's note's corner. Same plate, same
+ * materials, same two states — a second map that behaved differently would be
+ * a third thing to learn. It is square because
  * countries are not all wide: Chile has to be allowed to be a thread.
  */
 .country-inset {
   position: fixed;
-  left: 332px; /* past the 280px rail and the fade at its edge */
-  top: 88px;
+  left: 332px; /* under the world map: same corner, the other scale */
+  top: 216px; /* 88 + the world map's 100 + 16 padding + 2 border + 10 gap */
   width: 200px;
   aspect-ratio: 1;
   z-index: 65;
@@ -1106,6 +1065,7 @@
 @media (max-width: 1100px) {
   .country-inset {
     left: 300px;
+    top: 186px; /* 88 + 80 + 18 */
     width: 160px;
   }
 
@@ -1118,7 +1078,7 @@
   /* The rail is a sheet here, so the corner is free from the edge in. */
   .country-inset {
     left: 16px;
-    top: 64px;
+    top: 138px; /* 64 + the world map's 52 + 12 padding + 2 border + 8 gap */
     width: 104px;
     padding: 6px;
   }
@@ -1162,7 +1122,7 @@
    ============================================================================= */
 .filmstrip {
   position: fixed;
-  top: 232px;
+  top: 96px;
   right: 32px;
   z-index: 50;
   display: flex;
@@ -1262,7 +1222,7 @@
 
 @media (max-width: 768px) {
   .filmstrip {
-    top: 150px;
+    top: 64px;
     right: 20px;
   }
 
@@ -1272,6 +1232,15 @@
   .journey-experience:has(.about-overlay:not(.about-overlay--note)) .stop-rail,
   .journey-experience:has(.stop-rail--sheet.is-open) .minimap {
     display: none;
+  }
+
+  /* The list up, it is the thing being used: the city's note under it steps
+     aside the way the maps do, and comes straight back when it closes. */
+  .journey-experience:has(.stop-rail--sheet.is-open) .about-overlay--note {
+    /* the entrance animation would otherwise keep it at full ink */
+    animation: none;
+    opacity: 0;
+    pointer-events: none;
   }
 
   /*
@@ -1318,15 +1287,10 @@
   }
 }
 
-/* how many photos this stay has — the camera alone never read as a door */
-.city-label__n {
+/* how many times the journey came here — only said past once */
+.city-label__x {
   font-size: 10px;
   color: var(--ink-2);
-  letter-spacing: 0.02em;
-}
-
-.city-label--link:hover .city-label__n {
-  color: var(--ink);
 }
 
 /* =============================================================================

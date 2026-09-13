@@ -1,5 +1,5 @@
 export interface Note {
-  subtitle: string;
+  subtitle?: string;
   title?: string;
   story: string;
   quote?: string;
@@ -35,9 +35,11 @@ export function NoteCard({ note }: { note: Note }) {
   return (
     <div className="about-overlay__card">
       {/* in reading order — the hand writes the document top to bottom */}
-      <p className="about-overlay__subtitle">
-        <Typed text={note.subtitle} />
-      </p>
+      {note.subtitle && (
+        <p className="about-overlay__subtitle">
+          <Typed text={note.subtitle} />
+        </p>
+      )}
       {note.title && (
         <h2 className="about-overlay__title">
           <Typed text={note.title} />
