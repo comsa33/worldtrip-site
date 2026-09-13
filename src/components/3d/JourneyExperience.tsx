@@ -1495,7 +1495,15 @@ function Header({
 }) {
   const { t, language } = useI18n();
   return (
-    <header className="journey-header">
+    <header
+      className="journey-header"
+      // A switch pressed with the mouse lets go of the focus, so the arrow keys
+      // go straight back to the journey. Pressed from the keyboard (detail 0)
+      // it keeps it, and the reader tabbing along does not lose their place.
+      onClick={(e) => {
+        if (e.detail > 0) (e.target as HTMLElement).closest('button')?.blur();
+      }}
+    >
       <div className="journey-header__brand">
         <span className="journey-header__dot" data-dot-home aria-hidden="true" />
         <span>{t('journey.brand')}</span>
