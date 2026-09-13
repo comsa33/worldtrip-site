@@ -19,7 +19,6 @@ export const PLACE_GLYPH: Record<string, Glyph> = {
   '바히아 잉글레사': 'water',
   코파카바나: 'water',
   '산 페드로 데 아타카마': 'desert',
-  '살바도르 달리 사막': 'desert',
   국경: 'gate',
 };
 

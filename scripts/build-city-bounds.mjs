@@ -165,8 +165,7 @@ const PICKED = {
   '바히아 잉글레사': null,
   코파카바나: null,
   '산 페드로 데 아타카마': null,
-  // OSM's Desierto Salvador Dalí lies 60km from the journey's point for it
-  '살바도르 달리 사막': null,
+  '살바도르 달리 사막': 'W415179783', // Desierto Salvador Dalí
   국경: null,
 };
 
