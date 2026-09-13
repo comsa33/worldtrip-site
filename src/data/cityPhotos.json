@@ -31406,25 +31406,6 @@
         "h": 768
       },
       {
-        "id": "lisbon-012",
-        "publicId": "cities/lisbon/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/lisbon/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/lisbon/photo017",
-        "date": "2017-02-24T22:03:52",
-        "gps": {
-          "lat": 38.723861666666664,
-          "lng": -9.134166666666667
-        },
-        "location": "Rua Palmira 23, Arroios, Lisboa, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 640,
-        "h": 360
-      },
-      {
         "id": "lisbon-013",
         "publicId": "cities/lisbon/photo018",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/lisbon/photo018",
