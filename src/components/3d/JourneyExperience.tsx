@@ -581,11 +581,17 @@ function TravelPath({
           },
           onOut: () => onHoverLeg(null),
         };
+        // A leg's tense is in its key. An ahead leg carries reveal state on its
+        // material — hidden until the pen reaches it, dashed to how far it has —
+        // and a past leg never touches either. Sharing a key, a leg that went
+        // from ahead to past in one jump kept the ahead leg's line, still hidden:
+        // only its fresh page-coloured backing drew. A browser restoring the
+        // scroll after the first render does exactly that jump, for every leg.
         if (seg.end <= idx) {
           const w = trail(seg.transport, t);
           return (
             <RouteLine
-              key={seg.start}
+              key={`past-${seg.start}`}
               points={seg.pts}
               color={pastColor}
               opacity={isHovered ? 1 : w.opacity}
@@ -598,7 +604,7 @@ function TravelPath({
         if (seg.start >= idx) {
           return (
             <RouteLine
-              key={seg.start}
+              key={`ahead-${seg.start}`}
               points={seg.pts}
               color={t.aheadColor}
               opacity={isHovered ? Math.min(1, t.aheadOpacity + 0.35) : t.aheadOpacity}
@@ -610,7 +616,7 @@ function TravelPath({
         }
         const split = idx - seg.start;
         return (
-          <group key={seg.start}>
+          <group key={`split-${seg.start}`}>
             <RouteLine
               points={seg.pts.slice(0, split + 1)}
               color={pastColor}
