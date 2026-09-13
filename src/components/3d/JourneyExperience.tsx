@@ -33,7 +33,7 @@ import { PLACE_GLYPH } from './placeGlyphs';
 import { useOutlines } from './cityOutlines';
 import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
-import { DotGlobe } from './DotGlobe';
+import { DotGlobe, GLOBE_RADIUS } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
 import { Minimap } from './Minimap';
@@ -707,7 +707,19 @@ function Camera({
     cameraTarget.current.copy(dir.multiplyScalar(distance));
   }, [target, zoom, isUserInteracting, progressiveZoom]);
 
-  useFrame(() => {
+  useFrame((state) => {
+    // The near plane follows the camera out. Depth precision falls with the
+    // square of the distance over `near`, and at 0.01 a phone standing back for
+    // the whole globe (≈13 units) could no longer tell the route (2.003) from
+    // the ground under it: the line lost the depth test in patches and only
+    // its wider page-coloured backing showed. The margin keeps the highest
+    // flight arcs (0.15 up) well in front of the plane.
+    const persp = state.camera as THREE.PerspectiveCamera;
+    const wantNear = Math.max(0.01, (camera.position.length() - GLOBE_RADIUS - 1.2) * 0.5);
+    if (Math.abs(wantNear - persp.near) > persp.near * 0.05) {
+      persp.near = wantNear;
+      persp.updateProjectionMatrix();
+    }
     const ph = phase.current;
     if (ph === 'back' || ph === 'free') {
       if (held?.current) phase.current = 'free';
@@ -1131,8 +1143,9 @@ function Scene({
       {/* City markers: one per city, hover-linked with the rail */}
       {cityMarkers.map((m) => {
         const dotProduct = m.position.clone().normalize().dot(position.clone().normalize());
-        // looking around, any city may face the camera; the globe hides the far side
-        if (!looking && dotProduct < -0.3) return null;
+        // Looking around, the names mark the cities: a ring is under a pixel from
+        // that far, and a hundred and twenty of them cost a phone its frame rate
+        if (looking || dotProduct < -0.3) return null;
         const markerScale = skim / Math.max(zoomScale, 0.5);
         const hovered = hoveredCity === m.city;
         const isCurrent = m.state === 'current';
