@@ -3,10 +3,11 @@ import { useI18n } from '../../i18n';
 import { setSound, soundAnalyser, useSoundMood, useSoundOn, type Mood } from '../../lib/sound';
 
 const N = 25;
-/** calm is one slow wave; bright, two quick ones — the song, in the mark */
+/** calm is one slow wave; bright, two quick ones; orbit, one tall wave barely moving */
 const SHAPE: Record<Mood, { periods: number; amp: number; run: number }> = {
   calm: { periods: 1, amp: 2.2, run: 5 },
   bright: { periods: 2, amp: 2.6, run: 11 },
+  orbit: { periods: 1, amp: 3.2, run: 1.6 },
 };
 
 const wavePoints = (periods: number, amp: number, phase: number) =>

@@ -15,14 +15,18 @@ import type { ScoreNote } from './journeyScore';
  *   falls on the next eighth, a new country's chord waits for the next bar, and
  *   in the air the hats run in sixteenths.
  *
- * Starting or stopping the autoplay crosses from one to the other over a bar or
- * so. Nothing plays until the reader turns it on, and a reader who did is
+ * - orbit, while the reader looks around the globe: no beat and no landings,
+ *   an open chord that drifts, and now and then a high note from the scale,
+ *   as far apart as stars. Turning the globe by hand stirs it — the faster the
+ *   hand, the more often a note glints and the more air comes through.
+ *
+ * Changing how they travel crosses from one song to the next over a bar or so. Nothing plays until the reader turns it on, and a reader who did is
  * remembered in this browser; the sound then waits for their first touch or
  * key, since a browser will not let a page make sound before one. A photo book
  * open over the globe takes it down to half; a hidden tab takes it away.
  */
 
-export type Mood = 'calm' | 'bright';
+export type Mood = 'calm' | 'bright' | 'orbit';
 
 const KEY = 'sound';
 /** in and out, never a cut */
@@ -60,6 +64,8 @@ type Song = {
   out: GainNode;
   land(note: ScoreNote): void;
   fly(up: boolean): void;
+  /** how fast the hand is turning the globe, in radians a second */
+  turn?(speed: number): void;
   stop(): void;
 };
 
@@ -324,11 +330,86 @@ function brightSong(e: Engine, out: GainNode): Song {
   };
 }
 
+function orbitSong(e: Engine, out: GainNode): Song {
+  const { ctx } = e;
+  // D with the fifth and the ninth, spread wide, nothing to resolve
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 900;
+  filter.Q.value = 0.5;
+  const level = ctx.createGain();
+  level.gain.value = 0;
+  level.gain.setTargetAtTime(0.045, ctx.currentTime, 1.5);
+  filter.connect(level);
+  level.connect(out);
+  const drift = ctx.createOscillator();
+  drift.frequency.value = 0.03;
+  const driftAmt = ctx.createGain();
+  driftAmt.gain.value = 400;
+  drift.connect(driftAmt);
+  driftAmt.connect(filter.frequency);
+  const oscs = [73.42, 110.0, 164.81, 220.0, 329.63].flatMap((f, i) =>
+    [-7, 6].map((cents) => {
+      const o = ctx.createOscillator();
+      o.type = i < 2 ? 'sine' : 'triangle';
+      o.frequency.value = f;
+      o.detune.value = cents;
+      o.connect(filter);
+      return o;
+    })
+  );
+  // the air the hand moves
+  const noise = noiseSource(e);
+  noise.loop = true;
+  const band = ctx.createBiquadFilter();
+  band.type = 'bandpass';
+  band.frequency.value = 1400;
+  band.Q.value = 0.6;
+  const air = ctx.createGain();
+  air.gain.value = 0;
+  noise.connect(band);
+  band.connect(air);
+  air.connect(out);
+  [drift, noise, ...oscs].forEach((n) => n.start());
+
+  // a high note now and then, never the same one twice
+  const HIGH = [587.33, 659.25, 739.99, 880.0, 987.77, 1174.66];
+  let last = -1;
+  let stir = 0;
+  let timer = 0;
+  const glint = () => {
+    let i = Math.floor(Math.random() * HIGH.length);
+    if (i === last) i = (i + 1 + Math.floor(Math.random() * (HIGH.length - 1))) % HIGH.length;
+    last = i;
+    strike(e, out, HIGH[i], 0.05, 3.6);
+    const gap = 4200 - 2400 * stir + Math.random() * 1600;
+    timer = window.setTimeout(glint, Math.max(500, gap));
+  };
+  timer = window.setTimeout(glint, 1400);
+
+  return {
+    out,
+    land() {},
+    fly() {},
+    turn(speed) {
+      stir = Math.min(1, speed / 1.5);
+      const t = ctx.currentTime;
+      air.gain.setTargetAtTime(0.03 * stir, t, stir > 0 ? 0.12 : 0.6);
+      band.frequency.setTargetAtTime(1000 + 1600 * stir, t, 0.2);
+    },
+    stop() {
+      window.clearTimeout(timer);
+      [drift, noise, ...oscs].forEach((n) => n.stop());
+    },
+  };
+}
+
 function playSong(e: Engine, which: Mood): Song {
   const out = e.ctx.createGain();
   out.gain.value = 0;
   out.connect(e.master);
   out.gain.setTargetAtTime(1, e.ctx.currentTime, 0.5);
+  if (which === 'orbit') return orbitSong(e, out);
   return which === 'bright' ? brightSong(e, out) : calmSong(e, out);
 }
 
@@ -426,6 +507,31 @@ export function setMood(next: Mood) {
     window.setTimeout(() => old.out.disconnect(), 4500);
   }, 3000);
   e.song = playSong(e, next);
+}
+
+let turnFrom: { x: number; y: number; z: number; t: number } | null = null;
+let calmTimer = 0;
+/**
+ * Where the camera looks from while the hand turns the globe. The speed of the
+ * turn is read off successive directions; when they stop coming, it is still.
+ */
+export function turnedTo(x: number, y: number, z: number) {
+  const len = Math.hypot(x, y, z) || 1;
+  const now = performance.now();
+  const d = { x: x / len, y: y / len, z: z / len, t: now };
+  // the controls report several times a frame; a speed read over a few
+  // milliseconds is noise, so it is read over 30ms or more
+  if (!turnFrom) turnFrom = d;
+  else if (now - turnFrom.t >= 30) {
+    const dot = Math.max(-1, Math.min(1, d.x * turnFrom.x + d.y * turnFrom.y + d.z * turnFrom.z));
+    engine?.song.turn?.(Math.acos(dot) / ((now - turnFrom.t) / 1000));
+    turnFrom = d;
+  }
+  window.clearTimeout(calmTimer);
+  calmTimer = window.setTimeout(() => {
+    turnFrom = null;
+    engine?.song.turn?.(0);
+  }, 160);
 }
 
 /** the dot is in the air */
