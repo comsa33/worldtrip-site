@@ -202,25 +202,43 @@ export function HeadTracker({
     const W = Math.max(MIN_W, Math.min(DOT, area / (0.625 * len))); // ∫ t^0.6 = 0.625
     const forward = head >= t; // which end is the head
     const ordered = forward ? pts : pts.slice().reverse(); // tail → head
+    // The direction at each sample, carried over wherever two samples land on
+    // the same pixel. The route repeats a city's point where one leg ends and
+    // the next begins, so on arrival the samples nearest the head coincide —
+    // and a direction read off two identical points is (0,0): the sides pinch
+    // to nothing and the cap swings to «right», an elbow for a frame.
+    const dir: { x: number; y: number }[] = [];
+    let ldx = 1;
+    let ldy = 0;
+    let firstReal = -1;
+    for (let i = 0; i <= n; i++) {
+      const q = ordered[Math.min(n, i + 1)];
+      const r = ordered[Math.max(0, i - 1)];
+      const dx = q.x - r.x;
+      const dy = q.y - r.y;
+      const m = Math.hypot(dx, dy);
+      if (m > 0.05) {
+        ldx = dx / m;
+        ldy = dy / m;
+        if (firstReal < 0) firstReal = i;
+      }
+      dir.push({ x: ldx, y: ldy });
+    }
+    // samples before the first real direction take it, rather than «right»
+    for (let i = 0; i < firstReal; i++) dir[i] = dir[firstReal];
     const left: string[] = [];
     const right: string[] = [];
     for (let i = 0; i <= n; i++) {
       const p = ordered[i];
-      const q = ordered[Math.min(n, i + 1)];
-      const r = ordered[Math.max(0, i - 1)];
-      let dx = q.x - r.x;
-      let dy = q.y - r.y;
-      const m = Math.hypot(dx, dy) || 1;
-      dx /= m;
-      dy /= m;
+      const { x: dx, y: dy } = dir[i];
       const w = (W * Math.pow(i / n, 0.6)) / 2;
       left.push(`${p.x - dy * w},${p.y + dx * w}`);
       right.unshift(`${p.x + dy * w},${p.y - dx * w}`);
     }
-    // a round cap on the head, so a ribbon that has gathered is a circle
+    // a round cap on the head, facing the way the head is going, so a ribbon
+    // that has gathered is a circle
     const h = ordered[n];
-    const g = ordered[n - 1];
-    const ang = Math.atan2(h.y - g.y, h.x - g.x);
+    const ang = Math.atan2(dir[n].y, dir[n].x);
     const cap: string[] = [];
     for (let i = 0; i <= 8; i++) {
       const a = ang - Math.PI / 2 + (Math.PI * i) / 8;
