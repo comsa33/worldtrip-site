@@ -1287,22 +1287,16 @@
     right: 20px;
   }
 
-  /* While the opening story is up on a phone, give it the screen: rail and
-     minimap step aside. A city's note is not the opening — it comes and goes at
-     every stop, and the rail leaving for each one read as a blink, so it stays. */
-  .journey-experience:has(.about-overlay:not(.about-overlay--note)) .stop-rail {
-    display: none;
-  }
-
   /* the maps step back for the list, on the same transition they already have */
   .journey-experience:has(.stop-rail--sheet.is-open) .minimap {
     opacity: 0;
     pointer-events: none;
   }
 
-  /* The list up, it is the thing being used: the city's note under it steps
-     aside the way the maps do, and comes straight back when it closes. */
-  .journey-experience:has(.stop-rail--sheet.is-open) .about-overlay--note {
+  /* The list up, it is the thing being used: the words under it — a city's
+     note, or the opening story at the first stop — step aside the way the maps
+     do, and come straight back when it closes. */
+  .journey-experience:has(.stop-rail--sheet.is-open) .about-overlay {
     /* the entrance animation would otherwise keep it at full ink */
     animation: none;
     opacity: 0;
