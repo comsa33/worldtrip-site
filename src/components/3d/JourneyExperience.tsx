@@ -42,6 +42,16 @@ import { GLOBE, useTheme, useToggleTheme, type Theme } from '../../theme';
 import { RouteTuner } from './RouteTuner';
 import { TUNE_ON, defaults, useTuning, type Tuning } from './routeTuning';
 import { PhotoMarkers } from './PhotoMarkers';
+import { GlobeLabelDriver, GlobeViewToggle } from './GlobeView';
+import {
+  fitDistance,
+  nearestDistance,
+  useDoubleTap,
+  useGlobeView,
+  useGlobeViewDocument,
+  type GlobeLabel,
+  type GlobeMode,
+} from './useGlobeView';
 import osrmRoutes from '../../data/osrmRoutes.json';
 import './JourneyExperience.css';
 
@@ -630,6 +640,11 @@ function Camera({
   progressiveZoom,
   unhurried = false,
   onRest,
+  globe = 'off',
+  fit = 5.5,
+  held,
+  refit = 0,
+  onHome,
 }: {
   target: THREE.Vector3;
   zoom: number;
@@ -640,11 +655,38 @@ function Camera({
   unhurried?: boolean;
   /** whether the camera has arrived where it is going — false while it glides */
   onRest?: (resting: boolean) => void;
+  /** looking around the globe (GlobeView) — the hand has the camera */
+  globe?: GlobeMode;
+  /** the distance the whole globe is seen from */
+  fit?: number;
+  /** set by the controls the moment a hand takes the globe */
+  held?: React.MutableRefObject<boolean>;
+  /** bumped to stand back to the whole globe again (double click / tap) */
+  refit?: number;
+  /** the camera has come home from looking around */
+  onHome?: () => void;
 }) {
   const { camera } = useThree();
   const cameraTarget = useRef(new THREE.Vector3(-2.5, 3, -3.5));
   const initialized = useRef(false);
   const resting = useRef(true);
+  /**
+   * Looking around, the camera does one thing at a time, as it does on a long
+   * leg. Going in it only stands back, facing where it faced. Coming home it
+   * turns at that height first (`turn`) and only then comes down (`down`).
+   * A hand on the globe drops whatever it was doing.
+   */
+  const phase = useRef<'none' | 'back' | 'free' | 'turn' | 'down'>('none');
+  const prevGlobe = useRef<GlobeMode>('off');
+  useEffect(() => {
+    const was = prevGlobe.current;
+    prevGlobe.current = globe;
+    if (globe === 'on' && was !== 'on') phase.current = 'back';
+    if (globe !== 'on' && was === 'on') phase.current = 'turn';
+  }, [globe]);
+  useEffect(() => {
+    if (refit && globe === 'on') phase.current = 'back';
+  }, [refit, globe]);
 
   useEffect(() => {
     // Skip auto-positioning when user is manually interacting
@@ -666,6 +708,34 @@ function Camera({
   }, [target, zoom, isUserInteracting, progressiveZoom]);
 
   useFrame(() => {
+    const ph = phase.current;
+    if (ph === 'back' || ph === 'free') {
+      if (held?.current) phase.current = 'free';
+      if (phase.current === 'back') {
+        const len = camera.position.length();
+        const next = len + (fit - len) * 0.06;
+        camera.position.setLength(Math.abs(fit - next) < 0.002 ? fit : next);
+        if (camera.position.length() === fit) phase.current = 'free';
+      }
+      camera.lookAt(0, 0, 0);
+      return;
+    }
+    if (ph === 'turn') {
+      // at the height it was left at, round to where the journey is looking
+      const len = camera.position.length();
+      const want = cameraTarget.current.clone().normalize();
+      const dir = camera.position.clone().normalize();
+      if (dir.dot(want) < -0.999) dir.add(new THREE.Vector3(0, 0.01, 0));
+      dir.lerp(want, 0.06).normalize();
+      camera.position.copy(dir.multiplyScalar(len));
+      camera.lookAt(0, 0, 0);
+      if (camera.position.clone().normalize().angleTo(want) < 0.01) phase.current = 'down';
+      return;
+    }
+    if (ph === 'down' && camera.position.distanceTo(cameraTarget.current) < 0.02) {
+      phase.current = 'none';
+      onHome?.();
+    }
     // Only auto-follow when not interacting. The turn towards a city and the
     // change of distance are eased apart: the turn is quick, the distance is
     // slow — a zoom that takes its time is a zoom the stomach does not notice.
@@ -789,6 +859,10 @@ function Scene({
   onNoteSide,
   onCameraRest,
   lean,
+  globe,
+  onGlobeHome,
+  labelLayer,
+  labels,
 }: {
   progress: number;
   zoom: number;
@@ -810,14 +884,51 @@ function Scene({
   onCameraRest: (resting: boolean) => void;
   /** the first-step hint: how far up the first leg the dot leans right now */
   lean: React.RefObject<number>;
+  /** looking around the globe: the hand turns it, nothing moves the journey */
+  globe: GlobeMode;
+  onGlobeHome: () => void;
+  /** where the names go while looking around (rendered outside the canvas) */
+  labelLayer: React.RefObject<HTMLDivElement | null>;
+  labels: GlobeLabel[];
 }) {
+  const looking = globe === 'on';
+  const { size } = useThree();
+  const aspect = size.width / Math.max(1, size.height);
+  const fit = fitDistance(aspect);
+  const nearest = nearestDistance(aspect);
+  const held = useRef(false);
+  const [refit, setRefit] = useState(0);
+  useDoubleTap(looking, () => {
+    held.current = false;
+    setRefit((n) => n + 1);
+  });
+  // the controls keep the far limit until the camera is home, or it would be
+  // clamped in a jump the moment the mode ends
+  const [far, setFar] = useState(globe !== 'off');
+  if (globe === 'on' && !far) setFar(true);
+  const home = useCallback(() => {
+    setFar(false);
+    onGlobeHome();
+  }, [onGlobeHome]);
+  useEffect(() => {
+    held.current = false;
+  }, [globe]);
   const INK = GLOBE[theme].ink;
   const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
   const [hoveredLeg, setHoveredLeg] = useState<{ leg: Leg; at: THREE.Vector3 } | null>(null);
-  const onHoverLeg = useCallback((leg: Leg | null, at?: THREE.Vector3) => {
-    setHoveredLeg(leg && at ? { leg, at: at.clone() } : null);
-    document.body.style.cursor = leg ? 'crosshair' : '';
-  }, []);
+  const onHoverLeg = useCallback(
+    (leg: Leg | null, at?: THREE.Vector3) => {
+      if (looking) return;
+      setHoveredLeg(leg && at ? { leg, at: at.clone() } : null);
+      document.body.style.cursor = leg ? 'crosshair' : '';
+    },
+    [looking]
+  );
+  useEffect(() => {
+    if (looking) document.body.style.cursor = '';
+  }, [looking]);
+  // a route under the pointer when the mode began says nothing while looking around
+  const legTip = looking ? null : hoveredLeg;
   const stops = journeyData.stops as Stop[];
   const cities = citiesData.cities as Record<string, CityData>;
   const { language } = useI18n();
@@ -965,6 +1076,14 @@ function Scene({
 
   return (
     <>
+      {looking && (
+        <GlobeLabelDriver
+          labels={labels}
+          layer={labelLayer}
+          fit={fit}
+          header={size.width <= 768 ? 48 : 56}
+        />
+      )}
       <TravelPath
         points={path}
         segments={segments}
@@ -975,7 +1094,7 @@ function Scene({
         ahead={GLOBE[theme].routeAhead}
         aheadOpacity={GLOBE[theme].routeAheadOpacity}
         reveal={reveal}
-        hoveredLeg={hoveredLeg?.leg ?? null}
+        hoveredLeg={legTip?.leg ?? null}
         onHoverLeg={onHoverLeg}
       />
       <RevealDriver segments={segments} run={revealRun} reveal={reveal} />
@@ -995,9 +1114,7 @@ function Scene({
         stopIdx={noteStop}
         onSide={onNoteSide}
       />
-      {hoveredLeg && (
-        <LegTooltip leg={hoveredLeg.leg} at={hoveredLeg.at} stops={stops} cities={cities} />
-      )}
+      {legTip && <LegTooltip leg={legTip.leg} at={legTip.at} stops={stops} cities={cities} />}
 
       {/* Cities as their own outlines, where the camera is close enough to read them */}
       <CityBounds
@@ -1014,7 +1131,8 @@ function Scene({
       {/* City markers: one per city, hover-linked with the rail */}
       {cityMarkers.map((m) => {
         const dotProduct = m.position.clone().normalize().dot(position.clone().normalize());
-        if (dotProduct < -0.3) return null;
+        // looking around, any city may face the camera; the globe hides the far side
+        if (!looking && dotProduct < -0.3) return null;
         const markerScale = skim / Math.max(zoomScale, 0.5);
         const hovered = hoveredCity === m.city;
         const isCurrent = m.state === 'current';
@@ -1064,26 +1182,28 @@ function Scene({
               />
             )}
             {/* hit area for hover / click */}
-            <mesh
-              onPointerOver={(e) => {
-                e.stopPropagation();
-                onHoverCity(m.city);
-                document.body.style.cursor = 'pointer';
-              }}
-              onPointerOut={() => {
-                onHoverCity(null);
-                document.body.style.cursor = '';
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (isCurrent && hasPhotos) onCityClick(m.city);
-                else onSelectCity(m.city);
-              }}
-            >
-              <sphereGeometry args={[0.022, 8, 8]} />
-              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-            </mesh>
-            {showLabel && (
+            {!looking && (
+              <mesh
+                onPointerOver={(e) => {
+                  e.stopPropagation();
+                  onHoverCity(m.city);
+                  document.body.style.cursor = 'pointer';
+                }}
+                onPointerOut={() => {
+                  onHoverCity(null);
+                  document.body.style.cursor = '';
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (isCurrent && hasPhotos) onCityClick(m.city);
+                  else onSelectCity(m.city);
+                }}
+              >
+                <sphereGeometry args={[0.022, 8, 8]} />
+                <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+              </mesh>
+            )}
+            {showLabel && globe === 'off' && (
               <Html center style={{ pointerEvents: 'none' }}>
                 <div
                   className={`city-label city-label--${m.state}${hovered ? ' is-hover' : ''}${isCurrent && hasPhotos ? ' city-label--link' : ''}`}
@@ -1102,14 +1222,16 @@ function Scene({
         );
       })}
 
-      <PhotoMarkers
-        currentStopIdx={currentStopIdx}
-        stops={stops}
-        cities={cities}
-        cameraPosition={position}
-        zoomScale={zoomScale}
-        theme={theme}
-      />
+      {!looking && (
+        <PhotoMarkers
+          currentStopIdx={currentStopIdx}
+          stops={stops}
+          cities={cities}
+          cameraPosition={position}
+          zoomScale={zoomScale}
+          theme={theme}
+        />
+      )}
       <Camera
         target={look}
         zoom={zoom}
@@ -1117,21 +1239,43 @@ function Scene({
         progressiveZoom={legZoom}
         unhurried={staged}
         onRest={onCameraRest}
+        globe={globe}
+        fit={fit}
+        held={held}
+        refit={refit}
+        onHome={home}
       />
       {(() => {
         const isMobile =
           typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+        // One set of props for both modes, every one of them always given: a prop
+        // that drops out is reset to undefined, and an undefined polar limit
+        // threw the camera onto the north pole the moment it came home.
+        const journey = !looking;
         return (
           <OrbitControls
-            enableZoom={isMobile}
+            enableZoom={journey ? isMobile : true}
+            enableRotate={journey ? !isMobile && !far : true}
             enablePan={false}
-            enableRotate={!isMobile}
-            minDistance={1.5}
-            maxDistance={8}
-            zoomSpeed={0.5}
-            autoRotate={!isUserInteracting && zoom < 0.2}
+            enableDamping={looking}
+            dampingFactor={0.08}
+            rotateSpeed={journey ? 1 : 0.5}
+            zoomSpeed={journey ? 0.5 : 0.6}
+            minDistance={looking ? nearest : 1.5}
+            // until the camera is home the far limit stays, or it would be clamped in a jump
+            maxDistance={looking ? fit : far ? Math.max(fit, 8) : 8}
+            // looking around, north stays up: the globe stops short of a pole
+            minPolarAngle={looking ? 0.21 : 0}
+            maxPolarAngle={looking ? Math.PI - 0.21 : Math.PI}
+            autoRotate={journey && !far && !isUserInteracting && zoom < 0.2}
             autoRotateSpeed={0.15}
-            onStart={onInteraction}
+            onStart={
+              looking
+                ? () => {
+                    held.current = true;
+                  }
+                : onInteraction
+            }
           />
         );
       })()}
@@ -1303,8 +1447,8 @@ function ThemeToggle() {
   );
 }
 
-function Header() {
-  const { t } = useI18n();
+function Header({ globe, onToggleGlobe }: { globe: boolean; onToggleGlobe: () => void }) {
+  const { t, language } = useI18n();
   return (
     <header className="journey-header">
       <div className="journey-header__brand">
@@ -1317,6 +1461,19 @@ function Header() {
         <a href="https://blog.po24lio.com">{t('nav.blog')}</a>
         <LanguageToggle />
         <span className="journey-header__sep" aria-hidden="true" />
+        <GlobeViewToggle
+          on={globe}
+          onToggle={onToggleGlobe}
+          label={
+            globe
+              ? language === 'ko'
+                ? '여정으로 돌아가기'
+                : 'Back to the journey'
+              : language === 'ko'
+                ? '지구본 둘러보기'
+                : 'Explore the globe'
+          }
+        />
       </nav>
       <ThemeToggle />
     </header>
@@ -1394,6 +1551,39 @@ function JourneyExperienceContent() {
   const city = stops[currentStop];
   const currentCountry = city?.country || 'KR';
 
+  /** Looking around the globe (GlobeView): header and globe only, the journey held still. */
+  const globeView = useGlobeView();
+  useGlobeViewDocument(globeView.mode);
+  const globeOn = globeView.mode === 'on';
+  const globeModeRef = useRef(globeView.mode);
+  useEffect(() => {
+    globeModeRef.current = globeView.mode;
+  }, [globeView.mode]);
+  const labelLayerRef = useRef<HTMLDivElement>(null);
+
+  // the cities already walked, as names to say while looking around — the one
+  // the dot is on first, then by how long the journey stayed
+  const globeLabels = useMemo<GlobeLabel[]>(() => {
+    if (globeView.mode !== 'on') return [];
+    const days = new Map<string, number>();
+    stops.forEach((st, i) => {
+      if (i > currentStop || !cities[st.city]) return;
+      const a = dayNumber(st.startDate) ?? 0;
+      const b = dayNumber(st.endDate) ?? a;
+      days.set(st.city, (days.get(st.city) ?? 0) + Math.max(1, b - a + 1));
+    });
+    const here = stops[currentStop]?.city;
+    return [...days.entries()]
+      .sort((x, y) => (x[0] === here ? -1 : y[0] === here ? 1 : y[1] - x[1]))
+      .map(([c], rank) => ({
+        city: c,
+        name: cities[c][language as 'ko' | 'en'],
+        position: latLngToVector3(cities[c].lat, cities[c].lng, 2.004),
+        rank,
+        current: c === here,
+      }));
+  }, [globeView.mode, stops, cities, currentStop, language]);
+
   // Current position back in lat/lng (inverse of latLngToVector3) for the minimap
   const currentLatLng = useMemo(() => {
     const idx = Math.min(Math.round(smoothProgress * path.length), path.length - 1);
@@ -1443,6 +1633,8 @@ function JourneyExperienceContent() {
   // Every control (scrubber, rail, keys, autoplay) moves the page scroll; `progress` derives from it
   const seek = useCallback(
     (p: number, mode: 'drag' | 'jump') => {
+      // looking around, nothing moves the journey (autoplay, a back into the mode)
+      if (globeModeRef.current === 'on') return;
       // a control already chose where this stops, so the rest-snap below stays out of it
       wheelAtRef.current = 0;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -1467,6 +1659,30 @@ function JourneyExperienceContent() {
 
   const [playing, setPlaying] = useState(false);
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
+
+  /**
+   * Which map is open, if either. Held here rather than in each map because
+   * only one may be: both put the cursor away and draw a ring where the hand
+   * is, and two rings is two answers to one question.
+   */
+  const [openMap, setOpenMap] = useState<'world' | 'country' | null>(null);
+
+  // Going in puts every open thing away and stops the play; either way the
+  // camera belongs to the mode now, not to the last drag's three-second hold
+  const enterGlobe = useCallback(() => {
+    if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
+    setIsUserInteracting(false);
+    setPlaying(false);
+    setOpenMap(null);
+    setRailOpen(false);
+    setHoveredCity(null);
+    globeView.enter();
+  }, [globeView]);
+  const exitGlobe = useCallback(() => {
+    if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
+    setIsUserInteracting(false);
+    globeView.exit();
+  }, [globeView]);
 
   const goToStop = useCallback(
     (idx: number) => {
@@ -1524,6 +1740,15 @@ function JourneyExperienceContent() {
       const target = e.target as HTMLElement | null;
       if (target && ['INPUT', 'TEXTAREA', 'BUTTON'].includes(target.tagName)) return;
       if (selectedCity !== null) return;
+      // looking around, the one key is the way out
+      if (globeView.mode === 'on') {
+        if (e.key === 'Escape') exitGlobe();
+        return;
+      }
+      if ((e.key === 'g' || e.key === 'G') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        enterGlobe();
+        return;
+      }
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         if (e.repeat) return;
@@ -1541,7 +1766,7 @@ function JourneyExperienceContent() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [currentStop, goToStop, selectedCity]);
+  }, [currentStop, goToStop, selectedCity, globeView.mode, enterGlobe, exitGlobe]);
 
   // Countries the journey has reached so far (lights their land dots on the globe)
   const visitedCountries = useMemo(() => {
@@ -1596,6 +1821,7 @@ function JourneyExperienceContent() {
   const openingWanted = () =>
     typeof window !== 'undefined' &&
     window.scrollY < 8 &&
+    window.location.hash !== '#globe' &&
     !new URLSearchParams(window.location.search).get('stop') &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealRef = useRef<number>(openingWanted() ? 0 : Infinity);
@@ -1607,8 +1833,8 @@ function JourneyExperienceContent() {
   const openingUp = currentStop === 0 && progress < 0.03;
   // a reader who moves on before the words are written takes the dot with
   // them, and the block is left to its own hand
-  if (!dotOut && !openingUp) setDotOut(true);
-  if (hand !== 'self' && !openingUp) setHand('self');
+  if (!dotOut && (!openingUp || globeOn)) setDotOut(true);
+  if (hand !== 'self' && (!openingUp || globeOn)) setHand('self');
   useEffect(() => {
     if (hand !== 'wait') return;
     const leave = window.setTimeout(() => setDotOut(true), OPENING_BREATH_MS);
@@ -1647,7 +1873,8 @@ function JourneyExperienceContent() {
   // conditions above can flicker for a frame (the settle clock restarts on a
   // pixel of scroll, the camera nudges), and a finale that unmounted for that
   // frame came back already «written» and sat straight down as the period.
-  const finaleOff = currentStop !== stops.length - 1 || selectedCity !== null;
+  const finaleOff =
+    currentStop !== stops.length - 1 || selectedCity !== null || globeView.mode !== 'off';
   const [finaleOn, setFinaleOn] = useState(false);
   if (finaleReady && !finaleOff && !finaleOn) setFinaleOn(true);
   if (finaleOff && finaleOn) setFinaleOn(false);
@@ -1658,12 +1885,12 @@ function JourneyExperienceContent() {
   const { rest: restZooms, zoomParams: insetZoomParams } = useRestZooms(stops, cities);
   const restZoom = restZooms[currentStop] ?? insetZoomParams.zMax;
 
-  /**
-   * Which map is open, if either. Held here rather than in each map because
-   * only one may be: both put the cursor away and draw a ring where the hand
-   * is, and two rings is two answers to one question.
-   */
-  const [openMap, setOpenMap] = useState<'world' | 'country' | null>(null);
+  // the camera never reports home (reduced motion, a hidden tab): don't keep the HUD away for good
+  useEffect(() => {
+    if (globeView.mode !== 'leaving') return;
+    const t = window.setTimeout(globeView.settled, 4000);
+    return () => window.clearTimeout(t);
+  }, [globeView]);
 
   // The first step. Once the opening has been written and nothing has been
   // touched, the dot leans up the first leg and settles back; on a desktop the
@@ -1681,7 +1908,11 @@ function JourneyExperienceContent() {
   // screen space, once the reader has settled (NoteSideProbe)
   const [noteSide, setNoteSide] = useState<'below' | 'above'>('below');
   const noteStop =
-    settledStop === currentStop && currentStop !== 0 && !finale && selectedCity === null
+    settledStop === currentStop &&
+    currentStop !== 0 &&
+    !finale &&
+    selectedCity === null &&
+    globeView.mode === 'off'
       ? currentStop
       : null;
   // a block is up over the map — the opening, a city's note, or the closing —
@@ -1888,6 +2119,7 @@ function JourneyExperienceContent() {
 
     const settle = () => {
       if (gliding || held || playing || selectedCity !== null) return;
+      if (globeModeRef.current !== 'off') return;
       // a page that moved on its own already chose where to stop
       if (performance.now() - wheelAtRef.current > SNAP_HAND_MS) return;
 
@@ -1967,6 +2199,12 @@ function JourneyExperienceContent() {
     const handleTouchStart = (e: TouchEvent) => {
       // Don't handle touch if gallery is open
       if (selectedCityRef.current !== null) return;
+      // looking around, a finger turns the globe instead
+      if (globeModeRef.current !== 'off') {
+        isDragging.current = false;
+        touchStartY.current = null;
+        return;
+      }
 
       if (e.touches.length === 1) {
         touchStartY.current = e.touches[0].clientY;
@@ -1992,6 +2230,7 @@ function JourneyExperienceContent() {
     const handleTouchEnd = (e: TouchEvent) => {
       // Don't handle swipe if gallery is open
       if (selectedCityRef.current !== null) return;
+      if (globeModeRef.current !== 'off') return;
 
       if (!isDragging.current || touchStartY.current === null) return;
 
@@ -2173,6 +2412,10 @@ function JourneyExperienceContent() {
             onNoteSide={setNoteSide}
             onCameraRest={setCameraResting}
             lean={leanRef}
+            globe={globeView.mode}
+            onGlobeHome={globeView.settled}
+            labelLayer={labelLayerRef}
+            labels={globeLabels}
           />
           <DotGlobe
             countryCode={currentCountry}
@@ -2184,7 +2427,19 @@ function JourneyExperienceContent() {
         </Canvas>
       </div>
 
-      <Header />
+      <Header globe={globeOn} onToggleGlobe={globeOn ? exitGlobe : enterGlobe} />
+      {/* the names of the cities walked, while looking around (GlobeLabelDriver places them) */}
+      {globeOn && (
+        <div className="globe-labels" ref={labelLayerRef} aria-hidden="true">
+          {globeLabels.map((l) => (
+            <span key={l.city} className="globe-labels__name">
+              <span className={`city-label city-label--${l.current ? 'current' : 'past'}`}>
+                {l.name}
+              </span>
+            </span>
+          ))}
+        </div>
+      )}
 
       <VerticalTimeline
         currentStopIndex={currentStop}
@@ -2271,7 +2526,7 @@ function JourneyExperienceContent() {
         <StopNote
           stopId={city.id}
           side={noteSide}
-          visible={noteStop !== null && !isUserInteracting}
+          visible={noteStop !== null && !isUserInteracting && globeView.mode === 'off'}
         />
       )}
       {/* And the last word, back where it started — written by the dot itself */}

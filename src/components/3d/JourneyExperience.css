@@ -147,6 +147,87 @@
 }
 
 /* =============================================================================
+   Looking around the globe (GlobeView) — the header and the globe only
+   ============================================================================= */
+.globe-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the meridian slides round on the hand, the way the globe will turn */
+.globe-toggle__meridian {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 420ms var(--ease);
+}
+
+/* a mark, like the theme switch beside it — no plate behind it on the hand */
+.journey-header__nav .globe-toggle:hover {
+  background: transparent;
+}
+
+.globe-toggle:hover .globe-toggle__meridian {
+  transform: scaleX(0.35);
+}
+
+html[data-globe-view]
+  :is(
+    .stop-rail,
+    .filmstrip,
+    .country-inset,
+    .minimap,
+    .scrubber,
+    .about-overlay,
+    .first-hint,
+    .leg-tip
+  ) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 200ms var(--ease) !important;
+}
+
+/* the hand has the globe, on a phone too */
+html[data-globe-view='on'] .canvas-container {
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+}
+
+html[data-globe-view='on'] .canvas-container:active {
+  cursor: grabbing;
+}
+
+.globe-labels {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.globe-labels__name {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.globe-labels__name.is-on {
+  opacity: 1;
+}
+
+.globe-labels__name > .city-label {
+  flex-shrink: 0;
+  animation: none;
+}
+
+/* =============================================================================
    Stop rail — left, the current stop pinned to the vertical centre
    ============================================================================= */
 .stop-rail {
