@@ -27,6 +27,8 @@ import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd, SwipeHint } from './FirstStep';
+import { SoundToggle } from './SoundToggle';
+import { landAt, setDucked, setFlying } from '../../lib/sound';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
 import { CityBounds, PlaceGlyph } from './CityBounds';
 import { PLACE_GLYPH } from './placeGlyphs';
@@ -1519,6 +1521,7 @@ function Header({
             }
           />
         )}
+        <SoundToggle />
       </nav>
       <ThemeToggle />
     </header>
@@ -2101,6 +2104,40 @@ function JourneyExperienceContent() {
   // and a dot floating over a list reads as belonging to some row; it goes
   // home to the header's ring while the list is up and flies back after.
   const dotOnGlobe = dotOut && selectedCity === null && !finale && !(isMobile && railOpen);
+
+  // The sound follows the journey in two ways. In the air the chord opens —
+  // read off the leg under the page, not the spring, so it opens as the move
+  // begins. And a note sounds when the mark comes to rest on a stop: the seat
+  // stops being a ribbon (HeadTracker) while the page stands on a stop's own
+  // place. A scrub let go between two cities comes to rest too, and says nothing.
+  const legUnder = path[Math.min(path.length - 1, Math.round(progress * (path.length - 1)))];
+  const airborne =
+    legUnder?.transport === 'flight' &&
+    legUnder.segmentProgress > 0.02 &&
+    legUnder.segmentProgress < 0.98;
+  useEffect(() => setFlying(airborne), [airborne]);
+  useEffect(() => setDucked(selectedCity !== null), [selectedCity]);
+  const restingOnRef = useRef({ progress, stop: currentStop, stopProgress, steps: path.length });
+  useEffect(() => {
+    restingOnRef.current = { progress, stop: currentStop, stopProgress, steps: path.length };
+  }, [progress, currentStop, stopProgress, path.length]);
+  useEffect(() => {
+    const seat = seatRef.current;
+    if (!seat) return;
+    let was = seat.getAttribute('data-dot-carry');
+    const watch = new MutationObserver(() => {
+      const carry = seat.getAttribute('data-dot-carry');
+      const landed = was === 'ribbon' && carry !== 'ribbon' && carry !== 'hidden';
+      was = carry;
+      if (!landed) return;
+      const r = restingOnRef.current;
+      if (Math.abs(r.progress - r.stopProgress[r.stop]) > 1.5 / r.steps) return;
+      const city = cities[stops[r.stop]?.city];
+      if (city) landAt(city.lat);
+    });
+    watch.observe(seat, { attributes: true, attributeFilter: ['data-dot-carry'] });
+    return () => watch.disconnect();
+  }, [cities, stops]);
 
   /**
    * Where a scroll comes to rest.

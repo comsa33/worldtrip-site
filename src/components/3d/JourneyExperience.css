@@ -171,6 +171,45 @@
   transform: scaleX(0.35);
 }
 
+/* The sound's switch: a line that is the sound. No plate on the hand, like
+   the marks beside it; on, it takes full ink as the theme mark does. */
+.sound-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.journey-header__nav .sound-toggle:hover {
+  background: transparent;
+}
+
+.journey-header__nav .sound-toggle[aria-pressed='true'] {
+  color: var(--ink);
+}
+
+.sound-toggle svg {
+  display: block;
+  overflow: visible;
+}
+
+/* the key, where the hand already is — and only where there are keys. It
+   hangs under the line rather than beside it, so nothing in the header moves. */
+.sound-toggle .sound-toggle__key {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sound-toggle:hover .sound-toggle__key {
+    opacity: 1;
+  }
+}
+
 html[data-globe-view]
   :is(
     .stop-rail,
