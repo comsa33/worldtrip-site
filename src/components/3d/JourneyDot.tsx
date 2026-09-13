@@ -201,7 +201,22 @@ export function HeadTracker({
     const area = Math.PI * (DOT / 2) * (DOT / 2);
     const W = Math.max(MIN_W, Math.min(DOT, area / (0.625 * len))); // ∫ t^0.6 = 0.625
     const forward = head >= t; // which end is the head
-    const ordered = forward ? pts : pts.slice().reverse(); // tail → head
+    let ordered = forward ? pts : pts.slice().reverse(); // tail → head
+    // Gathering in, the mark is short and nearly as wide as it is long. A
+    // ribbon that wide cannot follow a bend in the road — its inner side folds
+    // over itself into a spike — and a tail drawn to a point at that length is
+    // a thorn, not a comet. So under three diameters the mark is a straight
+    // capsule between tail and head, and the tail rounds off as it closes in.
+    const short = len < 3 * DOT;
+    const tailRound = short ? 1 - len / (3 * DOT) : 0;
+    if (short) {
+      const a0 = ordered[0];
+      const a1 = ordered[n];
+      ordered = [];
+      for (let i = 0; i <= n; i++) {
+        ordered.push({ x: a0.x + ((a1.x - a0.x) * i) / n, y: a0.y + ((a1.y - a0.y) * i) / n });
+      }
+    }
     // The direction at each sample, carried over wherever two samples land on
     // the same pixel. The route repeats a city's point where one leg ends and
     // the next begins, so on arrival the samples nearest the head coincide —
@@ -228,23 +243,32 @@ export function HeadTracker({
     for (let i = 0; i < firstReal; i++) dir[i] = dir[firstReal];
     const left: string[] = [];
     const right: string[] = [];
+    const halfAt = (i: number) => (W / 2) * ((1 - tailRound) * Math.pow(i / n, 0.6) + tailRound);
     for (let i = 0; i <= n; i++) {
       const p = ordered[i];
       const { x: dx, y: dy } = dir[i];
-      const w = (W * Math.pow(i / n, 0.6)) / 2;
+      const w = halfAt(i);
       left.push(`${p.x - dy * w},${p.y + dx * w}`);
       right.unshift(`${p.x + dy * w},${p.y - dx * w}`);
     }
-    // a round cap on the head, facing the way the head is going, so a ribbon
-    // that has gathered is a circle
-    const h = ordered[n];
+    // Round caps, walked in the polygon's own order so no edge crosses the
+    // mark: the left side ends at the head's +90° point, so the head's cap
+    // runs from +90° through «ahead» to −90°, where the right side begins; the
+    // right side ends at the tail's −90° point, and a rounded tail runs from
+    // there through «behind» back to +90°, where the left side began.
+    const arc = (c: { x: number; y: number }, from: number, sweep: number, r: number) => {
+      const out: string[] = [];
+      for (let i = 0; i <= 8; i++) {
+        const a = from + (sweep * i) / 8;
+        out.push(`${c.x + Math.cos(a) * r},${c.y + Math.sin(a) * r}`);
+      }
+      return out;
+    };
     const ang = Math.atan2(dir[n].y, dir[n].x);
-    const cap: string[] = [];
-    for (let i = 0; i <= 8; i++) {
-      const a = ang - Math.PI / 2 + (Math.PI * i) / 8;
-      cap.push(`${h.x + Math.cos(a) * (W / 2)},${h.y + Math.sin(a) * (W / 2)}`);
-    }
-    poly.setAttribute('points', left.concat(cap, right).join(' '));
+    const cap = arc(ordered[n], ang + Math.PI / 2, -Math.PI, W / 2);
+    const ang0 = Math.atan2(dir[0].y, dir[0].x);
+    const tailCap = tailRound > 0 ? arc(ordered[0], ang0 - Math.PI / 2, -Math.PI, halfAt(0)) : [];
+    poly.setAttribute('points', left.concat(cap, right, tailCap).join(' '));
     poly.setAttribute('data-on', '');
     setCarry('ribbon');
   });
