@@ -43,7 +43,7 @@ export type Outline = {
  * A ring cut into triangles.
  *
  * The cutting is done in degrees, before the points are put on the globe: a
- * city is at most 126km across and over that much ground the sphere is flat
+ * place is at most 142km across (the Salar de Uyuni) and over that much ground the sphere is flat
  * enough that a triangulation made on the map holds when the corners are lifted
  * onto it. Doing it in three dimensions would be the same answer and a great
  * deal more arithmetic.
@@ -68,7 +68,7 @@ export function useOutlines(
     const out = new Map<string, Outline>();
     for (const [city, b] of Object.entries(data)) {
       const c = cities[city];
-      // a lake, a pass, a border post: a shape says the wrong thing there
+      // a place with no shape of its own wears its map mark instead
       if (!c || PLACE_GLYPH[city] || OUTLINE_SKIP.has(city)) continue;
       const center = toSphere(c.lat, c.lng, RADIUS + LIFT);
       const fill: number[] = [];

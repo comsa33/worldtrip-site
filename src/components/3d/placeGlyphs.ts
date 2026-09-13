@@ -8,23 +8,18 @@
  */
 export type Glyph = 'peak' | 'site' | 'water' | 'desert' | 'gate';
 
-/** which places wear a mark instead of a ring */
+/**
+ * which places wear a mark instead of a ring: the ones with no shape of their
+ * own to draw. A lake, an island, a salt flat or a park that OpenStreetMap does
+ * have is an outline like any city's (scripts/build-city-bounds.mjs --picked).
+ */
 export const PLACE_GLYPH: Record<string, Glyph> = {
-  안나푸르나: 'peak',
-  마추픽추: 'peak',
-  함피: 'site',
   아잔타: 'site',
-  뚝뚝섬: 'water',
   다합: 'water',
-  파라티: 'water',
   '바히아 잉글레사': 'water',
   코파카바나: 'water',
-  '라구나 베르데': 'water',
-  '오르타 호수': 'water',
-  '이과수 폭포': 'water',
   '산 페드로 데 아타카마': 'desert',
   '살바도르 달리 사막': 'desert',
-  우유니: 'desert',
   국경: 'gate',
 };
 

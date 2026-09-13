@@ -137,6 +137,63 @@ function onLand(rs, country) {
   return polygonClipping.intersection(rs.map((r) => [r]), land).map((poly) => poly[0]);
 }
 
+/**
+ * Places that are not a city: their own shape where OpenStreetMap has one — the
+ * lake, the island, the salt flat, the park around the falls, the sanctuary
+ * around the ruins — found by hand and named by id, since a search for the name
+ * finds the nearest town. Each lies on or within 2km of the journey's point for
+ * it, except the two big ones the point sits at the edge of: Uyuni is the town
+ * beside the salar (12km), the Annapurna point is on the trek inside the
+ * conservation area's bounds (17km from its line). `null` is a place with no
+ * shape of its own, or only one too small to ever be drawn (the Ajanta caves
+ * are 400m across): it keeps its map mark, and a wrong outline fetched for it
+ * earlier — a province, a county — is dropped.
+ * Run: node scripts/build-city-bounds.mjs --picked
+ */
+const PICKED = {
+  안나푸르나: 'R4497739', // Annapurna Conservation Area
+  마추픽추: 'R3891114', // Santuario Histórico de Machupicchu
+  함피: 'W823174016', // Group of Monuments at Hampi
+  뚝뚝섬: 'R13202530', // Pulau Samosir
+  파라티: 'R14602147', // Paraty, the district
+  '라구나 베르데': 'W23690519',
+  '오르타 호수': 'R2024365', // Lago d'Orta
+  '이과수 폭포': 'R2639206', // Parque Nacional do Iguaçu
+  우유니: 'R1769713', // Salar de Uyuni
+  아잔타: null,
+  다합: null,
+  '바히아 잉글레사': null,
+  코파카바나: null,
+  '산 페드로 데 아타카마': null,
+  // OSM's Desierto Salvador Dalí lies 60km from the journey's point for it
+  '살바도르 달리 사막': null,
+  국경: null,
+};
+
+if (process.argv.includes('--picked')) {
+  const bounds = JSON.parse(readFileSync('src/data/cityBounds.json', 'utf8'));
+  for (const [key, id] of Object.entries(PICKED)) {
+    if (!id) {
+      if (bounds[key]) console.log(`${key} — dropped ${bounds[key].name}, keeps its mark`);
+      delete bounds[key];
+      continue;
+    }
+    const c = cities[key];
+    const url = `https://nominatim.openstreetmap.org/lookup?osm_ids=${id}&format=jsonv2&polygon_geojson=1&polygon_threshold=0.0015`;
+    const res = await fetch(url, { headers: { 'User-Agent': UA } });
+    if (!res.ok) throw new Error(`Nominatim ${res.status} for ${key}`);
+    const [d] = await res.json();
+    const rs = rings(d.geojson);
+    const km = extentKm(rs, c.lat);
+    const simplified = rs.map((r) => simplify(r, 0.0025).map(([x, y]) => [+x.toFixed(4), +y.toFixed(4)])).filter((r) => r.length >= 4);
+    bounds[key] = { name: d.name, type: d.type, km: Math.round(km), rings: simplified };
+    console.log(`${key} ${d.name} (${d.category}/${d.type}, ${Math.round(km)}km, ${simplified.reduce((n, r) => n + r.length, 0)} pts)`);
+    await sleep(1100);
+  }
+  writeFileSync('src/data/cityBounds.json', JSON.stringify(bounds));
+  process.exit(0);
+}
+
 // `--coast 호치민,다낭,두바이` trims those outlines, already in the file, to the land
 if (process.argv.includes('--coast')) {
   const bounds = JSON.parse(readFileSync('src/data/cityBounds.json', 'utf8'));
