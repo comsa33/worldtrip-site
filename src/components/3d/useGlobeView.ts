@@ -11,20 +11,11 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import type * as THREE from 'three';
+import { SIDEWAYS, isSideways } from '../../lib/sideways';
 
 export type GlobeMode = 'off' | 'on' | 'leaving';
 
 const HASH = '#globe';
-
-/**
- * A phone on its side. Three hundred and ninety pixels of height leave no room
- * for the rail, the maps and the scrubber, and a globe is the one thing that
- * gets better for a wide screen — so turning the phone is a way in, and
- * turning it back is the way out. A tablet or a desktop window keeps its HUD.
- */
-const SIDEWAYS =
-  '(hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px)';
-const sideways = () => typeof window !== 'undefined' && window.matchMedia(SIDEWAYS).matches;
 
 /**
  * The mode, and the address that goes with it. `#globe` opens straight into it
@@ -43,7 +34,7 @@ export function useGlobeView({ held = false }: { held?: boolean } = {}) {
    * (`held`) the phone turning gives the photos a wider screen instead, and
    * the globe takes over only once the book is closed.
    */
-  const [sideway, setSideway] = useState(sideways);
+  const [sideway, setSideway] = useState(isSideways);
   const forced = sideway && !held;
   const forcedRef = useRef(forced);
   useEffect(() => {

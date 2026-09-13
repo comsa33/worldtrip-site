@@ -11,6 +11,7 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { visitsForCity } from '../../lib/visitPhotos';
+import { useSideways } from '../../lib/sideways';
 import { VisitSeam } from './VisitSeam';
 import './PhotoGallery.css';
 
@@ -96,6 +97,8 @@ export default function PhotoGallery({
 }: PhotoGalleryProps) {
   const { language } = useI18n();
   const lang = language as 'ko' | 'en';
+  /** a phone on its side: the photo gets the height, the strip and the caption fold */
+  const sideways = useSideways();
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
 
   const photos = useMemo(() => {
@@ -602,7 +605,7 @@ export default function PhotoGallery({
     <span
       className="pb__seat"
       data-dot-end=""
-      data-dot-active={atEnd && !sheet ? '' : undefined}
+      data-dot-active={atEnd && !sheet && !sideways ? '' : undefined}
       aria-hidden="true"
     />
   );
@@ -624,7 +627,13 @@ export default function PhotoGallery({
       <div className="pb__top mono">
         <span className="pb__city">{cityName}</span>
         <span className="pb__counter">
-          <span className="pb__roll" aria-live="polite">
+          <span
+            className="pb__roll"
+            aria-live="polite"
+            // on its side the strip and the caption fold away, and the dot that
+            // stood under the current thumbnail stands under its number instead
+            data-dot-active={sideways && !sheet ? '' : undefined}
+          >
             <b key={safeIndex} className={dir > 0 ? 'is-up' : 'is-down'}>
               {String(safeIndex + 1).padStart(2, '0')}
             </b>
@@ -809,7 +818,7 @@ export default function PhotoGallery({
               type="button"
               className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
               style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
-              data-dot-active={!sheet && !atEnd && i === safeIndex ? '' : undefined}
+              data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
               onClick={() => {
                 if (stripRef.current?.dataset.moved) return;
                 setIndex(i);

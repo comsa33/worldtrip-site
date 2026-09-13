@@ -104,6 +104,10 @@
 .pb__stage {
   position: relative;
   display: grid;
+  /* the column must not grow to the frame: the frame's width is read off the
+     slot, and a slot pushed wide by the last frame never gave the width back —
+     turning a phone upright left the picture hanging off the right edge */
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   row-gap: 14px;
   min-height: 0;
@@ -115,6 +119,7 @@
   display: grid;
   place-items: center;
   min-height: 0;
+  min-width: 0;
 }
 
 /*
@@ -654,6 +659,45 @@
 
   .pb__touchhint.is-gone {
     opacity: 0;
+  }
+}
+
+/*
+ * A phone on its side (src/lib/sideways.ts). At 390px of height the header,
+ * the caption and the strip left the picture 170px. The strip and the caption
+ * fold away and the picture takes the height; the counter says where in the
+ * roll this is, with the dot under its number, and the grid behind it is
+ * still one tap away.
+ */
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
+  .pb {
+    grid-template-rows: 40px 1fr 0;
+  }
+
+  .pb__top {
+    padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  }
+
+  .pb__stage {
+    row-gap: 0;
+    padding: 8px 16px;
+  }
+
+  .pb__cap,
+  .pb__strip,
+  .pb__keys,
+  .pb__nav,
+  .pb__cursor {
+    display: none;
+  }
+
+  .pb__frame {
+    cursor: default;
+  }
+
+  .pb__roll {
+    --dot-size: 5px;
+    --dot-below: 3px;
   }
 }
 
