@@ -145,7 +145,7 @@ export function Scrubber({
     <div className="scrubber" role="group" aria-label="Timeline">
       <div
         className={`scrubber__label mono${pct < 10 ? ' is-start' : pct > 90 ? ' is-end' : ''}`}
-        style={{ left: `${pct}%` }}
+        style={{ left: `calc(var(--hit-l) + (100% - var(--hit-l) - var(--hit-r)) * ${progress})` }}
       >
         {/* what the track measures, and only that: the day, the date. The place is
             the label on the globe — said there, not again here */}
@@ -165,6 +165,28 @@ export function Scrubber({
           <ChevronUp size={14} strokeWidth={1.75} />
         </button>
       )}
+
+      {/* Play sits where the line begins, pointing along it: the way the dot
+          will go when it is pressed. Bars while it is going. */}
+      <button
+        type="button"
+        className="scrubber__play"
+        onClick={onTogglePlay}
+        aria-pressed={playing}
+        aria-label={playing ? (ko ? '자동 재생 멈추기' : 'Stop') : ko ? '자동 재생' : 'Play'}
+        title={playing ? (ko ? '자동 재생 멈추기' : 'Stop') : ko ? '자동 재생' : 'Play'}
+      >
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+          {playing ? (
+            <>
+              <rect x="2.5" y="1.5" width="2.2" height="9" rx="0.6" fill="currentColor" />
+              <rect x="7.3" y="1.5" width="2.2" height="9" rx="0.6" fill="currentColor" />
+            </>
+          ) : (
+            <path d="M3 1.4 L10.6 6 L3 10.6 Z" fill="currentColor" strokeLinejoin="round" />
+          )}
+        </svg>
+      </button>
 
       <div
         ref={hitRef}
@@ -199,14 +221,6 @@ export function Scrubber({
       </div>
 
       <div className="scrubber__foot mono">
-        <button
-          type="button"
-          className="scrubber__play"
-          onClick={onTogglePlay}
-          aria-pressed={playing}
-        >
-          {playing ? (language === 'ko' ? '정지' : 'Stop') : language === 'ko' ? '재생' : 'Play'}
-        </button>
         <span className="scrubber__hint">
           <Kbd>space</Kbd>
           <span>{ko ? '자동 재생' : 'play'}</span>

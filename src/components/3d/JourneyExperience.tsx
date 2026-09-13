@@ -28,7 +28,8 @@ import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd, SwipeHint } from './FirstStep';
 import { SoundToggle } from './SoundToggle';
-import { landAt, setDucked, setFlying } from '../../lib/sound';
+import { landOn, setDucked, setFlying } from '../../lib/sound';
+import { composeJourney } from '../../lib/journeyScore';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
 import { CityBounds, PlaceGlyph } from './CityBounds';
 import { PLACE_GLYPH } from './placeGlyphs';
@@ -2115,9 +2116,10 @@ function JourneyExperienceContent() {
 
   // The sound follows the journey in two ways. In the air the chord opens —
   // read off the leg under the page, not the spring, so it opens as the move
-  // begins. And a note sounds when the mark comes to rest on a stop: the seat
-  // stops being a ribbon (HeadTracker) while the page stands on a stop's own
-  // place. A scrub let go between two cities comes to rest too, and says nothing.
+  // begins. And the stop's note in the journey's tune sounds when the mark comes
+  // to rest on it: the seat stops being a ribbon (HeadTracker) while the page
+  // stands on a stop's own place. A scrub let go between two cities says nothing.
+  const score = useMemo(() => composeJourney(stops, cities), [stops, cities]);
   const legUnder = path[Math.min(path.length - 1, Math.round(progress * (path.length - 1)))];
   const airborne =
     legUnder?.transport === 'flight' &&
@@ -2140,12 +2142,12 @@ function JourneyExperienceContent() {
       if (!landed) return;
       const r = restingOnRef.current;
       if (Math.abs(r.progress - r.stopProgress[r.stop]) > 1.5 / r.steps) return;
-      const city = cities[stops[r.stop]?.city];
-      if (city) landAt(city.lat);
+      const note = score[r.stop];
+      if (note) landOn(note);
     });
     watch.observe(seat, { attributes: true, attributeFilter: ['data-dot-carry'] });
     return () => watch.disconnect();
-  }, [cities, stops]);
+  }, [score]);
 
   /**
    * Where a scroll comes to rest.

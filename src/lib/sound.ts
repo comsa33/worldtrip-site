@@ -1,11 +1,14 @@
 import { useSyncExternalStore } from 'react';
 
+import type { ScoreNote } from './journeyScore';
+
 /**
  * The page's sound, made here in Web Audio rather than played from a file: a
  * low chord held under the whole journey, and one note each time the dot lands
- * on a stop — pitched by the city's latitude, north higher, the equator low, on
- * a D major pentatonic so no two landings clash. While the dot is in the air
- * the chord opens and a little air comes in; it closes as the dot lands.
+ * on a stop. The notes are the journey's own tune (journeyScore.ts) — a stop
+ * always sounds its note, and the stops in order make a melody — and the chord
+ * under them changes with the country. While the dot is in the air the chord
+ * opens and a little air comes in; it closes as the dot lands.
  *
  * Nothing plays until the reader turns it on, and a reader who did is
  * remembered in this browser; the sound then waits for their first touch or
@@ -22,12 +25,15 @@ const LEVEL = 0.7;
 const CUTOFF = { rest: 620, flying: 2200 };
 /** landings closer together than this are one landing — a fast hand is not a chord */
 const NOTE_GAP_S = 0.3;
+/** D major pentatonic, D3 to D5 — the steps a ScoreNote names */
 const SCALE = [146.83, 164.81, 185.0, 220.0, 246.94, 293.66, 329.63, 369.99, 440.0, 493.88, 587.33];
-/** 10°S at the bottom of the scale, 40°N at the top */
-const noteFor = (lat: number) =>
-  SCALE[
-    Math.max(0, Math.min(SCALE.length - 1, Math.round(((lat + 10) / 50) * (SCALE.length - 1))))
-  ];
+/** D, B minor, G, A — voiced low, each under every note of the scale */
+const CHORDS = [
+  [73.42, 146.83, 220.0, 369.99],
+  [61.74, 123.47, 185.0, 293.66],
+  [98.0, 146.83, 246.94, 293.66],
+  [55.0, 110.0, 164.81, 277.18],
+];
 
 const readOn = () => {
   try {
@@ -46,6 +52,7 @@ type Engine = {
   master: GainNode;
   duck: GainNode;
   chord: BiquadFilterNode;
+  layer: { gain: GainNode; oscs: OscillatorNode[]; index: number };
   air: GainNode;
   echo: GainNode;
   analyser: AnalyserNode;
@@ -55,6 +62,26 @@ let flying = false;
 let ducked = false;
 let offTimer = 0;
 let lastNote = -1;
+let chordIndex = 0;
+
+/** one chord's voices, each a pair a few cents apart, into the chord's filter */
+function chordLayer(ctx: AudioContext, into: AudioNode, index: number) {
+  const gain = ctx.createGain();
+  gain.gain.value = 0;
+  gain.connect(into);
+  const oscs = CHORDS[index].flatMap((f, i) =>
+    [-6, 5].map((cents) => {
+      const o = ctx.createOscillator();
+      o.type = i === 0 ? 'sine' : 'triangle';
+      o.frequency.value = f;
+      o.detune.value = cents;
+      o.connect(gain);
+      o.start();
+      return o;
+    })
+  );
+  return { gain, oscs, index };
+}
 
 function build(): Engine {
   const Ctx =
@@ -91,7 +118,7 @@ function build(): Engine {
   tone.connect(wet);
   wet.connect(master);
 
-  // the chord: D, D, A, F♯, each a pair a few cents apart, under a filter that breathes
+  // the chord, under a filter that breathes
   const chord = ctx.createBiquadFilter();
   chord.type = 'lowpass';
   chord.frequency.value = flying ? CUTOFF.flying : CUTOFF.rest;
@@ -106,17 +133,6 @@ function build(): Engine {
   breathAmt.gain.value = 220;
   breath.connect(breathAmt);
   breathAmt.connect(chord.frequency);
-  const voices = [73.42, 146.83, 220.0, 369.99].flatMap((f, i) =>
-    [-6, 5].map((cents) => {
-      const o = ctx.createOscillator();
-      o.type = i === 0 ? 'sine' : 'triangle';
-      o.frequency.value = f;
-      o.detune.value = cents;
-      o.connect(chord);
-      return o;
-    })
-  );
-
   // the air in flight: noise through a wide band, silent on the ground
   const buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
   const data = buf.getChannelData(0);
@@ -134,8 +150,10 @@ function build(): Engine {
   band.connect(air);
   air.connect(master);
 
-  [breath, noise, ...voices].forEach((n) => n.start());
-  return { ctx, master, duck, chord, air, echo, analyser };
+  [breath, noise].forEach((n) => n.start());
+  const layer = chordLayer(ctx, chord, chordIndex);
+  layer.gain.gain.value = 1;
+  return { ctx, master, duck, chord, layer, air, echo, analyser };
 }
 
 function fadeTo(e: Engine, to: number, seconds: number) {
@@ -184,18 +202,27 @@ export function setFlying(next: boolean) {
   engine.air.gain.setTargetAtTime(next ? 0.02 : 0, t, next ? 0.3 : 0.25);
 }
 
-/** the dot has landed on a stop at this latitude */
-export function landAt(lat: number) {
-  if (!engine || !wanted || engine.master.gain.value === 0) return;
-  const { ctx, master, echo } = engine;
+/** a chord crossfades into the next one rather than jumping */
+function setChord(e: Engine, index: number) {
+  chordIndex = index;
+  if (e.layer.index === index) return;
+  const t = e.ctx.currentTime;
+  const old = e.layer;
+  old.gain.gain.setTargetAtTime(0, t, 0.6);
+  window.setTimeout(() => {
+    old.oscs.forEach((o) => o.stop());
+    old.gain.disconnect();
+  }, 4000);
+  e.layer = chordLayer(e.ctx, e.chord, index);
+  e.layer.gain.gain.setTargetAtTime(1, t, 0.6);
+}
+
+function strike(e: Engine, freq: number, peak: number, len: number) {
+  const { ctx, master, echo } = e;
   const t = ctx.currentTime;
-  if (t - lastNote < NOTE_GAP_S) return;
-  lastNote = t;
-  const freq = noteFor(lat);
-  const len = 2.6;
   const env = ctx.createGain();
   env.gain.setValueAtTime(0.0001, t);
-  env.gain.exponentialRampToValueAtTime(0.16, t + 0.012);
+  env.gain.exponentialRampToValueAtTime(peak, t + 0.012);
   env.gain.exponentialRampToValueAtTime(0.0001, t + len);
   const body = ctx.createOscillator();
   body.frequency.value = freq;
@@ -213,6 +240,21 @@ export function landAt(lat: number) {
   shine.start(t);
   body.stop(t + len + 0.05);
   shine.stop(t + len + 0.05);
+}
+
+/**
+ * The dot has landed on a stop: its note, over its country's chord. The first
+ * stop in a country is a new bar, and the chord's root sounds under the note.
+ */
+export function landOn(note: ScoreNote) {
+  chordIndex = note.chord;
+  if (!engine || !wanted || engine.master.gain.value === 0) return;
+  const t = engine.ctx.currentTime;
+  if (t - lastNote < NOTE_GAP_S) return;
+  lastNote = t;
+  setChord(engine, note.chord);
+  strike(engine, SCALE[note.step], 0.16, 2.6);
+  if (note.downbeat) strike(engine, CHORDS[note.chord][1] * 2, 0.07, 3.4);
 }
 
 /** something is laid over the globe that the reader is looking at instead */

@@ -629,6 +629,9 @@ html[data-globe-view='on'] .canvas-container:active {
    Scrubber — bottom timeline, the one control that moves everything
    ============================================================================= */
 .scrubber {
+  /* where the line runs: past the play button on the left, to the gutter on the right */
+  --hit-l: 72px;
+  --hit-r: 32px;
   position: fixed;
   left: 0;
   right: 0;
@@ -700,8 +703,8 @@ html[data-globe-view='on'] .canvas-container:active {
 
 .scrubber__hit {
   position: absolute;
-  left: 32px;
-  right: 32px;
+  left: var(--hit-l);
+  right: var(--hit-r);
   top: 34px;
   height: 44px;
   cursor: ew-resize;
@@ -809,19 +812,28 @@ html[data-globe-view='on'] .canvas-container:active {
   color: var(--ink-3);
 }
 
+/* A 44px target around a 12px mark, centred on the line (the hit area's 22px) */
 .scrubber__play {
-  padding: 3px 8px;
-  margin-left: -8px;
+  position: absolute;
+  left: calc(var(--hit-l) - 52px);
+  top: 34px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-sm);
   color: var(--ink-2);
-  transition:
-    color var(--t-fast) var(--ease),
-    background-color var(--t-fast) var(--ease);
+  transition: color var(--t-fast) var(--ease);
 }
 
-.scrubber__play:hover {
+.scrubber__play svg {
+  display: block;
+}
+
+.scrubber__play:hover,
+.scrubber__play[aria-pressed='true'] {
   color: var(--ink);
-  background: var(--bg-hover);
 }
 
 .scrubber__play:focus-visible {
@@ -867,13 +879,18 @@ html[data-globe-view='on'] .canvas-container:active {
 
 @media (max-width: 768px) {
   .scrubber {
+    --hit-l: 52px;
+    --hit-r: 20px;
     height: 104px;
     padding: 0 20px;
   }
 
   .scrubber__hit {
-    left: 20px;
-    right: 20px;
+    top: 30px;
+  }
+
+  .scrubber__play {
+    left: 4px;
     top: 30px;
   }
 
