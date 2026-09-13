@@ -1617,10 +1617,19 @@ function JourneyExperienceContent() {
   // dot alone still talked over the camera's last seconds, and the dot leaving
   // the globe for the words is the one move the whole page has been for.
   const [cameraResting, setCameraResting] = useState(true);
-  const finale = useAfterBeat(
+  const finaleReady = useAfterBeat(
     settledStop === stops.length - 1 && cameraResting && selectedCity === null,
     FINALE_BEAT_MS
   );
+  // Once begun it holds until the reader actually leaves the last stop. The
+  // conditions above can flicker for a frame (the settle clock restarts on a
+  // pixel of scroll, the camera nudges), and a finale that unmounted for that
+  // frame came back already «written» and sat straight down as the period.
+  const finaleOff = currentStop !== stops.length - 1 || selectedCity !== null;
+  const [finaleOn, setFinaleOn] = useState(false);
+  if (finaleReady && !finaleOff && !finaleOn) setFinaleOn(true);
+  if (finaleOff && finaleOn) setFinaleOn(false);
+  const finale = finaleOn && !finaleOff;
 
   // the same zoom the camera will rest at here — the inset measures the screen
   // against it (see useRestZooms)
