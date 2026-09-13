@@ -13005,44 +13005,6 @@
         "h": 768
       },
       {
-        "id": "casablanca-010",
-        "publicId": "cities/casablanca/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo010",
-        "date": "2017-02-27T17:27:07",
-        "gps": {
-          "lat": 33.31784722222223,
-          "lng": -7.575716666666667
-        },
-        "location": "Nouaceur, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "casablanca-011",
-        "publicId": "cities/casablanca/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo011",
-        "date": "2017-02-27T17:32:52",
-        "gps": {
-          "lat": 33.37012222222222,
-          "lng": -7.585194444444444
-        },
-        "location": "Deroua, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "casablanca-012",
         "publicId": "cities/casablanca/photo012",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo012",
@@ -13100,25 +13062,6 @@
         "h": 768
       },
       {
-        "id": "casablanca-015",
-        "publicId": "cities/casablanca/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo015",
-        "date": "2017-02-28T07:19:40",
-        "gps": {
-          "lat": 33.366991666666664,
-          "lng": -7.579952777777778
-        },
-        "location": "Deroua, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "casablanca-016",
         "publicId": "cities/casablanca/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo016",
@@ -13136,44 +13079,6 @@
         "alt": "photo016",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "casablanca-017",
-        "publicId": "cities/casablanca/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo017",
-        "date": "2017-02-27T17:31:43",
-        "gps": {
-          "lat": 33.37712777777778,
-          "lng": -7.587661111111111
-        },
-        "location": "Deroua, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "casablanca-018",
-        "publicId": "cities/casablanca/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo018",
-        "date": "2017-02-27T17:28:01",
-        "gps": {
-          "lat": 33.333355555555556,
-          "lng": -7.580327777777778
-        },
-        "location": "Nouaceur, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1182,
-        "h": 665
       },
       {
         "id": "casablanca-019",
@@ -13233,44 +13138,6 @@
         "h": 768
       },
       {
-        "id": "casablanca-022",
-        "publicId": "cities/casablanca/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo023",
-        "date": "2017-02-27T17:31:38",
-        "gps": {
-          "lat": 33.37746388888889,
-          "lng": -7.587744444444444
-        },
-        "location": "Deroua, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "casablanca-023",
-        "publicId": "cities/casablanca/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo024",
-        "date": "2017-02-27T17:28:00",
-        "gps": {
-          "lat": 33.333355555555556,
-          "lng": -7.580327777777778
-        },
-        "location": "Nouaceur, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1182,
-        "h": 665
-      },
-      {
         "id": "casablanca-024",
         "publicId": "cities/casablanca/photo025",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo025",
@@ -13309,25 +13176,6 @@
         "h": 1024
       },
       {
-        "id": "casablanca-026",
-        "publicId": "cities/casablanca/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo027",
-        "date": "2017-02-27T17:27:49",
-        "gps": {
-          "lat": 33.333355555555556,
-          "lng": -7.580327777777778
-        },
-        "location": "Nouaceur, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1182,
-        "h": 665
-      },
-      {
         "id": "casablanca-027",
         "publicId": "cities/casablanca/photo028",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo028",
@@ -13345,25 +13193,6 @@
         "alt": "photo028",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "casablanca-028",
-        "publicId": "cities/casablanca/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo029",
-        "date": "2017-02-27T17:27:57",
-        "gps": {
-          "lat": 33.333355555555556,
-          "lng": -7.580327777777778
-        },
-        "location": "Nouaceur, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 1182,
-        "h": 665
       },
       {
         "id": "casablanca-029",
@@ -13402,25 +13231,6 @@
         "alt": "photo031",
         "w": 1182,
         "h": 665
-      },
-      {
-        "id": "casablanca-031",
-        "publicId": "cities/casablanca/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo032",
-        "date": "2017-02-27T21:02:35",
-        "gps": {
-          "lat": 33.36709722222222,
-          "lng": -7.579922222222222
-        },
-        "location": "Deroua, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768
       }
     ]
   },
