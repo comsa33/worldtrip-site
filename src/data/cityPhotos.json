@@ -2122,25 +2122,6 @@
         "h": 768
       },
       {
-        "id": "angradosreis-013",
-        "publicId": "cities/angradosreis/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/angradosreis/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/angradosreis/photo013",
-        "date": "2017-03-13T22:55:30",
-        "gps": {
-          "lat": -23.00668611111111,
-          "lng": -44.31717777777778
-        },
-        "location": "Travessa Legiao da Boa Vontade, 168, Centro, Angra Dos Reis, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "angradosreis-014",
         "publicId": "cities/angradosreis/photo014",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/angradosreis/photo014",
