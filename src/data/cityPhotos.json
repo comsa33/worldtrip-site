@@ -26235,25 +26235,6 @@
         "h": 768
       },
       {
-        "id": "incheon-003",
-        "publicId": "cities/incheon/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/incheon/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/incheon/photo003",
-        "date": "2016-10-24T19:53:08",
-        "gps": {
-          "lat": 37.57194444444445,
-          "lng": 126.98883888888889
-        },
-        "location": "수표로, 종로1·2·3·4가동, 서울특별시",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "incheon-004",
         "publicId": "cities/incheon/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/incheon/photo004",
