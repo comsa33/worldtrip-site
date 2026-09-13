@@ -47255,25 +47255,6 @@
     "cityCode": "santiago",
     "photos": [
       {
-        "id": "santiago-001",
-        "publicId": "cities/santiago/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo005",
-        "date": "2017-05-02T18:02:48",
-        "gps": {
-          "lat": -33.42776388888888,
-          "lng": -70.64038055555557
-        },
-        "location": "Dominica 190, Recoleta, Recoleta, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "santiago-002",
         "publicId": "cities/santiago/photo006",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo006",
@@ -47308,63 +47289,6 @@
           "en": ""
         },
         "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-004",
-        "publicId": "cities/santiago/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo011",
-        "date": "2017-04-23T19:08:55",
-        "gps": {
-          "lat": -33.416713888888886,
-          "lng": -70.60691944444444
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-005",
-        "publicId": "cities/santiago/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo012",
-        "date": "2017-04-23T18:35:02",
-        "gps": {
-          "lat": -33.41839722222222,
-          "lng": -70.60690277777778
-        },
-        "location": "Nueva Los Leones 167, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1220,
-        "h": 643
-      },
-      {
-        "id": "santiago-006",
-        "publicId": "cities/santiago/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo015",
-        "date": "2017-04-23T18:47:56",
-        "gps": {
-          "lat": -33.41700833333333,
-          "lng": -70.6067361111111
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
         "w": 1024,
         "h": 768
       },
@@ -47407,63 +47331,6 @@
         "h": 768
       },
       {
-        "id": "santiago-009",
-        "publicId": "cities/santiago/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo020",
-        "date": "2017-04-21T13:45:39",
-        "gps": {
-          "lat": -33.080625000000005,
-          "lng": -69.534125
-        },
-        "location": "Tupungato, Mendoza",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "santiago-010",
-        "publicId": "cities/santiago/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo024",
-        "date": "2017-04-23T19:06:15",
-        "gps": {
-          "lat": -33.416824999999996,
-          "lng": -70.60697222222221
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 2048,
-        "h": 1536
-      },
-      {
-        "id": "santiago-011",
-        "publicId": "cities/santiago/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo025",
-        "date": "2017-04-23T18:59:12",
-        "gps": {
-          "lat": -33.41689722222222,
-          "lng": -70.60698611111111
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "santiago-012",
         "publicId": "cities/santiago/photo026",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo026",
@@ -47502,44 +47369,6 @@
         "h": 1024
       },
       {
-        "id": "santiago-014",
-        "publicId": "cities/santiago/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo031",
-        "date": "2017-04-23T19:08:08",
-        "gps": {
-          "lat": -33.41701944444444,
-          "lng": -70.60680277777777
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-015",
-        "publicId": "cities/santiago/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo032",
-        "date": "2017-04-23T19:06:01",
-        "gps": {
-          "lat": -33.41685,
-          "lng": -70.60693333333333
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "santiago-016",
         "publicId": "cities/santiago/photo033",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo033",
@@ -47557,25 +47386,6 @@
         "alt": "photo033",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "santiago-017",
-        "publicId": "cities/santiago/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo034",
-        "date": "2017-04-23T18:58:14",
-        "gps": {
-          "lat": -33.41696944444444,
-          "lng": -70.60666666666665
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "santiago-018",
@@ -47635,44 +47445,6 @@
         "h": 768
       },
       {
-        "id": "santiago-021",
-        "publicId": "cities/santiago/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo039",
-        "date": "2017-04-23T19:04:13",
-        "gps": {
-          "lat": -33.41699722222222,
-          "lng": -70.60657499999999
-        },
-        "location": "Avenida Andrés Bello 2447, Providencia, Providencia, Santiago Metropolitan Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo039",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-022",
-        "publicId": "cities/santiago/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo041",
-        "date": "2017-04-21T16:03:37",
-        "gps": {
-          "lat": -33.44413333333333,
-          "lng": -70.66887777777778
-        },
-        "location": "Moneda, Santiago, Santiago, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo041",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "santiago-023",
         "publicId": "cities/santiago/photo042",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo042",
@@ -47688,101 +47460,6 @@
           "en": ""
         },
         "alt": "photo042",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-024",
-        "publicId": "cities/santiago/photo043",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo043",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo043",
-        "date": "2017-04-22T00:27:49",
-        "gps": {
-          "lat": -33.430027777777774,
-          "lng": -70.63455833333335
-        },
-        "location": "Paseo Metropolitano - Sendero de los Sentidos, Población León XIII, Providencia, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo043",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "santiago-025",
-        "publicId": "cities/santiago/photo044",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo044",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo044",
-        "date": "2017-04-23T02:14:14",
-        "gps": {
-          "lat": -33.43778333333333,
-          "lng": -70.63575833333334
-        },
-        "location": "Reñaca, Santiago, Santiago, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo044",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-026",
-        "publicId": "cities/santiago/photo045",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo045",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo045",
-        "date": "2017-04-22T19:27:27",
-        "gps": {
-          "lat": -33.43190277777777,
-          "lng": -70.63536944444445
-        },
-        "location": "Antonia López de Bello, Providencia, Providencia, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo045",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santiago-027",
-        "publicId": "cities/santiago/photo046",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo046",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo046",
-        "date": "2017-04-23T02:08:44",
-        "gps": {
-          "lat": -33.43781944444444,
-          "lng": -70.63575833333334
-        },
-        "location": "Reñaca, Santiago, Santiago, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo046",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "santiago-028",
-        "publicId": "cities/santiago/photo047",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo047",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo047",
-        "date": "2017-04-22T00:28:02",
-        "gps": {
-          "lat": -33.43000833333333,
-          "lng": -70.63736666666668
-        },
-        "location": "Dominica, Recoleta, Santiago, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo047",
         "w": 1024,
         "h": 768
       },
@@ -47804,63 +47481,6 @@
         "alt": "photo048",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "santiago-030",
-        "publicId": "cities/santiago/photo049",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo049",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo049",
-        "date": "2017-04-22T00:27:47",
-        "gps": {
-          "lat": -33.430027777777774,
-          "lng": -70.63455833333335
-        },
-        "location": "Paseo Metropolitano - Sendero de los Sentidos, Población León XIII, Providencia, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo049",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "santiago-031",
-        "publicId": "cities/santiago/photo050",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo050",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo050",
-        "date": "2017-04-21T21:22:35",
-        "gps": {
-          "lat": -33.44418333333333,
-          "lng": -70.66878611111112
-        },
-        "location": "Moneda, Santiago, Santiago, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo050",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "santiago-032",
-        "publicId": "cities/santiago/photo051",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santiago/photo051",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santiago/photo051",
-        "date": "2017-04-22T00:27:51",
-        "gps": {
-          "lat": -33.43001111111111,
-          "lng": -70.637375
-        },
-        "location": "Dominica, Recoleta, Santiago, Región Metropolitana de Santiago",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo051",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "santiago-033",
