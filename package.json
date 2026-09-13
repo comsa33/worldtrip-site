@@ -50,6 +50,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "polygon-clipping": "^0.15.7",
     "prettier": "^3.7.4",
     "puppeteer-core": "^25.10.0",
     "topojson-client": "^3.1.0",
