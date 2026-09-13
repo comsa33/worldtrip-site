@@ -1050,6 +1050,22 @@
   vector-effect: non-scaling-stroke;
 }
 
+/* The country's name in the corner of its own map. The map is drawn in a
+   1000-unit box and shown at 200px, so 55 units is 11px — each width below
+   keeps the name at 11px closed, and lets it grow with the map when open, the
+   same way the aim label is set (28 units at 420px). */
+.country-inset__name {
+  font-family: var(--sans);
+  font-size: 55px;
+  fill: var(--ink-3);
+  pointer-events: none;
+  transition: font-size var(--t-base) var(--ease);
+}
+
+.country-inset.is-open .country-inset__name {
+  font-size: 28px;
+}
+
 .country-inset__aim text {
   transition: opacity var(--t-base) var(--ease-out);
   font-family: var(--mono);
@@ -1072,6 +1088,14 @@
   .country-inset.is-open {
     width: 360px;
   }
+
+  .country-inset__name {
+    font-size: 69px; /* 11px at 160 */
+  }
+
+  .country-inset.is-open .country-inset__name {
+    font-size: 31px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1091,6 +1115,14 @@
      against the right edge with all the air on the left. */
   .country-inset.is-open {
     width: min(358px, calc(100vw - 46px));
+  }
+
+  .country-inset__name {
+    font-size: 106px; /* 11px at 104 */
+  }
+
+  .country-inset.is-open .country-inset__name {
+    font-size: 32px;
   }
 
   /* Out of the way of the opening story and the rail's sheet, exactly as the

@@ -23,20 +23,16 @@ const SAMPLE = 6;
 /** How long the hand has to be still before the name of the place comes up. */
 const LABEL_REST_MS = 180;
 /**
- * Once it is up it stays up until the country fits with room to spare. Without
- * the margin a stop that lands exactly on the line would flicker it in and out
- * as the camera settled.
- */
-const HYSTERESIS = 1.05;
-
-/**
  * Where in this country am I?
  *
  * The globe answers it only when the whole country is on screen, and it almost
  * never is: the camera rests at its closest nearly everywhere, which shows about
  * 528 × 330km, and every country the journey entered is bigger than that except
  * Belgium. So a corner of Brazil looks like a corner of anywhere, and the world
- * minimap cannot help — down there Brazil is a thumbnail.
+ * minimap cannot help — down there Brazil is a thumbnail. (It used to step
+ * aside for a country that fit on screen — Belgium alone — and one country
+ * out of thirty-one without its map read as the map being broken, not as
+ * the map being unneeded. It stays up for every country now.)
  *
  * So: the current country under the world's map, at 10m, with
  * the journey's own two tenses on it, the frame of what the globe is showing,
@@ -58,6 +54,7 @@ const HYSTERESIS = 1.05;
  */
 export function CountryInset({
   countryCode,
+  name,
   stops,
   cities,
   currentStopIdx,
@@ -67,6 +64,8 @@ export function CountryInset({
   onSelect,
 }: {
   countryCode: string | null;
+  /** the country's name in the reader's language — the one place it is said */
+  name: string;
   stops: InsetStop[];
   cities: Record<string, InsetCity>;
   currentStopIdx: number;
@@ -198,20 +197,6 @@ export function CountryInset({
   }, []);
 
   /**
-   * How many screens of ground the country needs, from where the reader stands.
-   * Read off the zoom the camera RESTS at rather than where it is this frame: a
-   * leg that pulls the camera out to see the hop would otherwise say the country
-   * fits, and the inset would blink away every time the journey moved.
-   */
-  const need = useMemo(() => {
-    const c = shape && cities[stops[currentStopIdx]?.city];
-    if (!shape || !c) return null;
-    const reach = shape.reach(c.lat, c.lng);
-    const view = viewKm(restZoom, aspect);
-    return Math.max((reach.w * 2) / view.w, (reach.h * 2) / view.h);
-  }, [shape, cities, stops, currentStopIdx, restZoom, aspect]);
-
-  /**
    * What the globe is showing, drawn on the country — the locator frame an atlas
    * puts on its inset, and the thing the inset is answering: this much of it.
    *
@@ -235,19 +220,8 @@ export function CountryInset({
     return { x: here.x - w / 2, y: here.y - h / 2, w, h };
   }, [shape, cities, stops, currentStopIdx, restZoom, aspect, here]);
 
-  /**
-   * The margin only applies to going away: a country that does not fit brings
-   * the map up at once, and one that comes to fit has to fit with room to spare
-   * before it goes. So the answer is measured against the last answer, which
-   * makes it state rather than arithmetic — adjusted here, in render, because an
-   * effect would show one wrong frame first.
-   */
-  const [up, setUp] = useState(false);
-  const [measured, setMeasured] = useState<number | null>(null);
-  if (need !== measured) {
-    setMeasured(need);
-    setUp(need === null ? false : up ? need > 1 / HYSTERESIS : need > 1);
-  }
+  // up whenever there is a country to draw — see the note at the top
+  const up = Boolean(shape && cities[stops[currentStopIdx]?.city]);
 
   /* ── the aim, painted by hand — see Minimap.tsx for why it is not React's ── */
   const aimRef = useRef<Aim | null>(null);
@@ -477,7 +451,7 @@ export function CountryInset({
       onPointerCancel={() => paintAim(null)}
       onPointerLeave={onLeave}
       role="img"
-      aria-label={`${countryCode} overview`}
+      aria-label={`${name} overview`}
     >
       <path className="country-inset__land" d={shape.d} />
       {/* the same outline, traced once as it arrives, then gone */}
@@ -501,6 +475,11 @@ export function CountryInset({
       {/* a hole in the land, so the one filled mark is findable wherever it sits */}
       <circle cx={here.x} cy={here.y} r={26} className="country-inset__ring" />
       <circle cx={here.x} cy={here.y} r={17} className="country-inset__head" />
+      {/* which country this is — said here, under the shape, and nowhere else
+          since the place meta left the top-right corner */}
+      <text className="country-inset__name" x={30} y={INSET_BOX - 30}>
+        {name}
+      </text>
       <g className="country-inset__aim" ref={gRef} style={{ display: 'none' }}>
         <circle ref={ringRef} r={16} />
         <text ref={labelRef} style={{ opacity: 0 }} />

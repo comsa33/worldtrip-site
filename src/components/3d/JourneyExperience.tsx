@@ -16,6 +16,7 @@ import journeyData from '../../data/journey.json';
 // 헤더 기간 표시: journey.json에서 유도한다 (데이터가 바뀌면 같이 따라간다)
 const journeyPeriod = `${journeyData.startDate.replace(/-/g, '.')} — ${journeyData.endDate.replace(/-/g, '.')}`;
 import citiesData from '../../data/cities.json';
+import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
 import FinaleOverlay from '../about/FinaleOverlay';
@@ -2119,6 +2120,11 @@ function JourneyExperienceContent() {
       )}
       <CountryInset
         countryCode={currentCountry}
+        name={
+          (
+            countriesData as { countries: { code: string; name: Record<string, string> }[] }
+          ).countries.find((c) => c.code === currentCountry)?.name[language] ?? currentCountry
+        }
         stops={stops}
         cities={cities}
         currentStopIdx={currentStop}
