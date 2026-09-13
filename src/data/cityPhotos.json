@@ -28265,25 +28265,6 @@
         "h": 768
       },
       {
-        "id": "krakow-010",
-        "publicId": "cities/krakow/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo010",
-        "date": "2017-01-08T15:21:29",
-        "gps": {
-          "lat": 50.05318333333333,
-          "lng": 19.9339
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "krakow-011",
         "publicId": "cities/krakow/photo011",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo011",
@@ -28320,25 +28301,6 @@
         "alt": "photo012",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "krakow-013",
-        "publicId": "cities/krakow/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo013",
-        "date": "2017-01-08T15:19:33",
-        "gps": {
-          "lat": 50.05323055555555,
-          "lng": 19.93357222222222
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "krakow-014",
@@ -28512,25 +28474,6 @@
         "h": 1022
       },
       {
-        "id": "krakow-023",
-        "publicId": "cities/krakow/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo024",
-        "date": "2017-01-08T15:19:38",
-        "gps": {
-          "lat": 50.053238888888885,
-          "lng": 19.93357222222222
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "krakow-024",
         "publicId": "cities/krakow/photo025",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo025",
@@ -28683,25 +28626,6 @@
         "h": 2048
       },
       {
-        "id": "krakow-032",
-        "publicId": "cities/krakow/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo033",
-        "date": "2017-01-08T15:19:21",
-        "gps": {
-          "lat": 50.05320833333333,
-          "lng": 19.933558333333334
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "krakow-033",
         "publicId": "cities/krakow/photo034",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo034",
@@ -28795,25 +28719,6 @@
         "alt": "photo039",
         "w": 768,
         "h": 1022
-      },
-      {
-        "id": "krakow-038",
-        "publicId": "cities/krakow/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo040",
-        "date": "2017-01-08T15:21:32",
-        "gps": {
-          "lat": 50.053238888888885,
-          "lng": 19.933905555555555
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo040",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "krakow-039",
