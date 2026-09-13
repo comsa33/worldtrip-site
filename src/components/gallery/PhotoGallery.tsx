@@ -247,9 +247,14 @@ export default function PhotoGallery({
   const stripRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!cityName) return;
-    const y = window.scrollY;
+    // Held as a share of the page, not a pixel: turning a phone halves the
+    // page's length, and a pixel held from before would put the journey
+    // somewhere else — at its end, once the browser clamps it — on closing.
+    const maxOf = () => Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const share = window.scrollY / maxOf();
+    const at = () => Math.round(share * maxOf());
     const keep = () => {
-      if (window.scrollY !== y) window.scrollTo(0, y);
+      if (Math.abs(window.scrollY - at()) > 1) window.scrollTo(0, at());
     };
     // The strip does its own horizontal scrolling; everything else would move
     // the globe behind the lightbox, which is how the wheel "stopped working".
@@ -266,7 +271,7 @@ export default function PhotoGallery({
       window.removeEventListener('wheel', block);
       window.removeEventListener('touchmove', block);
       window.removeEventListener('scroll', keep);
-      window.scrollTo(0, y);
+      window.scrollTo(0, at());
     };
   }, [cityName]);
 

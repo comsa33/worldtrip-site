@@ -1596,7 +1596,7 @@ function JourneyExperienceContent() {
   const currentCountry = city?.country || 'KR';
 
   /** Looking around the globe (GlobeView): header and globe only, the journey held still. */
-  const globeView = useGlobeView();
+  const globeView = useGlobeView({ held: selectedCity !== null });
   useGlobeViewDocument(globeView.mode);
   const globeOn = globeView.mode === 'on';
   const globeModeRef = useRef(globeView.mode);

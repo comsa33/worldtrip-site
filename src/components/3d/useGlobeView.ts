@@ -32,19 +32,30 @@ const sideways = () => typeof window !== 'undefined' && window.matchMedia(SIDEWA
  * pops the one it pushed. `leaving` lasts while the camera comes home — the
  * scroll is free again but the HUD waits for the camera (`settled`).
  */
-export function useGlobeView() {
+export function useGlobeView({ held = false }: { held?: boolean } = {}) {
   const [mode, setMode] = useState<GlobeMode>(() =>
     typeof window !== 'undefined' && window.location.hash === HASH ? 'on' : 'off'
   );
 
-  // held open by the phone lying on its side — not an entry in the history
-  const [forced, setForced] = useState(sideways);
+  /*
+   * Held open by the phone lying on its side — not an entry in the history.
+   * What the reader is looking at keeps the screen: with the photo book open
+   * (`held`) the phone turning gives the photos a wider screen instead, and
+   * the globe takes over only once the book is closed.
+   */
+  const [sideway, setSideway] = useState(sideways);
+  const forced = sideway && !held;
+  const forcedRef = useRef(forced);
+  useEffect(() => {
+    forcedRef.current = forced;
+  }, [forced]);
   useEffect(() => {
     const mq = window.matchMedia(SIDEWAYS);
     const onChange = () => {
-      setForced(mq.matches);
-      // stood back up: a globe the reader did not open themselves goes home
-      if (!mq.matches) setMode((m) => (m === 'off' ? 'leaving' : m));
+      // stood back up: a globe the reader did not open themselves goes home —
+      // if it was showing at all
+      if (!mq.matches && forcedRef.current) setMode((m) => (m === 'off' ? 'leaving' : m));
+      setSideway(mq.matches);
     };
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
