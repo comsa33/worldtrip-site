@@ -3,6 +3,8 @@ import './TravelingDot.css';
 
 /** A little over the transform transition, so a return home can settle. */
 const FLIGHT_MS = 560;
+/** The one return that is the end of something: a host with `data-dot-return="slow"`. */
+const SLOW_FLIGHT_MS = 1500;
 
 /** A move shorter than this is a nudge, not a journey — no deformation. */
 const JOURNEY_PX = 6;
@@ -248,16 +250,20 @@ export function TravelingDot() {
       returning = 0;
       atHome = true;
       dot.setAttribute('data-home', '');
+      dot.removeAttribute('data-slow');
       homeEl()?.removeAttribute('data-dot-state');
     };
 
-    /** Fly back to the mark in the header, then hand over to it. */
+    /** Fly back to the mark in the header, then hand over to it. A host that
+     *  said `data-dot-return="slow"` is left at a walk, not a flight. */
     const goHome = () => {
       if (atHome || returning) return;
       window.clearTimeout(landing);
       window.clearTimeout(followStart);
       stopFollowing();
+      const slow = currentHost?.getAttribute('data-dot-return') === 'slow';
       dot.setAttribute('data-ready', 'true');
+      if (slow) dot.setAttribute('data-slow', '');
       ball?.removeAttribute('data-land');
       currentHost = null;
       const home = homeEl();
@@ -268,7 +274,7 @@ export function TravelingDot() {
       const s = spotOf(home);
       dot.style.setProperty('--size', `${s.size}px`);
       moveTo(s.x, s.y);
-      returning = window.setTimeout(settleHome, FLIGHT_MS);
+      returning = window.setTimeout(settleHome, slow ? SLOW_FLIGHT_MS : FLIGHT_MS);
     };
 
     /** Go to a host — leaving the mark on the map first if that is where we are. */

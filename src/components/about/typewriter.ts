@@ -33,6 +33,9 @@ const THINK_MS: [number, number] = [600, 1000];
  */
 export type Pace = { pace?: number; lead?: number };
 
+/** The opening's and the finale's hand: a shade quicker than the default beat. */
+export const BOOKEND: Pace = { pace: 0.75 };
+
 export type Hooks = {
   /** the cursor is waiting (blinking) or writing (steady) */
   blink: (on: boolean) => void;

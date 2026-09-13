@@ -2,11 +2,15 @@ import { useRef } from 'react';
 import { useI18n } from '../../i18n';
 import { NoteCard } from './NoteCard';
 import { useSelfTyped } from './useSelfTyped';
+import { useDotTyped } from './useDotTyped';
+import { BOOKEND } from './typewriter';
 import { useDotAnchor } from './useDotAnchor';
 import './AboutOverlay.css';
 
 interface AboutOverlayProps {
   visible: boolean;
+  /** who writes: the travelling dot, the block's own cursor, or nobody yet */
+  hand: 'wait' | 'dot' | 'self';
   /** the full stop has landed — the page may do what comes after the opening */
   onWritten?: () => void;
 }
@@ -14,10 +18,15 @@ interface AboutOverlayProps {
 /* typed once per load — the card is NoteCard, the hand useSelfTyped */
 const seen = new Set<string>();
 
-export default function AboutOverlay({ visible, onWritten }: AboutOverlayProps) {
+export default function AboutOverlay({ visible, hand, onWritten }: AboutOverlayProps) {
   const { language } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
-  useSelfTyped(ref, visible, 'about', seen, undefined, onWritten);
+  // Fresh at the top of the page the dot itself writes this, the way it writes
+  // the finale, once it has landed on the first stop and the page says so.
+  // Anyone who arrived with the dot already out there — scrolled, deep-linked,
+  // or coming back — gets the hand with its own cursor, or the block simply there.
+  useDotTyped(ref, visible && hand === 'dot', 'about', seen, onWritten);
+  useSelfTyped(ref, visible && hand === 'self', 'about', seen, BOOKEND, onWritten);
   // beside the dot, where it lands — the same seat every city's note takes
   useDotAnchor(ref, visible);
 

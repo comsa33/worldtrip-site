@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useI18n } from '../../i18n';
-import { typewrite } from './typewriter';
+import { BOOKEND, typewrite } from './typewriter';
 import { useDotAnchor } from './useDotAnchor';
 import './AboutOverlay.css';
 
@@ -16,6 +16,8 @@ import './AboutOverlay.css';
  * while it writes and as the full stop once it has.
  */
 let written = false;
+/** After the full stop has landed: the bounce (~640ms), then a second as the period. */
+const SIT_MS = 640 + 1000;
 
 export default function FinaleOverlay({ visible }: { visible: boolean }) {
   const { language } = useI18n();
@@ -31,11 +33,19 @@ export default function FinaleOverlay({ visible }: { visible: boolean }) {
     const seat = host.querySelector<HTMLElement>('.about-overlay__seat');
     if (!seat || chars.length === 0) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let leave = 0;
     const sitDown = () => {
       chars[chars.length - 1].after(seat);
       seat.setAttribute('data-dot-carry', 'land:1');
       host.classList.add('is-done');
       host.setAttribute('data-dot-sitting', '');
+      // ...and then, having been the period for a moment, it goes home — the
+      // mark in the header it left at the very start, at a walk. The accent
+      // period stays where it sat.
+      leave = window.setTimeout(() => {
+        host.removeAttribute('data-dot-sitting');
+        seat.removeAttribute('data-dot-active');
+      }, SIT_MS);
     };
     if (written || reduced) {
       sitDown();
@@ -44,13 +54,18 @@ export default function FinaleOverlay({ visible }: { visible: boolean }) {
     written = true;
     // the dot arrives first; the hand starts once it is standing
     seat.setAttribute('data-dot-carry', 'caret-blink');
-    const stop = typewrite(chars, {
-      at: (el, after) => (after ? el.after(seat) : el.before(seat)),
-      blink: (on) => seat.setAttribute('data-dot-carry', on ? 'caret-blink' : 'caret'),
-      done: sitDown,
-    });
+    const stop = typewrite(
+      chars,
+      {
+        at: (el, after) => (after ? el.after(seat) : el.before(seat)),
+        blink: (on) => seat.setAttribute('data-dot-carry', on ? 'caret-blink' : 'caret'),
+        done: sitDown,
+      },
+      BOOKEND
+    );
     return () => {
       stop();
+      window.clearTimeout(leave);
       host.classList.add('is-done');
       host.removeAttribute('data-dot-sitting');
     };
@@ -104,6 +119,7 @@ than with how I took the place I was in.`,
           className="about-overlay__seat"
           data-dot-active=""
           data-dot-follow=""
+          data-dot-return="slow"
           data-dot-carry="caret-blink"
           aria-hidden="true"
         />

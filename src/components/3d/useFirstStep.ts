@@ -34,14 +34,15 @@ export function useFirstMove(): boolean {
     const onKey = (e: KeyboardEvent) => {
       if (['ArrowLeft', 'ArrowRight', ' ', 'PageDown', 'PageUp'].includes(e.key)) done();
     };
+    // A click is not a move: a reader giving the page focus, or pressing on
+    // the map, has not yet learned how it travels. Wheel, touch and the keys
+    // are the moves the hint teaches, so those are what end it.
     window.addEventListener('wheel', done, { passive: true, once: true });
     window.addEventListener('touchstart', done, { passive: true, once: true });
-    window.addEventListener('pointerdown', done, { passive: true, once: true });
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('wheel', done);
       window.removeEventListener('touchstart', done);
-      window.removeEventListener('pointerdown', done);
       window.removeEventListener('keydown', onKey);
     };
   }, [moved]);

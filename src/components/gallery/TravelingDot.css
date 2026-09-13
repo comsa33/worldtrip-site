@@ -39,6 +39,14 @@
     height 320ms var(--ease);
 }
 
+/* The way home at the end of the journey, at a walk. */
+.tdot[data-ready='true'][data-slow] {
+  transition:
+    transform 1400ms var(--ease),
+    width 320ms var(--ease),
+    height 320ms var(--ease);
+}
+
 /*
  * A soft body: on every journey it gathers, stretches along the line of
  * travel, lands with a squash and settles — rotated so the stretch always

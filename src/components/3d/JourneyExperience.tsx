@@ -119,6 +119,9 @@ interface CityData {
 
 /** How long the dot sits landed in Gwangju before it gets up to write. */
 const FINALE_BEAT_MS = 900;
+/** The opening: a breath before the mark leaves the header, and a beat on the first stop before it comes to write. */
+const OPENING_BREATH_MS = 900;
+const OPENING_BEAT_MS = 600;
 
 /** `on`, but only once it has held for `ms`; off at once. */
 function useAfterBeat(on: boolean, ms: number): boolean {
@@ -1582,9 +1585,12 @@ function JourneyExperienceContent() {
   };
 
   /* ── the opening ─────────────────────────────────────────────────────────
-     Fresh at the top of the page, the mark in the header leaves for the globe,
-     lands on the first stop, and the route comes out of it. Anyone who arrived
-     scrolled, deep-linked, or asking for less motion gets the page as it is. */
+     Fresh at the top of the page: a breath, then the mark in the header leaves
+     for the globe and lands on the first stop; a beat there, and it comes down
+     into the opening and writes it (AboutOverlay, useDotTyped), sits as its
+     full stop, and flies back to the first stop — and the route comes out of
+     it. The finale in mirror. Anyone who arrived scrolled, deep-linked, or
+     asking for less motion gets the page as it is. */
   const seatRef = useRef<HTMLSpanElement>(null);
   const ribbonRef = useRef<SVGPolygonElement>(null);
   const openingWanted = () =>
@@ -1594,17 +1600,33 @@ function JourneyExperienceContent() {
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealRef = useRef<number>(openingWanted() ? 0 : Infinity);
   const [dotOut, setDotOut] = useState(() => !openingWanted());
+  const [hand, setHand] = useState<'wait' | 'dot' | 'self'>(() =>
+    openingWanted() ? 'wait' : 'self'
+  );
   const [revealRun, setRevealRun] = useState(false);
+  const openingUp = currentStop === 0 && progress < 0.03;
+  // a reader who moves on before the words are written takes the dot with
+  // them, and the block is left to its own hand
+  if (!dotOut && !openingUp) setDotOut(true);
+  if (hand !== 'self' && !openingUp) setHand('self');
   useEffect(() => {
-    if (dotOut) return;
-    const leave = window.setTimeout(() => setDotOut(true), 700); // the mark leaves the header
-    const draw = window.setTimeout(() => setRevealRun(true), 700 + 560 + 420); // landed; the route comes out of it
+    if (hand !== 'wait') return;
+    const leave = window.setTimeout(() => setDotOut(true), OPENING_BREATH_MS);
+    const write = window.setTimeout(
+      () => setHand('dot'),
+      OPENING_BREATH_MS + 560 + 640 + OPENING_BEAT_MS // flight, bounce, a beat
+    );
     return () => {
       window.clearTimeout(leave);
-      window.clearTimeout(draw);
+      window.clearTimeout(write);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hand]);
+  useEffect(() => {
+    // the hand put down and the dot back on the first stop: the route comes out of it
+    if (hand !== 'self' || revealRef.current === Infinity) return;
+    const draw = window.setTimeout(() => setRevealRun(true), 560 + 420);
+    return () => window.clearTimeout(draw);
+  }, [hand]);
 
   // the stop the reader has actually come to rest on, a beat after they stop
   const settledStop = useSettledStop(currentStop, progress);
@@ -2234,8 +2256,12 @@ function JourneyExperienceContent() {
 
       {/* About section at starting point */}
       <AboutOverlay
-        visible={currentStop === 0 && progress < 0.03}
-        onWritten={() => setOpeningWritten(true)}
+        visible={openingUp}
+        hand={hand}
+        onWritten={() => {
+          setOpeningWritten(true);
+          setHand('self');
+        }}
       />
       <CursorHint active={firstStep} next={nextCityName} />
       {TUNE_ON && <RouteTuner theme={theme} />}
