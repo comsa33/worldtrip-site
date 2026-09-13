@@ -54042,25 +54042,6 @@
         "h": 768
       },
       {
-        "id": "turin-013",
-        "publicId": "cities/turin/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo015",
-        "date": "2017-01-16T16:08:51",
-        "gps": {
-          "lat": 45.068200000000004,
-          "lng": 7.696730555555556
-        },
-        "location": "Corso San Maurizio 63, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 768,
-        "h": 1022
-      },
-      {
         "id": "turin-014",
         "publicId": "cities/turin/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo016",
@@ -54078,25 +54059,6 @@
         "alt": "photo016",
         "w": 886,
         "h": 886
-      },
-      {
-        "id": "turin-015",
-        "publicId": "cities/turin/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo017",
-        "date": "2017-01-14T13:08:48",
-        "gps": {
-          "lat": 45.05309722222222,
-          "lng": 7.679833333333334
-        },
-        "location": "Via Tommaso Valperga Caluso 22C, San Salvario-Cavoretto-Borgo Po-Nizza Millefonti-Lingotto-Filadelfia, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "turin-016",
