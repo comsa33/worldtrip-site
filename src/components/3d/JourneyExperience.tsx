@@ -26,7 +26,7 @@ import PhotoGallery from '../gallery/PhotoGallery';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
-import { CursorHint, Kbd } from './FirstStep';
+import { CursorHint, Kbd, SwipeHint } from './FirstStep';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
 import { CityBounds, PlaceGlyph } from './CityBounds';
 import { PLACE_GLYPH } from './placeGlyphs';
@@ -2605,6 +2605,12 @@ function JourneyExperienceContent() {
         }}
       />
       <CursorHint active={firstStep} next={nextCityName} />
+      <SwipeHint
+        active={openingWritten && currentStop === 0 && dotOnGlobe}
+        seat={seatRef}
+        lean={leanRef}
+        next={nextCityName}
+      />
       {TUNE_ON && <RouteTuner theme={theme} />}
       {/* What a city has to say — only once the journey has actually stopped
           there. Scrubbing past a dozen of them says nothing. */}

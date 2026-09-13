@@ -180,6 +180,7 @@ html[data-globe-view]
     .scrubber,
     .about-overlay,
     .first-hint,
+    .swipe-hint,
     .leg-tip
   ) {
   opacity: 0 !important;
@@ -1517,6 +1518,49 @@ kbd.key {
 
 .first-hint__sep {
   color: var(--line-strong);
+}
+
+/* The phone's hint hangs on the dot, over the globe: the same line, with no
+   plate — the opening's glyph halo lifts it off the map instead. HeadTracker
+   moves the seat; SwipeHint follows it and owns the opacity frame by frame. */
+.swipe-hint {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--ink-2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  text-shadow:
+    1px 0 0 var(--bg),
+    -1px 0 0 var(--bg),
+    0 1px 0 var(--bg),
+    0 -1px 0 var(--bg),
+    0.7px 0.7px 0 var(--bg),
+    -0.7px 0.7px 0 var(--bg),
+    0.7px -0.7px 0 var(--bg),
+    -0.7px -0.7px 0 var(--bg),
+    0 0 2px var(--bg),
+    0 0 3px var(--bg),
+    0 0 5px var(--bg),
+    0 0 8px var(--bg);
+}
+
+.swipe-hint__arrow {
+  color: var(--ink);
+}
+
+/* a lifted finger: gone the rest of the way, or back as they were */
+.swipe-hint.is-easing {
+  transition: opacity var(--t-fast) var(--ease);
 }
 
 /* the phone has no keys, and no room on the stats line for every number */
