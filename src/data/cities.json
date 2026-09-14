@@ -965,6 +965,13 @@
       "lat": -34.4713,
       "lng": -57.8445,
       "country": "UY"
+    },
+    "나리타": {
+      "ko": "나리타 공항",
+      "en": "Narita Airport",
+      "lat": 35.772,
+      "lng": 140.3929,
+      "country": "JP"
     }
   },
   "countries": {

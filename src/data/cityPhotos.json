@@ -17721,44 +17721,6 @@
         "alt": "photo005",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "incheon-004",
-        "publicId": "cities/incheon/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/incheon/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/incheon/photo004",
-        "date": "2016-10-24T20:10:39",
-        "gps": {
-          "lat": 37.57271666666667,
-          "lng": 126.98929722222222
-        },
-        "location": "수표로28길, 종로1·2·3·4가동, 서울특별시",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "incheon-002",
-        "publicId": "cities/incheon/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/incheon/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/incheon/photo002",
-        "date": "2016-10-24T20:17:37",
-        "gps": {
-          "lat": 37.57248611111111,
-          "lng": 126.98915
-        },
-        "location": "돈화문로11길, 종로1·2·3·4가동, 서울특별시",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
       }
     ]
   },
@@ -40433,6 +40395,73 @@
           "lng": 7.744877777777778
         },
         "location": "A6, Carmagnola, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768
+      }
+    ]
+  },
+  "서울": {
+    "cityCode": "seoul",
+    "photos": [
+      {
+        "id": "seoul-002",
+        "publicId": "cities/seoul/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/seoul/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/seoul/photo002",
+        "date": "2016-10-24T20:10:39",
+        "gps": {
+          "lat": 37.57271666666667,
+          "lng": 126.98929722222222
+        },
+        "location": "수표로28길, 종로1·2·3·4가동, 서울특별시",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "seoul-001",
+        "publicId": "cities/seoul/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/seoul/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/seoul/photo001",
+        "date": "2016-10-24T20:17:37",
+        "gps": {
+          "lat": 37.57248611111111,
+          "lng": 126.98915
+        },
+        "location": "돈화문로11길, 종로1·2·3·4가동, 서울특별시",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768
+      }
+    ]
+  },
+  "나리타": {
+    "cityCode": "narita",
+    "photos": [
+      {
+        "id": "narita-001",
+        "publicId": "cities/narita/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/narita/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/narita/photo001",
+        "date": "2016-10-19T10:04:31",
+        "gps": {
+          "lat": 35.77322777777778,
+          "lng": 140.38864166666667
+        },
+        "location": "成田市, 千葉県",
         "caption": {
           "ko": "",
           "en": ""

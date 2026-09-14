@@ -871,6 +871,22 @@
       "story": "Climbed the Rainbow Mountain.\nPeople climbed in a line below the striped ridge.\nSnow on the peaks, a herd of llamas.\nReached Lima the next day."
     }
   },
+  "160": {
+    "ko": {
+      "story": "인도에서 돌아오는 길, 나리타 공항에서 몇 시간을 기다렸습니다.\n벽에 세계지도가 붙어 있었습니다."
+    },
+    "en": {
+      "story": "On the way back from India, a few hours' wait at Narita Airport.\nThere was a world map on the wall."
+    }
+  },
+  "161": {
+    "ko": {
+      "story": "광주에서 기차로 올라왔습니다.\n출국 전날 밤, 종로 포장마차에서 파전과 홍합탕에 소주를 마셨습니다."
+    },
+    "en": {
+      "story": "Came up from Gwangju by train.\nThe night before flying out, pajeon, mussel soup and soju at a street tent in Jongno."
+    }
+  },
   "_형식": {
     "설명": "journey.json 의 stop id 를 키로, 그 도시에 머무는 동안 띄울 글. 여기 없는 stop 은 아무 말도 하지 않는다.",
     "필수": "ko.story 하나. title 과 quote 는 없으면 그 줄이 통째로 빠진다.",

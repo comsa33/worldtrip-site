@@ -168,6 +168,7 @@ const PICKED = {
   '살바도르 달리 사막': 'W415179783', // Desierto Salvador Dalí
   국경: null,
   비니쿤카: null, // Winikunka — a peak node only
+  나리타: 'R3182579', // Narita International Airport
 };
 
 if (process.argv.includes('--picked')) {

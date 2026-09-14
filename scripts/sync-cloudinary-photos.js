@@ -30,6 +30,7 @@ const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 const folderToKorean = {
   'gwangju': '광주',
   'incheon': '인천',
+  'seoul': '서울',
   'hochiminh': '호치민',
   'danang': '다낭',
   'kualalumpur': '쿠알라룸푸르',
@@ -66,6 +67,7 @@ const folderToKorean = {
   'agra': '아그라',
   'newdelhi': '뉴델리',
   'tokyo': '도쿄',
+  'narita': '나리타',
   'abudhabi': '아부다비',
   'dubai': '두바이',
   'sharjah': '샤르자',
