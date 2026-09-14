@@ -775,6 +775,26 @@
   color: var(--ink-2);
 }
 
+/* Before its photo, a tile is the photo's own two tones; the photo fades up over them. */
+.pb__sheet--roll .pb__cell {
+  background: linear-gradient(var(--tone-a, var(--bg-card)), var(--tone-b, var(--bg-card)));
+}
+
+.pb__sheet--roll .pb__cell img {
+  opacity: 0;
+  transition: opacity 220ms var(--ease-out);
+}
+
+.pb__sheet--roll .pb__cell img.is-in {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb__sheet--roll .pb__cell img {
+    transition: none;
+  }
+}
+
 /* the places a short last row leaves empty, so one photo is not blown up to a row */
 .pb__cellgap {
   flex: var(--ar) 1 0;

@@ -12,6 +12,8 @@ export interface VisitPhoto {
   /** Baked in by scripts/add-photo-dimensions.js — the frame needs it before the photo arrives. */
   w?: number;
   h?: number;
+  /** Two tones, top over bottom, for the tile before the photo arrives (scripts/add-photo-tones.py). */
+  tone?: string;
 }
 
 interface Visit {

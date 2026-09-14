@@ -56,7 +56,26 @@ const HOW: Record<string, { ko: string; en: string }> = {
 };
 
 const MD = (d: string) => d.slice(5, 10).replace('-', '.');
+
+/**
+ * A tile before its photo: the photo's own two tones, top over bottom (baked by
+ * scripts/add-photo-tones.py). A fast flick through the year shows the colour
+ * of the places going by instead of a column of grey boxes.
+ */
+function toneStyle(ar: number, tone?: string) {
+  const style: Record<string, string> = { '--ar': String(ar) };
+  const [a, b] = tone?.split(',') ?? [];
+  if (a && b) {
+    style['--tone-a'] = `#${a}`;
+    style['--tone-b'] = `#${b}`;
+  }
+  return style as React.CSSProperties;
+}
 /** The sheet's one thumbnail width, whatever the screen's density. */
+/** Faster than this (about four screens a second on a phone) is a throw, not reading. */
+const FAST_PX_PER_MS = 3;
+/** How long the sheet has to be slow before the photos it is passing are attached. */
+const SETTLE_MS = 90;
 const SHEET_PX = 480;
 
 /** The seam at the head of a stop: the day, a rule, and how the journey got here. */
@@ -354,22 +373,74 @@ export const JourneySheet = memo(function JourneySheet({
   useEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    const io = new IntersectionObserver(
+    /* Two edges, so a stop does not flicker in and out at one line: pictures
+       are attached a screen and a half ahead and only let go four screens
+       behind — scrolling back a little finds them still there. */
+    const pendingIn = new Set<number>();
+    const pendingOut = new Set<number>();
+    let idle = 0;
+    let lastY = el.scrollTop;
+    let lastT = performance.now();
+    let fast = false;
+    const flush = () => {
+      if (!pendingIn.size && !pendingOut.size) return;
+      const add = [...pendingIn];
+      const drop = [...pendingOut];
+      pendingIn.clear();
+      pendingOut.clear();
+      setLive((prev) => {
+        const next = new Set(prev);
+        add.forEach((k) => next.add(k));
+        drop.forEach((k) => next.delete(k));
+        return next;
+      });
+    };
+    /* While a flick is still fast, nothing new is decoded: the tones fill the
+       tiles going by, and the photos are attached the moment the sheet slows
+       down. Decoding a screenful of photos every frame of a throw is what
+       made it stutter. */
+    const onScroll = () => {
+      const now = performance.now();
+      const v = Math.abs(el.scrollTop - lastY) / Math.max(1, now - lastT);
+      lastY = el.scrollTop;
+      lastT = now;
+      fast = v > FAST_PX_PER_MS;
+      window.clearTimeout(idle);
+      idle = window.setTimeout(() => {
+        fast = false;
+        flush();
+      }, SETTLE_MS);
+    };
+    const key = (e: IntersectionObserverEntry) => Number((e.target as HTMLElement).dataset.run);
+    const near = new IntersectionObserver(
       (entries) => {
-        setLive((prev) => {
-          const next = new Set(prev);
-          for (const e of entries) {
-            const k = Number((e.target as HTMLElement).dataset.run);
-            if (e.isIntersecting) next.add(k);
-            else next.delete(k);
-          }
-          return next;
-        });
+        for (const e of entries) if (e.isIntersecting) pendingIn.add(key(e));
+        if (!fast) flush();
       },
       { root: el, rootMargin: '150% 0px' }
     );
-    el.querySelectorAll('[data-run]').forEach((sec) => io.observe(sec));
-    return () => io.disconnect();
+    const far = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) continue;
+          pendingIn.delete(key(e));
+          pendingOut.add(key(e));
+        }
+        if (!fast) flush();
+      },
+      { root: el, rootMargin: '400% 0px' }
+    );
+    el.querySelectorAll('[data-run]').forEach((sec) => {
+      near.observe(sec);
+      far.observe(sec);
+    });
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      near.disconnect();
+      far.disconnect();
+      el.removeEventListener('scroll', onScroll);
+      window.clearTimeout(idle);
+    };
   }, [scroller, fold]);
 
   return (
@@ -463,7 +534,7 @@ const StopSection = memo(function StopSection({
                   role="gridcell"
                   data-i={i}
                   className={`pb__cell${i === current ? ' is-current' : ''}`}
-                  style={{ '--ar': String(ar) } as React.CSSProperties}
+                  style={toneStyle(ar, p.tone)}
                   onClick={(e) => onOpen(i, e.currentTarget)}
                   aria-label={`${rollNo(i)} · ${cityLabel(city, lang)}`}
                 >
@@ -472,7 +543,15 @@ const StopSection = memo(function StopSection({
                       images, and a phone at 3× does not decode a 1000px photo
                       into a 117px tile. */}
                   {live && (
-                    <img src={srcFor(p, SHEET_PX, { exact: true })} alt="" decoding="async" />
+                    <img
+                      src={srcFor(p, SHEET_PX, { exact: true })}
+                      alt=""
+                      decoding="async"
+                      // the photo comes up out of its own colours rather than
+                      // popping onto grey; set on the node, not in state, so a
+                      // hundred arrivals are not a hundred renders
+                      onLoad={(e) => e.currentTarget.classList.add('is-in')}
+                    />
                   )}
                   <span className="pb__cellno mono">{rollNo(i)}</span>
                 </button>
