@@ -545,10 +545,10 @@
   },
   "86": {
     "ko": {
-      "story": "해 질 무렵이면 전망대로 갔습니다.\n다들 같은 방향을 보고 앉아 있었습니다.\n28번 트램, 호시우 역의 아치.\n비행기 창 밖 온도계가 영하 17도를 가리켰습니다."
+      "story": "밤에 호시우 광장의 아치 아래를 걸었습니다.\n노란 트램이 지나갔고, 맥주 탭 온도계는 영하 1.7도를 가리켰습니다.\n해 질 무렵 산타 카타리나 전망대에 갔습니다.\n다들 같은 방향을 보고 앉아 있었습니다.\n자정 넘어 알파마 지붕들을 내려다봤습니다."
     },
     "en": {
-      "story": "Around sunset I went up to the miradouros.\nEveryone sat facing the same way.\nTram 28, the arches of Rossio station.\nThe thermometer on the plane window read minus seventeen."
+      "story": "At night I walked under the arches of Rossio.\nA yellow tram went by, and the beer tap's thermometer read minus 1.7.\nAt sunset I went up to the Santa Catarina lookout.\nEveryone sat facing the same way.\nPast midnight I looked down over the roofs of Alfama."
     }
   },
   "87": {
@@ -557,6 +557,14 @@
     },
     "en": {
       "story": "Walked down the spiral of the well at Quinta da Regaleira.\nCats sat along the walls.\nTook a photo in front of a pink wall."
+    }
+  },
+  "88": {
+    "ko": {
+      "story": "신트라에서 리스본으로 돌아왔습니다.\n카사블랑카로 가는 비행기 창 밖은 온통 구름이었습니다."
+    },
+    "en": {
+      "story": "Back to Lisbon from Sintra.\nOn the flight to Casablanca, nothing but cloud outside the window."
     }
   },
   "90": {
