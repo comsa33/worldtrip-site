@@ -48207,25 +48207,6 @@
         "h": 768
       },
       {
-        "id": "sintra-003",
-        "publicId": "cities/sintra/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo003",
-        "date": "2017-02-26T17:53:02",
-        "gps": {
-          "lat": 38.79861944444444,
-          "lng": -9.387027777777778
-        },
-        "location": "Avenida Dr Miguel Bombarda 8, União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim), Sintra, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "sintra-004",
         "publicId": "cities/sintra/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo004",
@@ -48319,25 +48300,6 @@
         "alt": "photo009",
         "w": 886,
         "h": 886
-      },
-      {
-        "id": "sintra-009",
-        "publicId": "cities/sintra/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo010",
-        "date": "2017-02-26T17:47:42",
-        "gps": {
-          "lat": 38.7977,
-          "lng": -9.388116666666667
-        },
-        "location": "Volta do Duche 16, União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim), Sintra, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "sintra-010",
@@ -48568,44 +48530,6 @@
         "h": 768
       },
       {
-        "id": "sintra-022",
-        "publicId": "cities/sintra/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo025",
-        "date": "2017-02-26T17:04:23",
-        "gps": {
-          "lat": 38.79584444444444,
-          "lng": -9.39626111111111
-        },
-        "location": "Rua Barbosa Du Bocage 3, União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim), Sintra, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sintra-023",
-        "publicId": "cities/sintra/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo027",
-        "date": "2017-02-26T17:53:12",
-        "gps": {
-          "lat": 38.798674999999996,
-          "lng": -9.387066666666666
-        },
-        "location": "Avenida Dr Miguel Bombarda 8, União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim), Sintra, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "sintra-024",
         "publicId": "cities/sintra/photo028",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo028",
@@ -48623,44 +48547,6 @@
         "alt": "photo028",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "sintra-025",
-        "publicId": "cities/sintra/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo030",
-        "date": "2017-02-26T17:07:57",
-        "gps": {
-          "lat": 38.79622222222222,
-          "lng": -9.396213888888889
-        },
-        "location": "Rua Barbosa Du Bocage 3, União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim), Sintra, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sintra-026",
-        "publicId": "cities/sintra/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo031",
-        "date": "2017-02-26T17:08:19",
-        "gps": {
-          "lat": 38.796366666666664,
-          "lng": -9.396219444444444
-        },
-        "location": "Rua Barbosa Du Bocage 3, União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim), Sintra, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "sintra-027",
@@ -48889,25 +48775,6 @@
         "alt": "photo046",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "sintra-039",
-        "publicId": "cities/sintra/photo047",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sintra/photo047",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sintra/photo047",
-        "date": "2017-02-26T17:09:52",
-        "gps": {
-          "lat": 38.796375,
-          "lng": -9.3962
-        },
-        "location": "Rua Barbosa du Bocage, Sintra - Santa Maria, Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim)",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo047",
-        "w": 1024,
-        "h": 768
       }
     ]
   },
