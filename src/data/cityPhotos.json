@@ -12606,25 +12606,6 @@
     "cityCode": "casablanca",
     "photos": [
       {
-        "id": "casablanca-001",
-        "publicId": "cities/casablanca/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo001",
-        "date": "2017-02-18T16:48:27",
-        "gps": {
-          "lat": 33.599091666666666,
-          "lng": -7.6206611111111116
-        },
-        "location": "Rue de Salé 69, Casablanca, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "casablanca-002",
         "publicId": "cities/casablanca/photo002",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo002",
@@ -12661,25 +12642,6 @@
         "alt": "photo003",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "casablanca-004",
-        "publicId": "cities/casablanca/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo004",
-        "date": "2017-02-18T14:53:40",
-        "gps": {
-          "lat": 33.54527222222222,
-          "lng": -7.6423194444444436
-        },
-        "location": "طريق النواصر, Casablanca, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1182,
-        "h": 665
       },
       {
         "id": "casablanca-005",
@@ -12796,25 +12758,6 @@
         "h": 768
       },
       {
-        "id": "casablanca-013",
-        "publicId": "cities/casablanca/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo013",
-        "date": "2017-02-19T14:38:32",
-        "gps": {
-          "lat": 33.370919444444446,
-          "lng": -7.53705
-        },
-        "location": "Boulevard 18 Novembre, Deroua, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "casablanca-014",
         "publicId": "cities/casablanca/photo014",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo014",
@@ -12851,25 +12794,6 @@
         "alt": "photo016",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "casablanca-019",
-        "publicId": "cities/casablanca/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo019",
-        "date": "2017-02-18T16:48:13",
-        "gps": {
-          "lat": 33.599108333333334,
-          "lng": -7.620644444444445
-        },
-        "location": "Rue de Salé 69, Casablanca, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "casablanca-020",
@@ -12965,25 +12889,6 @@
         "alt": "photo028",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "casablanca-029",
-        "publicId": "cities/casablanca/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/casablanca/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/casablanca/photo030",
-        "date": "2017-02-18T14:53:43",
-        "gps": {
-          "lat": 33.54527222222222,
-          "lng": -7.6423194444444436
-        },
-        "location": "طريق النواصر, Casablanca, Casablanca-Settat",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1182,
-        "h": 665
       },
       {
         "id": "casablanca-030",
@@ -33046,44 +32951,6 @@
         "h": 768
       },
       {
-        "id": "marrakech-004",
-        "publicId": "cities/marrakech/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo004",
-        "date": "2017-02-13T12:39:46",
-        "gps": {
-          "lat": 31.600933333333334,
-          "lng": -8.025605555555556
-        },
-        "location": "Drop-Off, Marrakesh, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "marrakech-005",
-        "publicId": "cities/marrakech/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo005",
-        "date": "2017-02-16T15:47:18",
-        "gps": {
-          "lat": 31.724213888888887,
-          "lng": -7.865983333333333
-        },
-        "location": "Bourrous, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1022,
-        "h": 768
-      },
-      {
         "id": "marrakech-006",
         "publicId": "cities/marrakech/photo006",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo006",
@@ -33103,25 +32970,6 @@
         "h": 768
       },
       {
-        "id": "marrakech-007",
-        "publicId": "cities/marrakech/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo007",
-        "date": "2017-02-16T15:47:09",
-        "gps": {
-          "lat": 31.724224999999997,
-          "lng": -7.865969444444444
-        },
-        "location": "Bourrous, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "marrakech-008",
         "publicId": "cities/marrakech/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo008",
@@ -33137,25 +32985,6 @@
           "en": ""
         },
         "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "marrakech-009",
-        "publicId": "cities/marrakech/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo009",
-        "date": "2017-02-14T16:35:37",
-        "gps": {
-          "lat": 31.61895277777778,
-          "lng": -7.983966666666666
-        },
-        "location": "Rue de Berrima 113, Marrakesh, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
         "w": 1024,
         "h": 768
       },
@@ -33369,25 +33198,6 @@
         "h": 768
       },
       {
-        "id": "marrakech-021",
-        "publicId": "cities/marrakech/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo024",
-        "date": "2017-02-13T14:40:37",
-        "gps": {
-          "lat": 31.620994444444445,
-          "lng": -7.988019444444444
-        },
-        "location": "Avenue Houman el Fetouaki, Marrakesh, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "marrakech-022",
         "publicId": "cities/marrakech/photo025",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo025",
@@ -33462,25 +33272,6 @@
         "alt": "photo028",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "marrakech-026",
-        "publicId": "cities/marrakech/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo029",
-        "date": "2017-02-13T14:40:06",
-        "gps": {
-          "lat": 31.621000000000002,
-          "lng": -7.988
-        },
-        "location": "Avenue Houman el Fetouaki, Marrakesh, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "marrakech-027",
@@ -33578,25 +33369,6 @@
         "h": 768
       },
       {
-        "id": "marrakech-032",
-        "publicId": "cities/marrakech/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo035",
-        "date": "2017-02-16T15:04:19",
-        "gps": {
-          "lat": 31.708066666666667,
-          "lng": -7.934291666666667
-        },
-        "location": "Ouahat Sidi Brahim, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "marrakech-033",
         "publicId": "cities/marrakech/photo036",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo036",
@@ -33631,44 +33403,6 @@
           "en": ""
         },
         "alt": "photo037",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "marrakech-035",
-        "publicId": "cities/marrakech/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo038",
-        "date": "2017-02-15T16:33:58",
-        "gps": {
-          "lat": 31.61998611111111,
-          "lng": -7.985105555555555
-        },
-        "location": "Marrakesh, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo038",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "marrakech-036",
-        "publicId": "cities/marrakech/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/marrakech/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/marrakech/photo039",
-        "date": "2017-02-13T14:41:14",
-        "gps": {
-          "lat": 31.621011111111113,
-          "lng": -7.988033333333333
-        },
-        "location": "Avenue Houman el Fetouaki, Marrakesh, Marrakesh-Safi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo039",
         "w": 1024,
         "h": 768
       },
