@@ -328,14 +328,33 @@ export default function PhotoGallery({
   const [holding, setHolding] = useState<Photo | null>(null);
   const [shownId, setShownId] = useState<string | undefined>(photo?.id);
   const [dir, setDir] = useState(1);
+  /* Opened from a tile, the photo is not the neighbour of the one before it:
+     holding the last photo seen until this one decodes put a different picture
+     in the frame for a moment. So a photo grown out of its tile starts as that
+     tile — the sheet's own thumbnail, already in hand — and the full photo
+     comes up over it once it has decoded. Swiping keeps the hold: there the
+     outgoing photo is the right thing to see until the next one is ready. */
+  const [grownFrom, setGrownFrom] = useState<string | null>(null);
+  const [sharpId, setSharpId] = useState<string | null>(null);
   if (photo && shownId !== photo.id) {
     // the photo changed this render: keep the old one on screen until the new
     // one reports it has decoded (state reset during render, per React guidance)
     const prevIdx = photos.findIndex((p) => p.id === shownId);
     setDir(prevIdx >= 0 && prevIdx > safeIndex ? -1 : 1);
-    setHolding(photos.find((p) => p.id === shownId) ?? null);
+    setHolding(grownFrom === photo.id ? null : (photos.find((p) => p.id === shownId) ?? null));
     setShownId(photo.id);
   }
+  const growing = Boolean(photo && grownFrom === photo.id && sharpId !== photo.id);
+  const mainImgRef = useRef<HTMLImageElement>(null);
+  // a photo already in the cache can finish before the load listener is attached
+  useEffect(() => {
+    const img = mainImgRef.current;
+    if (!growing || !img || !photo) return;
+    if (!(img.complete && img.naturalWidth > 0)) return;
+    const id = photo.id;
+    const raf = requestAnimationFrame(() => setSharpId(id));
+    return () => cancelAnimationFrame(raf);
+  }, [growing, photo]);
 
   const sheetRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -359,6 +378,7 @@ export default function PhotoGallery({
         zs: Math.max(0.05, r.width / fw),
       });
     }
+    setGrownFrom(target?.id ?? null);
     setIndex(i);
     setSheet(false);
   };
@@ -1007,6 +1027,15 @@ export default function PhotoGallery({
             onPointerMove={onFigureMove}
             onClick={onFigureClick}
           >
+            {growing && photo && (
+              <img
+                key={`${photo.id}:tile`}
+                className="pb__img is-tile"
+                src={srcFor(photo, 480, { exact: true })}
+                alt=""
+                aria-hidden="true"
+              />
+            )}
             {holding && box && (
               <img
                 key={holding.id}
@@ -1018,10 +1047,11 @@ export default function PhotoGallery({
             )}
             <img
               key={photo.id}
-              className="pb__img"
+              ref={mainImgRef}
+              className={`pb__img${growing ? ' is-waiting' : ''}`}
               style={
                 {
-                  '--from': `${entry ? entry.from : dir > 0 ? 22 : -22}px`,
+                  '--from': `${grownFrom === photo.id ? 0 : entry ? entry.from : dir > 0 ? 22 : -22}px`,
                   '--in-ms': `${entry ? entry.ms : 300}ms`,
                 } as React.CSSProperties
               }
@@ -1029,8 +1059,14 @@ export default function PhotoGallery({
               alt={text}
               decoding="async"
               fetchPriority="high"
-              onLoad={() => setHolding(null)}
-              onError={() => setHolding(null)}
+              onLoad={() => {
+                setHolding(null);
+                setSharpId(photo.id);
+              }}
+              onError={() => {
+                setHolding(null);
+                setSharpId(photo.id);
+              }}
             />
             <span className="pb__cursor" ref={curRef} aria-hidden="true" />
           </figure>

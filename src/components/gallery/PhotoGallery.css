@@ -203,6 +203,18 @@
   }
 }
 
+/* Grown out of a tile: the tile's own thumbnail fills the frame, and the full
+   photo waits unseen until it has decoded, then fades up over it. */
+.pb__img.is-tile {
+  z-index: 0;
+  animation: none;
+}
+
+.pb__img.is-waiting {
+  animation: none;
+  opacity: 0;
+}
+
 /* the photo on its way out: it holds the frame until the new one has decoded */
 .pb__img.is-out {
   z-index: 0;
