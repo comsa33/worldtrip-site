@@ -117,6 +117,14 @@
       "story": "Stood under the banyan tree at Auroville.\nA Gandhi statue stood on the seafront promenade.\nTook a boat out on the backwaters.\nBack to Chennai the same day."
     }
   },
+  "20": {
+    "ko": {
+      "story": "퐁디셰리에서 투어 버스로 돌아왔습니다.\n새벽 여섯 시에 첸나이 센트럴 역에 나갔습니다.\n역에서 이들리로 아침을 먹었습니다.\n기차 창밖으로 해 뜬 물가를 지났습니다."
+    },
+    "en": {
+      "story": "Came back from Puducherry on the tour bus.\nOut to Chennai Central at six in the morning.\nIdli for breakfast at the station.\nFrom the train window, water in the sunrise."
+    }
+  },
   "21": {
     "ko": {
       "story": "랄바그 식물원의 유리 온실.\n개들이 흙바닥에서 낮잠을 잤습니다.\n어느 날은 파업으로 가게가 닫혀 있었습니다.\n호스텔에서 당구를 쳤습니다."
@@ -149,6 +157,22 @@
       "story": "Took a rickshaw out to the Ellora caves.\nA temple carved out of one piece of rock.\nIt rained, and water fell off the cliffs.\nOn the way back, the white dome of Bibi Ka Maqbara."
     }
   },
+  "25": {
+    "ko": {
+      "story": "아침에 버스로 닿았습니다.\n시장 건물 앞으로 자전거 릭샤가 지나갔습니다.\n붉은 돌로 지은 역,\n노란 밥과 커리.\n밤에 다시 역으로 가서 기차를 탔습니다."
+    },
+    "en": {
+      "story": "Arrived by bus in the morning.\nCycle rickshaws went past the market building.\nA station built of red stone,\nyellow rice and curry.\nBack to the station at night for the train."
+    }
+  },
+  "26": {
+    "ko": {
+      "story": "기차에서 내려 숙소에서 쉬었습니다.\n낮에 시내를 걸었습니다.\n길 한가운데 소가 서 있었습니다.\n다음 날 탈리를 먹고 하우라행 기차를 탔습니다."
+    },
+    "en": {
+      "story": "Off the train and a rest at the hotel.\nWalked around town in the afternoon.\nA cow stood in the middle of the street.\nThe next day, a thali, then the train to Howrah."
+    }
+  },
   "27": {
     "ko": {
       "story": "노란 택시가 거리를 채우고 있었습니다.\n사람이 끄는 인력거가 지나갔습니다.\n빅토리아 기념관의 흰 돔,\n길가에서 낮잠 자는 개들,\n외국인 입장료가 25배였습니다."
@@ -175,10 +199,10 @@
   },
   "30": {
     "ko": {
-      "story": "아그라에서 오는 기차 창밖으로 해가 졌습니다.\n하우즈 카스의 호수에 해가 졌습니다.\n철문 앞에 원숭이가 앉아 있었습니다.\n지하철을 타고 다녔습니다.\n인도의 첫 절반이 여기서 끝났습니다."
+      "story": "아그라에서 오는 기차 창밖으로 해가 졌습니다.\n다음 날은 하우즈 카스의 호수에 해가 졌습니다.\n지하철을 타고 다녔습니다.\n인도의 첫 절반이 여기서 끝났습니다."
     },
     "en": {
-      "story": "The sun set outside the window of the train from Agra.\nThe sun went down over the lake at Hauz Khas.\nMonkeys sat outside the iron gate.\nGot around on the metro.\nThe first half of India ended here."
+      "story": "The sun set outside the window of the train from Agra.\nThe next day, the sun went down over the lake at Hauz Khas.\nGot around on the metro.\nThe first half of India ended here."
     }
   },
   "32": {
@@ -197,6 +221,22 @@
     },
     "en": {
       "story": "One day in Tokyo, between India and India.\nTook the train from Narita to Tokyo Station.\nCrossed the Shibuya scramble.\nWent from bar to club all night,\nand at dawn took a photo with people dressed as Mario."
+    }
+  },
+  "35": {
+    "ko": {
+      "story": "도쿄에서 다시 날아왔습니다.\n밤에 꼬챙이에 고기가 돌아가고 있었습니다.\n아침은 벽에 「Liberate」라고 그려진 가게 앞이었습니다.\n철문 앞에 원숭이가 앉아 있었습니다.\n그날 밤 동쪽으로 떠났습니다."
+    },
+    "en": {
+      "story": "Flew back in from Tokyo.\nAt night, meat turning on a spit.\nMorning in front of a shop with \"Liberate\" painted on the wall.\nMonkeys sat outside the iron gate.\nHeaded east that night."
+    }
+  },
+  "36": {
+    "ko": {
+      "story": "아침에 역 앞에서 말을 끄는 사람들을 봤습니다.\n바라나시로 가는 버스를 탔습니다.\n다리 위에서 모래톱이 넓은 강을 건넜습니다."
+    },
+    "en": {
+      "story": "Outside the station in the morning, people leading horses.\nCaught the bus for Varanasi.\nCrossed a wide river of sandbanks on the bridge."
     }
   },
   "37": {
