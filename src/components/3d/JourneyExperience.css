@@ -50,6 +50,13 @@
   pointer-events: none;
 }
 
+/* The theme switch paints from snapshots, and a snapshot keeps the 85% ground
+   but not the blur behind it — for those 360ms the route showed through the
+   bar sharp. The bar goes solid for the switch; the blur is back when it lands. */
+:root[data-theme-switching] .journey-header {
+  background: var(--bg);
+}
+
 .journey-header > * {
   pointer-events: auto;
 }
