@@ -135,6 +135,39 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/*
+ * The site is handled more than it is read: maps are held and dragged, the
+ * journey is swiped, photos are pulled and pinched. A long press on a phone
+ * started a text selection instead — the blue handles ran across the map, the
+ * header and the city's note at once — and a drag on the desktop picked up a
+ * photo as a ghost image. So nothing selects, nothing is dragged out, a held
+ * finger gets no callout and a tap no grey flash.
+ */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+svg {
+  -webkit-user-drag: none;
+}
+
+/* The one thing that is read: a city's note and the opening and closing words.
+   A mouse can select those without taking any gesture from anyone; a finger
+   cannot, so on a phone they stay as the rest. */
+@media (hover: hover) and (pointer: fine) {
+  .about-overlay__title,
+  .about-overlay__subtitle,
+  .about-overlay__story,
+  .about-overlay__quote {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
 body {
   font-family: var(--sans);
   font-size: 14px;
