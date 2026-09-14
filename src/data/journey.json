@@ -253,7 +253,7 @@
       "order": 24,
       "transport": "bus",
       "startDate": "2016-10-01",
-      "endDate": "2016-10-03"
+      "endDate": "2016-10-02"
     },
     {
       "id": 25,
@@ -263,7 +263,7 @@
       "order": 25,
       "transport": "bus",
       "startDate": "2016-10-03",
-      "endDate": "2016-10-04"
+      "endDate": "2016-10-03"
     },
     {
       "id": 26,
@@ -271,7 +271,7 @@
       "country": "IN",
       "countryCode": "IN",
       "order": 26,
-      "transport": "bus",
+      "transport": "train",
       "startDate": "2016-10-04",
       "endDate": "2016-10-05"
     },

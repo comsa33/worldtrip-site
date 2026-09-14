@@ -9833,507 +9833,7 @@
     "cityCode": "chennai",
     "photos": [
       {
-        "id": "chennai-001",
-        "publicId": "cities/chennai/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900955/cities/chennai/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900955/cities/chennai/photo001",
-        "date": "2016-09-17T13:24:06",
-        "gps": {
-          "lat": 13.043352777777777,
-          "lng": 80.27991388888888
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "98b6d2,988d84"
-      },
-      {
-        "id": "chennai-002",
-        "publicId": "cities/chennai/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900958/cities/chennai/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900958/cities/chennai/photo003",
-        "date": "2016-09-17T19:34:47",
-        "gps": {
-          "lat": 13.030141666666667,
-          "lng": 80.26676111111111
-        },
-        "location": "Ramkrishna Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 768,
-        "h": 1024,
-        "tone": "c4c6a9,7b7366"
-      },
-      {
-        "id": "chennai-003",
-        "publicId": "cities/chennai/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900961/cities/chennai/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900961/cities/chennai/photo004",
-        "date": "2016-09-20T08:37:38",
-        "gps": {
-          "lat": 13.090925,
-          "lng": 79.76904166666667
-        },
-        "location": "Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768,
-        "tone": "cabca5,837a59"
-      },
-      {
-        "id": "chennai-004",
-        "publicId": "cities/chennai/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900964/cities/chennai/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900964/cities/chennai/photo005",
-        "date": "2016-09-17T19:39:32",
-        "gps": {
-          "lat": 13.030558333333333,
-          "lng": 80.26694444444445
-        },
-        "location": "Ramkrishna Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768,
-        "tone": "544a4e,85796b"
-      },
-      {
-        "id": "chennai-005",
-        "publicId": "cities/chennai/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900968/cities/chennai/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900968/cities/chennai/photo007",
-        "date": "2016-09-20T06:36:50",
-        "gps": {
-          "lat": 13.082802777777777,
-          "lng": 80.27561944444444
-        },
-        "location": "Wall Tax Road, Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024,
-        "tone": "c1a750,85725a"
-      },
-      {
-        "id": "chennai-006",
-        "publicId": "cities/chennai/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900971/cities/chennai/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900971/cities/chennai/photo008",
-        "date": "2016-09-17T11:43:10",
-        "gps": {
-          "lat": 13.02576388888889,
-          "lng": 80.26563888888889
-        },
-        "location": "RK Mutt Road, Zone 13 Adyar, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768,
-        "tone": "8d979d,655645"
-      },
-      {
-        "id": "chennai-007",
-        "publicId": "cities/chennai/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900973/cities/chennai/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900973/cities/chennai/photo009",
-        "date": "2016-09-17T14:08:05",
-        "gps": {
-          "lat": 13.043758333333333,
-          "lng": 80.26818888888889
-        },
-        "location": "VM Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024,
-        "tone": "5e4e3d,755b47"
-      },
-      {
-        "id": "chennai-008",
-        "publicId": "cities/chennai/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900976/cities/chennai/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900976/cities/chennai/photo010",
-        "date": "2016-09-20T08:36:03",
-        "gps": {
-          "lat": 13.095894444444445,
-          "lng": 79.791175
-        },
-        "location": "Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768,
-        "tone": "8488a7,48451d"
-      },
-      {
-        "id": "chennai-009",
-        "publicId": "cities/chennai/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900979/cities/chennai/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900979/cities/chennai/photo011",
-        "date": "2016-09-19T16:32:18",
-        "gps": {
-          "lat": 13.027869444444445,
-          "lng": 80.26618888888889
-        },
-        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024,
-        "tone": "b6b1a9,a39c92"
-      },
-      {
-        "id": "chennai-010",
-        "publicId": "cities/chennai/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900982/cities/chennai/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900982/cities/chennai/photo013",
-        "date": "2016-09-16T20:12:12",
-        "gps": {
-          "lat": 13.034475,
-          "lng": 80.268525
-        },
-        "location": "North Mada Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 768,
-        "h": 1024,
-        "tone": "766e69,5a4d42"
-      },
-      {
-        "id": "chennai-011",
-        "publicId": "cities/chennai/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900985/cities/chennai/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900985/cities/chennai/photo014",
-        "date": "2016-09-20T06:14:17",
-        "gps": {
-          "lat": 13.082983333333333,
-          "lng": 80.27471944444444
-        },
-        "location": "Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768,
-        "tone": "8f8d74,79622d"
-      },
-      {
-        "id": "chennai-012",
-        "publicId": "cities/chennai/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900991/cities/chennai/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900991/cities/chennai/photo016",
-        "date": "2016-09-17T13:24:55",
-        "gps": {
-          "lat": 13.043344444444445,
-          "lng": 80.28006666666667
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768,
-        "tone": "8c6a59,a08572"
-      },
-      {
-        "id": "chennai-013",
-        "publicId": "cities/chennai/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900994/cities/chennai/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900994/cities/chennai/photo017",
-        "date": "2016-09-17T13:26:25",
-        "gps": {
-          "lat": 13.043402777777777,
-          "lng": 80.28016666666666
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768,
-        "tone": "a7bfe3,7c816b"
-      },
-      {
-        "id": "chennai-014",
-        "publicId": "cities/chennai/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900996/cities/chennai/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900996/cities/chennai/photo018",
-        "date": "2016-09-16T18:09:13",
-        "gps": {
-          "lat": 13.02791388888889,
-          "lng": 80.26605277777777
-        },
-        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768,
-        "tone": "8b8681,92817d"
-      },
-      {
-        "id": "chennai-015",
-        "publicId": "cities/chennai/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901000/cities/chennai/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901000/cities/chennai/photo019",
-        "date": "2016-09-17T13:30:40",
-        "gps": {
-          "lat": 13.0434,
-          "lng": 80.28048611111112
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768,
-        "tone": "9d958f,655554"
-      },
-      {
-        "id": "chennai-016",
-        "publicId": "cities/chennai/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901003/cities/chennai/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901003/cities/chennai/photo020",
-        "date": "2016-09-17T14:45:15",
-        "gps": {
-          "lat": 13.043827777777778,
-          "lng": 80.2681361111111
-        },
-        "location": "VM Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 768,
-        "h": 1024,
-        "tone": "806946,6b6c7c"
-      },
-      {
-        "id": "chennai-017",
-        "publicId": "cities/chennai/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901007/cities/chennai/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901007/cities/chennai/photo022",
-        "date": "2016-09-16T18:06:12",
-        "gps": {
-          "lat": 13.027825,
-          "lng": 80.26612777777778
-        },
-        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 1024,
-        "h": 768,
-        "tone": "927f7b,887f63"
-      },
-      {
-        "id": "chennai-018",
-        "publicId": "cities/chennai/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901009/cities/chennai/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901009/cities/chennai/photo023",
-        "date": "2016-09-20T07:28:50",
-        "gps": {
-          "lat": 13.089322222222222,
-          "lng": 80.27454444444444
-        },
-        "location": "Wall Tax Road, Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768,
-        "tone": "727254,1a1e17"
-      },
-      {
-        "id": "chennai-019",
-        "publicId": "cities/chennai/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901013/cities/chennai/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901013/cities/chennai/photo024",
-        "date": "2016-09-17T15:54:02",
-        "gps": {
-          "lat": 13.027841666666667,
-          "lng": 80.26618888888889
-        },
-        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 768,
-        "h": 1024,
-        "tone": "c5c1bb,a5978c"
-      },
-      {
-        "id": "chennai-020",
-        "publicId": "cities/chennai/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901016/cities/chennai/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901016/cities/chennai/photo025",
-        "date": "2016-09-20T07:32:27",
-        "gps": {
-          "lat": 13.09443888888889,
-          "lng": 80.27237777777778
-        },
-        "location": "Elephant Gate Bridge, Ward 77, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 767,
-        "tone": "a19584,342518"
-      },
-      {
-        "id": "chennai-021",
-        "publicId": "cities/chennai/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901018/cities/chennai/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901018/cities/chennai/photo026",
-        "date": "2016-09-16T19:44:47",
-        "gps": {
-          "lat": 13.034477777777777,
-          "lng": 80.26881388888889
-        },
-        "location": "North Mada Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 768,
-        "h": 1024,
-        "tone": "9b8b69,848337"
-      },
-      {
-        "id": "chennai-022",
-        "publicId": "cities/chennai/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901021/cities/chennai/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901021/cities/chennai/photo027",
-        "date": "2016-09-20T07:27:05",
-        "gps": {
-          "lat": 13.086086111111111,
-          "lng": 80.27528333333333
-        },
-        "location": "Wall Tax Road, Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768,
-        "tone": "5a6061,796b5f"
-      },
-      {
-        "id": "chennai-023",
-        "publicId": "cities/chennai/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176637/cities/chennai/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176637/cities/chennai/photo028",
-        "date": "2016-09-20T07:27:50",
-        "gps": {
-          "lat": 13.08708888888889,
-          "lng": 80.27497777777778
-        },
-        "location": "Wall Tax Road, Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768,
-        "tone": "a6acb9,49494c"
-      },
-      {
-        "id": "chennai-024",
-        "publicId": "cities/chennai/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176640/cities/chennai/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176640/cities/chennai/photo029",
-        "date": "2016-09-16T18:24:42",
-        "gps": {
-          "lat": 13.027825,
-          "lng": 80.26613611111111
-        },
-        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 1024,
-        "h": 768,
-        "tone": "a19a93,b1afa8"
-      },
-      {
-        "id": "chennai-025",
-        "publicId": "cities/chennai/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176642/cities/chennai/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176642/cities/chennai/photo030",
-        "date": "2016-09-17T13:36:33",
-        "gps": {
-          "lat": 13.043333333333333,
-          "lng": 80.27986111111112
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768,
-        "tone": "b5bdc1,686560"
-      },
-      {
-        "id": "chennai-026",
+        "id": "chennai-031",
         "publicId": "cities/chennai/photo031",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176644/cities/chennai/photo031",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176644/cities/chennai/photo031",
@@ -10353,187 +9853,27 @@
         "tone": "6e7d74,676258"
       },
       {
-        "id": "chennai-027",
-        "publicId": "cities/chennai/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176647/cities/chennai/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176647/cities/chennai/photo032",
-        "date": "2016-09-17T13:34:05",
+        "id": "chennai-018",
+        "publicId": "cities/chennai/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900996/cities/chennai/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900996/cities/chennai/photo018",
+        "date": "2016-09-16T18:09:13",
         "gps": {
-          "lat": 13.043536111111111,
-          "lng": 80.28054166666666
-        },
-        "location": "Kamarajar Salai, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768,
-        "tone": "a6a7a7,8b847d"
-      },
-      {
-        "id": "chennai-028",
-        "publicId": "cities/chennai/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176649/cities/chennai/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176649/cities/chennai/photo033",
-        "date": "2016-09-17T13:27:38",
-        "gps": {
-          "lat": 13.043380555555556,
-          "lng": 80.28035
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 479,
-        "tone": "b6bec4,6b685b"
-      },
-      {
-        "id": "chennai-029",
-        "publicId": "cities/chennai/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176651/cities/chennai/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176651/cities/chennai/photo034",
-        "date": "2016-09-17T13:38:56",
-        "gps": {
-          "lat": 13.043222222222223,
-          "lng": 80.27941111111112
-        },
-        "location": "Dr Radhakrishnan Salai, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768,
-        "tone": "dae0e8,999d9f"
-      },
-      {
-        "id": "chennai-030",
-        "publicId": "cities/chennai/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176652/cities/chennai/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176652/cities/chennai/photo035",
-        "date": "2016-09-17T13:39:03",
-        "gps": {
-          "lat": 13.043222222222223,
-          "lng": 80.27941111111112
-        },
-        "location": "Dr Radhakrishnan Salai, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 1024,
-        "h": 768,
-        "tone": "d8e0ed,6f6f6e"
-      },
-      {
-        "id": "chennai-031",
-        "publicId": "cities/chennai/photo036",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176655/cities/chennai/photo036",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176655/cities/chennai/photo036",
-        "date": "2016-09-17T13:28:16",
-        "gps": {
-          "lat": 13.043377777777778,
-          "lng": 80.28034166666667
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo036",
-        "w": 1024,
-        "h": 768,
-        "tone": "d5d9e0,5f5f5c"
-      },
-      {
-        "id": "chennai-032",
-        "publicId": "cities/chennai/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176657/cities/chennai/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176657/cities/chennai/photo037",
-        "date": "2016-09-17T13:33:31",
-        "gps": {
-          "lat": 13.043530555555556,
-          "lng": 80.28057222222222
-        },
-        "location": "Kamarajar Salai, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
-        "w": 1024,
-        "h": 502,
-        "tone": "babfc5,786551"
-      },
-      {
-        "id": "chennai-033",
-        "publicId": "cities/chennai/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176659/cities/chennai/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176659/cities/chennai/photo038",
-        "date": "2016-09-18T17:05:21",
-        "gps": {
-          "lat": 13.020241666666667,
-          "lng": 80.26249722222222
-        },
-        "location": "Kuttigramani Street, Zone 13 Adyar, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo038",
-        "w": 1024,
-        "h": 768,
-        "tone": "645544,6d6868"
-      },
-      {
-        "id": "chennai-034",
-        "publicId": "cities/chennai/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176661/cities/chennai/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176661/cities/chennai/photo039",
-        "date": "2016-09-17T11:28:26",
-        "gps": {
-          "lat": 13.027825,
-          "lng": 80.266175
+          "lat": 13.02791388888889,
+          "lng": 80.26605277777777
         },
         "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo039",
+        "alt": "photo018",
         "w": 1024,
         "h": 768,
-        "tone": "8b8d8a,878a84"
+        "tone": "8b8681,92817d"
       },
       {
-        "id": "chennai-035",
-        "publicId": "cities/chennai/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176663/cities/chennai/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176663/cities/chennai/photo040",
-        "date": "2016-09-17T13:23:48",
-        "gps": {
-          "lat": 13.043355555555555,
-          "lng": 80.27994444444444
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo040",
-        "w": 1024,
-        "h": 768,
-        "tone": "d5deeb,8a888a"
-      },
-      {
-        "id": "chennai-036",
+        "id": "chennai-041",
         "publicId": "cities/chennai/photo041",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176666/cities/chennai/photo041",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176666/cities/chennai/photo041",
@@ -10553,7 +9893,47 @@
         "tone": "473e3a,3e332e"
       },
       {
-        "id": "chennai-037",
+        "id": "chennai-026",
+        "publicId": "cities/chennai/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901018/cities/chennai/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901018/cities/chennai/photo026",
+        "date": "2016-09-16T19:44:47",
+        "gps": {
+          "lat": 13.034477777777777,
+          "lng": 80.26881388888889
+        },
+        "location": "North Mada Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo026",
+        "w": 768,
+        "h": 1024,
+        "tone": "9b8b69,848337"
+      },
+      {
+        "id": "chennai-008",
+        "publicId": "cities/chennai/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900971/cities/chennai/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900971/cities/chennai/photo008",
+        "date": "2016-09-17T11:43:10",
+        "gps": {
+          "lat": 13.02576388888889,
+          "lng": 80.26563888888889
+        },
+        "location": "RK Mutt Road, Zone 13 Adyar, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008",
+        "w": 1024,
+        "h": 768,
+        "tone": "8d979d,655645"
+      },
+      {
+        "id": "chennai-042",
         "publicId": "cities/chennai/photo042",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176669/cities/chennai/photo042",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176669/cities/chennai/photo042",
@@ -10573,47 +9953,7 @@
         "tone": "9fa5aa,aba9ab"
       },
       {
-        "id": "chennai-038",
-        "publicId": "cities/chennai/photo043",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176671/cities/chennai/photo043",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176671/cities/chennai/photo043",
-        "date": "2016-09-17T13:24:23",
-        "gps": {
-          "lat": 13.043338888888888,
-          "lng": 80.27998333333333
-        },
-        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo043",
-        "w": 768,
-        "h": 1024,
-        "tone": "afb6bd,675c59"
-      },
-      {
-        "id": "chennai-039",
-        "publicId": "cities/chennai/photo044",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176673/cities/chennai/photo044",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176673/cities/chennai/photo044",
-        "date": "2016-09-17T13:34:08",
-        "gps": {
-          "lat": 13.043536111111111,
-          "lng": 80.28054166666666
-        },
-        "location": "Kamarajar Salai, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo044",
-        "w": 768,
-        "h": 1024,
-        "tone": "bec4cb,7b6650"
-      },
-      {
-        "id": "chennai-040",
+        "id": "chennai-045",
         "publicId": "cities/chennai/photo045",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176675/cities/chennai/photo045",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176675/cities/chennai/photo045",
@@ -10633,16 +9973,76 @@
         "tone": "c1c8d2,797576"
       },
       {
-        "id": "chennai-041",
-        "publicId": "cities/chennai/photo046",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176677/cities/chennai/photo046",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176677/cities/chennai/photo046",
-        "date": "2016-09-15T22:41:30",
+        "id": "chennai-016",
+        "publicId": "cities/chennai/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900991/cities/chennai/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900991/cities/chennai/photo016",
+        "date": "2016-09-17T13:24:55",
         "gps": {
-          "lat": 12.9804,
-          "lng": 80.165925
+          "lat": 13.043344444444445,
+          "lng": 80.28006666666667
         },
-        "location": "Grand Southern Trunk Road, St. Thomas Mount Cantonment, St.Thomas Mount-Pallavaram Cantonment Board, Tamil Nadu",
+        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016",
+        "w": 1024,
+        "h": 768,
+        "tone": "8c6a59,a08572"
+      },
+      {
+        "id": "chennai-019",
+        "publicId": "cities/chennai/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901000/cities/chennai/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901000/cities/chennai/photo019",
+        "date": "2016-09-17T13:30:40",
+        "gps": {
+          "lat": 13.0434,
+          "lng": 80.28048611111112
+        },
+        "location": "Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019",
+        "w": 1024,
+        "h": 768,
+        "tone": "9d958f,655554"
+      },
+      {
+        "id": "chennai-044",
+        "publicId": "cities/chennai/photo044",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176673/cities/chennai/photo044",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176673/cities/chennai/photo044",
+        "date": "2016-09-17T13:34:08",
+        "gps": {
+          "lat": 13.043536111111111,
+          "lng": 80.28054166666666
+        },
+        "location": "Kamarajar Salai, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo044",
+        "w": 768,
+        "h": 1024,
+        "tone": "bec4cb,7b6650"
+      },
+      {
+        "id": "chennai-046",
+        "publicId": "cities/chennai/photo046",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381781/cities/chennai/photo046",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381781/cities/chennai/photo046",
+        "date": "2016-09-17T14:04:26",
+        "gps": {
+          "lat": 13.043766666666667,
+          "lng": 80.26818055555556
+        },
+        "location": "VM Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
         "caption": {
           "ko": "",
           "en": ""
@@ -10650,7 +10050,227 @@
         "alt": "photo046",
         "w": 1024,
         "h": 768,
-        "tone": "9b9792,a09791"
+        "tone": "9d7764,866750"
+      },
+      {
+        "id": "chennai-009",
+        "publicId": "cities/chennai/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900973/cities/chennai/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900973/cities/chennai/photo009",
+        "date": "2016-09-17T14:08:05",
+        "gps": {
+          "lat": 13.043758333333333,
+          "lng": 80.26818888888889
+        },
+        "location": "VM Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009",
+        "w": 768,
+        "h": 1024,
+        "tone": "5e4e3d,755b47"
+      },
+      {
+        "id": "chennai-048",
+        "publicId": "cities/chennai/photo048",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381785/cities/chennai/photo048",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381785/cities/chennai/photo048",
+        "date": "2016-09-17T14:44:41",
+        "gps": {
+          "lat": 13.043958333333332,
+          "lng": 80.26815
+        },
+        "location": "VM Street, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo048",
+        "w": 1024,
+        "h": 768,
+        "tone": "796e39,787567"
+      },
+      {
+        "id": "chennai-024",
+        "publicId": "cities/chennai/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901013/cities/chennai/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901013/cities/chennai/photo024",
+        "date": "2016-09-17T15:54:02",
+        "gps": {
+          "lat": 13.027841666666667,
+          "lng": 80.26618888888889
+        },
+        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo024",
+        "w": 768,
+        "h": 1024,
+        "tone": "c5c1bb,a5978c"
+      },
+      {
+        "id": "chennai-003",
+        "publicId": "cities/chennai/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900958/cities/chennai/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900958/cities/chennai/photo003",
+        "date": "2016-09-17T19:34:47",
+        "gps": {
+          "lat": 13.030141666666667,
+          "lng": 80.26676111111111
+        },
+        "location": "Ramkrishna Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003",
+        "w": 768,
+        "h": 1024,
+        "tone": "c4c6a9,7b7366"
+      },
+      {
+        "id": "chennai-047",
+        "publicId": "cities/chennai/photo047",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381783/cities/chennai/photo047",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381783/cities/chennai/photo047",
+        "date": "2016-09-17T19:36:07",
+        "gps": {
+          "lat": 13.030544444444445,
+          "lng": 80.26676944444445
+        },
+        "location": "RK Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo047",
+        "w": 1024,
+        "h": 768,
+        "tone": "7b9989,827353"
+      },
+      {
+        "id": "chennai-005",
+        "publicId": "cities/chennai/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900964/cities/chennai/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900964/cities/chennai/photo005",
+        "date": "2016-09-17T19:39:32",
+        "gps": {
+          "lat": 13.030558333333333,
+          "lng": 80.26694444444445
+        },
+        "location": "Ramkrishna Mutt Road, Zone 9 Teynampet, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005",
+        "w": 1024,
+        "h": 768,
+        "tone": "544a4e,85796b"
+      },
+      {
+        "id": "chennai-038",
+        "publicId": "cities/chennai/photo038",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176659/cities/chennai/photo038",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176659/cities/chennai/photo038",
+        "date": "2016-09-18T17:05:21",
+        "gps": {
+          "lat": 13.020241666666667,
+          "lng": 80.26249722222222
+        },
+        "location": "Kuttigramani Street, Zone 13 Adyar, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo038",
+        "w": 1024,
+        "h": 768,
+        "tone": "645544,6d6868"
+      },
+      {
+        "id": "chennai-014",
+        "publicId": "cities/chennai/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900985/cities/chennai/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900985/cities/chennai/photo014",
+        "date": "2016-09-20T06:14:17",
+        "gps": {
+          "lat": 13.082983333333333,
+          "lng": 80.27471944444444
+        },
+        "location": "Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo014",
+        "w": 1024,
+        "h": 768,
+        "tone": "8f8d74,79622d"
+      },
+      {
+        "id": "chennai-007",
+        "publicId": "cities/chennai/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900968/cities/chennai/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900968/cities/chennai/photo007",
+        "date": "2016-09-20T06:36:50",
+        "gps": {
+          "lat": 13.082802777777777,
+          "lng": 80.27561944444444
+        },
+        "location": "Wall Tax Road, Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007",
+        "w": 768,
+        "h": 1024,
+        "tone": "c1a750,85725a"
+      },
+      {
+        "id": "chennai-023",
+        "publicId": "cities/chennai/photo023",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901009/cities/chennai/photo023",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901009/cities/chennai/photo023",
+        "date": "2016-09-20T07:28:50",
+        "gps": {
+          "lat": 13.089322222222222,
+          "lng": 80.27454444444444
+        },
+        "location": "Wall Tax Road, Zone 5 Royapuram, Chennai Corporation, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo023",
+        "w": 1024,
+        "h": 768,
+        "tone": "727254,1a1e17"
+      },
+      {
+        "id": "chennai-004",
+        "publicId": "cities/chennai/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765900961/cities/chennai/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765900961/cities/chennai/photo004",
+        "date": "2016-09-20T08:37:38",
+        "gps": {
+          "lat": 13.090925,
+          "lng": 79.76904166666667
+        },
+        "location": "Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 1024,
+        "h": 768,
+        "tone": "cabca5,837a59"
       }
     ]
   },
@@ -17472,144 +17092,24 @@
     "cityCode": "jabalpur",
     "photos": [
       {
-        "id": "jabalpur-001",
-        "publicId": "cities/jabalpur/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936452/cities/jabalpur/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936452/cities/jabalpur/photo001",
-        "date": "2016-10-04T18:33:59",
+        "id": "jabalpur-014",
+        "publicId": "cities/jabalpur/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176989/cities/jabalpur/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176989/cities/jabalpur/photo014",
+        "date": "2016-10-04T11:54:55",
         "gps": {
-          "lat": 23.165533333333332,
-          "lng": 79.94982777777778
-        },
-        "location": "Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "191a16,3c362e"
-      },
-      {
-        "id": "jabalpur-002",
-        "publicId": "cities/jabalpur/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936454/cities/jabalpur/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936454/cities/jabalpur/photo002",
-        "date": "2016-10-04T13:58:42",
-        "gps": {
-          "lat": 23.157397222222222,
-          "lng": 79.94350555555556
+          "lat": 23.16519444444444,
+          "lng": 79.94973888888889
         },
         "location": "Sadar, Jabalpur, Madhya Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768,
-        "tone": "797977,ca7960"
-      },
-      {
-        "id": "jabalpur-003",
-        "publicId": "cities/jabalpur/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936457/cities/jabalpur/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936457/cities/jabalpur/photo003",
-        "date": "2016-10-05T10:46:10",
-        "gps": {
-          "lat": 23.168280555555558,
-          "lng": 79.95311666666667
-        },
-        "location": "Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768,
-        "tone": "80808a,7d7e7f"
-      },
-      {
-        "id": "jabalpur-004",
-        "publicId": "cities/jabalpur/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936459/cities/jabalpur/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936459/cities/jabalpur/photo004",
-        "date": "2016-10-04T14:51:42",
-        "gps": {
-          "lat": 23.154119444444444,
-          "lng": 79.9443888888889
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768,
-        "tone": "756c6a,474643"
-      },
-      {
-        "id": "jabalpur-005",
-        "publicId": "cities/jabalpur/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936462/cities/jabalpur/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936462/cities/jabalpur/photo005",
-        "date": "2016-10-05T10:59:15",
-        "gps": {
-          "lat": 23.16702777777778,
-          "lng": 79.95001944444445
-        },
-        "location": "Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
+        "alt": "photo014",
         "w": 768,
         "h": 1024,
-        "tone": "9eadba,80756b"
-      },
-      {
-        "id": "jabalpur-006",
-        "publicId": "cities/jabalpur/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936464/cities/jabalpur/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936464/cities/jabalpur/photo006",
-        "date": "2016-10-04T14:52:05",
-        "gps": {
-          "lat": 23.15411111111111,
-          "lng": 79.94459444444445
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768,
-        "tone": "8b97a1,84745f"
-      },
-      {
-        "id": "jabalpur-007",
-        "publicId": "cities/jabalpur/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176973/cities/jabalpur/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176973/cities/jabalpur/photo007",
-        "date": "2016-10-04T15:14:33",
-        "gps": {
-          "lat": 23.163894444444445,
-          "lng": 79.94944722222223
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024,
-        "tone": "6787a3,555546"
+        "tone": "b0a090,9d7a71"
       },
       {
         "id": "jabalpur-008",
@@ -17632,164 +17132,104 @@
         "tone": "98b2d8,777563"
       },
       {
-        "id": "jabalpur-009",
-        "publicId": "cities/jabalpur/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176979/cities/jabalpur/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176979/cities/jabalpur/photo009",
-        "date": "2016-10-05T12:35:39",
+        "id": "jabalpur-002",
+        "publicId": "cities/jabalpur/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936454/cities/jabalpur/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936454/cities/jabalpur/photo002",
+        "date": "2016-10-04T13:58:42",
         "gps": {
-          "lat": 23.16512222222222,
-          "lng": 79.95062222222222
+          "lat": 23.157397222222222,
+          "lng": 79.94350555555556
         },
         "location": "Sadar, Jabalpur, Madhya Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo009",
+        "alt": "photo002",
         "w": 1024,
         "h": 768,
-        "tone": "38475e,d6cbb8"
+        "tone": "797977,ca7960"
       },
       {
-        "id": "jabalpur-010",
-        "publicId": "cities/jabalpur/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176981/cities/jabalpur/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176981/cities/jabalpur/photo010",
-        "date": "2016-10-04T15:03:46",
+        "id": "jabalpur-004",
+        "publicId": "cities/jabalpur/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936459/cities/jabalpur/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936459/cities/jabalpur/photo004",
+        "date": "2016-10-04T14:51:42",
         "gps": {
-          "lat": 23.156338888888886,
-          "lng": 79.9510638888889
+          "lat": 23.154119444444444,
+          "lng": 79.9443888888889
         },
         "location": "Sadar, Jabalpur, Madhya Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo010",
+        "alt": "photo004",
         "w": 1024,
         "h": 768,
-        "tone": "89a0bf,4e504b"
+        "tone": "756c6a,474643"
       },
       {
-        "id": "jabalpur-011",
-        "publicId": "cities/jabalpur/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176983/cities/jabalpur/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176983/cities/jabalpur/photo011",
-        "date": "2016-10-04T13:54:50",
+        "id": "jabalpur-006",
+        "publicId": "cities/jabalpur/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936464/cities/jabalpur/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936464/cities/jabalpur/photo006",
+        "date": "2016-10-04T14:52:05",
         "gps": {
-          "lat": 23.15893611111111,
-          "lng": 79.94203888888889
+          "lat": 23.15411111111111,
+          "lng": 79.94459444444445
+        },
+        "location": "Sadar, Jabalpur, Madhya Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006",
+        "w": 1024,
+        "h": 768,
+        "tone": "8b97a1,84745f"
+      },
+      {
+        "id": "jabalpur-001",
+        "publicId": "cities/jabalpur/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936452/cities/jabalpur/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936452/cities/jabalpur/photo001",
+        "date": "2016-10-04T18:33:59",
+        "gps": {
+          "lat": 23.165533333333332,
+          "lng": 79.94982777777778
         },
         "location": "Jabalpur, Madhya Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024,
-        "tone": "b8ac9f,7f7b74"
-      },
-      {
-        "id": "jabalpur-012",
-        "publicId": "cities/jabalpur/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176985/cities/jabalpur/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176985/cities/jabalpur/photo012",
-        "date": "2016-10-05T12:35:36",
-        "gps": {
-          "lat": 23.16512222222222,
-          "lng": 79.95062222222222
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
+        "alt": "photo001",
         "w": 1024,
         "h": 768,
-        "tone": "394d67,a69c93"
+        "tone": "191a16,3c362e"
       },
       {
-        "id": "jabalpur-013",
-        "publicId": "cities/jabalpur/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176987/cities/jabalpur/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176987/cities/jabalpur/photo013",
-        "date": "2016-10-04T14:00:17",
+        "id": "jabalpur-005",
+        "publicId": "cities/jabalpur/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936462/cities/jabalpur/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936462/cities/jabalpur/photo005",
+        "date": "2016-10-05T10:59:15",
         "gps": {
-          "lat": 23.156633333333332,
-          "lng": 79.94368055555556
+          "lat": 23.16702777777778,
+          "lng": 79.95001944444445
         },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
+        "location": "Jabalpur, Madhya Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768,
-        "tone": "93a1b1,524f49"
-      },
-      {
-        "id": "jabalpur-014",
-        "publicId": "cities/jabalpur/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176989/cities/jabalpur/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176989/cities/jabalpur/photo014",
-        "date": "2016-10-04T11:54:55",
-        "gps": {
-          "lat": 23.16519444444444,
-          "lng": 79.94973888888889
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
+        "alt": "photo005",
         "w": 768,
         "h": 1024,
-        "tone": "b0a090,9d7a71"
-      },
-      {
-        "id": "jabalpur-015",
-        "publicId": "cities/jabalpur/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176992/cities/jabalpur/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176992/cities/jabalpur/photo015",
-        "date": "2016-10-04T12:03:00",
-        "gps": {
-          "lat": 23.16519444444444,
-          "lng": 79.94980555555556
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 768,
-        "h": 1024,
-        "tone": "82786e,211a14"
-      },
-      {
-        "id": "jabalpur-016",
-        "publicId": "cities/jabalpur/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176994/cities/jabalpur/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176994/cities/jabalpur/photo016",
-        "date": "2016-10-04T13:59:31",
-        "gps": {
-          "lat": 23.15696388888889,
-          "lng": 79.94374722222223
-        },
-        "location": "Sadar, Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768,
-        "tone": "a2adb8,635e5a"
+        "tone": "9eadba,80756b"
       }
     ]
   },
@@ -24600,164 +24040,44 @@
     "cityCode": "nagpur",
     "photos": [
       {
-        "id": "nagpur-001",
-        "publicId": "cities/nagpur/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936630/cities/nagpur/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936630/cities/nagpur/photo001",
-        "date": "2016-10-03T16:12:36",
+        "id": "nagpur-014",
+        "publicId": "cities/nagpur/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177236/cities/nagpur/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177236/cities/nagpur/photo014",
+        "date": "2016-10-03T07:38:13",
         "gps": {
-          "lat": 21.155624999999997,
-          "lng": 79.0821611111111
-        },
-        "location": "Kingsway Road;Bhandara Road, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "8197b9,505536"
-      },
-      {
-        "id": "nagpur-002",
-        "publicId": "cities/nagpur/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936633/cities/nagpur/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936633/cities/nagpur/photo002",
-        "date": "2016-10-03T10:45:06",
-        "gps": {
-          "lat": 21.15035,
-          "lng": 79.0952611111111
-        },
-        "location": "Gandhi Baug, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768,
-        "tone": "98a0a2,6a6660"
-      },
-      {
-        "id": "nagpur-003",
-        "publicId": "cities/nagpur/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936636/cities/nagpur/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936636/cities/nagpur/photo003",
-        "date": "2016-10-03T11:26:48",
-        "gps": {
-          "lat": 21.152491666666666,
-          "lng": 79.0873111111111
-        },
-        "location": "Mominpura, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768,
-        "tone": "97999c,464341"
-      },
-      {
-        "id": "nagpur-004",
-        "publicId": "cities/nagpur/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936638/cities/nagpur/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936638/cities/nagpur/photo004",
-        "date": "2016-10-03T21:10:29",
-        "gps": {
-          "lat": 21.152716666666667,
-          "lng": 79.08805
-        },
-        "location": "Mominpura, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768,
-        "tone": "3d3940,7b6f60"
-      },
-      {
-        "id": "nagpur-005",
-        "publicId": "cities/nagpur/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936641/cities/nagpur/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936641/cities/nagpur/photo005",
-        "date": "2016-10-04T11:52:21",
-        "gps": {
-          "lat": 23.165066666666664,
-          "lng": 79.94952500000001
-        },
-        "location": "Jabalpur, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 768,
-        "h": 1024,
-        "tone": "514235,3a2e21"
-      },
-      {
-        "id": "nagpur-006",
-        "publicId": "cities/nagpur/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936643/cities/nagpur/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936643/cities/nagpur/photo006",
-        "date": "2016-10-03T11:46:32",
-        "gps": {
-          "lat": 21.152005555555554,
-          "lng": 79.08761666666666
-        },
-        "location": "Mominpura, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768,
-        "tone": "665c4f,4e453c"
-      },
-      {
-        "id": "nagpur-007",
-        "publicId": "cities/nagpur/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177222/cities/nagpur/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177222/cities/nagpur/photo007",
-        "date": "2016-10-03T15:56:45",
-        "gps": {
-          "lat": 21.156163888888887,
-          "lng": 79.085275
-        },
-        "location": "Mominpura, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768,
-        "tone": "8799b6,585a5d"
-      },
-      {
-        "id": "nagpur-008",
-        "publicId": "cities/nagpur/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177224/cities/nagpur/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177224/cities/nagpur/photo008",
-        "date": "2016-10-03T07:38:21",
-        "gps": {
-          "lat": 21.144283333333334,
-          "lng": 79.07714166666666
+          "lat": 21.144452777777776,
+          "lng": 79.07705
         },
         "location": "Amravati Road, Ramdaspeth, Nagpur City, Maharashtra",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo008",
+        "alt": "photo014",
         "w": 1024,
         "h": 768,
-        "tone": "8a7e73,463e38"
+        "tone": "817b71,514f50"
+      },
+      {
+        "id": "nagpur-016",
+        "publicId": "cities/nagpur/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381810/cities/nagpur/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381810/cities/nagpur/photo016",
+        "date": "2016-10-03T08:01:31",
+        "gps": {
+          "lat": 21.14623333333333,
+          "lng": 79.08981388888888
+        },
+        "location": "Ghat Road, Mominpura, Nagpur City, Maharashtra",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016",
+        "w": 1024,
+        "h": 768,
+        "tone": "a7a49c,6e6357"
       },
       {
         "id": "nagpur-009",
@@ -24780,64 +24100,24 @@
         "tone": "7c7f7d,5f5549"
       },
       {
-        "id": "nagpur-010",
-        "publicId": "cities/nagpur/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177228/cities/nagpur/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177228/cities/nagpur/photo010",
-        "date": "2016-10-03T11:27:02",
+        "id": "nagpur-002",
+        "publicId": "cities/nagpur/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936633/cities/nagpur/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936633/cities/nagpur/photo002",
+        "date": "2016-10-03T10:45:06",
         "gps": {
-          "lat": 21.15249722222222,
-          "lng": 79.08735
+          "lat": 21.15035,
+          "lng": 79.0952611111111
         },
-        "location": "Mominpura, Nagpur City, Maharashtra",
+        "location": "Gandhi Baug, Nagpur City, Maharashtra",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo010",
+        "alt": "photo002",
         "w": 1024,
         "h": 768,
-        "tone": "b0b5bc,322e2f"
-      },
-      {
-        "id": "nagpur-011",
-        "publicId": "cities/nagpur/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177230/cities/nagpur/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177230/cities/nagpur/photo011",
-        "date": "2016-10-03T08:09:21",
-        "gps": {
-          "lat": 21.148644444444443,
-          "lng": 79.09191944444444
-        },
-        "location": "Shri Bejonji Mehta Road, Gandhi Baug, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768,
-        "tone": "b7c6d6,797b7d"
-      },
-      {
-        "id": "nagpur-012",
-        "publicId": "cities/nagpur/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177233/cities/nagpur/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177233/cities/nagpur/photo012",
-        "date": "2016-10-03T08:05:24",
-        "gps": {
-          "lat": 21.14883611111111,
-          "lng": 79.090125
-        },
-        "location": "Mominpura, Nagpur City, Maharashtra",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768,
-        "tone": "c6cfd2,6f6c65"
+        "tone": "98a0a2,6a6660"
       },
       {
         "id": "nagpur-013",
@@ -24860,24 +24140,64 @@
         "tone": "bbc0c7,343030"
       },
       {
-        "id": "nagpur-014",
-        "publicId": "cities/nagpur/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177236/cities/nagpur/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177236/cities/nagpur/photo014",
-        "date": "2016-10-03T07:38:13",
+        "id": "nagpur-006",
+        "publicId": "cities/nagpur/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936643/cities/nagpur/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936643/cities/nagpur/photo006",
+        "date": "2016-10-03T11:46:32",
         "gps": {
-          "lat": 21.144452777777776,
-          "lng": 79.07705
+          "lat": 21.152005555555554,
+          "lng": 79.08761666666666
         },
-        "location": "Amravati Road, Ramdaspeth, Nagpur City, Maharashtra",
+        "location": "Mominpura, Nagpur City, Maharashtra",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo014",
+        "alt": "photo006",
         "w": 1024,
         "h": 768,
-        "tone": "817b71,514f50"
+        "tone": "665c4f,4e453c"
+      },
+      {
+        "id": "nagpur-001",
+        "publicId": "cities/nagpur/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936630/cities/nagpur/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936630/cities/nagpur/photo001",
+        "date": "2016-10-03T16:12:36",
+        "gps": {
+          "lat": 21.155624999999997,
+          "lng": 79.0821611111111
+        },
+        "location": "Kingsway Road;Bhandara Road, Nagpur City, Maharashtra",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768,
+        "tone": "8197b9,505536"
+      },
+      {
+        "id": "nagpur-004",
+        "publicId": "cities/nagpur/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936638/cities/nagpur/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936638/cities/nagpur/photo004",
+        "date": "2016-10-03T21:10:29",
+        "gps": {
+          "lat": 21.152716666666667,
+          "lng": 79.08805
+        },
+        "location": "Mominpura, Nagpur City, Maharashtra",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 1024,
+        "h": 768,
+        "tone": "3d3940,7b6f60"
       },
       {
         "id": "nagpur-015",
@@ -27845,144 +27165,64 @@
     "cityCode": "pondicherry",
     "photos": [
       {
-        "id": "pondicherry-001",
-        "publicId": "cities/pondicherry/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901166/cities/pondicherry/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901166/cities/pondicherry/photo001",
-        "date": "2016-09-18T14:45:33",
+        "id": "pondicherry-014",
+        "publicId": "cities/pondicherry/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381795/cities/pondicherry/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381795/cities/pondicherry/photo014",
+        "date": "2016-09-18T10:49:27",
         "gps": {
-          "lat": 12.347311111111111,
-          "lng": 80.06073055555555
-        },
-        "location": "Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "b5cde2,678473"
-      },
-      {
-        "id": "pondicherry-002",
-        "publicId": "cities/pondicherry/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901170/cities/pondicherry/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901170/cities/pondicherry/photo002",
-        "date": "2016-09-18T12:31:17",
-        "gps": {
-          "lat": 11.932530555555555,
-          "lng": 79.8359611111111
-        },
-        "location": "Place de la République, Grand Bazaar, Puducherry, Puducherry",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768,
-        "tone": "7a91b2,9b9983"
-      },
-      {
-        "id": "pondicherry-003",
-        "publicId": "cities/pondicherry/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901172/cities/pondicherry/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901172/cities/pondicherry/photo003",
-        "date": "2016-09-18T12:40:54",
-        "gps": {
-          "lat": 11.932397222222221,
-          "lng": 79.83621111111111
-        },
-        "location": "Place de la République, Grand Bazaar, Puducherry, Puducherry",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768,
-        "tone": "abc3d9,6a6f67"
-      },
-      {
-        "id": "pondicherry-004",
-        "publicId": "cities/pondicherry/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901175/cities/pondicherry/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901175/cities/pondicherry/photo004",
-        "date": "2016-09-18T14:41:47",
-        "gps": {
-          "lat": 12.35226111111111,
-          "lng": 80.06256944444443
-        },
-        "location": "East Coast Road, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768,
-        "tone": "a4a59f,735e5e"
-      },
-      {
-        "id": "pondicherry-005",
-        "publicId": "cities/pondicherry/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901178/cities/pondicherry/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901178/cities/pondicherry/photo005",
-        "date": "2016-09-18T11:01:56",
-        "gps": {
-          "lat": 12.004466666666668,
-          "lng": 79.80818055555555
+          "lat": 12.005372222222222,
+          "lng": 79.81027222222222
         },
         "location": "Centre Field, Auroville, Tamil Nadu",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo005",
+        "alt": "photo014",
         "w": 1024,
         "h": 768,
-        "tone": "7c745f,9e6540"
+        "tone": "747978,5e553f"
       },
       {
-        "id": "pondicherry-006",
-        "publicId": "cities/pondicherry/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901186/cities/pondicherry/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901186/cities/pondicherry/photo006",
-        "date": "2016-09-18T14:43:52",
+        "id": "pondicherry-015",
+        "publicId": "cities/pondicherry/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381797/cities/pondicherry/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381797/cities/pondicherry/photo015",
+        "date": "2016-09-18T10:52:09",
         "gps": {
-          "lat": 12.349152777777778,
-          "lng": 80.06270555555555
+          "lat": 12.005397222222221,
+          "lng": 79.81028611111111
         },
-        "location": "Tamil Nadu",
+        "location": "Centre Field, Auroville, Tamil Nadu",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo006",
+        "alt": "photo015",
         "w": 1024,
         "h": 768,
-        "tone": "8d9a96,b27e11"
+        "tone": "b3b2ae,6f6043"
       },
       {
-        "id": "pondicherry-007",
-        "publicId": "cities/pondicherry/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901203/cities/pondicherry/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901203/cities/pondicherry/photo007",
-        "date": "2016-09-18T14:54:41",
+        "id": "pondicherry-017",
+        "publicId": "cities/pondicherry/photo017",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381802/cities/pondicherry/photo017",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381802/cities/pondicherry/photo017",
+        "date": "2016-09-18T11:01:27",
         "gps": {
-          "lat": 12.345761111111111,
-          "lng": 80.05812777777777
+          "lat": 12.00453888888889,
+          "lng": 79.80832777777778
         },
-        "location": "Tamil Nadu",
+        "location": "Centre Field, Auroville, Tamil Nadu",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo007",
+        "alt": "photo017",
         "w": 1024,
         "h": 768,
-        "tone": "7fc7da,4f867b"
+        "tone": "9a996b,c07f16"
       },
       {
         "id": "pondicherry-008",
@@ -28005,64 +27245,44 @@
         "tone": "52665c,95947c"
       },
       {
-        "id": "pondicherry-009",
-        "publicId": "cities/pondicherry/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901208/cities/pondicherry/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901208/cities/pondicherry/photo009",
-        "date": "2016-09-18T10:44:39",
+        "id": "pondicherry-002",
+        "publicId": "cities/pondicherry/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901170/cities/pondicherry/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901170/cities/pondicherry/photo002",
+        "date": "2016-09-18T12:31:17",
         "gps": {
-          "lat": 12.004380555555555,
-          "lng": 79.808525
+          "lat": 11.932530555555555,
+          "lng": 79.8359611111111
         },
-        "location": "Centre Field, Auroville, Tamil Nadu",
+        "location": "Place de la République, Grand Bazaar, Puducherry, Puducherry",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo009",
-        "w": 966,
-        "h": 812,
-        "tone": "a0b3c3,906435"
-      },
-      {
-        "id": "pondicherry-010",
-        "publicId": "cities/pondicherry/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901211/cities/pondicherry/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901211/cities/pondicherry/photo010",
-        "date": "2016-09-18T10:48:21",
-        "gps": {
-          "lat": 12.005366666666667,
-          "lng": 79.8102111111111
-        },
-        "location": "Centre Field, Auroville, Tamil Nadu",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
+        "alt": "photo002",
         "w": 1024,
         "h": 768,
-        "tone": "7d97b2,654a14"
+        "tone": "7a91b2,9b9983"
       },
       {
-        "id": "pondicherry-011",
-        "publicId": "cities/pondicherry/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901213/cities/pondicherry/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901213/cities/pondicherry/photo011",
-        "date": "2016-09-18T12:01:40",
+        "id": "pondicherry-016",
+        "publicId": "cities/pondicherry/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381799/cities/pondicherry/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381799/cities/pondicherry/photo016",
+        "date": "2016-09-18T12:35:51",
         "gps": {
-          "lat": 11.934386111111111,
-          "lng": 79.83461666666666
+          "lat": 11.932508333333333,
+          "lng": 79.83608888888888
         },
-        "location": "Rue Saint-Louis, Puducherry, Puducherry",
+        "location": "Place de la République, Grand Bazaar, Puducherry, Puducherry",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo011",
+        "alt": "photo016",
         "w": 1024,
         "h": 768,
-        "tone": "738078,5f6248"
+        "tone": "9f9ea0,7e6e74"
       },
       {
         "id": "pondicherry-012",
@@ -28083,6 +27303,86 @@
         "w": 1024,
         "h": 768,
         "tone": "8da2b8,9f9779"
+      },
+      {
+        "id": "pondicherry-013",
+        "publicId": "cities/pondicherry/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381793/cities/pondicherry/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381793/cities/pondicherry/photo013",
+        "date": "2016-09-18T12:42:46",
+        "gps": {
+          "lat": 11.9324,
+          "lng": 79.83619722222221
+        },
+        "location": "Place de la République, Grand Bazaar, Puducherry, Puducherry",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013",
+        "w": 768,
+        "h": 1024,
+        "tone": "b5bec7,615f5c"
+      },
+      {
+        "id": "pondicherry-004",
+        "publicId": "cities/pondicherry/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901175/cities/pondicherry/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901175/cities/pondicherry/photo004",
+        "date": "2016-09-18T14:41:47",
+        "gps": {
+          "lat": 12.35226111111111,
+          "lng": 80.06256944444443
+        },
+        "location": "East Coast Road, Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 1024,
+        "h": 768,
+        "tone": "a4a59f,735e5e"
+      },
+      {
+        "id": "pondicherry-006",
+        "publicId": "cities/pondicherry/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901186/cities/pondicherry/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901186/cities/pondicherry/photo006",
+        "date": "2016-09-18T14:43:52",
+        "gps": {
+          "lat": 12.349152777777778,
+          "lng": 80.06270555555555
+        },
+        "location": "Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006",
+        "w": 1024,
+        "h": 768,
+        "tone": "8d9a96,b27e11"
+      },
+      {
+        "id": "pondicherry-001",
+        "publicId": "cities/pondicherry/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765901166/cities/pondicherry/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765901166/cities/pondicherry/photo001",
+        "date": "2016-09-18T14:45:33",
+        "gps": {
+          "lat": 12.347311111111111,
+          "lng": 80.06073055555555
+        },
+        "location": "Tamil Nadu",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768,
+        "tone": "b5cde2,678473"
       }
     ]
   },
