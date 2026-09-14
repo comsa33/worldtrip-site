@@ -6447,59 +6447,21 @@
     "cityCode": "bergamo",
     "photos": [
       {
-        "id": "bergamo-001",
-        "publicId": "cities/bergamo/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo001",
-        "date": "2017-01-13T16:55:27",
+        "id": "bergamo-010",
+        "publicId": "cities/bergamo/photo010",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo010",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo010",
+        "date": "2017-01-13T15:45:59",
         "gps": {
-          "lat": 45.66747222222222,
-          "lng": 9.661855555555556
+          "lat": 45.66639444444444,
+          "lng": 9.700466666666665
         },
-        "location": "A4, Bergamo, Lombardy",
+        "location": "Orio al Serio, Lombardy",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "bergamo-002",
-        "publicId": "cities/bergamo/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo002",
-        "date": "2017-01-13T16:55:32",
-        "gps": {
-          "lat": 45.66747222222222,
-          "lng": 9.661855555555556
-        },
-        "location": "A4, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "bergamo-003",
-        "publicId": "cities/bergamo/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo003",
-        "date": "2017-01-13T17:01:33",
-        "gps": {
-          "lat": 45.611000000000004,
-          "lng": 9.546372222222223
-        },
-        "location": "A4, Brembate, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
+        "alt": "photo010",
         "w": 1024,
         "h": 768
       },
@@ -6523,45 +6485,7 @@
         "h": 768
       },
       {
-        "id": "bergamo-005",
-        "publicId": "cities/bergamo/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo006",
-        "date": "2017-01-13T16:51:41",
-        "gps": {
-          "lat": 45.67512222222222,
-          "lng": 9.677483333333333
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "bergamo-006",
-        "publicId": "cities/bergamo/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo007",
-        "date": "2017-01-13T16:54:01",
-        "gps": {
-          "lat": 45.675999999999995,
-          "lng": 9.667983333333332
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "bergamo-007",
+        "id": "bergamo-008",
         "publicId": "cities/bergamo/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo008",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo008",
@@ -6580,78 +6504,40 @@
         "h": 665
       },
       {
-        "id": "bergamo-008",
-        "publicId": "cities/bergamo/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo009",
-        "date": "2017-01-13T15:43:01",
+        "id": "bergamo-001",
+        "publicId": "cities/bergamo/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo001",
+        "date": "2017-01-13T16:55:27",
         "gps": {
-          "lat": 45.666758333333334,
-          "lng": 9.700683333333332
+          "lat": 45.66747222222222,
+          "lng": 9.661855555555556
         },
-        "location": "Orio al Serio, Lombardy",
+        "location": "A4, Bergamo, Lombardy",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bergamo-009",
-        "publicId": "cities/bergamo/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo010",
-        "date": "2017-01-13T15:45:59",
-        "gps": {
-          "lat": 45.66639444444444,
-          "lng": 9.700466666666665
-        },
-        "location": "Orio al Serio, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bergamo-010",
-        "publicId": "cities/bergamo/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo011",
-        "date": "2017-01-13T16:50:37",
-        "gps": {
-          "lat": 45.67512222222222,
-          "lng": 9.677483333333333
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
+        "alt": "photo001",
         "w": 1182,
         "h": 665
       },
       {
-        "id": "bergamo-011",
-        "publicId": "cities/bergamo/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo012",
-        "date": "2017-01-13T16:32:48",
+        "id": "bergamo-003",
+        "publicId": "cities/bergamo/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bergamo/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bergamo/photo003",
+        "date": "2017-01-13T17:01:33",
         "gps": {
-          "lat": 45.66560833333333,
-          "lng": 9.697722222222222
+          "lat": 45.611000000000004,
+          "lng": 9.546372222222223
         },
-        "location": "Via Aeroporto, Orio al Serio, Lombardy",
+        "location": "A4, Brembate, Lombardy",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo012",
+        "alt": "photo003",
         "w": 1024,
         "h": 768
       }
@@ -9779,63 +9665,6 @@
     "cityCode": "cannobio",
     "photos": [
       {
-        "id": "cannobio-001",
-        "publicId": "cities/cannobio/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo001",
-        "date": "2017-01-18T15:49:19",
-        "gps": {
-          "lat": 46.06693611111111,
-          "lng": 8.700380555555554
-        },
-        "location": "Piazza Martiri della Libertà, Cannobio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cannobio-002",
-        "publicId": "cities/cannobio/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo002",
-        "date": "2017-01-18T15:28:56",
-        "gps": {
-          "lat": 46.02271944444444,
-          "lng": 8.68076111111111
-        },
-        "location": "Via Roma 26, Cannero Riviera, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cannobio-003",
-        "publicId": "cities/cannobio/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo003",
-        "date": "2017-01-18T15:46:21",
-        "gps": {
-          "lat": 46.06706944444445,
-          "lng": 8.700502777777777
-        },
-        "location": "Piazza Martiri della Libertà, Cannobio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "cannobio-004",
         "publicId": "cities/cannobio/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo004",
@@ -9874,64 +9703,7 @@
         "h": 768
       },
       {
-        "id": "cannobio-006",
-        "publicId": "cities/cannobio/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo007",
-        "date": "2017-01-18T15:44:34",
-        "gps": {
-          "lat": 46.06697777777778,
-          "lng": 8.700441666666666
-        },
-        "location": "Piazza Martiri della Libertà, Cannobio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cannobio-007",
-        "publicId": "cities/cannobio/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo008",
-        "date": "2017-01-18T15:50:46",
-        "gps": {
-          "lat": 46.06694166666667,
-          "lng": 8.700141666666665
-        },
-        "location": "Piazza Martiri della Libertà, Cannobio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cannobio-008",
-        "publicId": "cities/cannobio/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo010",
-        "date": "2017-01-18T16:06:32",
-        "gps": {
-          "lat": 46.029719444444446,
-          "lng": 8.708338888888887
-        },
-        "location": "SS 34 5–11, Cannobio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cannobio-009",
+        "id": "cannobio-013",
         "publicId": "cities/cannobio/photo013",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo013",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo013",
@@ -9950,45 +9722,45 @@
         "h": 768
       },
       {
-        "id": "cannobio-010",
-        "publicId": "cities/cannobio/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo015",
-        "date": "2017-01-18T15:49:10",
+        "id": "cannobio-022",
+        "publicId": "cities/cannobio/photo022",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo022",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo022",
+        "date": "2017-01-18T15:46:49",
         "gps": {
-          "lat": 46.066947222222225,
-          "lng": 8.700349999999998
+          "lat": 46.06706944444445,
+          "lng": 8.700502777777777
         },
         "location": "Piazza Martiri della Libertà, Cannobio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
+        "alt": "photo022",
+        "w": 768,
+        "h": 1024
       },
       {
-        "id": "cannobio-011",
-        "publicId": "cities/cannobio/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo020",
-        "date": "2017-01-18T15:44:14",
+        "id": "cannobio-008",
+        "publicId": "cities/cannobio/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo008",
+        "date": "2017-01-18T15:50:46",
         "gps": {
-          "lat": 46.06700555555556,
-          "lng": 8.700438888888888
+          "lat": 46.06694166666667,
+          "lng": 8.700141666666665
         },
         "location": "Piazza Martiri della Libertà, Cannobio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo020",
+        "alt": "photo008",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "cannobio-012",
+        "id": "cannobio-021",
         "publicId": "cities/cannobio/photo021",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo021",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo021",
@@ -10005,63 +9777,6 @@
         "alt": "photo021",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "cannobio-013",
-        "publicId": "cities/cannobio/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo022",
-        "date": "2017-01-18T13:39:19",
-        "gps": {
-          "lat": 45.79993333333333,
-          "lng": 8.40468888888889
-        },
-        "location": "Largo Andrea Gorla, Orta San Giulio, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cannobio-014",
-        "publicId": "cities/cannobio/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo023",
-        "date": "2017-01-18T13:27:40",
-        "gps": {
-          "lat": 45.800291666666666,
-          "lng": 8.405558333333333
-        },
-        "location": "Via Antonio Poli, Orta San Giulio, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "cannobio-015",
-        "publicId": "cities/cannobio/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cannobio/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cannobio/photo024",
-        "date": "2017-01-18T12:59:27",
-        "gps": {
-          "lat": 45.80084166666666,
-          "lng": 8.406094444444445
-        },
-        "location": "Strada di Prarondo, Orta San Giulio, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 576
       }
     ]
   },
@@ -11652,99 +11367,23 @@
     "cityCode": "cinqueterre",
     "photos": [
       {
-        "id": "cinqueterre-001",
-        "publicId": "cities/cinqueterre/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo001",
-        "date": "2017-01-22T17:17:25",
+        "id": "cinqueterre-041",
+        "publicId": "cities/cinqueterre/photo041",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo041",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo041",
+        "date": "2017-01-22T14:01:13",
         "gps": {
-          "lat": 44.11726388888889,
-          "lng": 9.725880555555555
+          "lat": 44.118405555555555,
+          "lng": 9.716075
         },
-        "location": "Riomaggiore-Monterosso, Riomaggiore, Liguria",
+        "location": "Via alla Stazione, Località Lardarina, Corniglia, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1536,
-        "h": 2048
-      },
-      {
-        "id": "cinqueterre-002",
-        "publicId": "cities/cinqueterre/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo002",
-        "date": "2017-01-22T14:09:31",
-        "gps": {
-          "lat": 44.10038333333333,
-          "lng": 9.735494444444443
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-003",
-        "publicId": "cities/cinqueterre/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo003",
-        "date": "2017-01-22T14:33:38",
-        "gps": {
-          "lat": 44.10675833333333,
-          "lng": 9.728336111111112
-        },
-        "location": "Via Renato Birolli 61, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
+        "alt": "photo041",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "cinqueterre-004",
-        "publicId": "cities/cinqueterre/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo004",
-        "date": "2017-01-22T14:53:43",
-        "gps": {
-          "lat": 44.10754444444444,
-          "lng": 9.725822222222222
-        },
-        "location": "Via di Corniglia 24–30, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "cinqueterre-005",
-        "publicId": "cities/cinqueterre/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo005",
-        "date": "2017-01-22T14:07:43",
-        "gps": {
-          "lat": 44.10050277777778,
-          "lng": 9.73561111111111
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "cinqueterre-006",
@@ -11766,59 +11405,59 @@
         "h": 768
       },
       {
-        "id": "cinqueterre-007",
-        "publicId": "cities/cinqueterre/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo007",
-        "date": "2017-01-22T14:46:45",
+        "id": "cinqueterre-032",
+        "publicId": "cities/cinqueterre/photo032",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo032",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo032",
+        "date": "2017-01-22T14:09:38",
         "gps": {
-          "lat": 44.109741666666665,
-          "lng": 9.723936111111112
+          "lat": 44.100411111111114,
+          "lng": 9.735458333333332
         },
-        "location": "Riomaggiore",
+        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo007",
+        "alt": "photo032",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "cinqueterre-008",
-        "publicId": "cities/cinqueterre/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo008",
-        "date": "2017-01-22T17:01:38",
+        "id": "cinqueterre-026",
+        "publicId": "cities/cinqueterre/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo026",
+        "date": "2017-01-22T14:19:27",
         "gps": {
-          "lat": 44.115744444444445,
-          "lng": 9.72836388888889
+          "lat": 44.10042222222222,
+          "lng": 9.73621111111111
         },
-        "location": "Riomaggiore-Monterosso, Volastra, Riomaggiore, Liguria",
+        "location": "Piazza Rio Finale 36, Piazza Rio Finale, Riomaggiore",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
+        "alt": "photo026",
+        "w": 768,
+        "h": 1024
       },
       {
-        "id": "cinqueterre-009",
-        "publicId": "cities/cinqueterre/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo009",
-        "date": "2017-01-22T17:01:28",
+        "id": "cinqueterre-015",
+        "publicId": "cities/cinqueterre/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo015",
+        "date": "2017-01-22T14:19:54",
         "gps": {
-          "lat": 44.11580277777778,
-          "lng": 9.728427777777778
+          "lat": 44.10047222222222,
+          "lng": 9.736180555555555
         },
-        "location": "Riomaggiore-Monterosso, Volastra, Riomaggiore, Liguria",
+        "location": "Piazza Rio Finale 36, Piazza Rio Finale, Riomaggiore",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo009",
+        "alt": "photo015",
         "w": 1024,
         "h": 768
       },
@@ -11842,135 +11481,40 @@
         "h": 768
       },
       {
-        "id": "cinqueterre-011",
-        "publicId": "cities/cinqueterre/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo011",
-        "date": "2017-01-22T17:03:55",
+        "id": "cinqueterre-003",
+        "publicId": "cities/cinqueterre/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo003",
+        "date": "2017-01-22T14:33:38",
         "gps": {
-          "lat": 44.11633333333334,
-          "lng": 9.728902777777778
+          "lat": 44.10675833333333,
+          "lng": 9.728336111111112
         },
-        "location": "SP 51 8, Volastra, Riomaggiore, Liguria",
+        "location": "Via Renato Birolli 61, Manarola, Riomaggiore, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
+        "alt": "photo003",
+        "w": 768,
+        "h": 1024
       },
       {
-        "id": "cinqueterre-012",
-        "publicId": "cities/cinqueterre/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo012",
-        "date": "2017-01-22T14:42:11",
+        "id": "cinqueterre-023",
+        "publicId": "cities/cinqueterre/photo023",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo023",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo023",
+        "date": "2017-01-22T14:36:42",
         "gps": {
-          "lat": 44.10720833333333,
-          "lng": 9.726841666666667
+          "lat": 44.10672777777778,
+          "lng": 9.727030555555556
         },
-        "location": "Via Renato Birolli 66–122, Manarola, Riomaggiore, Liguria",
+        "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-013",
-        "publicId": "cities/cinqueterre/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo013",
-        "date": "2017-01-22T14:44:32",
-        "gps": {
-          "lat": 44.10738888888889,
-          "lng": 9.726386111111111
-        },
-        "location": "Via Renato Birolli 93–149, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-014",
-        "publicId": "cities/cinqueterre/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo014",
-        "date": "2017-01-22T14:10:27",
-        "gps": {
-          "lat": 44.10038333333333,
-          "lng": 9.735483333333333
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1194,
-        "h": 360
-      },
-      {
-        "id": "cinqueterre-015",
-        "publicId": "cities/cinqueterre/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo015",
-        "date": "2017-01-22T14:19:54",
-        "gps": {
-          "lat": 44.10047222222222,
-          "lng": 9.736180555555555
-        },
-        "location": "Piazza Rio Finale 36, Piazza Rio Finale, Riomaggiore",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-016",
-        "publicId": "cities/cinqueterre/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo016",
-        "date": "2017-01-22T17:15:28",
-        "gps": {
-          "lat": 44.11648888888889,
-          "lng": 9.726580555555556
-        },
-        "location": "Riomaggiore-Monterosso, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-017",
-        "publicId": "cities/cinqueterre/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo017",
-        "date": "2017-01-22T14:45:05",
-        "gps": {
-          "lat": 44.107369444444444,
-          "lng": 9.726080555555555
-        },
-        "location": "Via Renato Birolli 93–149, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
+        "alt": "photo023",
         "w": 1024,
         "h": 768
       },
@@ -11994,118 +11538,137 @@
         "h": 768
       },
       {
-        "id": "cinqueterre-019",
-        "publicId": "cities/cinqueterre/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo019",
-        "date": "2017-01-22T14:42:31",
+        "id": "cinqueterre-030",
+        "publicId": "cities/cinqueterre/photo030",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo030",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo030",
+        "date": "2017-01-22T14:40:21",
         "gps": {
-          "lat": 44.107197222222226,
-          "lng": 9.726777777777778
-        },
-        "location": "Via Renato Birolli 66–122, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-020",
-        "publicId": "cities/cinqueterre/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo020",
-        "date": "2017-01-22T14:07:52",
-        "gps": {
-          "lat": 44.10050555555556,
-          "lng": 9.735594444444443
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-021",
-        "publicId": "cities/cinqueterre/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo021",
-        "date": "2017-01-22T14:41:16",
-        "gps": {
-          "lat": 44.106880555555556,
-          "lng": 9.726852777777777
+          "lat": 44.106925000000004,
+          "lng": 9.726797222222222
         },
         "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo021",
+        "alt": "photo030",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "cinqueterre-022",
-        "publicId": "cities/cinqueterre/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo022",
-        "date": "2017-01-22T14:44:49",
+        "id": "cinqueterre-028",
+        "publicId": "cities/cinqueterre/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo028",
+        "date": "2017-01-22T14:41:22",
         "gps": {
-          "lat": 44.107391666666665,
-          "lng": 9.726216666666668
-        },
-        "location": "Via Renato Birolli 93–149, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-023",
-        "publicId": "cities/cinqueterre/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo023",
-        "date": "2017-01-22T14:36:42",
-        "gps": {
-          "lat": 44.10672777777778,
-          "lng": 9.727030555555556
+          "lat": 44.106875,
+          "lng": 9.726844444444444
         },
         "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo023",
+        "alt": "photo028",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "cinqueterre-024",
-        "publicId": "cities/cinqueterre/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo024",
-        "date": "2017-01-22T14:39:51",
+        "id": "cinqueterre-033",
+        "publicId": "cities/cinqueterre/photo033",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo033",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo033",
+        "date": "2017-01-22T14:46:47",
         "gps": {
-          "lat": 44.10693055555556,
-          "lng": 9.726861111111111
+          "lat": 44.109741666666665,
+          "lng": 9.723936111111112
         },
-        "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
+        "location": "Riomaggiore",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo024",
+        "alt": "photo033",
         "w": 1024,
         "h": 768
+      },
+      {
+        "id": "cinqueterre-004",
+        "publicId": "cities/cinqueterre/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo004",
+        "date": "2017-01-22T14:53:43",
+        "gps": {
+          "lat": 44.10754444444444,
+          "lng": 9.725822222222222
+        },
+        "location": "Via di Corniglia 24–30, Manarola, Riomaggiore, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "cinqueterre-042",
+        "publicId": "cities/cinqueterre/photo042",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo042",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo042",
+        "date": "2017-01-22T16:25:53",
+        "gps": {
+          "lat": 44.10840555555556,
+          "lng": 9.729838888888889
+        },
+        "location": "Via Discovolo, Manarola, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo042",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "cinqueterre-008",
+        "publicId": "cities/cinqueterre/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo008",
+        "date": "2017-01-22T17:01:38",
+        "gps": {
+          "lat": 44.115744444444445,
+          "lng": 9.72836388888889
+        },
+        "location": "Riomaggiore-Monterosso, Volastra, Riomaggiore, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo008",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "cinqueterre-038",
+        "publicId": "cities/cinqueterre/photo038",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo038",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo038",
+        "date": "2017-01-22T17:04:12",
+        "gps": {
+          "lat": 44.115811111111114,
+          "lng": 9.728455555555556
+        },
+        "location": "Riomaggiore-Monterosso, Volastra, Riomaggiore, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo038",
+        "w": 1226,
+        "h": 641
       },
       {
         "id": "cinqueterre-025",
@@ -12127,254 +11690,7 @@
         "h": 1024
       },
       {
-        "id": "cinqueterre-026",
-        "publicId": "cities/cinqueterre/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo026",
-        "date": "2017-01-22T14:19:27",
-        "gps": {
-          "lat": 44.10042222222222,
-          "lng": 9.73621111111111
-        },
-        "location": "Piazza Rio Finale 36, Piazza Rio Finale, Riomaggiore",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "cinqueterre-027",
-        "publicId": "cities/cinqueterre/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo028",
-        "date": "2017-01-22T14:41:22",
-        "gps": {
-          "lat": 44.106875,
-          "lng": 9.726844444444444
-        },
-        "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-028",
-        "publicId": "cities/cinqueterre/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo029",
-        "date": "2017-01-22T14:48:13",
-        "gps": {
-          "lat": 44.10777777777778,
-          "lng": 9.725436111111112
-        },
-        "location": "Via di Corniglia 24–30, Riomaggiore",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-029",
-        "publicId": "cities/cinqueterre/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo030",
-        "date": "2017-01-22T14:40:21",
-        "gps": {
-          "lat": 44.106925000000004,
-          "lng": 9.726797222222222
-        },
-        "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-030",
-        "publicId": "cities/cinqueterre/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo031",
-        "date": "2017-01-22T17:00:52",
-        "gps": {
-          "lat": 44.11637777777778,
-          "lng": 9.72888611111111
-        },
-        "location": "SP 51 8, Volastra, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-031",
-        "publicId": "cities/cinqueterre/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo032",
-        "date": "2017-01-22T14:09:38",
-        "gps": {
-          "lat": 44.100411111111114,
-          "lng": 9.735458333333332
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-032",
-        "publicId": "cities/cinqueterre/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo033",
-        "date": "2017-01-22T14:46:47",
-        "gps": {
-          "lat": 44.109741666666665,
-          "lng": 9.723936111111112
-        },
-        "location": "Riomaggiore",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-033",
-        "publicId": "cities/cinqueterre/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo034",
-        "date": "2017-01-22T17:06:52",
-        "gps": {
-          "lat": 44.11597777777778,
-          "lng": 9.727733333333333
-        },
-        "location": "Riomaggiore-Monterosso, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-034",
-        "publicId": "cities/cinqueterre/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo035",
-        "date": "2017-01-22T14:13:34",
-        "gps": {
-          "lat": 44.10055555555556,
-          "lng": 9.735483333333333
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "cinqueterre-035",
-        "publicId": "cities/cinqueterre/photo036",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo036",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo036",
-        "date": "2017-01-22T14:36:44",
-        "gps": {
-          "lat": 44.10673611111111,
-          "lng": 9.726975
-        },
-        "location": "Via Renato Birolli 149, Manarola, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo036",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-036",
-        "publicId": "cities/cinqueterre/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo037",
-        "date": "2017-01-22T14:23:43",
-        "gps": {
-          "lat": 44.10049444444444,
-          "lng": 9.736291666666666
-        },
-        "location": "Piazza Rio Finale 36, Piazza Rio Finale, Riomaggiore",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "cinqueterre-037",
-        "publicId": "cities/cinqueterre/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo038",
-        "date": "2017-01-22T17:04:12",
-        "gps": {
-          "lat": 44.115811111111114,
-          "lng": 9.728455555555556
-        },
-        "location": "Riomaggiore-Monterosso, Volastra, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo038",
-        "w": 1226,
-        "h": 641
-      },
-      {
-        "id": "cinqueterre-038",
-        "publicId": "cities/cinqueterre/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo039",
-        "date": "2017-01-22T14:09:15",
-        "gps": {
-          "lat": 44.10036111111111,
-          "lng": 9.735502777777777
-        },
-        "location": "Via dell'Amore 52, Riomaggiore, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo039",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "cinqueterre-039",
+        "id": "cinqueterre-040",
         "publicId": "cities/cinqueterre/photo040",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo040",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo040",
@@ -12391,25 +11707,6 @@
         "alt": "photo040",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "cinqueterre-040",
-        "publicId": "cities/cinqueterre/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/cinqueterre/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/cinqueterre/photo041",
-        "date": "2017-01-22T14:01:13",
-        "gps": {
-          "lat": 44.118405555555555,
-          "lng": 9.716075
-        },
-        "location": "Via alla Stazione, Località Lardarina, Corniglia, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo041",
-        "w": 768,
-        "h": 1024
       }
     ]
   },
@@ -15583,40 +14880,59 @@
     "cityCode": "genoa",
     "photos": [
       {
-        "id": "genoa-001",
-        "publicId": "cities/genoa/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo001",
-        "date": "2017-01-28T00:42:27",
+        "id": "genoa-006",
+        "publicId": "cities/genoa/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo006",
+        "date": "2017-01-21T21:08:36",
         "gps": {
-          "lat": 44.40653888888889,
-          "lng": 8.929730555555555
+          "lat": 44.40781666666666,
+          "lng": 8.930538888888888
         },
-        "location": "Via di San Bernardo 43 R, Centro Est, Genoa, Liguria",
+        "location": "Piazza Di San Lorenzo 2 R, Centro Est, Genoa, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
+        "alt": "photo006",
+        "w": 768,
+        "h": 1024
       },
       {
-        "id": "genoa-002",
-        "publicId": "cities/genoa/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo002",
-        "date": "2017-01-21T21:10:22",
+        "id": "genoa-008",
+        "publicId": "cities/genoa/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo008",
+        "date": "2017-01-21T21:16:33",
         "gps": {
-          "lat": 44.40779444444444,
-          "lng": 8.931066666666666
+          "lat": 44.40786666666666,
+          "lng": 8.930822222222222
         },
-        "location": "Via San Lorenzo 48 R, Centro Est, Genoa, Liguria",
+        "location": "Piazza Di San Lorenzo 8 R, Centro Est, Genoa, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo002",
+        "alt": "photo008",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "genoa-009",
+        "publicId": "cities/genoa/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo009",
+        "date": "2017-01-22T10:22:53",
+        "gps": {
+          "lat": 44.40593055555556,
+          "lng": 8.92916111111111
+        },
+        "location": "Salita alla Torre degli Embriaci 1, Centro Est, Genoa, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009",
         "w": 768,
         "h": 1024
       },
@@ -15640,13 +14956,13 @@
         "h": 1024
       },
       {
-        "id": "genoa-004",
-        "publicId": "cities/genoa/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo005",
-        "date": "2017-01-28T00:42:08",
+        "id": "genoa-001",
+        "publicId": "cities/genoa/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo001",
+        "date": "2017-01-28T00:42:27",
         "gps": {
-          "lat": 44.40653611111111,
+          "lat": 44.40653888888889,
           "lng": 8.929730555555555
         },
         "location": "Via di San Bernardo 43 R, Centro Est, Genoa, Liguria",
@@ -15654,66 +14970,9 @@
           "ko": "",
           "en": ""
         },
-        "alt": "photo005",
+        "alt": "photo001",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "genoa-005",
-        "publicId": "cities/genoa/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo006",
-        "date": "2017-01-21T21:08:36",
-        "gps": {
-          "lat": 44.40781666666666,
-          "lng": 8.930538888888888
-        },
-        "location": "Piazza Di San Lorenzo 2 R, Centro Est, Genoa, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "genoa-006",
-        "publicId": "cities/genoa/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo008",
-        "date": "2017-01-21T21:16:33",
-        "gps": {
-          "lat": 44.40786666666666,
-          "lng": 8.930822222222222
-        },
-        "location": "Piazza Di San Lorenzo 8 R, Centro Est, Genoa, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "genoa-007",
-        "publicId": "cities/genoa/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/genoa/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/genoa/photo009",
-        "date": "2017-01-22T10:22:53",
-        "gps": {
-          "lat": 44.40593055555556,
-          "lng": 8.92916111111111
-        },
-        "location": "Salita alla Torre degli Embriaci 1, Centro Est, Genoa, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
       }
     ]
   },
@@ -26959,217 +26218,7 @@
   },
   "밀라노": {
     "cityCode": "milan",
-    "photos": [
-      {
-        "id": "milan-001",
-        "publicId": "cities/milan/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo001",
-        "date": "2017-01-13T16:55:27",
-        "gps": {
-          "lat": 45.66747222222222,
-          "lng": 9.661855555555556
-        },
-        "location": "A4, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "milan-002",
-        "publicId": "cities/milan/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo002",
-        "date": "2017-01-13T16:55:32",
-        "gps": {
-          "lat": 45.66747222222222,
-          "lng": 9.661855555555556
-        },
-        "location": "A4, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "milan-003",
-        "publicId": "cities/milan/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo003",
-        "date": "2017-01-13T17:01:33",
-        "gps": {
-          "lat": 45.611000000000004,
-          "lng": 9.546372222222223
-        },
-        "location": "A4, Brembate, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "milan-004",
-        "publicId": "cities/milan/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo004",
-        "date": "2017-01-13T16:32:09",
-        "gps": {
-          "lat": 45.66561111111111,
-          "lng": 9.697852777777777
-        },
-        "location": "Via Aeroporto, Orio al Serio, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "milan-005",
-        "publicId": "cities/milan/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo006",
-        "date": "2017-01-13T16:51:41",
-        "gps": {
-          "lat": 45.67512222222222,
-          "lng": 9.677483333333333
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "milan-006",
-        "publicId": "cities/milan/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo007",
-        "date": "2017-01-13T16:54:01",
-        "gps": {
-          "lat": 45.675999999999995,
-          "lng": 9.667983333333332
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "milan-007",
-        "publicId": "cities/milan/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo008",
-        "date": "2017-01-13T16:50:46",
-        "gps": {
-          "lat": 45.67512222222222,
-          "lng": 9.677483333333333
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "milan-008",
-        "publicId": "cities/milan/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo009",
-        "date": "2017-01-13T15:43:01",
-        "gps": {
-          "lat": 45.666758333333334,
-          "lng": 9.700683333333332
-        },
-        "location": "Orio al Serio, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "milan-009",
-        "publicId": "cities/milan/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo010",
-        "date": "2017-01-13T15:45:59",
-        "gps": {
-          "lat": 45.66639444444444,
-          "lng": 9.700466666666665
-        },
-        "location": "Orio al Serio, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "milan-010",
-        "publicId": "cities/milan/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo011",
-        "date": "2017-01-13T16:50:37",
-        "gps": {
-          "lat": 45.67512222222222,
-          "lng": 9.677483333333333
-        },
-        "location": "SP ex SS 671, Bergamo, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "milan-011",
-        "publicId": "cities/milan/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/milan/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/milan/photo012",
-        "date": "2017-01-13T16:32:48",
-        "gps": {
-          "lat": 45.66560833333333,
-          "lng": 9.697722222222222
-        },
-        "location": "Via Aeroporto, Orio al Serio, Lombardy",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      }
-    ]
+    "photos": []
   },
   "몬테비데오": {
     "cityCode": "montevideo",
@@ -29846,70 +28895,32 @@
     "cityCode": "ortalake",
     "photos": [
       {
-        "id": "ortalake-001",
-        "publicId": "cities/ortalake/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo001",
-        "date": "2017-01-18T13:06:16",
+        "id": "ortalake-043",
+        "publicId": "cities/ortalake/photo043",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo043",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo043",
+        "date": "2017-01-18T11:48:32",
         "gps": {
-          "lat": 45.80351666666667,
-          "lng": 8.407122222222222
+          "lat": 45.45536388888889,
+          "lng": 8.34688888888889
         },
-        "location": "Via Prarondo 16, Orta San Giulio, Piedmont",
+        "location": "Villarboit, Piemonte",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
+        "alt": "photo043",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "ortalake-002",
-        "publicId": "cities/ortalake/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo002",
-        "date": "2017-01-18T12:03:26",
+        "id": "ortalake-028",
+        "publicId": "cities/ortalake/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo028",
+        "date": "2017-01-18T12:04:21",
         "gps": {
-          "lat": 45.52284722222222,
-          "lng": 8.43226111111111
-        },
-        "location": "A26, Sillavengo, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-003",
-        "publicId": "cities/ortalake/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo003",
-        "date": "2017-01-18T12:55:23",
-        "gps": {
-          "lat": 45.80193611111111,
-          "lng": 8.406694444444446
-        },
-        "location": "Via Panoramica 24, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-004",
-        "publicId": "cities/ortalake/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo004",
-        "date": "2017-01-18T12:03:23",
-        "gps": {
-          "lat": 45.52284722222222,
+          "lat": 45.52283055555556,
           "lng": 8.432258333333333
         },
         "location": "A26, Sillavengo, Piedmont",
@@ -29917,159 +28928,45 @@
           "ko": "",
           "en": ""
         },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
+        "alt": "photo028",
+        "w": 1182,
+        "h": 665
       },
       {
-        "id": "ortalake-005",
-        "publicId": "cities/ortalake/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo005",
-        "date": "2017-01-18T13:33:44",
+        "id": "ortalake-025",
+        "publicId": "cities/ortalake/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo025",
+        "date": "2017-01-18T12:57:37",
         "gps": {
-          "lat": 45.79992222222222,
-          "lng": 8.404655555555555
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "ortalake-006",
-        "publicId": "cities/ortalake/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo006",
-        "date": "2017-01-18T12:01:27",
-        "gps": {
-          "lat": 45.522869444444446,
-          "lng": 8.432205555555555
-        },
-        "location": "A26, Sillavengo, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-007",
-        "publicId": "cities/ortalake/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo007",
-        "date": "2017-01-18T13:40:56",
-        "gps": {
-          "lat": 45.7999,
-          "lng": 8.404794444444445
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1773,
-        "h": 1773
-      },
-      {
-        "id": "ortalake-008",
-        "publicId": "cities/ortalake/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo008",
-        "date": "2017-01-18T13:30:34",
-        "gps": {
-          "lat": 45.79989166666667,
-          "lng": 8.404488888888888
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-009",
-        "publicId": "cities/ortalake/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo009",
-        "date": "2017-01-18T13:34:29",
-        "gps": {
-          "lat": 45.79992222222222,
-          "lng": 8.404655555555555
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "ortalake-010",
-        "publicId": "cities/ortalake/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo010",
-        "date": "2017-01-18T12:58:34",
-        "gps": {
-          "lat": 45.80080833333333,
-          "lng": 8.40605
+          "lat": 45.80101388888889,
+          "lng": 8.405994444444445
         },
         "location": "Via Poli 17, Orta San Giulio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo010",
+        "alt": "photo025",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "ortalake-011",
-        "publicId": "cities/ortalake/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo011",
-        "date": "2017-01-18T13:42:36",
+        "id": "ortalake-031",
+        "publicId": "cities/ortalake/photo031",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo031",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo031",
+        "date": "2017-01-18T12:58:18",
         "gps": {
-          "lat": 45.799949999999995,
-          "lng": 8.404791666666666
+          "lat": 45.80088055555555,
+          "lng": 8.406080555555556
         },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
+        "location": "Via Poli 17, Orta San Giulio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo011",
-        "w": 886,
-        "h": 886
-      },
-      {
-        "id": "ortalake-012",
-        "publicId": "cities/ortalake/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo012",
-        "date": "2017-01-18T13:15:00",
-        "gps": {
-          "lat": 45.80390277777777,
-          "lng": 8.40913888888889
-        },
-        "location": "Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
+        "alt": "photo031",
         "w": 1024,
         "h": 768
       },
@@ -30093,6 +28990,82 @@
         "h": 768
       },
       {
+        "id": "ortalake-038",
+        "publicId": "cities/ortalake/photo038",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo038",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo038",
+        "date": "2017-01-18T13:13:09",
+        "gps": {
+          "lat": 45.80419444444444,
+          "lng": 8.408444444444445
+        },
+        "location": "Orta San Giulio, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo038",
+        "w": 1190,
+        "h": 659
+      },
+      {
+        "id": "ortalake-042",
+        "publicId": "cities/ortalake/photo042",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo042",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo042",
+        "date": "2017-01-18T13:27:40",
+        "gps": {
+          "lat": 45.800291666666666,
+          "lng": 8.405558333333333
+        },
+        "location": "Via Antonio Poli, Orta San Giulio, Piemonte",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo042",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "ortalake-037",
+        "publicId": "cities/ortalake/photo037",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo037",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo037",
+        "date": "2017-01-18T13:30:10",
+        "gps": {
+          "lat": 45.799841666666666,
+          "lng": 8.404444444444445
+        },
+        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo037",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "ortalake-021",
+        "publicId": "cities/ortalake/photo021",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo021",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo021",
+        "date": "2017-01-18T13:30:16",
+        "gps": {
+          "lat": 45.79989166666667,
+          "lng": 8.404480555555557
+        },
+        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo021",
+        "w": 1024,
+        "h": 768
+      },
+      {
         "id": "ortalake-014",
         "publicId": "cities/ortalake/photo014",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo014",
@@ -30112,80 +29085,42 @@
         "h": 768
       },
       {
-        "id": "ortalake-015",
-        "publicId": "cities/ortalake/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo015",
-        "date": "2017-01-18T13:43:24",
+        "id": "ortalake-005",
+        "publicId": "cities/ortalake/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo005",
+        "date": "2017-01-18T13:33:44",
         "gps": {
-          "lat": 45.80020277777778,
-          "lng": 8.407372222222223
+          "lat": 45.79992222222222,
+          "lng": 8.404655555555555
         },
-        "location": "Via delle Palma 9, Orta San Giulio, Piedmont",
+        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo015",
+        "alt": "photo005",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "ortalake-016",
-        "publicId": "cities/ortalake/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo016",
-        "date": "2017-01-18T13:11:47",
+        "id": "ortalake-009",
+        "publicId": "cities/ortalake/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo009",
+        "date": "2017-01-18T13:34:29",
         "gps": {
-          "lat": 45.80426333333333,
-          "lng": 8.407921666666667
-        },
-        "location": "Via Prarondo 22, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1118,
-        "h": 360
-      },
-      {
-        "id": "ortalake-017",
-        "publicId": "cities/ortalake/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo017",
-        "date": "2017-01-18T13:42:24",
-        "gps": {
-          "lat": 45.799952777777776,
-          "lng": 8.404719444444444
+          "lat": 45.79992222222222,
+          "lng": 8.404655555555555
         },
         "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo017",
-        "w": 886,
-        "h": 886
-      },
-      {
-        "id": "ortalake-018",
-        "publicId": "cities/ortalake/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo018",
-        "date": "2017-01-18T13:30:40",
-        "gps": {
-          "lat": 45.79987777777777,
-          "lng": 8.404491666666667
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
+        "alt": "photo009",
+        "w": 768,
+        "h": 1024
       },
       {
         "id": "ortalake-019",
@@ -30207,403 +29142,23 @@
         "h": 886
       },
       {
-        "id": "ortalake-020",
-        "publicId": "cities/ortalake/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo021",
-        "date": "2017-01-18T13:30:16",
+        "id": "ortalake-017",
+        "publicId": "cities/ortalake/photo017",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo017",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo017",
+        "date": "2017-01-18T13:42:24",
         "gps": {
-          "lat": 45.79989166666667,
-          "lng": 8.404480555555557
+          "lat": 45.799952777777776,
+          "lng": 8.404719444444444
         },
         "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo021",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-021",
-        "publicId": "cities/ortalake/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo022",
-        "date": "2017-01-18T12:59:27",
-        "gps": {
-          "lat": 45.80084166666666,
-          "lng": 8.406094444444445
-        },
-        "location": "Via Poli 17, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "ortalake-022",
-        "publicId": "cities/ortalake/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo024",
-        "date": "2017-01-18T13:37:23",
-        "gps": {
-          "lat": 45.79984722222222,
-          "lng": 8.404755555555555
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-023",
-        "publicId": "cities/ortalake/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo025",
-        "date": "2017-01-18T12:57:37",
-        "gps": {
-          "lat": 45.80101388888889,
-          "lng": 8.405994444444445
-        },
-        "location": "Via Poli 17, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-024",
-        "publicId": "cities/ortalake/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo026",
-        "date": "2017-01-18T13:30:18",
-        "gps": {
-          "lat": 45.79989722222222,
-          "lng": 8.404486111111112
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-025",
-        "publicId": "cities/ortalake/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo027",
-        "date": "2017-01-18T12:54:51",
-        "gps": {
-          "lat": 45.80220833333333,
-          "lng": 8.406983333333333
-        },
-        "location": "Via Panoramica 22, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-026",
-        "publicId": "cities/ortalake/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo028",
-        "date": "2017-01-18T12:04:21",
-        "gps": {
-          "lat": 45.52283055555556,
-          "lng": 8.432258333333333
-        },
-        "location": "A26, Sillavengo, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "ortalake-027",
-        "publicId": "cities/ortalake/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo030",
-        "date": "2017-01-18T13:39:47",
-        "gps": {
-          "lat": 45.79993333333333,
-          "lng": 8.40468888888889
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 2048,
-        "h": 1536
-      },
-      {
-        "id": "ortalake-028",
-        "publicId": "cities/ortalake/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo031",
-        "date": "2017-01-18T12:58:18",
-        "gps": {
-          "lat": 45.80088055555555,
-          "lng": 8.406080555555556
-        },
-        "location": "Via Poli 17, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-029",
-        "publicId": "cities/ortalake/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo032",
-        "date": "2017-01-18T13:11:08",
-        "gps": {
-          "lat": 45.80426388888888,
-          "lng": 8.407675000000001
-        },
-        "location": "Via Prarondo 22, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-030",
-        "publicId": "cities/ortalake/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo033",
-        "date": "2017-01-18T13:16:17",
-        "gps": {
-          "lat": 45.80340833333333,
-          "lng": 8.408677777777777
-        },
-        "location": "Via Panoramica 4B, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-031",
-        "publicId": "cities/ortalake/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo034",
-        "date": "2017-01-18T12:57:29",
-        "gps": {
-          "lat": 45.80094444444444,
-          "lng": 8.406008333333334
-        },
-        "location": "Via Poli 17, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-032",
-        "publicId": "cities/ortalake/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo035",
-        "date": "2017-01-18T13:30:30",
-        "gps": {
-          "lat": 45.799908333333335,
-          "lng": 8.4045
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-033",
-        "publicId": "cities/ortalake/photo036",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo036",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo036",
-        "date": "2017-01-18T13:31:54",
-        "gps": {
-          "lat": 45.79996388888889,
-          "lng": 8.404677777777778
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo036",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-034",
-        "publicId": "cities/ortalake/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo037",
-        "date": "2017-01-18T13:30:10",
-        "gps": {
-          "lat": 45.799841666666666,
-          "lng": 8.404444444444445
-        },
-        "location": "Vicolo al Lago 2, Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-035",
-        "publicId": "cities/ortalake/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo038",
-        "date": "2017-01-18T13:13:09",
-        "gps": {
-          "lat": 45.80419444444444,
-          "lng": 8.408444444444445
-        },
-        "location": "Orta San Giulio, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo038",
-        "w": 1190,
-        "h": 659
-      },
-      {
-        "id": "ortalake-036",
-        "publicId": "cities/ortalake/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo041",
-        "date": "2017-01-18T11:36:39",
-        "gps": {
-          "lat": 45.455355555555556,
-          "lng": 8.346927777777779
-        },
-        "location": "Villarboit, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo041",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "ortalake-037",
-        "publicId": "cities/ortalake/photo042",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo042",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo042",
-        "date": "2017-01-18T13:27:40",
-        "gps": {
-          "lat": 45.800291666666666,
-          "lng": 8.405558333333333
-        },
-        "location": "Via Antonio Poli, Orta San Giulio, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo042",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "ortalake-038",
-        "publicId": "cities/ortalake/photo043",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo043",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo043",
-        "date": "2017-01-18T11:48:32",
-        "gps": {
-          "lat": 45.45536388888889,
-          "lng": 8.34688888888889
-        },
-        "location": "Villarboit, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo043",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ortalake-039",
-        "publicId": "cities/ortalake/photo044",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo044",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo044",
-        "date": "2017-01-18T15:46:37",
-        "gps": {
-          "lat": 46.06706944444445,
-          "lng": 8.700502777777777
-        },
-        "location": "Sant'Agata, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo044",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "ortalake-040",
-        "publicId": "cities/ortalake/photo045",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ortalake/photo045",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ortalake/photo045",
-        "date": "2017-01-18T15:50:58",
-        "gps": {
-          "lat": 46.06694166666667,
-          "lng": 8.700141666666665
-        },
-        "location": "Sant'Agata, Piemonte",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo045",
-        "w": 1024,
-        "h": 768
+        "alt": "photo017",
+        "w": 886,
+        "h": 886
       }
     ]
   },
@@ -31742,25 +30297,6 @@
     "cityCode": "pisa",
     "photos": [
       {
-        "id": "pisa-001",
-        "publicId": "cities/pisa/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo001",
-        "date": "2017-01-21T15:41:18",
-        "gps": {
-          "lat": 43.72295833333334,
-          "lng": 10.396116666666666
-        },
-        "location": "Via Roma 86–98, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "pisa-002",
         "publicId": "cities/pisa/photo002",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo002",
@@ -31776,6 +30312,44 @@
           "en": ""
         },
         "alt": "photo002",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pisa-015",
+        "publicId": "cities/pisa/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo015",
+        "date": "2017-01-21T14:43:52",
+        "gps": {
+          "lat": 43.71018611111111,
+          "lng": 10.399180555555555
+        },
+        "location": "Piazza Vittorio Emanuele II 10, Piazza Vittorio Emanuele II, Pisa, Tuscany",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pisa-033",
+        "publicId": "cities/pisa/photo033",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo033",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo033",
+        "date": "2017-01-21T14:48:08",
+        "gps": {
+          "lat": 43.710425,
+          "lng": 10.399288888888888
+        },
+        "location": "Piazza Vittorio Emanuele II, Pisa, Tuscany",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo033",
         "w": 1024,
         "h": 768
       },
@@ -31799,64 +30373,7 @@
         "h": 768
       },
       {
-        "id": "pisa-004",
-        "publicId": "cities/pisa/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo004",
-        "date": "2017-01-21T15:37:50",
-        "gps": {
-          "lat": 43.72320833333333,
-          "lng": 10.396997222222222
-        },
-        "location": "Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1536,
-        "h": 2048
-      },
-      {
-        "id": "pisa-005",
-        "publicId": "cities/pisa/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo006",
-        "date": "2017-01-21T15:35:55",
-        "gps": {
-          "lat": 43.72305277777778,
-          "lng": 10.397313888888888
-        },
-        "location": "Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pisa-006",
-        "publicId": "cities/pisa/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo007",
-        "date": "2017-01-21T15:24:11",
-        "gps": {
-          "lat": 43.72269722222222,
-          "lng": 10.39475
-        },
-        "location": "Piazza dei Facchini, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-007",
+        "id": "pisa-008",
         "publicId": "cities/pisa/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo008",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo008",
@@ -31875,121 +30392,7 @@
         "h": 768
       },
       {
-        "id": "pisa-008",
-        "publicId": "cities/pisa/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo009",
-        "date": "2017-01-21T15:34:24",
-        "gps": {
-          "lat": 43.723055555555554,
-          "lng": 10.397541666666665
-        },
-        "location": "Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-009",
-        "publicId": "cities/pisa/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo011",
-        "date": "2017-01-21T15:39:30",
-        "gps": {
-          "lat": 43.723263888888894,
-          "lng": 10.396808333333333
-        },
-        "location": "Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1022
-      },
-      {
-        "id": "pisa-010",
-        "publicId": "cities/pisa/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo012",
-        "date": "2017-01-21T15:28:29",
-        "gps": {
-          "lat": 43.723019444444446,
-          "lng": 10.39636111111111
-        },
-        "location": "Via Roma 86–98, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-011",
-        "publicId": "cities/pisa/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo013",
-        "date": "2017-01-21T15:33:45",
-        "gps": {
-          "lat": 43.72310277777778,
-          "lng": 10.397411111111111
-        },
-        "location": "Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-012",
-        "publicId": "cities/pisa/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo014",
-        "date": "2017-01-21T14:44:26",
-        "gps": {
-          "lat": 43.71045,
-          "lng": 10.399294444444443
-        },
-        "location": "Piazza Vittorio Emanuele II, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-013",
-        "publicId": "cities/pisa/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo015",
-        "date": "2017-01-21T14:43:52",
-        "gps": {
-          "lat": 43.71018611111111,
-          "lng": 10.399180555555555
-        },
-        "location": "Piazza Vittorio Emanuele II 10, Piazza Vittorio Emanuele II, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-014",
+        "id": "pisa-016",
         "publicId": "cities/pisa/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo016",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo016",
@@ -32008,64 +30411,26 @@
         "h": 768
       },
       {
-        "id": "pisa-015",
-        "publicId": "cities/pisa/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo019",
-        "date": "2017-01-21T15:37:13",
+        "id": "pisa-034",
+        "publicId": "cities/pisa/photo034",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo034",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo034",
+        "date": "2017-01-21T15:26:20",
         "gps": {
-          "lat": 43.72316111111111,
-          "lng": 10.396894444444444
+          "lat": 43.72296111111111,
+          "lng": 10.396055555555556
         },
-        "location": "Pisa, Tuscany",
+        "location": "Via Roma 86–98, Pisa, Tuscany",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo019",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "pisa-016",
-        "publicId": "cities/pisa/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo021",
-        "date": "2017-01-21T15:25:11",
-        "gps": {
-          "lat": 43.72275277777778,
-          "lng": 10.395541666666666
-        },
-        "location": "Via Roma 87–99, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
+        "alt": "photo034",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "pisa-017",
-        "publicId": "cities/pisa/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo022",
-        "date": "2017-01-21T13:47:48",
-        "gps": {
-          "lat": 43.710594444444446,
-          "lng": 10.395072222222222
-        },
-        "location": "Via Cesare Battisti 16, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pisa-018",
+        "id": "pisa-024",
         "publicId": "cities/pisa/photo024",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo024",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo024",
@@ -32084,154 +30449,78 @@
         "h": 1024
       },
       {
-        "id": "pisa-019",
-        "publicId": "cities/pisa/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo026",
-        "date": "2017-01-21T13:44:34",
+        "id": "pisa-013",
+        "publicId": "cities/pisa/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo013",
+        "date": "2017-01-21T15:33:45",
         "gps": {
-          "lat": 43.71066944444445,
-          "lng": 10.391625
-        },
-        "location": "Via Quarantola, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-020",
-        "publicId": "cities/pisa/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo027",
-        "date": "2017-01-21T15:22:57",
-        "gps": {
-          "lat": 43.72284444444445,
-          "lng": 10.393816666666666
-        },
-        "location": "Piazza dei Facchini, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-021",
-        "publicId": "cities/pisa/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo028",
-        "date": "2017-01-21T15:40:07",
-        "gps": {
-          "lat": 43.723219444444446,
-          "lng": 10.396672222222222
+          "lat": 43.72310277777778,
+          "lng": 10.397411111111111
         },
         "location": "Pisa, Tuscany",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo028",
+        "alt": "photo013",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pisa-019",
+        "publicId": "cities/pisa/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo019",
+        "date": "2017-01-21T15:37:13",
+        "gps": {
+          "lat": 43.72316111111111,
+          "lng": 10.396894444444444
+        },
+        "location": "Pisa, Tuscany",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019",
+        "w": 1182,
+        "h": 665
+      },
+      {
+        "id": "pisa-011",
+        "publicId": "cities/pisa/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo011",
+        "date": "2017-01-21T15:39:30",
+        "gps": {
+          "lat": 43.723263888888894,
+          "lng": 10.396808333333333
+        },
+        "location": "Pisa, Tuscany",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011",
         "w": 768,
         "h": 1022
       },
       {
-        "id": "pisa-022",
-        "publicId": "cities/pisa/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo031",
-        "date": "2017-01-21T14:44:24",
+        "id": "pisa-001",
+        "publicId": "cities/pisa/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo001",
+        "date": "2017-01-21T15:41:18",
         "gps": {
-          "lat": 43.710438888888895,
-          "lng": 10.399286111111111
+          "lat": 43.72295833333334,
+          "lng": 10.396116666666666
         },
-        "location": "Piazza Vittorio Emanuele II, Pisa, Tuscany",
+        "location": "Via Roma 86–98, Pisa, Tuscany",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-023",
-        "publicId": "cities/pisa/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo032",
-        "date": "2017-01-21T15:35:40",
-        "gps": {
-          "lat": 43.72301388888889,
-          "lng": 10.397233333333332
-        },
-        "location": "Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pisa-024",
-        "publicId": "cities/pisa/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo033",
-        "date": "2017-01-21T14:48:08",
-        "gps": {
-          "lat": 43.710425,
-          "lng": 10.399288888888888
-        },
-        "location": "Piazza Vittorio Emanuele II, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pisa-025",
-        "publicId": "cities/pisa/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo034",
-        "date": "2017-01-21T15:21:49",
-        "gps": {
-          "lat": 43.722858333333335,
-          "lng": 10.392861111111111
-        },
-        "location": "Piazza Daniele Manin 7, Piazza Daniele Manin, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pisa-026",
-        "publicId": "cities/pisa/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pisa/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pisa/photo035",
-        "date": "2017-01-21T15:22:50",
-        "gps": {
-          "lat": 43.72283055555556,
-          "lng": 10.393744444444444
-        },
-        "location": "Piazza dei Facchini, Pisa, Tuscany",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
+        "alt": "photo001",
         "w": 768,
         "h": 1024
       }
@@ -37470,249 +35759,21 @@
     "cityCode": "savona",
     "photos": [
       {
-        "id": "savona-001",
-        "publicId": "cities/savona/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo001",
-        "date": "2017-01-26T12:26:37",
+        "id": "savona-027",
+        "publicId": "cities/savona/photo027",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo027",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo027",
+        "date": "2017-01-26T12:26:18",
         "gps": {
-          "lat": 44.33508611111111,
-          "lng": 8.363172222222222
+          "lat": 44.33508333333334,
+          "lng": 8.363161111111111
         },
         "location": "Via Nazionale Piemonte 31, Quiliano, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-002",
-        "publicId": "cities/savona/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo002",
-        "date": "2017-01-26T12:32:41",
-        "gps": {
-          "lat": 44.332058333333336,
-          "lng": 8.384502777777778
-        },
-        "location": "Via Nazionale al Piemonte 1–7, Cadibona, Quiliano, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 2048,
-        "h": 1536
-      },
-      {
-        "id": "savona-003",
-        "publicId": "cities/savona/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo003",
-        "date": "2017-01-26T13:42:06",
-        "gps": {
-          "lat": 44.30485833333333,
-          "lng": 8.484247222222221
-        },
-        "location": "Piazzale Priamar 15R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-004",
-        "publicId": "cities/savona/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo004",
-        "date": "2017-01-26T12:35:20",
-        "gps": {
-          "lat": 44.331763888888894,
-          "lng": 8.38518611111111
-        },
-        "location": "Via alla Strà, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-005",
-        "publicId": "cities/savona/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo005",
-        "date": "2017-01-26T13:03:19",
-        "gps": {
-          "lat": 44.30918055555555,
-          "lng": 8.481019444444444
-        },
-        "location": "Via Au Fossu 8 R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-006",
-        "publicId": "cities/savona/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo006",
-        "date": "2017-01-26T13:54:44",
-        "gps": {
-          "lat": 44.303755555555554,
-          "lng": 8.482050000000001
-        },
-        "location": "Piazzale Eroe dei 2 Mondi 2 R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "savona-007",
-        "publicId": "cities/savona/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo007",
-        "date": "2017-01-26T14:11:34",
-        "gps": {
-          "lat": 44.30812777777778,
-          "lng": 8.47933888888889
-        },
-        "location": "Piazza Goffredo Mameli 1A, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-008",
-        "publicId": "cities/savona/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo008",
-        "date": "2017-01-26T14:18:24",
-        "gps": {
-          "lat": 44.30909722222222,
-          "lng": 8.47965
-        },
-        "location": "Via Cesare Battisti 10 R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 792,
-        "h": 990
-      },
-      {
-        "id": "savona-009",
-        "publicId": "cities/savona/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo009",
-        "date": "2017-01-26T12:33:52",
-        "gps": {
-          "lat": 44.33156666666667,
-          "lng": 8.385030555555556
-        },
-        "location": "Via Pollero 13, Cadibona, Quiliano, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-010",
-        "publicId": "cities/savona/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo010",
-        "date": "2017-01-26T13:56:10",
-        "gps": {
-          "lat": 44.302972222222216,
-          "lng": 8.482508333333334
-        },
-        "location": "Viale Dante Alighieri, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-011",
-        "publicId": "cities/savona/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo011",
-        "date": "2017-01-26T13:22:01",
-        "gps": {
-          "lat": 44.30527222222222,
-          "lng": 8.482991666666667
-        },
-        "location": "Corso Giuseppe Mazzini 10–14, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-012",
-        "publicId": "cities/savona/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo012",
-        "date": "2017-01-26T13:42:10",
-        "gps": {
-          "lat": 44.304852777777775,
-          "lng": 8.484247222222221
-        },
-        "location": "Piazzale Priamar 15R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-013",
-        "publicId": "cities/savona/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo013",
-        "date": "2017-01-26T13:56:26",
-        "gps": {
-          "lat": 44.30294166666666,
-          "lng": 8.482525
-        },
-        "location": "Viale Dante Alighieri, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
+        "alt": "photo027",
         "w": 1024,
         "h": 768
       },
@@ -37736,23 +35797,61 @@
         "h": 768
       },
       {
-        "id": "savona-015",
-        "publicId": "cities/savona/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo015",
-        "date": "2017-01-26T13:37:00",
+        "id": "savona-023",
+        "publicId": "cities/savona/photo023",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo023",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo023",
+        "date": "2017-01-26T12:34:54",
         "gps": {
-          "lat": 44.304538888888885,
-          "lng": 8.485066666666667
+          "lat": 44.33185277777778,
+          "lng": 8.38551111111111
         },
-        "location": "Piazzale Priamar 2, Savona, Liguria",
+        "location": "Via alla Strà, Savona, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo015",
+        "alt": "photo023",
         "w": 1024,
         "h": 768
+      },
+      {
+        "id": "savona-005",
+        "publicId": "cities/savona/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo005",
+        "date": "2017-01-26T13:03:19",
+        "gps": {
+          "lat": 44.30918055555555,
+          "lng": 8.481019444444444
+        },
+        "location": "Via Au Fossu 8 R, Savona, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "savona-021",
+        "publicId": "cities/savona/photo021",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo021",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo021",
+        "date": "2017-01-26T13:03:42",
+        "gps": {
+          "lat": 44.30894722222222,
+          "lng": 8.481102777777778
+        },
+        "location": "Via Pietro Paleocapa 101 R, Savona, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo021",
+        "w": 768,
+        "h": 1024
       },
       {
         "id": "savona-016",
@@ -37774,121 +35873,26 @@
         "h": 768
       },
       {
-        "id": "savona-017",
-        "publicId": "cities/savona/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo018",
-        "date": "2017-01-26T14:04:24",
+        "id": "savona-031",
+        "publicId": "cities/savona/photo031",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo031",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo031",
+        "date": "2017-01-26T13:22:09",
         "gps": {
-          "lat": 44.30355833333333,
-          "lng": 8.481327777777778
+          "lat": 44.305274999999995,
+          "lng": 8.483105555555555
         },
-        "location": "Via Lorenzo Giacchero 58 R, Savona, Liguria",
+        "location": "Corso Giuseppe Mazzini 10–14, Savona, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo018",
+        "alt": "photo031",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "savona-018",
-        "publicId": "cities/savona/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo019",
-        "date": "2017-01-26T14:18:16",
-        "gps": {
-          "lat": 44.30911666666666,
-          "lng": 8.479675
-        },
-        "location": "Via Cesare Battisti 10 R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "savona-019",
-        "publicId": "cities/savona/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo020",
-        "date": "2017-01-26T13:31:03",
-        "gps": {
-          "lat": 44.304649999999995,
-          "lng": 8.48426111111111
-        },
-        "location": "Piazzale Priamar 15R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-020",
-        "publicId": "cities/savona/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo021",
-        "date": "2017-01-26T13:03:42",
-        "gps": {
-          "lat": 44.30894722222222,
-          "lng": 8.481102777777778
-        },
-        "location": "Via Pietro Paleocapa 101 R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "savona-021",
-        "publicId": "cities/savona/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo023",
-        "date": "2017-01-26T12:34:54",
-        "gps": {
-          "lat": 44.33185277777778,
-          "lng": 8.38551111111111
-        },
-        "location": "Via alla Strà, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-022",
-        "publicId": "cities/savona/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo024",
-        "date": "2017-01-26T12:35:07",
-        "gps": {
-          "lat": 44.33179444444445,
-          "lng": 8.385344444444444
-        },
-        "location": "Via alla Strà, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-023",
+        "id": "savona-025",
         "publicId": "cities/savona/photo025",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo025",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo025",
@@ -37907,45 +35911,7 @@
         "h": 768
       },
       {
-        "id": "savona-024",
-        "publicId": "cities/savona/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo026",
-        "date": "2017-01-26T13:41:43",
-        "gps": {
-          "lat": 44.30500277777777,
-          "lng": 8.484425
-        },
-        "location": "Piazzale Priamar 15R, Savona, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-025",
-        "publicId": "cities/savona/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo027",
-        "date": "2017-01-26T12:26:18",
-        "gps": {
-          "lat": 44.33508333333334,
-          "lng": 8.363161111111111
-        },
-        "location": "Via Nazionale Piemonte 31, Quiliano, Liguria",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "savona-026",
+        "id": "savona-028",
         "publicId": "cities/savona/photo028",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo028",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo028",
@@ -37964,61 +35930,99 @@
         "h": 768
       },
       {
-        "id": "savona-027",
-        "publicId": "cities/savona/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo029",
-        "date": "2017-01-26T14:16:21",
+        "id": "savona-026",
+        "publicId": "cities/savona/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo026",
+        "date": "2017-01-26T13:41:43",
         "gps": {
-          "lat": 44.30846111111111,
-          "lng": 8.479094444444444
+          "lat": 44.30500277777777,
+          "lng": 8.484425
         },
-        "location": "Via Pietro Paleocapa, Savona, Liguria",
+        "location": "Piazzale Priamar 15R, Savona, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo029",
+        "alt": "photo026",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "savona-028",
-        "publicId": "cities/savona/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo030",
-        "date": "2017-01-26T13:37:05",
+        "id": "savona-006",
+        "publicId": "cities/savona/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo006",
+        "date": "2017-01-26T13:54:44",
         "gps": {
-          "lat": 44.30455833333333,
-          "lng": 8.485038888888887
+          "lat": 44.303755555555554,
+          "lng": 8.482050000000001
         },
-        "location": "Piazzale Priamar 2, Savona, Liguria",
+        "location": "Piazzale Eroe dei 2 Mondi 2 R, Savona, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo030",
+        "alt": "photo006",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "savona-013",
+        "publicId": "cities/savona/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo013",
+        "date": "2017-01-26T13:56:26",
+        "gps": {
+          "lat": 44.30294166666666,
+          "lng": 8.482525
+        },
+        "location": "Viale Dante Alighieri, Savona, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "savona-029",
-        "publicId": "cities/savona/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo031",
-        "date": "2017-01-26T13:22:09",
+        "id": "savona-007",
+        "publicId": "cities/savona/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo007",
+        "date": "2017-01-26T14:11:34",
         "gps": {
-          "lat": 44.305274999999995,
-          "lng": 8.483105555555555
+          "lat": 44.30812777777778,
+          "lng": 8.47933888888889
         },
-        "location": "Corso Giuseppe Mazzini 10–14, Savona, Liguria",
+        "location": "Piazza Goffredo Mameli 1A, Savona, Liguria",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo031",
+        "alt": "photo007",
         "w": 1024,
         "h": 768
+      },
+      {
+        "id": "savona-019",
+        "publicId": "cities/savona/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/savona/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/savona/photo019",
+        "date": "2017-01-26T14:18:16",
+        "gps": {
+          "lat": 44.30911666666666,
+          "lng": 8.479675
+        },
+        "location": "Via Cesare Battisti 10 R, Savona, Liguria",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019",
+        "w": 768,
+        "h": 1024
       }
     ]
   },
@@ -41766,23 +39770,99 @@
     "cityCode": "turin",
     "photos": [
       {
-        "id": "turin-001",
-        "publicId": "cities/turin/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo001",
-        "date": "2017-01-17T09:44:52",
+        "id": "turin-020",
+        "publicId": "cities/turin/photo020",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo020",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo020",
+        "date": "2017-01-14T12:11:03",
         "gps": {
-          "lat": 45.07510277777778,
-          "lng": 7.6846861111111116
+          "lat": 45.05008333333333,
+          "lng": 7.683741666666667
         },
-        "location": "Centro-Crocetta, Turin, Piedmont",
+        "location": "Viale Carlo Ceppi 8–28, San Salvario-Cavoretto-Borgo Po-Nizza Millefonti-Lingotto-Filadelfia, Turin, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1182,
-        "h": 665
+        "alt": "photo020",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "turin-005",
+        "publicId": "cities/turin/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo005",
+        "date": "2017-01-14T15:31:22",
+        "gps": {
+          "lat": 45.06922222222222,
+          "lng": 7.693269444444445
+        },
+        "location": "Via Gaudenzio Ferrari 10, Centro-Crocetta, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "turin-028",
+        "publicId": "cities/turin/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo028",
+        "date": "2017-01-15T12:17:47",
+        "gps": {
+          "lat": 45.07669722222222,
+          "lng": 7.683975
+        },
+        "location": "Piazza della Repubblica 30, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo028",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "turin-011",
+        "publicId": "cities/turin/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo011",
+        "date": "2017-01-16T16:05:24",
+        "gps": {
+          "lat": 45.06818055555556,
+          "lng": 7.696325
+        },
+        "location": "Via Michele Buniva, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "turin-024",
+        "publicId": "cities/turin/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo024",
+        "date": "2017-01-16T16:06:22",
+        "gps": {
+          "lat": 45.068250000000006,
+          "lng": 7.696775000000001
+        },
+        "location": "Corso San Maurizio 63, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo024",
+        "w": 1022,
+        "h": 768
       },
       {
         "id": "turin-002",
@@ -41804,273 +39884,26 @@
         "h": 1024
       },
       {
-        "id": "turin-004",
-        "publicId": "cities/turin/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo005",
-        "date": "2017-01-14T15:31:22",
+        "id": "turin-001",
+        "publicId": "cities/turin/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo001",
+        "date": "2017-01-17T09:44:52",
         "gps": {
-          "lat": 45.06922222222222,
-          "lng": 7.693269444444445
+          "lat": 45.07510277777778,
+          "lng": 7.6846861111111116
         },
-        "location": "Via Gaudenzio Ferrari 10, Centro-Crocetta, Turin, Piedmont",
+        "location": "Centro-Crocetta, Turin, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo005",
-        "w": 768,
-        "h": 1024
+        "alt": "photo001",
+        "w": 1182,
+        "h": 665
       },
       {
-        "id": "turin-007",
-        "publicId": "cities/turin/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo008",
-        "date": "2017-01-14T15:35:31",
-        "gps": {
-          "lat": 45.06840555555556,
-          "lng": 7.692008333333334
-        },
-        "location": "Via Giuseppe Verdi 16, Centro-Crocetta, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1536,
-        "h": 2048
-      },
-      {
-        "id": "turin-008",
-        "publicId": "cities/turin/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo009",
-        "date": "2017-01-20T13:20:42",
-        "gps": {
-          "lat": 45.06042222222222,
-          "lng": 7.682258333333333
-        },
-        "location": "Piazzetta Primo Levi 12, San Salvario-Cavoretto-Borgo Po-Nizza Millefonti-Lingotto-Filadelfia, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "turin-009",
-        "publicId": "cities/turin/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo010",
-        "date": "2017-01-26T11:21:54",
-        "gps": {
-          "lat": 44.89906666666666,
-          "lng": 7.744894444444444
-        },
-        "location": "A6, Carmagnola, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-010",
-        "publicId": "cities/turin/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo011",
-        "date": "2017-01-16T16:05:24",
-        "gps": {
-          "lat": 45.06818055555556,
-          "lng": 7.696325
-        },
-        "location": "Via Michele Buniva, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-011",
-        "publicId": "cities/turin/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo013",
-        "date": "2017-01-16T16:05:31",
-        "gps": {
-          "lat": 45.06825555555556,
-          "lng": 7.696722222222222
-        },
-        "location": "Corso San Maurizio 63, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 2048,
-        "h": 1536
-      },
-      {
-        "id": "turin-012",
-        "publicId": "cities/turin/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo014",
-        "date": "2017-01-26T11:20:34",
-        "gps": {
-          "lat": 44.89906944444444,
-          "lng": 7.744877777777778
-        },
-        "location": "A6, Carmagnola, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-016",
-        "publicId": "cities/turin/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo018",
-        "date": "2017-01-20T18:41:01",
-        "gps": {
-          "lat": 45.06309444444444,
-          "lng": 7.681805555555556
-        },
-        "location": "Via Urbano Rattazzi 1A bis, Centro-Crocetta, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-018",
-        "publicId": "cities/turin/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo020",
-        "date": "2017-01-14T12:11:03",
-        "gps": {
-          "lat": 45.05008333333333,
-          "lng": 7.683741666666667
-        },
-        "location": "Viale Carlo Ceppi 8–28, San Salvario-Cavoretto-Borgo Po-Nizza Millefonti-Lingotto-Filadelfia, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-019",
-        "publicId": "cities/turin/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo023",
-        "date": "2017-01-16T16:05:42",
-        "gps": {
-          "lat": 45.06826666666667,
-          "lng": 7.696775000000001
-        },
-        "location": "Corso San Maurizio 63, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-020",
-        "publicId": "cities/turin/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo024",
-        "date": "2017-01-16T16:06:22",
-        "gps": {
-          "lat": 45.068250000000006,
-          "lng": 7.696775000000001
-        },
-        "location": "Corso San Maurizio 63, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "turin-021",
-        "publicId": "cities/turin/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo025",
-        "date": "2017-01-16T16:06:38",
-        "gps": {
-          "lat": 45.068250000000006,
-          "lng": 7.696733333333333
-        },
-        "location": "Corso San Maurizio 63, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "turin-022",
-        "publicId": "cities/turin/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo026",
-        "date": "2017-01-26T11:21:42",
-        "gps": {
-          "lat": 44.899055555555556,
-          "lng": 7.744913888888889
-        },
-        "location": "A6, Carmagnola, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-024",
-        "publicId": "cities/turin/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo028",
-        "date": "2017-01-15T12:17:47",
-        "gps": {
-          "lat": 45.07669722222222,
-          "lng": 7.683975
-        },
-        "location": "Piazza della Repubblica 30, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-025",
+        "id": "turin-029",
         "publicId": "cities/turin/photo029",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo029",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo029",
@@ -42089,64 +39922,26 @@
         "h": 768
       },
       {
-        "id": "turin-026",
-        "publicId": "cities/turin/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo030",
-        "date": "2017-01-24T13:06:27",
+        "id": "turin-018",
+        "publicId": "cities/turin/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo018",
+        "date": "2017-01-20T18:41:01",
         "gps": {
-          "lat": 45.079711111111116,
-          "lng": 7.674922222222222
+          "lat": 45.06309444444444,
+          "lng": 7.681805555555556
         },
-        "location": "Corso Regina Margherita 178–180, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "location": "Via Urbano Rattazzi 1A bis, Centro-Crocetta, Turin, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo030",
+        "alt": "photo018",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "turin-027",
-        "publicId": "cities/turin/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo031",
-        "date": "2017-01-26T11:22:09",
-        "gps": {
-          "lat": 44.89910833333333,
-          "lng": 7.744869444444444
-        },
-        "location": "A6, Carmagnola, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-028",
-        "publicId": "cities/turin/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo032",
-        "date": "2017-01-23T18:35:23",
-        "gps": {
-          "lat": 45.08159166666667,
-          "lng": 7.6721111111111115
-        },
-        "location": "Corso Principe Oddone, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "turin-029",
+        "id": "turin-034",
         "publicId": "cities/turin/photo034",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo034",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo034",
@@ -42165,40 +39960,78 @@
         "h": 1024
       },
       {
-        "id": "turin-030",
+        "id": "turin-032",
+        "publicId": "cities/turin/photo032",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo032",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo032",
+        "date": "2017-01-23T18:35:23",
+        "gps": {
+          "lat": 45.08159166666667,
+          "lng": 7.6721111111111115
+        },
+        "location": "Corso Principe Oddone, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo032",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "turin-035",
         "publicId": "cities/turin/photo035",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo035",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo035",
-        "date": "2017-01-26T11:21:35",
+        "date": "2017-01-23T20:49:11",
         "gps": {
-          "lat": 44.899055555555556,
-          "lng": 7.744902777777778
+          "lat": 45.08188611111112,
+          "lng": 7.673713888888889
+        },
+        "location": "Via Brindisi 10, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo035",
+        "w": 1022,
+        "h": 768
+      },
+      {
+        "id": "turin-030",
+        "publicId": "cities/turin/photo030",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo030",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo030",
+        "date": "2017-01-24T13:06:27",
+        "gps": {
+          "lat": 45.079711111111116,
+          "lng": 7.674922222222222
+        },
+        "location": "Corso Regina Margherita 178–180, Aurora, Vanchiglia-Sassi-Madonna del Pilone, Turin, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo030",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "turin-014",
+        "publicId": "cities/turin/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo014",
+        "date": "2017-01-26T11:20:34",
+        "gps": {
+          "lat": 44.89906944444444,
+          "lng": 7.744877777777778
         },
         "location": "A6, Carmagnola, Piedmont",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo035",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "turin-031",
-        "publicId": "cities/turin/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo037",
-        "date": "2017-01-15T11:56:03",
-        "gps": {
-          "lat": 45.09090555555556,
-          "lng": 7.692938888888889
-        },
-        "location": "Corso Giulio Cesare 90–92, Barriera di Milano Regio Parco-Barca-Bertolla-Falchera-Rebaudengo-Villaretto, Turin, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
+        "alt": "photo014",
         "w": 1024,
         "h": 768
       }
