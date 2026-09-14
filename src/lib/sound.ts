@@ -548,7 +548,7 @@ function albumSong(e: Engine, out: GainNode): Song {
 // the album, by region: the same tune, dressed for where the photos were taken
 // =============================================================================
 
-export type Region = 'asia' | 'south' | 'europe' | 'mena';
+export type Region = 'asia' | 'india' | 'south' | 'europe' | 'mena';
 let region: Region = 'asia';
 
 /** a short burst of noise through a filter: shakers, drum skins, breath */
@@ -859,6 +859,170 @@ function europeAlbum(e: Engine, out: GainNode): Song {
   };
 }
 
+/**
+ * India and Nepal — raga Bhupali, at 80. Bhupali is the major pentatonic, the
+ * very scale the journey's tune is written in, so every stop's note belongs
+ * to it. A tanpura turns its four strings (Pa, Sa, Sa, low Sa) with the buzz
+ * of its bridge; a tabla plays keherwa (dha ge na ti · na ka dhi na), the
+ * bayan's stroke bending up; a sitar walks the raga with a slide into a note
+ * now and then, and each stop's note is a long meend into it.
+ */
+function indiaAlbum(e: Engine, out: GainNode): Song {
+  const { ctx } = e;
+  // drums and plucks with a lot of silence between them sit lower than the other albums
+  const bus = ctx.createGain();
+  bus.gain.value = 2;
+  bus.connect(out);
+  // the tanpura: long saw plucks through a resonance that sweeps as the string rings — the jawari
+  const tanpura = ctx.createGain();
+  tanpura.gain.value = 0;
+  tanpura.gain.setTargetAtTime(1, ctx.currentTime, 1.2);
+  tanpura.connect(bus);
+  const TANPURA = [110.0, 146.83, 146.83, 73.42];
+  let string = 0;
+  const pluckTanpura = (t: number) => {
+    const f = TANPURA[string++ % 4];
+    const o = ctx.createOscillator();
+    o.type = 'sawtooth';
+    o.frequency.value = f;
+    const body = ctx.createBiquadFilter();
+    body.type = 'lowpass';
+    body.frequency.value = 1400;
+    const buzz = ctx.createBiquadFilter();
+    buzz.type = 'bandpass';
+    buzz.Q.value = 9;
+    buzz.frequency.setValueAtTime(f * 12, t);
+    buzz.frequency.exponentialRampToValueAtTime(f * 5, t + 3.2);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.03, t + 0.05);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 4.2);
+    const shimmer = ctx.createGain();
+    shimmer.gain.value = 2.2;
+    o.connect(body);
+    body.connect(g);
+    o.connect(buzz);
+    buzz.connect(shimmer);
+    shimmer.connect(g);
+    g.connect(tanpura);
+    o.start(t);
+    o.stop(t + 4.3);
+  };
+
+  /** a tabla stroke on the dayan: a ringing tone with a tap of skin */
+  const dayan = (t: number, f: number, peak: number, len: number) => {
+    const o = ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.value = f;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(peak, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    o.connect(g);
+    g.connect(bus);
+    o.start(t);
+    o.stop(t + len + 0.02);
+    noiseHit(e, bus, t, 'bandpass', 3000, peak * 0.4, 0.03, 1.5);
+  };
+  /** the bayan: low, and its pitch bends up under the palm */
+  const bayan = (t: number, peak: number) => {
+    const o = ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(78, t);
+    o.frequency.exponentialRampToValueAtTime(112, t + 0.22);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(peak, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
+    o.connect(g);
+    g.connect(bus);
+    o.start(t);
+    o.stop(t + 0.55);
+  };
+
+  const sitar = ctx.createGain();
+  sitar.gain.value = 1;
+  sitar.connect(bus);
+  sitar.connect(e.echo);
+  /** a sitar note: a bright pluck, a buzz, and a slide from `from` if it has one */
+  const sitarNote = (t: number, f: number, peak: number, len: number, from = 0) => {
+    const o = ctx.createOscillator();
+    o.type = 'sawtooth';
+    o.frequency.setValueAtTime(from || f, t);
+    if (from) o.frequency.exponentialRampToValueAtTime(f, t + Math.min(0.5, len * 0.35));
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(4200, t);
+    lp.frequency.exponentialRampToValueAtTime(1200, t + len * 0.6);
+    const buzz = ctx.createBiquadFilter();
+    buzz.type = 'bandpass';
+    buzz.frequency.value = f * 7;
+    buzz.Q.value = 6;
+    const buzzLevel = ctx.createGain();
+    buzzLevel.gain.value = 0.9;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + 0.005);
+    g.gain.exponentialRampToValueAtTime(peak * 0.3, t + 0.3);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    o.connect(lp);
+    lp.connect(g);
+    o.connect(buzz);
+    buzz.connect(buzzLevel);
+    buzzLevel.connect(g);
+    g.connect(sitar);
+    o.start(t);
+    o.stop(t + len + 0.05);
+  };
+
+  // keherwa over eight eighths: dha ge na ti | na ka dhi na
+  const KEHERWA: Record<number, 'dha' | 'ge' | 'na' | 'ti' | 'ka' | 'dhi'> = {
+    0: 'dha',
+    2: 'ge',
+    4: 'na',
+    6: 'ti',
+    8: 'na',
+    10: 'ka',
+    12: 'dhi',
+    14: 'na',
+  };
+  let pos = 5;
+  let phrase = 0;
+  const clock = sixteenths(ctx, 80, (step, t) => {
+    const s = step % 16;
+    if (s === 0 || s === 8) pluckTanpura(t);
+    const bol = KEHERWA[s];
+    if (bol === 'dha' || bol === 'dhi') {
+      bayan(t, 0.16);
+      dayan(t, 520, 0.07, 0.35);
+    } else if (bol === 'ge') bayan(t, 0.1);
+    else if (bol === 'na') dayan(t, 560, 0.055, 0.4);
+    else if (bol === 'ti') dayan(t, 700, 0.035, 0.12);
+    else if (bol === 'ka') noiseHit(e, bus, t, 'lowpass', 400, 0.05, 0.08);
+    // the sitar: phrases of the raga, a bar of rest after three
+    if (s === 0) phrase = (phrase + 1) % 4;
+    if (phrase === 0 || s % 2 === 1) return;
+    if (Math.random() < 0.6) {
+      const move = [-2, -1, -1, 1, 1, 2][Math.floor(Math.random() * 6)];
+      const prev = pos;
+      pos = Math.max(2, Math.min(SCALE.length - 1, pos + move));
+      const glide = Math.random() < 0.25 ? SCALE[prev] * 2 : 0;
+      sitarNote(t, SCALE[pos] * 2, 0.045, glide ? 1.4 : 0.9, glide);
+    }
+  });
+  return {
+    out,
+    land(note) {
+      const f = SCALE[note.step] * 2;
+      // a long meend up into the stop's note, from the note below it
+      const below = SCALE[Math.max(0, note.step - 1)] * 2;
+      sitarNote(clock.nextOn(4), f, 0.08, 3, below);
+    },
+    fly() {},
+    stop() {
+      clock.stop();
+    },
+  };
+}
+
 /** D phrygian dominant over two octaves: D E♭ F♯ G A B♭ C — step for step with SCALE */
 const HIJAZ = [146.83, 155.56, 185.0, 196.0, 220.0, 233.08, 261.63, 293.66, 311.13, 369.99, 392.0];
 
@@ -986,6 +1150,7 @@ function playSong(e: Engine, which: Mood): Song {
   if (which === 'orbit') return orbitSong(e, out);
   if (which === 'album') {
     if (region === 'south') return southAlbum(e, out);
+    if (region === 'india') return indiaAlbum(e, out);
     if (region === 'europe') return europeAlbum(e, out);
     if (region === 'mena') return menaAlbum(e, out);
     return albumSong(e, out);
@@ -1097,8 +1262,9 @@ function crossTo(next: Mood) {
 let regionTimer = 0;
 /**
  * Where the photos being looked at were taken. The album is dressed for it:
- * Asia keeps the felt piano, South America a bossa, Europe an orchestra, the
- * Middle East and North Africa the oud and the darbuka. A reader scrolling fast
+ * Asia keeps the felt piano, India and Nepal a sitar over a tanpura, South
+ * America a bossa, Europe an orchestra, the Middle East and North Africa the
+ * oud and the darbuka. A reader scrolling fast
  * through a border does not want the band to change at every stop, so a new
  * region has to hold for a moment before the music follows it.
  */

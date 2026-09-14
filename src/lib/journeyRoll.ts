@@ -131,7 +131,9 @@ const CONTINENT = Object.fromEntries(
 );
 /** Which way the photo book's song is dressed for a stop's photos. */
 export function regionForStop(stopId: number): Region {
-  const c = CONTINENT[stops[stopOrder(stopId)]?.country ?? ''];
+  const country = stops[stopOrder(stopId)]?.country ?? '';
+  if (country === 'IN' || country === 'NP') return 'india';
+  const c = CONTINENT[country];
   if (c === 'south-america') return 'south';
   if (c === 'europe') return 'europe';
   if (c === 'africa' || c === 'middle-east') return 'mena';
