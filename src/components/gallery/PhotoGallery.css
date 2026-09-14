@@ -441,16 +441,28 @@
   border-color: var(--line-strong);
 }
 
-/* the rest step back for the one under the pointer */
-.pb__sheet:hover .pb__cell {
-  opacity: 0.55;
+/* The rest step back for the one under the pointer — for a pointer only. A
+   finger leaves :hover stuck on whatever it touched, and in the journey's sheet
+   that set two thousand tiles fading at once. */
+@media (hover: hover) and (pointer: fine) {
+  .pb__sheet:hover .pb__cell {
+    opacity: 0.55;
+  }
+
+  .pb__sheet:hover .pb__cell:hover {
+    opacity: 1;
+    transform: scale(1.02);
+    border-color: var(--line-strong);
+    z-index: 2;
+  }
 }
 
-.pb__sheet:hover .pb__cell:hover {
-  opacity: 1;
-  transform: scale(1.02);
-  border-color: var(--line-strong);
-  z-index: 2;
+/* In the journey's sheet the dimming is instant: a transition there is two
+   thousand animations every time the pointer comes onto the sheet. */
+.pb__sheet--roll .pb__cell {
+  transition:
+    border-color 200ms var(--ease),
+    transform 260ms var(--ease);
 }
 
 .pb__cellno {
@@ -464,8 +476,10 @@
   transition: opacity 200ms var(--ease);
 }
 
-.pb__cell:hover .pb__cellno {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .pb__cell:hover .pb__cellno {
+    opacity: 1;
+  }
 }
 
 .pb__sheetbtn {
@@ -908,37 +922,14 @@
   animation-name: pbRollDown;
 }
 
-/* Up out of the open photo: the sheet is there at once (the photo is already
-   on its way down into its tile), its own stop first, the rest a beat later. */
-.pb__sheet--roll.is-arriving {
+/* The wide sheet does not fade as a whole: eighty thousand pixels of animated
+   content is a layer a phone cannot hold. The tiles on the screen fade instead
+   (JourneySheet fadeInView). */
+.pb__sheet--roll {
   animation: none;
-}
-
-.pb__sheet--roll.is-arriving .pb__stop {
-  animation: pbFade 260ms 150ms var(--ease-out) both;
-}
-
-.pb__sheet--roll.is-arriving .pb__stop.is-home {
-  animation-delay: 40ms;
-}
-
-.pb__sheet--roll.is-arriving .pb__stop.is-home .pb__cell.is-current {
-  z-index: 2;
-}
-
-.pb__sheet--roll.is-arriving .pb__stop.is-home:has(.is-current) {
-  animation: none;
-}
-
-.pb__sheet--roll.is-arriving .pb__stop.is-home:has(.is-current) .pb__cell:not(.is-current),
-.pb__sheet--roll.is-arriving .pb__stop.is-home:has(.is-current) .pb__stopseam {
-  animation: pbFade 220ms 60ms var(--ease-out) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pb__sheet--roll.is-arriving .pb__stop,
-  .pb__sheet--roll.is-arriving .pb__cell,
-  .pb__sheet--roll.is-arriving .pb__stopseam,
   .pb__allroll b,
   .pb__cityroll b {
     animation: none !important;

@@ -58,6 +58,30 @@ const HOW: Record<string, { ko: string; en: string }> = {
 const MD = (d: string) => d.slice(5, 10).replace('-', '.');
 
 /**
+ * Fade in only the tiles and seams that are actually on the screen.
+ *
+ * Animating the sheet, or its hundred and forty stops, meant animating eighty
+ * thousand pixels of content: a phone gives every animated element a layer of
+ * its own, and at 3× that came to about a gigabyte — Safari threw the page
+ * away and loaded it again. What is off the screen cannot be seen fading
+ * anyway. `except` is the tile that is moving by itself.
+ */
+function fadeInView(sheet: HTMLElement, except: Element | null, delay: number, from = 0) {
+  const view = sheet.getBoundingClientRect();
+  sheet.querySelectorAll<HTMLElement>('.pb__cell, .pb__stopseam').forEach((node) => {
+    if (node === except) return;
+    const r = node.getBoundingClientRect();
+    if (r.bottom < view.top || r.top > view.bottom) return;
+    node.animate([{ opacity: from }, { opacity: 1 }], {
+      duration: 220,
+      delay,
+      easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      fill: 'backwards',
+    });
+  });
+}
+
+/**
  * A tile before its photo: the photo's own two tones, top over bottom (baked by
  * scripts/add-photo-tones.py). A fast flick through the year shows the colour
  * of the places going by instead of a column of grey boxes.
@@ -172,8 +196,8 @@ export const JourneySheet = memo(function JourneySheet({
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const from = origin();
     const cell = el.querySelector<HTMLElement>(`[data-i="${current}"]`);
-    el.classList.add('is-arriving');
-    const done = window.setTimeout(() => el.classList.remove('is-arriving'), 720);
+    // only what is on the screen comes in round it — see fadeInView
+    fadeInView(el, cell, 60);
     if (from && cell) {
       const to = cell.getBoundingClientRect();
       const s = from.width / Math.max(1, to.width);
@@ -188,7 +212,6 @@ export const JourneySheet = memo(function JourneySheet({
         { duration: 440, easing: 'cubic-bezier(0.32, 0.72, 0, 1)' }
       );
     }
-    return () => window.clearTimeout(done);
     // only on arrival: after that the scroll belongs to the reader
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -242,7 +265,7 @@ export const JourneySheet = memo(function JourneySheet({
       ],
       { duration: 260, easing: 'cubic-bezier(0.32, 0.72, 0, 1)' }
     );
-    el.animate([{ opacity: 0.55 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+    fadeInView(el, cell, 0, 0.55);
   }, [perRow, fold, scroller]);
 
   // ⌘ / ctrl + wheel, which is also what a trackpad pinch arrives as; two fingers on a phone
@@ -374,7 +397,7 @@ export const JourneySheet = memo(function JourneySheet({
     const el = scroller.current;
     if (!el) return;
     /* Two edges, so a stop does not flicker in and out at one line: pictures
-       are attached a screen and a half ahead and only let go four screens
+       are attached a screen ahead and only let go two and a half screens
        behind — scrolling back a little finds them still there. */
     const pendingIn = new Set<number>();
     const pendingOut = new Set<number>();
@@ -417,7 +440,7 @@ export const JourneySheet = memo(function JourneySheet({
         for (const e of entries) if (e.isIntersecting) pendingIn.add(key(e));
         if (!fast) flush();
       },
-      { root: el, rootMargin: '150% 0px' }
+      { root: el, rootMargin: '100% 0px' }
     );
     const far = new IntersectionObserver(
       (entries) => {
@@ -428,7 +451,7 @@ export const JourneySheet = memo(function JourneySheet({
         }
         if (!fast) flush();
       },
-      { root: el, rootMargin: '400% 0px' }
+      { root: el, rootMargin: '250% 0px' }
     );
     el.querySelectorAll('[data-run]').forEach((sec) => {
       near.observe(sec);
