@@ -305,26 +305,34 @@
   },
   "49": {
     "ko": {
-      "story": "부르즈 할리파를 올려다봤습니다.\n마리나의 밤, 몰 안의 폭포.\n아부다비로 가는 길목이었습니다."
+      "story": "밤에 공항에 내려 마리나로 갔습니다.\n물 위로 고층 건물 불빛이 비쳤습니다.\n이틀 뒤 사막으로 가는 날, 부르즈 할리파를 올려다보고\n몰 안의 폭포와 수족관 앞에 섰습니다."
     },
     "en": {
-      "story": "Looked up at the Burj Khalifa.\nThe marina at night, the waterfall inside the mall.\nA stop on the way to Abu Dhabi."
+      "story": "Landed at night and went to the Marina.\nTower lights shone on the water.\nTwo days later, on the way to the desert, I looked up at the Burj Khalifa\nand stood before the waterfall and the aquarium in the mall."
     }
   },
   "50": {
     "ko": {
-      "story": "밤마다 셰이크 자예드 모스크에 갔습니다.\n흰 기둥이 물에 비쳤습니다.\n코르니시를 따라 걷고, 야스 마리나의 불빛을 봤습니다."
+      "story": "도착한 밤, 야스 마리나의 보라색 불빛을 봤습니다.\n다음 날은 차를 타고 헤리티지 빌리지에 갔습니다.\n코르니시 너머로 해가 졌습니다.\n저녁에는 친구들과 한국 음식을 먹으며 건배했습니다."
     },
     "en": {
-      "story": "Went to the Sheikh Zayed Mosque night after night.\nWhite columns reflected in the water.\nWalked the Corniche, saw the lights of Yas Marina."
+      "story": "The night I arrived, the purple lights of Yas Marina.\nThe next day we drove to the Heritage Village.\nThe sun set beyond the Corniche.\nIn the evening, Korean food and toasts with friends."
     }
   },
   "51": {
     "ko": {
-      "story": "사막으로 나갔습니다.\n사륜 오토바이, 낙타, 모래 언덕을 타는 차.\n해가 지고 나서 춤을 봤습니다.\n물담배를 피웠습니다."
+      "story": "사막으로 나갔습니다.\n사륜 오토바이, 낙타, 모래 언덕을 타는 차.\n해가 지고 나서 치마를 돌리는 춤과 불 쇼, 벨리댄스를 봤습니다.\n물담배를 피웠습니다."
     },
     "en": {
-      "story": "Went out into the desert.\nQuad bikes, camels, a car over the dunes.\nAfter sunset, a dance.\nSmoked shisha."
+      "story": "Out into the desert.\nQuad bikes, camels, a car riding the dunes.\nAfter sunset, a whirling skirt dance, a fire show, belly dancing.\nSmoked shisha."
+    }
+  },
+  "52": {
+    "ko": {
+      "story": "아부다비로 돌아왔습니다.\n밤에 셰이크 자예드 모스크에 갔습니다.\n흰 기둥이 물에 비쳤고, 천장에는 꽃이 피어 있었습니다.\n떠나기 전날 태권도장에 들렀고, 친구 집에서 저녁을 먹었습니다."
+    },
+    "en": {
+      "story": "Back in Abu Dhabi.\nAt night I went to the Sheikh Zayed Mosque.\nWhite columns reflected in the water, and flowers bloomed on the ceilings.\nThe day before leaving I stopped by a taekwondo school and had dinner at a friend's home."
     }
   },
   "53": {
