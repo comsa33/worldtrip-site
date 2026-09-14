@@ -1103,3 +1103,60 @@
     display: none;
   }
 }
+
+/* A phone on its side, for the journey's sheet. Kept at the end of the file so
+   it wins over the sheet's own rules above (same specificity, later wins). */
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
+  /* The journey's sheet has to start where this shorter bar ends: left at the
+     desktop's 56px, the frame of the photo underneath showed through the gap
+     as a stray rectangle at the top of the screen. */
+  .pb__sheet {
+    top: 40px;
+    bottom: 64px;
+    padding: 10px max(16px, env(safe-area-inset-right)) 16px max(16px, env(safe-area-inset-left));
+    gap: 4px;
+  }
+
+  .pb__sheetrow,
+  .pb__stop {
+    gap: 4px;
+  }
+
+  .pb__wave {
+    height: 64px;
+    padding: 16px max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+  }
+
+  .pb__waveplot,
+  .pb__waveplot svg {
+    height: 30px;
+  }
+
+  .pb__wavemonths {
+    top: 33px;
+  }
+
+  /* the map fits the 40px bar instead of hanging off its top */
+  .pb__locator,
+  .pb__locmap {
+    width: 56px;
+  }
+
+  .pb__locmap {
+    left: -6px;
+    top: -6px;
+    padding: 6px;
+  }
+
+  .pb__locator.is-open .pb__locmap {
+    width: min(520px, calc(100vw - 48px));
+  }
+
+  .pb__stopseam {
+    padding: 10px 6px 6px;
+  }
+
+  .pb__stopseam.is-border {
+    padding-top: 18px;
+  }
+}

@@ -20,13 +20,21 @@ import type { ScoreNote } from './journeyScore';
  *   as far apart as stars. Turning the globe by hand stirs it — the faster the
  *   hand, the more often a note glints and the more air comes through.
  *
+ * - album, while the reader looks through the photo book: 72 BPM and no drums,
+ *   a felt-piano figure turning over the chord in eighths, a warm pad under it,
+ *   a low root on each bar and a little tape hiss — music to look at pictures
+ *   by. It still belongs to the journey: moving into another stop's photos sounds
+ *   that stop's note on the next eighth, and its country's chord takes over at
+ *   the next bar. Left on one stop, the chord leans to its neighbour and back
+ *   every two bars so it never stands still.
+ *
  * Changing how they travel crosses from one song to the next over a bar or so. Nothing plays until the reader turns it on, and a reader who did is
  * remembered in this browser; the sound then waits for their first touch or
- * key, since a browser will not let a page make sound before one. A photo book
- * open over the globe takes it down to half; a hidden tab takes it away.
+ * key, since a browser will not let a page make sound before one. A hidden tab
+ * takes it away.
  */
 
-export type Mood = 'calm' | 'bright' | 'orbit';
+export type Mood = 'calm' | 'bright' | 'orbit' | 'album';
 
 const KEY = 'sound';
 /** in and out, never a cut */
@@ -404,12 +412,145 @@ function orbitSong(e: Engine, out: GainNode): Song {
   };
 }
 
+const ALBUM_BPM = 72;
+const ALBUM_EIGHTH = 60 / ALBUM_BPM / 2;
+
+function albumSong(e: Engine, out: GainNode): Song {
+  const { ctx } = e;
+  // the pad: the chord, low and warm, breathing slowly
+  const padFilter = ctx.createBiquadFilter();
+  padFilter.type = 'lowpass';
+  padFilter.frequency.value = 760;
+  padFilter.Q.value = 0.4;
+  const padLevel = ctx.createGain();
+  padLevel.gain.value = 0;
+  padLevel.gain.setTargetAtTime(0.032, ctx.currentTime, 1.2);
+  padFilter.connect(padLevel);
+  padLevel.connect(out);
+  const breath = ctx.createOscillator();
+  breath.frequency.value = 0.045;
+  const breathAmt = ctx.createGain();
+  breathAmt.gain.value = 180;
+  breath.connect(breathAmt);
+  breathAmt.connect(padFilter.frequency);
+  breath.start();
+  let home = chordIndex;
+  let chord = home;
+  let layer = chordLayer(ctx, padFilter, chord);
+  let pending: number | null = null;
+
+  // the piano's room: everything it plays goes through one soft lowpass
+  const keys = ctx.createBiquadFilter();
+  keys.type = 'lowpass';
+  keys.frequency.value = 1900;
+  keys.Q.value = 0.3;
+  keys.connect(out);
+
+  // tape: a hiss too quiet to notice until it stops
+  const hiss = noiseSource(e);
+  hiss.loop = true;
+  const hissTone = ctx.createBiquadFilter();
+  hissTone.type = 'lowpass';
+  hissTone.frequency.value = 2800;
+  const hissLevel = ctx.createGain();
+  hissLevel.gain.value = 0.0045;
+  hiss.connect(hissTone);
+  hissTone.connect(hissLevel);
+  hissLevel.connect(out);
+  hiss.start();
+
+  /** a felt-piano note: soft attack, a long fall, a faint octave */
+  const felt = (t: number, f: number, peak: number, len: number) => {
+    const env = ctx.createGain();
+    env.gain.setValueAtTime(0.0001, t);
+    env.gain.exponentialRampToValueAtTime(peak, t + 0.018);
+    env.gain.exponentialRampToValueAtTime(peak * 0.35, t + 0.25);
+    env.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    const body = ctx.createOscillator();
+    body.type = 'sine';
+    body.frequency.value = f;
+    const edge = ctx.createOscillator();
+    edge.type = 'triangle';
+    edge.frequency.value = f * 2;
+    const edgeLevel = ctx.createGain();
+    edgeLevel.gain.value = 0.12;
+    body.connect(env);
+    edge.connect(edgeLevel);
+    edgeLevel.connect(env);
+    env.connect(keys);
+    env.connect(e.echo);
+    body.start(t);
+    edge.start(t);
+    body.stop(t + len + 0.05);
+    edge.stop(t + len + 0.05);
+  };
+
+  // the figure: chord tones across two octaves, turning over; some off-beats left out
+  const FIGURE = [0, 2, 1, 3, 2, 4, 3, 1];
+  const t0 = ctx.currentTime + 0.1;
+  let step = 0;
+  let next = t0;
+  const schedule = () => {
+    while (next < ctx.currentTime + 0.2) {
+      const s = step % 16;
+      if (s === 0) {
+        if (pending !== null) {
+          home = pending;
+          pending = null;
+        }
+        // two bars on the stop's chord, two leaning to its neighbour
+        const lean = step % 32 === 16;
+        const want = lean ? (home + 3) % 4 : home;
+        if (want !== chord) {
+          layer = nextLayer(ctx, padFilter, layer, want);
+          chord = want;
+        }
+        const low = CHORDS[chord][0];
+        felt(next, low < 70 ? low * 2 : low, 0.1, 3.2);
+      }
+      const tones = CHORDS[chord]
+        .slice(1)
+        .flatMap((f) => [f * 2, f * 4])
+        .sort((a, b) => a - b);
+      const offBeat = s % 2 === 1;
+      if (!offBeat || Math.random() > 0.35) {
+        const f = tones[FIGURE[s % 8] % tones.length];
+        const human = (Math.random() - 0.5) * 0.016;
+        const peak = (offBeat ? 0.028 : 0.042) * (0.85 + Math.random() * 0.3);
+        felt(next + human, f, peak, offBeat ? 1.1 : 1.6);
+      }
+      step++;
+      next += ALBUM_EIGHTH;
+    }
+  };
+  const clock = window.setInterval(schedule, 40);
+  schedule();
+
+  return {
+    out,
+    land(note) {
+      const now = ctx.currentTime;
+      const at = now + (ALBUM_EIGHTH - ((now - t0) % ALBUM_EIGHTH));
+      if (note.chord !== home) pending = note.chord;
+      felt(at, SCALE[note.step] * 2, 0.075, 2.8);
+    },
+    fly() {},
+    stop() {
+      window.clearInterval(clock);
+      layer.oscs.forEach((o) => o.stop());
+      breath.stop();
+      hiss.stop();
+    },
+  };
+}
+
 function playSong(e: Engine, which: Mood): Song {
   const out = e.ctx.createGain();
   out.gain.value = 0;
   out.connect(e.master);
   out.gain.setTargetAtTime(1, e.ctx.currentTime, 0.5);
   if (which === 'orbit') return orbitSong(e, out);
+  if (which === 'album') return albumSong(e, out);
   return which === 'bright' ? brightSong(e, out) : calmSong(e, out);
 }
 

@@ -1,5 +1,6 @@
 import journeyData from '../data/journey.json';
 import citiesData from '../data/cities.json';
+import { composeJourney, type ScoreNote } from './journeyScore';
 import { photosForStop, type VisitPhoto } from './visitPhotos';
 
 interface RollStop {
@@ -110,5 +111,12 @@ export function jumpTo(sheet: HTMLElement | null, i: number, where: 'top' | 'foc
     (block && block.start === i && sheet.querySelector<HTMLElement>(`[data-seam="${i}"]`)) ||
     sheet.querySelector<HTMLElement>(`[data-i="${i}"]`);
   if (!el) return;
-  sheet.scrollTop = where === 'top' ? el.offsetTop - 6 : el.offsetTop - sheet.clientHeight * 0.3;
+  sheet.scrollTop = where === 'top' ? el.offsetTop : el.offsetTop - sheet.clientHeight * 0.3; // exactly at the seam: a few pixels above it showed the last row's edges as a stray line
 }
+
+/** The journey's tune, a note for every stop — the same one the globe plays on landing. */
+const SCORE: ScoreNote[] = composeJourney(
+  stops,
+  citiesData.cities as Record<string, { lat: number; lng: number }>
+);
+export const noteForStop = (stopId: number): ScoreNote | undefined => SCORE[stopOrder(stopId)];

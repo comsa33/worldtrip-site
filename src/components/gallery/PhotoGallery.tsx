@@ -16,10 +16,12 @@ import {
   cityLabel,
   journeyRoll,
   jumpTo,
+  noteForStop,
   rollIndexForStop,
   rollNo,
 } from '../../lib/journeyRoll';
 import { srcFor } from '../../lib/photoSrc';
+import { landOn } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
 import './PhotoGallery.css';
@@ -100,11 +102,15 @@ export default function PhotoGallery({
   const sideways = useSideways();
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
 
+  /* Opened from a stop, the book is that stay's photos. Standing in Varanasi in
+     October and handed November's return as well read as one muddled roll —
+     the other stays are one swipe up, in the journey's sheet, in their place. */
   const cityRoll = useMemo(() => {
     if (!cityName || !cityPhotos[cityName]) return [] as Photo[];
-    const list = cityPhotos[cityName].photos;
+    const stay = visitsForCity(cityName).find((v) => v.stopId === focusStopId);
+    const list = stay ? stay.photos : cityPhotos[cityName].photos;
     return [...list].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }, [cityName, cityPhotos]);
+  }, [cityName, cityPhotos, focusStopId]);
 
   /* ── the scope: one city, or the whole journey ──────────────────────────
      The book opens on a city. Its contact sheet has no walls: asking for all
@@ -120,7 +126,8 @@ export default function PhotoGallery({
      renders exactly as it did before. */
   const groups = useMemo(() => {
     const visits = visitsForCity(cityName);
-    if (visits.length < 2) return null;
+    // a roll that is already one stay has nothing to split
+    if (visits.length < 2 || visits.some((v) => v.stopId === focusStopId)) return null;
     const here = new Set(cityRoll.map((p) => p.id));
     const out: { visit: (typeof visits)[number]; start: number; count: number }[] = [];
     let start = 0;
@@ -131,7 +138,7 @@ export default function PhotoGallery({
       start += n;
     }
     return out.length > 1 ? out : null;
-  }, [cityName, cityRoll]);
+  }, [cityName, cityRoll, focusStopId]);
 
   const [index, setIndex] = useState(0);
   // the whole set at once, as a contact sheet — G toggles, a tile opens it there
@@ -252,6 +259,14 @@ export default function PhotoGallery({
   const spokenCity = wide
     ? cityLabel(journeyRoll.blocks[journeyRoll.blockOf[spoken]]?.stop.city ?? '', lang)
     : cityName;
+  /* The book's song belongs to the journey: coming into another stop's photos
+     sounds that stop's note, the one the globe plays on landing there. */
+  const spokenStop = wide ? journeyRoll.blocks[journeyRoll.blockOf[spoken]]?.stop.id : focusStopId;
+  useEffect(() => {
+    if (!cityName || spokenStop == null) return;
+    const note = noteForStop(spokenStop);
+    if (note) landOn(note);
+  }, [cityName, spokenStop]);
 
   /* ── how the next photo arrives ─────────────────────────────────────────
      A swipe hands over where the finger left the picture and how fast it was
@@ -617,12 +632,27 @@ export default function PhotoGallery({
       slotEl.style.transform = `translateX(${atEnd ? dx * 0.32 : dx * 0.9}px)`;
       return;
     }
-    g.dy = Math.max(0, dy);
-    const k = Math.min(g.dy / 700, 1);
+    g.dy = dy;
     const el = rootRef.current;
-    if (!el) return;
-    el.style.transform = `translateY(${g.dy}px) scale(${1 - k * 0.1})`;
-    el.style.opacity = String(1 - k * 0.45);
+    const slotEl = slotRef.current;
+    if (!el || !slotEl) return;
+    if (dy >= 0) {
+      // down: the whole book follows the finger away
+      slotEl.style.transition = 'none';
+      slotEl.style.transform = '';
+      const k = Math.min(dy / 700, 1);
+      el.style.transform = `translateY(${dy}px) scale(${1 - k * 0.1})`;
+      el.style.opacity = String(1 - k * 0.45);
+    } else {
+      /* up: the photo lifts and grows smaller under the finger, on its way to
+         becoming a tile — let go past the line and it goes into the sheet from
+         exactly where it was */
+      el.style.transform = '';
+      el.style.opacity = '';
+      const k = Math.min(-dy / 420, 1);
+      slotEl.style.transition = 'none';
+      slotEl.style.transform = `translateY(${dy * 0.85}px) scale(${1 - k * 0.42})`;
+    }
   };
   const endGesture = (e: React.PointerEvent) => {
     const g = gesture.current;
@@ -669,7 +699,28 @@ export default function PhotoGallery({
         }
       }
     } else if (g.axis === 'y') {
-      if (g.dy > 150) {
+      const slotEl = slotRef.current;
+      const up = g.dy < 0;
+      const flung = Math.abs(g.dy) / Math.max(ms, 1) > 0.45;
+      if (up && (g.dy < -90 || (flung && g.dy < -30)) && !sheet) {
+        // into the sheet, from where the photo is now; the frame is put back
+        // once the sheet has covered it
+        setSheet(true);
+        window.setTimeout(() => {
+          if (slotEl) {
+            slotEl.style.transition = '';
+            slotEl.style.transform = '';
+          }
+        }, 520);
+      } else if (up) {
+        if (slotEl) {
+          slotEl.style.transition = 'transform 320ms var(--ease)';
+          slotEl.style.transform = '';
+          window.setTimeout(() => {
+            slotEl.style.transition = '';
+          }, 340);
+        }
+      } else if (g.dy > 150) {
         close();
       } else if (el) {
         el.style.transition = 'transform 320ms var(--ease), opacity 320ms var(--ease)';
@@ -940,7 +991,7 @@ export default function PhotoGallery({
       )}
 
       <span className={`pb__touchhint mono${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
-        {lang === 'ko' ? '← 쓸어 넘기기 · 아래로 당겨 닫기 ↓' : '← swipe · pull down to close ↓'}
+        {lang === 'ko' ? '← 넘기기 · ↑ 전체 · ↓ 닫기' : '← swipe · ↑ all · ↓ close'}
       </span>
 
       <div className="pb__strip" ref={stripRef}>
