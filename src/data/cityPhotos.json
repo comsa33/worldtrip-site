@@ -27182,25 +27182,6 @@
         "h": 665
       },
       {
-        "id": "krakow-004",
-        "publicId": "cities/krakow/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo004",
-        "date": "2017-01-07T20:33:14",
-        "gps": {
-          "lat": 50.061927777777775,
-          "lng": 19.936577777777778
-        },
-        "location": "Rynek Główny, Śródmieście, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "krakow-005",
         "publicId": "cities/krakow/photo005",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo005",
@@ -27372,25 +27353,6 @@
         "h": 768
       },
       {
-        "id": "krakow-016",
-        "publicId": "cities/krakow/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo016",
-        "date": "2017-01-08T15:09:41",
-        "gps": {
-          "lat": 50.05348333333333,
-          "lng": 19.934725
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "krakow-017",
         "publicId": "cities/krakow/photo017",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo017",
@@ -27408,63 +27370,6 @@
         "alt": "photo017",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "krakow-018",
-        "publicId": "cities/krakow/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo018",
-        "date": "2017-01-08T15:16:12",
-        "gps": {
-          "lat": 50.05357222222222,
-          "lng": 19.934638888888887
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "krakow-019",
-        "publicId": "cities/krakow/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo019",
-        "date": "2017-01-08T15:12:19",
-        "gps": {
-          "lat": 50.0535,
-          "lng": 19.934752777777778
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "krakow-020",
-        "publicId": "cities/krakow/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo021",
-        "date": "2017-01-08T15:09:20",
-        "gps": {
-          "lat": 50.05358611111111,
-          "lng": 19.934686111111112
-        },
-        "location": "Droga do Zamku, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
-        "w": 2048,
-        "h": 1536
       },
       {
         "id": "krakow-021",
@@ -27503,25 +27408,6 @@
         "alt": "photo023",
         "w": 768,
         "h": 1022
-      },
-      {
-        "id": "krakow-024",
-        "publicId": "cities/krakow/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo025",
-        "date": "2017-01-07T20:32:43",
-        "gps": {
-          "lat": 50.06205833333333,
-          "lng": 19.936355555555554
-        },
-        "location": "Rynek Główny, Śródmieście, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "krakow-025",
@@ -27655,82 +27541,6 @@
         "alt": "photo032",
         "w": 1536,
         "h": 2048
-      },
-      {
-        "id": "krakow-033",
-        "publicId": "cities/krakow/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo034",
-        "date": "2017-01-08T15:03:35",
-        "gps": {
-          "lat": 50.054027777777776,
-          "lng": 19.935669444444446
-        },
-        "location": "Zamek Wawel, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "krakow-034",
-        "publicId": "cities/krakow/photo036",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo036",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo036",
-        "date": "2017-01-07T20:32:33",
-        "gps": {
-          "lat": 50.062038888888885,
-          "lng": 19.936552777777777
-        },
-        "location": "Rynek Główny, Śródmieście, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo036",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "krakow-035",
-        "publicId": "cities/krakow/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo037",
-        "date": "2017-01-08T15:02:38",
-        "gps": {
-          "lat": 50.05409722222222,
-          "lng": 19.935469444444443
-        },
-        "location": "Zamek Wawel, Wawel, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "krakow-036",
-        "publicId": "cities/krakow/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/krakow/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/krakow/photo038",
-        "date": "2017-01-08T15:36:43",
-        "gps": {
-          "lat": 50.05919166666666,
-          "lng": 19.937769444444445
-        },
-        "location": "Grodzka 17, Śródmieście, Kraków, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo038",
-        "w": 1182,
-        "h": 665
       },
       {
         "id": "krakow-037",
@@ -42636,44 +42446,6 @@
         "h": 768
       },
       {
-        "id": "prague-004",
-        "publicId": "cities/prague/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/prague/photo004",
-        "date": "2017-01-10T14:13:32",
-        "gps": {
-          "lat": 50.08401111111112,
-          "lng": 14.423666666666666
-        },
-        "location": "Václavské náměstí 772/2, Nové Město, Prague 1, Prague",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "prague-005",
-        "publicId": "cities/prague/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/prague/photo005",
-        "date": "2017-01-10T14:13:52",
-        "gps": {
-          "lat": 50.084244444444444,
-          "lng": 14.423627777777778
-        },
-        "location": "Na Příkopě 846/2, Jindřišský Obvod, Prague 1, Prague",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 2048,
-        "h": 1536
-      },
-      {
         "id": "prague-006",
         "publicId": "cities/prague/photo006",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo006",
@@ -42748,25 +42520,6 @@
         "alt": "photo010",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "prague-010",
-        "publicId": "cities/prague/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/prague/photo011",
-        "date": "2017-01-10T15:10:19",
-        "gps": {
-          "lat": 50.08545,
-          "lng": 14.418127777777777
-        },
-        "location": "Husova 243/11, Betlémský Obvod, Prague 1, Prague",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "prague-011",
@@ -42883,25 +42636,6 @@
         "h": 768
       },
       {
-        "id": "prague-017",
-        "publicId": "cities/prague/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/prague/photo018",
-        "date": "2017-01-10T14:13:53",
-        "gps": {
-          "lat": 50.084244444444444,
-          "lng": 14.42363611111111
-        },
-        "location": "Na Příkopě 846/2, Jindřišský Obvod, Prague 1, Prague",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "prague-018",
         "publicId": "cities/prague/photo019",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo019",
@@ -42919,25 +42653,6 @@
         "alt": "photo019",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "prague-019",
-        "publicId": "cities/prague/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/prague/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/prague/photo020",
-        "date": "2017-01-13T08:56:07",
-        "gps": {
-          "lat": 50.08015,
-          "lng": 14.438125
-        },
-        "location": "Italská, Riegrovy Sady, Prague 2, Prague",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "prague-020",
