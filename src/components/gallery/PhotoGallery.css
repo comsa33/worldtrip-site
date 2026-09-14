@@ -43,8 +43,7 @@
 .pb__top,
 .pb__strip,
 .pb__cap,
-.pb__nav,
-.pb__touchhint {
+.pb__nav {
   filter: opacity(calc(1 - var(--pull, 0)));
 }
 
@@ -53,8 +52,7 @@
 .pb__top,
 .pb__strip,
 .pb__cap,
-.pb__nav,
-.pb__touchhint {
+.pb__nav {
   filter: opacity(max(0, calc(1 - var(--pull, 0) * 1.8)));
 }
 
@@ -376,10 +374,6 @@
 .pb__all.is-on {
   color: var(--ink);
   text-decoration-color: var(--ink-2);
-}
-
-.pb__touchhint {
-  display: none;
 }
 
 /* ── caption ───────────────────────────────────────────────────────────── */
@@ -707,29 +701,6 @@
   .pb__sheetrow {
     gap: 4px;
   }
-
-  .pb__touchhint {
-    position: absolute;
-    left: 50%;
-    bottom: 100px;
-    transform: translateX(-50%);
-    display: inline-flex;
-    padding: 6px 10px;
-    border: 1px solid var(--line);
-    border-radius: 99px;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
-    font-size: 10.5px;
-    color: var(--ink-2);
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 3;
-    transition: opacity 420ms var(--ease-out);
-  }
-
-  .pb__touchhint.is-gone {
-    opacity: 0;
-  }
 }
 
 /*
@@ -969,9 +940,55 @@
 }
 
 .pb__allroll {
+  position: relative;
   display: inline-grid;
-  overflow: hidden;
+  /* clipped above and below only, so the journey's wider total can stand in
+     beside it while it rolls in */
+  clip-path: inset(0 -12ch 0 -1ch);
   vertical-align: bottom;
+}
+
+/*
+ * Reaching for all of them. A finger lifting the photo carries --reach from 0
+ * to 1 on the book (1 is the point where letting go opens the sheet), and the
+ * city's total rolls away under it while the journey's total rolls in — the
+ * number the sheet will show, arriving at the speed of the hand. Let go short
+ * and they roll back; let go past it and the sheet opens on a number that is
+ * already there. `translate`, not `transform`: the roll's keyframes hold
+ * `transform` and would win.
+ */
+.pb__allroll.is-city b,
+.pb__allghost {
+  translate: 0 calc(var(--reach, 0) * -100%);
+  transition: translate 320ms var(--ease);
+}
+
+.pb__allghost {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.pb.is-reaching .pb__allroll.is-city b,
+.pb.is-reaching .pb__allghost,
+.pb.is-reaching .pb__all,
+.pb.is-reaching .pb__sheetbtn {
+  transition: none;
+}
+
+/* the sheet opened from the reach: its total is the one already standing
+   there, so it does not roll in a second time. A zero duration, not
+   `animation: none` — taking the name away and giving it back would start the
+   roll over when the class comes off. */
+.pb.is-reached .pb__allroll b {
+  animation-duration: 0s;
+}
+
+.pb__all,
+.pb__sheetbtn {
+  color: color-mix(in srgb, var(--ink) calc(var(--reach, 0) * 100%), var(--ink-3));
 }
 
 .pb__allroll b {

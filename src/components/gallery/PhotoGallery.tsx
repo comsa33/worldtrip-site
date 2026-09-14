@@ -61,6 +61,8 @@ interface PhotoGalleryProps {
 
 const DEFAULT_AR = 4 / 3;
 const PHOTOS_HASH = '#photos';
+/** How far a finger lifts the photo before letting go opens the sheet. */
+const REACH_PX = 90;
 const arOf = (p: Photo) => (p.w && p.h ? p.w / p.h : DEFAULT_AR);
 
 /** Thumbnails are 62x46 CSS px; ask for exactly that at this screen's density. */
@@ -744,6 +746,7 @@ export default function PhotoGallery({
       slotEl.style.transition = 'none';
       slotEl.style.transform = `translate(${lift.tx}px, ${lift.ty}px) scale(${lift.s})`;
       el.style.setProperty('--pull', String(Math.min(dy / 320, 1) * 0.9));
+      el.style.setProperty('--reach', '0');
     } else {
       /* up: the photo lifts and grows smaller under the finger, on its way to
          becoming a tile — let go past the line and it goes into the sheet from
@@ -751,6 +754,12 @@ export default function PhotoGallery({
       el.style.transform = '';
       el.style.opacity = '';
       const k = Math.min(-dy / 420, 1);
+      // the header answers the hand: at REACH_PX the city's total has rolled
+      // over to the journey's, which is where letting go opens the sheet
+      if (!fromSheet && !sheet) {
+        el.classList.add('is-reaching');
+        el.style.setProperty('--reach', String(Math.min(-dy / REACH_PX, 1)));
+      }
       slotEl.style.transition = 'none';
       slotEl.style.transform = `translateY(${dy * 0.85}px) scale(${1 - k * 0.42})`;
     }
@@ -804,18 +813,30 @@ export default function PhotoGallery({
       // back to the sheet goes either way for a photo that came from it
       const up = g.dy < 0 || fromSheet;
       const flung = Math.abs(g.dy) / Math.max(ms, 1) > 0.45;
-      const far = Math.abs(g.dy) > 90 || (flung && Math.abs(g.dy) > 30);
+      const far = Math.abs(g.dy) > REACH_PX || (flung && Math.abs(g.dy) > 30);
+      el?.classList.remove('is-reaching');
       if (up && far && !sheet) {
         // into the sheet, from where the photo is now; the frame is put back
-        // once the sheet has covered it
+        // once the sheet has covered it. A fling can let go short of the reach,
+        // so the total finishes its roll with the sheet.
+        if (el && !fromSheet) {
+          el.style.setProperty('--reach', '1');
+          el.classList.add('is-reached');
+        }
         setSheet(true);
         window.setTimeout(() => {
+          if (el) {
+            el.classList.remove('is-reached');
+            el.style.removeProperty('--reach');
+          }
           if (slotEl) {
             slotEl.style.transition = '';
             slotEl.style.transform = '';
           }
         }, 520);
       } else if (up) {
+        // short of it: the totals roll back with the photo
+        el?.style.setProperty('--reach', '0');
         if (slotEl) {
           slotEl.style.transition = 'transform 320ms var(--ease)';
           slotEl.style.transform = '';
@@ -1024,10 +1045,13 @@ export default function PhotoGallery({
             title={lang === 'ko' ? '전부 보기 (G)' : 'See them all (G)'}
           >
             {/* the total rolls over when the book widens: 47 becomes 2,297 */}
-            <span className="pb__allroll" key={wide ? 'all' : 'city'}>
+            <span className={`pb__allroll${wide ? '' : ' is-city'}`} key={wide ? 'all' : 'city'}>
               <b className={wide ? 'is-up' : 'is-down'}>
                 {wide ? TOTAL_LABEL : String(count).padStart(2, '0')}
               </b>
+              {/* the journey's total, waiting under the city's for a finger
+                  lifting the photo to roll it in (--reach) */}
+              {!wide && <i className="pb__allghost">{TOTAL_LABEL}</i>}
             </span>
           </button>
         </span>
@@ -1169,16 +1193,6 @@ export default function PhotoGallery({
           onHover={setHover}
         />
       )}
-
-      <span className={`pb__touchhint mono${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
-        {fromSheet
-          ? lang === 'ko'
-            ? '← 넘기기 · ↑↓ 전체로'
-            : '← swipe · ↑↓ back to all'
-          : lang === 'ko'
-            ? '← 넘기기 · ↑ 전체 · ↓ 닫기'
-            : '← swipe · ↑ all · ↓ close'}
-      </span>
 
       <div className="pb__strip" ref={stripRef}>
         {stripRange.map((i) => {
