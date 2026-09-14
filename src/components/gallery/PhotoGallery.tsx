@@ -644,16 +644,55 @@ export default function PhotoGallery({
     };
   }, [cityName]);
 
-  /* keep the current thumbnail in view without yanking the strip around */
+  /* ── keeping the current frame in view, without moving the strip for nothing ──
+     A frame tapped on the strip is already where the finger is: the strip used
+     to scroll it to the middle anyway, a slide on every tap. Now the strip moves
+     only as far as it must to keep the current frame clear of its edges — which
+     for a tap is not at all, and for a swipe through the photos is a frame's
+     width at a time. On opening, the frame is simply put in the middle. */
+  const stripOpenedFor = useRef<string | null>(null);
+  const stripAnchor = useRef<{ id: string; left: number } | null>(null);
+  useLayoutEffect(() => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    // In the wide book the strip holds the stop being looked at and its two
+    // neighbours; stepping into a neighbour changes which stops those are, and
+    // every frame shifts. The frame that was current is found again and the
+    // scroll moved by exactly its shift, so nothing moves under the finger.
+    const a = stripAnchor.current;
+    if (a) {
+      const same = strip.querySelector<HTMLElement>(`[data-id="${a.id}"]`);
+      if (same && same.offsetLeft !== a.left) strip.scrollLeft += same.offsetLeft - a.left;
+    }
+    const cur = strip.querySelector<HTMLElement>('.pb__thumb.is-current');
+    stripAnchor.current = cur ? { id: cur.dataset.id ?? '', left: cur.offsetLeft } : null;
+  });
   useEffect(() => {
+    if (!cityName) {
+      // closed: the next open starts centred again
+      stripOpenedFor.current = null;
+      stripAnchor.current = null;
+      return;
+    }
     const strip = stripRef.current;
     const el = strip?.querySelector<HTMLElement>('.pb__thumb.is-current');
     if (!strip || !el) return;
-    strip.scrollTo({
-      left: el.offsetLeft - strip.clientWidth / 2 + el.offsetWidth / 2,
-      behavior: 'smooth',
-    });
-  }, [safeIndex, cityName]);
+    const openKeyNow = `${cityName}:${scope}`;
+    if (stripOpenedFor.current !== openKeyNow) {
+      stripOpenedFor.current = openKeyNow;
+      strip.scrollLeft = el.offsetLeft - strip.clientWidth / 2 + el.offsetWidth / 2;
+      return;
+    }
+    const margin = Math.min(96, strip.clientWidth / 4);
+    const left = el.offsetLeft - strip.scrollLeft;
+    const right = left + el.offsetWidth;
+    if (left < margin) strip.scrollTo({ left: el.offsetLeft - margin, behavior: 'smooth' });
+    else if (right > strip.clientWidth - margin)
+      strip.scrollTo({
+        left: el.offsetLeft + el.offsetWidth - strip.clientWidth + margin,
+        behavior: 'smooth',
+      });
+  }, [safeIndex, cityName, scope]);
 
   /* ── touch: swipe across, pull down to close ─────────────────────────── */
   const gesture = useRef({ down: false, sx: 0, sy: 0, axis: '' as '' | 'x' | 'y', dy: 0, t0: 0 });
@@ -1153,6 +1192,7 @@ export default function PhotoGallery({
               <button
                 type="button"
                 className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
+                data-id={p.id}
                 style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
                 data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
                 onClick={() => {
