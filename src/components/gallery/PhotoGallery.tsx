@@ -11,8 +11,17 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
 import { visitsForCity } from '../../lib/visitPhotos';
+import {
+  TOTAL_LABEL,
+  cityLabel,
+  journeyRoll,
+  jumpTo,
+  rollIndexForStop,
+  rollNo,
+} from '../../lib/journeyRoll';
+import { srcFor } from '../../lib/photoSrc';
 import { useSideways } from '../../lib/sideways';
-import { VisitSeam } from './VisitSeam';
+import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
 import './PhotoGallery.css';
 
 interface Photo {
@@ -40,27 +49,13 @@ interface PhotoGalleryProps {
   initialSheet?: boolean;
   /** Which stay to land on, for a city the journey passed through twice. */
   focusStopId?: number | null;
+  /** Open on the whole journey rather than the city — the header's door. */
+  initialScope?: 'city' | 'all';
   onClose: () => void;
 }
 
-/** Widths worth asking Cloudinary for. Anything between rounds up to the next one. */
-const STEPS = [480, 640, 800, 1000, 1280, 1600, 2048, 2560];
-
 const DEFAULT_AR = 4 / 3;
 const arOf = (p: Photo) => (p.w && p.h ? p.w / p.h : DEFAULT_AR);
-
-/**
- * One source at the size it will actually be drawn, capped at the original.
- * Asking for a single 1600px file meant every phone paid for pixels it threw
- * away, and every retina desktop got less than it needed.
- */
-function srcFor(p: Photo, cssWidth: number): string {
-  if (!p.url) return '';
-  const want = cssWidth * (typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1);
-  const step = STEPS.find((s) => s >= want) ?? STEPS[STEPS.length - 1];
-  const w = p.w ? Math.min(step, p.w) : step;
-  return p.url.replace('/f_auto,q_auto/', `/f_auto,q_auto:good,w_${w}/`);
-}
 
 /** Thumbnails are 62x46 CSS px; ask for exactly that at this screen's density. */
 function thumbFor(p: Photo): string | undefined {
@@ -93,6 +88,7 @@ export default function PhotoGallery({
   initialPhotoId,
   initialSheet,
   focusStopId,
+  initialScope,
   onClose,
 }: PhotoGalleryProps) {
   const { language } = useI18n();
@@ -101,11 +97,19 @@ export default function PhotoGallery({
   const sideways = useSideways();
   const cityPhotos = cityPhotosData as Record<string, CityPhotoData>;
 
-  const photos = useMemo(() => {
+  const cityRoll = useMemo(() => {
     if (!cityName || !cityPhotos[cityName]) return [] as Photo[];
     const list = cityPhotos[cityName].photos;
     return [...list].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }, [cityName, cityPhotos]);
+
+  /* ── the scope: one city, or the whole journey ──────────────────────────
+     The book opens on a city. Its contact sheet has no walls: asking for all
+     of them (the total, G, the wheel) widens the book to every photo of the
+     journey, standing on the same photo. From there ← → walk on across
+     cities too. The header's door opens straight into the wide book. */
+  const [scope, setScope] = useState<'city' | 'all'>(initialScope ?? 'city');
+  const photos = scope === 'all' ? (journeyRoll.photos as Photo[]) : cityRoll;
 
   /* ── the city's stays, in order ─────────────────────────────────────────
      `photos` is already in date order and so are the visits, so each stay is
@@ -114,7 +118,7 @@ export default function PhotoGallery({
   const groups = useMemo(() => {
     const visits = visitsForCity(cityName);
     if (visits.length < 2) return null;
-    const here = new Set(photos.map((p) => p.id));
+    const here = new Set(cityRoll.map((p) => p.id));
     const out: { visit: (typeof visits)[number]; start: number; count: number }[] = [];
     let start = 0;
     for (const v of visits) {
@@ -124,14 +128,15 @@ export default function PhotoGallery({
       start += n;
     }
     return out.length > 1 ? out : null;
-  }, [cityName, photos]);
+  }, [cityName, cityRoll]);
 
   const [index, setIndex] = useState(0);
   // the whole set at once, as a contact sheet — G toggles, a tile opens it there
   const [sheet, setSheet] = useState(Boolean(initialSheet));
-  const openKey = `${cityName}:${initialPhotoId ?? ''}:${initialSheet ? 'sheet' : ''}:${focusStopId ?? ''}`;
+  const openKey = `${cityName}:${initialPhotoId ?? ''}:${initialSheet ? 'sheet' : ''}:${focusStopId ?? ''}:${initialScope ?? ''}`;
   const [lastKey, setLastKey] = useState(openKey);
-  if (openKey !== lastKey) {
+  const opening = openKey !== lastKey;
+  if (opening) {
     // a new open: start at the requested photo (state reset during render, per React guidance)
     setLastKey(openKey);
     const byPhoto = initialPhotoId ? photos.findIndex((p) => p.id === initialPhotoId) : -1;
@@ -141,12 +146,57 @@ export default function PhotoGallery({
     const i = byPhoto >= 0 ? byPhoto : byVisit >= 0 ? byVisit : 0;
     setIndex(i);
     setSheet(Boolean(initialSheet));
+    setScope('city');
+    if (initialScope === 'all') {
+      const inRoll = initialPhotoId
+        ? journeyRoll.photos.findIndex((p) => p.id === initialPhotoId)
+        : -1;
+      setScope('all');
+      setIndex(inRoll >= 0 ? inRoll : rollIndexForStop(focusStopId));
+    }
+  }
+
+  // a city's sheet is the journey's sheet, standing on the same photo
+  if (!opening && sheet && scope === 'city' && cityName) {
+    const here = cityRoll[Math.min(index, cityRoll.length - 1)];
+    const inRoll = here ? journeyRoll.photos.findIndex((p) => p.id === here.id) : -1;
+    setScope('all');
+    setIndex(inRoll >= 0 ? inRoll : 0);
   }
 
   const count = photos.length;
   const safeIndex = count ? Math.min(index, count - 1) : 0;
   const photo: Photo | undefined = photos[safeIndex];
   const atEnd = count > 0 && safeIndex === count - 1;
+
+  /* ── reading the wide sheet: what is at the top, what is at the bottom ── */
+  const [read, setRead] = useState({ top: 0, bottom: 0 });
+  const [readDir, setReadDir] = useState(1);
+  const readTop = useRef(0);
+  const onRead = useCallback((top: number, bottom: number) => {
+    if (top !== readTop.current) setReadDir(top > readTop.current ? 1 : -1);
+    readTop.current = top;
+    setRead({ top, bottom });
+  }, []);
+  const [hover, setHover] = useState<number | null>(null);
+  /* The strip in the wide book is the stop being looked at and its two
+     neighbours — two thousand thumbnails in a row is no strip at all. */
+  const stripRange = useMemo(() => {
+    if (scope !== 'all') return photos.map((_, i) => i);
+    const b = journeyRoll.blockOf[safeIndex] ?? 0;
+    const first = journeyRoll.blocks[Math.max(0, b - 1)];
+    const last = journeyRoll.blocks[Math.min(journeyRoll.blocks.length - 1, b + 1)];
+    const out: number[] = [];
+    for (let i = first.start; i < last.start + last.count; i++) out.push(i);
+    return out;
+  }, [scope, photos, safeIndex]);
+  const wide = scope === 'all';
+  const rollSheet = wide && sheet;
+  /** the photo the top bar speaks for: the one at the top of the sheet, or the one open */
+  const spoken = rollSheet ? Math.min(read.top, count - 1) : safeIndex;
+  const spokenCity = wide
+    ? cityLabel(journeyRoll.blocks[journeyRoll.blockOf[spoken]]?.stop.city ?? '', lang)
+    : cityName;
 
   /* ── how the next photo arrives ─────────────────────────────────────────
      A swipe hands over where the finger left the picture and how fast it was
@@ -352,7 +402,8 @@ export default function PhotoGallery({
       el.removeEventListener('touchend', end);
       el.removeEventListener('touchcancel', end);
     };
-  }, [sheet, onClose]);
+    // the sheet mounts once the scope has widened, so wait for that too
+  }, [sheet, scope, onClose]);
 
   /* ── the wheel over the picture: down is out (the sheet), up is back in ── */
   const wheelAcc = useRef(0);
@@ -615,7 +666,9 @@ export default function PhotoGallery({
       className="pb"
       role="dialog"
       aria-modal="true"
-      aria-label={cityName}
+      aria-label={
+        wide ? (lang === 'ko' ? '여정의 모든 사진' : 'Every photo of the journey') : cityName
+      }
       ref={rootRef}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -625,17 +678,27 @@ export default function PhotoGallery({
       <div className="pb__backdrop" onClick={onClose} />
 
       <div className="pb__top mono">
-        <span className="pb__city">{cityName}</span>
+        {/* the where: the reading's place on the journey, in the corner, beside its name */}
+        {wide && <RollLocator index={spoken} dot={rollSheet && !sideways} />}
+        <span className="pb__city">
+          {wide ? (
+            <span className="pb__cityroll" key={spokenCity}>
+              <b className={(rollSheet ? readDir : dir) > 0 ? 'is-up' : 'is-down'}>{spokenCity}</b>
+            </span>
+          ) : (
+            cityName
+          )}
+        </span>
         <span className="pb__counter">
           <span
-            className="pb__roll"
-            aria-live="polite"
+            className={`pb__roll${wide ? ' is-wide' : ''}`}
+            aria-live={rollSheet ? undefined : 'polite'}
             // on its side the strip and the caption fold away, and the dot that
             // stood under the current thumbnail stands under its number instead
             data-dot-active={sideways && !sheet ? '' : undefined}
           >
-            <b key={safeIndex} className={dir > 0 ? 'is-up' : 'is-down'}>
-              {String(safeIndex + 1).padStart(2, '0')}
+            <b key={spoken} className={(rollSheet ? readDir : dir) > 0 ? 'is-up' : 'is-down'}>
+              {wide ? rollNo(spoken) : String(safeIndex + 1).padStart(2, '0')}
             </b>
           </span>
           &nbsp;/&nbsp;
@@ -646,7 +709,7 @@ export default function PhotoGallery({
             aria-pressed={sheet}
             title={lang === 'ko' ? '전부 보기 (G)' : 'See them all (G)'}
           >
-            {String(count).padStart(2, '0')}
+            {wide ? TOTAL_LABEL : String(count).padStart(2, '0')}
           </button>
         </span>
         <span className={`pb__keys${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
@@ -755,54 +818,16 @@ export default function PhotoGallery({
         </button>
       </div>
 
-      {sheet && (
-        <div
-          className="pb__sheet"
-          ref={sheetRef}
-          role="grid"
-          aria-label={`${cityName} — all photos`}
-        >
-          {(() => {
-            const perRow = typeof window !== 'undefined' && window.innerWidth < 768 ? 3 : 6;
-            const blocks = groups ?? [{ visit: null, start: 0, count: photos.length }];
-            return blocks.map((b, bi) => {
-              const mine = photos.slice(b.start, b.start + b.count);
-              const rows: Photo[][] = [];
-              for (let i = 0; i < mine.length; i += perRow) rows.push(mine.slice(i, i + perRow));
-              return (
-                <Fragment key={b.visit?.stopId ?? 'all'}>
-                  {bi > 0 && groups && (
-                    <VisitSeam from={groups[bi - 1].visit} to={groups[bi].visit} lang={lang} />
-                  )}
-                  {rows.map((row, r) => (
-                    <div className="pb__sheetrow" role="row" key={r}>
-                      {row.map((p, j) => {
-                        const i = b.start + r * perRow + j;
-                        return (
-                          <button
-                            type="button"
-                            key={p.id}
-                            role="gridcell"
-                            className={`pb__cell${i === safeIndex ? ' is-current' : ''}`}
-                            style={{ '--ar': String(arOf(p)) } as React.CSSProperties}
-                            data-dot-active={i === safeIndex ? '' : undefined}
-                            onClick={(e) => openFromTile(i, e.currentTarget)}
-                            aria-label={`${i + 1}`}
-                          >
-                            <img src={srcFor(p, 320)} alt="" loading="lazy" decoding="async" />
-                            <span className="pb__cellno mono">
-                              {String(i + 1).padStart(2, '0')}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </Fragment>
-              );
-            });
-          })()}
-        </div>
+      {rollSheet && (
+        <JourneySheet
+          scroller={sheetRef}
+          current={safeIndex}
+          perRow={typeof window !== 'undefined' && window.innerWidth < 768 ? 3 : 6}
+          lang={lang}
+          onOpen={openFromTile}
+          onRead={onRead}
+          onHover={setHover}
+        />
       )}
 
       <span className={`pb__touchhint mono${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
@@ -810,27 +835,49 @@ export default function PhotoGallery({
       </span>
 
       <div className="pb__strip" ref={stripRef}>
-        {photos.map((p, i) => {
+        {stripRange.map((i) => {
+          const p = photos[i];
           const d = Math.abs(i - safeIndex);
+          const seamBefore =
+            wide && i > stripRange[0] && journeyRoll.blockOf[i] !== journeyRoll.blockOf[i - 1];
           return (
-            <button
-              key={p.id}
-              type="button"
-              className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
-              style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
-              data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
-              onClick={() => {
-                if (stripRef.current?.dataset.moved) return;
-                setIndex(i);
-              }}
-              aria-label={`${i + 1}`}
-              aria-current={i === safeIndex}
-            >
-              <img src={thumbFor(p)} alt="" loading="lazy" decoding="async" />
-            </button>
+            <Fragment key={p.id}>
+              {seamBefore && (
+                <span className="pb__stripseam mono" aria-hidden="true">
+                  <span>
+                    {cityLabel(journeyRoll.blocks[journeyRoll.blockOf[i]].stop.city, lang)}
+                  </span>
+                </span>
+              )}
+              <button
+                type="button"
+                className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
+                style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
+                data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
+                onClick={() => {
+                  if (stripRef.current?.dataset.moved) return;
+                  setIndex(i);
+                }}
+                aria-label={`${i + 1}`}
+                aria-current={i === safeIndex}
+              >
+                <img src={thumbFor(p)} alt="" loading="lazy" decoding="async" />
+              </button>
+            </Fragment>
           );
         })}
       </div>
+
+      {/* the when: under the wide sheet the strip gives its place to the year */}
+      {rollSheet && (
+        <YearWave
+          top={read.top}
+          bottom={read.bottom}
+          hover={hover}
+          lang={lang}
+          onScrub={(i) => jumpTo(sheetRef.current, i)}
+        />
+      )}
     </div>
   );
 }

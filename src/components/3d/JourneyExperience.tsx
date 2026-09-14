@@ -23,6 +23,7 @@ import FinaleOverlay from '../about/FinaleOverlay';
 import StopNote from '../about/StopNote';
 import { useSettledStop } from '../about/useSettledStop';
 import PhotoGallery from '../gallery/PhotoGallery';
+import { TOTAL_LABEL, journeyRoll, rollIndexForStop } from '../../lib/journeyRoll';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
@@ -1494,11 +1495,14 @@ function Header({
   globe,
   forced,
   onToggleGlobe,
+  onOpenPhotos,
 }: {
   globe: boolean;
   /** held open by the phone on its side: there is no journey to go back to at that size */
   forced: boolean;
   onToggleGlobe: () => void;
+  /** every photo of the journey, opened where the journey is standing */
+  onOpenPhotos: () => void;
 }) {
   const { t, language } = useI18n();
   return (
@@ -1516,6 +1520,12 @@ function Header({
         <span>{t('journey.brand')}</span>
       </div>
       <span className="journey-header__period mono">{journeyPeriod}</span>
+      {/* Beside the words for the whole journey, how many photos it left. The
+          photo book already taught that its total is the way to all of them;
+          this total answers the same way, with the same underline. */}
+      <button type="button" className="journey-header__photos mono" onClick={onOpenPhotos}>
+        {language === 'ko' ? `· ${TOTAL_LABEL}장` : `· ${TOTAL_LABEL} photos`}
+      </button>
       <nav className="journey-header__nav mono" aria-label="Sites">
         <a href="https://po24lio.com">{t('nav.portfolio')}</a>
         <a href="https://blog.po24lio.com">{t('nav.blog')}</a>
@@ -1591,6 +1601,7 @@ function JourneyExperienceContent() {
   const [sheetFirst, setSheetFirst] = useState(false);
   const [focusStopId, setFocusStopId] = useState<number | null>(null);
   const [initialPhotoId, setInitialPhotoId] = useState<string | null>(null);
+  const [galleryScope, setGalleryScope] = useState<'city' | 'all'>('city');
   const interactionTimeoutRef = useRef<number | null>(null);
 
   const stops = journeyData.stops as Stop[];
@@ -1873,6 +1884,7 @@ function JourneyExperienceContent() {
   // other is the city — and a camera is a thing you expect to hand you all of
   // them. The filmstrip is the other door: it opens on the frame you clicked.
   const handleCityClick = (cityName: string) => {
+    setGalleryScope('city');
     setSelectedCity(cityName);
     setInitialPhotoId(null);
     setFocusStopId(city?.id ?? null);
@@ -1883,6 +1895,7 @@ function JourneyExperienceContent() {
   // The seam keeps the stays apart, so paging on lands in the next one rather
   // than in a shuffle of both.
   const handleOpenPhoto = (cityName: string, photoId: string) => {
+    setGalleryScope('city');
     setSelectedCity(cityName);
     setInitialPhotoId(photoId);
     setFocusStopId(city?.id ?? null);
@@ -1999,7 +2012,21 @@ function JourneyExperienceContent() {
   // and the world steps back a shade so the words sit above it
   const noteUp = noteStop !== null || (currentStop === 0 && progress < 0.03) || finale;
 
+  // From the header's total: every photo of the journey, as one contact sheet,
+  // opened on the stop the journey is standing at (the start, on arrival).
+  const handleOpenAllPhotos = () => {
+    const at = rollIndexForStop(city?.id);
+    const block = journeyRoll.blocks[journeyRoll.blockOf[at]];
+    if (!block) return;
+    setGalleryScope('all');
+    setSelectedCity(block.stop.city);
+    setInitialPhotoId(null);
+    setFocusStopId(block.stop.id);
+    setSheetFirst(true);
+  };
+
   const handleCloseGallery = useCallback(() => {
+    setGalleryScope('city');
     setSelectedCity(null);
     setInitialPhotoId(null);
     setSheetFirst(false);
@@ -2468,6 +2495,7 @@ function JourneyExperienceContent() {
         globe={globeOn}
         forced={globeView.forced}
         onToggleGlobe={globeOn ? exitGlobe : enterGlobe}
+        onOpenPhotos={handleOpenAllPhotos}
       />
       {/* the names of the cities walked, while looking around (GlobeLabelDriver places them) */}
       {globeOn && (
@@ -2591,6 +2619,7 @@ function JourneyExperienceContent() {
         initialPhotoId={initialPhotoId}
         initialSheet={sheetFirst}
         focusStopId={focusStopId}
+        initialScope={galleryScope}
         onClose={handleCloseGallery}
       />
     </div>

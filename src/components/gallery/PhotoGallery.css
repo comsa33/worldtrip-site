@@ -709,256 +709,284 @@
   }
 }
 
-/* ── the seam between two stays in the same city ───────────────────────────
-   A rule that says what happened in between, and opens to show the way. */
-.pb__seam {
-  margin: 8px 0 10px;
+/* ── the wide book: every stop, one after another ────────────────────────
+   The sheet is the city's sheet with its walls taken down (JourneySheet.tsx).
+   Each stop opens with a seam: the day, a rule, how the journey got there. */
+.pb__stop {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.pb__seam.is-open {
-  margin: 16px 0 20px;
-}
-
-.pb__seambar {
+.pb__stopseam {
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 100%;
-  padding: 12px 10px;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
-  transition: background var(--t-fast) var(--ease);
+  min-width: 0;
+  padding: 16px 10px 8px;
 }
 
-.pb__seambar:hover {
-  background: var(--bg-hover);
+.pb__stop:first-child .pb__stopseam {
+  padding-top: 0;
+}
+
+/* a border crossed: the rule steps forward and names the two countries */
+.pb__stopseam.is-border {
+  padding-top: 28px;
 }
 
 .pb__seamdate {
   font-size: 11px;
   color: var(--ink-2);
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .pb__seamrule {
   flex: 1;
+  min-width: 8px;
   height: 1px;
   background: var(--line);
-  transition: background var(--t-fast) var(--ease);
 }
 
-.pb__seambar:hover .pb__seamrule {
+.pb__stopseam.is-border .pb__seamrule {
   background: var(--line-strong);
 }
 
+/* the rule must never widen the sheet: a long summary shortens instead */
 .pb__seamsum {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 10.5px;
   color: var(--ink-3);
   white-space: nowrap;
   letter-spacing: 0.04em;
 }
 
-.pb__seamchev {
-  width: 10px;
-  font-size: 10px;
-  line-height: 1;
-  color: var(--line-strong);
-  transition: color var(--t-fast) var(--ease);
-}
-
-.pb__seambar:hover .pb__seamchev {
+.pb__stopseam.is-border .pb__seamsum {
   color: var(--ink-2);
 }
 
-.pb__way {
-  padding: 6px 14px 0;
-  animation: pbFade 200ms var(--ease-out) both;
+/* the places a short last row leaves empty, so one photo is not blown up to a row */
+.pb__cellgap {
+  flex: var(--ar) 1 0;
+  visibility: hidden;
 }
 
-/* wide: the stops lie along a line, spaced by the days they took */
-.pb__wayline {
+/* the where: the site's minimap, drawn small in the corner beside the name */
+.pb__locator {
   position: relative;
-  height: 52px;
+  flex-shrink: 0;
+  width: 88px;
+  aspect-ratio: 2 / 1;
 }
 
-.pb__waybase {
+.pb__locator svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* The dot's seat. It moves when the reading crosses into another stop, and
+   the dot, pinned to it every frame, slides with it rather than jumping. The
+   hole beneath is the minimap's: the one filled mark is findable on the map. */
+.pb__locseat {
+  --dot-size: 5px;
+  position: absolute;
+  width: 0;
+  height: 0;
+  transition:
+    left 520ms var(--ease),
+    top 520ms var(--ease);
+}
+
+.pb__locseat::before {
+  content: '';
+  position: absolute;
+  left: -4.5px;
+  top: -4.5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+/* the city rolls in from the side the reading went, like the counter */
+.pb__cityroll {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.pb__cityroll b {
+  font-weight: inherit;
+  animation: pbRoll 260ms var(--ease) both;
+}
+
+.pb__cityroll b.is-down {
+  animation-name: pbRollDown;
+}
+
+.pb__roll.is-wide {
+  width: 4ch;
+}
+
+/* in the wide book the strip holds three stops; a hairline says where one ends */
+.pb__stripseam {
+  position: relative;
+  flex: 0 0 1px;
+  align-self: stretch;
+  height: 46px;
+  margin: 0 8px;
+  background: var(--line-strong);
+}
+
+.pb__stripseam span {
+  position: absolute;
+  left: 6px;
+  top: -14px;
+  font-size: 9.5px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* ── the when: the year under the sheet, one bar a day ─────────────────── */
+.pb__wave {
   position: absolute;
   left: 0;
   right: 0;
-  top: 8px;
-  height: 1px;
-  background: color-mix(in srgb, var(--line) 70%, transparent);
+  bottom: 0;
+  z-index: 4;
+  height: 92px;
+  padding: 26px 32px 0;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
 }
 
-.pb__waystop {
+.pb__waveplot {
+  position: relative;
+  height: 40px;
+}
+
+.pb__waveplot svg {
+  display: block;
+  width: 100%;
+  height: 40px;
+}
+
+.pb__wavebars {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 0.72;
+}
+
+.pb__wavebars.is-in {
+  stroke: var(--ink-2);
+}
+
+.pb__wave:hover .pb__wavebars {
+  stroke: color-mix(in srgb, var(--line-strong) 70%, var(--ink-3));
+}
+
+.pb__wave:hover .pb__wavebars.is-in {
+  stroke: var(--ink);
+}
+
+.pb__wavehead,
+.pb__wavehover {
   position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 7px;
+  top: -10px;
+  bottom: 0;
+  width: 0;
+  pointer-events: none;
 }
 
-.pb__waydot {
-  width: 4px;
-  height: 4px;
-  margin-top: 6.5px;
-  border-radius: 50%;
-  background: #5a5a5a;
-  transition: transform var(--t-fast) var(--ease-out);
+.pb__wavehead {
+  border-left: 1px solid var(--ink);
 }
 
-.pb__waystop.is-peak .pb__waydot {
-  width: 7px;
-  height: 7px;
-  margin-top: 5px;
-  background: var(--accent);
+.pb__wavehover {
+  top: -6px;
+  border-left: 1px dashed var(--ink-3);
 }
 
-.pb__wayname {
-  font-size: 8.5px;
-  color: var(--ink-3);
+.pb__wavehead span,
+.pb__wavehover span {
+  position: absolute;
+  top: -5px;
   white-space: nowrap;
-  letter-spacing: 0.02em;
-  transition: color var(--t-fast) var(--ease);
+  font-size: 11px;
+  line-height: 1;
 }
 
-.pb__waystop.is-peak .pb__wayname {
-  color: var(--ink-2);
-}
-
-.pb__waystop:hover .pb__waydot {
-  transform: scale(1.9);
-}
-
-.pb__waystop:hover .pb__wayname {
+.pb__wavehead span {
+  right: 6px;
   color: var(--ink);
 }
 
-/* narrow: the same walk runs top to bottom, and every stop gets its dates */
-.pb__waylist {
-  margin: 0;
-  padding: 0 0 0 7px;
-  list-style: none;
+.pb__wavehead.is-right span,
+.pb__wavehover span {
+  right: auto;
+  left: 6px;
 }
 
-.pb__waylist li {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 0 0 9px 19px;
-}
-
-.pb__waylist li .pb__waydot {
-  position: absolute;
-  left: 0;
-  top: 4px;
-  margin: 0;
-}
-
-.pb__waylist li.is-peak .pb__waydot {
-  left: -1.5px;
-  width: 7px;
-  height: 7px;
-  background: var(--accent);
-}
-
-/* the line that joins them — not under the last one */
-.pb__waylist li::after {
-  content: '';
-  position: absolute;
-  left: 1.5px;
-  top: 11px;
-  bottom: -2px;
-  width: 1px;
-  background: color-mix(in srgb, var(--line) 80%, transparent);
-}
-
-.pb__waylist li:last-child::after {
-  display: none;
-}
-
-.pb__waylist li .pb__wayname {
+.pb__wavehover span {
   font-size: 10.5px;
   color: var(--ink-2);
 }
 
-.pb__waylist li.is-peak .pb__wayname {
-  color: var(--ink);
+.pb__wavemonths {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 46px;
+  height: 12px;
+  pointer-events: none;
 }
 
-.pb__waywhen {
-  font-size: 9px;
-  color: #4a4a4a;
-}
-
-.pb__waywalk {
-  font-size: 8.5px;
-  color: #4a4a4a;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  padding: 1px 4px;
+.pb__wavemonths span {
+  position: absolute;
+  font-size: 9.5px;
+  color: var(--ink-3);
 }
 
 @media (max-width: 768px) {
-  .pb__seambar {
+  .pb__locator {
+    width: 64px;
+  }
+
+  .pb__stopseam {
     gap: 10px;
-    padding: 10px 6px;
+    padding: 12px 6px 6px;
+  }
+
+  .pb__stopseam.is-border {
+    padding-top: 20px;
   }
 
   .pb__seamsum {
     font-size: 9.5px;
   }
 
-  .pb__seamchev {
+  .pb__stop {
+    gap: 4px;
+  }
+
+  .pb__wave {
+    height: 84px;
+    padding: 22px 16px 0;
+  }
+
+  .pb__wavehead span {
+    font-size: 10px;
+  }
+
+  .pb__wavemonths span:nth-child(even) {
     display: none;
   }
-
-  .pb__way {
-    padding: 10px 4px 0;
-  }
-}
-
-/* the border the journey crossed, above the mark that crossed it */
-.pb__wayborder {
-  position: absolute;
-  bottom: 100%;
-  margin-bottom: 3px;
-  padding: 1px 3px;
-  border-radius: 2px;
-  font-size: 8px;
-  line-height: 1.3;
-  color: #4a4a4a;
-  white-space: nowrap;
-  background: var(--bg);
-}
-
-.pb__waystop {
-  cursor: default;
-}
-
-/* the rule must never widen the sheet: a long summary shortens instead */
-.pb__seambar {
-  min-width: 0;
-}
-
-.pb__seamsum {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.pb__seamrule {
-  min-width: 8px;
-}
-
-/* the one place the journey turns a year */
-.pb__wayyear {
-  font-size: 8.5px;
-  color: var(--accent);
-  letter-spacing: 0.06em;
 }
