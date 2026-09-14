@@ -25851,25 +25851,6 @@
         "h": 768
       },
       {
-        "id": "jablonka-002",
-        "publicId": "cities/jablonka/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo002",
-        "date": "2017-01-07T13:05:04",
-        "gps": {
-          "lat": 49.64440833333333,
-          "lng": 19.914016666666665
-        },
-        "location": "Skomielna Biała 22, Folwark, Lubień, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "jablonka-003",
         "publicId": "cities/jablonka/photo003",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo003",
@@ -25889,25 +25870,6 @@
         "h": 768
       },
       {
-        "id": "jablonka-004",
-        "publicId": "cities/jablonka/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo004",
-        "date": "2017-01-07T10:23:44",
-        "gps": {
-          "lat": 48.87513333333333,
-          "lng": 19.227908333333332
-        },
-        "location": "Cesta 59, Donovaly, Banská Bystrica",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "jablonka-005",
         "publicId": "cities/jablonka/photo005",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo005",
@@ -25923,25 +25885,6 @@
           "en": ""
         },
         "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "jablonka-006",
-        "publicId": "cities/jablonka/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo007",
-        "date": "2017-01-07T12:19:04",
-        "gps": {
-          "lat": 49.44125833333333,
-          "lng": 19.682255555555557
-        },
-        "location": "Droga Krajowa 7, Chyżne, Jabłonka, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
         "w": 1024,
         "h": 768
       },
@@ -26003,82 +25946,6 @@
         "h": 768
       },
       {
-        "id": "jablonka-010",
-        "publicId": "cities/jablonka/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo011",
-        "date": "2017-01-07T10:53:27",
-        "gps": {
-          "lat": 49.10203055555556,
-          "lng": 19.305058333333335
-        },
-        "location": "Likavka 298, Likavka, Likavka, Žilina",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "jablonka-011",
-        "publicId": "cities/jablonka/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo012",
-        "date": "2017-01-07T12:19:15",
-        "gps": {
-          "lat": 49.44391666666667,
-          "lng": 19.683444444444444
-        },
-        "location": "Słowacka, Jabłonka, Jabłonka, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "jablonka-012",
-        "publicId": "cities/jablonka/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo013",
-        "date": "2017-01-07T12:18:55",
-        "gps": {
-          "lat": 49.43946111111111,
-          "lng": 19.681069444444447
-        },
-        "location": "Droga Krajowa 7, Chyżne, Jabłonka, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "jablonka-013",
-        "publicId": "cities/jablonka/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo015",
-        "date": "2017-01-07T11:52:31",
-        "gps": {
-          "lat": 49.41285277777778,
-          "lng": 19.66396111111111
-        },
-        "location": "Chyżne 298, Chyżne, Jabłonka, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "jablonka-014",
         "publicId": "cities/jablonka/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo016",
@@ -26094,25 +25961,6 @@
           "en": ""
         },
         "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "jablonka-015",
-        "publicId": "cities/jablonka/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/jablonka/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/jablonka/photo017",
-        "date": "2017-01-07T12:19:01",
-        "gps": {
-          "lat": 49.44081111111111,
-          "lng": 19.682025
-        },
-        "location": "Droga Krajowa 7, Chyżne, Jabłonka, Lesser Poland",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
         "w": 1024,
         "h": 768
       }
