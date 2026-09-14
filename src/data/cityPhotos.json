@@ -9863,25 +9863,6 @@
     "cityCode": "budapest",
     "photos": [
       {
-        "id": "budapest-001",
-        "publicId": "cities/budapest/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo001",
-        "date": "2017-01-06T13:06:45",
-        "gps": {
-          "lat": 47.51884722222222,
-          "lng": 19.082497222222223
-        },
-        "location": "Állatkerti körút 11., District XIV, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "budapest-002",
         "publicId": "cities/budapest/photo002",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo002",
@@ -9958,44 +9939,6 @@
         "h": 768
       },
       {
-        "id": "budapest-006",
-        "publicId": "cities/budapest/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo006",
-        "date": "2017-01-06T16:59:05",
-        "gps": {
-          "lat": 47.51081111111111,
-          "lng": 19.055222222222223
-        },
-        "location": "Nyugati tér 5., District V, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "budapest-007",
-        "publicId": "cities/budapest/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo007",
-        "date": "2017-01-05T14:14:49",
-        "gps": {
-          "lat": 47.51006666666667,
-          "lng": 19.055644444444447
-        },
-        "location": "Bajcsy-Zsilinszky út 2., District VI, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "budapest-008",
         "publicId": "cities/budapest/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo008",
@@ -10015,25 +9958,6 @@
         "h": 768
       },
       {
-        "id": "budapest-009",
-        "publicId": "cities/budapest/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo009",
-        "date": "2017-01-04T21:16:08",
-        "gps": {
-          "lat": 47.50440555555556,
-          "lng": 19.0621
-        },
-        "location": "Andrássy út 44., District VI, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "budapest-010",
         "publicId": "cities/budapest/photo010",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo010",
@@ -10049,44 +9973,6 @@
           "en": ""
         },
         "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "budapest-011",
-        "publicId": "cities/budapest/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo011",
-        "date": "2017-01-06T16:59:01",
-        "gps": {
-          "lat": 47.510819444444444,
-          "lng": 19.05530277777778
-        },
-        "location": "Nyugati tér 5., District V, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "budapest-012",
-        "publicId": "cities/budapest/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo012",
-        "date": "2017-01-06T16:58:59",
-        "gps": {
-          "lat": 47.51075,
-          "lng": 19.055366666666668
-        },
-        "location": "Nyugati tér 5., District V, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
         "w": 1024,
         "h": 768
       },
@@ -10243,44 +10129,6 @@
         "h": 768
       },
       {
-        "id": "budapest-021",
-        "publicId": "cities/budapest/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo023",
-        "date": "2017-01-05T15:18:01",
-        "gps": {
-          "lat": 47.50553055555555,
-          "lng": 19.04455
-        },
-        "location": "Id Antall József rakpart, District V, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "budapest-022",
-        "publicId": "cities/budapest/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo024",
-        "date": "2017-01-04T18:49:15",
-        "gps": {
-          "lat": 47.506727777777776,
-          "lng": 19.06097777777778
-        },
-        "location": "Teréz körút 30., District VI, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "budapest-023",
         "publicId": "cities/budapest/photo025",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo025",
@@ -10319,25 +10167,6 @@
         "h": 1024
       },
       {
-        "id": "budapest-025",
-        "publicId": "cities/budapest/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo029",
-        "date": "2017-01-06T16:59:06",
-        "gps": {
-          "lat": 47.5108,
-          "lng": 19.055230555555557
-        },
-        "location": "Nyugati tér 5., District V, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "budapest-026",
         "publicId": "cities/budapest/photo030",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo030",
@@ -10353,44 +10182,6 @@
           "en": ""
         },
         "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "budapest-027",
-        "publicId": "cities/budapest/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo031",
-        "date": "2017-01-07T06:51:01",
-        "gps": {
-          "lat": 47.46398888888889,
-          "lng": 19.022969444444442
-        },
-        "location": "Somogyi út 35., District XI, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "budapest-028",
-        "publicId": "cities/budapest/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/budapest/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/budapest/photo032",
-        "date": "2017-01-05T15:18:41",
-        "gps": {
-          "lat": 47.50559722222222,
-          "lng": 19.044825000000003
-        },
-        "location": "Id Antall József rakpart 11., District V, Budapest, Budapest",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
         "w": 1024,
         "h": 768
       }
