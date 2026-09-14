@@ -2127,21 +2127,21 @@
     "cityCode": "annapurna",
     "photos": [
       {
-        "id": "annapurna-001",
-        "publicId": "cities/annapurna/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo001",
-        "date": "2016-11-05T17:05:41",
+        "id": "annapurna-030",
+        "publicId": "cities/annapurna/photo030",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo030",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo030",
+        "date": "2016-11-03T08:04:33",
         "gps": {
-          "lat": 28.415525,
-          "lng": 83.82849166666666
+          "lat": 28.283530555555558,
+          "lng": 83.868325
         },
-        "location": "गण्डकी प्रदेश",
+        "location": "Pokhara Baglung Highway, Kade, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
+        "alt": "photo030",
         "w": 1024,
         "h": 768
       },
@@ -2165,42 +2165,213 @@
         "h": 1024
       },
       {
-        "id": "annapurna-003",
-        "publicId": "cities/annapurna/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo003",
-        "date": "2016-11-04T16:48:28",
+        "id": "annapurna-006",
+        "publicId": "cities/annapurna/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo006",
+        "date": "2016-11-03T09:31:51",
         "gps": {
-          "lat": 28.400141666666666,
-          "lng": 83.68948333333333
+          "lat": 28.305825000000002,
+          "lng": 83.7714388888889
         },
-        "location": "Ghorepani-Poonhill, Dhawalagiri",
+        "location": "Birethanti-Chane, Birethanti, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo003",
-        "w": 1206,
-        "h": 360
+        "alt": "photo006",
+        "w": 1024,
+        "h": 768
       },
       {
-        "id": "annapurna-004",
-        "publicId": "cities/annapurna/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo004",
-        "date": "2016-11-04T11:57:47",
+        "id": "annapurna-040",
+        "publicId": "cities/annapurna/photo040",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo040",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo040",
+        "date": "2016-11-03T09:59:34",
         "gps": {
-          "lat": 28.402813888888886,
-          "lng": 83.70017222222222
+          "lat": 28.311994444444444,
+          "lng": 83.77153888888888
         },
-        "location": "43DR020, Ghorepani, गण्डकी प्रदेश",
+        "location": "40DR001, Birethanti, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo004",
-        "w": 1166,
-        "h": 673
+        "alt": "photo040",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-034",
+        "publicId": "cities/annapurna/photo034",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo034",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo034",
+        "date": "2016-11-03T10:14:18",
+        "gps": {
+          "lat": 28.31368888888889,
+          "lng": 83.7657
+        },
+        "location": "40DR001, Birethanti, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo034",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-024",
+        "publicId": "cities/annapurna/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo024",
+        "date": "2016-11-03T10:21:16",
+        "gps": {
+          "lat": 28.315822222222224,
+          "lng": 83.76258055555556
+        },
+        "location": "40DR001, Khiu, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo024",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-050",
+        "publicId": "cities/annapurna/photo050",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo050",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo050",
+        "date": "2016-11-03T11:09:52",
+        "gps": {
+          "lat": 28.328980555555557,
+          "lng": 83.746125
+        },
+        "location": "40DR001, Hile, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo050",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-039",
+        "publicId": "cities/annapurna/photo039",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo039",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo039",
+        "date": "2016-11-03T13:01:21",
+        "gps": {
+          "lat": 28.35065,
+          "lng": 83.74239444444444
+        },
+        "location": "Hile, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo039",
+        "w": 1022,
+        "h": 768
+      },
+      {
+        "id": "annapurna-036",
+        "publicId": "cities/annapurna/photo036",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo036",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo036",
+        "date": "2016-11-03T14:39:30",
+        "gps": {
+          "lat": 28.355808333333336,
+          "lng": 83.73614444444445
+        },
+        "location": "Ulleri, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo036",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-043",
+        "publicId": "cities/annapurna/photo043",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo043",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo043",
+        "date": "2016-11-03T17:21:44",
+        "gps": {
+          "lat": 28.357405555555555,
+          "lng": 83.73514444444444
+        },
+        "location": "Ulleri, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo043",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-046",
+        "publicId": "cities/annapurna/photo046",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo046",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo046",
+        "date": "2016-11-03T19:27:57",
+        "gps": {
+          "lat": 28.35745277777778,
+          "lng": 83.7350388888889
+        },
+        "location": "Ulleri, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo046",
+        "w": 1022,
+        "h": 768
+      },
+      {
+        "id": "annapurna-042",
+        "publicId": "cities/annapurna/photo042",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo042",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo042",
+        "date": "2016-11-04T08:37:03",
+        "gps": {
+          "lat": 28.357405555555555,
+          "lng": 83.73520555555555
+        },
+        "location": "Ulleri, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo042",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-011",
+        "publicId": "cities/annapurna/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo011",
+        "date": "2016-11-04T08:45:02",
+        "gps": {
+          "lat": 28.357394444444445,
+          "lng": 83.73510833333333
+        },
+        "location": "Ulleri, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011",
+        "w": 1024,
+        "h": 768
       },
       {
         "id": "annapurna-005",
@@ -2218,25 +2389,6 @@
           "en": ""
         },
         "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-006",
-        "publicId": "cities/annapurna/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo006",
-        "date": "2016-11-03T09:31:51",
-        "gps": {
-          "lat": 28.305825000000002,
-          "lng": 83.7714388888889
-        },
-        "location": "Birethanti-Chane, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
         "w": 1024,
         "h": 768
       },
@@ -2260,6 +2412,63 @@
         "h": 1024
       },
       {
+        "id": "annapurna-012",
+        "publicId": "cities/annapurna/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo012",
+        "date": "2016-11-04T11:55:52",
+        "gps": {
+          "lat": 28.402541666666664,
+          "lng": 83.69995
+        },
+        "location": "43DR020, Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012",
+        "w": 1022,
+        "h": 768
+      },
+      {
+        "id": "annapurna-044",
+        "publicId": "cities/annapurna/photo044",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo044",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo044",
+        "date": "2016-11-04T16:12:21",
+        "gps": {
+          "lat": 28.40002222222222,
+          "lng": 83.68956666666666
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo044",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-041",
+        "publicId": "cities/annapurna/photo041",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo041",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo041",
+        "date": "2016-11-04T16:18:54",
+        "gps": {
+          "lat": 28.400244444444443,
+          "lng": 83.68923055555555
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo041",
+        "w": 768,
+        "h": 1024
+      },
+      {
         "id": "annapurna-008",
         "publicId": "cities/annapurna/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo008",
@@ -2275,6 +2484,139 @@
           "en": ""
         },
         "alt": "photo008",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-048",
+        "publicId": "cities/annapurna/photo048",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo048",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo048",
+        "date": "2016-11-04T16:39:54",
+        "gps": {
+          "lat": 28.40009722222222,
+          "lng": 83.68950555555556
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo048",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-038",
+        "publicId": "cities/annapurna/photo038",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo038",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo038",
+        "date": "2016-11-05T06:08:53",
+        "gps": {
+          "lat": 28.399502777777776,
+          "lng": 83.68948333333334
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo038",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-031",
+        "publicId": "cities/annapurna/photo031",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo031",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo031",
+        "date": "2016-11-05T06:25:12",
+        "gps": {
+          "lat": 28.39993611111111,
+          "lng": 83.68973611111112
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo031",
+        "w": 1024,
+        "h": 474
+      },
+      {
+        "id": "annapurna-035",
+        "publicId": "cities/annapurna/photo035",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo035",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo035",
+        "date": "2016-11-05T06:30:45",
+        "gps": {
+          "lat": 28.40001111111111,
+          "lng": 83.68983333333334
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo035",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-049",
+        "publicId": "cities/annapurna/photo049",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo049",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo049",
+        "date": "2016-11-05T06:34:41",
+        "gps": {
+          "lat": 28.399958333333334,
+          "lng": 83.68974166666668
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo049",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-045",
+        "publicId": "cities/annapurna/photo045",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo045",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo045",
+        "date": "2016-11-05T06:45:50",
+        "gps": {
+          "lat": 28.40018611111111,
+          "lng": 83.68937777777778
+        },
+        "location": "Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo045",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-023",
+        "publicId": "cities/annapurna/photo023",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo023",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo023",
+        "date": "2016-11-05T08:53:08",
+        "gps": {
+          "lat": 28.402583333333332,
+          "lng": 83.70042500000001
+        },
+        "location": "43DR020, Ghorepani, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo023",
         "w": 1024,
         "h": 768
       },
@@ -2298,178 +2640,7 @@
         "h": 768
       },
       {
-        "id": "annapurna-010",
-        "publicId": "cities/annapurna/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo010",
-        "date": "2016-11-05T08:51:53",
-        "gps": {
-          "lat": 28.402766666666665,
-          "lng": 83.7004
-        },
-        "location": "43DR020, Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-011",
-        "publicId": "cities/annapurna/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo011",
-        "date": "2016-11-04T08:45:02",
-        "gps": {
-          "lat": 28.357394444444445,
-          "lng": 83.73510833333333
-        },
-        "location": "Ulleri, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-012",
-        "publicId": "cities/annapurna/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo012",
-        "date": "2016-11-04T11:55:52",
-        "gps": {
-          "lat": 28.402541666666664,
-          "lng": 83.69995
-        },
-        "location": "43DR020, Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "annapurna-013",
-        "publicId": "cities/annapurna/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo013",
-        "date": "2016-11-03T09:15:20",
-        "gps": {
-          "lat": 28.29883888888889,
-          "lng": 83.76827222222222
-        },
-        "location": "Nayapul, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-014",
-        "publicId": "cities/annapurna/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo015",
-        "date": "2016-11-04T16:43:59",
-        "gps": {
-          "lat": 28.400066666666664,
-          "lng": 83.6894
-        },
-        "location": "Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-015",
-        "publicId": "cities/annapurna/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo016",
-        "date": "2016-11-05T17:05:53",
-        "gps": {
-          "lat": 28.415558333333333,
-          "lng": 83.828475
-        },
-        "location": "गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-016",
-        "publicId": "cities/annapurna/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo017",
-        "date": "2016-11-05T06:36:47",
-        "gps": {
-          "lat": 28.399958333333334,
-          "lng": 83.68969722222222
-        },
-        "location": "Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-017",
-        "publicId": "cities/annapurna/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo018",
-        "date": "2016-11-03T10:30:41",
-        "gps": {
-          "lat": 28.319230555555556,
-          "lng": 83.75929166666667
-        },
-        "location": "40DR001, Hile, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-018",
-        "publicId": "cities/annapurna/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo020",
-        "date": "2016-11-06T13:00:30",
-        "gps": {
-          "lat": 28.336455555555553,
-          "lng": 83.80087222222222
-        },
-        "location": "Nayapul-Ghandruk Road, Tihan Gaun, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1186,
-        "h": 663
-      },
-      {
-        "id": "annapurna-019",
+        "id": "annapurna-021",
         "publicId": "cities/annapurna/photo021",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo021",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo021",
@@ -2488,216 +2659,7 @@
         "h": 768
       },
       {
-        "id": "annapurna-020",
-        "publicId": "cities/annapurna/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo022",
-        "date": "2016-11-03T20:06:00",
-        "gps": {
-          "lat": 28.357383333333335,
-          "lng": 83.73475
-        },
-        "location": "Ulleri, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-021",
-        "publicId": "cities/annapurna/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo023",
-        "date": "2016-11-05T08:53:08",
-        "gps": {
-          "lat": 28.402583333333332,
-          "lng": 83.70042500000001
-        },
-        "location": "43DR020, Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-022",
-        "publicId": "cities/annapurna/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo024",
-        "date": "2016-11-03T10:21:16",
-        "gps": {
-          "lat": 28.315822222222224,
-          "lng": 83.76258055555556
-        },
-        "location": "40DR001, Khiu, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-023",
-        "publicId": "cities/annapurna/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo025",
-        "date": "2016-11-06T14:17:26",
-        "gps": {
-          "lat": 28.30931111111111,
-          "lng": 83.77533611111112
-        },
-        "location": "Modi Khola Bridge, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-024",
-        "publicId": "cities/annapurna/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo026",
-        "date": "2016-11-03T09:45:51",
-        "gps": {
-          "lat": 28.309597222222223,
-          "lng": 83.77539722222222
-        },
-        "location": "40DR001, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-025",
-        "publicId": "cities/annapurna/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo027",
-        "date": "2016-11-06T13:58:24",
-        "gps": {
-          "lat": 28.31528888888889,
-          "lng": 83.780875
-        },
-        "location": "40DR002, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-026",
-        "publicId": "cities/annapurna/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo028",
-        "date": "2016-11-05T11:49:30",
-        "gps": {
-          "lat": 28.39623611111111,
-          "lng": 83.76544166666666
-        },
-        "location": "गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-027",
-        "publicId": "cities/annapurna/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo029",
-        "date": "2016-11-04T10:26:47",
-        "gps": {
-          "lat": 28.38502777777778,
-          "lng": 83.70983055555556
-        },
-        "location": "गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-028",
-        "publicId": "cities/annapurna/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo030",
-        "date": "2016-11-03T08:04:33",
-        "gps": {
-          "lat": 28.283530555555558,
-          "lng": 83.868325
-        },
-        "location": "Pokhara Baglung Highway, Kade, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "annapurna-029",
-        "publicId": "cities/annapurna/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo031",
-        "date": "2016-11-05T06:25:12",
-        "gps": {
-          "lat": 28.39993611111111,
-          "lng": 83.68973611111112
-        },
-        "location": "Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 474
-      },
-      {
-        "id": "annapurna-030",
-        "publicId": "cities/annapurna/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo032",
-        "date": "2016-11-04T16:19:08",
-        "gps": {
-          "lat": 28.400233333333333,
-          "lng": 83.68925555555556
-        },
-        "location": "Ghorepani, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "annapurna-031",
+        "id": "annapurna-033",
         "publicId": "cities/annapurna/photo033",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo033",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo033",
@@ -2716,23 +2678,137 @@
         "h": 1024
       },
       {
-        "id": "annapurna-032",
-        "publicId": "cities/annapurna/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo034",
-        "date": "2016-11-03T12:59:00",
+        "id": "annapurna-028",
+        "publicId": "cities/annapurna/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo028",
+        "date": "2016-11-05T11:49:30",
         "gps": {
-          "lat": 28.350261111111113,
-          "lng": 83.74316388888889
+          "lat": 28.39623611111111,
+          "lng": 83.76544166666666
         },
-        "location": "Hile, गण्डकी प्रदेश",
+        "location": "गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo034",
+        "alt": "photo028",
         "w": 1024,
-        "h": 576
+        "h": 768
+      },
+      {
+        "id": "annapurna-001",
+        "publicId": "cities/annapurna/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo001",
+        "date": "2016-11-05T17:05:41",
+        "gps": {
+          "lat": 28.415525,
+          "lng": 83.82849166666666
+        },
+        "location": "गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-037",
+        "publicId": "cities/annapurna/photo037",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo037",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo037",
+        "date": "2016-11-05T17:07:38",
+        "gps": {
+          "lat": 28.415330555555553,
+          "lng": 83.82855277777777
+        },
+        "location": "Chhomrong, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo037",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "annapurna-020",
+        "publicId": "cities/annapurna/photo020",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo020",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo020",
+        "date": "2016-11-06T13:00:30",
+        "gps": {
+          "lat": 28.336455555555553,
+          "lng": 83.80087222222222
+        },
+        "location": "Nayapul-Ghandruk Road, Tihan Gaun, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo020",
+        "w": 1186,
+        "h": 663
+      },
+      {
+        "id": "annapurna-027",
+        "publicId": "cities/annapurna/photo027",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo027",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo027",
+        "date": "2016-11-06T13:58:24",
+        "gps": {
+          "lat": 28.31528888888889,
+          "lng": 83.780875
+        },
+        "location": "40DR002, Birethanti, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo027",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-047",
+        "publicId": "cities/annapurna/photo047",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo047",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo047",
+        "date": "2016-11-06T13:59:35",
+        "gps": {
+          "lat": 28.31561388888889,
+          "lng": 83.7807611111111
+        },
+        "location": "40DR002, Birethanti, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo047",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "annapurna-025",
+        "publicId": "cities/annapurna/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/annapurna/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/annapurna/photo025",
+        "date": "2016-11-06T14:17:26",
+        "gps": {
+          "lat": 28.30931111111111,
+          "lng": 83.77533611111112
+        },
+        "location": "Modi Khola Bridge, Birethanti, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo025",
+        "w": 768,
+        "h": 1024
       }
     ]
   },
@@ -6110,116 +6186,59 @@
     "cityCode": "bhaktapur",
     "photos": [
       {
-        "id": "bhaktapur-001",
-        "publicId": "cities/bhaktapur/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo001",
-        "date": "2016-11-13T17:44:20",
+        "id": "bhaktapur-032",
+        "publicId": "cities/bhaktapur/photo032",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo032",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo032",
+        "date": "2016-11-11T18:55:23",
         "gps": {
-          "lat": 27.67262777777778,
-          "lng": 85.42403333333334
+          "lat": 27.672625,
+          "lng": 85.42534722222223
         },
-        "location": "itachhen, भक्तपुर, बागमती प्रदेश",
+        "location": "इतछें, भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
+        "alt": "photo032",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "bhaktapur-041",
+        "publicId": "cities/bhaktapur/photo041",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo041",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo041",
+        "date": "2016-11-11T20:07:24",
+        "gps": {
+          "lat": 27.67117777777778,
+          "lng": 85.42887222222222
+        },
+        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo041",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-002",
-        "publicId": "cities/bhaktapur/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo002",
-        "date": "2016-11-12T13:32:26",
+        "id": "bhaktapur-019",
+        "publicId": "cities/bhaktapur/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo019",
+        "date": "2016-11-12T11:59:49",
         "gps": {
-          "lat": 27.673486111111114,
-          "lng": 85.43705833333334
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-003",
-        "publicId": "cities/bhaktapur/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo003",
-        "date": "2016-11-13T15:34:54",
-        "gps": {
-          "lat": 27.67123888888889,
+          "lat": 27.671166666666668,
           "lng": 85.42925277777778
         },
-        "location": "भक्तपुर, बागमती प्रदेश",
+        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo003",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-004",
-        "publicId": "cities/bhaktapur/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo004",
-        "date": "2016-11-13T17:39:46",
-        "gps": {
-          "lat": 27.672800000000002,
-          "lng": 85.42542222222222
-        },
-        "location": "khauma, इतछें, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-005",
-        "publicId": "cities/bhaktapur/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo005",
-        "date": "2016-11-12T13:54:42",
-        "gps": {
-          "lat": 27.672522222222224,
-          "lng": 85.43319722222223
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-006",
-        "publicId": "cities/bhaktapur/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo006",
-        "date": "2016-11-12T13:13:05",
-        "gps": {
-          "lat": 27.673475,
-          "lng": 85.4352638888889
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
+        "alt": "photo019",
         "w": 1024,
         "h": 768
       },
@@ -6243,80 +6262,156 @@
         "h": 1024
       },
       {
-        "id": "bhaktapur-008",
-        "publicId": "cities/bhaktapur/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo008",
-        "date": "2016-11-13T17:31:26",
+        "id": "bhaktapur-044",
+        "publicId": "cities/bhaktapur/photo044",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo044",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo044",
+        "date": "2016-11-12T13:08:46",
         "gps": {
-          "lat": 27.67116111111111,
-          "lng": 85.42949722222222
+          "lat": 27.673375,
+          "lng": 85.43489166666667
         },
         "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo008",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-009",
-        "publicId": "cities/bhaktapur/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo009",
-        "date": "2016-11-13T11:48:50",
-        "gps": {
-          "lat": 27.67204166666667,
-          "lng": 85.42145555555555
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
+        "alt": "photo044",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-010",
-        "publicId": "cities/bhaktapur/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo010",
-        "date": "2016-11-12T12:00:16",
+        "id": "bhaktapur-038",
+        "publicId": "cities/bhaktapur/photo038",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo038",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo038",
+        "date": "2016-11-12T13:09:36",
         "gps": {
-          "lat": 27.671105555555556,
-          "lng": 85.42926111111112
+          "lat": 27.6734,
+          "lng": 85.43486111111112
         },
         "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo010",
-        "w": 768,
-        "h": 1024
+        "alt": "photo038",
+        "w": 1024,
+        "h": 768
       },
       {
-        "id": "bhaktapur-011",
-        "publicId": "cities/bhaktapur/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo011",
-        "date": "2016-11-12T20:10:54",
+        "id": "bhaktapur-027",
+        "publicId": "cities/bhaktapur/photo027",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo027",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo027",
+        "date": "2016-11-12T13:11:22",
         "gps": {
-          "lat": 27.672469444444445,
-          "lng": 85.42363611111112
+          "lat": 27.673502777777777,
+          "lng": 85.43534166666667
         },
-        "location": "itachhen, भक्तपुर, बागमती प्रदेश",
+        "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo011",
+        "alt": "photo027",
         "w": 1024,
         "h": 768
+      },
+      {
+        "id": "bhaktapur-017",
+        "publicId": "cities/bhaktapur/photo017",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo017",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo017",
+        "date": "2016-11-12T13:18:26",
+        "gps": {
+          "lat": 27.673544444444445,
+          "lng": 85.435525
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo017",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "bhaktapur-042",
+        "publicId": "cities/bhaktapur/photo042",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo042",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo042",
+        "date": "2016-11-12T13:20:29",
+        "gps": {
+          "lat": 27.673547222222222,
+          "lng": 85.43595833333333
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo042",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "bhaktapur-002",
+        "publicId": "cities/bhaktapur/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo002",
+        "date": "2016-11-12T13:32:26",
+        "gps": {
+          "lat": 27.673486111111114,
+          "lng": 85.43705833333334
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "bhaktapur-014",
+        "publicId": "cities/bhaktapur/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo014",
+        "date": "2016-11-12T13:33:59",
+        "gps": {
+          "lat": 27.67365277777778,
+          "lng": 85.43712500000001
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo014",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "bhaktapur-047",
+        "publicId": "cities/bhaktapur/photo047",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo047",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo047",
+        "date": "2016-11-12T14:11:44",
+        "gps": {
+          "lat": 27.67143888888889,
+          "lng": 85.43
+        },
+        "location": "kwachhen, भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo047",
+        "w": 768,
+        "h": 1024
       },
       {
         "id": "bhaktapur-012",
@@ -6338,444 +6433,83 @@
         "h": 768
       },
       {
-        "id": "bhaktapur-013",
-        "publicId": "cities/bhaktapur/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo014",
-        "date": "2016-11-12T13:33:59",
+        "id": "bhaktapur-043",
+        "publicId": "cities/bhaktapur/photo043",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo043",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo043",
+        "date": "2016-11-12T17:07:38",
         "gps": {
-          "lat": 27.67365277777778,
-          "lng": 85.43712500000001
+          "lat": 27.670197222222225,
+          "lng": 85.42804722222223
         },
         "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
+        "alt": "photo043",
+        "w": 768,
+        "h": 1024
       },
       {
-        "id": "bhaktapur-014",
-        "publicId": "cities/bhaktapur/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo015",
-        "date": "2016-11-13T15:27:03",
+        "id": "bhaktapur-046",
+        "publicId": "cities/bhaktapur/photo046",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo046",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo046",
+        "date": "2016-11-12T18:07:42",
         "gps": {
-          "lat": 27.67237777777778,
-          "lng": 85.427475
+          "lat": 27.672422222222224,
+          "lng": 85.4275138888889
         },
         "location": "इतछें, भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo015",
+        "alt": "photo046",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-015",
-        "publicId": "cities/bhaktapur/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo016",
-        "date": "2016-11-13T12:54:22",
+        "id": "bhaktapur-040",
+        "publicId": "cities/bhaktapur/photo040",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo040",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo040",
+        "date": "2016-11-12T18:40:56",
         "gps": {
-          "lat": 27.671408333333336,
-          "lng": 85.42204166666667
+          "lat": 27.672697222222222,
+          "lng": 85.42525555555557
         },
-        "location": "bharwacho, भक्तपुर, बागमती प्रदेश",
+        "location": "itachhen, इतछें, भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo016",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-016",
-        "publicId": "cities/bhaktapur/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo017",
-        "date": "2016-11-12T13:18:26",
-        "gps": {
-          "lat": 27.673544444444445,
-          "lng": 85.435525
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
+        "alt": "photo040",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-017",
-        "publicId": "cities/bhaktapur/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo018",
-        "date": "2016-11-12T13:33:40",
+        "id": "bhaktapur-011",
+        "publicId": "cities/bhaktapur/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo011",
+        "date": "2016-11-12T20:10:54",
         "gps": {
-          "lat": 27.673469444444446,
-          "lng": 85.43712500000001
+          "lat": 27.672469444444445,
+          "lng": 85.42363611111112
         },
-        "location": "Main Chok, भक्तपुर, बागमती प्रदेश",
+        "location": "itachhen, भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo018",
+        "alt": "photo011",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-018",
-        "publicId": "cities/bhaktapur/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo019",
-        "date": "2016-11-12T11:59:49",
-        "gps": {
-          "lat": 27.671166666666668,
-          "lng": 85.42925277777778
-        },
-        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-019",
-        "publicId": "cities/bhaktapur/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo020",
-        "date": "2016-11-12T13:48:25",
-        "gps": {
-          "lat": 27.67256388888889,
-          "lng": 85.43528611111111
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-020",
-        "publicId": "cities/bhaktapur/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo021",
-        "date": "2016-11-13T11:56:31",
-        "gps": {
-          "lat": 27.67160555555556,
-          "lng": 85.42049444444444
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-021",
-        "publicId": "cities/bhaktapur/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo022",
-        "date": "2016-11-13T17:29:13",
-        "gps": {
-          "lat": 27.67106111111111,
-          "lng": 85.42939722222222
-        },
-        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-022",
-        "publicId": "cities/bhaktapur/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo023",
-        "date": "2016-11-13T17:53:23",
-        "gps": {
-          "lat": 27.67213888888889,
-          "lng": 85.42385
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-023",
-        "publicId": "cities/bhaktapur/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo024",
-        "date": "2016-11-13T11:52:14",
-        "gps": {
-          "lat": 27.671522222222222,
-          "lng": 85.42133333333334
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-024",
-        "publicId": "cities/bhaktapur/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo025",
-        "date": "2016-11-13T12:55:28",
-        "gps": {
-          "lat": 27.671322222222223,
-          "lng": 85.42216388888889
-        },
-        "location": "bharwacho, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-025",
-        "publicId": "cities/bhaktapur/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo026",
-        "date": "2016-11-13T17:31:31",
-        "gps": {
-          "lat": 27.671122222222223,
-          "lng": 85.4294888888889
-        },
-        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-026",
-        "publicId": "cities/bhaktapur/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo027",
-        "date": "2016-11-12T13:11:22",
-        "gps": {
-          "lat": 27.673502777777777,
-          "lng": 85.43534166666667
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-027",
-        "publicId": "cities/bhaktapur/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo028",
-        "date": "2016-11-13T17:43:22",
-        "gps": {
-          "lat": 27.67266388888889,
-          "lng": 85.42399722222223
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-028",
-        "publicId": "cities/bhaktapur/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo029",
-        "date": "2016-11-13T12:55:24",
-        "gps": {
-          "lat": 27.671322222222223,
-          "lng": 85.42216388888889
-        },
-        "location": "bharwacho, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-029",
-        "publicId": "cities/bhaktapur/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo030",
-        "date": "2016-11-12T13:14:52",
-        "gps": {
-          "lat": 27.67361388888889,
-          "lng": 85.43528611111111
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-030",
-        "publicId": "cities/bhaktapur/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo031",
-        "date": "2016-11-12T14:11:46",
-        "gps": {
-          "lat": 27.671436111111113,
-          "lng": 85.43
-        },
-        "location": "kwachhen, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-031",
-        "publicId": "cities/bhaktapur/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo032",
-        "date": "2016-11-11T18:55:23",
-        "gps": {
-          "lat": 27.672625,
-          "lng": 85.42534722222223
-        },
-        "location": "इतछें, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-032",
-        "publicId": "cities/bhaktapur/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo033",
-        "date": "2016-11-12T12:11:41",
-        "gps": {
-          "lat": 27.67253611111111,
-          "lng": 85.43246388888889
-        },
-        "location": "golmadhi, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-033",
-        "publicId": "cities/bhaktapur/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo034",
-        "date": "2016-11-13T17:30:16",
-        "gps": {
-          "lat": 27.671116666666666,
-          "lng": 85.42933611111111
-        },
-        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-034",
-        "publicId": "cities/bhaktapur/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo035",
-        "date": "2016-11-13T17:50:51",
-        "gps": {
-          "lat": 27.67210277777778,
-          "lng": 85.42385833333334
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "bhaktapur-035",
-        "publicId": "cities/bhaktapur/photo036",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo036",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo036",
-        "date": "2016-11-12T17:08:42",
-        "gps": {
-          "lat": 27.670219444444445,
-          "lng": 85.42834444444445
-        },
-        "location": "भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo036",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "bhaktapur-036",
+        "id": "bhaktapur-037",
         "publicId": "cities/bhaktapur/photo037",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo037",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo037",
@@ -6794,59 +6528,173 @@
         "h": 768
       },
       {
-        "id": "bhaktapur-037",
-        "publicId": "cities/bhaktapur/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo038",
-        "date": "2016-11-12T13:09:36",
+        "id": "bhaktapur-009",
+        "publicId": "cities/bhaktapur/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo009",
+        "date": "2016-11-13T11:48:50",
         "gps": {
-          "lat": 27.6734,
-          "lng": 85.43486111111112
+          "lat": 27.67204166666667,
+          "lng": 85.42145555555555
         },
         "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo038",
+        "alt": "photo009",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-038",
-        "publicId": "cities/bhaktapur/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo039",
-        "date": "2016-11-11T13:06:02",
+        "id": "bhaktapur-024",
+        "publicId": "cities/bhaktapur/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo024",
+        "date": "2016-11-13T11:52:14",
         "gps": {
-          "lat": 27.728394444444444,
-          "lng": 85.30687777777777
+          "lat": 27.671522222222222,
+          "lng": 85.42133333333334
         },
-        "location": "पारिजात सादक, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
+        "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo039",
+        "alt": "photo024",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "bhaktapur-039",
-        "publicId": "cities/bhaktapur/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo040",
-        "date": "2016-11-12T18:40:56",
+        "id": "bhaktapur-021",
+        "publicId": "cities/bhaktapur/photo021",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo021",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo021",
+        "date": "2016-11-13T11:56:31",
         "gps": {
-          "lat": 27.672697222222222,
-          "lng": 85.42525555555557
+          "lat": 27.67160555555556,
+          "lng": 85.42049444444444
         },
-        "location": "itachhen, इतछें, भक्तपुर, बागमती प्रदेश",
+        "location": "भक्तपुर, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo040",
+        "alt": "photo021",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "bhaktapur-015",
+        "publicId": "cities/bhaktapur/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo015",
+        "date": "2016-11-13T15:27:03",
+        "gps": {
+          "lat": 27.67237777777778,
+          "lng": 85.427475
+        },
+        "location": "इतछें, भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "bhaktapur-003",
+        "publicId": "cities/bhaktapur/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo003",
+        "date": "2016-11-13T15:34:54",
+        "gps": {
+          "lat": 27.67123888888889,
+          "lng": 85.42925277777778
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "bhaktapur-045",
+        "publicId": "cities/bhaktapur/photo045",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo045",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo045",
+        "date": "2016-11-13T17:30:12",
+        "gps": {
+          "lat": 27.671097222222222,
+          "lng": 85.42940555555556
+        },
+        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo045",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "bhaktapur-026",
+        "publicId": "cities/bhaktapur/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo026",
+        "date": "2016-11-13T17:31:31",
+        "gps": {
+          "lat": 27.671122222222223,
+          "lng": 85.4294888888889
+        },
+        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo026",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "bhaktapur-028",
+        "publicId": "cities/bhaktapur/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo028",
+        "date": "2016-11-13T17:43:22",
+        "gps": {
+          "lat": 27.67266388888889,
+          "lng": 85.42399722222223
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo028",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "bhaktapur-048",
+        "publicId": "cities/bhaktapur/photo048",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bhaktapur/photo048",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bhaktapur/photo048",
+        "date": "2016-11-13T17:54:17",
+        "gps": {
+          "lat": 27.67213888888889,
+          "lng": 85.42387500000001
+        },
+        "location": "भक्तपुर, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo048",
         "w": 1024,
         "h": 768
       }
@@ -18735,23 +18583,23 @@
     "cityCode": "kathmandu",
     "photos": [
       {
-        "id": "kathmandu-001",
-        "publicId": "cities/kathmandu/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo001",
-        "date": "2016-11-09T20:16:13",
+        "id": "kathmandu-024",
+        "publicId": "cities/kathmandu/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo024",
+        "date": "2016-11-09T12:25:54",
         "gps": {
-          "lat": 27.71135,
-          "lng": 85.30861666666667
+          "lat": 27.810647222222222,
+          "lng": 84.83364999999999
         },
-        "location": "पक्नाजोल, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
+        "location": "Prithvi Rajmarg, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
+        "alt": "photo024",
+        "w": 768,
+        "h": 1024
       },
       {
         "id": "kathmandu-002",
@@ -18769,63 +18617,6 @@
           "en": ""
         },
         "alt": "photo002",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "kathmandu-003",
-        "publicId": "cities/kathmandu/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo003",
-        "date": "2016-11-10T15:05:13",
-        "gps": {
-          "lat": 27.71178888888889,
-          "lng": 85.30927222222222
-        },
-        "location": "J.P. Road, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "kathmandu-004",
-        "publicId": "cities/kathmandu/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo004",
-        "date": "2016-11-10T09:14:54",
-        "gps": {
-          "lat": 27.708191666666664,
-          "lng": 85.31356944444444
-        },
-        "location": "Yogbir Singh Marg, कमलाक्षी, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "kathmandu-005",
-        "publicId": "cities/kathmandu/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo005",
-        "date": "2016-11-11T17:26:37",
-        "gps": {
-          "lat": 27.706225,
-          "lng": 85.3164361111111
-        },
-        "location": "बागबजार सडक, बागबजार, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
         "w": 768,
         "h": 1024
       },
@@ -18849,118 +18640,23 @@
         "h": 768
       },
       {
-        "id": "kathmandu-007",
-        "publicId": "cities/kathmandu/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo007",
-        "date": "2016-11-10T11:00:54",
+        "id": "kathmandu-001",
+        "publicId": "cities/kathmandu/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo001",
+        "date": "2016-11-09T20:16:13",
         "gps": {
-          "lat": 27.706875,
-          "lng": 85.30982222222222
+          "lat": 27.71135,
+          "lng": 85.30861666666667
         },
-        "location": "Heritage Walk, Nhaikantalla, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
+        "location": "पक्नाजोल, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "kathmandu-008",
-        "publicId": "cities/kathmandu/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo008",
-        "date": "2016-11-10T06:35:25",
-        "gps": {
-          "lat": 27.71570277777778,
-          "lng": 85.31427777777778
-        },
-        "location": "Keshar Mahal Marg, ठमेल, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
+        "alt": "photo001",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "kathmandu-009",
-        "publicId": "cities/kathmandu/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo009",
-        "date": "2016-11-11T13:06:12",
-        "gps": {
-          "lat": 27.728363888888886,
-          "lng": 85.30690833333333
-        },
-        "location": "पारिजात सादक, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "kathmandu-010",
-        "publicId": "cities/kathmandu/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo010",
-        "date": "2016-11-11T20:07:24",
-        "gps": {
-          "lat": 27.67117777777778,
-          "lng": 85.42887222222222
-        },
-        "location": "Adarsha, भक्तपुर, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "kathmandu-011",
-        "publicId": "cities/kathmandu/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo011",
-        "date": "2016-11-10T15:05:04",
-        "gps": {
-          "lat": 27.711747222222222,
-          "lng": 85.30928888888889
-        },
-        "location": "J.P. Road, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "kathmandu-012",
-        "publicId": "cities/kathmandu/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo012",
-        "date": "2016-11-10T10:56:55",
-        "gps": {
-          "lat": 27.70888611111111,
-          "lng": 85.31034722222222
-        },
-        "location": "चन्द्रमन मास्की मार्ग, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "kathmandu-013",
@@ -18982,121 +18678,83 @@
         "h": 768
       },
       {
-        "id": "kathmandu-014",
-        "publicId": "cities/kathmandu/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo014",
-        "date": "2016-11-10T10:56:39",
+        "id": "kathmandu-004",
+        "publicId": "cities/kathmandu/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo004",
+        "date": "2016-11-10T09:14:54",
         "gps": {
-          "lat": 27.708952777777778,
-          "lng": 85.31032499999999
+          "lat": 27.708191666666664,
+          "lng": 85.31356944444444
+        },
+        "location": "Yogbir Singh Marg, कमलाक्षी, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "kathmandu-012",
+        "publicId": "cities/kathmandu/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo012",
+        "date": "2016-11-10T10:56:55",
+        "gps": {
+          "lat": 27.70888611111111,
+          "lng": 85.31034722222222
         },
         "location": "चन्द्रमन मास्की मार्ग, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo014",
+        "alt": "photo012",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "kathmandu-015",
-        "publicId": "cities/kathmandu/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo015",
-        "date": "2016-11-11T18:55:23",
+        "id": "kathmandu-007",
+        "publicId": "cities/kathmandu/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo007",
+        "date": "2016-11-10T11:00:54",
         "gps": {
-          "lat": 27.672625,
-          "lng": 85.42534722222223
+          "lat": 27.706875,
+          "lng": 85.30982222222222
         },
-        "location": "इतछें, भक्तपुर, बागमती प्रदेश",
+        "location": "Heritage Walk, Nhaikantalla, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo015",
+        "alt": "photo007",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "kathmandu-016",
-        "publicId": "cities/kathmandu/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo016",
-        "date": "2016-11-09T17:25:58",
+        "id": "kathmandu-011",
+        "publicId": "cities/kathmandu/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo011",
+        "date": "2016-11-10T15:05:04",
         "gps": {
-          "lat": 27.71376111111111,
-          "lng": 85.30318333333334
-        },
-        "location": "पुष्पलाल पथ ;स्वयम्भु मार्ग, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "kathmandu-017",
-        "publicId": "cities/kathmandu/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo017",
-        "date": "2016-11-09T23:02:24",
-        "gps": {
-          "lat": 27.715866666666667,
-          "lng": 85.31411666666666
-        },
-        "location": "Keshar Mahal Marg, ठमेल, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "kathmandu-018",
-        "publicId": "cities/kathmandu/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo018",
-        "date": "2016-11-10T08:08:01",
-        "gps": {
-          "lat": 27.71208888888889,
-          "lng": 85.30994444444444
+          "lat": 27.711747222222222,
+          "lng": 85.30928888888889
         },
         "location": "J.P. Road, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo018",
+        "alt": "photo011",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "kathmandu-019",
-        "publicId": "cities/kathmandu/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo020",
-        "date": "2016-11-11T13:06:03",
-        "gps": {
-          "lat": 27.728355555555552,
-          "lng": 85.30688611111111
-        },
-        "location": "पारिजात सादक, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "kathmandu-020",
+        "id": "kathmandu-021",
         "publicId": "cities/kathmandu/photo021",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo021",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo021",
@@ -19115,26 +18773,7 @@
         "h": 768
       },
       {
-        "id": "kathmandu-021",
-        "publicId": "cities/kathmandu/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo022",
-        "date": "2016-11-10T10:56:43",
-        "gps": {
-          "lat": 27.70898888888889,
-          "lng": 85.31031666666667
-        },
-        "location": "चन्द्रमन मास्की मार्ग, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "kathmandu-022",
+        "id": "kathmandu-023",
         "publicId": "cities/kathmandu/photo023",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo023",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo023",
@@ -19153,23 +18792,23 @@
         "h": 768
       },
       {
-        "id": "kathmandu-023",
-        "publicId": "cities/kathmandu/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo024",
-        "date": "2016-11-10T09:04:30",
+        "id": "kathmandu-005",
+        "publicId": "cities/kathmandu/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/kathmandu/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/kathmandu/photo005",
+        "date": "2016-11-11T17:26:37",
         "gps": {
-          "lat": 27.710238888888888,
-          "lng": 85.31063888888889
+          "lat": 27.706225,
+          "lng": 85.3164361111111
         },
-        "location": "काठमाडौँ महानगरपालिका, बागमती प्रदेश",
+        "location": "बागबजार सडक, बागबजार, काठमाडौँ महानगरपालिका, बागमती प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
+        "alt": "photo005",
+        "w": 768,
+        "h": 1024
       }
     ]
   },
@@ -28749,444 +28388,7 @@
     "cityCode": "pokhara",
     "photos": [
       {
-        "id": "pokhara-001",
-        "publicId": "cities/pokhara/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo001",
-        "date": "2016-11-03T07:22:56",
-        "gps": {
-          "lat": 28.21299722222222,
-          "lng": 83.975525
-        },
-        "location": "Pokhara Baglung Rajmarg, जीरो किलोमीटर, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-002",
-        "publicId": "cities/pokhara/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo002",
-        "date": "2016-11-01T14:29:18",
-        "gps": {
-          "lat": 28.208130555555556,
-          "lng": 83.9553138888889
-        },
-        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-003",
-        "publicId": "cities/pokhara/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo005",
-        "date": "2016-11-02T11:34:55",
-        "gps": {
-          "lat": 28.20458611111111,
-          "lng": 83.9621361111111
-        },
-        "location": "Lakeside Marg, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-004",
-        "publicId": "cities/pokhara/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo006",
-        "date": "2016-11-01T18:48:46",
-        "gps": {
-          "lat": 28.214422222222222,
-          "lng": 83.95778611111112
-        },
-        "location": "Lakeside Marg, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-005",
-        "publicId": "cities/pokhara/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo007",
-        "date": "2016-11-08T20:34:45",
-        "gps": {
-          "lat": 28.221905555555555,
-          "lng": 83.9549638888889
-        },
-        "location": "40DR012, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-006",
-        "publicId": "cities/pokhara/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo008",
-        "date": "2016-11-01T15:38:50",
-        "gps": {
-          "lat": 28.213952777777777,
-          "lng": 83.957825
-        },
-        "location": "Baidam Road, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-007",
-        "publicId": "cities/pokhara/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo009",
-        "date": "2016-11-01T14:09:20",
-        "gps": {
-          "lat": 28.21233611111111,
-          "lng": 83.9554138888889
-        },
-        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-008",
-        "publicId": "cities/pokhara/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo010",
-        "date": "2016-11-01T14:14:40",
-        "gps": {
-          "lat": 28.211913888888887,
-          "lng": 83.95530833333333
-        },
-        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-009",
-        "publicId": "cities/pokhara/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo011",
-        "date": "2016-11-01T17:19:48",
-        "gps": {
-          "lat": 28.21143611111111,
-          "lng": 83.95561944444445
-        },
-        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-010",
-        "publicId": "cities/pokhara/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo012",
-        "date": "2016-11-07T16:32:13",
-        "gps": {
-          "lat": 28.227152777777775,
-          "lng": 83.93398333333333
-        },
-        "location": "Khapaudi Road, Bhakunde, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-011",
-        "publicId": "cities/pokhara/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo013",
-        "date": "2016-11-07T16:17:55",
-        "gps": {
-          "lat": 28.226633333333332,
-          "lng": 83.93409722222222
-        },
-        "location": "Khapaudi Road, Bhakunde, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-012",
-        "publicId": "cities/pokhara/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo014",
-        "date": "2016-11-01T12:19:21",
-        "gps": {
-          "lat": 28.216641666666668,
-          "lng": 83.96105833333334
-        },
-        "location": "24, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-013",
-        "publicId": "cities/pokhara/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo015",
-        "date": "2016-11-01T14:32:40",
-        "gps": {
-          "lat": 28.208130555555556,
-          "lng": 83.95545277777778
-        },
-        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "pokhara-014",
-        "publicId": "cities/pokhara/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo016",
-        "date": "2016-11-01T14:43:12",
-        "gps": {
-          "lat": 28.211247222222223,
-          "lng": 83.9555888888889
-        },
-        "location": "Rolling Stone Rock Bar way, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-015",
-        "publicId": "cities/pokhara/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo017",
-        "date": "2016-11-02T17:51:29",
-        "gps": {
-          "lat": 28.21739722222222,
-          "lng": 83.95938055555555
-        },
-        "location": "19, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-016",
-        "publicId": "cities/pokhara/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo018",
-        "date": "2016-11-07T16:27:11",
-        "gps": {
-          "lat": 28.226611111111108,
-          "lng": 83.93404444444445
-        },
-        "location": "Khapaudi Road, Bhakunde, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-017",
-        "publicId": "cities/pokhara/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo019",
-        "date": "2016-11-03T07:27:14",
-        "gps": {
-          "lat": 28.225344444444442,
-          "lng": 83.98043055555556
-        },
-        "location": "Parsyang Ratamata Road, धारापानी, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-018",
-        "publicId": "cities/pokhara/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo020",
-        "date": "2016-11-01T12:19:42",
-        "gps": {
-          "lat": 28.216813888888886,
-          "lng": 83.96093888888889
-        },
-        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-019",
-        "publicId": "cities/pokhara/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo021",
-        "date": "2016-11-01T17:25:33",
-        "gps": {
-          "lat": 28.213738888888887,
-          "lng": 83.95544444444445
-        },
-        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-020",
-        "publicId": "cities/pokhara/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo022",
-        "date": "2016-11-02T10:18:31",
-        "gps": {
-          "lat": 28.204449999999998,
-          "lng": 83.96382222222222
-        },
-        "location": "5th Street,Ammat, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-021",
-        "publicId": "cities/pokhara/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo024",
-        "date": "2016-11-08T22:53:14",
-        "gps": {
-          "lat": 28.220419444444442,
-          "lng": 83.95724444444444
-        },
-        "location": "40DR012, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-022",
-        "publicId": "cities/pokhara/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo025",
-        "date": "2016-11-08T17:40:58",
-        "gps": {
-          "lat": 28.21535,
-          "lng": 83.95675555555556
-        },
-        "location": "Camping Chok Road, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-023",
-        "publicId": "cities/pokhara/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo026",
-        "date": "2016-11-07T16:26:44",
-        "gps": {
-          "lat": 28.226713888888888,
-          "lng": 83.934075
-        },
-        "location": "Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-024",
+        "id": "pokhara-027",
         "publicId": "cities/pokhara/photo027",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo027",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo027",
@@ -29205,83 +28407,64 @@
         "h": 768
       },
       {
-        "id": "pokhara-025",
-        "publicId": "cities/pokhara/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo028",
-        "date": "2016-11-08T20:23:33",
+        "id": "pokhara-075",
+        "publicId": "cities/pokhara/photo075",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo075",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo075",
+        "date": "2016-11-01T11:21:41",
         "gps": {
-          "lat": 28.22179722222222,
-          "lng": 83.95491666666668
+          "lat": 28.216905555555552,
+          "lng": 83.96080833333333
         },
-        "location": "40DR012, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "location": "24, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo028",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-026",
-        "publicId": "cities/pokhara/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo029",
-        "date": "2016-11-07T20:51:54",
-        "gps": {
-          "lat": 28.211305555555555,
-          "lng": 83.9591138888889
-        },
-        "location": "16, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
+        "alt": "photo075",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-027",
-        "publicId": "cities/pokhara/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo030",
-        "date": "2016-11-06T13:00:42",
+        "id": "pokhara-014",
+        "publicId": "cities/pokhara/photo014",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo014",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo014",
+        "date": "2016-11-01T12:19:21",
         "gps": {
-          "lat": 28.33647222222222,
-          "lng": 83.80053055555555
+          "lat": 28.216641666666668,
+          "lng": 83.96105833333334
         },
-        "location": "Nayapul-Ghandruk Road, Tihan Gaun, गण्डकी प्रदेश",
+        "location": "24, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo030",
+        "alt": "photo014",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-028",
-        "publicId": "cities/pokhara/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo031",
-        "date": "2016-11-08T17:35:53",
+        "id": "pokhara-009",
+        "publicId": "cities/pokhara/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo009",
+        "date": "2016-11-01T14:09:20",
         "gps": {
-          "lat": 28.216724999999997,
-          "lng": 83.95726111111111
+          "lat": 28.21233611111111,
+          "lng": 83.9554138888889
         },
-        "location": "18A, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo031",
+        "alt": "photo009",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-029",
+        "id": "pokhara-032",
         "publicId": "cities/pokhara/photo032",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo032",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo032",
@@ -29300,102 +28483,64 @@
         "h": 768
       },
       {
-        "id": "pokhara-030",
-        "publicId": "cities/pokhara/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo033",
-        "date": "2016-11-06T14:10:48",
+        "id": "pokhara-010",
+        "publicId": "cities/pokhara/photo010",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo010",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo010",
+        "date": "2016-11-01T14:14:40",
         "gps": {
-          "lat": 28.30971388888889,
-          "lng": 83.77546666666666
+          "lat": 28.211913888888887,
+          "lng": 83.95530833333333
         },
-        "location": "40DR001, Birethanti, गण्डकी प्रदेश",
+        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo033",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-031",
-        "publicId": "cities/pokhara/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo034",
-        "date": "2016-11-03T10:21:04",
-        "gps": {
-          "lat": 28.315822222222224,
-          "lng": 83.76258055555556
-        },
-        "location": "40DR001, Khiu, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-032",
-        "publicId": "cities/pokhara/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo035",
-        "date": "2016-11-03T10:21:26",
-        "gps": {
-          "lat": 28.315822222222224,
-          "lng": 83.76258055555556
-        },
-        "location": "40DR001, Khiu, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
+        "alt": "photo010",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-033",
-        "publicId": "cities/pokhara/photo036",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo036",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo036",
-        "date": "2016-11-06T13:50:36",
+        "id": "pokhara-069",
+        "publicId": "cities/pokhara/photo069",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo069",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo069",
+        "date": "2016-11-01T14:28:56",
         "gps": {
-          "lat": 28.319247222222224,
-          "lng": 83.78495
+          "lat": 28.208125,
+          "lng": 83.95533055555556
         },
-        "location": "40DR002, Tomijung, गण्डकी प्रदेश",
+        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo036",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-034",
-        "publicId": "cities/pokhara/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo037",
-        "date": "2016-11-03T08:08:05",
-        "gps": {
-          "lat": 28.28135,
-          "lng": 83.86488333333332
-        },
-        "location": "Pokhara Baglung Highway, Kade, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
+        "alt": "photo069",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-035",
+        "id": "pokhara-074",
+        "publicId": "cities/pokhara/photo074",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo074",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo074",
+        "date": "2016-11-01T14:43:32",
+        "gps": {
+          "lat": 28.21120833333333,
+          "lng": 83.95551944444445
+        },
+        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo074",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-038",
         "publicId": "cities/pokhara/photo038",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo038",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo038",
@@ -29414,159 +28559,26 @@
         "h": 768
       },
       {
-        "id": "pokhara-036",
-        "publicId": "cities/pokhara/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo039",
-        "date": "2016-11-08T09:25:57",
+        "id": "pokhara-008",
+        "publicId": "cities/pokhara/photo008",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo008",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo008",
+        "date": "2016-11-01T15:38:50",
         "gps": {
-          "lat": 28.20535,
-          "lng": 83.96399722222222
+          "lat": 28.213952777777777,
+          "lng": 83.957825
         },
-        "location": "Kiwi Lane, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "location": "Baidam Road, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo039",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-037",
-        "publicId": "cities/pokhara/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo040",
-        "date": "2016-11-01T18:52:45",
-        "gps": {
-          "lat": 28.214369444444444,
-          "lng": 83.95810833333334
-        },
-        "location": "Lakeside Marg, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo040",
+        "alt": "photo008",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-038",
-        "publicId": "cities/pokhara/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo041",
-        "date": "2016-11-07T16:29:17",
-        "gps": {
-          "lat": 28.22648333333333,
-          "lng": 83.93415833333334
-        },
-        "location": "Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo041",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-039",
-        "publicId": "cities/pokhara/photo042",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo042",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo042",
-        "date": "2016-11-07T16:19:17",
-        "gps": {
-          "lat": 28.226680555555554,
-          "lng": 83.9340888888889
-        },
-        "location": "Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo042",
-        "w": 1024,
-        "h": 576
-      },
-      {
-        "id": "pokhara-040",
-        "publicId": "cities/pokhara/photo043",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo043",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo043",
-        "date": "2016-11-01T17:22:44",
-        "gps": {
-          "lat": 28.21257222222222,
-          "lng": 83.95525277777779
-        },
-        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo043",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-041",
-        "publicId": "cities/pokhara/photo044",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo044",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo044",
-        "date": "2016-11-06T13:58:25",
-        "gps": {
-          "lat": 28.315291666666667,
-          "lng": 83.78088333333334
-        },
-        "location": "40DR002, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo044",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-042",
-        "publicId": "cities/pokhara/photo045",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo045",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo045",
-        "date": "2016-11-01T14:06:29",
-        "gps": {
-          "lat": 28.212374999999998,
-          "lng": 83.95516111111111
-        },
-        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo045",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-043",
-        "publicId": "cities/pokhara/photo046",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo046",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo046",
-        "date": "2016-11-08T17:36:35",
-        "gps": {
-          "lat": 28.216702777777776,
-          "lng": 83.95724444444444
-        },
-        "location": "18A, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo046",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-044",
+        "id": "pokhara-047",
         "publicId": "cities/pokhara/photo047",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo047",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo047",
@@ -29585,330 +28597,45 @@
         "h": 769
       },
       {
-        "id": "pokhara-045",
-        "publicId": "cities/pokhara/photo048",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo048",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo048",
-        "date": "2016-11-07T16:22:34",
+        "id": "pokhara-011",
+        "publicId": "cities/pokhara/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo011",
+        "date": "2016-11-01T17:19:48",
         "gps": {
-          "lat": 28.226630555555555,
-          "lng": 83.93409722222222
+          "lat": 28.21143611111111,
+          "lng": 83.95561944444445
         },
-        "location": "Pokhara, गण्डकी प्रदेश",
+        "location": "16B, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo048",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-046",
-        "publicId": "cities/pokhara/photo049",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo049",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo049",
-        "date": "2016-11-08T17:38:49",
-        "gps": {
-          "lat": 28.21642222222222,
-          "lng": 83.95714444444445
-        },
-        "location": "18A, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo049",
+        "alt": "photo011",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-047",
-        "publicId": "cities/pokhara/photo050",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo050",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo050",
-        "date": "2016-11-06T13:57:44",
+        "id": "pokhara-021",
+        "publicId": "cities/pokhara/photo021",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo021",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo021",
+        "date": "2016-11-01T17:25:33",
         "gps": {
-          "lat": 28.315294444444444,
-          "lng": 83.7809
-        },
-        "location": "40DR002, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo050",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-048",
-        "publicId": "cities/pokhara/photo051",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo051",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo051",
-        "date": "2016-11-07T16:19:03",
-        "gps": {
-          "lat": 28.226680555555554,
-          "lng": 83.9340888888889
-        },
-        "location": "Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo051",
-        "w": 1024,
-        "h": 576
-      },
-      {
-        "id": "pokhara-049",
-        "publicId": "cities/pokhara/photo052",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo052",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo052",
-        "date": "2016-11-06T13:58:03",
-        "gps": {
-          "lat": 28.315308333333334,
-          "lng": 83.78088333333334
-        },
-        "location": "40DR002, Birethanti, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo052",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-050",
-        "publicId": "cities/pokhara/photo053",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo053",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo053",
-        "date": "2016-11-08T17:38:45",
-        "gps": {
-          "lat": 28.21643611111111,
-          "lng": 83.95716111111112
-        },
-        "location": "18A, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo053",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-051",
-        "publicId": "cities/pokhara/photo054",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo054",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo054",
-        "date": "2016-11-06T08:15:13",
-        "gps": {
-          "lat": 28.409875,
-          "lng": 83.82392777777777
-        },
-        "location": "गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo054",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-052",
-        "publicId": "cities/pokhara/photo055",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo055",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo055",
-        "date": "2016-11-08T17:48:47",
-        "gps": {
-          "lat": 28.21361111111111,
-          "lng": 83.95726111111111
+          "lat": 28.213738888888887,
+          "lng": 83.95544444444445
         },
         "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo055",
-        "w": 1024,
-        "h": 576
-      },
-      {
-        "id": "pokhara-053",
-        "publicId": "cities/pokhara/photo056",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo056",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo056",
-        "date": "2016-11-08T17:27:42",
-        "gps": {
-          "lat": 28.21969722222222,
-          "lng": 83.95774722222222
-        },
-        "location": "40DR012, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo056",
+        "alt": "photo021",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-054",
-        "publicId": "cities/pokhara/photo057",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo057",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo057",
-        "date": "2016-11-08T20:25:15",
-        "gps": {
-          "lat": 28.221844444444443,
-          "lng": 83.95505555555556
-        },
-        "location": "40DR012, बैदाम, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo057",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-055",
-        "publicId": "cities/pokhara/photo058",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo058",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo058",
-        "date": "2016-11-02T11:15:48",
-        "gps": {
-          "lat": 28.199036111111113,
-          "lng": 83.96913055555555
-        },
-        "location": "Dam Side Marg, बिरौटा, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo058",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "pokhara-056",
-        "publicId": "cities/pokhara/photo059",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo059",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo059",
-        "date": "2016-11-03T12:59:00",
-        "gps": {
-          "lat": 28.350261111111113,
-          "lng": 83.74316388888889
-        },
-        "location": "Hile, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo059",
-        "w": 1024,
-        "h": 576
-      },
-      {
-        "id": "pokhara-057",
-        "publicId": "cities/pokhara/photo060",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo060",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo060",
-        "date": "2016-11-03T08:15:57",
-        "gps": {
-          "lat": 28.285983333333334,
-          "lng": 83.83299166666666
-        },
-        "location": "Pokhara Baglung Highway, Kade, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo060",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-058",
-        "publicId": "cities/pokhara/photo061",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo061",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo061",
-        "date": "2016-11-07T16:18:19",
-        "gps": {
-          "lat": 28.22666111111111,
-          "lng": 83.93408333333333
-        },
-        "location": "Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo061",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-059",
-        "publicId": "cities/pokhara/photo062",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo062",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo062",
-        "date": "2016-11-03T14:48:10",
-        "gps": {
-          "lat": 28.355733333333333,
-          "lng": 83.73628333333333
-        },
-        "location": "Ulleri, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo062",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-060",
-        "publicId": "cities/pokhara/photo063",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo063",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo063",
-        "date": "2016-11-07T16:32:12",
-        "gps": {
-          "lat": 28.227152777777775,
-          "lng": 83.93398333333333
-        },
-        "location": "Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo063",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-061",
-        "publicId": "cities/pokhara/photo064",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo064",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo064",
-        "date": "2016-11-07T15:25:28",
-        "gps": {
-          "lat": 28.244552777777777,
-          "lng": 83.94793055555556
-        },
-        "location": "Main Street, Pokhara, गण्डकी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo064",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "pokhara-062",
+        "id": "pokhara-065",
         "publicId": "cities/pokhara/photo065",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo065",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo065",
@@ -29927,26 +28654,83 @@
         "h": 768
       },
       {
-        "id": "pokhara-063",
-        "publicId": "cities/pokhara/photo066",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo066",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo066",
-        "date": "2016-11-07T16:27:31",
+        "id": "pokhara-072",
+        "publicId": "cities/pokhara/photo072",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo072",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo072",
+        "date": "2016-11-01T18:54:01",
         "gps": {
-          "lat": 28.226611111111108,
-          "lng": 83.93405277777778
+          "lat": 28.214333333333332,
+          "lng": 83.95806111111112
         },
-        "location": "Pokhara, गण्डकी प्रदेश",
+        "location": "Lakeside Marg, बैदाम, Pokhara, गण्डकी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo066",
+        "alt": "photo072",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "pokhara-064",
+        "id": "pokhara-058",
+        "publicId": "cities/pokhara/photo058",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo058",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo058",
+        "date": "2016-11-02T11:15:48",
+        "gps": {
+          "lat": 28.199036111111113,
+          "lng": 83.96913055555555
+        },
+        "location": "Dam Side Marg, बिरौटा, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo058",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "pokhara-005",
+        "publicId": "cities/pokhara/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo005",
+        "date": "2016-11-02T11:34:55",
+        "gps": {
+          "lat": 28.20458611111111,
+          "lng": 83.9621361111111
+        },
+        "location": "Lakeside Marg, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-017",
+        "publicId": "cities/pokhara/photo017",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo017",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo017",
+        "date": "2016-11-02T17:51:29",
+        "gps": {
+          "lat": 28.21739722222222,
+          "lng": 83.95938055555555
+        },
+        "location": "19, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo017",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "pokhara-067",
         "publicId": "cities/pokhara/photo067",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo067",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo067",
@@ -29961,6 +28745,329 @@
           "en": ""
         },
         "alt": "photo067",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-019",
+        "publicId": "cities/pokhara/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo019",
+        "date": "2016-11-03T07:27:14",
+        "gps": {
+          "lat": 28.225344444444442,
+          "lng": 83.98043055555556
+        },
+        "location": "Parsyang Ratamata Road, धारापानी, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-064",
+        "publicId": "cities/pokhara/photo064",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo064",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo064",
+        "date": "2016-11-07T15:25:28",
+        "gps": {
+          "lat": 28.244552777777777,
+          "lng": 83.94793055555556
+        },
+        "location": "Main Street, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo064",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-061",
+        "publicId": "cities/pokhara/photo061",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo061",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo061",
+        "date": "2016-11-07T16:18:19",
+        "gps": {
+          "lat": 28.22666111111111,
+          "lng": 83.93408333333333
+        },
+        "location": "Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo061",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-070",
+        "publicId": "cities/pokhara/photo070",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo070",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo070",
+        "date": "2016-11-07T16:19:01",
+        "gps": {
+          "lat": 28.226680555555554,
+          "lng": 83.9340888888889
+        },
+        "location": "Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo070",
+        "w": 1182,
+        "h": 665
+      },
+      {
+        "id": "pokhara-071",
+        "publicId": "cities/pokhara/photo071",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo071",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo071",
+        "date": "2016-11-07T16:20:05",
+        "gps": {
+          "lat": 28.226591666666664,
+          "lng": 83.93409722222222
+        },
+        "location": "Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo071",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-018",
+        "publicId": "cities/pokhara/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo018",
+        "date": "2016-11-07T16:27:11",
+        "gps": {
+          "lat": 28.226611111111108,
+          "lng": 83.93404444444445
+        },
+        "location": "Khapaudi Road, Bhakunde, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo018",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-012",
+        "publicId": "cities/pokhara/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo012",
+        "date": "2016-11-07T16:32:13",
+        "gps": {
+          "lat": 28.227152777777775,
+          "lng": 83.93398333333333
+        },
+        "location": "Khapaudi Road, Bhakunde, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-073",
+        "publicId": "cities/pokhara/photo073",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo073",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo073",
+        "date": "2016-11-07T16:35:41",
+        "gps": {
+          "lat": 28.227213888888887,
+          "lng": 83.9340138888889
+        },
+        "location": "Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo073",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-029",
+        "publicId": "cities/pokhara/photo029",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo029",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo029",
+        "date": "2016-11-07T20:51:54",
+        "gps": {
+          "lat": 28.211305555555555,
+          "lng": 83.9591138888889
+        },
+        "location": "16, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo029",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-039",
+        "publicId": "cities/pokhara/photo039",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo039",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo039",
+        "date": "2016-11-08T09:25:57",
+        "gps": {
+          "lat": 28.20535,
+          "lng": 83.96399722222222
+        },
+        "location": "Kiwi Lane, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo039",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "pokhara-068",
+        "publicId": "cities/pokhara/photo068",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo068",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo068",
+        "date": "2016-11-08T17:24:34",
+        "gps": {
+          "lat": 28.220699999999997,
+          "lng": 83.956475
+        },
+        "location": "40DR012, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo068",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "pokhara-031",
+        "publicId": "cities/pokhara/photo031",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo031",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo031",
+        "date": "2016-11-08T17:35:53",
+        "gps": {
+          "lat": 28.216724999999997,
+          "lng": 83.95726111111111
+        },
+        "location": "18A, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo031",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-053",
+        "publicId": "cities/pokhara/photo053",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo053",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo053",
+        "date": "2016-11-08T17:38:45",
+        "gps": {
+          "lat": 28.21643611111111,
+          "lng": 83.95716111111112
+        },
+        "location": "18A, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo053",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-025",
+        "publicId": "cities/pokhara/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo025",
+        "date": "2016-11-08T17:40:58",
+        "gps": {
+          "lat": 28.21535,
+          "lng": 83.95675555555556
+        },
+        "location": "Camping Chok Road, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo025",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-055",
+        "publicId": "cities/pokhara/photo055",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo055",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo055",
+        "date": "2016-11-08T17:48:47",
+        "gps": {
+          "lat": 28.21361111111111,
+          "lng": 83.95726111111111
+        },
+        "location": "बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo055",
+        "w": 1024,
+        "h": 576
+      },
+      {
+        "id": "pokhara-007",
+        "publicId": "cities/pokhara/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo007",
+        "date": "2016-11-08T20:34:45",
+        "gps": {
+          "lat": 28.221905555555555,
+          "lng": 83.9549638888889
+        },
+        "location": "40DR012, बैदाम, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "pokhara-024",
+        "publicId": "cities/pokhara/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/pokhara/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/pokhara/photo024",
+        "date": "2016-11-08T22:53:14",
+        "gps": {
+          "lat": 28.220419444444442,
+          "lng": 83.95724444444444
+        },
+        "location": "40DR012, Pokhara, गण्डकी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo024",
         "w": 1024,
         "h": 768
       }
@@ -34401,116 +33508,40 @@
     "cityCode": "siddharthanagar",
     "photos": [
       {
-        "id": "siddharthanagar-001",
-        "publicId": "cities/siddharthanagar/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo001",
-        "date": "2016-10-31T20:09:20",
+        "id": "siddharthanagar-009",
+        "publicId": "cities/siddharthanagar/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo009",
+        "date": "2016-10-31T15:42:33",
         "gps": {
-          "lat": 27.552111111111113,
-          "lng": 83.80110833333333
+          "lat": 27.475211111111108,
+          "lng": 83.46960555555556
         },
-        "location": "महेन्द्र राज्मार्ग्, लुम्बिनी प्रदेश",
+        "location": "NH24, Sonauli, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
+        "alt": "photo009",
+        "w": 1182,
+        "h": 665
       },
       {
-        "id": "siddharthanagar-002",
-        "publicId": "cities/siddharthanagar/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo002",
-        "date": "2016-10-31T17:27:45",
+        "id": "siddharthanagar-012",
+        "publicId": "cities/siddharthanagar/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo012",
+        "date": "2016-10-31T16:53:29",
         "gps": {
-          "lat": 27.476641666666666,
-          "lng": 83.4702
+          "lat": 27.477341666666664,
+          "lng": 83.46985000000001
         },
-        "location": "Siddhartha Highway, Belahiya, लुम्बिनी प्रदेश",
+        "location": "बेलहिया, लुम्बिनी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "siddharthanagar-003",
-        "publicId": "cities/siddharthanagar/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo003",
-        "date": "2016-11-15T06:12:47",
-        "gps": {
-          "lat": 27.477091666666666,
-          "lng": 83.46995555555556
-        },
-        "location": "49DR024, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "siddharthanagar-004",
-        "publicId": "cities/siddharthanagar/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo004",
-        "date": "2016-10-31T16:59:31",
-        "gps": {
-          "lat": 27.477955555555553,
-          "lng": 83.46983333333334
-        },
-        "location": "Belahiya, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "siddharthanagar-005",
-        "publicId": "cities/siddharthanagar/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo005",
-        "date": "2016-10-31T15:43:59",
-        "gps": {
-          "lat": 27.476286111111108,
-          "lng": 83.46990277777778
-        },
-        "location": "Siddhartha Highway, Belahiya, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "siddharthanagar-007",
-        "publicId": "cities/siddharthanagar/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo007",
-        "date": "2016-10-31T15:43:41",
-        "gps": {
-          "lat": 27.476105555555552,
-          "lng": 83.46994722222223
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
+        "alt": "photo012",
         "w": 1024,
         "h": 768
       },
@@ -34534,14 +33565,52 @@
         "h": 768
       },
       {
+        "id": "siddharthanagar-002",
+        "publicId": "cities/siddharthanagar/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo002",
+        "date": "2016-10-31T17:27:45",
+        "gps": {
+          "lat": 27.476641666666666,
+          "lng": 83.4702
+        },
+        "location": "Siddhartha Highway, Belahiya, लुम्बिनी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "siddharthanagar-001",
+        "publicId": "cities/siddharthanagar/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo001",
+        "date": "2016-10-31T20:09:20",
+        "gps": {
+          "lat": 27.552111111111113,
+          "lng": 83.80110833333333
+        },
+        "location": "महेन्द्र राज्मार्ग्, लुम्बिनी प्रदेश",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768
+      },
+      {
         "id": "siddharthanagar-010",
         "publicId": "cities/siddharthanagar/photo010",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo010",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo010",
-        "date": "2016-11-15T06:09:42",
+        "date": "2016-11-15T06:08:11",
         "gps": {
-          "lat": 27.4771,
-          "lng": 83.46979444444445
+          "lat": 27.477119444444444,
+          "lng": 83.46984166666667
         },
         "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
         "caption": {
@@ -34549,25 +33618,25 @@
           "en": ""
         },
         "alt": "photo010",
-        "w": 768,
-        "h": 1024
+        "w": 1024,
+        "h": 768
       },
       {
-        "id": "siddharthanagar-012",
-        "publicId": "cities/siddharthanagar/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo012",
-        "date": "2016-10-31T16:53:22",
+        "id": "siddharthanagar-011",
+        "publicId": "cities/siddharthanagar/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo011",
+        "date": "2016-11-15T06:12:39",
         "gps": {
-          "lat": 27.47734722222222,
-          "lng": 83.46981111111111
+          "lat": 27.47709722222222,
+          "lng": 83.46997777777779
         },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
+        "location": "49DR024, लुम्बिनी प्रदेश",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo012",
+        "alt": "photo011",
         "w": 1024,
         "h": 768
       }
@@ -36782,44 +35851,6 @@
     "cityCode": "sonauli",
     "photos": [
       {
-        "id": "sonauli-001",
-        "publicId": "cities/sonauli/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo001",
-        "date": "2016-10-31T15:42:49",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1182,
-        "h": 665
-      },
-      {
-        "id": "sonauli-002",
-        "publicId": "cities/sonauli/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo002",
-        "date": "2016-10-31T15:42:33",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1182,
-        "h": 665
-      },
-      {
         "id": "sonauli-003",
         "publicId": "cities/sonauli/photo003",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo003",
@@ -36837,6 +35868,25 @@
         "alt": "photo003",
         "w": 1024,
         "h": 768
+      },
+      {
+        "id": "sonauli-001",
+        "publicId": "cities/sonauli/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo001",
+        "date": "2016-10-31T15:42:49",
+        "gps": {
+          "lat": 27.475211111111108,
+          "lng": 83.46960555555556
+        },
+        "location": "NH24, Sonauli, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1182,
+        "h": 665
       },
       {
         "id": "sonauli-004",
@@ -36858,158 +35908,6 @@
         "h": 1024
       },
       {
-        "id": "sonauli-005",
-        "publicId": "cities/sonauli/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo005",
-        "date": "2016-11-15T06:07:51",
-        "gps": {
-          "lat": 27.47713333333333,
-          "lng": 83.46978055555556
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-006",
-        "publicId": "cities/sonauli/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo006",
-        "date": "2016-11-15T06:09:47",
-        "gps": {
-          "lat": 27.47711111111111,
-          "lng": 83.46980277777779
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "sonauli-007",
-        "publicId": "cities/sonauli/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo007",
-        "date": "2016-11-15T06:09:39",
-        "gps": {
-          "lat": 27.476999999999997,
-          "lng": 83.46984166666667
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "sonauli-008",
-        "publicId": "cities/sonauli/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo008",
-        "date": "2016-11-15T06:08:11",
-        "gps": {
-          "lat": 27.477119444444444,
-          "lng": 83.46984166666667
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-009",
-        "publicId": "cities/sonauli/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo009",
-        "date": "2016-11-15T06:12:39",
-        "gps": {
-          "lat": 27.47709722222222,
-          "lng": 83.46997777777779
-        },
-        "location": "49DR024, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-010",
-        "publicId": "cities/sonauli/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo010",
-        "date": "2016-11-15T06:12:52",
-        "gps": {
-          "lat": 27.477088888888886,
-          "lng": 83.46993888888889
-        },
-        "location": "49DR024, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-011",
-        "publicId": "cities/sonauli/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo011",
-        "date": "2016-11-15T08:19:55",
-        "gps": {
-          "lat": 27.238944444444446,
-          "lng": 83.36662222222222
-        },
-        "location": "Mohnapur, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "sonauli-012",
-        "publicId": "cities/sonauli/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo012",
-        "date": "2016-11-15T06:30:54",
-        "gps": {
-          "lat": 27.476008333333333,
-          "lng": 83.4698638888889
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "sonauli-013",
         "publicId": "cities/sonauli/photo013",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo013",
@@ -37027,63 +35925,6 @@
         "alt": "photo013",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "sonauli-016",
-        "publicId": "cities/sonauli/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo016",
-        "date": "2016-10-31T15:42:41",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 576
-      },
-      {
-        "id": "sonauli-017",
-        "publicId": "cities/sonauli/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo017",
-        "date": "2016-10-31T16:53:29",
-        "gps": {
-          "lat": 27.477341666666664,
-          "lng": 83.46985000000001
-        },
-        "location": "बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-018",
-        "publicId": "cities/sonauli/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo018",
-        "date": "2016-10-31T15:42:31",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 576
       }
     ]
   },
