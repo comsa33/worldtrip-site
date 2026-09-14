@@ -652,6 +652,7 @@ export default function PhotoGallery({
      width at a time. On opening, the frame is simply put in the middle. */
   const stripOpenedFor = useRef<string | null>(null);
   const stripAnchor = useRef<{ id: string; left: number } | null>(null);
+  const pickedOnStrip = useRef(false);
   useLayoutEffect(() => {
     const strip = stripRef.current;
     if (!strip) return;
@@ -683,7 +684,12 @@ export default function PhotoGallery({
       strip.scrollLeft = el.offsetLeft - strip.clientWidth / 2 + el.offsetWidth / 2;
       return;
     }
-    const margin = Math.min(96, strip.clientWidth / 4);
+    // A frame picked on the strip is where the reader put it: the strip moves only
+    // if it is actually cut off by the edge. A photo reached by swiping keeps a
+    // margin of air, so the next frames stay in sight.
+    const picked = pickedOnStrip.current;
+    pickedOnStrip.current = false;
+    const margin = picked ? 8 : Math.min(96, strip.clientWidth / 4);
     const left = el.offsetLeft - strip.scrollLeft;
     const right = left + el.offsetWidth;
     if (left < margin) strip.scrollTo({ left: el.offsetLeft - margin, behavior: 'smooth' });
@@ -1197,6 +1203,7 @@ export default function PhotoGallery({
                 data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
                 onClick={() => {
                   if (stripRef.current?.dataset.moved) return;
+                  pickedOnStrip.current = true;
                   setIndex(i);
                 }}
                 aria-label={`${i + 1}`}
