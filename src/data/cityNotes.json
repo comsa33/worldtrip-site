@@ -2,27 +2,35 @@
   "3": {
     "ko": {
       "title": "첫 도시",
-      "story": "여행의 첫 도시였습니다.\n부이비엔 거리에서 쌀국수와 반미를 먹고,\n사이공 맥주를 마셨습니다.\n밤의 인민위원회 청사 앞을 걸었습니다.\n다낭에 다녀와 다시 며칠을 더 머물렀습니다."
+      "story": "여행의 첫 도시였습니다.\n부이비엔 거리에서 쌀국수와 반미를 먹고,\n사이공 맥주를 마셨습니다.\n밤의 인민위원회 청사 앞을 걸었습니다.\n전쟁 박물관에 다녀온 날 밤, 기차 침대칸에 올랐습니다."
     },
     "en": {
       "title": "First City",
-      "story": "The first city of the trip.\nPho and banh mi on Bui Vien street,\na Saigon beer at night.\nI walked past the People's Committee building after dark.\nCame back for a few more days after Da Nang."
+      "story": "The first city of the trip.\nPho and banh mi on Bui Vien street,\na Saigon beer at night.\nI walked past the People's Committee building after dark.\nThe day I went to the War Remnants Museum, I boarded a night sleeper train."
     }
   },
   "4": {
     "ko": {
-      "story": "기차 침대칸으로 올라왔습니다.\n호이안의 밤은 등불이었습니다.\n강에 촛불을 띄우고, 다리를 건넜습니다.\n안방 해변에서는 소가 풀을 뜯었습니다."
+      "story": "기차 침대칸으로 올라왔습니다.\n안방 해변 뒤 들판에서는 소가 풀을 뜯었습니다.\n호이안의 밤은 등불이었습니다.\n강에 촛불을 띄우고, 다리를 건넜습니다.\n다음 날은 강가 해먹에서 코코넛을 마셨습니다."
     },
     "en": {
-      "story": "Came up on a sleeper train.\nHoi An at night was all lanterns.\nSet a candle on the river, crossed the bridge.\nAt An Bang beach a cow was grazing."
+      "story": "Came up on a sleeper train.\nBehind An Bang beach, a cow grazed in the fields.\nHoi An at night was lanterns.\nWe floated candles on the river and crossed the bridge.\nThe next day, coconuts in a hammock by the river."
+    }
+  },
+  "5": {
+    "ko": {
+      "story": "기차로 다시 사이공에 내렸습니다.\n새벽 공원에서 사람들이 체조를 했습니다.\n분홍 성당 앞에서 사진을 찍고,\n밤의 인민위원회 청사를 한 번 더 봤습니다.\n마지막 날은 옥상 수영장에서 보냈습니다."
+    },
+    "en": {
+      "story": "Back in Saigon by train.\nAt dawn people were exercising in the park.\nA photo in front of the pink church,\nthe People's Committee building at night once more.\nThe last day went to a rooftop pool."
     }
   },
   "6": {
     "ko": {
-      "story": "바투 동굴의 금빛 무루간 상 앞에 섰습니다.\n계단에는 원숭이가 바나나를 들고 앉아 있었습니다.\n밤에는 페트로나스 타워를 올려다봤습니다."
+      "story": "말레이시아에 들어왔습니다.\n파란 벽이 있는 뒷골목을 걸었습니다.\n밤에는 페트로나스 타워를 올려다봤습니다.\n잘란 알로의 노천 식당에서 늦게까지 앉아 있었습니다."
     },
     "en": {
-      "story": "Stood in front of the golden Murugan at Batu Caves.\nA monkey sat on the steps holding a banana.\nAt night I looked up at the Petronas Towers."
+      "story": "Into Malaysia.\nWalked the back streets past a blue wall.\nAt night I looked up at the Petronas Towers.\nSat late at an open-air restaurant on Jalan Alor."
     }
   },
   "7": {
@@ -36,27 +44,35 @@
   "8": {
     "ko": {
       "title": "토바 호수",
-      "story": "배를 타고 사모시르 섬의 뚝뚝으로 들어갔습니다.\n하늘은 내내 흐렸습니다.\n오토바이를 빌려 호숫가를 돌고,\n미고렝을 먹었습니다."
+      "story": "배를 타고 사모시르 섬의 뚝뚝으로 들어갔습니다.\n하늘은 내내 흐렸습니다.\n숙소에는 새끼 고양이들이 있었습니다.\n호숫가에서 친구들과 뛰고 날아차기를 하며 사진을 찍었습니다.\n미고렝을 먹었습니다."
     },
     "en": {
       "title": "Lake Toba",
-      "story": "Took the boat over to Tuk Tuk on Samosir island.\nThe sky stayed grey the whole time.\nRented a motorbike, rode along the lake,\nate mie goreng."
+      "story": "Took a boat to Tuktuk on Samosir Island.\nThe sky stayed grey the whole time.\nThere were kittens at the guesthouse.\nBy the lake we jumped and flying-kicked for photos.\nAte mie goreng."
+    }
+  },
+  "10": {
+    "ko": {
+      "story": "토바 호수에서 돌아왔습니다.\n바투 동굴의 금빛 무루간 상 앞에 섰습니다.\n계단 옆에서 원숭이들이 노란 열매를 먹고 있었습니다.\n밤에 페트로나스 타워를 한 번 더 올려다봤습니다."
+    },
+    "en": {
+      "story": "Back from Lake Toba.\nStood before the golden Murugan at Batu Caves.\nBy the steps, monkeys were eating yellow fruit.\nLooked up at the Petronas Towers once more that night."
     }
   },
   "11": {
     "ko": {
-      "story": "뚝뚝 뒷자리에서 앙코르로 갔습니다.\n앙코르 와트, 바욘의 얼굴들, 코끼리.\n소가 사원 앞 풀밭에 누워 있었습니다.\n밤에는 펍 스트리트가 시끄러웠습니다."
+      "story": "길가 풀밭에 소가 누워 있었습니다.\n저녁엔 언덕에 올라 친구들과 해 지는 물을 봤습니다.\n전기 스쿠터를 빌려 앙코르로 갔습니다.\n남문의 얼굴, 바욘, 코끼리, 앙코르 와트의 스님.\n밤에는 펍 스트리트가 시끄러웠습니다."
     },
     "en": {
-      "story": "Rode out to Angkor in the back of a tuk-tuk.\nAngkor Wat, the faces of Bayon, elephants.\nA cow lay in the grass outside the temple.\nPub Street was loud at night."
+      "story": "A cow lay in the grass by the road.\nIn the evening we climbed a hill and watched the water at sunset.\nRented an electric scooter and rode to Angkor.\nThe faces of the South Gate, the Bayon, elephants, a monk at Angkor Wat.\nAt night Pub Street was loud."
     }
   },
   "12": {
     "ko": {
-      "story": "운하를 달리는 배를 탔습니다. 14바트.\n골든 마운트에 올라 종을 쳤습니다.\n왕궁 담을 따라 걷고,\n밤에는 카오산 거리의 소음 속에 있었습니다."
+      "story": "운하를 달리는 배를 탔습니다. 14바트.\n골든 마운트에 올라 징을 쳤습니다.\n밤에는 카오산 거리의 소음 속에 있었습니다.\n왕궁 담을 따라 걷고,\n롱테일 보트로 톤부리 운하를 돌았습니다."
     },
     "en": {
-      "story": "Rode the canal boat. Fourteen baht.\nClimbed the Golden Mount and rang the bells.\nWalked along the palace walls,\nat night stood in the noise of Khao San."
+      "story": "Took the boat that runs the canal. 14 baht.\nClimbed the Golden Mount and struck the gong.\nAt night, in the noise of Khao San Road.\nWalked along the palace wall,\nand rode a longtail boat through the Thonburi canals."
     }
   },
   "14": {
