@@ -1655,3 +1655,100 @@ kbd.key {
     display: none;
   }
 }
+
+/* ── the maps' drag mark (MapDragHint.tsx) ────────────────────────────────
+   The aim ring on a short track, sliding one way and back; pressed first for a
+   finger. Drawn at the open map's bottom edge until the hand has done it once. */
+.map-drag-hint {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms var(--ease-out);
+}
+
+.map-drag-hint.is-on {
+  opacity: 1;
+  transition-delay: 260ms; /* after the map has finished opening */
+}
+
+.map-drag-hint__halo {
+  stroke: var(--bg);
+  stroke-width: 5;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+
+.map-drag-hint__track {
+  stroke: var(--ink-3);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.map-drag-hint__end {
+  fill: var(--ink-3);
+}
+
+.map-drag-hint__ring {
+  fill: color-mix(in srgb, var(--bg) 70%, transparent);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.map-drag-hint__press {
+  fill: var(--accent);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.map-drag-hint.is-on .map-drag-hint__hand {
+  animation: mapDragSlide 2.8s var(--ease) infinite;
+}
+
+.map-drag-hint.is-on.is-touch .map-drag-hint__press {
+  animation: mapDragPress 2.8s var(--ease-out) infinite;
+}
+
+@keyframes mapDragSlide {
+  0%,
+  16% {
+    transform: translateX(0);
+  }
+  38% {
+    transform: translateX(-18px);
+  }
+  66% {
+    transform: translateX(18px);
+  }
+  84%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* the finger comes down, and stays down while it slides */
+@keyframes mapDragPress {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  12% {
+    opacity: 0.32;
+    transform: scale(1.7);
+  }
+  80% {
+    opacity: 0.22;
+    transform: scale(1.5);
+  }
+  94%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-drag-hint.is-on .map-drag-hint__hand,
+  .map-drag-hint.is-on.is-touch .map-drag-hint__press {
+    animation: none;
+  }
+}

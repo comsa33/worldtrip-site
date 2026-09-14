@@ -1,5 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import minimap from '../../data/minimap.json';
+import { MapDragHint } from './MapDragHint';
+import { useMapDragHint } from './useMapDragHint';
 
 interface MinimapData {
   w: number;
@@ -116,6 +118,7 @@ export function Minimap({
   onSelect: (index: number) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const hint = useMapDragHint(open, svgRef, data.w);
   const stopPoints = useMemo(
     () =>
       stops.map((s) => {
@@ -277,6 +280,7 @@ export function Minimap({
   // a mouse resting on it opens it; a finger has no resting, so its tap does
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    hint.pointer(e.pointerType);
     // A FINGER taking hold again starts a new one, wherever the last ended. A
     // MOUSE does not: it has been aiming by hovering all along, and the press
     // that is about to become a click is the end of that aim, not a new one.
@@ -297,6 +301,7 @@ export function Minimap({
   };
   const onEnter = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    hint.pointer(e.pointerType);
     if (e.pointerType === 'touch') return;
     window.clearTimeout(openTimer.current);
     openTimer.current = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
@@ -364,6 +369,8 @@ export function Minimap({
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
     const { clientX } = e;
+    // a finger only moves while it holds; a mouse moving over the open map is aiming
+    if (e.pointerType !== 'touch' || e.buttons) hint.aimed();
     if (!grip.current) grip.current = { x: clientX, across: anchorAcross };
     if (moveRaf.current) return;
     moveRaf.current = requestAnimationFrame(() => {
@@ -377,7 +384,10 @@ export function Minimap({
     if (byTouch.current) setOpen(false);
     grip.current = null;
     paintAim(null);
-    if (a) onSelect(a.stop);
+    if (a) {
+      hint.reached();
+      onSelect(a.stop);
+    }
   };
 
   /**
@@ -427,6 +437,13 @@ export function Minimap({
       <World currentStopIdx={currentStopIdx} />
       <circle cx={cx} cy={cy} r={17} className="minimap__ring" />
       <circle cx={cx} cy={cy} r={11} className="minimap__head" />
+      <MapDragHint
+        visible={hint.visible}
+        touch={hint.touch}
+        k={hint.k}
+        x={data.w / 2}
+        y={data.h - 18 * hint.k}
+      />
       <g className="minimap__aim" ref={gRef} style={{ display: 'none' }}>
         <circle ref={ringRef} r={9} />
         <text ref={labelRef} style={{ opacity: 0 }} />

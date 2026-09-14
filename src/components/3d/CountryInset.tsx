@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { MapDragHint } from './MapDragHint';
+import { useMapDragHint } from './useMapDragHint';
 import { INSET_BOX, countryShape } from './countryShape';
 import { viewKm } from './cityZoom';
 
@@ -76,6 +78,7 @@ export function CountryInset({
   onSelect: (index: number) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const hint = useMapDragHint(open, svgRef, INSET_BOX);
   const shape = useMemo(() => countryShape(countryCode), [countryCode]);
 
   /** every stop in this country, in the order the journey took them */
@@ -358,6 +361,8 @@ export function CountryInset({
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
     const { clientX } = e;
+    // a finger only moves while it holds; a mouse moving over the open map is aiming
+    if (e.pointerType !== 'touch' || e.buttons) hint.aimed();
     // where the finger is, kept apart from where the ring has been drawn to:
     // painting waits for a frame, and a lift landing on last frame's aim is a
     // lift landing on the stop next door
@@ -372,6 +377,7 @@ export function CountryInset({
 
   const onDown = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    hint.pointer(e.pointerType);
     // A FINGER taking hold again starts a new one, wherever the last ended. A
     // MOUSE does not: it has been aiming by hovering all along, and the press
     // that is about to become a click is the end of that aim, not a new one.
@@ -388,6 +394,7 @@ export function CountryInset({
   };
   const onEnter = (e: React.PointerEvent<SVGSVGElement>) => {
     byTouch.current = e.pointerType === 'touch';
+    hint.pointer(e.pointerType);
     if (e.pointerType === 'touch') return;
     window.clearTimeout(openTimer.current);
     openTimer.current = window.setTimeout(() => onOpenChange(true), OPEN_DELAY_MS);
@@ -404,7 +411,10 @@ export function CountryInset({
     if (byTouch.current) onOpenChange(false);
     grip.current = null;
     paintAim(null);
-    if (a) onSelect(a.stop);
+    if (a) {
+      hint.reached();
+      onSelect(a.stop);
+    }
   };
 
   const onUp = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -480,6 +490,13 @@ export function CountryInset({
       <text className="country-inset__name" x={30} y={INSET_BOX - 30}>
         {name}
       </text>
+      <MapDragHint
+        visible={hint.visible}
+        touch={hint.touch}
+        k={hint.k}
+        x={INSET_BOX / 2}
+        y={INSET_BOX - 22 * hint.k}
+      />
       <g className="country-inset__aim" ref={gRef} style={{ display: 'none' }}>
         <circle ref={ringRef} r={16} />
         <text ref={labelRef} style={{ opacity: 0 }} />
