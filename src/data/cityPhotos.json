@@ -1894,25 +1894,6 @@
     "cityCode": "angradosreis",
     "photos": [
       {
-        "id": "angradosreis-001",
-        "publicId": "cities/angradosreis/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/angradosreis/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/angradosreis/photo001",
-        "date": "2017-03-17T14:12:24",
-        "gps": {
-          "lat": -23.030391666666667,
-          "lng": -44.543683333333334
-        },
-        "location": "Rodovia Rio-Santos, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "angradosreis-002",
         "publicId": "cities/angradosreis/photo002",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/angradosreis/photo002",
@@ -2042,25 +2023,6 @@
           "en": ""
         },
         "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "angradosreis-009",
-        "publicId": "cities/angradosreis/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/angradosreis/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/angradosreis/photo009",
-        "date": "2017-03-14T14:53:32",
-        "gps": {
-          "lat": -23.012416666666667,
-          "lng": -44.31744444444445
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
         "w": 1024,
         "h": 768
       },
@@ -2797,63 +2759,6 @@
         "h": 768
       },
       {
-        "id": "arraialdocabo-002",
-        "publicId": "cities/arraialdocabo/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo002",
-        "date": "2017-03-09T11:27:08",
-        "gps": {
-          "lat": -22.957580555555555,
-          "lng": -42.026944444444446
-        },
-        "location": "Avenida General Bruno Martins, 4545, Monte Alto, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-003",
-        "publicId": "cities/arraialdocabo/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo004",
-        "date": "2017-03-09T12:12:42",
-        "gps": {
-          "lat": -22.972680555555552,
-          "lng": -42.031502777777774
-        },
-        "location": "Orla Flávia Alessandra, Morro da Cocacola, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-004",
-        "publicId": "cities/arraialdocabo/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo007",
-        "date": "2017-03-09T11:27:31",
-        "gps": {
-          "lat": -22.957591666666666,
-          "lng": -42.02698888888889
-        },
-        "location": "Avenida General Bruno Martins, 4545, Monte Alto, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "arraialdocabo-005",
         "publicId": "cities/arraialdocabo/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo008",
@@ -2869,25 +2774,6 @@
           "en": ""
         },
         "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-006",
-        "publicId": "cities/arraialdocabo/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo009",
-        "date": "2017-03-09T10:10:18",
-        "gps": {
-          "lat": -22.946011111111112,
-          "lng": -42.030522222222224
-        },
-        "location": "Trilha para mirante, Centro, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
         "w": 1024,
         "h": 768
       },
@@ -2930,25 +2816,6 @@
         "h": 768
       },
       {
-        "id": "arraialdocabo-009",
-        "publicId": "cities/arraialdocabo/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo014",
-        "date": "2017-03-09T11:27:37",
-        "gps": {
-          "lat": -22.95758888888889,
-          "lng": -42.02701666666667
-        },
-        "location": "Avenida General Bruno Martins, 4545, Monte Alto, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "arraialdocabo-010",
         "publicId": "cities/arraialdocabo/photo015",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo015",
@@ -2983,44 +2850,6 @@
           "en": ""
         },
         "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-012",
-        "publicId": "cities/arraialdocabo/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo017",
-        "date": "2017-03-09T10:10:15",
-        "gps": {
-          "lat": -22.946005555555555,
-          "lng": -42.03052777777778
-        },
-        "location": "Trilha para mirante, Centro, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-013",
-        "publicId": "cities/arraialdocabo/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo019",
-        "date": "2017-03-09T11:24:37",
-        "gps": {
-          "lat": -22.958027777777776,
-          "lng": -42.026741666666666
-        },
-        "location": "Avenida General Bruno Martins, 4545, Centro, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
         "w": 1024,
         "h": 768
       },
@@ -3101,25 +2930,6 @@
         "h": 768
       },
       {
-        "id": "arraialdocabo-018",
-        "publicId": "cities/arraialdocabo/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo025",
-        "date": "2017-03-09T11:27:17",
-        "gps": {
-          "lat": -22.957619444444443,
-          "lng": -42.02696111111111
-        },
-        "location": "Avenida General Bruno Martins, 4545, Monte Alto, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "arraialdocabo-019",
         "publicId": "cities/arraialdocabo/photo026",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo026",
@@ -3135,44 +2945,6 @@
           "en": ""
         },
         "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-020",
-        "publicId": "cities/arraialdocabo/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo027",
-        "date": "2017-03-09T10:07:20",
-        "gps": {
-          "lat": -22.94641111111111,
-          "lng": -42.031013888888886
-        },
-        "location": "Trilha para mirante, Centro, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-021",
-        "publicId": "cities/arraialdocabo/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo028",
-        "date": "2017-03-09T10:05:17",
-        "gps": {
-          "lat": -22.946980555555555,
-          "lng": -42.031958333333336
-        },
-        "location": "Centro, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
         "w": 1024,
         "h": 768
       },
@@ -3194,25 +2966,6 @@
         "alt": "photo029",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "arraialdocabo-023",
-        "publicId": "cities/arraialdocabo/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo031",
-        "date": "2017-03-09T10:12:22",
-        "gps": {
-          "lat": -22.946122222222222,
-          "lng": -42.030680555555556
-        },
-        "location": "Trilha para mirante, Centro, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1182,
-        "h": 665
       },
       {
         "id": "arraialdocabo-024",
@@ -3253,25 +3006,6 @@
         "h": 660
       },
       {
-        "id": "arraialdocabo-026",
-        "publicId": "cities/arraialdocabo/photo037",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo037",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo037",
-        "date": "2017-03-09T11:49:08",
-        "gps": {
-          "lat": -22.972683333333332,
-          "lng": -42.03134166666666
-        },
-        "location": "Orla Flávia Alessandra, Morro da Cocacola, Arraial Do Cabo, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo037",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "arraialdocabo-027",
         "publicId": "cities/arraialdocabo/photo038",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo038",
@@ -3306,25 +3040,6 @@
           "en": ""
         },
         "alt": "photo039",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-029",
-        "publicId": "cities/arraialdocabo/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo040",
-        "date": "2017-03-09T10:10:02",
-        "gps": {
-          "lat": -22.94599722222222,
-          "lng": -42.03050277777778
-        },
-        "location": "Trilha para mirante, Centro, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo040",
         "w": 1024,
         "h": 768
       },
@@ -3496,25 +3211,6 @@
           "en": ""
         },
         "alt": "photo049",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "arraialdocabo-039",
-        "publicId": "cities/arraialdocabo/photo050",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/arraialdocabo/photo050",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/arraialdocabo/photo050",
-        "date": "2017-03-06T15:11:57",
-        "gps": {
-          "lat": -22.94534722222222,
-          "lng": -42.098777777777784
-        },
-        "location": "Avenida Pedro Francisco Sanches, Monte Alto, Arraial do Cabo, Rio de Janeiro",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo050",
         "w": 1024,
         "h": 768
       },
@@ -10785,44 +10481,6 @@
         "h": 768
       },
       {
-        "id": "buzios-009",
-        "publicId": "cities/buzios/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/buzios/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/buzios/photo009",
-        "date": "2017-03-05T17:07:10",
-        "gps": {
-          "lat": -22.769955555555555,
-          "lng": -41.90262222222222
-        },
-        "location": "Rua das Anchovas, 1, Manguinhos, Armação Dos Búzios, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "buzios-010",
-        "publicId": "cities/buzios/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/buzios/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/buzios/photo010",
-        "date": "2017-03-05T18:12:35",
-        "gps": {
-          "lat": -22.772688888888887,
-          "lng": -41.912052777777774
-        },
-        "location": "Rua Rio de Janeiro, 257, Manguinhos, Armação Dos Búzios, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "buzios-011",
         "publicId": "cities/buzios/photo011",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/buzios/photo011",
@@ -10857,25 +10515,6 @@
           "en": ""
         },
         "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "buzios-013",
-        "publicId": "cities/buzios/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/buzios/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/buzios/photo014",
-        "date": "2017-03-05T18:12:11",
-        "gps": {
-          "lat": -22.772805555555554,
-          "lng": -41.91209722222222
-        },
-        "location": "Rua Rio de Janeiro, 257, Manguinhos, Armação Dos Búzios, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
         "w": 1024,
         "h": 768
       }
@@ -20019,44 +19658,6 @@
         "h": 768
       },
       {
-        "id": "florianopolis-002",
-        "publicId": "cities/florianopolis/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/florianopolis/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/florianopolis/photo012",
-        "date": "2017-03-29T14:30:28",
-        "gps": {
-          "lat": -27.60356388888889,
-          "lng": -48.58654722222222
-        },
-        "location": "Via Expressa, Capoeira, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "florianopolis-003",
-        "publicId": "cities/florianopolis/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/florianopolis/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/florianopolis/photo014",
-        "date": "2017-03-29T14:32:53",
-        "gps": {
-          "lat": -27.597730555555554,
-          "lng": -48.56460277777777
-        },
-        "location": "Ponte Governador Pedro Ivo Campos, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "florianopolis-004",
         "publicId": "cities/florianopolis/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/florianopolis/photo016",
@@ -20112,63 +19713,6 @@
         "alt": "photo022",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "florianopolis-007",
-        "publicId": "cities/florianopolis/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/florianopolis/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/florianopolis/photo023",
-        "date": "2017-03-29T14:30:41",
-        "gps": {
-          "lat": -27.603761111111112,
-          "lng": -48.58466666666667
-        },
-        "location": "Via Expressa, Estreito, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "florianopolis-008",
-        "publicId": "cities/florianopolis/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/florianopolis/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/florianopolis/photo030",
-        "date": "2017-03-29T14:30:32",
-        "gps": {
-          "lat": -27.603708333333334,
-          "lng": -48.58590277777778
-        },
-        "location": "Via Expressa, Capoeira, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "florianopolis-009",
-        "publicId": "cities/florianopolis/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/florianopolis/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/florianopolis/photo031",
-        "date": "2017-03-29T14:32:33",
-        "gps": {
-          "lat": -27.59783611111111,
-          "lng": -48.567863888888894
-        },
-        "location": "Ponte Governador Pedro Ivo Campos, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "florianopolis-010",
@@ -24515,25 +24059,6 @@
         "h": 768
       },
       {
-        "id": "ilhagrande-002",
-        "publicId": "cities/ilhagrande/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo002",
-        "date": "2017-03-16T16:07:55",
-        "gps": {
-          "lat": -23.119433333333333,
-          "lng": -44.168369444444444
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "ilhagrande-003",
         "publicId": "cities/ilhagrande/photo003",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo003",
@@ -24591,25 +24116,6 @@
         "h": 768
       },
       {
-        "id": "ilhagrande-006",
-        "publicId": "cities/ilhagrande/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo007",
-        "date": "2017-03-16T12:25:11",
-        "gps": {
-          "lat": -23.127136111111113,
-          "lng": -44.16681944444444
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "ilhagrande-007",
         "publicId": "cities/ilhagrande/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo008",
@@ -24625,44 +24131,6 @@
           "en": ""
         },
         "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ilhagrande-008",
-        "publicId": "cities/ilhagrande/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo009",
-        "date": "2017-03-16T12:25:07",
-        "gps": {
-          "lat": -23.127272222222224,
-          "lng": -44.16678611111111
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "ilhagrande-009",
-        "publicId": "cities/ilhagrande/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo010",
-        "date": "2017-03-16T12:25:25",
-        "gps": {
-          "lat": -23.126708333333333,
-          "lng": -44.16690555555555
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
         "w": 1024,
         "h": 768
       },
@@ -24758,25 +24226,6 @@
           "en": ""
         },
         "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ilhagrande-015",
-        "publicId": "cities/ilhagrande/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo017",
-        "date": "2017-03-16T15:48:30",
-        "gps": {
-          "lat": -23.096383333333332,
-          "lng": -44.19779722222222
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
         "w": 1024,
         "h": 768
       },
@@ -24893,25 +24342,6 @@
         "alt": "photo023",
         "w": 886,
         "h": 886
-      },
-      {
-        "id": "ilhagrande-022",
-        "publicId": "cities/ilhagrande/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo024",
-        "date": "2017-03-16T12:25:20",
-        "gps": {
-          "lat": -23.12686111111111,
-          "lng": -44.166869444444444
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "ilhagrande-023",
@@ -25066,25 +24496,6 @@
         "h": 768
       },
       {
-        "id": "ilhagrande-031",
-        "publicId": "cities/ilhagrande/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo034",
-        "date": "2017-03-16T12:37:24",
-        "gps": {
-          "lat": -23.10755,
-          "lng": -44.18234722222222
-        },
-        "location": "RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "ilhagrande-032",
         "publicId": "cities/ilhagrande/photo037",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo037",
@@ -25140,44 +24551,6 @@
         "alt": "photo039",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "ilhagrande-035",
-        "publicId": "cities/ilhagrande/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo040",
-        "date": "2017-03-16T14:37:39",
-        "gps": {
-          "lat": -23.091744444444444,
-          "lng": -44.21354166666667
-        },
-        "location": "T3, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo040",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ilhagrande-036",
-        "publicId": "cities/ilhagrande/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ilhagrande/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ilhagrande/photo041",
-        "date": "2017-03-14T16:12:30",
-        "gps": {
-          "lat": -23.066066666666668,
-          "lng": -44.241372222222225
-        },
-        "location": "Ponta Leste, Angra dos Reis, Rio de Janeiro",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo041",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "ilhagrande-037",
@@ -28275,25 +27648,6 @@
         "h": 768
       },
       {
-        "id": "laguna-003",
-        "publicId": "cities/laguna/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/laguna/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/laguna/photo003",
-        "date": "2017-04-02T14:33:27",
-        "gps": {
-          "lat": -28.60497777777778,
-          "lng": -48.81536388888889
-        },
-        "location": "Acesso à Escola, Laguna, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "laguna-004",
         "publicId": "cities/laguna/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/laguna/photo004",
@@ -28347,25 +27701,6 @@
           "en": ""
         },
         "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "laguna-007",
-        "publicId": "cities/laguna/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/laguna/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/laguna/photo007",
-        "date": "2017-04-02T14:36:47",
-        "gps": {
-          "lat": -28.60545,
-          "lng": -48.81480833333333
-        },
-        "location": "Laguna, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
         "w": 1024,
         "h": 768
       },
@@ -36544,25 +35879,6 @@
         "h": 1024
       },
       {
-        "id": "navegantes-002",
-        "publicId": "cities/navegantes/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/navegantes/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/navegantes/photo002",
-        "date": "2017-03-28T08:35:53",
-        "gps": {
-          "lat": -26.91463611111111,
-          "lng": -48.639541666666666
-        },
-        "location": "Caminho de Xinxiang, Cabecudas, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1022,
-        "h": 768
-      },
-      {
         "id": "navegantes-003",
         "publicId": "cities/navegantes/photo003",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/navegantes/photo003",
@@ -38041,44 +37357,6 @@
         "h": 768
       },
       {
-        "id": "paraty-003",
-        "publicId": "cities/paraty/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo003",
-        "date": "2017-03-19T16:12:32",
-        "gps": {
-          "lat": -23.211580555555553,
-          "lng": -44.71098611111111
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "paraty-004",
-        "publicId": "cities/paraty/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo004",
-        "date": "2017-03-19T16:16:58",
-        "gps": {
-          "lat": -23.211247222222223,
-          "lng": -44.710461111111115
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "paraty-005",
         "publicId": "cities/paraty/photo005",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo005",
@@ -38115,25 +37393,6 @@
         "alt": "photo006",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "paraty-007",
-        "publicId": "cities/paraty/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo007",
-        "date": "2017-03-19T16:11:39",
-        "gps": {
-          "lat": -23.21161111111111,
-          "lng": -44.71098333333334
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "paraty-008",
@@ -38193,44 +37452,6 @@
         "h": 768
       },
       {
-        "id": "paraty-011",
-        "publicId": "cities/paraty/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo011",
-        "date": "2017-03-19T16:11:41",
-        "gps": {
-          "lat": -23.211583333333333,
-          "lng": -44.711022222222226
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "paraty-012",
-        "publicId": "cities/paraty/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo012",
-        "date": "2017-03-19T16:12:03",
-        "gps": {
-          "lat": -23.211608333333334,
-          "lng": -44.71098611111111
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "paraty-013",
         "publicId": "cities/paraty/photo013",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo013",
@@ -38265,25 +37486,6 @@
           "en": ""
         },
         "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "paraty-015",
-        "publicId": "cities/paraty/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo015",
-        "date": "2017-03-19T16:12:51",
-        "gps": {
-          "lat": -23.211588888888887,
-          "lng": -44.710950000000004
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
         "w": 1024,
         "h": 768
       },
@@ -38324,25 +37526,6 @@
         "alt": "photo017",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "paraty-018",
-        "publicId": "cities/paraty/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo019",
-        "date": "2017-03-19T16:08:07",
-        "gps": {
-          "lat": -23.21168611111111,
-          "lng": -44.71109444444445
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "paraty-019",
@@ -38398,44 +37581,6 @@
           "en": ""
         },
         "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "paraty-022",
-        "publicId": "cities/paraty/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo024",
-        "date": "2017-03-19T16:11:58",
-        "gps": {
-          "lat": -23.21161111111111,
-          "lng": -44.710997222222225
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "paraty-023",
-        "publicId": "cities/paraty/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo025",
-        "date": "2017-03-19T16:17:41",
-        "gps": {
-          "lat": -23.211258333333333,
-          "lng": -44.71066944444445
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
         "w": 1024,
         "h": 768
       },
@@ -38533,25 +37678,6 @@
         "alt": "photo031",
         "w": 858,
         "h": 360
-      },
-      {
-        "id": "paraty-029",
-        "publicId": "cities/paraty/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/paraty/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/paraty/photo032",
-        "date": "2017-03-19T16:19:18",
-        "gps": {
-          "lat": -23.211147222222223,
-          "lng": -44.710708333333336
-        },
-        "location": "Trilha do Forte, Pontal, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1182,
-        "h": 665
       }
     ]
   },
@@ -46405,44 +45531,6 @@
     "cityCode": "santos",
     "photos": [
       {
-        "id": "santos-001",
-        "publicId": "cities/santos/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo001",
-        "date": "2017-03-25T17:45:46",
-        "gps": {
-          "lat": -23.967355555555553,
-          "lng": -46.328900000000004
-        },
-        "location": "Avenida Washington Luiz, 500–522, Boqueirao, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "santos-002",
-        "publicId": "cities/santos/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo002",
-        "date": "2017-03-25T17:52:18",
-        "gps": {
-          "lat": -23.969755555555555,
-          "lng": -46.33246944444445
-        },
-        "location": "Avenida Vicente de Carvalho, Gonzaga, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1022,
-        "h": 768
-      },
-      {
         "id": "santos-003",
         "publicId": "cities/santos/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo004",
@@ -46478,120 +45566,6 @@
         },
         "alt": "photo005",
         "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santos-005",
-        "publicId": "cities/santos/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo006",
-        "date": "2017-03-25T17:46:58",
-        "gps": {
-          "lat": -23.970744444444442,
-          "lng": -46.32933888888889
-        },
-        "location": "Avenida Vicente de Carvalho, 31, Gonzaga, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "santos-006",
-        "publicId": "cities/santos/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo007",
-        "date": "2017-03-24T20:24:42",
-        "gps": {
-          "lat": -23.989675000000002,
-          "lng": -46.29091666666667
-        },
-        "location": "Barca Guarujá-Santos, Vila Ligya, Guarujá, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "santos-007",
-        "publicId": "cities/santos/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo008",
-        "date": "2017-03-25T17:46:56",
-        "gps": {
-          "lat": -23.97068333333333,
-          "lng": -46.32918611111111
-        },
-        "location": "Avenida Vicente de Carvalho, 31, Gonzaga, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "santos-008",
-        "publicId": "cities/santos/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo009",
-        "date": "2017-03-25T17:46:59",
-        "gps": {
-          "lat": -23.970677777777777,
-          "lng": -46.32939166666667
-        },
-        "location": "Avenida Vicente de Carvalho, 31, Gonzaga, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "santos-009",
-        "publicId": "cities/santos/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo010",
-        "date": "2017-03-25T17:46:54",
-        "gps": {
-          "lat": -23.970402777777775,
-          "lng": -46.329211111111114
-        },
-        "location": "Avenida Washington Luiz, 565, Boqueirao, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1022,
-        "h": 768
-      },
-      {
-        "id": "santos-010",
-        "publicId": "cities/santos/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/santos/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/santos/photo011",
-        "date": "2017-03-25T17:45:41",
-        "gps": {
-          "lat": -23.967355555555553,
-          "lng": -46.328900000000004
-        },
-        "location": "Avenida Washington Luiz, 500–522, Boqueirao, Santos, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1022,
         "h": 768
       },
       {
@@ -51577,44 +50551,6 @@
     "cityCode": "ubatuba",
     "photos": [
       {
-        "id": "ubatuba-001",
-        "publicId": "cities/ubatuba/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo001",
-        "date": "2017-03-20T16:52:57",
-        "gps": {
-          "lat": -23.46473611111111,
-          "lng": -45.05455277777777
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-002",
-        "publicId": "cities/ubatuba/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo002",
-        "date": "2017-03-23T15:47:11",
-        "gps": {
-          "lat": -23.466080555555553,
-          "lng": -45.05813611111111
-        },
-        "location": "Rua Alcina, 611, Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "ubatuba-003",
         "publicId": "cities/ubatuba/photo003",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo003",
@@ -51691,63 +50627,6 @@
         "h": 768
       },
       {
-        "id": "ubatuba-007",
-        "publicId": "cities/ubatuba/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo007",
-        "date": "2017-03-23T15:54:22",
-        "gps": {
-          "lat": -23.466475,
-          "lng": -45.05789166666666
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-008",
-        "publicId": "cities/ubatuba/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo008",
-        "date": "2017-03-23T15:54:19",
-        "gps": {
-          "lat": -23.46646388888889,
-          "lng": -45.05788333333333
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-009",
-        "publicId": "cities/ubatuba/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo009",
-        "date": "2017-03-20T16:52:07",
-        "gps": {
-          "lat": -23.473233333333333,
-          "lng": -45.06388055555555
-        },
-        "location": "SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "ubatuba-010",
         "publicId": "cities/ubatuba/photo010",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo010",
@@ -51767,25 +50646,6 @@
         "h": 768
       },
       {
-        "id": "ubatuba-011",
-        "publicId": "cities/ubatuba/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo011",
-        "date": "2017-03-23T15:47:25",
-        "gps": {
-          "lat": -23.4661,
-          "lng": -45.05813611111111
-        },
-        "location": "Rua Alcina, 611, Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "ubatuba-012",
         "publicId": "cities/ubatuba/photo012",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo012",
@@ -51801,25 +50661,6 @@
           "en": ""
         },
         "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-013",
-        "publicId": "cities/ubatuba/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo013",
-        "date": "2017-03-23T15:56:50",
-        "gps": {
-          "lat": -23.466416666666667,
-          "lng": -45.05793055555555
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
         "w": 1024,
         "h": 768
       },
@@ -51877,63 +50718,6 @@
           "en": ""
         },
         "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-017",
-        "publicId": "cities/ubatuba/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo017",
-        "date": "2017-03-21T16:55:10",
-        "gps": {
-          "lat": -23.44661388888889,
-          "lng": -45.06735277777778
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-018",
-        "publicId": "cities/ubatuba/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo018",
-        "date": "2017-03-23T16:31:27",
-        "gps": {
-          "lat": -23.466330555555555,
-          "lng": -45.057941666666665
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-019",
-        "publicId": "cities/ubatuba/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo019",
-        "date": "2017-03-21T16:55:01",
-        "gps": {
-          "lat": -23.44768611111111,
-          "lng": -45.06703055555556
-        },
-        "location": "Praça da Baleia, Barra da Lagoa, Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
         "w": 1024,
         "h": 768
       },
@@ -52052,44 +50836,6 @@
         "h": 359
       },
       {
-        "id": "ubatuba-026",
-        "publicId": "cities/ubatuba/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo027",
-        "date": "2017-03-22T18:03:00",
-        "gps": {
-          "lat": -23.440230555555555,
-          "lng": -45.06972777777778
-        },
-        "location": "Rua Guarani, 75, Centro, Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-027",
-        "publicId": "cities/ubatuba/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo028",
-        "date": "2017-03-23T16:32:58",
-        "gps": {
-          "lat": -23.466555555555555,
-          "lng": -45.057991666666666
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "ubatuba-028",
         "publicId": "cities/ubatuba/photo029",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo029",
@@ -52109,25 +50855,6 @@
         "h": 768
       },
       {
-        "id": "ubatuba-029",
-        "publicId": "cities/ubatuba/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo030",
-        "date": "2017-03-21T16:58:28",
-        "gps": {
-          "lat": -23.4473,
-          "lng": -45.067775000000005
-        },
-        "location": "Barra da Lagoa, Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "ubatuba-030",
         "publicId": "cities/ubatuba/photo032",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo032",
@@ -52143,25 +50870,6 @@
           "en": ""
         },
         "alt": "photo032",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-031",
-        "publicId": "cities/ubatuba/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo034",
-        "date": "2017-03-23T15:56:52",
-        "gps": {
-          "lat": -23.466416666666667,
-          "lng": -45.05793055555555
-        },
-        "location": "Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
         "w": 1024,
         "h": 768
       },
@@ -52219,25 +50927,6 @@
           "en": ""
         },
         "alt": "photo037",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "ubatuba-035",
-        "publicId": "cities/ubatuba/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/ubatuba/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/ubatuba/photo038",
-        "date": "2017-03-21T16:50:01",
-        "gps": {
-          "lat": -23.439983333333334,
-          "lng": -45.07137222222222
-        },
-        "location": "Centro, Ubatuba, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo038",
         "w": 1024,
         "h": 768
       },
