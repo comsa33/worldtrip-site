@@ -23544,6 +23544,158 @@
     "cityCode": "luangprabang",
     "photos": [
       {
+        "id": "luangprabang-024",
+        "publicId": "cities/luangprabang/photo024",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo024",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo024",
+        "date": "2016-09-08T11:19:01",
+        "gps": {
+          "lat": 19.462333333333333,
+          "lng": 102.09919722222222
+        },
+        "location": "4C, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo024",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "luangprabang-025",
+        "publicId": "cities/luangprabang/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo025",
+        "date": "2016-09-08T17:03:23",
+        "gps": {
+          "lat": 19.893349999999998,
+          "lng": 102.13900833333334
+        },
+        "location": "ຖະຫນົນ ສັກກະລິນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo025",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "luangprabang-011",
+        "publicId": "cities/luangprabang/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo011",
+        "date": "2016-09-09T20:09:24",
+        "gps": {
+          "lat": 19.891841666666664,
+          "lng": 102.13691666666668
+        },
+        "location": "Sisavangvong Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo011",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "luangprabang-010",
+        "publicId": "cities/luangprabang/photo010",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo010",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo010",
+        "date": "2016-09-10T09:13:12",
+        "gps": {
+          "lat": 19.891672222222223,
+          "lng": 102.13458333333334
+        },
+        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010",
+        "w": 577,
+        "h": 1024
+      },
+      {
+        "id": "luangprabang-022",
+        "publicId": "cities/luangprabang/photo022",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo022",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo022",
+        "date": "2016-09-10T09:13:33",
+        "gps": {
+          "lat": 19.891672222222223,
+          "lng": 102.13458333333334
+        },
+        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo022",
+        "w": 577,
+        "h": 1024
+      },
+      {
+        "id": "luangprabang-013",
+        "publicId": "cities/luangprabang/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo013",
+        "date": "2016-09-10T09:14:13",
+        "gps": {
+          "lat": 19.89131111111111,
+          "lng": 102.13426111111112
+        },
+        "location": "ປ່າຂາມ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo013",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "luangprabang-016",
+        "publicId": "cities/luangprabang/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo016",
+        "date": "2016-09-10T13:44:10",
+        "gps": {
+          "lat": 19.891466666666666,
+          "lng": 102.13897777777778
+        },
+        "location": "Kingkitsarath Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "luangprabang-003",
+        "publicId": "cities/luangprabang/photo003",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo003",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo003",
+        "date": "2016-09-10T14:06:25",
+        "gps": {
+          "lat": 19.88809722222222,
+          "lng": 102.14016666666667
+        },
+        "location": "Phommathat Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo003",
+        "w": 1024,
+        "h": 768
+      },
+      {
         "id": "luangprabang-001",
         "publicId": "cities/luangprabang/photo001",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo001",
@@ -23582,26 +23734,26 @@
         "h": 768
       },
       {
-        "id": "luangprabang-003",
-        "publicId": "cities/luangprabang/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo003",
-        "date": "2016-09-10T14:06:25",
+        "id": "luangprabang-023",
+        "publicId": "cities/luangprabang/photo023",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo023",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo023",
+        "date": "2016-09-12T10:53:44",
         "gps": {
-          "lat": 19.88809722222222,
-          "lng": 102.14016666666667
+          "lat": 19.39036388888889,
+          "lng": 102.13878611111112
         },
-        "location": "Phommathat Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
+        "location": "4C, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo003",
+        "alt": "photo023",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "luangprabang-004",
+        "id": "luangprabang-005",
         "publicId": "cities/luangprabang/photo005",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo005",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo005",
@@ -23620,26 +23772,7 @@
         "h": 768
       },
       {
-        "id": "luangprabang-005",
-        "publicId": "cities/luangprabang/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo006",
-        "date": "2016-09-09T20:09:05",
-        "gps": {
-          "lat": 19.891841666666664,
-          "lng": 102.13691666666668
-        },
-        "location": "Sisavangvong Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-006",
+        "id": "luangprabang-009",
         "publicId": "cities/luangprabang/photo009",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo009",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo009",
@@ -23656,272 +23789,6 @@
         "alt": "photo009",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "luangprabang-007",
-        "publicId": "cities/luangprabang/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo010",
-        "date": "2016-09-10T09:13:12",
-        "gps": {
-          "lat": 19.891672222222223,
-          "lng": 102.13458333333334
-        },
-        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 577,
-        "h": 1024
-      },
-      {
-        "id": "luangprabang-008",
-        "publicId": "cities/luangprabang/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo011",
-        "date": "2016-09-09T20:09:24",
-        "gps": {
-          "lat": 19.891841666666664,
-          "lng": 102.13691666666668
-        },
-        "location": "Sisavangvong Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-009",
-        "publicId": "cities/luangprabang/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo012",
-        "date": "2016-09-10T14:35:41",
-        "gps": {
-          "lat": 19.888088888888888,
-          "lng": 102.14013611111112
-        },
-        "location": "Phommathat Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-010",
-        "publicId": "cities/luangprabang/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo013",
-        "date": "2016-09-10T09:14:13",
-        "gps": {
-          "lat": 19.89131111111111,
-          "lng": 102.13426111111112
-        },
-        "location": "ປ່າຂາມ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "luangprabang-011",
-        "publicId": "cities/luangprabang/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo014",
-        "date": "2016-09-10T13:44:33",
-        "gps": {
-          "lat": 19.89136111111111,
-          "lng": 102.13895277777779
-        },
-        "location": "Kingkitsarath Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-012",
-        "publicId": "cities/luangprabang/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo015",
-        "date": "2016-09-10T13:44:22",
-        "gps": {
-          "lat": 19.891419444444445,
-          "lng": 102.13894722222223
-        },
-        "location": "Kingkitsarath Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-013",
-        "publicId": "cities/luangprabang/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo016",
-        "date": "2016-09-10T13:44:10",
-        "gps": {
-          "lat": 19.891466666666666,
-          "lng": 102.13897777777778
-        },
-        "location": "Kingkitsarath Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-014",
-        "publicId": "cities/luangprabang/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo017",
-        "date": "2016-09-10T09:13:14",
-        "gps": {
-          "lat": 19.891672222222223,
-          "lng": 102.13458333333334
-        },
-        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 577,
-        "h": 1024
-      },
-      {
-        "id": "luangprabang-015",
-        "publicId": "cities/luangprabang/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo018",
-        "date": "2016-09-10T09:13:10",
-        "gps": {
-          "lat": 19.891672222222223,
-          "lng": 102.13458333333334
-        },
-        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 577,
-        "h": 1024
-      },
-      {
-        "id": "luangprabang-016",
-        "publicId": "cities/luangprabang/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo019",
-        "date": "2016-09-10T09:13:36",
-        "gps": {
-          "lat": 19.891672222222223,
-          "lng": 102.13458333333334
-        },
-        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 577,
-        "h": 1024
-      },
-      {
-        "id": "luangprabang-017",
-        "publicId": "cities/luangprabang/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo020",
-        "date": "2016-09-11T14:37:29",
-        "gps": {
-          "lat": 19.88774722222222,
-          "lng": 102.13186666666665
-        },
-        "location": "ຖະໜົນ ເຈົ້າຟ້າງຸ່ມ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-018",
-        "publicId": "cities/luangprabang/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo021",
-        "date": "2016-09-10T14:06:41",
-        "gps": {
-          "lat": 19.88809722222222,
-          "lng": 102.14016666666667
-        },
-        "location": "Phommathat Road, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "luangprabang-019",
-        "publicId": "cities/luangprabang/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo022",
-        "date": "2016-09-10T09:13:33",
-        "gps": {
-          "lat": 19.891672222222223,
-          "lng": 102.13458333333334
-        },
-        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 577,
-        "h": 1024
-      },
-      {
-        "id": "luangprabang-020",
-        "publicId": "cities/luangprabang/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/luangprabang/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/luangprabang/photo023",
-        "date": "2016-09-10T09:13:27",
-        "gps": {
-          "lat": 19.891672222222223,
-          "lng": 102.13458333333334
-        },
-        "location": "ຖະໜົນ ສາທຸຕັນ, ຫຼວງພະບາງ, ຫລວງພະບາງ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 577,
-        "h": 1024
       }
     ]
   },
@@ -41752,6 +41619,63 @@
     "cityCode": "vangvieng",
     "photos": [
       {
+        "id": "vangvieng-026",
+        "publicId": "cities/vangvieng/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo026",
+        "date": "2016-09-06T13:01:40",
+        "gps": {
+          "lat": 18.695755555555557,
+          "lng": 102.3424611111111
+        },
+        "location": "13N, Hin Hit, ວຽງຈັນ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo026",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "vangvieng-031",
+        "publicId": "cities/vangvieng/photo031",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo031",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo031",
+        "date": "2016-09-06T13:02:23",
+        "gps": {
+          "lat": 18.698375,
+          "lng": 102.34473333333332
+        },
+        "location": "13N, Hin Hit, ວຽງຈັນ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo031",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "vangvieng-025",
+        "publicId": "cities/vangvieng/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo025",
+        "date": "2016-09-06T13:53:34",
+        "gps": {
+          "lat": 18.912005555555552,
+          "lng": 102.45562777777778
+        },
+        "location": "13N, Phonepheng, ວຽງຈັນ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo025",
+        "w": 1024,
+        "h": 768
+      },
+      {
         "id": "vangvieng-001",
         "publicId": "cities/vangvieng/photo001",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo001",
@@ -41771,154 +41695,40 @@
         "h": 768
       },
       {
-        "id": "vangvieng-002",
-        "publicId": "cities/vangvieng/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo002",
-        "date": "2016-09-06T17:39:50",
+        "id": "vangvieng-011",
+        "publicId": "cities/vangvieng/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo011",
+        "date": "2016-09-06T17:04:41",
         "gps": {
-          "lat": 18.926705555555557,
-          "lng": 102.39565277777778
-        },
-        "location": "ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-003",
-        "publicId": "cities/vangvieng/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo003",
-        "date": "2016-09-06T12:45:43",
-        "gps": {
-          "lat": 18.594575,
-          "lng": 102.33476388888889
-        },
-        "location": "13N, Hin Ngon, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 766,
-        "h": 1026
-      },
-      {
-        "id": "vangvieng-004",
-        "publicId": "cities/vangvieng/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo004",
-        "date": "2016-09-07T15:34:11",
-        "gps": {
-          "lat": 18.922219444444444,
-          "lng": 102.44844166666667
-        },
-        "location": "ວຽງແກ້ວ, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-005",
-        "publicId": "cities/vangvieng/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo005",
-        "date": "2016-09-06T13:01:41",
-        "gps": {
-          "lat": 18.69596388888889,
-          "lng": 102.34268055555555
-        },
-        "location": "13N, Hin Hit, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vangvieng-006",
-        "publicId": "cities/vangvieng/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo006",
-        "date": "2016-09-06T17:52:54",
-        "gps": {
-          "lat": 18.926516666666668,
-          "lng": 102.39557777777779
-        },
-        "location": "ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vangvieng-007",
-        "publicId": "cities/vangvieng/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo007",
-        "date": "2016-09-06T17:51:07",
-        "gps": {
-          "lat": 18.92674166666667,
-          "lng": 102.39570555555557
-        },
-        "location": "ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-008",
-        "publicId": "cities/vangvieng/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo008",
-        "date": "2016-09-06T17:04:54",
-        "gps": {
-          "lat": 18.926716666666668,
+          "lat": 18.92671388888889,
           "lng": 102.39560833333334
         },
-        "location": "ວຽງຈັນ",
+        "location": "Hong Ngern Village, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo008",
+        "alt": "photo011",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "vangvieng-009",
-        "publicId": "cities/vangvieng/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo009",
-        "date": "2016-09-07T15:31:04",
+        "id": "vangvieng-013",
+        "publicId": "cities/vangvieng/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo013",
+        "date": "2016-09-06T17:04:59",
         "gps": {
-          "lat": 18.921950000000002,
-          "lng": 102.44845555555555
+          "lat": 18.926719444444444,
+          "lng": 102.39561388888889
         },
-        "location": "ວັງວຽງ, ວຽງຈັນ",
+        "location": "Hong Ngern Village, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo009",
+        "alt": "photo013",
         "w": 768,
         "h": 1024
       },
@@ -41942,51 +41752,32 @@
         "h": 1024
       },
       {
-        "id": "vangvieng-011",
-        "publicId": "cities/vangvieng/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo011",
-        "date": "2016-09-06T17:04:41",
+        "id": "vangvieng-034",
+        "publicId": "cities/vangvieng/photo034",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo034",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo034",
+        "date": "2016-09-06T17:14:55",
         "gps": {
-          "lat": 18.92671388888889,
-          "lng": 102.39560833333334
+          "lat": 18.926650000000002,
+          "lng": 102.39562222222223
         },
         "location": "Hong Ngern Village, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-012",
-        "publicId": "cities/vangvieng/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo012",
-        "date": "2016-09-07T21:13:27",
-        "gps": {
-          "lat": 18.922075,
-          "lng": 102.44845555555555
-        },
-        "location": "ວັງວຽງ, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
+        "alt": "photo034",
         "w": 1024,
-        "h": 576
+        "h": 768
       },
       {
-        "id": "vangvieng-013",
-        "publicId": "cities/vangvieng/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo013",
-        "date": "2016-09-06T17:04:59",
+        "id": "vangvieng-028",
+        "publicId": "cities/vangvieng/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo028",
+        "date": "2016-09-06T17:15:12",
         "gps": {
-          "lat": 18.926719444444444,
+          "lat": 18.926650000000002,
           "lng": 102.39561388888889
         },
         "location": "Hong Ngern Village, ວຽງຈັນ",
@@ -41994,9 +41785,28 @@
           "ko": "",
           "en": ""
         },
-        "alt": "photo013",
-        "w": 768,
-        "h": 1024
+        "alt": "photo028",
+        "w": 1024,
+        "h": 768
+      },
+      {
+        "id": "vangvieng-032",
+        "publicId": "cities/vangvieng/photo032",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo032",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo032",
+        "date": "2016-09-06T17:17:00",
+        "gps": {
+          "lat": 18.926644444444445,
+          "lng": 102.39563055555556
+        },
+        "location": "Hong Ngern Village, ວຽງຈັນ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo032",
+        "w": 1024,
+        "h": 768
       },
       {
         "id": "vangvieng-014",
@@ -42018,277 +41828,125 @@
         "h": 1024
       },
       {
-        "id": "vangvieng-015",
-        "publicId": "cities/vangvieng/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo015",
-        "date": "2016-09-06T17:39:33",
+        "id": "vangvieng-007",
+        "publicId": "cities/vangvieng/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo007",
+        "date": "2016-09-06T17:51:07",
         "gps": {
-          "lat": 18.926705555555557,
-          "lng": 102.39566111111112
+          "lat": 18.92674166666667,
+          "lng": 102.39570555555557
         },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
+        "location": "ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo015",
+        "alt": "photo007",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "vangvieng-016",
-        "publicId": "cities/vangvieng/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo017",
-        "date": "2016-09-06T17:17:59",
+        "id": "vangvieng-035",
+        "publicId": "cities/vangvieng/photo035",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo035",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo035",
+        "date": "2016-09-06T17:51:20",
         "gps": {
-          "lat": 18.92675277777778,
-          "lng": 102.39565277777778
+          "lat": 18.92674166666667,
+          "lng": 102.39570555555557
         },
         "location": "Hong Ngern Village, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo017",
+        "alt": "photo035",
+        "w": 768,
+        "h": 1024
+      },
+      {
+        "id": "vangvieng-006",
+        "publicId": "cities/vangvieng/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo006",
+        "date": "2016-09-06T17:52:54",
+        "gps": {
+          "lat": 18.926516666666668,
+          "lng": 102.39557777777779
+        },
+        "location": "ວຽງຈັນ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "vangvieng-017",
-        "publicId": "cities/vangvieng/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo018",
-        "date": "2016-09-06T17:09:07",
+        "id": "vangvieng-009",
+        "publicId": "cities/vangvieng/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo009",
+        "date": "2016-09-07T15:31:04",
         "gps": {
-          "lat": 18.926644444444445,
-          "lng": 102.39565277777778
+          "lat": 18.921950000000002,
+          "lng": 102.44845555555555
         },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
+        "location": "ວັງວຽງ, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo018",
+        "alt": "photo009",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "vangvieng-018",
-        "publicId": "cities/vangvieng/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo019",
-        "date": "2016-09-06T17:09:40",
+        "id": "vangvieng-004",
+        "publicId": "cities/vangvieng/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo004",
+        "date": "2016-09-07T15:34:11",
         "gps": {
-          "lat": 18.926669444444446,
-          "lng": 102.39564444444446
+          "lat": 18.922219444444444,
+          "lng": 102.44844166666667
         },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
+        "location": "ວຽງແກ້ວ, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo019",
+        "alt": "photo004",
         "w": 768,
         "h": 1024
       },
       {
-        "id": "vangvieng-019",
-        "publicId": "cities/vangvieng/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo020",
-        "date": "2016-09-06T17:39:43",
+        "id": "vangvieng-033",
+        "publicId": "cities/vangvieng/photo033",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo033",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo033",
+        "date": "2016-09-07T16:50:18",
         "gps": {
-          "lat": 18.926705555555557,
-          "lng": 102.39565277777778
+          "lat": 18.92507777777778,
+          "lng": 102.449225
         },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
+        "location": "ວັງວຽງ, ວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo020",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-020",
-        "publicId": "cities/vangvieng/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo022",
-        "date": "2016-09-06T17:16:07",
-        "gps": {
-          "lat": 18.92663055555556,
-          "lng": 102.3956388888889
-        },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-021",
-        "publicId": "cities/vangvieng/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo023",
-        "date": "2016-09-06T17:04:31",
-        "gps": {
-          "lat": 18.926705555555557,
-          "lng": 102.3956388888889
-        },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-022",
-        "publicId": "cities/vangvieng/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo024",
-        "date": "2016-09-06T17:05:17",
-        "gps": {
-          "lat": 18.926705555555557,
-          "lng": 102.39563055555556
-        },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-023",
-        "publicId": "cities/vangvieng/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo025",
-        "date": "2016-09-06T13:53:34",
-        "gps": {
-          "lat": 18.912005555555552,
-          "lng": 102.45562777777778
-        },
-        "location": "13N, Phonepheng, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
+        "alt": "photo033",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "vangvieng-024",
-        "publicId": "cities/vangvieng/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo026",
-        "date": "2016-09-06T13:01:40",
-        "gps": {
-          "lat": 18.695755555555557,
-          "lng": 102.3424611111111
-        },
-        "location": "13N, Hin Hit, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vangvieng-025",
-        "publicId": "cities/vangvieng/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo027",
-        "date": "2016-09-06T17:09:55",
-        "gps": {
-          "lat": 18.926675,
-          "lng": 102.39568333333334
-        },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-026",
-        "publicId": "cities/vangvieng/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo028",
-        "date": "2016-09-06T17:15:12",
-        "gps": {
-          "lat": 18.926650000000002,
-          "lng": 102.39561388888889
-        },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vangvieng-027",
-        "publicId": "cities/vangvieng/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo029",
-        "date": "2016-09-06T17:07:20",
-        "gps": {
-          "lat": 18.926719444444444,
-          "lng": 102.39566666666667
-        },
-        "location": "Hong Ngern Village, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vangvieng-028",
-        "publicId": "cities/vangvieng/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo031",
-        "date": "2016-09-06T13:02:23",
-        "gps": {
-          "lat": 18.698375,
-          "lng": 102.34473333333332
-        },
-        "location": "13N, Hin Hit, ວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vangvieng-029",
-        "publicId": "cities/vangvieng/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo032",
-        "date": "2016-09-07T21:13:13",
+        "id": "vangvieng-012",
+        "publicId": "cities/vangvieng/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vangvieng/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vangvieng/photo012",
+        "date": "2016-09-07T21:13:27",
         "gps": {
           "lat": 18.922075,
           "lng": 102.44845555555555
@@ -42298,7 +41956,7 @@
           "ko": "",
           "en": ""
         },
-        "alt": "photo032",
+        "alt": "photo012",
         "w": 1024,
         "h": 576
       }
@@ -43681,45 +43339,7 @@
         "h": 1024
       },
       {
-        "id": "vientiane-002",
-        "publicId": "cities/vientiane/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo003",
-        "date": "2016-09-14T00:28:46",
-        "gps": {
-          "lat": 17.9648,
-          "lng": 102.60566666666666
-        },
-        "location": "ຖະໜົນ ໜໍ່ແກ້ວກຸມມານ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-003",
-        "publicId": "cities/vientiane/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo004",
-        "date": "2016-09-12T22:33:09",
-        "gps": {
-          "lat": 17.965847222222223,
-          "lng": 102.60456111111111
-        },
-        "location": "ຖະໜົນ ເຊດຖາທິຣາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-004",
+        "id": "vientiane-005",
         "publicId": "cities/vientiane/photo005",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo005",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo005",
@@ -43738,45 +43358,26 @@
         "h": 768
       },
       {
-        "id": "vientiane-005",
-        "publicId": "cities/vientiane/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo006",
-        "date": "2016-09-14T00:39:07",
+        "id": "vientiane-004",
+        "publicId": "cities/vientiane/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo004",
+        "date": "2016-09-12T22:33:09",
         "gps": {
-          "lat": 17.964636111111112,
-          "lng": 102.60592777777777
+          "lat": 17.965847222222223,
+          "lng": 102.60456111111111
         },
-        "location": "ຖະໜົນ ມັນທາຕຸລາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
+        "location": "ຖະໜົນ ເຊດຖາທິຣາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo006",
+        "alt": "photo004",
         "w": 1024,
         "h": 768
       },
       {
-        "id": "vientiane-006",
-        "publicId": "cities/vientiane/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo007",
-        "date": "2016-09-14T00:29:03",
-        "gps": {
-          "lat": 17.96463333333333,
-          "lng": 102.60559722222222
-        },
-        "location": "ຖະໜົນ ໜໍ່ແກ້ວກຸມມານ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-007",
+        "id": "vientiane-008",
         "publicId": "cities/vientiane/photo008",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo008",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo008",
@@ -43795,83 +43396,7 @@
         "h": 768
       },
       {
-        "id": "vientiane-008",
-        "publicId": "cities/vientiane/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo009",
-        "date": "2016-09-14T00:42:45",
-        "gps": {
-          "lat": 17.96463888888889,
-          "lng": 102.60591111111111
-        },
-        "location": "ຖະໜົນ ມັນທາຕຸລາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vientiane-009",
-        "publicId": "cities/vientiane/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo010",
-        "date": "2016-09-14T00:28:38",
-        "gps": {
-          "lat": 17.9648,
-          "lng": 102.60566666666666
-        },
-        "location": "ຖະໜົນ ໜໍ່ແກ້ວກຸມມານ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-010",
-        "publicId": "cities/vientiane/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo011",
-        "date": "2016-09-12T22:57:47",
-        "gps": {
-          "lat": 17.96591111111111,
-          "lng": 102.60456944444444
-        },
-        "location": "ຖະໜົນ ເຊດຖາທິຣາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-011",
-        "publicId": "cities/vientiane/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo012",
-        "date": "2016-09-14T00:41:13",
-        "gps": {
-          "lat": 17.964613888888888,
-          "lng": 102.60581944444444
-        },
-        "location": "ຖະໜົນ ໜໍ່ແກ້ວກຸມມານ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vientiane-012",
+        "id": "vientiane-013",
         "publicId": "cities/vientiane/photo013",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo013",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo013",
@@ -43890,45 +43415,7 @@
         "h": 768
       },
       {
-        "id": "vientiane-013",
-        "publicId": "cities/vientiane/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo014",
-        "date": "2016-09-14T00:39:21",
-        "gps": {
-          "lat": 17.964669444444443,
-          "lng": 102.60594999999999
-        },
-        "location": "ຖະໜົນ ມັນທາຕຸລາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-014",
-        "publicId": "cities/vientiane/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo015",
-        "date": "2016-09-14T00:38:34",
-        "gps": {
-          "lat": 17.964666666666666,
-          "lng": 102.60591944444444
-        },
-        "location": "ຖະໜົນ ມັນທາຕຸລາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vientiane-015",
+        "id": "vientiane-016",
         "publicId": "cities/vientiane/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo016",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo016",
@@ -43947,7 +43434,7 @@
         "h": 1024
       },
       {
-        "id": "vientiane-016",
+        "id": "vientiane-017",
         "publicId": "cities/vientiane/photo017",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo017",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo017",
@@ -43962,63 +43449,6 @@
           "en": ""
         },
         "alt": "photo017",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "vientiane-017",
-        "publicId": "cities/vientiane/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo018",
-        "date": "2016-09-14T00:38:23",
-        "gps": {
-          "lat": 17.964666666666666,
-          "lng": 102.60591944444444
-        },
-        "location": "ຖະໜົນ ມັນທາຕຸລາດ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vientiane-018",
-        "publicId": "cities/vientiane/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo019",
-        "date": "2016-09-14T00:40:46",
-        "gps": {
-          "lat": 17.964702777777777,
-          "lng": 102.60581111111111
-        },
-        "location": "ຖະໜົນ ໜໍ່ແກ້ວກຸມມານ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "vientiane-019",
-        "publicId": "cities/vientiane/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/vientiane/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/vientiane/photo020",
-        "date": "2016-09-14T00:28:53",
-        "gps": {
-          "lat": 17.96463333333333,
-          "lng": 102.60559722222222
-        },
-        "location": "ຖະໜົນ ໜໍ່ແກ້ວກຸມມານ, ວຽງຈັນ, ນະຄອນຫຼວງວຽງຈັນ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
         "w": 1024,
         "h": 768
       }
