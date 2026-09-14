@@ -281,13 +281,13 @@ async function syncPhotos() {
       }
       
       // Generate optimized URL
-      const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${publicId}`;
+      const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/v${photo.version}/${publicId}`;
       
       photoData.push({
         id: `${cityCode}-${String(idx + 1).padStart(3, '0')}`,
         publicId: publicId,
         url: url,
-        thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/${publicId}`,
+        thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v${photo.version}/${publicId}`,
         date: date,
         gps: gps,
         location: address, // 주소 추가

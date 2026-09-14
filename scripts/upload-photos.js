@@ -292,8 +292,8 @@ async function uploadPhoto(filePath, cityCode, index) {
     return {
       id: `${cityCode}-${String(index).padStart(3, '0')}`,
       publicId: publicId,
-      url: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${publicId}`,
-      thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/${publicId}`,
+      url: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/v${result.version}/${publicId}`,
+      thumbnail: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v${result.version}/${publicId}`,
       date: exif.date || '',
       gps: exif.gps,
       caption: {
