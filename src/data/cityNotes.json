@@ -184,11 +184,11 @@
   "32": {
     "ko": {
       "title": "잠깐 집",
-      "story": "인도 중간에 나흘 돌아왔습니다.\n떠나기 전에 약속한 결혼식이 있었습니다.\n전 직장 동료 둘이 결혼했고, 사회를 봤습니다.\n회와 소주.\n다시 인천으로 갔습니다."
+      "story": "인도 중간에 나흘 돌아왔습니다.\n떠나기 전에 약속한 결혼식이 있었습니다.\n전 직장 동료 둘이 결혼했고, 사회를 봤습니다.\n밤에는 친구들과 밴드 공연을 보고 술을 마셨습니다.\n역에서 배웅을 받고 다시 인천으로 갔습니다."
     },
     "en": {
       "title": "Home, Briefly",
-      "story": "Came back for four days, halfway through India.\nA wedding I had promised before leaving.\nTwo former colleagues married; I emceed.\nSashimi and soju.\nThen back to Incheon."
+      "story": "Four days home in the middle of India.\nThere was a wedding I had promised to be at before I left.\nTwo former colleagues got married, and I was the MC.\nAt night, a live band and drinks with friends.\nThey saw me off at the station, and I went back to Incheon."
     }
   },
   "34": {
@@ -853,6 +853,14 @@
     "en": {
       "title": "The Last Sea",
       "story": "The last city of the trip.\nThe beach was crowded and the sky was pink.\nSomeone grilled skewers on the sand.\nA kitten on the bed.\nFive days later, Gwangju."
+    }
+  },
+  "155": {
+    "ko": {
+      "story": "여행을 마치고 광주로 돌아왔습니다.\n새벽에 집에 들어가 강아지를 안았습니다.\n저녁에는 회와 소주."
+    },
+    "en": {
+      "story": "The trip was over, and I was back in Gwangju.\nI got home before dawn and picked up the dog.\nIn the evening, sashimi and soju."
     }
   },
   "158": {
