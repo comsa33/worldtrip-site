@@ -835,71 +835,76 @@ export function RollLocator({
   return (
     <span className={`pb__locator${open ? ' is-open' : ''}`} ref={boxRef}>
       <span className="pb__locmap">
-        <svg
-          ref={svgRef}
-          viewBox="0 0 1000 500"
-          preserveAspectRatio="xMidYMid meet"
-          role="img"
-          aria-label={lang === 'ko' ? '여정 지도' : 'Route overview'}
-          onPointerEnter={(e) => {
-            byTouch.current = e.pointerType === 'touch';
-            if (byTouch.current) return;
-            window.clearTimeout(openTimer.current);
-            openTimer.current = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
-          }}
-          onPointerLeave={(e) => {
-            if (e.pointerType !== 'touch') shut();
-          }}
-          onPointerDown={(e) => {
-            byTouch.current = e.pointerType === 'touch';
-            if (byTouch.current) {
-              try {
-                e.currentTarget.setPointerCapture(e.pointerId);
-              } catch {
-                /* a pointer already gone */
-              }
-            }
-          }}
-          onPointerMove={(e) => {
-            if (!open) return;
-            const { clientX, clientY } = e;
-            if (moveRaf.current) return;
-            moveRaf.current = requestAnimationFrame(() => {
-              moveRaf.current = 0;
-              paintAim(aimAt(clientX, clientY));
-            });
-          }}
-          onPointerUp={(e) => {
-            if (e.pointerType !== 'touch') return;
-            if (!open) {
-              setOpen(true);
-              return;
-            }
-            commit(aimRef.current ?? aimAt(e.clientX, e.clientY));
-          }}
-          onClick={(e) => {
-            if (byTouch.current) return;
-            if (!open) {
+        {/* the drawing and the seat share one box, the map's own size: the
+            seat's percentages were being taken of the plate's padding too,
+            which put the dot a few pixels off its city on a 64px map */}
+        <span className="pb__locplane">
+          <svg
+            ref={svgRef}
+            viewBox="0 0 1000 500"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            aria-label={lang === 'ko' ? '여정 지도' : 'Route overview'}
+            onPointerEnter={(e) => {
+              byTouch.current = e.pointerType === 'touch';
+              if (byTouch.current) return;
               window.clearTimeout(openTimer.current);
-              setOpen(true);
-              return;
-            }
-            commit(aimRef.current ?? aimAt(e.clientX, e.clientY));
-          }}
-        >
-          <Land order={order} />
-          <g className="minimap__aim" ref={gRef} style={{ display: 'none' }}>
-            <circle ref={ringRef} r={9} />
-            <text ref={labelRef} style={{ opacity: 0 }} />
-          </g>
-        </svg>
-        <span
-          className="pb__locseat"
-          style={{ left: `${x / 10}%`, top: `${y / 5}%` }}
-          data-dot-active={dot ? '' : undefined}
-          data-dot-follow={dot ? '' : undefined}
-          aria-hidden="true"
-        />
+              openTimer.current = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
+            }}
+            onPointerLeave={(e) => {
+              if (e.pointerType !== 'touch') shut();
+            }}
+            onPointerDown={(e) => {
+              byTouch.current = e.pointerType === 'touch';
+              if (byTouch.current) {
+                try {
+                  e.currentTarget.setPointerCapture(e.pointerId);
+                } catch {
+                  /* a pointer already gone */
+                }
+              }
+            }}
+            onPointerMove={(e) => {
+              if (!open) return;
+              const { clientX, clientY } = e;
+              if (moveRaf.current) return;
+              moveRaf.current = requestAnimationFrame(() => {
+                moveRaf.current = 0;
+                paintAim(aimAt(clientX, clientY));
+              });
+            }}
+            onPointerUp={(e) => {
+              if (e.pointerType !== 'touch') return;
+              if (!open) {
+                setOpen(true);
+                return;
+              }
+              commit(aimRef.current ?? aimAt(e.clientX, e.clientY));
+            }}
+            onClick={(e) => {
+              if (byTouch.current) return;
+              if (!open) {
+                window.clearTimeout(openTimer.current);
+                setOpen(true);
+                return;
+              }
+              commit(aimRef.current ?? aimAt(e.clientX, e.clientY));
+            }}
+          >
+            <Land order={order} />
+            <g className="minimap__aim" ref={gRef} style={{ display: 'none' }}>
+              <circle ref={ringRef} r={9} />
+              <text ref={labelRef} style={{ opacity: 0 }} />
+            </g>
+          </svg>
+          <span
+            className="pb__locseat"
+            style={{ left: `${x / 10}%`, top: `${y / 5}%` }}
+            data-dot-active={dot ? '' : undefined}
+            data-dot-follow={dot ? '' : undefined}
+            aria-hidden="true"
+          />
+        </span>
       </span>
     </span>
   );
