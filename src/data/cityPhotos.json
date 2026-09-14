@@ -36339,25 +36339,6 @@
         "h": 768
       },
       {
-        "id": "siddharthanagar-006",
-        "publicId": "cities/siddharthanagar/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo006",
-        "date": "2016-10-31T15:42:49",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 576
-      },
-      {
         "id": "siddharthanagar-007",
         "publicId": "cities/siddharthanagar/photo007",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo007",
@@ -36396,25 +36377,6 @@
         "h": 768
       },
       {
-        "id": "siddharthanagar-009",
-        "publicId": "cities/siddharthanagar/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo009",
-        "date": "2016-10-31T15:42:41",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 576
-      },
-      {
         "id": "siddharthanagar-010",
         "publicId": "cities/siddharthanagar/photo010",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo010",
@@ -36434,25 +36396,6 @@
         "h": 1024
       },
       {
-        "id": "siddharthanagar-011",
-        "publicId": "cities/siddharthanagar/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo011",
-        "date": "2016-10-31T15:42:33",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 576
-      },
-      {
         "id": "siddharthanagar-012",
         "publicId": "cities/siddharthanagar/photo012",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo012",
@@ -36470,25 +36413,6 @@
         "alt": "photo012",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "siddharthanagar-013",
-        "publicId": "cities/siddharthanagar/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/siddharthanagar/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/siddharthanagar/photo013",
-        "date": "2016-10-31T15:42:31",
-        "gps": {
-          "lat": 27.475211111111108,
-          "lng": 83.46960555555556
-        },
-        "location": "NH24, Sonauli, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 576
       }
     ]
   },
@@ -38887,44 +38811,6 @@
           "en": ""
         },
         "alt": "photo013",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-014",
-        "publicId": "cities/sonauli/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo014",
-        "date": "2016-10-31T15:43:41",
-        "gps": {
-          "lat": 27.476105555555552,
-          "lng": 83.46994722222223
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sonauli-015",
-        "publicId": "cities/sonauli/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sonauli/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sonauli/photo015",
-        "date": "2016-10-31T16:59:23",
-        "gps": {
-          "lat": 27.477786111111108,
-          "lng": 83.46965833333334
-        },
-        "location": "सिद्धार्थ राजमार्ग, बेलहिया, लुम्बिनी प्रदेश",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
         "w": 1024,
         "h": 768
       },
