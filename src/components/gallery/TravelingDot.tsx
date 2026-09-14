@@ -52,7 +52,17 @@ export function TravelingDot() {
     let lastCarry = '';
 
     const homeEl = () => document.querySelector<HTMLElement>('[data-dot-home]');
-    const activeEl = () => document.querySelector<HTMLElement>('[data-dot-active]');
+    /* An open photo book is where the reader is looking, so while it is up only
+       a host inside it counts. Otherwise a host behind it — the opening words
+       still typing themselves out in Gwangju — kept the dot, and the caret
+       went on blinking and walking over the photos. With no host in the book
+       the dot goes home, where it is not drawn. */
+    const activeEl = () => {
+      const book = document.querySelector<HTMLElement>('.pb');
+      return book
+        ? book.querySelector<HTMLElement>('[data-dot-active]')
+        : document.querySelector<HTMLElement>('[data-dot-active]');
+    };
 
     const numVar = (cs: CSSStyleDeclaration, name: string, fallback: number) => {
       const v = parseFloat(cs.getPropertyValue(name));
