@@ -40015,25 +40015,6 @@
         "alt": "photo030",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "turin-014",
-        "publicId": "cities/turin/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/turin/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/turin/photo014",
-        "date": "2017-01-26T11:20:34",
-        "gps": {
-          "lat": 44.89906944444444,
-          "lng": 7.744877777777778
-        },
-        "location": "A6, Carmagnola, Piedmont",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768
       }
     ]
   },
@@ -44328,6 +44309,30 @@
           "en": ""
         },
         "alt": "photo003",
+        "w": 1024,
+        "h": 768
+      }
+    ]
+  },
+  "브라": {
+    "cityCode": "bra",
+    "photos": [
+      {
+        "id": "bra-001",
+        "publicId": "cities/bra/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/bra/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/bra/photo001",
+        "date": "2017-01-26T11:20:34",
+        "gps": {
+          "lat": 44.89906944444444,
+          "lng": 7.744877777777778
+        },
+        "location": "A6, Carmagnola, Piedmont",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
         "w": 1024,
         "h": 768
       }
