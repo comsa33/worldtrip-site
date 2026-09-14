@@ -1,6 +1,8 @@
 import journeyData from '../data/journey.json';
 import citiesData from '../data/cities.json';
 import { composeJourney, type ScoreNote } from './journeyScore';
+import countriesData from '../data/countries.json';
+import type { Region } from './sound';
 import { photosForStop, type VisitPhoto } from './visitPhotos';
 
 interface RollStop {
@@ -120,3 +122,18 @@ const SCORE: ScoreNote[] = composeJourney(
   citiesData.cities as Record<string, { lat: number; lng: number }>
 );
 export const noteForStop = (stopId: number): ScoreNote | undefined => SCORE[stopOrder(stopId)];
+
+const CONTINENT = Object.fromEntries(
+  (countriesData as { countries: { code: string; continent: string }[] }).countries.map((c) => [
+    c.code,
+    c.continent,
+  ])
+);
+/** Which way the photo book's song is dressed for a stop's photos. */
+export function regionForStop(stopId: number): Region {
+  const c = CONTINENT[stops[stopOrder(stopId)]?.country ?? ''];
+  if (c === 'south-america') return 'south';
+  if (c === 'europe') return 'europe';
+  if (c === 'africa' || c === 'middle-east') return 'mena';
+  return 'asia';
+}

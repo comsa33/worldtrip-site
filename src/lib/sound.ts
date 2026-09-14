@@ -544,13 +544,452 @@ function albumSong(e: Engine, out: GainNode): Song {
   };
 }
 
+// =============================================================================
+// the album, by region: the same tune, dressed for where the photos were taken
+// =============================================================================
+
+export type Region = 'asia' | 'south' | 'europe' | 'mena';
+let region: Region = 'asia';
+
+/** a short burst of noise through a filter: shakers, drum skins, breath */
+function noiseHit(
+  e: Engine,
+  into: AudioNode,
+  t: number,
+  type: BiquadFilterType,
+  freq: number,
+  peak: number,
+  len: number,
+  q = 0.8
+) {
+  const { ctx } = e;
+  const src = noiseSource(e);
+  const f = ctx.createBiquadFilter();
+  f.type = type;
+  f.frequency.value = freq;
+  f.Q.value = q;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(peak, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+  src.connect(f);
+  f.connect(g);
+  g.connect(into);
+  src.start(t, Math.random() * 1.5);
+  src.stop(t + len + 0.02);
+}
+
+/** a plucked string: bright at the attack, closing fast — guitar, oud, harp by the settings */
+function pluckString(
+  e: Engine,
+  into: AudioNode,
+  t: number,
+  freq: number,
+  peak: number,
+  len: number,
+  { type = 'triangle' as OscillatorType, open = 3200, close = 700, bend = 0 } = {}
+) {
+  const { ctx } = e;
+  const o = ctx.createOscillator();
+  o.type = type;
+  o.frequency.setValueAtTime(freq * (1 + bend), t);
+  if (bend) o.frequency.exponentialRampToValueAtTime(freq, t + 0.06);
+  const lp = ctx.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.setValueAtTime(open, t);
+  lp.frequency.exponentialRampToValueAtTime(close, t + Math.min(0.4, len));
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t + 0.006);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+  o.connect(lp);
+  lp.connect(g);
+  g.connect(into);
+  o.start(t);
+  o.stop(t + len + 0.05);
+}
+
+/** a low drum: a sine dropping in pitch, with a little skin */
+function lowDrum(
+  e: Engine,
+  into: AudioNode,
+  t: number,
+  from: number,
+  to: number,
+  peak: number,
+  len: number
+) {
+  const { ctx } = e;
+  const o = ctx.createOscillator();
+  o.frequency.setValueAtTime(from, t);
+  o.frequency.exponentialRampToValueAtTime(to, t + len * 0.6);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(peak, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+  o.connect(g);
+  g.connect(into);
+  o.start(t);
+  o.stop(t + len + 0.05);
+  noiseHit(e, into, t, 'lowpass', 900, peak * 0.15, 0.05);
+}
+
+/** a clock that puts sixteenths on the audio timeline a little ahead */
+function sixteenths(ctx: AudioContext, bpm: number, onStep: (step: number, t: number) => void) {
+  const dur = 60 / bpm / 4;
+  const t0 = ctx.currentTime + 0.1;
+  let step = 0;
+  let next = t0;
+  const tick = () => {
+    while (next < ctx.currentTime + 0.2) {
+      onStep(step, next);
+      step++;
+      next += dur;
+    }
+  };
+  const id = window.setInterval(tick, 30);
+  tick();
+  return {
+    dur,
+    /** the next grid line of `every` sixteenths after now */
+    nextOn: (every: number) => {
+      const now = ctx.currentTime;
+      const d = dur * every;
+      return now + (d - ((now - t0) % d));
+    },
+    stop: () => window.clearInterval(id),
+  };
+}
+
+/** chords with their sevenths, voiced for a guitar: D maj7, Bm7, G maj7, A7 */
+const SEVENTHS = [
+  [146.83, 185.0, 220.0, 277.18],
+  [123.47, 146.83, 185.0, 220.0],
+  [98.0, 123.47, 146.83, 185.0],
+  [110.0, 138.59, 164.81, 196.0],
+];
+
+/**
+ * South America — bossa and samba at 104: a surdo answering on two and four,
+ * a ganzá in sixteenths, a nylon guitar comping the syncopated bossa figure
+ * with the sevenths, a bass that walks root and fifth, a tamborim now and
+ * then. Bright, moving, warm.
+ */
+function southAlbum(e: Engine, out: GainNode): Song {
+  const { ctx } = e;
+  // the bossa sits lower in level than the other albums; a bus brings it up to them
+  const bus = ctx.createGain();
+  bus.gain.value = 1.5;
+  bus.connect(out);
+  let home = chordIndex;
+  let pending: number | null = null;
+  const guitar = ctx.createGain();
+  guitar.gain.value = 0.9;
+  guitar.connect(bus);
+  guitar.connect(e.echo);
+  const COMP = new Set([0, 3, 6, 10, 12]);
+  const clock = sixteenths(ctx, 104, (step, t) => {
+    const s = step % 16;
+    if (s === 0 && pending !== null) {
+      home = pending;
+      pending = null;
+    }
+    // two bars home, two bars on the chord a fourth away
+    const chord = step % 32 >= 16 ? (home + 2) % 4 : home;
+    const v = SEVENTHS[chord];
+    // ganzá: every sixteenth, leaning on the off-beat
+    noiseHit(e, bus, t, 'highpass', 6000, [0.018, 0.009, 0.013, 0.009][s % 4], 0.05);
+    // surdo: soft on one, open on two; soft on three, open on four
+    if (s === 0 || s === 8) lowDrum(e, bus, t, 90, 55, 0.07, 0.3);
+    if (s === 4 || s === 12) lowDrum(e, bus, t, 80, 48, 0.2, 0.5);
+    // tamborim, the syncopation that makes it samba
+    if (s === 3 || s === 6 || s === 14) noiseHit(e, bus, t, 'bandpass', 2600, 0.035, 0.06, 2.5);
+    // bass: root, fifth
+    if (s === 0 || s === 8)
+      pluckString(e, bus, t, v[0] / 2, 0.16, 0.45, { type: 'sine', open: 900, close: 300 });
+    if (s === 6 || s === 14)
+      pluckString(e, bus, t, (v[0] / 2) * 1.5, 0.11, 0.3, { type: 'sine', open: 900, close: 300 });
+    // guitar: the chord, brushed a few milliseconds apart
+    if (COMP.has(s)) {
+      const peak = s === 0 ? 0.05 : 0.035;
+      v.forEach((f, i) =>
+        pluckString(e, guitar, t + i * 0.008, f * 2, peak, 0.35, { open: 2600, close: 900 })
+      );
+    }
+  });
+  return {
+    out,
+    land(note) {
+      if (note.chord !== home) pending = note.chord;
+      pluckString(e, guitar, clock.nextOn(2), SCALE[note.step] * 2, 0.11, 1.2, {
+        open: 4000,
+        close: 1400,
+      });
+    },
+    fly() {},
+    stop() {
+      clock.stop();
+    },
+  };
+}
+
+/**
+ * Europe — grand, at 60: strings that swell over each bar, a horn call on the
+ * first beat, the timpani under it and a roll into every fourth bar, a harp
+ * climbing the chord, a choir's "ah" high above. The chord walks D, Bm, G, A
+ * from the stop's own.
+ */
+function europeAlbum(e: Engine, out: GainNode): Song {
+  const { ctx } = e;
+  let home = chordIndex;
+  let pending: number | null = null;
+  // strings: detuned saws under a lowpass that opens as the bar swells
+  const strings = ctx.createBiquadFilter();
+  strings.type = 'lowpass';
+  strings.frequency.value = 900;
+  strings.Q.value = 0.5;
+  const stringLevel = ctx.createGain();
+  stringLevel.gain.value = 0.02;
+  strings.connect(stringLevel);
+  stringLevel.connect(out);
+  stringLevel.connect(e.echo);
+  // choir: a saw through two vowel formants
+  const vowelA = ctx.createBiquadFilter();
+  vowelA.type = 'bandpass';
+  vowelA.frequency.value = 750;
+  vowelA.Q.value = 6;
+  const vowelB = ctx.createBiquadFilter();
+  vowelB.type = 'bandpass';
+  vowelB.frequency.value = 1150;
+  vowelB.Q.value = 7;
+  const choir = ctx.createGain();
+  choir.gain.value = 0.05;
+  vowelA.connect(choir);
+  vowelB.connect(choir);
+  choir.connect(out);
+  choir.connect(e.echo);
+
+  let voices: OscillatorNode[] = [];
+  let voiceGain: GainNode | null = null;
+  const setChord = (index: number, t: number) => {
+    if (voiceGain) {
+      const g = voiceGain;
+      const vs = voices;
+      g.gain.setTargetAtTime(0, t, 0.5);
+      window.setTimeout(() => vs.forEach((o) => o.stop()), 3000);
+    }
+    const g = ctx.createGain();
+    g.gain.value = 0;
+    g.gain.setTargetAtTime(1, t, 0.7);
+    g.connect(strings);
+    const c = CHORDS[index];
+    const notes = [c[0], c[1], c[2], c[3], c[2] * 2];
+    voices = notes.flatMap((f) =>
+      [-9, 8].map((cents) => {
+        const o = ctx.createOscillator();
+        o.type = 'sawtooth';
+        o.frequency.value = f;
+        o.detune.value = cents;
+        o.connect(g);
+        o.start(t);
+        return o;
+      })
+    );
+    // the choir sings the chord's top two an octave up
+    [c[2] * 2, c[3] * 2].forEach((f) => {
+      const o = ctx.createOscillator();
+      o.type = 'sawtooth';
+      o.frequency.value = f;
+      const vg = ctx.createGain();
+      vg.gain.value = 0;
+      vg.gain.setTargetAtTime(0.5, t, 1.2);
+      o.connect(vg);
+      vg.connect(vowelA);
+      vg.connect(vowelB);
+      vg.connect(g);
+      o.start(t);
+      voices.push(o);
+    });
+    voiceGain = g;
+  };
+
+  let bar = 0;
+  const clock = sixteenths(ctx, 60, (step, t) => {
+    const s = step % 16;
+    if (s !== 0 && s % 4 !== 0) return;
+    if (s === 0) {
+      if (pending !== null) {
+        home = pending;
+        pending = null;
+      }
+      const chord = (home + (bar % 4)) % 4;
+      setChord(chord, t);
+      // the swell
+      strings.frequency.cancelScheduledValues(t);
+      strings.frequency.setValueAtTime(700, t);
+      strings.frequency.linearRampToValueAtTime(1900, t + 2.2);
+      strings.frequency.linearRampToValueAtTime(800, t + 3.9);
+      // timpani, and a horn on the root and fifth
+      const root = CHORDS[chord][0];
+      lowDrum(e, out, t, root * 1.2, root, 0.3, 1.6);
+      [root * 2, root * 3].forEach((f) =>
+        pluckString(e, out, t + 0.02, f, 0.05, 2.6, { type: 'sawtooth', open: 1100, close: 500 })
+      );
+      bar++;
+    }
+    // a roll into every fourth bar
+    if (bar % 4 === 0 && s === 12) {
+      for (let k = 0; k < 10; k++) lowDrum(e, out, t + k * 0.1, 80, 70, 0.04 + k * 0.012, 0.18);
+    }
+    // the harp climbs the chord on the beats
+    const c = CHORDS[(home + ((bar - 1 + 4) % 4)) % 4];
+    const harp = [c[1] * 2, c[2] * 2, c[3] * 2, c[1] * 4][(s / 4) | 0];
+    pluckString(e, out, t, harp, 0.05, 2.2, { open: 5000, close: 1600 });
+  });
+  return {
+    out,
+    land(note) {
+      if (note.chord !== home) pending = note.chord;
+      // a bell, high over the orchestra
+      strike(e, out, SCALE[note.step] * 4, 0.05, 3.4, clock.nextOn(4));
+    },
+    fly() {},
+    stop() {
+      clock.stop();
+      voices.forEach((o) => o.stop());
+    },
+  };
+}
+
+/** D phrygian dominant over two octaves: D E♭ F♯ G A B♭ C — step for step with SCALE */
+const HIJAZ = [146.83, 155.56, 185.0, 196.0, 220.0, 233.08, 261.63, 293.66, 311.13, 369.99, 392.0];
+
+/**
+ * The Middle East and North Africa — a mystery, at 84: a drone on D and A that
+ * shimmers, a darbuka playing maqsum (dum tek · tek dum · tek), an oud walking
+ * the hijaz scale in short phrases with rests between, and each stop's note on
+ * a ney — breath and a slow vibrato — over it all.
+ */
+function menaAlbum(e: Engine, out: GainNode): Song {
+  const { ctx } = e;
+  const droneFilter = ctx.createBiquadFilter();
+  droneFilter.type = 'lowpass';
+  droneFilter.frequency.value = 520;
+  droneFilter.Q.value = 3;
+  const droneLevel = ctx.createGain();
+  droneLevel.gain.value = 0;
+  droneLevel.gain.setTargetAtTime(0.035, ctx.currentTime, 1.5);
+  droneFilter.connect(droneLevel);
+  droneLevel.connect(out);
+  const sweep = ctx.createOscillator();
+  sweep.frequency.value = 0.07;
+  const sweepAmt = ctx.createGain();
+  sweepAmt.gain.value = 260;
+  sweep.connect(sweepAmt);
+  sweepAmt.connect(droneFilter.frequency);
+  const drone = [73.42, 110.0, 146.83, 220.0].flatMap((f, i) =>
+    [-5, 4].map((cents) => {
+      const o = ctx.createOscillator();
+      o.type = i < 2 ? 'sawtooth' : 'triangle';
+      o.frequency.value = f;
+      o.detune.value = cents;
+      o.connect(droneFilter);
+      return o;
+    })
+  );
+  [sweep, ...drone].forEach((n) => n.start());
+
+  const oud = ctx.createGain();
+  oud.gain.value = 1;
+  oud.connect(out);
+  oud.connect(e.echo);
+  let pos = 4;
+  let phrase = 0;
+  const MAQSUM: Record<number, 'dum' | 'tek'> = {
+    0: 'dum',
+    2: 'tek',
+    6: 'tek',
+    8: 'dum',
+    12: 'tek',
+  };
+  const clock = sixteenths(ctx, 84, (step, t) => {
+    const s = step % 16;
+    const hit = MAQSUM[s];
+    if (hit === 'dum') lowDrum(e, out, t, 110, 62, 0.16, 0.3);
+    if (hit === 'tek') noiseHit(e, out, t, 'bandpass', 3200, 0.05, 0.07, 1.8);
+    if (s % 4 === 3 && Math.random() < 0.35) noiseHit(e, out, t, 'bandpass', 4200, 0.018, 0.04, 2);
+    // the oud: a phrase of a few notes, then a rest of a bar
+    if (s === 0) phrase = (phrase + 1) % 4;
+    if (phrase === 3) return;
+    if (s % 2 === 0 && Math.random() < 0.72) {
+      const move = [-2, -1, -1, 1, 1, 2][Math.floor(Math.random() * 6)];
+      pos = Math.max(0, Math.min(HIJAZ.length - 1, pos + move));
+      const f = HIJAZ[pos];
+      pluckString(e, oud, t, f, 0.06, 0.7, {
+        type: 'sawtooth',
+        open: 2400,
+        close: 600,
+        bend: 0.02,
+      });
+      // the oud's tremolo on a long note, now and then
+      if (Math.random() < 0.18) {
+        for (let k = 1; k < 4; k++)
+          pluckString(e, oud, t + k * 0.045, f, 0.03, 0.2, {
+            type: 'sawtooth',
+            open: 2000,
+            close: 700,
+          });
+      }
+    }
+  });
+  /** a ney: a sine with breath in it and a slow vibrato */
+  const ney = (t: number, f: number) => {
+    const o = ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.value = f;
+    const vib = ctx.createOscillator();
+    vib.frequency.value = 5;
+    const vibAmt = ctx.createGain();
+    vibAmt.gain.setValueAtTime(0, t);
+    vibAmt.gain.linearRampToValueAtTime(f * 0.012, t + 0.8);
+    vib.connect(vibAmt);
+    vibAmt.connect(o.frequency);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.07, t + 0.25);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 3.2);
+    o.connect(g);
+    g.connect(out);
+    g.connect(e.echo);
+    o.start(t);
+    vib.start(t);
+    o.stop(t + 3.3);
+    vib.stop(t + 3.3);
+    noiseHit(e, out, t, 'bandpass', f * 3, 0.012, 1.2, 1.2);
+  };
+  return {
+    out,
+    land(note) {
+      ney(clock.nextOn(4), HIJAZ[note.step] * 2);
+    },
+    fly() {},
+    stop() {
+      clock.stop();
+      [sweep, ...drone].forEach((n) => n.stop());
+    },
+  };
+}
+
 function playSong(e: Engine, which: Mood): Song {
   const out = e.ctx.createGain();
   out.gain.value = 0;
   out.connect(e.master);
   out.gain.setTargetAtTime(1, e.ctx.currentTime, 0.5);
   if (which === 'orbit') return orbitSong(e, out);
-  if (which === 'album') return albumSong(e, out);
+  if (which === 'album') {
+    if (region === 'south') return southAlbum(e, out);
+    if (region === 'europe') return europeAlbum(e, out);
+    if (region === 'mena') return menaAlbum(e, out);
+    return albumSong(e, out);
+  }
   return which === 'bright' ? brightSong(e, out) : calmSong(e, out);
 }
 
@@ -639,6 +1078,11 @@ export function setMood(next: Mood) {
   if (next === mood) return;
   mood = next;
   emit();
+  crossTo(next);
+}
+
+/** one song out over a bar or so, the next one in */
+function crossTo(next: Mood) {
   if (!engine) return;
   const e = engine;
   const old = e.song;
@@ -648,6 +1092,27 @@ export function setMood(next: Mood) {
     window.setTimeout(() => old.out.disconnect(), 4500);
   }, 3000);
   e.song = playSong(e, next);
+}
+
+let regionTimer = 0;
+/**
+ * Where the photos being looked at were taken. The album is dressed for it:
+ * Asia keeps the felt piano, South America a bossa, Europe an orchestra, the
+ * Middle East and North Africa the oud and the darbuka. A reader scrolling fast
+ * through a border does not want the band to change at every stop, so a new
+ * region has to hold for a moment before the music follows it.
+ */
+export function setAlbumRegion(next: Region) {
+  window.clearTimeout(regionTimer);
+  if (next === region) return;
+  if (mood !== 'album' || !engine) {
+    region = next;
+    return;
+  }
+  regionTimer = window.setTimeout(() => {
+    region = next;
+    crossTo('album');
+  }, 700);
 }
 
 let turnFrom: { x: number; y: number; z: number; t: number } | null = null;

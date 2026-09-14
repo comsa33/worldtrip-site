@@ -68,7 +68,8 @@ export function Filmstrip({
   };
 
   return (
-    <div className="filmstrip" aria-label={`${cityName} photos`}>
+    // the photo book closes back into these: it finds the frame by the photo's id
+    <div className="filmstrip" aria-label={`${cityName} photos`} data-stop={stopId}>
       <button
         type="button"
         className="filmstrip__count mono"
@@ -88,6 +89,7 @@ export function Filmstrip({
             key={p.id}
             type="button"
             className="filmstrip__thumb"
+            data-photo-id={p.id}
             onClick={() => onOpen(cityName, p.id)}
             aria-label={p.caption[language] || p.id}
           >

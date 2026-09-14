@@ -10,18 +10,19 @@ import {
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
-import { visitsForCity } from '../../lib/visitPhotos';
+import { photosForStop, visitsForCity } from '../../lib/visitPhotos';
 import {
   TOTAL_LABEL,
   cityLabel,
   journeyRoll,
   jumpTo,
   noteForStop,
+  regionForStop,
   rollIndexForStop,
   rollNo,
 } from '../../lib/journeyRoll';
 import { srcFor } from '../../lib/photoSrc';
-import { landOn } from '../../lib/sound';
+import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
 import './PhotoGallery.css';
@@ -254,6 +255,18 @@ export default function PhotoGallery({
     }
     onClose();
   }, [onClose]);
+
+  /* ── closing, back to where it came from ─────────────────────────────────
+     The book was opened from a frame of the filmstrip, so that is where it
+     goes: the photo shrinks from wherever it is — under a finger pulling it
+     down, or at rest when Esc or ✕ closes it — into that frame, while the book
+     around it thins away. A photo the strip does not show goes into the strip's
+     "+n"; a photo from another stop, or a book the strip did not open, drops
+     away downward instead. */
+  const liftRef = useRef<{ tx: number; ty: number; s: number } | null>(null);
+  const closeHomeRef = useRef<() => void>(() => {});
+  const closeHome = useCallback(() => closeHomeRef.current(), []);
+
   /** the photo the top bar speaks for: the one at the top of the sheet, or the one open */
   const spoken = rollSheet ? Math.min(read.top, count - 1) : safeIndex;
   const spokenCity = wide
@@ -264,6 +277,7 @@ export default function PhotoGallery({
   const spokenStop = wide ? journeyRoll.blocks[journeyRoll.blockOf[spoken]]?.stop.id : focusStopId;
   useEffect(() => {
     if (!cityName || spokenStop == null) return;
+    setAlbumRegion(regionForStop(spokenStop));
     const note = noteForStop(spokenStop);
     if (note) landOn(note);
   }, [cityName, spokenStop]);
@@ -425,7 +439,7 @@ export default function PhotoGallery({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (sheet) leaveRef.current();
-        else close();
+        else closeHome();
       } else if (e.key === 'ArrowRight') go(1);
       else if (e.key === 'ArrowLeft') go(-1);
       else if (e.key === 'g' || e.key === 'G') {
@@ -437,7 +451,7 @@ export default function PhotoGallery({
     };
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
-  }, [cityName, close, go, sheet]);
+  }, [cityName, closeHome, go, sheet]);
 
   /* ── pulling the sheet shut ─────────────────────────────────────────────
      The picture is closed by the root's pointer gesture, but the sheet is a
@@ -637,12 +651,15 @@ export default function PhotoGallery({
     const slotEl = slotRef.current;
     if (!el || !slotEl) return;
     if (dy >= 0) {
-      // down: the whole book follows the finger away
+      /* down: the same move as up, the other way — the photo follows the finger
+         and grows smaller, and the book around it (the bar, the strip, the dark)
+         thins out until the journey shows through underneath */
+      const k = Math.min(dy / 520, 1);
+      const lift = { tx: dx * 0.75, ty: dy, s: 1 - k * 0.45 };
+      liftRef.current = lift;
       slotEl.style.transition = 'none';
-      slotEl.style.transform = '';
-      const k = Math.min(dy / 700, 1);
-      el.style.transform = `translateY(${dy}px) scale(${1 - k * 0.1})`;
-      el.style.opacity = String(1 - k * 0.45);
+      slotEl.style.transform = `translate(${lift.tx}px, ${lift.ty}px) scale(${lift.s})`;
+      el.style.setProperty('--pull', String(Math.min(dy / 320, 1) * 0.9));
     } else {
       /* up: the photo lifts and grows smaller under the finger, on its way to
          becoming a tile — let go past the line and it goes into the sheet from
@@ -720,14 +737,18 @@ export default function PhotoGallery({
             slotEl.style.transition = '';
           }, 340);
         }
-      } else if (g.dy > 150) {
-        close();
-      } else if (el) {
-        el.style.transition = 'transform 320ms var(--ease), opacity 320ms var(--ease)';
-        el.style.transform = '';
-        el.style.opacity = '';
+      } else if (g.dy > 110 || (flung && g.dy > 30)) {
+        closeHome();
+      } else if (el && slotEl) {
+        // not far enough: everything goes back where it was
+        el.classList.add('is-releasing');
+        el.style.setProperty('--pull', '0');
+        slotEl.style.transition = 'transform 320ms var(--ease)';
+        slotEl.style.transform = '';
+        liftRef.current = null;
         window.setTimeout(() => {
-          if (el) el.style.transition = '';
+          el.classList.remove('is-releasing');
+          slotEl.style.transition = '';
         }, 340);
       }
     }
@@ -771,6 +792,59 @@ export default function PhotoGallery({
     go(e.clientX - r.left < r.width / 2 ? -1 : 1);
   };
 
+  useEffect(() => {
+    closeHomeRef.current = () => {
+      const root = rootRef.current;
+      const slotEl = slotRef.current;
+      const fig = figRef.current;
+      if (!root || !slotEl || !fig || sheet || !photo) {
+        close();
+        return;
+      }
+      const strip = document.querySelector<HTMLElement>('.filmstrip');
+      const ours =
+        strip && photosForStop(Number(strip.dataset.stop)).some((p) => p.id === photo.id);
+      const frame = ours
+        ? (strip.querySelector<HTMLElement>(`[data-photo-id="${photo.id}"]`) ??
+          strip.querySelector<HTMLElement>('.filmstrip__more'))
+        : null;
+      const to = frame?.getBoundingClientRect();
+      const lift = liftRef.current ?? { tx: 0, ty: 0, s: 1 };
+      const slot = slotEl.getBoundingClientRect();
+      const f = fig.getBoundingClientRect();
+      // the slot scales about its centre, so its untransformed centre is this
+      const cx = slot.left + slot.width / 2 - lift.tx;
+      const cy = slot.top + slot.height / 2 - lift.ty;
+      const w0 = f.width / lift.s;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const end =
+        to && to.width > 0
+          ? {
+              tx: to.left + to.width / 2 - cx,
+              ty: to.top + to.height / 2 - cy,
+              s: to.width / Math.max(1, w0),
+            }
+          : { tx: lift.tx, ty: lift.ty + window.innerHeight * 0.5, s: lift.s * 0.8 };
+      const ms = reduce ? 0 : 340;
+      root.classList.add('is-releasing');
+      root.style.setProperty('--pull', '1');
+      slotEl.style.transition = `transform ${ms}ms cubic-bezier(0.32, 0.72, 0, 1)`;
+      slotEl.style.transform = `translate(${end.tx}px, ${end.ty}px) scale(${end.s})`;
+      fig.style.transition = `opacity ${ms ? 120 : 0}ms ease ${ms ? 230 : 0}ms`;
+      fig.style.opacity = to ? '0' : '0.4';
+      window.setTimeout(() => {
+        liftRef.current = null;
+        root.classList.remove('is-releasing');
+        root.style.removeProperty('--pull');
+        slotEl.style.transition = '';
+        slotEl.style.transform = '';
+        fig.style.transition = '';
+        fig.style.opacity = '';
+        close();
+      }, ms + 10);
+    };
+  });
+
   if (!cityName || count === 0 || !photo) return null;
 
   const date =
@@ -813,7 +887,7 @@ export default function PhotoGallery({
       onPointerUp={endGesture}
       onPointerCancel={endGesture}
     >
-      <div className="pb__backdrop" onClick={close} />
+      <div className="pb__backdrop" onClick={closeHome} />
 
       <div className="pb__top mono">
         {/* the where: the reading's place on the journey, in the corner, beside its name */}
@@ -885,7 +959,7 @@ export default function PhotoGallery({
         >
           {lang === 'ko' ? '전체' : 'all'}
         </button>
-        <button type="button" className="pb__btn" onClick={close} aria-label="Close">
+        <button type="button" className="pb__btn" onClick={closeHome} aria-label="Close">
           <X size={16} strokeWidth={1.5} />
         </button>
       </div>

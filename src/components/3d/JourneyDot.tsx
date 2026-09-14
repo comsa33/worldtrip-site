@@ -103,7 +103,9 @@ export function HeadTracker({
       path.length - 1,
       progress * (path.length - 1) + (lean?.current ?? 0) * leanSpan
     );
-    if (tail.current === null) tail.current = head;
+    // a tail that went bad (NaN, seen once after the photo book closed under a
+    // finger) starts again at the head rather than taking the frame loop down
+    if (tail.current === null || !Number.isFinite(tail.current)) tail.current = head;
 
     // in the air the mark is faster, and a faster mark is drawn out longer:
     // the tail hangs back more and the streak may run further
@@ -116,6 +118,7 @@ export function HeadTracker({
     // if the head gets further ahead than the ribbon is allowed to be long
     const k = 1 - Math.exp(-dt / tau);
     let t = tail.current + (head - tail.current) * k;
+    if (!Number.isFinite(t)) t = head;
     if (Math.abs(head - t) < 0.002) t = head;
 
     // front or back of the world
@@ -160,6 +163,7 @@ export function HeadTracker({
     if (len > maxLen) {
       // too far behind: bring the tail up to where the ribbon is as long as allowed
       t = head - (head - t) * (maxLen / len);
+      if (!Number.isFinite(t)) t = head;
       len = maxLen;
     }
     tail.current = t;

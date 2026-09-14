@@ -25,6 +25,39 @@
   }
 }
 
+/* How far the book has been pulled away (0–1), set while a finger pulls it down
+   or while it closes back into the filmstrip. Registered so it can transition. */
+@property --pull {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.pb.is-releasing {
+  transition: --pull 320ms var(--ease);
+}
+
+/* filter rather than opacity: the caption and the key hints already animate
+   their opacity, and an animation's fill would win over this */
+.pb__backdrop,
+.pb__top,
+.pb__strip,
+.pb__cap,
+.pb__nav,
+.pb__touchhint {
+  filter: opacity(calc(1 - var(--pull, 0)));
+}
+
+/* the book's own words and frames go first, so they never sit half-seen over
+   the journey's header and scrubber coming through underneath */
+.pb__top,
+.pb__strip,
+.pb__cap,
+.pb__nav,
+.pb__touchhint {
+  filter: opacity(max(0, calc(1 - var(--pull, 0) * 1.8)));
+}
+
 .pb__backdrop {
   position: absolute;
   inset: 0;
