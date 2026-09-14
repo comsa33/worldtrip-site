@@ -78,7 +78,6 @@ export function CountryInset({
   onSelect: (index: number) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const hint = useMapDragHint(open, svgRef, INSET_BOX);
   const shape = useMemo(() => countryShape(countryCode), [countryCode]);
 
   /** every stop in this country, in the order the journey took them */
@@ -189,6 +188,7 @@ export function CountryInset({
     for (let d = 1; at === undefined && d < mine.length; d++) at = mark[k - d] ?? mark[k + d];
     return 1 - (at ?? 0) / (rail.length - 1);
   }, [rail.length, mark, mine, here]);
+  const hint = useMapDragHint(open, svgRef, INSET_BOX, anchorAcross);
 
   /* ── whether it is wanted at all ────────────────────────────────────────── */
   const [aspect, setAspect] = useState(16 / 10);
@@ -360,9 +360,8 @@ export function CountryInset({
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
-    const { clientX } = e;
+    const { clientX, pointerType, buttons } = e;
     // a finger only moves while it holds; a mouse moving over the open map is aiming
-    if (e.pointerType !== 'touch' || e.buttons) hint.aimed();
     // where the finger is, kept apart from where the ring has been drawn to:
     // painting waits for a frame, and a lift landing on last frame's aim is a
     // lift landing on the stop next door
@@ -372,6 +371,11 @@ export function CountryInset({
     moveRaf.current = requestAnimationFrame(() => {
       moveRaf.current = 0;
       paintAim(aimAt(clientX));
+      // the slider follows the hand: a finger only while it holds, a mouse as it aims
+      const r = svgRef.current?.getBoundingClientRect();
+      const hold = grip.current;
+      if (r && hold && (pointerType !== 'touch' || buttons))
+        hint.aimed(hold.across + (clientX - hold.x) / r.width);
     });
   };
 
@@ -491,9 +495,12 @@ export function CountryInset({
         {name}
       </text>
       <MapDragHint
-        visible={hint.visible}
+        mode={hint.mode}
         touch={hint.touch}
         k={hint.k}
+        at={anchorAcross}
+        rootRef={hint.rootRef}
+        handRef={hint.handRef}
         x={INSET_BOX / 2}
         y={INSET_BOX - 22 * hint.k}
       />

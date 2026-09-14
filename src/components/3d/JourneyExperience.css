@@ -1067,8 +1067,10 @@ html[data-globe-view='on'] .canvas-container:active {
     padding: 6px;
   }
 
+  /* open, it takes the width of the phone with the same 16px either side — the
+     cap it used to have left the air on the right only */
   .minimap.is-open {
-    width: min(358px, calc(100vw - 46px));
+    width: calc(100vw - 46px);
   }
 }
 
@@ -1306,7 +1308,7 @@ html[data-globe-view='on'] .canvas-container:active {
      1px border, so the 14px comes off before the 16px gutters, or the map sits
      against the right edge with all the air on the left. */
   .country-inset.is-open {
-    width: min(358px, calc(100vw - 46px));
+    width: calc(100vw - 46px);
   }
 
   .country-inset__name {
@@ -1656,18 +1658,30 @@ kbd.key {
   }
 }
 
-/* ── the maps' drag mark (MapDragHint.tsx) ────────────────────────────────
-   The aim ring on a short track, sliding one way and back; pressed first for a
-   finger. Drawn at the open map's bottom edge until the hand has done it once. */
+/* ── the maps' slider (MapDragHint.tsx) ──────────────────────────────────
+   The aim ring on a short track at the open map's bottom edge. The first time
+   it demonstrates the gesture at full ink; after that it rests faint with its
+   ring where the reader is in the journey, and comes up to full ink and follows
+   the hand while the map is being aimed. */
 .map-drag-hint {
   opacity: 0;
   pointer-events: none;
   transition: opacity 240ms var(--ease-out);
 }
 
-.map-drag-hint.is-on {
+.map-drag-hint.is-demo {
   opacity: 1;
   transition-delay: 260ms; /* after the map has finished opening */
+}
+
+.map-drag-hint.is-rest {
+  opacity: 0.35;
+  transition-delay: 200ms;
+}
+
+.map-drag-hint.is-rest.is-active {
+  opacity: 1;
+  transition: opacity 120ms var(--ease-out);
 }
 
 .map-drag-hint__halo {
@@ -1687,6 +1701,15 @@ kbd.key {
   fill: var(--ink-3);
 }
 
+.map-drag-hint__hand {
+  /* at rest it eases back to where the reader is; while aimed it keeps up exactly */
+  transition: transform 260ms var(--ease);
+}
+
+.map-drag-hint.is-active .map-drag-hint__hand {
+  transition: none;
+}
+
 .map-drag-hint__ring {
   fill: color-mix(in srgb, var(--bg) 70%, transparent);
   stroke: var(--accent);
@@ -1700,11 +1723,11 @@ kbd.key {
   transform-origin: center;
 }
 
-.map-drag-hint.is-on .map-drag-hint__hand {
+.map-drag-hint.is-demo .map-drag-hint__hand {
   animation: mapDragSlide 2.8s var(--ease) infinite;
 }
 
-.map-drag-hint.is-on.is-touch .map-drag-hint__press {
+.map-drag-hint.is-demo.is-touch .map-drag-hint__press {
   animation: mapDragPress 2.8s var(--ease-out) infinite;
 }
 
@@ -1747,8 +1770,12 @@ kbd.key {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .map-drag-hint.is-on .map-drag-hint__hand,
-  .map-drag-hint.is-on.is-touch .map-drag-hint__press {
+  .map-drag-hint.is-demo .map-drag-hint__hand,
+  .map-drag-hint.is-demo.is-touch .map-drag-hint__press {
     animation: none;
+  }
+
+  .map-drag-hint__hand {
+    transition: none;
   }
 }

@@ -118,7 +118,6 @@ export function Minimap({
   onSelect: (index: number) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const hint = useMapDragHint(open, svgRef, data.w);
   const stopPoints = useMemo(
     () =>
       stops.map((s) => {
@@ -169,6 +168,7 @@ export function Minimap({
     const at = mark[currentStopIdx] ?? rail.length - 1;
     return 1 - at / (rail.length - 1);
   }, [rail.length, mark, currentStopIdx]);
+  const hint = useMapDragHint(open, svgRef, data.w, anchorAcross);
 
   const setOpen = onOpenChange;
   const openTimer = useRef(0);
@@ -368,14 +368,18 @@ export function Minimap({
   // a pointer can fire faster than the screen draws; one aim per frame is plenty
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!open) return;
-    const { clientX } = e;
+    const { clientX, pointerType, buttons } = e;
     // a finger only moves while it holds; a mouse moving over the open map is aiming
-    if (e.pointerType !== 'touch' || e.buttons) hint.aimed();
     if (!grip.current) grip.current = { x: clientX, across: anchorAcross };
     if (moveRaf.current) return;
     moveRaf.current = requestAnimationFrame(() => {
       moveRaf.current = 0;
       paintAim(aimAt(clientX));
+      // the slider follows the hand: a finger only while it holds, a mouse as it aims
+      const r = svgRef.current?.getBoundingClientRect();
+      const hold = grip.current;
+      if (r && hold && (pointerType !== 'touch' || buttons))
+        hint.aimed(hold.across + (clientX - hold.x) / r.width);
     });
   };
 
@@ -438,9 +442,12 @@ export function Minimap({
       <circle cx={cx} cy={cy} r={17} className="minimap__ring" />
       <circle cx={cx} cy={cy} r={11} className="minimap__head" />
       <MapDragHint
-        visible={hint.visible}
+        mode={hint.mode}
         touch={hint.touch}
         k={hint.k}
+        at={anchorAcross}
+        rootRef={hint.rootRef}
+        handRef={hint.handRef}
         x={data.w / 2}
         y={data.h - 18 * hint.k}
       />
