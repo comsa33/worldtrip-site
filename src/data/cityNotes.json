@@ -229,28 +229,36 @@
   },
   "40": {
     "ko": {
-      "story": "네팔 첫 밤이었습니다.\n카트만두 맥주 한 병.\n포카라행 야간 버스를 탔습니다."
+      "story": "네팔 첫 밤이었습니다.\n국경 문 앞 길에서 아이들이 전통 옷을 입고 춤을 췄습니다.\n카트만두 맥주 한 병.\n포카라행 야간 버스를 탔습니다."
     },
     "en": {
-      "story": "First night in Nepal.\nA bottle of Kathmandu beer.\nCaught the night bus to Pokhara."
+      "story": "My first night in Nepal.\nBy the border gate, children in traditional dress were dancing in the street.\nA bottle of Kathmandu beer.\nThen the night bus to Pokhara."
     }
   },
   "41": {
     "ko": {
-      "story": "페와 호수 위로 패러글라이더가 떠 있었습니다.\n트레킹 허가증을 받았습니다.\n밤거리에 아이들이 옷을 차려입고 모여 노래했습니다."
+      "story": "페와 호수에 배들이 떠 있었습니다.\n물소가 호수에 몸을 담그고 있었습니다.\n해 질 녘 설산이 금빛으로 물들었습니다.\n밤거리에서 아이들이 옷을 차려입고 모여 노래하고 춤췄습니다.\n다음 날 트레킹 허가증을 받았습니다."
     },
     "en": {
-      "story": "Paragliders hung over Phewa lake.\nGot my trekking permit.\nAt night, kids in their best clothes gathered in the street to sing."
+      "story": "Boats floated on Phewa Lake.\nA water buffalo was soaking in the lake.\nAt sunset the snow peaks turned gold.\nAt night, children in their best clothes gathered in the street to sing and dance.\nThe next day I got my trekking permit."
     }
   },
   "42": {
     "ko": {
       "title": "푼힐",
-      "story": "나야풀에서 걷기 시작했습니다.\n울레리의 돌계단, 짐을 진 노새들, 흔들다리.\n고레파니에서 자고 새벽에 푼힐에 올랐습니다.\n3,210미터.\n내려오는 길에 온천에 몸을 담갔습니다."
+      "story": "나야풀에서 걷기 시작했습니다.\n흔들다리를 건너고, 울레리의 돌계단에서 짐을 진 노새들과 마주쳤습니다.\n울레리에서 자는 저녁, 안나푸르나 남봉이 붉게 물들었습니다.\n고레파니에 닿은 날 오후 푼힐에 먼저 올랐고, 다음 날 새벽 다시 올라 해를 봤습니다.\n3,210미터.\n타다파니를 지나 지누의 온천에 몸을 담갔습니다."
     },
     "en": {
       "title": "Poon Hill",
-      "story": "Started walking from Nayapul.\nThe stone steps of Ulleri, mules carrying loads, swinging bridges.\nSlept at Ghorepani and climbed Poon Hill before dawn.\n3,210 metres.\nOn the way down I sat in a hot spring."
+      "story": "Started walking at Nayapul.\nOver suspension bridges, and up the stone steps of Ulleri past laden mules.\nThe evening in Ulleri, Annapurna South turned red.\nThe afternoon I reached Ghorepani I climbed Poon Hill, and went up again at dawn for the sunrise.\n3,210 meters.\nPast Tadapani, I soaked in the hot springs at Jhinu."
+    }
+  },
+  "43": {
+    "ko": {
+      "story": "트레킹을 마치고 포카라로 돌아왔습니다.\n호숫가 들판에 패러글라이더들이 내려앉았습니다.\n구름 뒤로 햇살이 퍼지는 저녁, 소가 풀을 뜯었습니다.\n다음 날 호숫가에서 해가 지는 걸 보고,\n밤에는 밴드 공연을 봤습니다."
+    },
+    "en": {
+      "story": "Back in Pokhara after the trek.\nParagliders came down on the lakeside field.\nIn the evening light fanned out behind a cloud, and a cow grazed.\nThe next day I watched the sun set over the lake,\nand at night there was a live band."
     }
   },
   "44": {
@@ -263,10 +271,10 @@
   },
   "45": {
     "ko": {
-      "story": "광장에는 지진으로 무너진 자리에\n대나무 비계가 서 있었습니다.\n아침에는 멀리 설산이 보였습니다.\n밤에 불을 피우는 사람들 옆에 앉았습니다.\n보름달이 떴습니다."
+      "story": "광장에는 지진으로 무너진 자리에\n대나무 비계가 서 있었습니다.\n아이들이 광장에서 크리켓을 하고, 노인들은 바닥에 앉아 놀이를 했습니다.\n낮에 멀리 설산이 보였습니다.\n해 질 녘 사원 앞에서 사람들이 불을 피웠습니다.\n보름달이 떴습니다."
     },
     "en": {
-      "story": "In the square, bamboo scaffolding stood\nwhere the earthquake had brought things down.\nIn the morning the snow peaks showed in the distance.\nAt night I sat beside people tending a fire.\nThe moon was full."
+      "story": "In the square, bamboo scaffolding stood\nwhere the earthquake had brought things down.\nChildren played cricket in the square, old men sat on the ground over a game.\nBy day the snow mountains showed in the distance.\nAt dusk people lit fires before a shrine.\nThe moon was full."
     }
   },
   "46": {
