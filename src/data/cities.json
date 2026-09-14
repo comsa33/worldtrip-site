@@ -958,6 +958,13 @@
       "lat": -13.8678,
       "lng": -71.3029,
       "country": "PE"
+    },
+    "콜로니아": {
+      "ko": "콜로니아",
+      "en": "Colonia del Sacramento",
+      "lat": -34.4713,
+      "lng": -57.8445,
+      "country": "UY"
     }
   },
   "countries": {
