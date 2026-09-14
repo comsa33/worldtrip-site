@@ -6381,7 +6381,10 @@
     "date": "2017-04-11T11:32:28"
   },
   "2AC37A54-1A0D-45A4-865B-8B271D258827_1_105_c.jpeg": {
-    "date": "2017-04-11T11:34:09"
+    "date": "2017-04-11T11:34:09",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
   },
   "D6863B27-DA0F-4C85-B462-6A82EE6C8A0B_1_105_c.jpeg": {
     "date": "2017-04-11T11:35:20"
@@ -6393,7 +6396,10 @@
     "date": "2017-04-12T09:44:56"
   },
   "C73FBAFA-7671-4B4A-9906-9467E2850F1D_1_105_c.jpeg": {
-    "date": "2017-04-12T09:46:42"
+    "date": "2017-04-12T09:46:42",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
   },
   "370FC3C7-F354-46BD-939B-48336CA2AB92_1_105_c.jpeg": {
     "date": "2017-04-12T12:46:05"
@@ -6402,16 +6408,25 @@
     "date": "2017-04-12T12:48:47"
   },
   "2E4C0C87-93EE-4B9C-85FA-BF0CF44C1E8B_1_105_c.jpeg": {
-    "date": "2017-04-13T19:37:44"
+    "date": "2017-04-13T19:37:44",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
   },
   "DFD2241A-B756-4B54-A9BF-42106EE8C055_1_105_c.jpeg": {
     "date": "2017-04-13T19:39:41"
   },
   "56321583-3F3E-4FB1-8D4F-65D4089FB32A_1_105_c.jpeg": {
-    "date": "2017-04-13T19:39:47"
+    "date": "2017-04-13T19:39:47",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
   },
   "1B8E990B-A67A-4AA0-A2FF-87DA3BFDA7A9_1_105_c.jpeg": {
-    "date": "2017-04-13T19:40:55"
+    "date": "2017-04-13T19:40:55",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
   },
   "250B73D8-0237-466D-9EA1-ECF3BAEBCB0E_1_105_c.jpeg": {
     "date": "2017-04-13T19:41:05"
@@ -6426,7 +6441,10 @@
     "date": "2017-04-14T12:00:47"
   },
   "D110FFB3-E1BE-471C-81FF-8D992EECD249_1_105_c.jpeg": {
-    "date": "2017-04-14T12:11:58"
+    "date": "2017-04-14T12:11:58",
+    "lat": -34.6118,
+    "lng": -58.381,
+    "address": "Avenida 9 de Julio, Monserrat, Buenos Aires"
   },
   "EBAC94CB-AC0F-4707-A513-3D51502CD8BA_4_5005_c.jpeg": {
     "date": "2017-04-14T12:41:04"
@@ -6441,10 +6459,16 @@
     "date": "2017-04-14T12:41:32"
   },
   "D3357E0D-1C51-4692-8DE2-4029A82F01A8_1_105_c.jpeg": {
-    "date": "2017-04-14T13:13:07"
+    "date": "2017-04-14T13:13:07",
+    "lat": -34.6081,
+    "lng": -58.3703,
+    "address": "Casa Rosada, Balcarce 50, Monserrat, Buenos Aires"
   },
   "04EC2D2B-03CE-49E6-A801-F47B03769A36_1_105_c.jpeg": {
-    "date": "2017-04-14T13:48:49"
+    "date": "2017-04-14T13:48:49",
+    "lat": -34.6037,
+    "lng": -58.3816,
+    "address": "Obelisco, Avenida 9 de Julio, San Nicolás, Buenos Aires"
   },
   "441F4407-3B25-4C31-83C4-73FD6B2E0F81_1_105_c.jpeg": {
     "date": "2017-04-15T10:15:27"
@@ -15625,5 +15649,83 @@
     "date": "2017-06-21T15:32:49",
     "lat": 6.220038,
     "lng": -75.179383
+  },
+  "78792FFF-67C2-47D8-B413-F2C6BF1110F9_1_105_c.jpeg": {
+    "date": "2017-04-11T11:51:15",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
+  },
+  "817DCA88-1480-4BBB-A73F-28E8B32619CB_1_105_c.jpeg": {
+    "date": "2017-04-11T12:10:09",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
+  },
+  "56AF49C6-CE93-4D29-B93D-59D964E54F35_1_105_c.jpeg": {
+    "date": "2017-04-12T09:44:56",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
+  },
+  "F41D91D0-0BA8-404E-B4A2-B945EFA6B8AD_1_105_c.jpeg": {
+    "date": "2017-04-12T12:44:57",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
+  },
+  "26D5AF2B-1689-437B-9BD7-97C6CCB32906_1_105_c.jpeg": {
+    "date": "2017-04-13T19:38:27",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
+  },
+  "BF9EC1BE-2C03-4C98-B7DE-48FB560453EA_1_105_c.jpeg": {
+    "date": "2017-04-13T19:39:19",
+    "lat": -35.5397,
+    "lng": -58.0488,
+    "address": "Skydive Chascomús, Chascomús, Buenos Aires"
+  },
+  "AF00E914-F6E8-482D-BFE5-76ABE8333E57_1_105_c.jpeg": {
+    "date": "2017-04-14T12:39:39",
+    "lat": -34.6083,
+    "lng": -58.3722,
+    "address": "Plaza de Mayo, Monserrat, Buenos Aires"
+  },
+  "90162ADA-D075-4D0A-938C-44A4425E1B70_1_105_c.jpeg": {
+    "date": "2017-04-14T12:47:05",
+    "lat": -34.608,
+    "lng": -58.3725,
+    "address": "Plaza de Mayo, Monserrat, Buenos Aires"
+  },
+  "C52AED15-B2CC-41E5-AFC9-30AF2DE62938_1_105_c.jpeg": {
+    "date": "2017-04-14T13:30:37",
+    "lat": -34.6108,
+    "lng": -58.3735,
+    "address": "Cabildo, Bolívar 65, Monserrat, Buenos Aires"
+  },
+  "B1F149B6-1790-4255-AC3A-E616D08930BB_1_105_c.jpeg": {
+    "date": "2017-04-14T15:25:07",
+    "lat": -34.5925,
+    "lng": -58.369,
+    "address": "Terminal Buquebus, Puerto Madero, Buenos Aires"
+  },
+  "86508CE7-888D-464F-907C-D741D7695DA9_1_105_c.jpeg": {
+    "date": "2017-04-14T18:15:42",
+    "lat": -34.5925,
+    "lng": -58.369,
+    "address": "Terminal Buquebus, Puerto Madero, Buenos Aires"
+  },
+  "6AE5DDD8-A1A9-4820-B2C0-F20310A4614E_1_105_c.jpeg": {
+    "date": "2017-04-13T20:44:18",
+    "lat": -34.622455,
+    "lng": -58.467213,
+    "address": "Flores, Buenos Aires"
+  },
+  "F7578CF6-23D5-4167-8666-246D71854586_1_105_c.jpeg": {
+    "date": "2017-04-13T23:45:07",
+    "lat": -34.6036,
+    "lng": -58.4108,
+    "address": "Abasto, Balvanera, Buenos Aires"
   }
 }
