@@ -36035,25 +36035,6 @@
         "h": 1024
       },
       {
-        "id": "montserrat-005",
-        "publicId": "cities/montserrat/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo005",
-        "date": "2016-12-07T12:46:29",
-        "gps": {
-          "lat": 41.59289444444445,
-          "lng": 1.8414694444444446
-        },
-        "location": "Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "montserrat-006",
         "publicId": "cities/montserrat/photo006",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo006",
@@ -36069,44 +36050,6 @@
           "en": ""
         },
         "alt": "photo006",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "montserrat-007",
-        "publicId": "cities/montserrat/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo007",
-        "date": "2016-12-07T12:42:37",
-        "gps": {
-          "lat": 41.58078888888889,
-          "lng": 1.8593583333333334
-        },
-        "location": "C-55, Collbató, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "montserrat-008",
-        "publicId": "cities/montserrat/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo008",
-        "date": "2016-12-07T13:24:04",
-        "gps": {
-          "lat": 41.593297222222226,
-          "lng": 1.8375083333333335
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
         "w": 1024,
         "h": 768
       },
@@ -36147,25 +36090,6 @@
         "alt": "photo010",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "montserrat-011",
-        "publicId": "cities/montserrat/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo011",
-        "date": "2016-12-07T12:49:04",
-        "gps": {
-          "lat": 41.59273888888889,
-          "lng": 1.838927777777778
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "montserrat-012",
@@ -36244,44 +36168,6 @@
         "h": 768
       },
       {
-        "id": "montserrat-016",
-        "publicId": "cities/montserrat/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo016",
-        "date": "2016-12-07T12:55:33",
-        "gps": {
-          "lat": 41.59276944444445,
-          "lng": 1.8367916666666668
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "montserrat-017",
-        "publicId": "cities/montserrat/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo017",
-        "date": "2016-12-07T12:51:43",
-        "gps": {
-          "lat": 41.59307777777778,
-          "lng": 1.838663888888889
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 768,
-        "h": 1024
-      },
-      {
         "id": "montserrat-018",
         "publicId": "cities/montserrat/photo018",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo018",
@@ -36318,25 +36204,6 @@
         "alt": "photo019",
         "w": 768,
         "h": 1024
-      },
-      {
-        "id": "montserrat-020",
-        "publicId": "cities/montserrat/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo020",
-        "date": "2016-12-07T13:20:35",
-        "gps": {
-          "lat": 41.592822222222225,
-          "lng": 1.8365972222222224
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
       },
       {
         "id": "montserrat-021",
@@ -36377,25 +36244,6 @@
         "h": 768
       },
       {
-        "id": "montserrat-023",
-        "publicId": "cities/montserrat/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo023",
-        "date": "2016-12-07T13:35:17",
-        "gps": {
-          "lat": 41.59294166666667,
-          "lng": 1.8368861111111112
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "montserrat-024",
         "publicId": "cities/montserrat/photo024",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo024",
@@ -36411,63 +36259,6 @@
           "en": ""
         },
         "alt": "photo024",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "montserrat-025",
-        "publicId": "cities/montserrat/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo025",
-        "date": "2016-12-07T13:32:23",
-        "gps": {
-          "lat": 41.59348333333334,
-          "lng": 1.8372583333333334
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "montserrat-026",
-        "publicId": "cities/montserrat/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo026",
-        "date": "2016-12-07T14:31:06",
-        "gps": {
-          "lat": 41.592725,
-          "lng": 1.837625
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "montserrat-027",
-        "publicId": "cities/montserrat/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo027",
-        "date": "2016-12-07T12:43:34",
-        "gps": {
-          "lat": 41.59139722222223,
-          "lng": 1.8507111111111112
-        },
-        "location": "C-55, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
         "w": 1024,
         "h": 768
       },
@@ -36567,25 +36358,6 @@
         "h": 768
       },
       {
-        "id": "montserrat-033",
-        "publicId": "cities/montserrat/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo033",
-        "date": "2016-12-07T13:19:18",
-        "gps": {
-          "lat": 41.592625000000005,
-          "lng": 1.8361750000000001
-        },
-        "location": "Esparraguera-Collbato, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "montserrat-034",
         "publicId": "cities/montserrat/photo034",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo034",
@@ -36603,25 +36375,6 @@
         "alt": "photo034",
         "w": 1024,
         "h": 768
-      },
-      {
-        "id": "montserrat-035",
-        "publicId": "cities/montserrat/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo035",
-        "date": "2016-12-07T12:51:32",
-        "gps": {
-          "lat": 41.593044444444445,
-          "lng": 1.838666666666667
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 768,
-        "h": 1024
       },
       {
         "id": "montserrat-036",
@@ -36677,25 +36430,6 @@
           "en": ""
         },
         "alt": "photo038",
-        "w": 768,
-        "h": 1024
-      },
-      {
-        "id": "montserrat-039",
-        "publicId": "cities/montserrat/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/montserrat/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/montserrat/photo039",
-        "date": "2016-12-07T13:32:16",
-        "gps": {
-          "lat": 41.59347777777778,
-          "lng": 1.8372972222222224
-        },
-        "location": "Martorell Monasterio de Montserrat, Monistrol de Montserrat, Barcelona",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo039",
         "w": 768,
         "h": 1024
       },
