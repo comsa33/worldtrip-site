@@ -144,6 +144,13 @@ export default function PhotoGallery({
   const [index, setIndex] = useState(0);
   // the whole set at once, as a contact sheet — G toggles, a tile opens it there
   const [sheet, setSheet] = useState(Boolean(initialSheet));
+  /* Where the open photo came from. Opened from a tile of the sheet, the sheet
+     is where it goes back to — pulled up or pulled down, Esc or a tap on the
+     dark. Opened from the journey (a filmstrip frame), down goes back to the
+     journey and up goes on to the sheet. The ✕ always closes the book. */
+  const [fromSheet, setFromSheet] = useState(false);
+  /** how far down the sheet was when a tile was opened, to come back to */
+  const [sheetMemory, setSheetMemory] = useState<number | null>(null);
   /* Whether the sheet came up out of the open photo (and so should gather
      round it) or was opened straight from a door. */
   const [sheetWas, setSheetWas] = useState(sheet);
@@ -163,6 +170,8 @@ export default function PhotoGallery({
     setSheet(Boolean(initialSheet));
     setSheetWas(Boolean(initialSheet));
     setArrive(false);
+    setFromSheet(false);
+    setSheetMemory(null);
     setScope('city');
     if (initialScope === 'all') {
       const inRoll = initialPhotoId
@@ -334,6 +343,11 @@ export default function PhotoGallery({
   // click, so the render only reads state
   const [zoomFrom, setZoomFrom] = useState<{ zx: number; zy: number; zs: number } | null>(null);
   const openFromTile = (i: number, el: HTMLElement) => {
+    // the photo came from the sheet: that is where it goes back to, and the
+    // sheet comes back to the place it was left at
+    setFromSheet(true);
+    const sh = sheetRef.current;
+    if (sh) setSheetMemory(sh.scrollTop);
     const r = el.getBoundingClientRect();
     const sr = slotRef.current?.getBoundingClientRect();
     const target = photos[i];
@@ -439,6 +453,7 @@ export default function PhotoGallery({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (sheet) leaveRef.current();
+        else if (fromSheet) setSheet(true);
         else closeHome();
       } else if (e.key === 'ArrowRight') go(1);
       else if (e.key === 'ArrowLeft') go(-1);
@@ -451,7 +466,7 @@ export default function PhotoGallery({
     };
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
-  }, [cityName, closeHome, go, sheet]);
+  }, [cityName, closeHome, go, sheet, fromSheet]);
 
   /* ── pulling the sheet shut ─────────────────────────────────────────────
      The picture is closed by the root's pointer gesture, but the sheet is a
@@ -650,7 +665,7 @@ export default function PhotoGallery({
     const el = rootRef.current;
     const slotEl = slotRef.current;
     if (!el || !slotEl) return;
-    if (dy >= 0) {
+    if (dy >= 0 && !fromSheet) {
       /* down: the same move as up, the other way — the photo follows the finger
          and grows smaller, and the book around it (the bar, the strip, the dark)
          thins out until the journey shows through underneath */
@@ -717,9 +732,11 @@ export default function PhotoGallery({
       }
     } else if (g.axis === 'y') {
       const slotEl = slotRef.current;
-      const up = g.dy < 0;
+      // back to the sheet goes either way for a photo that came from it
+      const up = g.dy < 0 || fromSheet;
       const flung = Math.abs(g.dy) / Math.max(ms, 1) > 0.45;
-      if (up && (g.dy < -90 || (flung && g.dy < -30)) && !sheet) {
+      const far = Math.abs(g.dy) > 90 || (flung && Math.abs(g.dy) > 30);
+      if (up && far && !sheet) {
         // into the sheet, from where the photo is now; the frame is put back
         // once the sheet has covered it
         setSheet(true);
@@ -887,7 +904,10 @@ export default function PhotoGallery({
       onPointerUp={endGesture}
       onPointerCancel={endGesture}
     >
-      <div className="pb__backdrop" onClick={closeHome} />
+      <div
+        className="pb__backdrop"
+        onClick={() => (fromSheet && !sheet ? setSheet(true) : closeHome())}
+      />
 
       <div className="pb__top mono">
         {/* the where: the reading's place on the journey, in the corner, beside its name */}
@@ -1052,6 +1072,7 @@ export default function PhotoGallery({
         <JourneySheet
           scroller={sheetRef}
           current={safeIndex}
+          restoreTop={sheetMemory}
           perRow={perRow}
           fold={dense === 2}
           lang={lang}
@@ -1065,7 +1086,13 @@ export default function PhotoGallery({
       )}
 
       <span className={`pb__touchhint mono${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
-        {lang === 'ko' ? '← 넘기기 · ↑ 전체 · ↓ 닫기' : '← swipe · ↑ all · ↓ close'}
+        {fromSheet
+          ? lang === 'ko'
+            ? '← 넘기기 · ↑↓ 전체로'
+            : '← swipe · ↑↓ back to all'
+          : lang === 'ko'
+            ? '← 넘기기 · ↑ 전체 · ↓ 닫기'
+            : '← swipe · ↑ all · ↓ close'}
       </span>
 
       <div className="pb__strip" ref={stripRef}>

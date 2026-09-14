@@ -145,6 +145,8 @@ const CITY_RUNS: RollBlock[][] = journeyRoll.blocks.map((b) => [b]);
 interface SheetProps {
   scroller: RefObject<HTMLDivElement | null>;
   current: number;
+  /** where the sheet was left when a tile was opened — come back there if that tile is still in view */
+  restoreTop?: number | null;
   perRow: number;
   /** densest: the cities fold and only the countries keep their seams */
   fold: boolean;
@@ -168,6 +170,7 @@ interface SheetProps {
 export const JourneySheet = memo(function JourneySheet({
   scroller,
   current,
+  restoreTop,
   perRow,
   fold,
   lang,
@@ -187,7 +190,17 @@ export const JourneySheet = memo(function JourneySheet({
     // a stop opened from its start (the header's door) begins at its seam;
     // a photo opened from inside a stop keeps some of what came before it
     const block = journeyRoll.blocks[homeBlock];
-    jumpTo(el, current, block?.start === current ? 'top' : 'focus');
+    let restored = false;
+    if (el && restoreTop != null) {
+      // back from a photo opened here: the sheet as it was left, as long as the
+      // photo now open (it may have been swiped on) has its tile on that screen
+      el.scrollTop = restoreTop;
+      const cell = el.querySelector<HTMLElement>(`[data-i="${current}"]`);
+      const r = cell?.getBoundingClientRect();
+      const v = el.getBoundingClientRect();
+      restored = Boolean(r && r.top >= v.top && r.bottom <= v.bottom);
+    }
+    if (!restored) jumpTo(el, current, block?.start === current ? 'top' : 'focus');
     if (!el || !arrive) return;
 
     /* From the open photo: the picture goes down into its own tile, and the
