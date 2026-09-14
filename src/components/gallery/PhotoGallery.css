@@ -851,8 +851,13 @@
   width: min(620px, calc(100vw - 56px));
   background: color-mix(in srgb, var(--bg) 92%, transparent);
   border-color: var(--line);
-  cursor: none;
+  cursor: default;
   touch-action: none;
+}
+
+/* the pointer is put away only while the ring on the route stands in for it */
+.pb__locmap svg.is-aiming {
+  cursor: none;
 }
 
 .pb__locmap svg {

@@ -633,6 +633,10 @@ const STOPS = journeyData.stops as JourneyStop[];
 const OPEN_DELAY_MS = 140;
 /** How finely the route is sampled for aiming, in viewBox units. */
 const SAMPLE = 3;
+/** How close to the route, in screen pixels, the hand has to be for the ring to settle on it. */
+const AIM_REACH_PX = 28;
+/** How much a pass further along the line costs against one nearer the hand (per rail unit). */
+const AIM_KEEP_TO_LINE = 0.02;
 /** How long the hand has to be still before the name of the place comes up. */
 const LABEL_REST_MS = 180;
 
@@ -668,12 +672,22 @@ type Aim = { x: number; y: number; stop: number };
  * for the dot there. The seat moves when the reading crosses into another stop
  * and the dot, following it, slides rather than jumps.
  *
- * It behaves as the journey's minimap does, because it is that map. At 88px it
- * is a picture: a mouse resting on it (or a finger tapping it) opens it, and
- * open it is aimed — the ring slides along the route as the hand moves across,
- * counting from where the reading already is, and names the stop once the hand
- * is still. A click takes the sheet (or the open photo) to that stop. The seat
- * grows with the map, so the dot rides the opening instead of waiting for it.
+ * At 88px it is a picture: a mouse resting on it (or a finger tapping it)
+ * opens it, the seat grows with the map, and the dot rides the opening instead
+ * of waiting for it.
+ *
+ * Open, it is aimed by POINTING, not by counting. The journey's minimap counts
+ * the hand's sideways distance from where it was put down, which works in the
+ * middle of a screen; this map lives in the top-left corner, and read that way
+ * the whole year from Gwangju onwards lay in the forty pixels between the hand
+ * and the edge of the window. In the wide book the year already has its own
+ * precise control — the wave under the sheet — so the map answers the other
+ * question, where, the way a map is asked it: you point at the place. Near the
+ * route (within a finger's width) the ring settles on it and names the stop
+ * once the hand is still; away from it there is no ring and the ordinary
+ * pointer comes back. Where the route passes a place twice — India in October
+ * and in November — the ring keeps to the pass it was already on, so sliding
+ * along the line follows the line rather than jumping between visits.
  */
 export function RollLocator({
   index,
@@ -703,13 +717,12 @@ export function RollLocator({
       }),
     []
   );
-  const anchorAcross =
-    rail.length < 2 ? 0.5 : 1 - (mark[order] ?? rail.length - 1) / (rail.length - 1);
+  /** the rail sample the ring was last on — the reading's own place until the hand says otherwise */
+  const lastRail = useRef(-1);
 
   const openTimer = useRef(0);
   const labelTimer = useRef(0);
   const moveRaf = useRef(0);
-  const grip = useRef<{ x: number; across: number } | null>(null);
   const byTouch = useRef(false);
   const aimRef = useRef<Aim | null>(null);
   const gRef = useRef<SVGGElement>(null);
@@ -728,6 +741,8 @@ export function RollLocator({
       const g = gRef.current;
       const label = labelRef.current;
       window.clearTimeout(labelTimer.current);
+      // the dot cursor is put away only while there is a ring to take its place
+      svgRef.current?.classList.toggle('is-aiming', Boolean(a));
       if (!g) return;
       if (!a) {
         g.style.display = 'none';
@@ -758,7 +773,7 @@ export function RollLocator({
   const shut = useCallback(() => {
     window.clearTimeout(openTimer.current);
     setOpen(false);
-    grip.current = null;
+    lastRail.current = -1;
     paintAim(null);
   }, [paintAim]);
 
@@ -781,30 +796,38 @@ export function RollLocator({
     []
   );
 
-  const aimAt = (clientX: number): Aim | null => {
+  const aimAt = (clientX: number, clientY: number): Aim | null => {
     const r = svgRef.current?.getBoundingClientRect();
-    if (!r || rail.length < 2) return null;
-    const hold = grip.current ?? { x: clientX, across: anchorAcross };
-    const across = hold.across + (clientX - hold.x) / r.width;
-    const u = 1 - Math.max(0, Math.min(1, across));
-    const f = u * (rail.length - 1);
-    const i = Math.min(rail.length - 2, Math.floor(f));
-    const t = f - i;
-    const a = rail[i];
-    const b = rail[i + 1];
-    const joined = a.leg === b.leg;
-    const ax = joined ? a.x + (b.x - a.x) * t : a.x;
-    const ay = joined ? a.y + (b.y - a.y) * t : a.y;
-    const p0 = stopPoints[a.leg];
-    const p1 = stopPoints[a.leg + 1] ?? p0;
+    if (!r || rail.length < 2 || !r.width) return null;
+    const k = 1000 / r.width; // viewBox units per screen pixel
+    const vx = (clientX - r.left) * k;
+    const vy = (clientY - r.top) * k;
+    const reach = AIM_REACH_PX * k;
+    const from = lastRail.current >= 0 ? lastRail.current : (mark[order] ?? 0);
+    let best = -1;
+    let bestScore = Infinity;
+    for (let i = 0; i < rail.length; i++) {
+      const d = Math.hypot(rail[i].x - vx, rail[i].y - vy);
+      if (d > reach) continue;
+      // among the passes within reach, the one nearest along the line wins
+      const score = d + Math.abs(i - from) * SAMPLE * AIM_KEEP_TO_LINE;
+      if (score < bestScore) {
+        bestScore = score;
+        best = i;
+      }
+    }
+    if (best < 0) return null;
+    lastRail.current = best;
+    const { x: ax, y: ay, leg } = rail[best];
+    const p0 = stopPoints[leg];
+    const p1 = stopPoints[leg + 1] ?? p0;
     const d0 = (p0[0] - ax) ** 2 + (p0[1] - ay) ** 2;
     const d1 = (p1[0] - ax) ** 2 + (p1[1] - ay) ** 2;
-    return { x: ax, y: ay, stop: d0 <= d1 ? a.leg : a.leg + 1 };
+    return { x: ax, y: ay, stop: d0 <= d1 ? leg : leg + 1 };
   };
 
   const commit = (a: Aim | null) => {
     if (byTouch.current) setOpen(false);
-    grip.current = null;
     paintAim(null);
     if (a) onPick(landing(a.stop).i);
   };
@@ -830,7 +853,6 @@ export function RollLocator({
           onPointerDown={(e) => {
             byTouch.current = e.pointerType === 'touch';
             if (byTouch.current) {
-              grip.current = null;
               try {
                 e.currentTarget.setPointerCapture(e.pointerId);
               } catch {
@@ -840,12 +862,11 @@ export function RollLocator({
           }}
           onPointerMove={(e) => {
             if (!open) return;
-            const { clientX } = e;
-            if (!grip.current) grip.current = { x: clientX, across: anchorAcross };
+            const { clientX, clientY } = e;
             if (moveRaf.current) return;
             moveRaf.current = requestAnimationFrame(() => {
               moveRaf.current = 0;
-              paintAim(aimAt(clientX));
+              paintAim(aimAt(clientX, clientY));
             });
           }}
           onPointerUp={(e) => {
@@ -854,7 +875,7 @@ export function RollLocator({
               setOpen(true);
               return;
             }
-            commit(aimRef.current ?? aimAt(e.clientX));
+            commit(aimRef.current ?? aimAt(e.clientX, e.clientY));
           }}
           onClick={(e) => {
             if (byTouch.current) return;
@@ -863,7 +884,7 @@ export function RollLocator({
               setOpen(true);
               return;
             }
-            commit(aimRef.current ?? aimAt(e.clientX));
+            commit(aimRef.current ?? aimAt(e.clientX, e.clientY));
           }}
         >
           <Land order={order} />
@@ -932,8 +953,10 @@ export function YearWave({
   onScrub: (i: number) => void;
 }) {
   const photos = journeyRoll.photos;
-  const readDay = photos[top]?.date ? dayOf(photos[top].date) : 1;
-  const endDay = photos[bottom]?.date ? dayOf(photos[bottom].date) : readDay;
+  // a photo from the night before the start (the phone's clock, a timezone) is still day 1
+  const clampDay = (d: number) => Math.min(JOURNEY_DAYS, Math.max(1, d));
+  const readDay = photos[top]?.date ? clampDay(dayOf(photos[top].date)) : 1;
+  const endDay = photos[bottom]?.date ? clampDay(dayOf(photos[bottom].date)) : readDay;
   const hoverPhoto = hover !== null ? photos[hover] : null;
   const hoverDay = hoverPhoto?.date ? dayOf(hoverPhoto.date) : null;
   const ref = useRef<HTMLDivElement>(null);
