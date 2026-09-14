@@ -162,8 +162,12 @@
 /* No plate. The control is a mark that fills and hollows, and a panel behind
    it sat in the corner of the screen as a faint grey box whether or not
    anything was being pressed. The mark taking full ink is the feedback. */
-.theme-toggle:hover {
-  color: var(--ink);
+/* Only where hover is real: a tapped button on a phone keeps :hover until the
+   next tap elsewhere, and the mark sat half-lit between the two themes. */
+@media (hover: hover) {
+  .theme-toggle:hover {
+    color: var(--ink);
+  }
 }
 
 .theme-toggle:focus-visible {

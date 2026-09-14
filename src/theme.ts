@@ -85,8 +85,17 @@ export function useTheme(): Theme {
   return useSyncExternalStore(subscribe, getSnapshot, () => 'dark');
 }
 
+/**
+ * A switch still under way. On a phone the view transition can take a moment
+ * to capture the page (the globe is a large canvas), and a second tap in that
+ * moment flipped the theme straight back — so light to dark sometimes took
+ * three taps. Taps are ignored until the switch has landed.
+ */
+let switching = false;
+
 export function useToggleTheme() {
   return useCallback((origin?: DOMRect) => {
+    if (switching) return;
     const root = document.documentElement;
     const next: Theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
 
@@ -105,6 +114,14 @@ export function useToggleTheme() {
 
     // Hold hover transitions while the document switches, as the sibling sites do
     root.setAttribute('data-theme-switching', '');
+    switching = true;
+    // a transition that never settles must not leave the control dead
+    const safety = window.setTimeout(() => (switching = false), 1000);
+    const done = () => {
+      window.clearTimeout(safety);
+      switching = false;
+      root.removeAttribute('data-theme-switching');
+    };
     const commit = () => {
       root.dataset.theme = next;
       try {
@@ -114,12 +131,10 @@ export function useToggleTheme() {
       }
     };
     if (document.startViewTransition) {
-      document.startViewTransition(commit).finished.finally(() => {
-        root.removeAttribute('data-theme-switching');
-      });
+      document.startViewTransition(commit).finished.finally(done);
     } else {
       commit();
-      requestAnimationFrame(() => root.removeAttribute('data-theme-switching'));
+      requestAnimationFrame(done);
     }
   }, []);
 }
