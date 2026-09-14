@@ -152,7 +152,7 @@
       "order": 14,
       "transport": "bus",
       "startDate": "2016-09-06",
-      "endDate": "2016-09-09"
+      "endDate": "2016-09-08"
     },
     {
       "id": 15,
@@ -161,7 +161,7 @@
       "countryCode": "LA",
       "order": 15,
       "transport": "bus",
-      "startDate": "2016-09-09",
+      "startDate": "2016-09-08",
       "endDate": "2016-09-12"
     },
     {
