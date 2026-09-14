@@ -17836,28 +17836,7 @@
   },
   "임비투바": {
     "cityCode": "imbituba",
-    "photos": [
-      {
-        "id": "imbituba-001",
-        "publicId": "cities/imbituba/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/imbituba/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/imbituba/photo001",
-        "date": "2017-03-31T17:39:29",
-        "gps": {
-          "lat": -28.12823888888889,
-          "lng": -48.661125
-        },
-        "location": "Rua Cravo, Ibiraquera, Imbituba, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 768,
-        "h": 1024,
-        "tone": "a3978b,727170"
-      }
-    ]
+    "photos": []
   },
   "인천": {
     "cityCode": "incheon",
