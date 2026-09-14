@@ -56,6 +56,8 @@ const HOW: Record<string, { ko: string; en: string }> = {
 };
 
 const MD = (d: string) => d.slice(5, 10).replace('-', '.');
+/** The sheet's one thumbnail width, whatever the screen's density. */
+const SHEET_PX = 480;
 
 /** The seam at the head of a stop: the day, a rule, and how the journey got here. */
 function seamText(b: RollBlock, lang: Lang) {
@@ -133,7 +135,6 @@ export const JourneySheet = memo(function JourneySheet({
   onRead,
   onHover,
 }: SheetProps) {
-  const { photos } = journeyRoll;
   const runs = fold ? COUNTRY_RUNS : CITY_RUNS;
   const homeBlock = journeyRoll.blockOf[current];
 
@@ -343,6 +344,34 @@ export const JourneySheet = memo(function JourneySheet({
     };
   }, [scroller, onRead, perRow, fold]);
 
+  /* ── only what is near gets its pictures ────────────────────────────────
+     Every tile keeps its place, but a picture is attached only while its stop
+     is within a screen and a half of the view, and let go again after. A
+     phone holding two thousand decoded photos at once runs out of memory
+     and the browser reloads the page — which is what scrolling the whole
+     journey used to do. */
+  const [live, setLive] = useState<Set<number>>(() => new Set());
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        setLive((prev) => {
+          const next = new Set(prev);
+          for (const e of entries) {
+            const k = Number((e.target as HTMLElement).dataset.run);
+            if (e.isIntersecting) next.add(k);
+            else next.delete(k);
+          }
+          return next;
+        });
+      },
+      { root: el, rootMargin: '150% 0px' }
+    );
+    el.querySelectorAll('[data-run]').forEach((sec) => io.observe(sec));
+    return () => io.disconnect();
+  }, [scroller, fold]);
+
   return (
     <div
       className="pb__sheet pb__sheet--roll"
@@ -357,63 +386,109 @@ export const JourneySheet = memo(function JourneySheet({
       onPointerLeave={() => onHover(null)}
     >
       {runs.map((run) => {
-        const b = run[0];
-        const last = run[run.length - 1];
-        const start = b.start;
-        const count = last.start + last.count - start;
-        const seam = fold ? countrySeamText(b, lang) : seamText(b, lang);
-        const rows: number[][] = [];
-        for (let i = 0; i < count; i += perRow) {
-          rows.push(Array.from({ length: Math.min(perRow, count - i) }, (_, k) => start + i + k));
-        }
+        const start = run[0].start;
         const home = run.some((x) => journeyRoll.blocks[homeBlock] === x);
         return (
-          <section className={`pb__stop${home ? ' is-home' : ''}`} key={b.stop.id}>
-            <div className={`pb__stopseam${seam.crossed ? ' is-border' : ''}`} data-seam={start}>
-              <span className="pb__seamdate mono">{MD(b.stop.startDate)}</span>
-              <span className="pb__seamrule" />
-              <span className="pb__seamsum mono">{seam.text}</span>
-            </div>
-            {rows.map((row, r) => {
-              // a short last row keeps the sheet's height instead of blowing
-              // one photo up to the full width: the missing places stay empty
-              const rest = perRow - row.length;
-              return (
-                <div className="pb__sheetrow" role="row" key={r}>
-                  {row.map((i) => {
-                    const p = photos[i];
-                    const ar = p.w && p.h ? p.w / p.h : 4 / 3;
-                    const city = journeyRoll.blocks[journeyRoll.blockOf[i]].stop.city;
-                    return (
-                      <button
-                        type="button"
-                        key={p.id}
-                        role="gridcell"
-                        data-i={i}
-                        className={`pb__cell${i === current ? ' is-current' : ''}`}
-                        style={{ '--ar': String(ar) } as React.CSSProperties}
-                        onClick={(e) => onOpen(i, e.currentTarget)}
-                        aria-label={`${rollNo(i)} · ${cityLabel(city, lang)}`}
-                      >
-                        <img src={srcFor(p, 320)} alt="" loading="lazy" decoding="async" />
-                        <span className="pb__cellno mono">{rollNo(i)}</span>
-                      </button>
-                    );
-                  })}
-                  {rest > 0 && (
-                    <span
-                      className="pb__cellgap"
-                      style={{ '--ar': String(rest * (4 / 3)) } as React.CSSProperties}
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </section>
+          <StopSection
+            key={run[0].stop.id}
+            run={run}
+            perRow={perRow}
+            fold={fold}
+            lang={lang}
+            home={home}
+            current={home ? current : -1}
+            live={live.has(start)}
+            onOpen={onOpen}
+          />
         );
       })}
     </div>
+  );
+});
+
+/**
+ * One stop (or, folded, one country) of the sheet. Memoised so that a stop
+ * coming into reach redraws that stop alone, not the other hundred and forty.
+ */
+const StopSection = memo(function StopSection({
+  run,
+  perRow,
+  fold,
+  lang,
+  home,
+  current,
+  live,
+  onOpen,
+}: {
+  run: RollBlock[];
+  perRow: number;
+  fold: boolean;
+  lang: Lang;
+  home: boolean;
+  current: number;
+  live: boolean;
+  onOpen: (i: number, el: HTMLElement) => void;
+}) {
+  const { photos } = journeyRoll;
+  const b = run[0];
+  const last = run[run.length - 1];
+  const start = b.start;
+  const count = last.start + last.count - start;
+  const seam = fold ? countrySeamText(b, lang) : seamText(b, lang);
+  const rows: number[][] = [];
+  for (let i = 0; i < count; i += perRow) {
+    rows.push(Array.from({ length: Math.min(perRow, count - i) }, (_, k) => start + i + k));
+  }
+  return (
+    <section className={`pb__stop${home ? ' is-home' : ''}`} data-run={start}>
+      <div className={`pb__stopseam${seam.crossed ? ' is-border' : ''}`} data-seam={start}>
+        <span className="pb__seamdate mono">{MD(b.stop.startDate)}</span>
+        <span className="pb__seamrule" />
+        <span className="pb__seamsum mono">{seam.text}</span>
+      </div>
+      {rows.map((row, r) => {
+        // a short last row keeps the sheet's height instead of blowing
+        // one photo up to the full width: the missing places stay empty
+        const rest = perRow - row.length;
+        return (
+          <div className="pb__sheetrow" role="row" key={r}>
+            {row.map((i) => {
+              const p = photos[i];
+              const ar = p.w && p.h ? p.w / p.h : 4 / 3;
+              const city = journeyRoll.blocks[journeyRoll.blockOf[i]].stop.city;
+              return (
+                <button
+                  type="button"
+                  key={p.id}
+                  role="gridcell"
+                  data-i={i}
+                  className={`pb__cell${i === current ? ' is-current' : ''}`}
+                  style={{ '--ar': String(ar) } as React.CSSProperties}
+                  onClick={(e) => onOpen(i, e.currentTarget)}
+                  aria-label={`${rollNo(i)} · ${cityLabel(city, lang)}`}
+                >
+                  {/* One size for every tile and every screen: the one the
+                      photo book's sheet already asks for, so no new derived
+                      images, and a phone at 3× does not decode a 1000px photo
+                      into a 117px tile. */}
+                  {live && (
+                    <img src={srcFor(p, SHEET_PX, { exact: true })} alt="" decoding="async" />
+                  )}
+                  <span className="pb__cellno mono">{rollNo(i)}</span>
+                </button>
+              );
+            })}
+            {rest > 0 && (
+              <span
+                className="pb__cellgap"
+                style={{ '--ar': String(rest * (4 / 3)) } as React.CSSProperties}
+                aria-hidden="true"
+              />
+            )}
+          </div>
+        );
+      })}
+    </section>
   );
 });
 

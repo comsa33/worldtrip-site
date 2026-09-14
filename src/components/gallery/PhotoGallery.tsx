@@ -327,6 +327,13 @@ export default function PhotoGallery({
     if (el && r && sr && r.bottom > sr.top && r.top < sr.bottom) openFromTile(safeIndex, el);
     else setSheet(false);
   };
+  /* The sheet is memoised; a handler made fresh every render would redraw all
+     of its tiles every time the reading moved a row. */
+  const openTileRef = useRef(openFromTile);
+  useEffect(() => {
+    openTileRef.current = openFromTile;
+  });
+  const onOpenTile = useCallback((i: number, el: HTMLElement) => openTileRef.current(i, el), []);
   const leaveRef = useRef(leaveSheet);
   useEffect(() => {
     leaveRef.current = leaveSheet;
@@ -924,7 +931,7 @@ export default function PhotoGallery({
           arrive={arrive}
           origin={originOf}
           onZoom={onZoom}
-          onOpen={openFromTile}
+          onOpen={onOpenTile}
           onRead={onRead}
           onHover={setHover}
         />

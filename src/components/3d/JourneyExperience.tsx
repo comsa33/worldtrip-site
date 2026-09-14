@@ -2464,6 +2464,9 @@ function JourneyExperienceContent() {
 
       <div className="canvas-container">
         <Canvas
+          // the photo book covers the globe: it holds its last frame instead of
+          // drawing sixty unseen ones a second under the photos
+          frameloop={selectedCity !== null ? 'never' : 'always'}
           camera={{ position: [-2.5, 3, -3.5], fov: 45, near: 0.01 }}
           gl={{ antialias: true }}
         >
