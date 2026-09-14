@@ -50611,44 +50611,6 @@
         "h": 768
       },
       {
-        "id": "sofia-002",
-        "publicId": "cities/sofia/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sofia/photo002",
-        "date": "2017-01-02T13:38:57",
-        "gps": {
-          "lat": 42.711450000000006,
-          "lng": 23.321694444444443
-        },
-        "location": "Serdika, Sofia",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sofia-003",
-        "publicId": "cities/sofia/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sofia/photo003",
-        "date": "2016-12-31T14:41:45",
-        "gps": {
-          "lat": 42.68824444444444,
-          "lng": 23.415444444444443
-        },
-        "location": "Slatina, Sofia",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "sofia-004",
         "publicId": "cities/sofia/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo004",
@@ -50725,25 +50687,6 @@
         "h": 1024
       },
       {
-        "id": "sofia-008",
-        "publicId": "cities/sofia/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sofia/photo008",
-        "date": "2017-01-02T13:39:19",
-        "gps": {
-          "lat": 42.711483333333334,
-          "lng": 23.32164722222222
-        },
-        "location": "Serdika, Sofia",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 1024,
-        "h": 768
-      },
-      {
         "id": "sofia-009",
         "publicId": "cities/sofia/photo009",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo009",
@@ -50797,25 +50740,6 @@
           "en": ""
         },
         "alt": "photo011",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sofia-012",
-        "publicId": "cities/sofia/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sofia/photo012",
-        "date": "2017-01-02T17:37:16",
-        "gps": {
-          "lat": 42.997550000000004,
-          "lng": 22.834830555555556
-        },
-        "location": "Europe Motorway, Novo byrdo, Sofiyska",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
         "w": 1024,
         "h": 768
       },
@@ -50949,44 +50873,6 @@
           "en": ""
         },
         "alt": "photo019",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sofia-020",
-        "publicId": "cities/sofia/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sofia/photo020",
-        "date": "2016-12-31T14:16:25",
-        "gps": {
-          "lat": 42.68914722222222,
-          "lng": 23.403230555555552
-        },
-        "location": "bul. Hristofor Kolumb 1, Slatina, Sofia",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768
-      },
-      {
-        "id": "sofia-021",
-        "publicId": "cities/sofia/photo021",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/cities/sofia/photo021",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/cities/sofia/photo021",
-        "date": "2017-01-02T13:39:51",
-        "gps": {
-          "lat": 42.71148055555556,
-          "lng": 23.321597222222223
-        },
-        "location": "Serdika, Sofia",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo021",
         "w": 1024,
         "h": 768
       },
