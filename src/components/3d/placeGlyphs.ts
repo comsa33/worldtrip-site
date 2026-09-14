@@ -20,6 +20,7 @@ export const PLACE_GLYPH: Record<string, Glyph> = {
   코파카바나: 'water',
   '산 페드로 데 아타카마': 'desert',
   국경: 'gate',
+  비니쿤카: 'peak',
 };
 
 /** cities whose fetched outline is the wrong shape (a district, a province) — ring instead */

@@ -951,6 +951,13 @@
       "lat": -35.5397,
       "lng": -58.0488,
       "country": "AR"
+    },
+    "비니쿤카": {
+      "ko": "비니쿤카",
+      "en": "Vinicunca",
+      "lat": -13.8678,
+      "lng": -71.3029,
+      "country": "PE"
     }
   },
   "countries": {

@@ -147,6 +147,7 @@ const folderToKorean = {
   'cartagena': '카르타헤나',
   'barranquilla': '바랑키야',
   'cusco': '쿠스코',
+  'vinicunca': '비니쿤카',
   'ubatuba': '우바투바',
   'arraialdocabo': '아라이알두카부',
   'buzios': '부지오스',

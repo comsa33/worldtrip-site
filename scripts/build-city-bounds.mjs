@@ -167,6 +167,7 @@ const PICKED = {
   '산 페드로 데 아타카마': null,
   '살바도르 달리 사막': 'W415179783', // Desierto Salvador Dalí
   국경: null,
+  비니쿤카: null, // Winikunka — a peak node only
 };
 
 if (process.argv.includes('--picked')) {

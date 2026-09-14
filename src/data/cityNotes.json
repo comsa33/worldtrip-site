@@ -749,10 +749,10 @@
   },
   "134": {
     "ko": {
-      "story": "쿠스코로 돌아왔습니다.\n골목 계단에서 그림 그리는 사람들을 봤습니다.\n무지개산에 다녀왔습니다. 줄무늬 능선 아래 사람들이 줄지어 올라갔습니다.\n눈 덮인 봉우리, 라마 떼.\n다음 날 리마로 떠났습니다."
+      "story": "쿠스코로 돌아왔습니다.\n골목 계단에서 그림 그리는 사람들을 봤습니다.\n언덕에서 붉은 지붕의 도시를 내려다봤습니다.\n밤에는 불빛이 골짜기를 채웠습니다."
     },
     "en": {
-      "story": "Back in Cusco.\nWatched people painting on the alley steps.\nWent out to the Rainbow Mountain. People climbed in a line below the striped ridge.\nSnow on the peaks, a herd of llamas.\nLeft for Lima the next day."
+      "story": "Back in Cusco.\nWatched people painting on the alley steps.\nLooked down on the red roofs from the hill.\nAt night the lights filled the valley."
     }
   },
   "138": {
@@ -829,6 +829,14 @@
     "en": {
       "title": "The Last Sea",
       "story": "The last city of the trip.\nThe beach was crowded and the sky was pink.\nSomeone grilled skewers on the sand.\nA kitten on the bed.\nFive days later, Gwangju."
+    }
+  },
+  "158": {
+    "ko": {
+      "story": "무지개산에 올랐습니다.\n줄무늬 능선 아래 사람들이 줄지어 올라갔습니다.\n눈 덮인 봉우리, 라마 떼.\n다음 날 리마에 닿았습니다."
+    },
+    "en": {
+      "story": "Climbed the Rainbow Mountain.\nPeople climbed in a line below the striped ridge.\nSnow on the peaks, a herd of llamas.\nReached Lima the next day."
     }
   },
   "_형식": {
