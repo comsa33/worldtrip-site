@@ -35,7 +35,7 @@ export default function AboutOverlay({ visible, hand, onWritten }: AboutOverlayP
   const content = {
     ko: {
       title: '여정의 시작',
-      subtitle: '2016년 7월, 광주',
+      subtitle: '2016년 8월, 광주',
       story: `18살, 대학 입시를 준비하던 시절 우연히 읽었던
 "바람난 부부의 세계일주"라는 책이 있었습니다.
 
@@ -45,7 +45,7 @@ export default function AboutOverlay({ visible, hand, onWritten }: AboutOverlayP
     },
     en: {
       title: 'The Beginning',
-      subtitle: 'July 2016, Gwangju',
+      subtitle: 'August 2016, Gwangju',
       story: `At 18, while preparing for college entrance exams,
 I came across a book called "Around the World Journey."
 
