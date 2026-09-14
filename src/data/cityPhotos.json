@@ -648,144 +648,64 @@
     "cityCode": "agra",
     "photos": [
       {
-        "id": "agra-001",
-        "publicId": "cities/agra/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936287/cities/agra/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936287/cities/agra/photo001",
-        "date": "2016-10-11T15:08:56",
+        "id": "agra-056",
+        "publicId": "cities/agra/photo056",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381550/cities/agra/photo056",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381550/cities/agra/photo056",
+        "date": "2016-10-11T05:32:27",
         "gps": {
-          "lat": 27.17618888888889,
-          "lng": 78.02204166666667
+          "lat": 27.182041666666667,
+          "lng": 78.01811944444444
         },
-        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
+        "location": "Civil Lines, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
+        "alt": "photo056",
         "w": 1024,
         "h": 768,
-        "tone": "9f857e,aa7757"
+        "tone": "938881,5d5648"
       },
       {
-        "id": "agra-002",
-        "publicId": "cities/agra/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936290/cities/agra/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936290/cities/agra/photo002",
-        "date": "2016-10-13T13:14:17",
+        "id": "agra-015",
+        "publicId": "cities/agra/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936323/cities/agra/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936323/cities/agra/photo015",
+        "date": "2016-10-11T07:29:27",
         "gps": {
-          "lat": 27.096344444444444,
-          "lng": 77.66316111111112
+          "lat": 27.170558333333336,
+          "lng": 78.04628888888888
         },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
+        "location": "Taj East Gate Road, Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo002",
-        "w": 768,
-        "h": 1024,
-        "tone": "be8d72,857572"
-      },
-      {
-        "id": "agra-003",
-        "publicId": "cities/agra/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936293/cities/agra/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936293/cities/agra/photo003",
-        "date": "2016-10-13T10:22:54",
-        "gps": {
-          "lat": 27.09519722222222,
-          "lng": 77.66265833333334
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 768,
-        "h": 1024,
-        "tone": "b5a498,aea7a4"
-      },
-      {
-        "id": "agra-004",
-        "publicId": "cities/agra/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936295/cities/agra/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936295/cities/agra/photo004",
-        "date": "2016-10-11T13:19:24",
-        "gps": {
-          "lat": 27.171122222222223,
-          "lng": 78.04036666666667
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
+        "alt": "photo015",
         "w": 1024,
         "h": 768,
-        "tone": "646d71,936f5d"
+        "tone": "7b6f4b,28170b"
       },
       {
-        "id": "agra-005",
-        "publicId": "cities/agra/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936298/cities/agra/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936298/cities/agra/photo005",
-        "date": "2016-10-11T12:58:17",
+        "id": "agra-053",
+        "publicId": "cities/agra/photo053",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381543/cities/agra/photo053",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381543/cities/agra/photo053",
+        "date": "2016-10-11T12:50:01",
         "gps": {
-          "lat": 27.16993888888889,
-          "lng": 78.04380833333333
+          "lat": 27.170916666666667,
+          "lng": 78.04553888888888
         },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "location": "Taj East Gate Road, Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo005",
-        "w": 1180,
-        "h": 665,
-        "tone": "6f6056,876257"
-      },
-      {
-        "id": "agra-006",
-        "publicId": "cities/agra/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936301/cities/agra/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936301/cities/agra/photo006",
-        "date": "2016-10-15T17:25:50",
-        "gps": {
-          "lat": 27.176172222222224,
-          "lng": 78.04373055555556
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1102,
-        "h": 713,
-        "tone": "f3f8f4,c8c5bb"
-      },
-      {
-        "id": "agra-007",
-        "publicId": "cities/agra/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936303/cities/agra/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936303/cities/agra/photo007",
-        "date": "2016-10-15T17:25:23",
-        "gps": {
-          "lat": 27.176147222222223,
-          "lng": 78.04360833333332
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
+        "alt": "photo053",
         "w": 1024,
         "h": 768,
-        "tone": "d7d7d6,867f6d"
+        "tone": "404134,ac7f7a"
       },
       {
         "id": "agra-008",
@@ -808,207 +728,27 @@
         "tone": "7a6150,785755"
       },
       {
-        "id": "agra-009",
-        "publicId": "cities/agra/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936309/cities/agra/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936309/cities/agra/photo009",
-        "date": "2016-10-11T13:01:21",
+        "id": "agra-005",
+        "publicId": "cities/agra/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936298/cities/agra/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936298/cities/agra/photo005",
+        "date": "2016-10-11T12:58:17",
         "gps": {
-          "lat": 27.169697222222222,
-          "lng": 78.04383055555556
+          "lat": 27.16993888888889,
+          "lng": 78.04380833333333
         },
         "location": "Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo009",
+        "alt": "photo005",
         "w": 1180,
         "h": 665,
-        "tone": "6f6059,4e3d36"
+        "tone": "6f6056,876257"
       },
       {
-        "id": "agra-010",
-        "publicId": "cities/agra/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936311/cities/agra/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936311/cities/agra/photo010",
-        "date": "2016-10-11T13:15:37",
-        "gps": {
-          "lat": 27.170447222222222,
-          "lng": 78.04143611111111
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768,
-        "tone": "99aac0,6a544e"
-      },
-      {
-        "id": "agra-011",
-        "publicId": "cities/agra/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936313/cities/agra/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936313/cities/agra/photo011",
-        "date": "2016-10-11T13:00:50",
-        "gps": {
-          "lat": 27.169697222222222,
-          "lng": 78.04383055555556
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1180,
-        "h": 665,
-        "tone": "625f56,5a4c45"
-      },
-      {
-        "id": "agra-012",
-        "publicId": "cities/agra/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936316/cities/agra/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936316/cities/agra/photo012",
-        "date": "2016-10-11T13:00:13",
-        "gps": {
-          "lat": 27.169697222222222,
-          "lng": 78.04383055555556
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1180,
-        "h": 665,
-        "tone": "a6827c,795954"
-      },
-      {
-        "id": "agra-013",
-        "publicId": "cities/agra/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936319/cities/agra/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936319/cities/agra/photo013",
-        "date": "2016-10-14T18:07:54",
-        "gps": {
-          "lat": 27.165852777777776,
-          "lng": 78.00874444444445
-        },
-        "location": "Agra Cantonment, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768,
-        "tone": "aca193,ae9f92"
-      },
-      {
-        "id": "agra-014",
-        "publicId": "cities/agra/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936323/cities/agra/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936323/cities/agra/photo015",
-        "date": "2016-10-11T07:29:27",
-        "gps": {
-          "lat": 27.170558333333336,
-          "lng": 78.04628888888888
-        },
-        "location": "Taj East Gate Road, Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768,
-        "tone": "7b6f4b,28170b"
-      },
-      {
-        "id": "agra-015",
-        "publicId": "cities/agra/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936326/cities/agra/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936326/cities/agra/photo016",
-        "date": "2016-10-11T14:30:17",
-        "gps": {
-          "lat": 27.183730555555556,
-          "lng": 78.01829444444445
-        },
-        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768,
-        "tone": "6b6b6c,6b594a"
-      },
-      {
-        "id": "agra-016",
-        "publicId": "cities/agra/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936330/cities/agra/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936330/cities/agra/photo018",
-        "date": "2016-10-15T17:17:19",
-        "gps": {
-          "lat": 27.176077777777778,
-          "lng": 78.04344999999999
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768,
-        "tone": "6d4d19,1d0701"
-      },
-      {
-        "id": "agra-017",
-        "publicId": "cities/agra/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936334/cities/agra/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936334/cities/agra/photo019",
-        "date": "2016-10-11T15:55:58",
-        "gps": {
-          "lat": 27.17128611111111,
-          "lng": 78.03916111111111
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768,
-        "tone": "9e9081,a45a4d"
-      },
-      {
-        "id": "agra-018",
-        "publicId": "cities/agra/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936336/cities/agra/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936336/cities/agra/photo020",
-        "date": "2016-10-14T13:48:06",
-        "gps": {
-          "lat": 27.17083888888889,
-          "lng": 78.04576944444445
-        },
-        "location": "Taj East Gate Road, Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768,
-        "tone": "c1b7a0,90918e"
-      },
-      {
-        "id": "agra-019",
+        "id": "agra-021",
         "publicId": "cities/agra/photo021",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936339/cities/agra/photo021",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936339/cities/agra/photo021",
@@ -1028,267 +768,7 @@
         "tone": "635853,6e6259"
       },
       {
-        "id": "agra-020",
-        "publicId": "cities/agra/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936341/cities/agra/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936341/cities/agra/photo022",
-        "date": "2016-10-13T07:39:18",
-        "gps": {
-          "lat": 27.09476944444444,
-          "lng": 77.66283333333334
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo022",
-        "w": 1024,
-        "h": 768,
-        "tone": "597678,805e33"
-      },
-      {
-        "id": "agra-021",
-        "publicId": "cities/agra/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936344/cities/agra/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936344/cities/agra/photo023",
-        "date": "2016-10-14T17:19:15",
-        "gps": {
-          "lat": 27.176605555555557,
-          "lng": 78.02193333333334
-        },
-        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768,
-        "tone": "9f7b73,7f4121"
-      },
-      {
-        "id": "agra-022",
-        "publicId": "cities/agra/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936347/cities/agra/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936347/cities/agra/photo024",
-        "date": "2016-10-13T08:13:19",
-        "gps": {
-          "lat": 27.095055555555554,
-          "lng": 77.66229166666668
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768,
-        "tone": "74819e,7e5b4b"
-      },
-      {
-        "id": "agra-023",
-        "publicId": "cities/agra/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936350/cities/agra/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936350/cities/agra/photo025",
-        "date": "2016-10-11T15:07:54",
-        "gps": {
-          "lat": 27.176119444444446,
-          "lng": 78.02188055555555
-        },
-        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 1024,
-        "h": 768,
-        "tone": "9caac6,a67d60"
-      },
-      {
-        "id": "agra-024",
-        "publicId": "cities/agra/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936352/cities/agra/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936352/cities/agra/photo026",
-        "date": "2016-10-12T17:19:09",
-        "gps": {
-          "lat": 27.169125,
-          "lng": 78.0423888888889
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768,
-        "tone": "9f7833,160d0d"
-      },
-      {
-        "id": "agra-025",
-        "publicId": "cities/agra/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936355/cities/agra/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936355/cities/agra/photo027",
-        "date": "2016-10-15T17:31:47",
-        "gps": {
-          "lat": 27.17524166666667,
-          "lng": 78.04395277777778
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo027",
-        "w": 768,
-        "h": 1024,
-        "tone": "79766f,a19c8e"
-      },
-      {
-        "id": "agra-026",
-        "publicId": "cities/agra/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936358/cities/agra/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936358/cities/agra/photo028",
-        "date": "2016-10-13T13:11:46",
-        "gps": {
-          "lat": 27.094819444444443,
-          "lng": 77.66119444444445
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo028",
-        "w": 1180,
-        "h": 665,
-        "tone": "a1a096,a18a6e"
-      },
-      {
-        "id": "agra-027",
-        "publicId": "cities/agra/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936360/cities/agra/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936360/cities/agra/photo029",
-        "date": "2016-10-13T17:52:30",
-        "gps": {
-          "lat": 27.096752777777777,
-          "lng": 77.6626888888889
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo029",
-        "w": 1024,
-        "h": 768,
-        "tone": "c0bfba,43432d"
-      },
-      {
-        "id": "agra-028",
-        "publicId": "cities/agra/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936362/cities/agra/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936362/cities/agra/photo030",
-        "date": "2016-10-13T09:09:06",
-        "gps": {
-          "lat": 27.0952,
-          "lng": 77.66267500000001
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768,
-        "tone": "b4ada7,7d7272"
-      },
-      {
-        "id": "agra-029",
-        "publicId": "cities/agra/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936365/cities/agra/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936365/cities/agra/photo031",
-        "date": "2016-10-15T17:14:13",
-        "gps": {
-          "lat": 27.176022222222223,
-          "lng": 78.04355555555556
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768,
-        "tone": "a37e41,452407"
-      },
-      {
-        "id": "agra-030",
-        "publicId": "cities/agra/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936368/cities/agra/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936368/cities/agra/photo033",
-        "date": "2016-10-11T13:49:50",
-        "gps": {
-          "lat": 27.178811111111113,
-          "lng": 78.02431388888888
-        },
-        "location": "SH62, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768,
-        "tone": "768383,563d30"
-      },
-      {
-        "id": "agra-031",
-        "publicId": "cities/agra/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936371/cities/agra/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936371/cities/agra/photo034",
-        "date": "2016-10-13T08:02:27",
-        "gps": {
-          "lat": 27.09506111111111,
-          "lng": 77.6629638888889
-        },
-        "location": "Fatehpur Sikri, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 768,
-        "h": 1024,
-        "tone": "886f5e,604b3c"
-      },
-      {
-        "id": "agra-032",
-        "publicId": "cities/agra/photo035",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936373/cities/agra/photo035",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936373/cities/agra/photo035",
-        "date": "2016-10-15T16:59:29",
-        "gps": {
-          "lat": 27.16896388888889,
-          "lng": 78.04324444444444
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo035",
-        "w": 1024,
-        "h": 768,
-        "tone": "8d8c8a,849196"
-      },
-      {
-        "id": "agra-033",
+        "id": "agra-036",
         "publicId": "cities/agra/photo036",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936376/cities/agra/photo036",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936376/cities/agra/photo036",
@@ -1308,7 +788,7 @@
         "tone": "847871,463231"
       },
       {
-        "id": "agra-034",
+        "id": "agra-037",
         "publicId": "cities/agra/photo037",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936378/cities/agra/photo037",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936378/cities/agra/photo037",
@@ -1328,247 +808,207 @@
         "tone": "967768,a7736f"
       },
       {
-        "id": "agra-035",
-        "publicId": "cities/agra/photo038",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176433/cities/agra/photo038",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176433/cities/agra/photo038",
-        "date": "2016-10-11T13:08:19",
+        "id": "agra-016",
+        "publicId": "cities/agra/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936326/cities/agra/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936326/cities/agra/photo016",
+        "date": "2016-10-11T14:30:17",
         "gps": {
-          "lat": 27.16886388888889,
-          "lng": 78.04115277777778
+          "lat": 27.183730555555556,
+          "lng": 78.01829444444445
+        },
+        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016",
+        "w": 1024,
+        "h": 768,
+        "tone": "6b6b6c,6b594a"
+      },
+      {
+        "id": "agra-001",
+        "publicId": "cities/agra/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936287/cities/agra/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936287/cities/agra/photo001",
+        "date": "2016-10-11T15:08:56",
+        "gps": {
+          "lat": 27.17618888888889,
+          "lng": 78.02204166666667
+        },
+        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768,
+        "tone": "9f857e,aa7757"
+      },
+      {
+        "id": "agra-019",
+        "publicId": "cities/agra/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936334/cities/agra/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936334/cities/agra/photo019",
+        "date": "2016-10-11T15:55:58",
+        "gps": {
+          "lat": 27.17128611111111,
+          "lng": 78.03916111111111
         },
         "location": "Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo038",
+        "alt": "photo019",
         "w": 1024,
         "h": 768,
-        "tone": "908c84,493b3b"
+        "tone": "9e9081,a45a4d"
       },
       {
-        "id": "agra-036",
-        "publicId": "cities/agra/photo039",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176435/cities/agra/photo039",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176435/cities/agra/photo039",
-        "date": "2016-10-15T17:27:48",
+        "id": "agra-060",
+        "publicId": "cities/agra/photo060",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381561/cities/agra/photo060",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381561/cities/agra/photo060",
+        "date": "2016-10-12T15:46:33",
         "gps": {
-          "lat": 27.17615,
-          "lng": 78.04361666666667
+          "lat": 27.169127777777778,
+          "lng": 78.04251944444444
         },
         "location": "Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo039",
+        "alt": "photo060",
         "w": 1024,
         "h": 768,
-        "tone": "afa49c,4c4946"
+        "tone": "acbacf,826c60"
       },
       {
-        "id": "agra-037",
-        "publicId": "cities/agra/photo040",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176438/cities/agra/photo040",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176438/cities/agra/photo040",
-        "date": "2016-10-11T19:12:30",
+        "id": "agra-026",
+        "publicId": "cities/agra/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936352/cities/agra/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936352/cities/agra/photo026",
+        "date": "2016-10-12T17:19:09",
         "gps": {
-          "lat": 27.169072222222223,
-          "lng": 78.04309166666667
+          "lat": 27.169125,
+          "lng": 78.0423888888889
         },
         "location": "Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo040",
+        "alt": "photo026",
         "w": 1024,
         "h": 768,
-        "tone": "1b1b17,31302b"
+        "tone": "9f7833,160d0d"
       },
       {
-        "id": "agra-038",
-        "publicId": "cities/agra/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176440/cities/agra/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176440/cities/agra/photo041",
-        "date": "2016-10-13T17:42:27",
+        "id": "agra-061",
+        "publicId": "cities/agra/photo061",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381562/cities/agra/photo061",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381562/cities/agra/photo061",
+        "date": "2016-10-12T17:26:57",
         "gps": {
-          "lat": 27.096072222222222,
-          "lng": 77.66213888888889
+          "lat": 27.16905277777778,
+          "lng": 78.04238055555555
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo061",
+        "w": 1024,
+        "h": 768,
+        "tone": "c6b38e,534f4b"
+      },
+      {
+        "id": "agra-052",
+        "publicId": "cities/agra/photo052",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381540/cities/agra/photo052",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381540/cities/agra/photo052",
+        "date": "2016-10-13T07:20:45",
+        "gps": {
+          "lat": 27.09368611111111,
+          "lng": 77.66315555555556
         },
         "location": "Fatehpur Sikri, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo041",
+        "alt": "photo052",
         "w": 1024,
         "h": 768,
-        "tone": "c1b2a2,24201c"
+        "tone": "9292a3,946448"
       },
       {
-        "id": "agra-039",
-        "publicId": "cities/agra/photo042",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176442/cities/agra/photo042",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176442/cities/agra/photo042",
-        "date": "2016-10-12T17:38:09",
+        "id": "agra-054",
+        "publicId": "cities/agra/photo054",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381545/cities/agra/photo054",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381545/cities/agra/photo054",
+        "date": "2016-10-13T07:24:49",
         "gps": {
-          "lat": 27.16908888888889,
-          "lng": 78.04240555555555
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo042",
-        "w": 768,
-        "h": 1024,
-        "tone": "8c857c,574f46"
-      },
-      {
-        "id": "agra-040",
-        "publicId": "cities/agra/photo043",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176445/cities/agra/photo043",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176445/cities/agra/photo043",
-        "date": "2016-10-14T15:46:04",
-        "gps": {
-          "lat": 27.17657777777778,
-          "lng": 78.022125
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo043",
-        "w": 768,
-        "h": 1024,
-        "tone": "7f7f79,6c716c"
-      },
-      {
-        "id": "agra-041",
-        "publicId": "cities/agra/photo044",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176447/cities/agra/photo044",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176447/cities/agra/photo044",
-        "date": "2016-10-14T17:21:09",
-        "gps": {
-          "lat": 27.176722222222224,
-          "lng": 78.02228611111111
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo044",
-        "w": 768,
-        "h": 1024,
-        "tone": "181c14,1f241a"
-      },
-      {
-        "id": "agra-042",
-        "publicId": "cities/agra/photo045",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176450/cities/agra/photo045",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176450/cities/agra/photo045",
-        "date": "2016-10-11T12:58:16",
-        "gps": {
-          "lat": 27.16993888888889,
-          "lng": 78.04380833333333
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo045",
-        "w": 1024,
-        "h": 577,
-        "tone": "6b5d54,816054"
-      },
-      {
-        "id": "agra-043",
-        "publicId": "cities/agra/photo046",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176452/cities/agra/photo046",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176452/cities/agra/photo046",
-        "date": "2016-10-13T07:40:53",
-        "gps": {
-          "lat": 27.095116666666666,
-          "lng": 77.66270555555556
+          "lat": 27.093977777777777,
+          "lng": 77.66311666666667
         },
         "location": "Fatehpur Sikri, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo046",
+        "alt": "photo054",
         "w": 1024,
         "h": 768,
-        "tone": "676661,161411"
+        "tone": "806d66,73533a"
       },
       {
-        "id": "agra-044",
-        "publicId": "cities/agra/photo047",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176454/cities/agra/photo047",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176454/cities/agra/photo047",
-        "date": "2016-10-15T17:20:27",
+        "id": "agra-022",
+        "publicId": "cities/agra/photo022",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936341/cities/agra/photo022",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936341/cities/agra/photo022",
+        "date": "2016-10-13T07:39:18",
         "gps": {
-          "lat": 27.176097222222225,
-          "lng": 78.04344999999999
-        },
-        "location": "Taj Ganj, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo047",
-        "w": 1024,
-        "h": 498,
-        "tone": "89878e,404145"
-      },
-      {
-        "id": "agra-045",
-        "publicId": "cities/agra/photo048",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176456/cities/agra/photo048",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176456/cities/agra/photo048",
-        "date": "2016-10-13T07:14:42",
-        "gps": {
-          "lat": 27.093902777777778,
-          "lng": 77.663925
+          "lat": 27.09476944444444,
+          "lng": 77.66283333333334
         },
         "location": "Fatehpur Sikri, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo048",
+        "alt": "photo022",
         "w": 1024,
         "h": 768,
-        "tone": "868580,39342b"
+        "tone": "597678,805e33"
       },
       {
-        "id": "agra-046",
-        "publicId": "cities/agra/photo049",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176459/cities/agra/photo049",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176459/cities/agra/photo049",
-        "date": "2016-10-11T14:33:39",
+        "id": "agra-034",
+        "publicId": "cities/agra/photo034",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936371/cities/agra/photo034",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936371/cities/agra/photo034",
+        "date": "2016-10-13T08:02:27",
         "gps": {
-          "lat": 27.1829,
-          "lng": 78.017175
+          "lat": 27.09506111111111,
+          "lng": 77.6629638888889
         },
-        "location": "Civil Lines, Agra, Uttar Pradesh",
+        "location": "Fatehpur Sikri, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo049",
-        "w": 1024,
-        "h": 768,
-        "tone": "595957,534436"
+        "alt": "photo034",
+        "w": 768,
+        "h": 1024,
+        "tone": "886f5e,604b3c"
       },
       {
-        "id": "agra-047",
+        "id": "agra-050",
         "publicId": "cities/agra/photo050",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176462/cities/agra/photo050",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176462/cities/agra/photo050",
@@ -1588,16 +1028,116 @@
         "tone": "a8947f,b9b4ae"
       },
       {
-        "id": "agra-048",
-        "publicId": "cities/agra/photo051",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176463/cities/agra/photo051",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176463/cities/agra/photo051",
-        "date": "2016-10-11T07:26:14",
+        "id": "agra-030",
+        "publicId": "cities/agra/photo030",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936362/cities/agra/photo030",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936362/cities/agra/photo030",
+        "date": "2016-10-13T09:09:06",
         "gps": {
-          "lat": 27.170775000000003,
-          "lng": 78.04598888888889
+          "lat": 27.0952,
+          "lng": 77.66267500000001
+        },
+        "location": "Fatehpur Sikri, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo030",
+        "w": 1024,
+        "h": 768,
+        "tone": "b4ada7,7d7272"
+      },
+      {
+        "id": "agra-002",
+        "publicId": "cities/agra/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936290/cities/agra/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936290/cities/agra/photo002",
+        "date": "2016-10-13T13:14:17",
+        "gps": {
+          "lat": 27.096344444444444,
+          "lng": 77.66316111111112
+        },
+        "location": "Fatehpur Sikri, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002",
+        "w": 768,
+        "h": 1024,
+        "tone": "be8d72,857572"
+      },
+      {
+        "id": "agra-058",
+        "publicId": "cities/agra/photo058",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381555/cities/agra/photo058",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381555/cities/agra/photo058",
+        "date": "2016-10-13T17:43:56",
+        "gps": {
+          "lat": 27.096119444444444,
+          "lng": 77.66217777777779
+        },
+        "location": "Fatehpur Sikri, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo058",
+        "w": 768,
+        "h": 1024,
+        "tone": "afa9a2,423628"
+      },
+      {
+        "id": "agra-029",
+        "publicId": "cities/agra/photo029",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936360/cities/agra/photo029",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936360/cities/agra/photo029",
+        "date": "2016-10-13T17:52:30",
+        "gps": {
+          "lat": 27.096752777777777,
+          "lng": 77.6626888888889
+        },
+        "location": "Fatehpur Sikri, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo029",
+        "w": 1024,
+        "h": 768,
+        "tone": "c0bfba,43432d"
+      },
+      {
+        "id": "agra-059",
+        "publicId": "cities/agra/photo059",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381558/cities/agra/photo059",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381558/cities/agra/photo059",
+        "date": "2016-10-14T13:47:56",
+        "gps": {
+          "lat": 27.17061388888889,
+          "lng": 78.04628888888888
         },
         "location": "Taj East Gate Road, Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo059",
+        "w": 1024,
+        "h": 768,
+        "tone": "baa784,8a847a"
+      },
+      {
+        "id": "agra-051",
+        "publicId": "cities/agra/photo051",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381538/cities/agra/photo051",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381538/cities/agra/photo051",
+        "date": "2016-10-14T16:16:43",
+        "gps": {
+          "lat": 27.176550000000002,
+          "lng": 78.02208611111111
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
@@ -1605,7 +1145,167 @@
         "alt": "photo051",
         "w": 1024,
         "h": 768,
-        "tone": "9a988e,1e1c1a"
+        "tone": "929691,7b7e74"
+      },
+      {
+        "id": "agra-057",
+        "publicId": "cities/agra/photo057",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381553/cities/agra/photo057",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381553/cities/agra/photo057",
+        "date": "2016-10-14T17:19:05",
+        "gps": {
+          "lat": 27.176616666666668,
+          "lng": 78.02201111111111
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo057",
+        "w": 768,
+        "h": 1024,
+        "tone": "a0857a,a7520e"
+      },
+      {
+        "id": "agra-035",
+        "publicId": "cities/agra/photo035",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936373/cities/agra/photo035",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936373/cities/agra/photo035",
+        "date": "2016-10-15T16:59:29",
+        "gps": {
+          "lat": 27.16896388888889,
+          "lng": 78.04324444444444
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo035",
+        "w": 1024,
+        "h": 768,
+        "tone": "8d8c8a,849196"
+      },
+      {
+        "id": "agra-031",
+        "publicId": "cities/agra/photo031",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936365/cities/agra/photo031",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936365/cities/agra/photo031",
+        "date": "2016-10-15T17:14:13",
+        "gps": {
+          "lat": 27.176022222222223,
+          "lng": 78.04355555555556
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo031",
+        "w": 1024,
+        "h": 768,
+        "tone": "a37e41,452407"
+      },
+      {
+        "id": "agra-018",
+        "publicId": "cities/agra/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936330/cities/agra/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936330/cities/agra/photo018",
+        "date": "2016-10-15T17:17:19",
+        "gps": {
+          "lat": 27.176077777777778,
+          "lng": 78.04344999999999
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo018",
+        "w": 1024,
+        "h": 768,
+        "tone": "6d4d19,1d0701"
+      },
+      {
+        "id": "agra-055",
+        "publicId": "cities/agra/photo055",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381548/cities/agra/photo055",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381548/cities/agra/photo055",
+        "date": "2016-10-15T17:23:45",
+        "gps": {
+          "lat": 27.176119444444446,
+          "lng": 78.04344999999999
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo055",
+        "w": 1024,
+        "h": 768,
+        "tone": "beb9b3,6c5f51"
+      },
+      {
+        "id": "agra-007",
+        "publicId": "cities/agra/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936303/cities/agra/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936303/cities/agra/photo007",
+        "date": "2016-10-15T17:25:23",
+        "gps": {
+          "lat": 27.176147222222223,
+          "lng": 78.04360833333332
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007",
+        "w": 1024,
+        "h": 768,
+        "tone": "d7d7d6,867f6d"
+      },
+      {
+        "id": "agra-006",
+        "publicId": "cities/agra/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936301/cities/agra/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936301/cities/agra/photo006",
+        "date": "2016-10-15T17:25:50",
+        "gps": {
+          "lat": 27.176172222222224,
+          "lng": 78.04373055555556
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006",
+        "w": 1102,
+        "h": 713,
+        "tone": "f3f8f4,c8c5bb"
+      },
+      {
+        "id": "agra-027",
+        "publicId": "cities/agra/photo027",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936355/cities/agra/photo027",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936355/cities/agra/photo027",
+        "date": "2016-10-15T17:31:47",
+        "gps": {
+          "lat": 27.17524166666667,
+          "lng": 78.04395277777778
+        },
+        "location": "Taj Ganj, Agra, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo027",
+        "w": 768,
+        "h": 1024,
+        "tone": "79766f,a19c8e"
       }
     ]
   },
@@ -18491,104 +18191,24 @@
     "cityCode": "kolkata",
     "photos": [
       {
-        "id": "kolkata-001",
-        "publicId": "cities/kolkata/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936468/cities/kolkata/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936468/cities/kolkata/photo001",
-        "date": "2016-10-07T10:03:56",
+        "id": "kolkata-011",
+        "publicId": "cities/kolkata/photo011",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936496/cities/kolkata/photo011",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936496/cities/kolkata/photo011",
+        "date": "2016-10-05T17:42:33",
         "gps": {
-          "lat": 22.54129166666667,
-          "lng": 88.34724444444444
+          "lat": 24.678936111111113,
+          "lng": 80.83704444444444
         },
-        "location": "Ashutosh Mukhejee Road, Bhowanipore, Kolkata, West Bengal",
+        "location": "Khairi Kothar, Madhya Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 768,
-        "h": 1024,
-        "tone": "7b8da0,3b3438"
-      },
-      {
-        "id": "kolkata-002",
-        "publicId": "cities/kolkata/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936470/cities/kolkata/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936470/cities/kolkata/photo002",
-        "date": "2016-10-05T14:30:27",
-        "gps": {
-          "lat": 23.289580555555556,
-          "lng": 79.99977777777778
-        },
-        "location": "Panagar, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
+        "alt": "photo011",
         "w": 1024,
         "h": 768,
-        "tone": "2d2121,7f726e"
-      },
-      {
-        "id": "kolkata-003",
-        "publicId": "cities/kolkata/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936473/cities/kolkata/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936473/cities/kolkata/photo003",
-        "date": "2016-10-07T10:13:32",
-        "gps": {
-          "lat": 22.542022222222222,
-          "lng": 88.34203333333333
-        },
-        "location": "Acharya Jagadish Chandra Bose Road, Ho Chi Minh Sarani, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768,
-        "tone": "4c5343,7b674c"
-      },
-      {
-        "id": "kolkata-004",
-        "publicId": "cities/kolkata/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936475/cities/kolkata/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936475/cities/kolkata/photo004",
-        "date": "2016-10-07T15:56:12",
-        "gps": {
-          "lat": 22.558447222222224,
-          "lng": 88.35263055555555
-        },
-        "location": "Madge Lane, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024,
-        "tone": "859083,8b775f"
-      },
-      {
-        "id": "kolkata-005",
-        "publicId": "cities/kolkata/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936478/cities/kolkata/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936478/cities/kolkata/photo005",
-        "date": "2016-10-05T14:36:40",
-        "gps": {
-          "lat": 23.328719444444445,
-          "lng": 80.02969444444444
-        },
-        "location": "Piparia, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 768,
-        "h": 1024,
-        "tone": "524645,6d5856"
+        "tone": "a58b5a,362c15"
       },
       {
         "id": "kolkata-006",
@@ -18611,24 +18231,24 @@
         "tone": "685342,675147"
       },
       {
-        "id": "kolkata-007",
-        "publicId": "cities/kolkata/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936483/cities/kolkata/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936483/cities/kolkata/photo007",
-        "date": "2016-10-07T09:07:30",
+        "id": "kolkata-026",
+        "publicId": "cities/kolkata/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936533/cities/kolkata/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936533/cities/kolkata/photo026",
+        "date": "2016-10-06T14:54:51",
         "gps": {
-          "lat": 22.559258333333332,
-          "lng": 88.3530111111111
+          "lat": 22.551633333333335,
+          "lng": 88.34940277777777
         },
-        "location": "Nellie Sengupta Sarani, Dharmatala, Kolkata, West Bengal",
+        "location": "Chowringhee Road, Dharmatala, Kolkata, West Bengal",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo007",
+        "alt": "photo026",
         "w": 1024,
         "h": 768,
-        "tone": "919eaa,564a45"
+        "tone": "1e67b3,4d6172"
       },
       {
         "id": "kolkata-008",
@@ -18651,6 +18271,26 @@
         "tone": "534937,5f533a"
       },
       {
+        "id": "kolkata-030",
+        "publicId": "cities/kolkata/photo030",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381524/cities/kolkata/photo030",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381524/cities/kolkata/photo030",
+        "date": "2016-10-06T19:12:35",
+        "gps": {
+          "lat": 22.559294444444443,
+          "lng": 88.35360833333333
+        },
+        "location": "Nellie Sengupta Sarani, Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo030",
+        "w": 768,
+        "h": 1024,
+        "tone": "5d4744,8f866a"
+      },
+      {
         "id": "kolkata-009",
         "publicId": "cities/kolkata/photo009",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936489/cities/kolkata/photo009",
@@ -18669,226 +18309,6 @@
         "w": 1024,
         "h": 768,
         "tone": "090505,594a43"
-      },
-      {
-        "id": "kolkata-010",
-        "publicId": "cities/kolkata/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936491/cities/kolkata/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936491/cities/kolkata/photo010",
-        "date": "2016-10-07T12:16:58",
-        "gps": {
-          "lat": 22.56083611111111,
-          "lng": 88.35310277777778
-        },
-        "location": "Market St, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 768,
-        "h": 1024,
-        "tone": "72686d,574730"
-      },
-      {
-        "id": "kolkata-011",
-        "publicId": "cities/kolkata/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936496/cities/kolkata/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936496/cities/kolkata/photo011",
-        "date": "2016-10-05T17:42:33",
-        "gps": {
-          "lat": 24.678936111111113,
-          "lng": 80.83704444444444
-        },
-        "location": "Khairi Kothar, Madhya Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 1024,
-        "h": 768,
-        "tone": "a58b5a,362c15"
-      },
-      {
-        "id": "kolkata-012",
-        "publicId": "cities/kolkata/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936498/cities/kolkata/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936498/cities/kolkata/photo012",
-        "date": "2016-10-06T19:46:34",
-        "gps": {
-          "lat": 22.558419444444446,
-          "lng": 88.35073055555554
-        },
-        "location": "Sudder Street, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768,
-        "tone": "282629,434c51"
-      },
-      {
-        "id": "kolkata-013",
-        "publicId": "cities/kolkata/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936501/cities/kolkata/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936501/cities/kolkata/photo013",
-        "date": "2016-10-07T11:33:47",
-        "gps": {
-          "lat": 22.547400000000003,
-          "lng": 88.343125
-        },
-        "location": "Maidan, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768,
-        "tone": "7991a3,564623"
-      },
-      {
-        "id": "kolkata-014",
-        "publicId": "cities/kolkata/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936503/cities/kolkata/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936503/cities/kolkata/photo014",
-        "date": "2016-10-07T12:28:43",
-        "gps": {
-          "lat": 22.56168611111111,
-          "lng": 88.35511666666666
-        },
-        "location": "Mirza Ghalib Street, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768,
-        "tone": "7d7c6f,6e5f4b"
-      },
-      {
-        "id": "kolkata-015",
-        "publicId": "cities/kolkata/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936506/cities/kolkata/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936506/cities/kolkata/photo015",
-        "date": "2016-10-07T09:43:47",
-        "gps": {
-          "lat": 22.56179722222222,
-          "lng": 88.35299722222221
-        },
-        "location": "Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 1024,
-        "h": 768,
-        "tone": "88684a,827c65"
-      },
-      {
-        "id": "kolkata-016",
-        "publicId": "cities/kolkata/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936509/cities/kolkata/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936509/cities/kolkata/photo016",
-        "date": "2016-10-07T08:48:24",
-        "gps": {
-          "lat": 22.553583333333336,
-          "lng": 88.35179166666666
-        },
-        "location": "Park Street, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 1024,
-        "h": 768,
-        "tone": "7e7a73,8c8173"
-      },
-      {
-        "id": "kolkata-017",
-        "publicId": "cities/kolkata/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936512/cities/kolkata/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936512/cities/kolkata/photo017",
-        "date": "2016-10-07T10:20:23",
-        "gps": {
-          "lat": 22.54315,
-          "lng": 88.34156666666667
-        },
-        "location": "Hospital Road, Maidan, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo017",
-        "w": 1024,
-        "h": 768,
-        "tone": "688479,85906e"
-      },
-      {
-        "id": "kolkata-018",
-        "publicId": "cities/kolkata/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936514/cities/kolkata/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936514/cities/kolkata/photo018",
-        "date": "2016-10-07T12:36:00",
-        "gps": {
-          "lat": 22.558766666666667,
-          "lng": 88.35492777777777
-        },
-        "location": "Mirza Ghalib Street, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768,
-        "tone": "524b44,7d786e"
-      },
-      {
-        "id": "kolkata-019",
-        "publicId": "cities/kolkata/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936517/cities/kolkata/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936517/cities/kolkata/photo019",
-        "date": "2016-10-07T11:29:38",
-        "gps": {
-          "lat": 22.545936111111114,
-          "lng": 88.34278055555555
-        },
-        "location": "Maidan, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768,
-        "tone": "849db5,3a4f14"
-      },
-      {
-        "id": "kolkata-020",
-        "publicId": "cities/kolkata/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936519/cities/kolkata/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936519/cities/kolkata/photo020",
-        "date": "2016-10-07T15:09:50",
-        "gps": {
-          "lat": 22.559686111111112,
-          "lng": 88.34928055555555
-        },
-        "location": "Esplanade, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768,
-        "tone": "9b9591,a29d94"
       },
       {
         "id": "kolkata-021",
@@ -18911,6 +18331,106 @@
         "tone": "14122f,42399a"
       },
       {
+        "id": "kolkata-012",
+        "publicId": "cities/kolkata/photo012",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936498/cities/kolkata/photo012",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936498/cities/kolkata/photo012",
+        "date": "2016-10-06T19:46:34",
+        "gps": {
+          "lat": 22.558419444444446,
+          "lng": 88.35073055555554
+        },
+        "location": "Sudder Street, Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo012",
+        "w": 1024,
+        "h": 768,
+        "tone": "282629,434c51"
+      },
+      {
+        "id": "kolkata-016",
+        "publicId": "cities/kolkata/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936509/cities/kolkata/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936509/cities/kolkata/photo016",
+        "date": "2016-10-07T08:48:24",
+        "gps": {
+          "lat": 22.553583333333336,
+          "lng": 88.35179166666666
+        },
+        "location": "Park Street, Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo016",
+        "w": 1024,
+        "h": 768,
+        "tone": "7e7a73,8c8173"
+      },
+      {
+        "id": "kolkata-007",
+        "publicId": "cities/kolkata/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936483/cities/kolkata/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936483/cities/kolkata/photo007",
+        "date": "2016-10-07T09:07:30",
+        "gps": {
+          "lat": 22.559258333333332,
+          "lng": 88.3530111111111
+        },
+        "location": "Nellie Sengupta Sarani, Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007",
+        "w": 1024,
+        "h": 768,
+        "tone": "919eaa,564a45"
+      },
+      {
+        "id": "kolkata-015",
+        "publicId": "cities/kolkata/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936506/cities/kolkata/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936506/cities/kolkata/photo015",
+        "date": "2016-10-07T09:43:47",
+        "gps": {
+          "lat": 22.56179722222222,
+          "lng": 88.35299722222221
+        },
+        "location": "Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo015",
+        "w": 1024,
+        "h": 768,
+        "tone": "88684a,827c65"
+      },
+      {
+        "id": "kolkata-028",
+        "publicId": "cities/kolkata/photo028",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936538/cities/kolkata/photo028",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936538/cities/kolkata/photo028",
+        "date": "2016-10-07T09:45:07",
+        "gps": {
+          "lat": 22.561947222222223,
+          "lng": 88.352425
+        },
+        "location": "Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo028",
+        "w": 768,
+        "h": 1024,
+        "tone": "929a9f,4e3e30"
+      },
+      {
         "id": "kolkata-022",
         "publicId": "cities/kolkata/photo022",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936524/cities/kolkata/photo022",
@@ -18931,204 +18451,124 @@
         "tone": "7b96b0,595f4a"
       },
       {
-        "id": "kolkata-023",
-        "publicId": "cities/kolkata/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936527/cities/kolkata/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936527/cities/kolkata/photo024",
-        "date": "2016-10-06T19:49:20",
+        "id": "kolkata-019",
+        "publicId": "cities/kolkata/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936517/cities/kolkata/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936517/cities/kolkata/photo019",
+        "date": "2016-10-07T11:29:38",
         "gps": {
-          "lat": 22.55815,
-          "lng": 88.35064722222222
-        },
-        "location": "Chowringhee Road, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo024",
-        "w": 1024,
-        "h": 768,
-        "tone": "d2c9c0,7a6d65"
-      },
-      {
-        "id": "kolkata-024",
-        "publicId": "cities/kolkata/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936530/cities/kolkata/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936530/cities/kolkata/photo025",
-        "date": "2016-10-07T09:45:44",
-        "gps": {
-          "lat": 22.56211111111111,
-          "lng": 88.35220277777778
-        },
-        "location": "Chowringhee Place, Esplanade, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo025",
-        "w": 768,
-        "h": 1024,
-        "tone": "6c6a61,4f4234"
-      },
-      {
-        "id": "kolkata-025",
-        "publicId": "cities/kolkata/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936533/cities/kolkata/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936533/cities/kolkata/photo026",
-        "date": "2016-10-06T14:54:51",
-        "gps": {
-          "lat": 22.551633333333335,
-          "lng": 88.34940277777777
-        },
-        "location": "Chowringhee Road, Dharmatala, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo026",
-        "w": 1024,
-        "h": 768,
-        "tone": "1e67b3,4d6172"
-      },
-      {
-        "id": "kolkata-026",
-        "publicId": "cities/kolkata/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936535/cities/kolkata/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936535/cities/kolkata/photo027",
-        "date": "2016-10-07T10:37:51",
-        "gps": {
-          "lat": 22.54553611111111,
-          "lng": 88.3432611111111
+          "lat": 22.545936111111114,
+          "lng": 88.34278055555555
         },
         "location": "Maidan, Kolkata, West Bengal",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo027",
+        "alt": "photo019",
         "w": 1024,
         "h": 768,
-        "tone": "628cb3,545241"
+        "tone": "849db5,3a4f14"
       },
       {
-        "id": "kolkata-027",
-        "publicId": "cities/kolkata/photo028",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936538/cities/kolkata/photo028",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936538/cities/kolkata/photo028",
-        "date": "2016-10-07T09:45:07",
+        "id": "kolkata-013",
+        "publicId": "cities/kolkata/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936501/cities/kolkata/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936501/cities/kolkata/photo013",
+        "date": "2016-10-07T11:33:47",
         "gps": {
-          "lat": 22.561947222222223,
-          "lng": 88.352425
+          "lat": 22.547400000000003,
+          "lng": 88.343125
         },
-        "location": "Dharmatala, Kolkata, West Bengal",
+        "location": "Maidan, Kolkata, West Bengal",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo028",
+        "alt": "photo013",
+        "w": 1024,
+        "h": 768,
+        "tone": "7991a3,564623"
+      },
+      {
+        "id": "kolkata-010",
+        "publicId": "cities/kolkata/photo010",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936491/cities/kolkata/photo010",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936491/cities/kolkata/photo010",
+        "date": "2016-10-07T12:16:58",
+        "gps": {
+          "lat": 22.56083611111111,
+          "lng": 88.35310277777778
+        },
+        "location": "Market St, Dharmatala, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo010",
         "w": 768,
         "h": 1024,
-        "tone": "929a9f,4e3e30"
+        "tone": "72686d,574730"
       },
       {
-        "id": "kolkata-028",
-        "publicId": "cities/kolkata/photo029",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177036/cities/kolkata/photo029",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177036/cities/kolkata/photo029",
-        "date": "2016-10-06T19:50:51",
+        "id": "kolkata-018",
+        "publicId": "cities/kolkata/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936514/cities/kolkata/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936514/cities/kolkata/photo018",
+        "date": "2016-10-07T12:36:00",
         "gps": {
-          "lat": 22.558027777777777,
-          "lng": 88.35044166666665
+          "lat": 22.558766666666667,
+          "lng": 88.35492777777777
         },
-        "location": "Park Street Flyover, Dharmatala, Kolkata, West Bengal",
+        "location": "Mirza Ghalib Street, Dharmatala, Kolkata, West Bengal",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo029",
+        "alt": "photo018",
         "w": 1024,
         "h": 768,
-        "tone": "645551,563c3e"
+        "tone": "524b44,7d786e"
+      },
+      {
+        "id": "kolkata-020",
+        "publicId": "cities/kolkata/photo020",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936519/cities/kolkata/photo020",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936519/cities/kolkata/photo020",
+        "date": "2016-10-07T15:09:50",
+        "gps": {
+          "lat": 22.559686111111112,
+          "lng": 88.34928055555555
+        },
+        "location": "Esplanade, Kolkata, West Bengal",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo020",
+        "w": 1024,
+        "h": 768,
+        "tone": "9b9591,a29d94"
       },
       {
         "id": "kolkata-029",
-        "publicId": "cities/kolkata/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177038/cities/kolkata/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177038/cities/kolkata/photo030",
-        "date": "2016-10-07T11:30:22",
+        "publicId": "cities/kolkata/photo029",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381521/cities/kolkata/photo029",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381521/cities/kolkata/photo029",
+        "date": "2016-10-07T15:56:40",
         "gps": {
-          "lat": 22.546244444444447,
-          "lng": 88.34287222222221
-        },
-        "location": "Victoria Circus, Maidan, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo030",
-        "w": 1024,
-        "h": 768,
-        "tone": "9ca5b0,4a483f"
-      },
-      {
-        "id": "kolkata-030",
-        "publicId": "cities/kolkata/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177040/cities/kolkata/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177040/cities/kolkata/photo031",
-        "date": "2016-10-07T10:21:18",
-        "gps": {
-          "lat": 22.543105555555556,
-          "lng": 88.34206388888889
-        },
-        "location": "Hospital Road, Maidan, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768,
-        "tone": "a4afbd,313434"
-      },
-      {
-        "id": "kolkata-031",
-        "publicId": "cities/kolkata/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177042/cities/kolkata/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177042/cities/kolkata/photo032",
-        "date": "2016-10-06T18:52:42",
-        "gps": {
-          "lat": 22.5581,
-          "lng": 88.35366944444444
+          "lat": 22.558352777777777,
+          "lng": 88.35264722222222
         },
         "location": "Sudder Street, Dharmatala, Kolkata, West Bengal",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768,
-        "tone": "010201,0a0f09"
-      },
-      {
-        "id": "kolkata-032",
-        "publicId": "cities/kolkata/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177044/cities/kolkata/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177044/cities/kolkata/photo033",
-        "date": "2016-10-07T11:41:18",
-        "gps": {
-          "lat": 22.54681666666667,
-          "lng": 88.34523055555555
-        },
-        "location": "Queensway, Ho Chi Minh Sarani, Kolkata, West Bengal",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768,
-        "tone": "4d5046,35341f"
+        "alt": "photo029",
+        "w": 1180,
+        "h": 665,
+        "tone": "858679,7e6c55"
       }
     ]
   },
@@ -21431,26 +20871,6 @@
     "cityCode": "lucknow",
     "photos": [
       {
-        "id": "lucknow-001",
-        "publicId": "cities/lucknow/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936541/cities/lucknow/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936541/cities/lucknow/photo001",
-        "date": "2016-10-10T16:52:37",
-        "gps": {
-          "lat": 26.84633611111111,
-          "lng": 80.94576944444445
-        },
-        "location": "Ashok Marg, Ganesh Ganj, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "95b4dc,7b6d61"
-      },
-      {
         "id": "lucknow-002",
         "publicId": "cities/lucknow/photo002",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936544/cities/lucknow/photo002",
@@ -21471,187 +20891,7 @@
         "tone": "a6979a,262429"
       },
       {
-        "id": "lucknow-003",
-        "publicId": "cities/lucknow/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936546/cities/lucknow/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936546/cities/lucknow/photo003",
-        "date": "2016-10-11T05:32:27",
-        "gps": {
-          "lat": 27.182041666666667,
-          "lng": 78.01811944444444
-        },
-        "location": "Subhash Bazaar, Agra, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768,
-        "tone": "938881,5d5648"
-      },
-      {
-        "id": "lucknow-004",
-        "publicId": "cities/lucknow/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936548/cities/lucknow/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936548/cities/lucknow/photo004",
-        "date": "2016-10-10T19:37:53",
-        "gps": {
-          "lat": 26.828741666666666,
-          "lng": 80.92174444444444
-        },
-        "location": "Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 768,
-        "h": 1024,
-        "tone": "a2967b,5e5a45"
-      },
-      {
-        "id": "lucknow-005",
-        "publicId": "cities/lucknow/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936552/cities/lucknow/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936552/cities/lucknow/photo006",
-        "date": "2016-10-09T17:26:41",
-        "gps": {
-          "lat": 26.83160277777778,
-          "lng": 80.92414166666667
-        },
-        "location": "Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768,
-        "tone": "bdc1c3,746051"
-      },
-      {
-        "id": "lucknow-006",
-        "publicId": "cities/lucknow/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936555/cities/lucknow/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936555/cities/lucknow/photo007",
-        "date": "2016-10-10T17:12:42",
-        "gps": {
-          "lat": 26.84785833333333,
-          "lng": 80.944625
-        },
-        "location": "Mahatma Gandhi Road, Hazratganj, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 768,
-        "h": 1024,
-        "tone": "9e6923,ddb076"
-      },
-      {
-        "id": "lucknow-007",
-        "publicId": "cities/lucknow/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936557/cities/lucknow/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936557/cities/lucknow/photo008",
-        "date": "2016-10-09T17:38:20",
-        "gps": {
-          "lat": 26.832522222222224,
-          "lng": 80.92564444444444
-        },
-        "location": "Kanpur-Lucknow Road, Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo008",
-        "w": 768,
-        "h": 1024,
-        "tone": "8f7969,927f73"
-      },
-      {
-        "id": "lucknow-008",
-        "publicId": "cities/lucknow/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936560/cities/lucknow/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936560/cities/lucknow/photo009",
-        "date": "2016-10-10T13:14:56",
-        "gps": {
-          "lat": 26.833569444444443,
-          "lng": 80.9238888888889
-        },
-        "location": "Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768,
-        "tone": "769073,918664"
-      },
-      {
-        "id": "lucknow-009",
-        "publicId": "cities/lucknow/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177135/cities/lucknow/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177135/cities/lucknow/photo010",
-        "date": "2016-10-10T13:17:11",
-        "gps": {
-          "lat": 26.83363611111111,
-          "lng": 80.92285277777778
-        },
-        "location": "Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 768,
-        "h": 1024,
-        "tone": "a88d70,bd9d7a"
-      },
-      {
-        "id": "lucknow-010",
-        "publicId": "cities/lucknow/photo011",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177137/cities/lucknow/photo011",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177137/cities/lucknow/photo011",
-        "date": "2016-10-09T18:33:22",
-        "gps": {
-          "lat": 26.83333888888889,
-          "lng": 80.92426388888889
-        },
-        "location": "Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo011",
-        "w": 768,
-        "h": 1024,
-        "tone": "34362b,1c282b"
-      },
-      {
-        "id": "lucknow-011",
-        "publicId": "cities/lucknow/photo012",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177140/cities/lucknow/photo012",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177140/cities/lucknow/photo012",
-        "date": "2016-10-09T17:32:20",
-        "gps": {
-          "lat": 26.832441666666668,
-          "lng": 80.92565277777778
-        },
-        "location": "Kanpur-Lucknow Road, Charbagh, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo012",
-        "w": 1024,
-        "h": 768,
-        "tone": "53433a,5e5753"
-      },
-      {
-        "id": "lucknow-012",
+        "id": "lucknow-013",
         "publicId": "cities/lucknow/photo013",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177142/cities/lucknow/photo013",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177142/cities/lucknow/photo013",
@@ -21671,27 +20911,7 @@
         "tone": "cbd7e5,756a68"
       },
       {
-        "id": "lucknow-013",
-        "publicId": "cities/lucknow/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177144/cities/lucknow/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177144/cities/lucknow/photo014",
-        "date": "2016-10-10T17:27:20",
-        "gps": {
-          "lat": 26.846638888888886,
-          "lng": 80.94608333333333
-        },
-        "location": "Ashok Marg, Ganesh Ganj, Lucknow, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 1024,
-        "h": 768,
-        "tone": "91a1be,33383e"
-      },
-      {
-        "id": "lucknow-014",
+        "id": "lucknow-015",
         "publicId": "cities/lucknow/photo015",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177146/cities/lucknow/photo015",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177146/cities/lucknow/photo015",
@@ -21711,27 +20931,67 @@
         "tone": "52443a,4e4d53"
       },
       {
-        "id": "lucknow-015",
-        "publicId": "cities/lucknow/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177149/cities/lucknow/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177149/cities/lucknow/photo016",
-        "date": "2016-10-09T17:32:09",
+        "id": "lucknow-009",
+        "publicId": "cities/lucknow/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936560/cities/lucknow/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936560/cities/lucknow/photo009",
+        "date": "2016-10-10T13:14:56",
         "gps": {
-          "lat": 26.83245833333333,
-          "lng": 80.92564444444444
+          "lat": 26.833569444444443,
+          "lng": 80.9238888888889
         },
-        "location": "Kanpur-Lucknow Road, Charbagh, Lucknow, Uttar Pradesh",
+        "location": "Charbagh, Lucknow, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo016",
+        "alt": "photo009",
         "w": 1024,
         "h": 768,
-        "tone": "5e4e45,575252"
+        "tone": "769073,918664"
       },
       {
-        "id": "lucknow-016",
+        "id": "lucknow-001",
+        "publicId": "cities/lucknow/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936541/cities/lucknow/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936541/cities/lucknow/photo001",
+        "date": "2016-10-10T16:52:37",
+        "gps": {
+          "lat": 26.84633611111111,
+          "lng": 80.94576944444445
+        },
+        "location": "Ashok Marg, Ganesh Ganj, Lucknow, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768,
+        "tone": "95b4dc,7b6d61"
+      },
+      {
+        "id": "lucknow-007",
+        "publicId": "cities/lucknow/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936555/cities/lucknow/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936555/cities/lucknow/photo007",
+        "date": "2016-10-10T17:12:42",
+        "gps": {
+          "lat": 26.84785833333333,
+          "lng": 80.944625
+        },
+        "location": "Mahatma Gandhi Road, Hazratganj, Lucknow, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007",
+        "w": 768,
+        "h": 1024,
+        "tone": "9e6923,ddb076"
+      },
+      {
+        "id": "lucknow-017",
         "publicId": "cities/lucknow/photo017",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177152/cities/lucknow/photo017",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177152/cities/lucknow/photo017",
@@ -21749,6 +21009,26 @@
         "w": 768,
         "h": 1024,
         "tone": "7f8ca1,6d747f"
+      },
+      {
+        "id": "lucknow-018",
+        "publicId": "cities/lucknow/photo018",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381587/cities/lucknow/photo018",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381587/cities/lucknow/photo018",
+        "date": "2016-10-10T18:50:32",
+        "gps": {
+          "lat": 26.83208888888889,
+          "lng": 80.92382777777779
+        },
+        "location": "Charbagh, Lucknow, Uttar Pradesh",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo018",
+        "w": 1024,
+        "h": 768,
+        "tone": "676652,2c2e2e"
       }
     ]
   },
@@ -25690,44 +24970,24 @@
     "cityCode": "newdelhi",
     "photos": [
       {
-        "id": "newdelhi-001",
-        "publicId": "cities/newdelhi/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936647/cities/newdelhi/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936647/cities/newdelhi/photo001",
-        "date": "2016-10-17T16:56:08",
+        "id": "newdelhi-016",
+        "publicId": "cities/newdelhi/photo016",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936684/cities/newdelhi/photo016",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936684/cities/newdelhi/photo016",
+        "date": "2016-10-16T17:11:42",
         "gps": {
-          "lat": 28.553769444444445,
-          "lng": 77.19343611111111
+          "lat": 27.853255555555556,
+          "lng": 77.40828611111111
         },
-        "location": "Hauz Khas Village Road, Hauz Khas Tehsil, Delhi",
+        "location": "NH44, Kotwan, Uttar Pradesh",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "36372a,090d05"
-      },
-      {
-        "id": "newdelhi-002",
-        "publicId": "cities/newdelhi/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936649/cities/newdelhi/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936649/cities/newdelhi/photo002",
-        "date": "2016-10-16T20:49:05",
-        "gps": {
-          "lat": 28.570558333333334,
-          "lng": 77.236275
-        },
-        "location": "Lala Lajpat Rai Path, Defence Colony Tehsil, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768,
-        "tone": "514d4b,7a7060"
+        "alt": "photo016",
+        "w": 768,
+        "h": 1024,
+        "tone": "b3822a,090c02"
       },
       {
         "id": "newdelhi-003",
@@ -25750,64 +25010,44 @@
         "tone": "271c0b,050601"
       },
       {
-        "id": "newdelhi-004",
-        "publicId": "cities/newdelhi/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936653/cities/newdelhi/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936653/cities/newdelhi/photo004",
-        "date": "2016-10-17T18:20:33",
+        "id": "newdelhi-002",
+        "publicId": "cities/newdelhi/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936649/cities/newdelhi/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936649/cities/newdelhi/photo002",
+        "date": "2016-10-16T20:49:05",
         "gps": {
-          "lat": 28.631641666666667,
-          "lng": 77.21925277777778
+          "lat": 28.570558333333334,
+          "lng": 77.236275
         },
-        "location": "Rajiv Chowk, Connaught Place, New Delhi",
+        "location": "Lala Lajpat Rai Path, Defence Colony Tehsil, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo004",
+        "alt": "photo002",
         "w": 1024,
         "h": 768,
-        "tone": "7f7976,483f32"
+        "tone": "514d4b,7a7060"
       },
       {
-        "id": "newdelhi-005",
-        "publicId": "cities/newdelhi/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936657/cities/newdelhi/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936657/cities/newdelhi/photo005",
-        "date": "2016-10-18T11:52:00",
+        "id": "newdelhi-026",
+        "publicId": "cities/newdelhi/photo026",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177262/cities/newdelhi/photo026",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177262/cities/newdelhi/photo026",
+        "date": "2016-10-17T13:49:10",
         "gps": {
-          "lat": 28.640366666666665,
-          "lng": 77.21038888888889
+          "lat": 28.593183333333332,
+          "lng": 77.24575833333333
         },
-        "location": "Paharganj, Delhi",
+        "location": "Delhi, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo005",
+        "alt": "photo026",
         "w": 1024,
         "h": 768,
-        "tone": "918981,6a5a57"
-      },
-      {
-        "id": "newdelhi-006",
-        "publicId": "cities/newdelhi/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936659/cities/newdelhi/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936659/cities/newdelhi/photo006",
-        "date": "2016-10-27T09:58:46",
-        "gps": {
-          "lat": 28.64035833333333,
-          "lng": 77.21010555555556
-        },
-        "location": "Main Bazar Road, Paharganj, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768,
-        "tone": "aa8f74,a17e6d"
+        "tone": "705a52,60352a"
       },
       {
         "id": "newdelhi-007",
@@ -25830,64 +25070,24 @@
         "tone": "8596a6,695b3f"
       },
       {
-        "id": "newdelhi-008",
-        "publicId": "cities/newdelhi/photo008",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936665/cities/newdelhi/photo008",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936665/cities/newdelhi/photo008",
-        "date": "2016-10-17T16:15:38",
+        "id": "newdelhi-033",
+        "publicId": "cities/newdelhi/photo033",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177278/cities/newdelhi/photo033",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177278/cities/newdelhi/photo033",
+        "date": "2016-10-17T16:15:53",
         "gps": {
           "lat": 28.553494444444446,
-          "lng": 77.20018055555556
+          "lng": 77.20010277777779
         },
-        "location": "Hauz Khas Village Road, Green Park, Delhi",
+        "location": "Hauz Khas Village Road, Green Park, Delhi, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo008",
+        "alt": "photo033",
         "w": 1024,
         "h": 768,
-        "tone": "84827c,2d2824"
-      },
-      {
-        "id": "newdelhi-009",
-        "publicId": "cities/newdelhi/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936668/cities/newdelhi/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936668/cities/newdelhi/photo009",
-        "date": "2016-10-27T13:42:17",
-        "gps": {
-          "lat": 28.62695,
-          "lng": 77.2215361111111
-        },
-        "location": "Connaught Place, New Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 1024,
-        "h": 768,
-        "tone": "717169,605556"
-      },
-      {
-        "id": "newdelhi-010",
-        "publicId": "cities/newdelhi/photo010",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936670/cities/newdelhi/photo010",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936670/cities/newdelhi/photo010",
-        "date": "2016-10-18T16:54:12",
-        "gps": {
-          "lat": 28.557036111111113,
-          "lng": 77.08446388888889
-        },
-        "location": "Vasant Vihar Tehsil, New Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo010",
-        "w": 1024,
-        "h": 768,
-        "tone": "655b53,4c3d39"
+        "tone": "8c8b85,2a2724"
       },
       {
         "id": "newdelhi-011",
@@ -25910,167 +25110,27 @@
         "tone": "81807a,45372f"
       },
       {
-        "id": "newdelhi-012",
-        "publicId": "cities/newdelhi/photo013",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936676/cities/newdelhi/photo013",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936676/cities/newdelhi/photo013",
-        "date": "2016-10-17T16:39:04",
+        "id": "newdelhi-035",
+        "publicId": "cities/newdelhi/photo035",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381305/cities/newdelhi/photo035",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381305/cities/newdelhi/photo035",
+        "date": "2016-10-17T16:36:20",
         "gps": {
-          "lat": 28.553255555555555,
-          "lng": 77.19366388888889
-        },
-        "location": "Hauz Khas Village Road, Hauz Khas Tehsil, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo013",
-        "w": 1024,
-        "h": 768,
-        "tone": "b6a99f,735139"
-      },
-      {
-        "id": "newdelhi-013",
-        "publicId": "cities/newdelhi/photo014",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936679/cities/newdelhi/photo014",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936679/cities/newdelhi/photo014",
-        "date": "2016-10-16T17:24:15",
-        "gps": {
-          "lat": 28.045133333333336,
-          "lng": 77.35336388888888
-        },
-        "location": "Deeghot, Haryana",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo014",
-        "w": 768,
-        "h": 1024,
-        "tone": "957d74,918070"
-      },
-      {
-        "id": "newdelhi-014",
-        "publicId": "cities/newdelhi/photo015",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936681/cities/newdelhi/photo015",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936681/cities/newdelhi/photo015",
-        "date": "2016-10-18T12:03:00",
-        "gps": {
-          "lat": 28.64110277777778,
-          "lng": 77.213775
-        },
-        "location": "Main Bazar Road, Paharganj, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo015",
-        "w": 768,
-        "h": 1024,
-        "tone": "9aa1ac,5c524e"
-      },
-      {
-        "id": "newdelhi-015",
-        "publicId": "cities/newdelhi/photo016",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936684/cities/newdelhi/photo016",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936684/cities/newdelhi/photo016",
-        "date": "2016-10-16T17:11:42",
-        "gps": {
-          "lat": 27.853255555555556,
-          "lng": 77.40828611111111
-        },
-        "location": "NH44, Kotwan, Uttar Pradesh",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo016",
-        "w": 768,
-        "h": 1024,
-        "tone": "b3822a,090c02"
-      },
-      {
-        "id": "newdelhi-016",
-        "publicId": "cities/newdelhi/photo017",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177241/cities/newdelhi/photo017",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177241/cities/newdelhi/photo017",
-        "date": "2016-10-17T16:34:41",
-        "gps": {
-          "lat": 28.55357777777778,
-          "lng": 77.19379444444445
+          "lat": 28.55356111111111,
+          "lng": 77.19377777777778
         },
         "location": "Hauz Khas Village Road, Hauz Khas, Delhi, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo017",
+        "alt": "photo035",
         "w": 1024,
         "h": 768,
-        "tone": "9b9990,312920"
+        "tone": "978773,8d7460"
       },
       {
-        "id": "newdelhi-017",
-        "publicId": "cities/newdelhi/photo018",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177244/cities/newdelhi/photo018",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177244/cities/newdelhi/photo018",
-        "date": "2016-10-27T13:43:49",
-        "gps": {
-          "lat": 28.627025,
-          "lng": 77.22166388888888
-        },
-        "location": "Tolstoy Lane, Connaught Place, New Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo018",
-        "w": 1024,
-        "h": 768,
-        "tone": "88827c,938d7d"
-      },
-      {
-        "id": "newdelhi-018",
-        "publicId": "cities/newdelhi/photo019",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177246/cities/newdelhi/photo019",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177246/cities/newdelhi/photo019",
-        "date": "2016-10-26T19:04:56",
-        "gps": {
-          "lat": 28.633847222222222,
-          "lng": 77.2064888888889
-        },
-        "location": "Shaheed Bhagat Singh Marg, Palika Niketan, New Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo019",
-        "w": 1024,
-        "h": 768,
-        "tone": "78533d,84634b"
-      },
-      {
-        "id": "newdelhi-019",
-        "publicId": "cities/newdelhi/photo020",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177248/cities/newdelhi/photo020",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177248/cities/newdelhi/photo020",
-        "date": "2016-10-17T13:50:27",
-        "gps": {
-          "lat": 28.59304722222222,
-          "lng": 77.24576666666667
-        },
-        "location": "Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo020",
-        "w": 1024,
-        "h": 768,
-        "tone": "79796f,3c3a26"
-      },
-      {
-        "id": "newdelhi-020",
+        "id": "newdelhi-021",
         "publicId": "cities/newdelhi/photo021",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177251/cities/newdelhi/photo021",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177251/cities/newdelhi/photo021",
@@ -26090,127 +25150,147 @@
         "tone": "b4ab99,38362b"
       },
       {
-        "id": "newdelhi-021",
-        "publicId": "cities/newdelhi/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177253/cities/newdelhi/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177253/cities/newdelhi/photo022",
-        "date": "2016-10-17T13:49:20",
+        "id": "newdelhi-013",
+        "publicId": "cities/newdelhi/photo013",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936676/cities/newdelhi/photo013",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936676/cities/newdelhi/photo013",
+        "date": "2016-10-17T16:39:04",
         "gps": {
-          "lat": 28.593183333333332,
-          "lng": 77.24575833333333
+          "lat": 28.553255555555555,
+          "lng": 77.19366388888889
         },
-        "location": "Delhi, Delhi",
+        "location": "Hauz Khas Village Road, Hauz Khas Tehsil, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo022",
+        "alt": "photo013",
         "w": 1024,
         "h": 768,
-        "tone": "857568,4d3931"
+        "tone": "b6a99f,735139"
       },
       {
-        "id": "newdelhi-022",
-        "publicId": "cities/newdelhi/photo023",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177255/cities/newdelhi/photo023",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177255/cities/newdelhi/photo023",
-        "date": "2016-10-17T13:49:03",
+        "id": "newdelhi-036",
+        "publicId": "cities/newdelhi/photo036",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381307/cities/newdelhi/photo036",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381307/cities/newdelhi/photo036",
+        "date": "2016-10-17T16:57:50",
         "gps": {
-          "lat": 28.593183333333332,
-          "lng": 77.24575833333333
-        },
-        "location": "Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo023",
-        "w": 1024,
-        "h": 768,
-        "tone": "705c54,5e392f"
-      },
-      {
-        "id": "newdelhi-023",
-        "publicId": "cities/newdelhi/photo024",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177258/cities/newdelhi/photo024",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177258/cities/newdelhi/photo024",
-        "date": "2016-10-17T16:35:35",
-        "gps": {
-          "lat": 28.553594444444446,
-          "lng": 77.1937638888889
+          "lat": 28.55432777777778,
+          "lng": 77.19368611111112
         },
         "location": "Hauz Khas Village Road, Hauz Khas, Delhi, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo024",
+        "alt": "photo036",
         "w": 1024,
         "h": 768,
-        "tone": "a09e94,29221a"
+        "tone": "65553b,494530"
       },
       {
-        "id": "newdelhi-024",
-        "publicId": "cities/newdelhi/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177260/cities/newdelhi/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177260/cities/newdelhi/photo025",
-        "date": "2016-10-27T13:44:06",
+        "id": "newdelhi-004",
+        "publicId": "cities/newdelhi/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936653/cities/newdelhi/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936653/cities/newdelhi/photo004",
+        "date": "2016-10-17T18:20:33",
         "gps": {
-          "lat": 28.627,
-          "lng": 77.22171111111112
+          "lat": 28.631641666666667,
+          "lng": 77.21925277777778
         },
-        "location": "Tolstoy Lane, Connaught Place, New Delhi, Delhi",
+        "location": "Rajiv Chowk, Connaught Place, New Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo025",
+        "alt": "photo004",
         "w": 1024,
         "h": 768,
-        "tone": "888c88,9d9c95"
+        "tone": "7f7976,483f32"
       },
       {
-        "id": "newdelhi-025",
-        "publicId": "cities/newdelhi/photo026",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177262/cities/newdelhi/photo026",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177262/cities/newdelhi/photo026",
-        "date": "2016-10-17T13:49:10",
+        "id": "newdelhi-034",
+        "publicId": "cities/newdelhi/photo034",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789381302/cities/newdelhi/photo034",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789381302/cities/newdelhi/photo034",
+        "date": "2016-10-18T11:51:53",
         "gps": {
-          "lat": 28.593183333333332,
-          "lng": 77.24575833333333
+          "lat": 28.640024999999998,
+          "lng": 77.21058611111111
         },
-        "location": "Delhi, Delhi",
+        "location": "Paharganj, Delhi, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo026",
+        "alt": "photo034",
         "w": 1024,
         "h": 768,
-        "tone": "705a52,60352a"
+        "tone": "8a847b,675552"
       },
       {
-        "id": "newdelhi-026",
-        "publicId": "cities/newdelhi/photo027",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177264/cities/newdelhi/photo027",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177264/cities/newdelhi/photo027",
-        "date": "2016-10-17T13:52:04",
+        "id": "newdelhi-015",
+        "publicId": "cities/newdelhi/photo015",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936681/cities/newdelhi/photo015",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936681/cities/newdelhi/photo015",
+        "date": "2016-10-18T12:03:00",
         "gps": {
-          "lat": 28.593072222222222,
-          "lng": 77.24568888888889
+          "lat": 28.64110277777778,
+          "lng": 77.213775
         },
-        "location": "Delhi, Delhi",
+        "location": "Main Bazar Road, Paharganj, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo027",
-        "w": 1024,
-        "h": 768,
-        "tone": "b1afad,8f8b89"
+        "alt": "photo015",
+        "w": 768,
+        "h": 1024,
+        "tone": "9aa1ac,5c524e"
       },
       {
-        "id": "newdelhi-027",
+        "id": "newdelhi-019",
+        "publicId": "cities/newdelhi/photo019",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177246/cities/newdelhi/photo019",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177246/cities/newdelhi/photo019",
+        "date": "2016-10-26T19:04:56",
+        "gps": {
+          "lat": 28.633847222222222,
+          "lng": 77.2064888888889
+        },
+        "location": "Shaheed Bhagat Singh Marg, Palika Niketan, New Delhi, Delhi",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo019",
+        "w": 1024,
+        "h": 768,
+        "tone": "78533d,84634b"
+      },
+      {
+        "id": "newdelhi-006",
+        "publicId": "cities/newdelhi/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936659/cities/newdelhi/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936659/cities/newdelhi/photo006",
+        "date": "2016-10-27T09:58:46",
+        "gps": {
+          "lat": 28.64035833333333,
+          "lng": 77.21010555555556
+        },
+        "location": "Main Bazar Road, Paharganj, Delhi",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006",
+        "w": 1024,
+        "h": 768,
+        "tone": "aa8f74,a17e6d"
+      },
+      {
+        "id": "newdelhi-028",
         "publicId": "cities/newdelhi/photo028",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177267/cities/newdelhi/photo028",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177267/cities/newdelhi/photo028",
@@ -26230,7 +25310,27 @@
         "tone": "7b7975,b2afa7"
       },
       {
-        "id": "newdelhi-028",
+        "id": "newdelhi-009",
+        "publicId": "cities/newdelhi/photo009",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1765936668/cities/newdelhi/photo009",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1765936668/cities/newdelhi/photo009",
+        "date": "2016-10-27T13:42:17",
+        "gps": {
+          "lat": 28.62695,
+          "lng": 77.2215361111111
+        },
+        "location": "Connaught Place, New Delhi",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo009",
+        "w": 1024,
+        "h": 768,
+        "tone": "717169,605556"
+      },
+      {
+        "id": "newdelhi-029",
         "publicId": "cities/newdelhi/photo029",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177269/cities/newdelhi/photo029",
         "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177269/cities/newdelhi/photo029",
@@ -26250,104 +25350,24 @@
         "tone": "797a74,b8b6b1"
       },
       {
-        "id": "newdelhi-029",
-        "publicId": "cities/newdelhi/photo030",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177272/cities/newdelhi/photo030",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177272/cities/newdelhi/photo030",
-        "date": "2016-10-27T13:44:02",
+        "id": "newdelhi-025",
+        "publicId": "cities/newdelhi/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177260/cities/newdelhi/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177260/cities/newdelhi/photo025",
+        "date": "2016-10-27T13:44:06",
         "gps": {
-          "lat": 28.627025,
-          "lng": 77.22168611111111
+          "lat": 28.627,
+          "lng": 77.22171111111112
         },
         "location": "Tolstoy Lane, Connaught Place, New Delhi, Delhi",
         "caption": {
           "ko": "",
           "en": ""
         },
-        "alt": "photo030",
+        "alt": "photo025",
         "w": 1024,
         "h": 768,
-        "tone": "858883,a19f99"
-      },
-      {
-        "id": "newdelhi-030",
-        "publicId": "cities/newdelhi/photo031",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177274/cities/newdelhi/photo031",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177274/cities/newdelhi/photo031",
-        "date": "2016-10-27T09:04:35",
-        "gps": {
-          "lat": 28.640330555555554,
-          "lng": 77.21028055555556
-        },
-        "location": "Paharganj, Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo031",
-        "w": 1024,
-        "h": 768,
-        "tone": "a48667,a06753"
-      },
-      {
-        "id": "newdelhi-031",
-        "publicId": "cities/newdelhi/photo032",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177276/cities/newdelhi/photo032",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177276/cities/newdelhi/photo032",
-        "date": "2016-10-17T16:56:00",
-        "gps": {
-          "lat": 28.553786111111112,
-          "lng": 77.19343611111111
-        },
-        "location": "Hauz Khas Village Road, Hauz Khas, Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo032",
-        "w": 1024,
-        "h": 768,
-        "tone": "595749,14190d"
-      },
-      {
-        "id": "newdelhi-032",
-        "publicId": "cities/newdelhi/photo033",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177278/cities/newdelhi/photo033",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177278/cities/newdelhi/photo033",
-        "date": "2016-10-17T16:15:53",
-        "gps": {
-          "lat": 28.553494444444446,
-          "lng": 77.20010277777779
-        },
-        "location": "Hauz Khas Village Road, Green Park, Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo033",
-        "w": 1024,
-        "h": 768,
-        "tone": "8c8b85,2a2724"
-      },
-      {
-        "id": "newdelhi-033",
-        "publicId": "cities/newdelhi/photo034",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789177281/cities/newdelhi/photo034",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789177281/cities/newdelhi/photo034",
-        "date": "2016-10-18T16:54:24",
-        "gps": {
-          "lat": 28.557036111111113,
-          "lng": 77.08446388888889
-        },
-        "location": "Delhi, Delhi",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo034",
-        "w": 1024,
-        "h": 768,
-        "tone": "624733,37281e"
+        "tone": "888c88,9d9c95"
       }
     ]
   },

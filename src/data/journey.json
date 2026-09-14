@@ -283,7 +283,7 @@
       "order": 27,
       "transport": "train",
       "startDate": "2016-10-06",
-      "endDate": "2016-10-09"
+      "endDate": "2016-10-08"
     },
     {
       "id": 28,
@@ -386,7 +386,7 @@
       "order": 37,
       "transport": "flight",
       "startDate": "2016-10-26",
-      "endDate": "2016-10-28",
+      "endDate": "2016-10-27",
       "note": "Return to India"
     },
     {
