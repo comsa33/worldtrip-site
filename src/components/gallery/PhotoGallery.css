@@ -559,7 +559,11 @@
   overflow-y: hidden;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
+  /* no snapping: a strip of film stops where the finger leaves it. Snapping
+     pulled it back to the nearest frame after every throw, so it read as
+     going and coming back. The current frame is centred when the photo
+     changes, not when the strip is scrolled. */
+  scroll-snap-type: none;
   cursor: grab;
   user-select: none;
   touch-action: pan-x;

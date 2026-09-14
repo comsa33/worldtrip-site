@@ -660,8 +660,12 @@ export default function PhotoGallery({
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === 'mouse') return;
     const t = e.target as HTMLElement;
-    // the sheet scrolls and pinches, the map aims: neither is a swipe of the photo
-    if (sheetRef.current?.contains(t) || t.closest('.pb__locator')) return;
+    // the sheet scrolls and pinches, the strip scrolls, the map aims: none of
+    // them is a swipe of the photo. A finger running along the strip used to
+    // turn the photo as well, and the strip then pulled itself back to centre
+    // the new one against the finger — a scroll that went and came back.
+    if (sheetRef.current?.contains(t) || stripRef.current?.contains(t) || t.closest('.pb__locator'))
+      return;
     gesture.current = { down: true, sx: e.clientX, sy: e.clientY, axis: '', dy: 0, t0: Date.now() };
   };
   const onPointerMove = (e: React.PointerEvent) => {
