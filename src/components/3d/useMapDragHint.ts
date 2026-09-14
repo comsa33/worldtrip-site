@@ -49,7 +49,6 @@ export function useMapDragHint(
   const timer = useRef(0);
   const restTimer = useRef(0);
   const rootRef = useRef<SVGGElement>(null);
-  const handRef = useRef<SVGGElement>(null);
   const atRef = useRef(at);
   useEffect(() => {
     atRef.current = at;
@@ -91,14 +90,19 @@ export function useMapDragHint(
     window.clearTimeout(timer.current);
     setMoved((m) => m || true);
     const root = rootRef.current;
-    const hand = handRef.current;
-    if (!root || !hand) return;
+    if (!root) return;
+    // the ring and the walked part of the track move as one
+    const hands = root.querySelectorAll<SVGGElement>('.map-drag-hint__hand');
+    const place = (v: number) =>
+      hands.forEach((h) => {
+        h.style.transform = `translateX(${((clamp(v) - 0.5) * TRACK_PX).toFixed(1)}px)`;
+      });
     root.classList.add('is-active');
-    hand.style.transform = `translateX(${((clamp(across) - 0.5) * TRACK_PX).toFixed(1)}px)`;
+    place(across);
     window.clearTimeout(restTimer.current);
     restTimer.current = window.setTimeout(() => {
       root.classList.remove('is-active');
-      hand.style.transform = `translateX(${((clamp(atRef.current) - 0.5) * TRACK_PX).toFixed(1)}px)`;
+      place(atRef.current);
     }, REST_MS);
   }, []);
 
@@ -116,7 +120,7 @@ export function useMapDragHint(
     : !learned && !moved && (kind === 'touch' || still)
       ? 'demo'
       : 'rest';
-  return { mode, touch: kind === 'touch', k, rootRef, handRef, pointer, aimed, reached };
+  return { mode, touch: kind === 'touch', k, rootRef, pointer, aimed, reached };
 }
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v));

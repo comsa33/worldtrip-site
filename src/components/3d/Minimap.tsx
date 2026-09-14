@@ -447,7 +447,6 @@ export function Minimap({
         k={hint.k}
         at={anchorAcross}
         rootRef={hint.rootRef}
-        handRef={hint.handRef}
         x={data.w / 2}
         y={data.h - 18 * hint.k}
       />

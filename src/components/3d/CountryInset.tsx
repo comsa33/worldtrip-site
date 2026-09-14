@@ -500,7 +500,6 @@ export function CountryInset({
         k={hint.k}
         at={anchorAcross}
         rootRef={hint.rootRef}
-        handRef={hint.handRef}
         x={INSET_BOX / 2}
         y={INSET_BOX - 22 * hint.k}
       />

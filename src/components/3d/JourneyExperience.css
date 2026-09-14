@@ -1675,7 +1675,7 @@ kbd.key {
 }
 
 .map-drag-hint.is-rest {
-  opacity: 0.35;
+  opacity: 0.5;
   transition-delay: 200ms;
 }
 
@@ -1691,14 +1691,28 @@ kbd.key {
   opacity: 0.8;
 }
 
-.map-drag-hint__track {
-  stroke: var(--ink-3);
-  stroke-width: 1.2;
+/* the route's two tenses: dull ahead (left), orange already walked (right) */
+.map-drag-hint__ahead {
+  stroke: var(--route-ahead);
+  stroke-opacity: var(--route-ahead-o);
+  stroke-width: 1.4;
   stroke-linecap: round;
 }
 
-.map-drag-hint__end {
-  fill: var(--ink-3);
+.map-drag-hint__past {
+  stroke: var(--route-past);
+  stroke-width: 1.6;
+}
+
+/* where it began: a filled point; where it has not got to yet: an open one */
+.map-drag-hint__end.is-start {
+  fill: var(--route-past);
+}
+
+.map-drag-hint__end.is-finish {
+  fill: var(--bg);
+  stroke: var(--route-ahead);
+  stroke-width: 1;
 }
 
 .map-drag-hint__hand {
