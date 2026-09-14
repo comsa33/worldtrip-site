@@ -55,6 +55,7 @@ interface PhotoGalleryProps {
 }
 
 const DEFAULT_AR = 4 / 3;
+const PHOTOS_HASH = '#photos';
 const arOf = (p: Photo) => (p.w && p.h ? p.w / p.h : DEFAULT_AR);
 
 /** Thumbnails are 62x46 CSS px; ask for exactly that at this screen's density. */
@@ -133,6 +134,10 @@ export default function PhotoGallery({
   const [index, setIndex] = useState(0);
   // the whole set at once, as a contact sheet — G toggles, a tile opens it there
   const [sheet, setSheet] = useState(Boolean(initialSheet));
+  /* Whether the sheet came up out of the open photo (and so should gather
+     round it) or was opened straight from a door. */
+  const [sheetWas, setSheetWas] = useState(sheet);
+  const [arrive, setArrive] = useState(false);
   const openKey = `${cityName}:${initialPhotoId ?? ''}:${initialSheet ? 'sheet' : ''}:${focusStopId ?? ''}:${initialScope ?? ''}`;
   const [lastKey, setLastKey] = useState(openKey);
   const opening = openKey !== lastKey;
@@ -146,6 +151,8 @@ export default function PhotoGallery({
     const i = byPhoto >= 0 ? byPhoto : byVisit >= 0 ? byVisit : 0;
     setIndex(i);
     setSheet(Boolean(initialSheet));
+    setSheetWas(Boolean(initialSheet));
+    setArrive(false);
     setScope('city');
     if (initialScope === 'all') {
       const inRoll = initialPhotoId
@@ -154,6 +161,11 @@ export default function PhotoGallery({
       setScope('all');
       setIndex(inRoll >= 0 ? inRoll : rollIndexForStop(focusStopId));
     }
+  }
+
+  if (!opening && sheet !== sheetWas) {
+    setSheetWas(sheet);
+    setArrive(sheet);
   }
 
   // a city's sheet is the journey's sheet, standing on the same photo
@@ -192,6 +204,47 @@ export default function PhotoGallery({
   }, [scope, photos, safeIndex]);
   const wide = scope === 'all';
   const rollSheet = wide && sheet;
+
+  /* ── how many to a row ──────────────────────────────────────────────────
+     Three steps, pinched or ⌘-wheeled. At the densest the cities fold into
+     their countries and a year is a couple of dozen screens. */
+  const [dense, setDense] = useState(0);
+  const narrow = typeof window !== 'undefined' && window.innerWidth < 768;
+  const perRow = (narrow ? [3, 6, 12] : [6, 12, 24])[dense];
+  const onZoom = useCallback((step: 1 | -1) => {
+    setDense((d) => Math.max(0, Math.min(2, d + step)));
+  }, []);
+
+  /* ── the address ────────────────────────────────────────────────────────
+     The wide book is #photos: a link opens it, and the browser's back is a
+     way out. Opening pushes an entry; closing from inside pops the one it
+     pushed (or, for a book that arrived by the link, just drops the hash). */
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  }, [onClose]);
+  useEffect(() => {
+    if (!cityName || !wide) return;
+    if (window.location.hash !== PHOTOS_HASH) {
+      history.pushState(
+        { photos: true },
+        '',
+        `${window.location.pathname}${window.location.search}${PHOTOS_HASH}`
+      );
+    }
+    const onPop = () => {
+      if (window.location.hash !== PHOTOS_HASH) closeRef.current();
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, [cityName, wide]);
+  const close = useCallback(() => {
+    if (window.location.hash === PHOTOS_HASH) {
+      if ((history.state as { photos?: boolean } | null)?.photos) history.back();
+      else history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+    }
+    onClose();
+  }, [onClose]);
   /** the photo the top bar speaks for: the one at the top of the sheet, or the one open */
   const spoken = rollSheet ? Math.min(read.top, count - 1) : safeIndex;
   const spokenCity = wide
@@ -264,6 +317,20 @@ export default function PhotoGallery({
     setIndex(i);
     setSheet(false);
   };
+  /* Leaving the sheet by key or wheel is the same move as clicking the tile:
+     the photo grows out of where its tile is — if that tile is on screen. */
+  const leaveSheet = () => {
+    const sh = sheetRef.current;
+    const el = sh?.querySelector<HTMLElement>(`[data-i="${safeIndex}"]`);
+    const r = el?.getBoundingClientRect();
+    const sr = sh?.getBoundingClientRect();
+    if (el && r && sr && r.bottom > sr.top && r.top < sr.bottom) openFromTile(safeIndex, el);
+    else setSheet(false);
+  };
+  const leaveRef = useRef(leaveSheet);
+  useEffect(() => {
+    leaveRef.current = leaveSheet;
+  });
   useEffect(() => {
     if (!zoomFrom) return;
     const t = window.setTimeout(() => setZoomFrom(null), 460);
@@ -333,18 +400,20 @@ export default function PhotoGallery({
     if (!cityName) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (sheet) setSheet(false);
-        else onClose();
+        if (sheet) leaveRef.current();
+        else close();
       } else if (e.key === 'ArrowRight') go(1);
       else if (e.key === 'ArrowLeft') go(-1);
-      else if (e.key === 'g' || e.key === 'G') setSheet((v) => !v);
-      else return;
+      else if (e.key === 'g' || e.key === 'G') {
+        if (sheet) leaveRef.current();
+        else setSheet(true);
+      } else return;
       e.preventDefault();
       e.stopPropagation();
     };
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
-  }, [cityName, onClose, go, sheet]);
+  }, [cityName, close, go, sheet]);
 
   /* ── pulling the sheet shut ─────────────────────────────────────────────
      The picture is closed by the root's pointer gesture, but the sheet is a
@@ -363,10 +432,14 @@ export default function PhotoGallery({
     const start = (e: TouchEvent) => {
       y0 = e.touches[0]?.clientY ?? 0;
       dy = 0;
-      mine = el.scrollTop <= 0;
+      mine = el.scrollTop <= 0 && e.touches.length === 1;
     };
     const move = (e: TouchEvent) => {
       if (!mine) return;
+      if (e.touches.length > 1) {
+        mine = false; // a second finger: it was a pinch
+        return;
+      }
       const d = (e.touches[0]?.clientY ?? 0) - y0;
       if (d <= 0) {
         mine = false; // going up is a scroll after all
@@ -382,7 +455,7 @@ export default function PhotoGallery({
       if (!mine) return;
       mine = false;
       if (dy > 150) {
-        onClose();
+        close();
         return;
       }
       root.style.transition = 'transform 320ms var(--ease), opacity 320ms var(--ease)';
@@ -403,7 +476,7 @@ export default function PhotoGallery({
       el.removeEventListener('touchcancel', end);
     };
     // the sheet mounts once the scope has widened, so wait for that too
-  }, [sheet, scope, onClose]);
+  }, [sheet, scope, close]);
 
   /* ── the wheel over the picture: down is out (the sheet), up is back in ── */
   const wheelAcc = useRef(0);
@@ -413,6 +486,7 @@ export default function PhotoGallery({
     const onWheel = (e: WheelEvent) => {
       const t = e.target as Node;
       if (stripRef.current?.contains(t)) return; // the strip scrolls itself
+      if (e.ctrlKey || e.metaKey) return; // a pinch: the sheet's own
       const inSheet = sheetRef.current?.contains(t) ?? false;
       if (inSheet) {
         // at the top of the sheet, a further push up goes back into the photo
@@ -420,7 +494,7 @@ export default function PhotoGallery({
           wheelAcc.current += e.deltaY;
           if (wheelAcc.current < -160) {
             wheelAcc.current = 0;
-            setSheet(false);
+            leaveRef.current();
           }
         } else wheelAcc.current = 0;
         return;
@@ -512,6 +586,9 @@ export default function PhotoGallery({
   const gesture = useRef({ down: false, sx: 0, sy: 0, axis: '' as '' | 'x' | 'y', dy: 0, t0: 0 });
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === 'mouse') return;
+    const t = e.target as HTMLElement;
+    // the sheet scrolls and pinches, the map aims: neither is a swipe of the photo
+    if (sheetRef.current?.contains(t) || t.closest('.pb__locator')) return;
     gesture.current = { down: true, sx: e.clientX, sy: e.clientY, axis: '', dy: 0, t0: Date.now() };
   };
   const onPointerMove = (e: React.PointerEvent) => {
@@ -584,7 +661,7 @@ export default function PhotoGallery({
       }
     } else if (g.axis === 'y') {
       if (g.dy > 150) {
-        onClose();
+        close();
       } else if (el) {
         el.style.transition = 'transform 320ms var(--ease), opacity 320ms var(--ease)';
         el.style.transform = '';
@@ -599,6 +676,7 @@ export default function PhotoGallery({
 
   /* ── the cursor is the accent dot, stretched by its own speed ────────── */
   const figRef = useRef<HTMLElement>(null);
+  const originOf = useCallback(() => figRef.current?.getBoundingClientRect() ?? null, []);
   const curRef = useRef<HTMLSpanElement>(null);
   const cursor = useRef({ x: 0, y: 0, vx: 0, vy: 0, raf: 0 });
   const onFigureMove = (e: React.PointerEvent) => {
@@ -675,11 +753,24 @@ export default function PhotoGallery({
       onPointerUp={endGesture}
       onPointerCancel={endGesture}
     >
-      <div className="pb__backdrop" onClick={onClose} />
+      <div className="pb__backdrop" onClick={close} />
 
       <div className="pb__top mono">
         {/* the where: the reading's place on the journey, in the corner, beside its name */}
-        {wide && <RollLocator index={spoken} dot={rollSheet && !sideways} />}
+        {wide && (
+          <RollLocator
+            index={spoken}
+            dot={rollSheet && !sideways}
+            lang={lang}
+            onPick={(i) => {
+              if (rollSheet) jumpTo(sheetRef.current, i);
+              else {
+                setEntry(null);
+                setIndex(i);
+              }
+            }}
+          />
+        )}
         <span className="pb__city">
           {wide ? (
             <span className="pb__cityroll" key={spokenCity}>
@@ -705,11 +796,16 @@ export default function PhotoGallery({
           <button
             type="button"
             className={`pb__all${sheet ? ' is-on' : ''}`}
-            onClick={() => setSheet((v) => !v)}
+            onClick={() => (sheet ? leaveSheet() : setSheet(true))}
             aria-pressed={sheet}
             title={lang === 'ko' ? '전부 보기 (G)' : 'See them all (G)'}
           >
-            {wide ? TOTAL_LABEL : String(count).padStart(2, '0')}
+            {/* the total rolls over when the book widens: 47 becomes 2,297 */}
+            <span className="pb__allroll" key={wide ? 'all' : 'city'}>
+              <b className={wide ? 'is-up' : 'is-down'}>
+                {wide ? TOTAL_LABEL : String(count).padStart(2, '0')}
+              </b>
+            </span>
           </button>
         </span>
         <span className={`pb__keys${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
@@ -724,12 +820,12 @@ export default function PhotoGallery({
         <button
           type="button"
           className={`pb__sheetbtn mono${sheet ? ' is-on' : ''}`}
-          onClick={() => setSheet((v) => !v)}
+          onClick={() => (sheet ? leaveSheet() : setSheet(true))}
           aria-pressed={sheet}
         >
           {lang === 'ko' ? '전체' : 'all'}
         </button>
-        <button type="button" className="pb__btn" onClick={onClose} aria-label="Close">
+        <button type="button" className="pb__btn" onClick={close} aria-label="Close">
           <X size={16} strokeWidth={1.5} />
         </button>
       </div>
@@ -822,8 +918,12 @@ export default function PhotoGallery({
         <JourneySheet
           scroller={sheetRef}
           current={safeIndex}
-          perRow={typeof window !== 'undefined' && window.innerWidth < 768 ? 3 : 6}
+          perRow={perRow}
+          fold={dense === 2}
           lang={lang}
+          arrive={arrive}
+          origin={originOf}
+          onZoom={onZoom}
           onOpen={openFromTile}
           onRead={onRead}
           onHover={setHover}

@@ -2014,8 +2014,8 @@ function JourneyExperienceContent() {
 
   // From the header's total: every photo of the journey, as one contact sheet,
   // opened on the stop the journey is standing at (the start, on arrival).
-  const handleOpenAllPhotos = () => {
-    const at = rollIndexForStop(city?.id);
+  const openAllPhotosAt = useCallback((stopId: number | null | undefined) => {
+    const at = rollIndexForStop(stopId);
     const block = journeyRoll.blocks[journeyRoll.blockOf[at]];
     if (!block) return;
     setGalleryScope('all');
@@ -2023,7 +2023,17 @@ function JourneyExperienceContent() {
     setInitialPhotoId(null);
     setFocusStopId(block.stop.id);
     setSheetFirst(true);
-  };
+  }, []);
+  const handleOpenAllPhotos = () => openAllPhotosAt(city?.id);
+
+  // Deep link: /#photos opens the whole book (at ?stop= if there is one)
+  useEffect(() => {
+    if (window.location.hash !== '#photos') return;
+    const id = Number(new URLSearchParams(window.location.search).get('stop'));
+    // a frame after the first paint, once the journey has laid itself out underneath
+    const raf = requestAnimationFrame(() => openAllPhotosAt(id || null));
+    return () => cancelAnimationFrame(raf);
+  }, [openAllPhotosAt]);
 
   const handleCloseGallery = useCallback(() => {
     setGalleryScope('city');
