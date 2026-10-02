@@ -15,6 +15,8 @@ export type RingFar = {
   grow: number;
   /** room left between two rings before they are one, px */
   gap: number;
+  /** pulled all the way in, every ring is this radius and stands on its own, px */
+  pin: number;
 };
 
 export const RING_FAR: RingFar = {
@@ -26,6 +28,7 @@ export const RING_FAR: RingFar = {
   deskStroke: 1.3,
   grow: 0.35,
   gap: 1,
+  pin: 3,
 };
 
 /**

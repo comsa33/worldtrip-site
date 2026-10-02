@@ -51,6 +51,7 @@ export type Tuning = {
   ringDeskStroke: number;
   ringGrow: number;
   ringGap: number;
+  ringPin: number;
   /** a ring opening into its photo book and back */
   ringOpenMs: number;
   ringCloseMs: number;
@@ -95,6 +96,7 @@ export function defaults(theme: Theme): Tuning {
     ringDeskStroke: RING_FAR.deskStroke,
     ringGrow: RING_FAR.grow,
     ringGap: RING_FAR.gap,
+    ringPin: RING_FAR.pin,
     ringOpenMs: RING_MOVE.openMs,
     ringCloseMs: RING_MOVE.closeMs,
     ringHold: RING_MOVE.hold,

@@ -54,7 +54,7 @@ lineWidth={${t.borderActive}}   // 활성
 --route-ahead-o: ${t.aheadOpacity};
 
 // src/components/3d/themeRingScale.ts
-export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPhoneMin}, phoneStroke: ${t.ringPhoneStroke}, deskK: ${t.ringDeskK}, deskMin: ${t.ringDeskMin}, deskStroke: ${t.ringDeskStroke}, grow: ${t.ringGrow}, gap: ${t.ringGap} };
+export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPhoneMin}, phoneStroke: ${t.ringPhoneStroke}, deskK: ${t.ringDeskK}, deskMin: ${t.ringDeskMin}, deskStroke: ${t.ringDeskStroke}, grow: ${t.ringGrow}, gap: ${t.ringGap}, pin: ${t.ringPin} };
 export const RING_MOVE: RingMove = { openMs: ${t.ringOpenMs}, closeMs: ${t.ringCloseMs}, hold: ${t.ringHold} };`;
 
   return (
@@ -122,6 +122,7 @@ export const RING_MOVE: RingMove = { openMs: ${t.ringOpenMs}, closeMs: ${t.ringC
       {num('ringDeskStroke', '데스크톱 선 굵기', 0.5, 2, 0.05)}
       {num('ringGrow', '당길 때 커지는 지수', 0, 1, 0.05)}
       {num('ringGap', '합치는 간격 px', 0, 8, 0.5)}
+      {num('ringPin', '끝까지 당겼을 때 반지름 px', 1, 8, 0.5)}
       <div className="tuner__note">
         주제를 켜고 둘러보기(G)에서 봅니다. 지수 0 은 당겨도 크기 그대로, 1 은 지도와 같이 커져
         갈라지지 않습니다. 폰은 짧은 변 768px 이하(가로로 눕힌 폰 포함).

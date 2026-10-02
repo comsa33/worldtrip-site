@@ -1182,6 +1182,7 @@ function Scene({
       deskStroke: tuned.ringDeskStroke,
       grow: tuned.ringGrow,
       gap: tuned.ringGap,
+      pin: tuned.ringPin,
     }),
     [
       tuned.ringPhoneK,
@@ -1192,6 +1193,7 @@ function Scene({
       tuned.ringDeskStroke,
       tuned.ringGrow,
       tuned.ringGap,
+      tuned.ringPin,
     ]
   );
   // every city that is a shape on the map, and how far each has handed over
