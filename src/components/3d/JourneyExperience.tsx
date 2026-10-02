@@ -819,8 +819,11 @@ function Camera({
       if (phase.current === 'back') {
         const len = camera.position.length();
         const next = len + (fit - len) * ease(0.16);
-        camera.position.setLength(Math.abs(fit - next) < 0.01 ? fit : next);
-        if (camera.position.length() === fit) phase.current = 'free';
+        // (not `length() === fit` afterwards: a length set is a length rounded,
+        // and a move that never ends keeps the globe drawing for nothing)
+        const there = Math.abs(fit - next) < 0.01;
+        camera.position.setLength(there ? fit : next);
+        if (there) phase.current = 'free';
       }
       camera.lookAt(0, 0, 0);
       return;
