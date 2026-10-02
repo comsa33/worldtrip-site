@@ -1,8 +1,8 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
-import type { Line2 } from 'three-stdlib';
+import { LineMaterial, LineSegments2, LineSegmentsGeometry } from 'three-stdlib';
 import worldBorders from '../../data/worldBorders.json';
 import { GLOBE, type Theme } from '../../theme';
 import { TUNE_ON, defaults, mix, useTuning } from './routeTuning';
@@ -15,6 +15,18 @@ const RADIUS = 2.003;
  * border read as two lines side by side.
  */
 const LIFT = 0.0004;
+
+/**
+ * The faint borders are cut into cells of this many degrees, one draw each. A
+ * cell off the screen is skipped by a frustum test, and one round the
+ * back of the globe by the horizon test below — on a phone the 165,000 segments
+ * were processed in full every frame, the far side included, and that was most
+ * of what the GPU did. A segment belongs to the one cell its midpoint is in, so
+ * nothing is drawn twice and nothing is cut at a cell's edge.
+ */
+const CELL_DEG = 15;
+/** The globe that hides the far side (DotGlobe's sphere). */
+const OCCLUDER = 2;
 
 function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -109,24 +121,18 @@ export function WorldBorders({
     ];
   }, [INK, baseOpacity, theme]);
 
-  // the step back is eased, not switched — the world settles a shade further
-  // away over a few frames, the same pace the note fades in
-  const base = useRef<Line2>(null);
-  const hushed = useRef(0);
-  useFrame(() => {
-    const m = base.current?.material;
-    if (!m) return;
-    hushed.current += ((hush ? 1 : 0) - hushed.current) * 0.12;
-    m.color.copy(loud).lerp(quiet, hushed.current);
-  });
-
-  // pairs of points: every boundary segment, laid end to end for `segments`
-  const borderPoints = useMemo(() => {
-    const pts: [number, number, number][] = [];
+  // every boundary segment, sorted into cells by its midpoint
+  const cells = useMemo(() => {
+    const byCell = new Map<string, number[]>();
     const seg = (ax: number, ay: number, bx: number, by: number, unit: number, radius: number) => {
       const a = latLngToVector3(ay * unit, ax * unit, radius);
       const b = latLngToVector3(by * unit, bx * unit, radius);
-      pts.push([a.x, a.y, a.z], [b.x, b.y, b.z]);
+      const lat = ((ay + by) / 2) * unit;
+      const lng = ((ax + bx) / 2) * unit;
+      const key = `${Math.floor((lat + 90) / CELL_DEG)}:${Math.floor((lng + 180) / CELL_DEG)}`;
+      let list = byCell.get(key);
+      if (!list) byCell.set(key, (list = []));
+      list.push(a.x, a.y, a.z, b.x, b.y, b.z);
     };
     const { unit: bu, lines } = data.borders;
     for (const line of lines) run(line, (ax, ay, bx, by) => seg(ax, ay, bx, by, bu, RADIUS));
@@ -151,8 +157,84 @@ export function WorldBorders({
         });
       }
     }
-    return pts;
+    // one material for every cell — drawn exactly as the single <Line> it
+    // replaces was: same width, colour and blending (set below)
+    const material = new LineMaterial();
+    /* Transparent things are drawn far to near, by the centre of their
+       geometry's bounding sphere — and the order is part of the look: the old
+       single line went after the land dots and before the current country's
+       outline and every mark. So every cell keeps the sphere of the whole for
+       sorting, which puts it exactly where the whole was. That also blinds
+       three's own frustum test, so each cell's real sphere is tested here, in
+       the frame loop, instead. */
+    const all = new THREE.Box3();
+    const p = new THREE.Vector3();
+    for (const flat of byCell.values())
+      for (let i = 0; i < flat.length; i += 3)
+        all.expandByPoint(p.set(flat[i], flat[i + 1], flat[i + 2]));
+    const whole = new THREE.Sphere();
+    all.getCenter(whole.center);
+    let r2 = 0;
+    for (const flat of byCell.values())
+      for (let i = 0; i < flat.length; i += 3)
+        r2 = Math.max(r2, whole.center.distanceToSquared(p.set(flat[i], flat[i + 1], flat[i + 2])));
+    whole.radius = Math.sqrt(r2);
+    const list = [...byCell.values()].map((flat) => {
+      const geometry = new LineSegmentsGeometry();
+      geometry.setPositions(flat);
+      geometry.computeBoundingSphere();
+      const own = (geometry.boundingSphere ?? new THREE.Sphere()).clone();
+      geometry.boundingSphere = whole;
+      const mesh = new LineSegments2(geometry, material);
+      mesh.frustumCulled = false;
+      const show = (on: boolean) => {
+        mesh.visible = on;
+      };
+      return { mesh, show, sphere: own };
+    });
+    return { material, list };
   }, [data.borders, data.countries]);
+  const cellsRef = useRef(cells);
+  useEffect(() => {
+    cellsRef.current = cells;
+    return () => {
+      for (const c of cells.list) c.mesh.geometry.dispose();
+      cells.material.dispose();
+    };
+  }, [cells]);
+
+  const size = useThree((s) => s.size);
+  useLayoutEffect(() => {
+    const m = cellsRef.current.material;
+    m.linewidth = w.borderBase;
+    m.transparent = true;
+    m.opacity = 1;
+    m.depthWrite = false;
+    m.resolution.set(size.width, size.height);
+  }, [cells, w.borderBase, size.width, size.height]);
+
+  // the step back is eased, not switched — the world settles a shade further
+  // away over a few frames, the same pace the note fades in
+  const hushed = useRef(0);
+  const frustum = useMemo(() => ({ f: new THREE.Frustum(), m: new THREE.Matrix4() }), []);
+  useFrame(({ camera }) => {
+    const { material, list } = cellsRef.current;
+    hushed.current += ((hush ? 1 : 0) - hushed.current) * 0.12;
+    material.color.copy(loud).lerp(quiet, hushed.current);
+    // round the back of the globe: a cell is drawn while any of its bounding
+    // sphere can be in front of the horizon — p·c > R² for some p in it, so
+    // centre·c + radius·|c| > R². Generous on purpose: a cell at the limb comes
+    // in before its first segment does, never after.
+    const cam = camera.position;
+    const len = cam.length();
+    frustum.m.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    frustum.f.setFromProjectionMatrix(frustum.m);
+    for (const c of list)
+      c.show(
+        c.sphere.center.dot(cam) + c.sphere.radius * len > OCCLUDER * OCCLUDER &&
+          frustum.f.intersectsSphere(c.sphere)
+      );
+  });
 
   // one draw for the whole country: Indonesia is 264 rings and Chile 163, and a
   // `<Line>` apiece was that many materials built on the frame you arrive
@@ -176,16 +258,9 @@ export function WorldBorders({
       {/* Every border, legible on its own: the map has to read as a map before
           the current country reads as the current one. Hairlines lose a lot of
           ink on a light ground, so light mode gets more. */}
-      <Line
-        ref={base}
-        points={borderPoints}
-        segments
-        color={loud}
-        lineWidth={w.borderBase}
-        transparent
-        opacity={1}
-        depthWrite={false}
-      />
+      {cells.list.map((c, i) => (
+        <primitive key={i} object={c.mesh} />
+      ))}
       {highlight && (
         <Line
           points={highlight}
