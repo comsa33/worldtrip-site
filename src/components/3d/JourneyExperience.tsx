@@ -68,6 +68,16 @@ import './JourneyExperience.css';
 // Constants
 // =============================================================================
 
+/**
+ * No MSAA on a dense touch screen. At two or three device pixels to a CSS pixel
+ * the edges it would smooth are already finer than the eye, and on an iPhone it
+ * was a fifth of the frame (fps 33~35 → 40~43 measured). A laptop or a 1×
+ * screen keeps it. Read once: a canvas decides antialiasing when it is made.
+ */
+const MSAA =
+  typeof window === 'undefined' ||
+  !(window.devicePixelRatio >= 2 && window.matchMedia('(pointer: coarse)').matches);
+
 const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
 const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
@@ -2647,7 +2657,7 @@ function JourneyExperienceContent() {
           // drawing sixty unseen ones a second under the photos
           frameloop={selectedCity !== null ? 'never' : 'always'}
           camera={{ position: [-2.5, 3, -3.5], fov: 45, near: 0.01 }}
-          gl={{ antialias: true }}
+          gl={{ antialias: MSAA }}
         >
           <Scene
             progress={smoothProgress}
