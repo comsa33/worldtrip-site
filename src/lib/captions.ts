@@ -38,8 +38,20 @@ export function loadCaptions(code: string): Promise<void> {
         listeners.forEach((l) => l());
       });
     asked.set(code, p);
+    // noted for the next run of this module on dev (below); not a dispose
+    // hook, which only the module that accepts the update gets to run
+    if (import.meta.hot) import.meta.hot.data.cities = [...asked.keys()];
   }
   return p;
+}
+
+/* On dev, a city's file saved while the book is open: this module is run
+   again with its maps empty, and the book, which keeps its place, does not
+   ask for the city a second time — so the cities the old module had fetched
+   are fetched again here. (import.meta.hot is undefined in a build.) */
+if (import.meta.hot) {
+  const had = import.meta.hot.data.cities as string[] | undefined;
+  had?.forEach((code) => void loadCaptions(code));
 }
 
 const subscribe = (l: () => void) => {
