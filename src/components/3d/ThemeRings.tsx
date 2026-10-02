@@ -53,6 +53,12 @@ const NEAR: Record<'desk' | 'phone', RingScale> = {
 };
 
 const GLOBE_R = 2;
+/**
+ * Looking around, how close a press on a lone ring brings the camera — about
+ * where the journey itself stands over a city. From here in, a press opens
+ * the ring's book.
+ */
+const COME_TO = 4.5;
 /** Looking around, the marks start drawing down to pins at this share of the nearest scale. */
 const PIN_FROM = 0.7;
 /** How long the marks take between the journey's size and the look around's, s. */
@@ -554,7 +560,26 @@ export function ThemeRings({
       ringPress.at = performance.now();
       if (best.members.length < 2) {
         const ring = rings[best.members[0]];
+        // Far off, a press comes closer; close by, it goes in. Looking around
+        // from further out than the journey ever stands, the camera goes over
+        // to the ring first, and the press after that opens its book.
+        if (gather && camera.position.length() > COME_TO * 1.08) {
+          letGo();
+          aim.current?.(
+            best.dir.clone(),
+            Math.max(nearest, Math.min(COME_TO, camera.position.length()))
+          );
+          return;
+        }
         if (was !== best.members[0]) letGo();
+        // The click that follows this press belongs to it: the book is up by
+        // then, and the click would land on its photo and turn the page.
+        const swallow = (c: MouseEvent) => {
+          c.stopPropagation();
+          c.preventDefault();
+        };
+        window.addEventListener('click', swallow, { capture: true, once: true });
+        window.setTimeout(() => window.removeEventListener('click', swallow, true), 400);
         open.current?.(ring.city, ring.stopId);
         // the globe stands still under the book; the ring lets out when it is back
         st.pressed = -1;
