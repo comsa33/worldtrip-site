@@ -6273,26 +6273,6 @@
         "tone": "b0b2b7,575959"
       },
       {
-        "id": "brussels-003",
-        "publicId": "cities/brussels/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084773/cities/brussels/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084773/cities/brussels/photo003",
-        "date": "2017-02-02T09:08:11",
-        "gps": {
-          "lat": 50.85185277777778,
-          "lng": 4.338016666666666
-        },
-        "location": "Rue Fernand Brunfaut 28, Sint-Jans-Molenbeek, Brussels-Capital Region",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 886,
-        "h": 886,
-        "tone": "ac9876,806528"
-      },
-      {
         "id": "brussels-004",
         "publicId": "cities/brussels/photo004",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084773/cities/brussels/photo004",
@@ -32614,46 +32594,6 @@
   "신트라": {
     "cityCode": "sintra",
     "photos": [
-      {
-        "id": "sintra-042",
-        "publicId": "cities/sintra/photo042",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789171698/cities/sintra/photo042",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789171698/cities/sintra/photo042",
-        "date": "2017-02-26T12:58:48",
-        "gps": {
-          "lat": 38.745472222222226,
-          "lng": -9.139491666666666
-        },
-        "location": "Avenida Frei Miguel Contreiras, Campo Grande, Lisboa",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo042",
-        "w": 1024,
-        "h": 768,
-        "tone": "778da4,767a6b"
-      },
-      {
-        "id": "sintra-045",
-        "publicId": "cities/sintra/photo045",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789171705/cities/sintra/photo045",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789171705/cities/sintra/photo045",
-        "date": "2017-02-26T13:38:31",
-        "gps": {
-          "lat": 38.751675,
-          "lng": -9.284236111111111
-        },
-        "location": "Avenida da República, Casal dos Ossos, Oeiras",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo045",
-        "w": 1024,
-        "h": 768,
-        "tone": "85837b,74716b"
-      },
       {
         "id": "sintra-024",
         "publicId": "cities/sintra/photo024",
