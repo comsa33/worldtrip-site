@@ -220,6 +220,11 @@ export function CountryInset({
     const per = shape.scale(c.lat);
     const w = view.w * per.x;
     const h = view.h * per.y;
+    // A screen that takes in the whole country has no «this much of it» to
+    // say, and its frame would run off the inset with a side missing. Short
+    // of the box's own edge, so a frame is not there at one stop and half
+    // gone at the next.
+    if (w > INSET_BOX * 0.95 || h > INSET_BOX * 0.95) return null;
     return { x: here.x - w / 2, y: here.y - h / 2, w, h };
   }, [shape, cities, stops, currentStopIdx, restZoom, aspect, here]);
 
