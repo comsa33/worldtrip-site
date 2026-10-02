@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>캡션 쓰기</title>
+<style>
+:root {
+  --bg: #fcfcfc; --card: #f6f6f6; --ink: #0f0f0f; --ink2: #6b6b6b; --ink3: #9c9c9c;
+  --line: #e8e8e8; --line-strong: #cfcfcf; --accent: #ff670d; --warn: #b94407;
+  --sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --serif: 'Noto Serif KR', ui-serif, Georgia, 'Apple SD Gothic Neo', serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d0d0d; --card: #141414; --ink: #f2f2f2; --ink2: #9a9a9a; --ink3: #6a6a6a;
+    --line: #222222; --line-strong: #3a3a3a; --warn: #ff8a4a;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+.mono { font-family: var(--mono); }
+
+.app { display: grid; grid-template-columns: 1fr 440px; height: 100vh; height: 100dvh; }
+.left { display: flex; flex-direction: column; min-width: 0; border-right: 1px solid var(--line); }
+.top { height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 14px; padding: 0 32px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--ink3); }
+.top b { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink); }
+.top .dirty { color: var(--warn); }
+.top .right { margin-left: auto; }
+.stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 24px 32px; }
+.stage img { max-width: 100%; max-height: 100%; border-radius: 3px; display: block; object-fit: contain; }
+.stage .none { font-size: 12px; color: var(--ink3); }
+.strip { height: 100px; flex-shrink: 0; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: flex-start; padding: 16px 32px 0; overflow-x: auto; scrollbar-width: none; }
+.strip::-webkit-scrollbar { display: none; }
+.thumb { position: relative; flex: 0 0 72px; height: 70px; padding: 0; border: 0; background: none; cursor: pointer; }
+.thumb span.f { display: block; width: 72px; height: 54px; border: 1px solid var(--line-strong); border-radius: 3px; overflow: hidden; opacity: 0.6; }
+.thumb.is-cur span.f { opacity: 1; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb i { position: absolute; left: 33px; top: 61px; width: 6px; height: 6px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--ink3); }
+.thumb.is-done i { box-shadow: none; background: var(--ink2); }
+.thumb.is-cur i { box-shadow: none; background: var(--accent); }
+
+.right { display: flex; flex-direction: column; gap: 26px; padding: 28px 32px; min-height: 0; overflow-y: auto; }
+.label { font-size: 11px; color: var(--ink3); }
+.clues { display: flex; flex-direction: column; gap: 6px; }
+.clue { display: grid; grid-template-columns: 64px 1fr; gap: 10px; font-size: 12px; line-height: 1.55; }
+.clue span:first-child { font-family: var(--mono); color: var(--ink3); }
+.clue span:last-child { color: var(--ink2); overflow-wrap: anywhere; }
+.clue span.empty { color: var(--ink3); }
+.rule { height: 1px; background: var(--line); flex-shrink: 0; }
+label.field { display: flex; flex-direction: column; gap: 8px; }
+textarea { width: 100%; resize: none; border: 0; border-bottom: 1px solid var(--line-strong); background: none; color: var(--ink); font-family: var(--serif); line-height: 1.85; padding: 0 0 8px; outline: none; }
+textarea:focus { border-bottom-color: var(--ink2); }
+#ko { font-size: 15px; min-height: 96px; }
+#en { font-size: 14px; min-height: 64px; }
+.msg { min-height: 16px; font-size: 11px; color: var(--ink3); }
+.msg.err { color: var(--warn); }
+.keys { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 11px; color: var(--ink3); }
+kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 17px; padding: 0 5px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 4px; font-family: var(--mono); font-size: 10.5px; color: var(--ink2); }
+.keys .k { display: inline-flex; gap: 3px; }
+.navbtns { display: none; gap: 10px; }
+.navbtns button { flex: 1; height: 40px; border: 1px solid var(--line-strong); border-radius: 6px; background: none; color: var(--ink); font: 13px var(--sans); }
+.navbtns button.save { border-color: var(--ink2); }
+
+/* phone: the same thing, standing up */
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; height: auto; min-height: 100dvh; }
+  .left { border-right: 0; }
+  .top { height: 48px; padding: 0 16px; font-size: 11px; position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  .stage { padding: 16px 16px 0; }
+  .stage img { max-height: 56vh; }
+  .strip { height: 86px; padding: 12px 16px 0; }
+  .right { padding: 16px 16px 24px; gap: 18px; overflow: visible; }
+  .clue { grid-template-columns: 52px 1fr; font-size: 11px; }
+  .keys { display: none; }
+  .navbtns { display: flex; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="left">
+    <div class="top mono">
+      <b id="city"></b><span id="pos"></span><span id="dirty" class="dirty"></span>
+      <span class="right" id="count"></span>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="strip" id="strip"></div>
+  </div>
+  <div class="right">
+    <div class="clues">
+      <span class="label mono">단서 — 캡션에 들어가지 않는다</span>
+      <div id="clues" class="clues"></div>
+    </div>
+    <div class="rule"></div>
+    <label class="field"><span class="label mono">ko</span><textarea id="ko" rows="3" spellcheck="false"></textarea></label>
+    <label class="field"><span class="label mono">en</span><textarea id="en" rows="2" spellcheck="true" lang="en"></textarea></label>
+    <div class="msg mono" id="msg"></div>
+    <div class="navbtns">
+      <button type="button" id="prevBtn">이전</button>
+      <button type="button" id="saveBtn" class="save">저장·다음</button>
+      <button type="button" id="nextBtn">다음</button>
+    </div>
+    <div class="keys mono">
+      <span class="k"><kbd>⌘</kbd><kbd>↵</kbd></span><span>저장·다음</span>
+      <span class="k"><kbd>⌥</kbd><kbd>←</kbd><kbd>→</kbd></span><span>넘기기</span>
+      <span class="k"><kbd>tab</kbd></span><span>ko ↔ en</span>
+    </div>
+  </div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+
+let list = [];            // [{ id, group, city, hasFile, ko, en }]
+let themes = {};          // id → ko name
+let i = 0;
+const drafts = new Map(); // id → { ko, en } not saved yet
+const clueCache = new Map();
+const done = new Set(store.get('caption-tool:done', []));
+
+const cur = () => list[i];
+const groupOf = (k) => list.filter((p) => p.group === list[k].group);
+const groupName = (p) => (p.group === 'review' ? '확인할 사진' : p.city);
+
+async function load() {
+  const r = await fetch('/api/state');
+  const s = await r.json();
+  list = s.list;
+  themes = Object.fromEntries(s.themes.map((t) => [t.id, t.ko]));
+  const want = decodeURIComponent(location.hash.slice(1)) || store.get('caption-tool:at', '');
+  const at = list.findIndex((p) => p.id === want);
+  go(at >= 0 ? at : 0, true);
+}
+
+function textOf(p) { return drafts.get(p.id) ?? { ko: p.ko, en: p.en }; }
+function keepDraft() {
+  const p = cur();
+  if (!p) return;
+  const ko = $('ko').value, en = $('en').value;
+  if (ko !== p.ko || en !== p.en) drafts.set(p.id, { ko, en });
+  else drafts.delete(p.id);
+}
+
+function go(k, first = false) {
+  if (!first) keepDraft();
+  i = Math.max(0, Math.min(list.length - 1, k));
+  const p = cur();
+  history.replaceState(null, '', `#${encodeURIComponent(p.id)}`);
+  store.set('caption-tool:at', p.id);
+  const t = textOf(p);
+  $('ko').value = t.ko;
+  $('en').value = t.en;
+  msg('');
+  render();
+  clues(p.id);
+  // the next photo is fetched before it is asked for
+  const n = list[i + 1];
+  if (n?.hasFile) new Image().src = `/img/${encodeURIComponent(n.id)}`;
+}
+
+function render() {
+  const p = cur();
+  const g = groupOf(i);
+  $('city').textContent = groupName(p);
+  $('pos').textContent = `${g.indexOf(p) + 1} / ${g.length}`;
+  $('dirty').textContent = drafts.size ? `· 저장 안 됨 ${drafts.size}` : '';
+  $('count').textContent = `확인 ${done.size.toLocaleString('en-US')} / ${list.length.toLocaleString('en-US')}`;
+  $('stage').innerHTML = p.hasFile
+    ? `<img src="/img/${encodeURIComponent(p.id)}" alt="">`
+    : `<span class="none mono">로컬 원본 없음 · ${p.id}</span>`;
+  const strip = $('strip');
+  strip.innerHTML = g.map((q) => {
+    const k = list.indexOf(q);
+    const cls = ['thumb', k === i ? 'is-cur' : '', done.has(q.id) ? 'is-done' : ''].join(' ');
+    return `<button type="button" class="${cls}" data-k="${k}" title="${q.id}"><span class="f">${q.hasFile ? `<img src="/img/${encodeURIComponent(q.id)}" alt="" loading="lazy">` : ''}</span><i></i></button>`;
+  }).join('');
+  const el = strip.querySelector('.is-cur');
+  if (el) strip.scrollLeft = el.offsetLeft - strip.clientWidth / 2 + 36;
+}
+
+async function clues(id) {
+  let c = clueCache.get(id);
+  if (!c) {
+    const r = await fetch(`/api/clues/${encodeURIComponent(id)}`);
+    c = await r.json();
+    clueCache.set(id, c);
+  }
+  if (cur().id !== id) return;
+  const row = (k, v) => `<div class="clue"><span>${k}</span><span class="${v ? '' : 'empty'}">${esc(v || '—')}</span></div>`;
+  $('clues').innerHTML = [
+    row('Apple', c.apple),
+    row('장소', c.address),
+    row('랜드마크', c.landmarks.join(' · ')),
+    row('시각', c.time),
+    row('사람', c.people.join(' · ')),
+    row('주제', c.themes.map((t) => themes[t] ?? t).join(' · ')),
+    row('id', id),
+  ].join('');
+}
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+function msg(t, err = false) { const m = $('msg'); m.textContent = t; m.className = `msg mono${err ? ' err' : ''}`; }
+
+let saving = false;
+async function saveNext() {
+  if (saving) return;
+  const p = cur();
+  const ko = $('ko').value.trim(), en = $('en').value.trim();
+  if (!ko || !en) return msg('ko와 en 둘 다 써야 저장된다', true);
+  saving = true;
+  try {
+    const r = await fetch('/api/caption', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: p.id, ko, en }) });
+    const s = await r.json();
+    if (!r.ok) return msg(s.error ?? `저장 실패 ${r.status}`, true);
+    p.ko = s.ko; p.en = s.en;
+    drafts.delete(p.id);
+    done.add(p.id);
+    store.set('caption-tool:done', [...done]);
+    if (i < list.length - 1) go(i + 1);
+    else { $('ko').value = p.ko; $('en').value = p.en; render(); msg('저장했다 · 마지막 사진'); }
+  } catch (e) {
+    msg(`저장 실패 · ${e.message}`, true);
+  } finally {
+    saving = false;
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); saveNext(); }
+  else if (e.altKey && e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
+  else if (e.altKey && e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
+  else if (e.key === 'Tab') {
+    e.preventDefault();
+    const to = document.activeElement === $('ko') ? $('en') : $('ko');
+    to.focus();
+    to.setSelectionRange(to.value.length, to.value.length);
+  }
+});
+for (const id of ['ko', 'en']) $(id).addEventListener('input', () => { keepDraft(); $('dirty').textContent = drafts.size ? `· 저장 안 됨 ${drafts.size}` : ''; });
+$('strip').addEventListener('click', (e) => { const b = e.target.closest('.thumb'); if (b) go(Number(b.dataset.k)); });
+$('prevBtn').addEventListener('click', () => go(i - 1));
+$('nextBtn').addEventListener('click', () => go(i + 1));
+$('saveBtn').addEventListener('click', saveNext);
+window.addEventListener('beforeunload', (e) => { keepDraft(); if (drafts.size) e.preventDefault(); });
+
+load().then(() => $('ko').focus());
+</script>
+</body>
+</html>
