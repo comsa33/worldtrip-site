@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
+import { useRef, useMemo, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Line, Html, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
@@ -449,6 +449,7 @@ function RouteLine({
   onOver,
   onOut,
   reveal,
+  cut,
 }: {
   points: THREE.Vector3[];
   opacity: number;
@@ -458,16 +459,43 @@ function RouteLine({
   onOver?: (e: ThreeEvent<PointerEvent>) => void;
   onOut?: () => void;
   reveal?: { ref: React.MutableRefObject<number>; start: number; end: number };
+  /**
+   * Only part of the line: the part `before` point `at` (the leg walked so
+   * far) or `after` it (the rest). The leg the dot is on used to be cut by
+   * slicing its points, which built and uploaded a new line every frame it
+   * moved; now both halves draw the leg's own line — the walked half by
+   * drawing only its first `at` segments, the rest by starting the dash
+   * pattern at the cut — and nothing is built while the dot travels.
+   */
+  cut?: { at: number; keep: 'before' | 'after' };
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const under = useRef<any>(null);
   const len = useMemo(() => pathLength(points), [points]);
+  /** the distance along the line to each point — the line's own dash distances */
+  const along = useMemo(() => {
+    const out = [0];
+    for (let i = 1; i < points.length; i++)
+      out.push(out[i - 1] + points[i].distanceTo(points[i - 1]));
+    return out;
+  }, [points]);
+  const before = cut?.keep === 'before' ? cut.at : Infinity;
+  useLayoutEffect(() => {
+    if (ref.current?.geometry) ref.current.geometry.instanceCount = before;
+    if (under.current?.geometry) under.current.geometry.instanceCount = before;
+  });
+  const from = cut?.keep === 'after' ? (along[cut.at] ?? 0) : 0;
   useFrame(() => {
     if (!reveal || !ref.current?.material) return;
     const r = reveal.ref.current;
     const span = Math.max(1, reveal.end - reveal.start);
     const frac = r === Infinity ? 1 : Math.max(0, Math.min(1, (r - reveal.start) / span));
-    ref.current.material.dashSize = Math.max(0.0001, frac * len);
+    // a dash from `from` to how far the pen has got: shown where
+    // mod(distance - from, dash + gap) < dash, and the gap is never reached
+    ref.current.material.dashOffset = -from;
+    ref.current.material.dashSize = Math.max(0.0001, frac * (len - from));
     ref.current.material.gapSize = 1e6;
     ref.current.visible = frac > 0;
   });
@@ -476,6 +504,7 @@ function RouteLine({
     <>
       {underlay && (
         <Line
+          ref={under}
           points={points}
           color={underlay}
           lineWidth={width + 3}
@@ -634,7 +663,8 @@ function TravelPath({
         return (
           <group key={`split-${seg.start}`}>
             <RouteLine
-              points={seg.pts.slice(0, split + 1)}
+              points={seg.pts}
+              cut={{ at: split, keep: 'before' }}
               color={pastColor}
               opacity={trail(seg.transport, t).opacity * k}
               width={trail(seg.transport, t).width}
@@ -642,7 +672,8 @@ function TravelPath({
               {...hover}
             />
             <RouteLine
-              points={seg.pts.slice(split)}
+              points={seg.pts}
+              cut={{ at: split, keep: 'after' }}
               color={t.aheadColor}
               opacity={Math.min(1, t.aheadOpacity + 0.12) * k}
               width={trailAhead(seg.transport, t)}
