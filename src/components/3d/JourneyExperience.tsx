@@ -1059,6 +1059,7 @@ function Scene({
   labels,
   photoTheme,
   onHand,
+  onOpenStop,
 }: {
   progress: number;
   zoom: number;
@@ -1090,6 +1091,8 @@ function Scene({
   photoTheme: string | null;
   /** the hand on the globe (a drag), for the theme row to step back */
   onHand: (on: boolean) => void;
+  /** a lit ring on its own was pressed: that stay's photo book */
+  onOpenStop: (cityName: string, stopId: number) => void;
 }) {
   const looking = globe === 'on';
   const { size, invalidate } = useThree();
@@ -1323,11 +1326,11 @@ function Scene({
   // the chosen theme's cities: one ring a city, its stays added up
   const themeRings = useMemo<ThemeRing[]>(() => {
     if (!photoTheme) return [];
-    const by = new Map<string, { n: number; stays: number }>();
+    const by = new Map<string, { n: number; stays: number; first: number }>();
     for (const st of stops) {
       const n = stopThemeCount(st.id, photoTheme);
       if (!n) continue;
-      const e = by.get(st.city) ?? { n: 0, stays: 0 };
+      const e = by.get(st.city) ?? { n: 0, stays: 0, first: st.id };
       e.n += n;
       e.stays += 1;
       by.set(st.city, e);
@@ -1341,6 +1344,7 @@ function Scene({
           position: latLngToVector3(city.lat, city.lng, 2.004),
           n: e.n,
           twice: e.stays > 1,
+          stopId: e.first,
         });
     }
     return out;
@@ -1512,6 +1516,7 @@ function Scene({
           // looking around, and on the way home from it, rings that touch are one
           gather={globe !== 'off'}
           onAim={aimAt}
+          onOpen={onOpenStop}
           scale={TUNE_ON ? ringScale : undefined}
         />
       )}
@@ -2207,6 +2212,16 @@ function JourneyExperienceContent() {
     setSheetFirst(true);
   };
 
+  // From a lit ring: the city's book at the stay the theme is in, the theme
+  // still on. The stay is the ring's, not the one the journey is standing on.
+  const handleOpenStop = (cityName: string, stopId: number) => {
+    setGalleryScope('city');
+    setSelectedCity(cityName);
+    setInitialPhotoId(null);
+    setFocusStopId(stopId);
+    setSheetFirst(true);
+  };
+
   // From the filmstrip: the city's whole book, opened on the frame clicked.
   // The seam keeps the stays apart, so paging on lands in the next one rather
   // than in a shuffle of both.
@@ -2848,6 +2863,7 @@ function JourneyExperienceContent() {
             labels={globeLabels}
             photoTheme={photoTheme}
             onHand={setOrbitHeld}
+            onOpenStop={handleOpenStop}
           />
           <Wake />
           <DotGlobe

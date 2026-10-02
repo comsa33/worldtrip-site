@@ -40,6 +40,8 @@ export interface ThemeRing {
   n: number;
   /** more than one stay had the theme */
   twice: boolean;
+  /** the first stay that has the theme — where its photo book opens */
+  stopId: number;
 }
 
 /** radius in px = k·√n + min, and the ring's own line */
@@ -208,6 +210,7 @@ export function ThemeRings({
   nearest,
   gather,
   onAim,
+  onOpen,
   scale: sizes = RING_FAR,
 }: {
   rings: ThemeRing[];
@@ -224,6 +227,8 @@ export function ThemeRings({
   gather: boolean;
   /** a ring of several was pressed: come this close, over there, and it comes apart */
   onAim?: (dir: THREE.Vector3, distance: number) => void;
+  /** a ring on its own was pressed: its photo book, at this stay */
+  onOpen?: (city: string, stopId: number) => void;
   /** the look around's sizes — the bench's while it is open */
   scale?: RingFar;
 }) {
@@ -232,7 +237,6 @@ export function ThemeRings({
   const height = useThree((s) => s.size.height);
   const invalidate = useThree((s) => s.invalidate);
   const gl = useThree((s) => s.gl);
-  const events = useThree((s) => s.events);
 
   const points = useRef<THREE.Points>(null);
   const live = useRef<ReturnType<typeof build> | null>(null);
@@ -394,14 +398,21 @@ export function ThemeRings({
     if (moving) invalidate();
   });
 
-  // A ring of several, pressed: the camera comes close enough for it to come apart.
+  // A ring pressed. One of several: the camera comes close enough for it to
+  // come apart. One on its own: that stay's photo book, the theme still on.
   const aim = useRef(onAim);
+  const open = useRef(onOpen);
   useEffect(() => {
     aim.current = onAim;
+    open.current = onOpen;
   });
   useEffect(() => {
-    if (!gather) return;
-    const el = (events.connected as HTMLElement | undefined) ?? gl.domElement;
+    // Heard on the window, not the canvas: on a phone the journey's canvas is
+    // not touched at all (the page under it scrolls), and the press lands on
+    // whatever lies there. Anything that is a thing of its own keeps its press.
+    const el = window;
+    const own =
+      'button, a, input, .journey-header, .theme-row, .stop-rail, .minimap, .country-inset, .filmstrip, .scrubber, .city-label, .about-overlay, .pb, .tuner';
     let down = { x: 0, y: 0, t: 0 };
     const onDown = (e: PointerEvent) => {
       down = { x: e.clientX, y: e.clientY, t: performance.now() };
@@ -409,6 +420,7 @@ export function ThemeRings({
     const onUp = (e: PointerEvent) => {
       const st = live.current;
       if (!st) return;
+      if (e.target instanceof Element && e.target.closest(own)) return;
       // a drag is a turn, and a long press is not a press
       if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 10) return;
       if (performance.now() - down.t > 600) return;
@@ -420,7 +432,7 @@ export function ThemeRings({
       let best: Group | null = null;
       let bestD = Infinity;
       for (const g of st.groups) {
-        if (g.members.length < 2 || g.dir.dot(eye) < 0.15) continue;
+        if (g.dir.dot(eye) < 0.15) continue;
         v.copy(g.dir).multiplyScalar(st.lift).project(camera);
         const x = rect.left + ((v.x + 1) / 2) * rect.width;
         const y = rect.top + ((1 - v.y) / 2) * rect.height;
@@ -433,6 +445,11 @@ export function ThemeRings({
       }
       if (!best) return;
       ringPress.at = performance.now();
+      if (best.members.length < 2) {
+        const ring = rings[best.members[0]];
+        open.current?.(ring.city, ring.stopId);
+        return;
+      }
       // closer by a tenth at a time until these are no longer one ring, and one step past it
       let to = distance;
       for (let step = 0; step < 60 && to > nearest; step++) {
@@ -455,7 +472,7 @@ export function ThemeRings({
       el.removeEventListener('pointerdown', onDown, true);
       el.removeEventListener('pointerup', onUp, true);
     };
-  }, [gather, rings, camera, gl, events, nearest]);
+  }, [rings, camera, gl, nearest]);
 
   if (!rings.length) return null;
   // above the route and the city rings, under the dot's own overlay (DOM)
