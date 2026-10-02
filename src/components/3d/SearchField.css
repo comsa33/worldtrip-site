@@ -215,6 +215,10 @@
   .journey-header__rank-keys {
     display: none;
   }
+  /* a phone's bar is full: while a search is up the two site links give way */
+  .journey-header[data-search] .journey-header__nav a {
+    display: none;
+  }
   .search-field__input {
     max-width: calc(100vw - 290px);
   }
