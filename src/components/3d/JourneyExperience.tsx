@@ -1396,6 +1396,7 @@ function Scene({
               looking
                 ? () => {
                     held.current = true;
+                    onHand(true);
                   }
                 : () => {
                     onInteraction();
@@ -2100,6 +2101,26 @@ function JourneyExperienceContent() {
   // dot alone still talked over the camera's last seconds, and the dot leaving
   // the globe for the words is the one move the whole page has been for.
   const [cameraResting, setCameraResting] = useState(true);
+
+  /* While the globe moves, the frosted things over it — the bar, the city's
+     name, a leg's tip — drop the blur and stand on a denser ground instead. A
+     backdrop blur over a canvas that changes every frame is blurred again
+     every frame, and on a phone that was a good part of what made it hot. At
+     rest they are exactly as they were. The blur comes back a moment after the
+     last movement, so the pauses of autoplay do not flicker it. */
+  // the camera follows the progress spring: while it has not settled, the globe is moving
+  const following = Math.abs(smoothProgress - progress) > 1e-5;
+  const globeMoving = following || playing || orbitHeld || scrubHeld || wheelBusy;
+  useEffect(() => {
+    const root = document.documentElement;
+    if (globeMoving) {
+      root.setAttribute('data-globe-moving', '');
+      return;
+    }
+    const t = window.setTimeout(() => root.removeAttribute('data-globe-moving'), 600);
+    return () => window.clearTimeout(t);
+  }, [globeMoving]);
+  useEffect(() => () => document.documentElement.removeAttribute('data-globe-moving'), []);
   const finaleReady = useAfterBeat(
     settledStop === stops.length - 1 && cameraResting && selectedCity === null,
     FINALE_BEAT_MS

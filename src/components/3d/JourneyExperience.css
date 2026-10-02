@@ -71,6 +71,36 @@
   background: var(--bg);
 }
 
+/* While the globe moves the frosted things go solid (see globeMoving in
+   JourneyExperience.tsx): no blur over a canvas that changes every frame, a
+   denser ground in its place. At rest, exactly as above. */
+.journey-header,
+.city-label,
+.leg-tip {
+  transition:
+    background-color 200ms var(--ease),
+    backdrop-filter 200ms var(--ease),
+    -webkit-backdrop-filter 200ms var(--ease);
+}
+
+:root[data-globe-moving] .journey-header {
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-globe-moving] .city-label {
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-globe-moving] .leg-tip {
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .journey-header > * {
   pointer-events: auto;
 }
