@@ -68,6 +68,78 @@ function run(line: number[], onSegment: (ax: number, ay: number, bx: number, by:
   }
 }
 
+/** A delta-encoded line as its vertices in whole units: [x0, y0, x1, y1, …]. */
+function vertices(line: number[]): number[] {
+  const out = [line[0], line[1]];
+  let x = line[0];
+  let y = line[1];
+  for (let i = 2; i < line.length; i += 2) {
+    x += line[i];
+    y += line[i + 1];
+    out.push(x, y);
+  }
+  return out;
+}
+
+/**
+ * Douglas–Peucker: the vertices a line keeps when none of the dropped ones is
+ * further than `tol` degrees from what is drawn instead (longitude shrunk by the
+ * cosine of the latitude, so a degree is a degree everywhere). The two ends
+ * always stay, so lines still meet.
+ */
+function simplify(v: number[], unit: number, tol: number): number[] {
+  const n = v.length / 2;
+  if (n < 3) return v;
+  const keep = new Uint8Array(n);
+  keep[0] = keep[n - 1] = 1;
+  const stack: [number, number][] = [[0, n - 1]];
+  const t2 = (tol / unit) * (tol / unit);
+  while (stack.length) {
+    const [a, b] = stack.pop()!;
+    const k = Math.cos(((v[a * 2 + 1] + v[b * 2 + 1]) / 2) * unit * (Math.PI / 180));
+    const ax = v[a * 2] * k;
+    const ay = v[a * 2 + 1];
+    const dx = v[b * 2] * k - ax;
+    const dy = v[b * 2 + 1] - ay;
+    const len2 = dx * dx + dy * dy;
+    let worst = -1;
+    let at = -1;
+    for (let i = a + 1; i < b; i++) {
+      const px = v[i * 2] * k - ax;
+      const py = v[i * 2 + 1] - ay;
+      let d2: number;
+      if (len2 === 0) d2 = px * px + py * py;
+      else {
+        const t = Math.max(0, Math.min(1, (px * dx + py * dy) / len2));
+        const ex = px - t * dx;
+        const ey = py - t * dy;
+        d2 = ex * ex + ey * ey;
+      }
+      if (d2 > worst) {
+        worst = d2;
+        at = i;
+      }
+    }
+    if (worst > t2) {
+      keep[at] = 1;
+      stack.push([a, at], [at, b]);
+    }
+  }
+  const out: number[] = [];
+  for (let i = 0; i < n; i++) if (keep[i]) out.push(v[i * 2], v[i * 2 + 1]);
+  return out;
+}
+
+/**
+ * Detail by distance. Far away a degree of coast is a few pixels, and the 10m
+ * outlines put many segments into each one — every one a quad with round caps,
+ * multiplied by MSAA, all landing on the same pixel. So two coarser sets are
+ * kept, and a set is used only where nothing it drops is further than
+ * MAX_ERR_PX from the line as drawn: the same picture, fewer layers.
+ */
+const LEVELS_DEG = [0, 0.03, 0.08];
+const MAX_ERR_PX = 0.25;
+
 /**
  * Country outlines from src/data/worldBorders.json, built by scripts/build-geo.mjs:
  * the countries we never entered at Natural Earth 50m, the 31 we did at 10m,
@@ -123,40 +195,56 @@ export function WorldBorders({
 
   // every boundary segment, sorted into cells by its midpoint
   const cells = useMemo(() => {
-    const byCell = new Map<string, number[]>();
-    const seg = (ax: number, ay: number, bx: number, by: number, unit: number, radius: number) => {
-      const a = latLngToVector3(ay * unit, ax * unit, radius);
-      const b = latLngToVector3(by * unit, bx * unit, radius);
-      const lat = ((ay + by) / 2) * unit;
-      const lng = ((ax + bx) / 2) * unit;
-      const key = `${Math.floor((lat + 90) / CELL_DEG)}:${Math.floor((lng + 180) / CELL_DEG)}`;
-      let list = byCell.get(key);
-      if (!list) byCell.set(key, (list = []));
-      list.push(a.x, a.y, a.z, b.x, b.y, b.z);
-    };
-    const { unit: bu, lines } = data.borders;
-    for (const line of lines) run(line, (ax, ay, bx, by) => seg(ax, ay, bx, by, bu, RADIUS));
-    // The visited countries carry their own boundary at 10m — including the part
-    // they share with a visited neighbour, which therefore arrives twice with the
-    // same vertices. Inked twice through a transparent material it would come out
-    // a stop brighter than every other border on the map, so a segment already
-    // laid down is skipped. The whole units are exact, so they are what is
-    // compared.
-    const { unit: cu, rings } = data.countries;
-    const seen = new Set<string>();
-    for (const country of Object.values(rings)) {
-      for (const ring of country) {
-        run(ring, (ax, ay, bx, by) => {
-          const key =
-            ax < bx || (ax === bx && ay <= by)
-              ? `${ax},${ay},${bx},${by}`
-              : `${bx},${by},${ax},${ay}`;
-          if (seen.has(key)) return;
-          seen.add(key);
-          seg(ax, ay, bx, by, cu, RADIUS);
-        });
+    const cellOf = (lat: number, lng: number) =>
+      `${Math.floor((lat + 90) / CELL_DEG)}:${Math.floor((lng + 180) / CELL_DEG)}`;
+    /** every boundary segment of one level of detail, sorted into cells by its midpoint */
+    const build = (tol: number) => {
+      const byCell = new Map<string, number[]>();
+      const lineSegs = (v: number[], unit: number, seen?: Set<string>) => {
+        for (let i = 2; i < v.length; i += 2) {
+          const ax = v[i - 2];
+          const ay = v[i - 1];
+          const bx = v[i];
+          const by = v[i + 1];
+          // The visited countries carry their own boundary at 10m — including the
+          // part they share with a visited neighbour, which therefore arrives
+          // twice with the same vertices. Inked twice through a transparent
+          // material it would come out a stop brighter than every other border
+          // on the map, so a segment already laid down is skipped. The whole
+          // units are exact, so they are what is compared.
+          if (seen) {
+            const key =
+              ax < bx || (ax === bx && ay <= by)
+                ? `${ax},${ay},${bx},${by}`
+                : `${bx},${by},${ax},${ay}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+          }
+          const pa = latLngToVector3(ay * unit, ax * unit, RADIUS);
+          const pb = latLngToVector3(by * unit, bx * unit, RADIUS);
+          const key = cellOf(((ay + by) / 2) * unit, ((ax + bx) / 2) * unit);
+          let list = byCell.get(key);
+          if (!list) byCell.set(key, (list = []));
+          list.push(pa.x, pa.y, pa.z, pb.x, pb.y, pb.z);
+        }
+      };
+      const { unit: bu, lines } = data.borders;
+      for (const line of lines) {
+        const v = vertices(line);
+        lineSegs(tol ? simplify(v, bu, tol) : v, bu);
       }
-    }
+      const { unit: cu, rings } = data.countries;
+      const seen = new Set<string>();
+      for (const country of Object.values(rings)) {
+        for (const ring of country) {
+          const v = vertices(ring);
+          lineSegs(tol ? simplify(v, cu, tol) : v, cu, seen);
+        }
+      }
+      return byCell;
+    };
+    const levels = LEVELS_DEG.map(build);
+
     // one material for every cell — drawn exactly as the single <Line> it
     // replaces was: same width, colour and blending (set below)
     const material = new LineMaterial();
@@ -169,29 +257,32 @@ export function WorldBorders({
        the frame loop, instead. */
     const all = new THREE.Box3();
     const p = new THREE.Vector3();
-    for (const flat of byCell.values())
+    for (const flat of levels[0].values())
       for (let i = 0; i < flat.length; i += 3)
         all.expandByPoint(p.set(flat[i], flat[i + 1], flat[i + 2]));
     const whole = new THREE.Sphere();
     all.getCenter(whole.center);
     let r2 = 0;
-    for (const flat of byCell.values())
+    for (const flat of levels[0].values())
       for (let i = 0; i < flat.length; i += 3)
         r2 = Math.max(r2, whole.center.distanceToSquared(p.set(flat[i], flat[i + 1], flat[i + 2])));
     whole.radius = Math.sqrt(r2);
-    const list = [...byCell.values()].map((flat) => {
-      const geometry = new LineSegmentsGeometry();
-      geometry.setPositions(flat);
-      geometry.computeBoundingSphere();
-      const own = (geometry.boundingSphere ?? new THREE.Sphere()).clone();
-      geometry.boundingSphere = whole;
-      const mesh = new LineSegments2(geometry, material);
-      mesh.frustumCulled = false;
-      const show = (on: boolean) => {
-        mesh.visible = on;
-      };
-      return { mesh, show, sphere: own };
-    });
+    const list = levels.flatMap((byCell, level) =>
+      [...byCell.values()].map((flat) => {
+        const geometry = new LineSegmentsGeometry();
+        geometry.setPositions(flat);
+        geometry.computeBoundingSphere();
+        const own = (geometry.boundingSphere ?? new THREE.Sphere()).clone();
+        geometry.boundingSphere = whole;
+        const mesh = new LineSegments2(geometry, material);
+        mesh.frustumCulled = false;
+        mesh.visible = false;
+        const show = (on: boolean) => {
+          mesh.visible = on;
+        };
+        return { mesh, show, sphere: own, level };
+      })
+    );
     return { material, list };
   }, [data.borders, data.countries]);
   const cellsRef = useRef(cells);
@@ -229,9 +320,23 @@ export function WorldBorders({
     const len = cam.length();
     frustum.m.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
     frustum.f.setFromProjectionMatrix(frustum.m);
+    // how many CSS pixels a degree is where the globe is nearest the camera —
+    // the largest it is anywhere on the screen, so the level is safe everywhere
+    const fov = (camera as THREE.PerspectiveCamera).fov ?? 45;
+    const pxPerDeg =
+      ((OCCLUDER * Math.PI) / 180) *
+      (size.height / 2 / Math.tan((fov * Math.PI) / 360) / Math.max(1e-3, len - OCCLUDER));
+    let level = 0;
+    for (let i = LEVELS_DEG.length - 1; i > 0; i--) {
+      if (LEVELS_DEG[i] * pxPerDeg <= MAX_ERR_PX) {
+        level = i;
+        break;
+      }
+    }
     for (const c of list)
       c.show(
-        c.sphere.center.dot(cam) + c.sphere.radius * len > OCCLUDER * OCCLUDER &&
+        c.level === level &&
+          c.sphere.center.dot(cam) + c.sphere.radius * len > OCCLUDER * OCCLUDER &&
           frustum.f.intersectsSphere(c.sphere)
       );
   });
