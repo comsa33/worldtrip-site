@@ -35,7 +35,7 @@ export function ThemeRow({
   halo?: boolean;
   /** a mouse over this (the top bar) brings the row back at once, like a mouse over the row */
   wake?: RefObject<HTMLElement | null>;
-  /** over the globe: only the words take the pointer, the rest of the line lets the globe be dragged */
+  /** over the globe: the row is only as wide as its words, the globe beside it can be dragged */
   floating?: boolean;
   className?: string;
 }) {

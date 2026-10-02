@@ -20,13 +20,14 @@
   transition: opacity 400ms var(--ease, ease) 300ms;
 }
 
-/* over the globe: the gaps between the words let the globe be dragged */
+/* Over the globe the row is only as wide as its words, so the globe can be
+   dragged beside it. The row itself keeps the pointer: a scroller that lets
+   touches through is one iOS (WebKit, so Chrome on iOS too) never scrolls. */
 .theme-row.is-floating {
-  pointer-events: none;
-}
-
-.theme-row.is-floating > * {
-  pointer-events: auto;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* more past an edge: that edge fades */

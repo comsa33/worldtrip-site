@@ -42,7 +42,6 @@
   position: fixed;
   top: 56px;
   left: 0;
-  right: 0;
   z-index: 99;
   --ground: var(--globe);
 }
