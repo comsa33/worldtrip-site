@@ -1481,6 +1481,9 @@ function Scene({
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
+                  // a lit ring lies on this marker and took the press: its
+                  // book opens, and the journey stays where it is
+                  if (performance.now() - ringPress.at < 500) return;
                   if (isCurrent && hasPhotos) onCityClick(m.city);
                   else onSelectCity(m.city);
                 }}

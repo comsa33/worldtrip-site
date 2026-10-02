@@ -535,7 +535,20 @@ export function ThemeRings({
           break;
         }
       }
-      aim.current?.(best.dir.clone(), Math.max(nearest, to));
+      to = Math.max(nearest, to);
+      // Neighbours a few pixels apart even at the nearest the hand may pull
+      // (Barcelona and Sitges) never come apart: once there is no closer to
+      // come, the press opens the largest of them rather than doing nothing.
+      const then = atRef.current(nearest, 1);
+      const never =
+        sortRings(rings, st.dirs, best.members, then.scale, then.k, then.min, gapRef.current)
+          .length < 2;
+      if (never && distance - to < 0.05) {
+        const ring = rings[best.members[0]];
+        open.current?.(ring.city, ring.stopId);
+        return;
+      }
+      aim.current?.(best.dir.clone(), to);
     };
     const onCancel = () => press(-1);
     const canvas = gl.domElement;
