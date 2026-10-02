@@ -41,6 +41,16 @@ const subscribe = (l: () => void) => {
   return () => listeners.delete(l);
 };
 
+/* The page is told when an answer comes — a result or none — so it can act
+   on it (go to the first stop) the once, as it would on a press. */
+const answerListeners = new Set<(s: SearchState) => void>();
+export function onAnswer(l: (s: SearchState) => void) {
+  answerListeners.add(l);
+  return () => {
+    answerListeners.delete(l);
+  };
+}
+
 export function useSearch(): SearchState {
   return useSyncExternalStore(
     subscribe,
@@ -103,4 +113,5 @@ export async function submitSearch() {
       if (state.mode === 'none') closeSearch();
     }, NONE_MS);
   }
+  answerListeners.forEach((l) => l(state));
 }

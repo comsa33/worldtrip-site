@@ -143,7 +143,7 @@ const LEVELS = [
 const GATE_KEY = '_is_a_search';
 const GATE_MIN = 0.5;
 const GATE =
-  'Is the query in the state looking for a place, a scene, an experience, a time or a kind of photo from a journey — something one could search travel photos for?';
+  'Is the query in the state looking for a place, a scene, an experience, a time, a kind of photo or who is in the photo, from a journey — something one could search travel photos for?';
 
 /* A score is where the stop falls among the levels, 0 to 3. Measured
    (2026-10-02, five queries): the stops that were the answer sat at 1.66 and
@@ -157,22 +157,12 @@ export const TOP = 12;
 // ---- the words a theme already answers -----------------------------------------
 
 /* Some words are a theme by another name, and a theme is answered from the
-   tags with no call at all: the stops that have it, most photos first. */
-const ME_WORDS = new Set([
-  '나',
-  '내 사진',
-  '내사진',
-  '내가 나온',
-  '내가 나온 사진',
-  '셀카',
-  '셀피',
-  'me',
-  'myself',
-  'selfie',
-  'selfies',
-  'my photos',
-  'photos of me',
-]);
+   tags with no call at all: the stops that have it, most photos first.
+   "Me" is asked for in many ways and Jev cannot tell those stops apart (the
+   traveller is in a few photos nearly everywhere — 2026-10-02, "내가 찍힌 사진"
+   scored flat 2.1–2.2 and gated 0.30), so the words go straight to the tag. */
+const ME_WORDS =
+  /(^|\s)(나|내|me|myself|selfies?)(\s|$)|내가|나를|나만|내 ?(사진|얼굴|모습)|나 ?(나온|찍힌|있는)|셀카|셀피|photos? of me|my (photos?|face)|with me/i;
 
 export function normalize(q: string): string {
   return q.normalize('NFC').replace(/\s+/g, ' ').trim();
@@ -182,7 +172,7 @@ export function normalize(q: string): string {
 export function themeOf(q: string): string | null {
   const w = normalize(q).toLowerCase();
   if (!w) return null;
-  if (ME_WORDS.has(w)) return 'me';
+  if (ME_WORDS.test(w)) return 'me';
   for (const c of tags.categories) {
     if (w === c.ko || w === c.en.toLowerCase()) return c.id;
   }
@@ -290,6 +280,14 @@ export async function POST(request: Request): Promise<Response> {
     };
     answers = data.answers ?? {};
     console.log(`[search] jev ${q.length} chars, ${data.usage?.input_tokens ?? '?'} in`);
+    // SEARCH_DEBUG=1 (dev): the gate and the top of the scores, to set the line by
+    if (process.env.SEARCH_DEBUG) {
+      const top = SUMMARIES.map((s) => ({ id: s.id, score: answers[String(s.id)]?.score ?? 0 }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10)
+        .map((r) => `${stops.find((s) => s.id === r.id)?.city}#${r.id} ${r.score.toFixed(2)}`);
+      console.log(`[search] gate ${answers[GATE_KEY]?.noul?.toFixed(2)} · ${top.join(' · ')}`);
+    }
   } catch {
     return fail('upstream', 502);
   }

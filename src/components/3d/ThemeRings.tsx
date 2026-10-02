@@ -31,7 +31,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ringPress } from './useGlobeView';
-import { RING_FAR, type RingFar } from './themeRingScale';
+import { RING_FAR, RING_NEAR, type RingFar, type RingScale } from './themeRingScale';
 
 export interface ThemeRing {
   city: string;
@@ -45,12 +45,8 @@ export interface ThemeRing {
 }
 
 /** radius in px = k·√n + min, and the ring's own line */
-type RingScale = { k: number; min: number; stroke: number };
-/** The marks at the journey's closeness (B1). With the whole globe in view: themeRingScale.ts. */
-const NEAR: Record<'desk' | 'phone', RingScale> = {
-  desk: { k: 4.2, min: 6, stroke: 1.5 },
-  phone: { k: 3.4, min: 5, stroke: 1.5 },
-};
+/** the marks at the journey's closeness (B1), and with the whole globe in view: themeRingScale.ts */
+const NEAR = RING_NEAR;
 
 const GLOBE_R = 2;
 /**

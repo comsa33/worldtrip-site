@@ -31,6 +31,9 @@ export function SearchField({ brand }: { brand: string }) {
   const { language } = useI18n();
   const search = useSearch();
   const open = search.mode !== 'closed';
+  // the dot is here while the words are written and until they are answered;
+  // with an answer it is back on the globe, and the words stay as they were
+  const seated = search.mode === 'open' || search.mode === 'waiting' || search.mode === 'none';
   const inputRef = useRef<HTMLInputElement>(null);
   const mirrorRef = useRef<HTMLSpanElement>(null);
   const [typing, setTyping] = useState(false);
@@ -45,8 +48,10 @@ export function SearchField({ brand }: { brand: string }) {
 
   // opened from the keyboard (/): the focus has to follow
   useEffect(() => {
-    if (open && document.activeElement !== inputRef.current) inputRef.current?.focus();
-  }, [open]);
+    if (search.mode === 'open' && document.activeElement !== inputRef.current) {
+      inputRef.current?.focus();
+    }
+  }, [search.mode]);
 
   // a cursor stands still while the hand writes and blinks when it pauses
   useEffect(() => {
@@ -109,6 +114,9 @@ export function SearchField({ brand }: { brand: string }) {
           if (e.key === 'Enter') {
             e.preventDefault();
             void submitSearch();
+            // the words are sent: the keys are the journey's again (and the
+            // phone's keyboard goes)
+            inputRef.current?.blur();
           } else if (e.key === 'Escape') {
             e.preventDefault();
             closeSearch();
@@ -120,7 +128,7 @@ export function SearchField({ brand }: { brand: string }) {
           if (search.mode === 'open' && !search.text.trim()) closeSearch();
         }}
       />
-      {open && (
+      {seated && (
         <span
           className="search-field__seat"
           data-dot-follow=""

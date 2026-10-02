@@ -3,6 +3,13 @@
  * they come together. Here rather than in ThemeRings so the `?tune=1` bench
  * can start from the same numbers the globe does.
  */
+export type RingScale = { k: number; min: number; stroke: number };
+/** The marks at the journey's closeness (B1): radius in px = k·√n + min, and the ring's own line. */
+export const RING_NEAR: Record<'desk' | 'phone', RingScale> = {
+  desk: { k: 4.2, min: 6, stroke: 1.5 },
+  phone: { k: 3.4, min: 5, stroke: 1.5 },
+};
+
 export type RingFar = {
   /** radius in px = k·√n + min, and the ring's own line — a phone, and a wider screen */
   phoneK: number;

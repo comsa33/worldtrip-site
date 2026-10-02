@@ -23,14 +23,14 @@ import FinaleOverlay from '../about/FinaleOverlay';
 import StopNote from '../about/StopNote';
 import { useSettledStop } from '../about/useSettledStop';
 import PhotoGallery, { type RingSpot } from '../gallery/PhotoGallery';
-import { TOTAL_LABEL, journeyRoll, rollIndexForStop } from '../../lib/journeyRoll';
+import { TOTAL_LABEL, cityLabel, journeyRoll, rollIndexForStop } from '../../lib/journeyRoll';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd, SwipeHint } from './FirstStep';
 import { SoundToggle } from './SoundToggle';
 import { SearchField } from './SearchField';
-import { openSearch, useSearch } from '../../lib/search';
+import { closeSearch, onAnswer, openSearch, useSearch, type SearchState } from '../../lib/search';
 import { landOn, setFlying, setMood, turnedTo } from '../../lib/sound';
 import { composeJourney } from '../../lib/journeyScore';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
@@ -55,7 +55,8 @@ import { GlobeLabelDriver, GlobeViewToggle } from './GlobeView';
 import { ThemeRings, type ThemeRing } from './ThemeRings';
 import type { RingFar } from './themeRingScale';
 import { ThemeRow } from '../themes/ThemeRow';
-import { hasTheme, stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
+import { hasTheme, setPhotoTheme, stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
+import { SearchRanks, type SearchRing } from './SearchRanks';
 import { stepIndex } from '../../lib/themeStep';
 import {
   fitDistance,
@@ -1063,6 +1064,8 @@ function Scene({
   labelLayer,
   labels,
   photoTheme,
+  searchRings,
+  rankLayer,
   onHand,
   onOpenStop,
   onPressStop,
@@ -1096,6 +1099,10 @@ function Scene({
   labels: GlobeLabel[];
   /** the chosen photo theme: its cities light up as rings (B1) */
   photoTheme: string | null;
+  /** the stops a search answered, lit the same way, with their ranks (C3); null when none */
+  searchRings: SearchRing[] | null;
+  /** where the ranks go (rendered outside the canvas) */
+  rankLayer: React.RefObject<HTMLDivElement | null>;
   /** the hand on the globe (a drag), for the theme row to step back */
   onHand: (on: boolean) => void;
   /** a lit ring on its own was pressed: that stay's photo book */
@@ -1362,6 +1369,9 @@ function Scene({
     }
     return out;
   }, [photoTheme, stops, cities]);
+  // one thing lit at a time: the theme's rings, or else a search's
+  const rings: ThemeRing[] = photoTheme ? themeRings : (searchRings ?? []);
+  const lit = Boolean(photoTheme) || Boolean(searchRings);
 
   return (
     <>
@@ -1386,7 +1396,7 @@ function Scene({
         reveal={reveal}
         hoveredLeg={legTip?.leg ?? null}
         onHoverLeg={onHoverLeg}
-        dim={Boolean(photoTheme)}
+        dim={lit}
       />
       <RevealDriver segments={segments} run={revealRun} reveal={reveal} />
       <HeadTracker
@@ -1463,7 +1473,7 @@ function Scene({
                 hovered={hovered}
                 ink={INK}
                 been={GLOBE[theme].routePast}
-                dim={Boolean(photoTheme)}
+                dim={lit}
                 handoff={
                   outlines.has(m.city)
                     ? {
@@ -1520,9 +1530,9 @@ function Scene({
         );
       })}
 
-      {photoTheme && (
+      {rings.length > 0 && (
         <ThemeRings
-          rings={themeRings}
+          rings={rings}
           ink={INK}
           ground={GLOBE[theme].sphere}
           phone={size.width <= 768}
@@ -1537,6 +1547,9 @@ function Scene({
           spot={ringSpot}
           scale={TUNE_ON ? ringScale : undefined}
         />
+      )}
+      {globe === 'off' && searchRings && (
+        <SearchRanks rings={searchRings} layer={rankLayer} phone={size.width <= 768} />
       )}
 
       {globe === 'off' && (
@@ -1783,6 +1796,8 @@ function Header({
   onToggleGlobe,
   onOpenPhotos,
   barRef,
+  rank,
+  note,
 }: {
   globe: boolean;
   /** held open by the phone on its side: there is no journey to go back to at that size */
@@ -1792,6 +1807,10 @@ function Header({
   onOpenPhotos: () => void;
   /** the bar, for the theme row under it to wake when a mouse is over it */
   barRef?: React.RefObject<HTMLElement | null>;
+  /** a search answered: which of its stops the journey is on, of how many */
+  rank: { n: number; of: number } | null;
+  /** what a reader is told of the answer (aria-live) */
+  note: string;
 }) {
   const { t, language } = useI18n();
   const search = useSearch();
@@ -1808,6 +1827,21 @@ function Header({
       }}
     >
       <SearchField brand={t('journey.brand')} />
+      {rank && (
+        <span className="journey-header__rank mono">
+          <span className="journey-header__rank-n">
+            {rank.n}&nbsp;/&nbsp;{rank.of}
+          </span>
+          <span className="journey-header__rank-keys">
+            <Kbd>←</Kbd>
+            <Kbd>→</Kbd>
+            <span>{language === 'ko' ? '켜진 곳' : 'lit'}</span>
+          </span>
+        </span>
+      )}
+      <span className="sr-only" aria-live="polite">
+        {note}
+      </span>
       <span className="journey-header__period mono">{journeyPeriod}</span>
       {/* Beside the words for the whole journey, how many photos it left. The
           photo book already taught that its total is the way to all of them;
@@ -2087,12 +2121,64 @@ function JourneyExperienceContent() {
         : null,
     [photoTheme, stops, stopProgress]
   );
+  /* The stops a search answered (C3): lit like a theme — one ring a city,
+     sized by the photos there, "1·4" where a city answered twice. A theme
+     word is the theme itself and has no rings of its own. */
+  const search = useSearch();
+  const searchMode = search.mode;
+  const searchStops = search.mode === 'result' && !search.theme ? search.stops : null;
+  const rankLayerRef = useRef<HTMLDivElement>(null);
+  const stopIndexOf = useCallback((id: number) => stops.findIndex((s) => s.id === id), [stops]);
+  const searchRings = useMemo<SearchRing[] | null>(() => {
+    if (!searchStops) return null;
+    const by = new Map<string, SearchRing>();
+    searchStops.forEach((r, rank) => {
+      const st = stops[stopIndexOf(r.id)];
+      const city = st && cities[st.city];
+      if (!st || !city) return;
+      const n = photosForStop(st.id).length;
+      const e = by.get(st.city);
+      if (e) {
+        e.n += n;
+        e.twice = true;
+        e.ranks.push(rank + 1);
+      } else {
+        by.set(st.city, {
+          city: st.city,
+          position: latLngToVector3(city.lat, city.lng, 2.004),
+          n,
+          twice: false,
+          stopId: st.id,
+          ranks: [rank + 1],
+        });
+      }
+    });
+    return [...by.values()];
+  }, [searchStops, stops, stopIndexOf, cities]);
+  const searchBars = useMemo(
+    () =>
+      searchStops
+        ? searchStops.flatMap((r) => {
+            const i = stopIndexOf(r.id);
+            return i >= 0 ? [{ progress: stopProgress[i], n: photosForStop(r.id).length }] : [];
+          })
+        : null,
+    [searchStops, stopIndexOf, stopProgress]
+  );
   const stepTo = useCallback(
     (from: number, dir: 1 | -1) => {
+      // with an answer up, ← → walk its ranks: next best, or the first from anywhere else
+      if (searchStops) {
+        const r = searchStops.findIndex((s) => s.id === stops[from].id);
+        const next = r < 0 ? 0 : Math.max(0, Math.min(searchStops.length - 1, r + dir));
+        const to = stopIndexOf(searchStops[next].id);
+        if (to >= 0 && to !== from) goToStop(to);
+        return;
+      }
       const to = stepIndex(stops.length, from, dir, litStop);
       if (to !== from) goToStop(to);
     },
-    [goToStop, litStop, stops.length]
+    [goToStop, litStop, stops, searchStops, stopIndexOf]
   );
 
   /* The hand at work — a drag of the globe, the line scrubbed, autoplay, the
@@ -2169,6 +2255,11 @@ function JourneyExperienceContent() {
       const target = e.target as HTMLElement | null;
       if (target && ['INPUT', 'TEXTAREA', 'BUTTON'].includes(target.tagName)) return;
       if (selectedCity !== null) return;
+      // an answer up: Esc puts it away (the dot stays where it is)
+      if (e.key === 'Escape' && searchMode !== 'closed') {
+        closeSearch();
+        return;
+      }
       // the dot stands up as a caret after the name: say where to go
       if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
@@ -2201,7 +2292,45 @@ function JourneyExperienceContent() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [currentStop, stepTo, selectedCity, globeView.mode, enterGlobe, exitGlobe]);
+  }, [currentStop, stepTo, selectedCity, globeView.mode, enterGlobe, exitGlobe, searchMode]);
+
+  /* An answer has come: a theme by another name is chosen, which the row
+     shows, and the search is put away; otherwise the search is the one thing
+     lit and the journey goes to the first stop it named — the camera's own
+     rules take it there. */
+  useEffect(
+    () =>
+      onAnswer((s: SearchState) => {
+        if (s.mode !== 'result') return;
+        setPhotoTheme(s.theme ?? null);
+        const top = s.stops[0] ? stopIndexOf(s.stops[0].id) : -1;
+        if (top >= 0) {
+          setPlaying(false);
+          if (globeView.mode === 'on') exitGlobe();
+          goToStop(top);
+        }
+        if (s.theme) closeSearch();
+      }),
+    [stopIndexOf, goToStop, exitGlobe, globeView.mode]
+  );
+
+  // the header's "1 / 6", and what a reader is told
+  const searchRank = useMemo(() => {
+    if (!searchStops) return null;
+    const at = searchStops.findIndex((r) => r.id === stops[currentStop]?.id);
+    return { n: at < 0 ? 1 : at + 1, of: searchStops.length };
+  }, [searchStops, stops, currentStop]);
+  const searchNote = useMemo(() => {
+    if (searchStops) {
+      const first = stops[stopIndexOf(searchStops[0].id)];
+      const name = first ? cityLabel(first.city, language) : '';
+      return language === 'ko'
+        ? `${searchStops.length}곳, 1위 ${name}`
+        : `${searchStops.length} stops, first ${name}`;
+    }
+    if (search.mode === 'none') return language === 'ko' ? '맞는 곳이 없습니다' : 'Nothing matched';
+    return '';
+  }, [searchStops, search.mode, stops, stopIndexOf, language]);
 
   // Countries the journey has reached so far (lights their land dots on the globe)
   const visitedCountries = useMemo(() => {
@@ -2565,8 +2694,9 @@ function JourneyExperienceContent() {
   // has it, or — on a phone — the stop list is up. The list covers the globe,
   // and a dot floating over a list reads as belonging to some row; it goes
   // home to the header's ring while the list is up and flies back after.
-  // while the words are being written the dot is their caret in the header
-  const searching = useSearch().mode !== 'closed';
+  // while the words are being written the dot is their caret in the header;
+  // with an answer it is back on the globe, flying to the first stop
+  const searching = search.mode === 'open' || search.mode === 'waiting' || search.mode === 'none';
   const dotOnGlobe =
     dotOut && selectedCity === null && !finale && !(isMobile && railOpen) && !searching;
 
@@ -2919,6 +3049,8 @@ function JourneyExperienceContent() {
             labelLayer={labelLayerRef}
             labels={globeLabels}
             photoTheme={photoTheme}
+            searchRings={searchRings}
+            rankLayer={rankLayerRef}
             onHand={setOrbitHeld}
             onOpenStop={handleOpenStop}
             onPressStop={handlePressStop}
@@ -2945,6 +3077,8 @@ function JourneyExperienceContent() {
         onToggleGlobe={globeOn ? exitGlobe : enterGlobe}
         onOpenPhotos={handleOpenAllPhotos}
         barRef={barRef}
+        rank={searchRank}
+        note={searchNote}
       />
       {/* the one place a theme is chosen, the same row the photo book has — looking around too */}
       <ThemeRow
@@ -2958,6 +3092,16 @@ function JourneyExperienceContent() {
       {/* the filmstrip's photos of other themes step back, as the book's do */}
       {photoTheme && globeView.mode === 'off' && (
         <style>{`.filmstrip__thumb:not([data-t~="${photoTheme}"]){opacity:0.2;filter:grayscale(1)}`}</style>
+      )}
+      {/* the ranks beside the rings a search lit (SearchRanks places them) */}
+      {searchRings && !globeOn && (
+        <div className="search-ranks mono" ref={rankLayerRef} aria-hidden="true">
+          {searchRings.map((r) => (
+            <span key={r.city} className="search-ranks__n">
+              {r.ranks.join('·')}
+            </span>
+          ))}
+        </div>
       )}
       {/* the names of the cities walked, while looking around (GlobeLabelDriver places them) */}
       {globeOn && (
@@ -3038,7 +3182,7 @@ function JourneyExperienceContent() {
           seek(p, mode);
         }}
         onTogglePlay={() => setPlaying((v) => !v)}
-        bars={themeBars}
+        bars={themeBars ?? searchBars}
         onDrag={setScrubHeld}
       />
 
