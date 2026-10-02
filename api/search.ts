@@ -106,7 +106,7 @@ const THEME_EN: Record<string, string> = Object.fromEntries(
 );
 /* "me" is the one theme that is not a thing in the picture but who is in it. */
 const describeTheme = (id: string, n: number) =>
-  id === 'me' ? `the traveller himself in ${n}` : `${THEME_EN[id] ?? id} ${n}`;
+  id === 'me' ? `the traveller in ${n}` : `${THEME_EN[id] ?? id} ${n}`;
 
 export type StopSummary = { id: number; text: string };
 

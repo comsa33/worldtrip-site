@@ -29,6 +29,8 @@ import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd, SwipeHint } from './FirstStep';
 import { SoundToggle } from './SoundToggle';
+import { SearchField } from './SearchField';
+import { openSearch, useSearch } from '../../lib/search';
 import { landOn, setFlying, setMood, turnedTo } from '../../lib/sound';
 import { composeJourney } from '../../lib/journeyScore';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
@@ -1792,10 +1794,12 @@ function Header({
   barRef?: React.RefObject<HTMLElement | null>;
 }) {
   const { t, language } = useI18n();
+  const search = useSearch();
   return (
     <header
       ref={barRef}
       className="journey-header"
+      data-search={search.mode === 'closed' ? undefined : search.mode}
       // A switch pressed with the mouse lets go of the focus, so the arrow keys
       // go straight back to the journey. Pressed from the keyboard (detail 0)
       // it keeps it, and the reader tabbing along does not lose their place.
@@ -1803,10 +1807,7 @@ function Header({
         if (e.detail > 0) (e.target as HTMLElement).closest('button')?.blur();
       }}
     >
-      <div className="journey-header__brand">
-        <span className="journey-header__dot" data-dot-home aria-hidden="true" />
-        <span>{t('journey.brand')}</span>
-      </div>
+      <SearchField brand={t('journey.brand')} />
       <span className="journey-header__period mono">{journeyPeriod}</span>
       {/* Beside the words for the whole journey, how many photos it left. The
           photo book already taught that its total is the way to all of them;
@@ -2168,6 +2169,12 @@ function JourneyExperienceContent() {
       const target = e.target as HTMLElement | null;
       if (target && ['INPUT', 'TEXTAREA', 'BUTTON'].includes(target.tagName)) return;
       if (selectedCity !== null) return;
+      // the dot stands up as a caret after the name: say where to go
+      if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        openSearch();
+        return;
+      }
       // looking around, the one key is the way out
       if (globeView.mode === 'on') {
         if (e.key === 'Escape') exitGlobe();
@@ -2558,7 +2565,10 @@ function JourneyExperienceContent() {
   // has it, or — on a phone — the stop list is up. The list covers the globe,
   // and a dot floating over a list reads as belonging to some row; it goes
   // home to the header's ring while the list is up and flies back after.
-  const dotOnGlobe = dotOut && selectedCity === null && !finale && !(isMobile && railOpen);
+  // while the words are being written the dot is their caret in the header
+  const searching = useSearch().mode !== 'closed';
+  const dotOnGlobe =
+    dotOut && selectedCity === null && !finale && !(isMobile && railOpen) && !searching;
 
   // The sound follows the journey in two ways. In the air the chord opens —
   // read off the leg under the page, not the spring, so it opens as the move

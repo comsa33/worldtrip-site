@@ -202,8 +202,10 @@ export function TravelingDot() {
             if (carry === 'caret-blink') ball.setAttribute('data-blink', '');
             else ball.removeAttribute('data-blink');
           } else if (wasCaret) {
-            unCaret();
+            lieDown();
           }
+          // sent off and waiting for the answer: the dot breathes where it lies
+          ball?.toggleAttribute('data-wait', carry === 'wait');
           if (carry.startsWith('land')) bounce();
           lastCarry = carry;
         }
@@ -232,6 +234,16 @@ export function TravelingDot() {
       ball.removeAttribute('data-caret');
       ball.removeAttribute('data-caret-in');
       ball.removeAttribute('data-blink');
+      ball.removeAttribute('data-caret-out');
+      ball.removeAttribute('data-wait');
+    };
+    /** The caret folds back into the dot — the standing-up run backwards. */
+    const lieDown = () => {
+      if (!ball) return;
+      unCaret();
+      void ball.offsetWidth;
+      ball.setAttribute('data-caret-out', '');
+      window.setTimeout(() => ball.removeAttribute('data-caret-out'), 340);
     };
 
     /** The one arrival that is not on the way to somewhere else. */
