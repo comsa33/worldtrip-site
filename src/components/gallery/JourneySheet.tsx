@@ -1083,7 +1083,7 @@ function ThemeRow({ theme, lang }: { theme: string | null; lang: Lang }) {
     const row = rowRef.current;
     const on = row?.querySelector<HTMLElement>('.is-on');
     if (!row || !on || row.scrollWidth <= row.clientWidth) return;
-    const l = on.offsetLeft - row.offsetLeft;
+    const l = on.offsetLeft; // the row is the word's offsetParent
     if (l < row.scrollLeft || l + on.offsetWidth > row.scrollLeft + row.clientWidth)
       row.scrollTo({ left: l - 24, behavior: 'smooth' });
   }, [theme]);
