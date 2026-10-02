@@ -31,6 +31,7 @@ import { RING_MOVE } from '../3d/themeRingScale';
 import { stepIndex } from '../../lib/themeStep';
 import { ThemeRow } from '../themes/ThemeRow';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
+import { FILM_DEFAULTS, Film, landing, rubber, speedOf, type FilmParams } from './film';
 import './PhotoGallery.css';
 
 interface Photo {
@@ -378,11 +379,6 @@ export default function PhotoGallery({
     if (note) landOn(note);
   }, [cityName, spokenStop]);
 
-  /* ── how the next photo arrives ─────────────────────────────────────────
-     A swipe hands over where the finger left the picture and how fast it was
-     going, and the incoming photo picks the movement up from exactly there.
-     A key or a click has no such handover, so it gets the house default. */
-  const [entry, setEntry] = useState<{ from: number; ms: number } | null>(null);
   /* A theme on, the others step back and ← → (a swipe too) go to the next lit
      photo. A roll with nothing lit in it steps as it always has. */
   const theme = usePhotoTheme();
@@ -391,9 +387,11 @@ export default function PhotoGallery({
     [theme, photos]
   );
   const anyLit = useMemo(() => (lit ? photos.some((_, i) => lit(i)) : false), [lit, photos]);
+  /* A key, a click, a button: the band is set a card over and the spring
+     brings it in (the film, below). Pressed again on the way, the target is
+     one card further and the speed is kept. */
   const go = useCallback(
-    (d: number, handoff?: { from: number; ms: number }) => {
-      setEntry(handoff ?? null);
+    (d: number) => {
       setIndex((i) => stepIndex(count, Math.min(i, count - 1), d > 0 ? 1 : -1, lit));
     },
     [count, lit]
@@ -419,16 +417,12 @@ export default function PhotoGallery({
     return { w: Math.round(h * ar), h: Math.round(h) };
   }, [photo, slot.w, slot.h]);
 
-  /* ── the outgoing photo keeps its place until the new one has decoded ── */
-  const [holding, setHolding] = useState<Photo | null>(null);
+  /* ── which way the counter rolls ──────────────────────────────────────── */
   const [shownId, setShownId] = useState<string | undefined>(photo?.id);
   const [dir, setDir] = useState(1);
-  /* Opened from a tile, the photo is not the neighbour of the one before it:
-     holding the last photo seen until this one decodes put a different picture
-     in the frame for a moment. So a photo grown out of its tile starts as that
-     tile — the sheet's own thumbnail, already in hand — and the full photo
-     comes up over it once it has decoded. Swiping keeps the hold: there the
-     outgoing photo is the right thing to see until the next one is ready. */
+  /* A photo grown out of its tile starts as that tile — the sheet's own
+     thumbnail, already in hand — and the full photo comes up over it once it
+     has decoded. */
   const [grownFrom, setGrownFrom] = useState<string | null>(null);
   const [sharpId, setSharpId] = useState<string | null>(null);
   // Out of a ring, the frame shows the sheet's tile under the photo until the
@@ -440,11 +434,9 @@ export default function PhotoGallery({
     setGrownFrom(initialPhotoId);
   }
   if (photo && shownId !== photo.id) {
-    // the photo changed this render: keep the old one on screen until the new
-    // one reports it has decoded (state reset during render, per React guidance)
+    // the photo changed this render (state reset during render, per React guidance)
     const prevIdx = photos.findIndex((p) => p.id === shownId);
     setDir(prevIdx >= 0 && prevIdx > safeIndex ? -1 : 1);
-    setHolding(grownFrom === photo.id ? null : (photos.find((p) => p.id === shownId) ?? null));
     setShownId(photo.id);
   }
   const growing = Boolean(photo && grownFrom === photo.id && sharpId !== photo.id);
@@ -458,6 +450,175 @@ export default function PhotoGallery({
     const raf = requestAnimationFrame(() => setSharpId(id));
     return () => cancelAnimationFrame(raf);
   }, [growing, photo]);
+
+  /* ── the strip of film ───────────────────────────────────────────────────
+     This photo and its neighbours — the next lit ones, with a theme on — lie
+     on one band (G1, film.ts). The hand moves the band 1:1; let go, a spring
+     carries it on with the hand's own speed; a key or a click sets the band a
+     card over and the same spring brings it in. Each card is its own frame,
+     the photo's own shape, so nothing changes shape on the way. */
+  const filmParams: FilmParams = TUNE_ON
+    ? {
+        response: tuned.filmResponse,
+        damping: tuned.filmDamping,
+        project: tuned.filmProject,
+        band: tuned.filmBand,
+        gapPhone: tuned.filmGapPhone,
+        gapDesk: tuned.filmGapDesk,
+      }
+    : FILM_DEFAULTS;
+  const coarse = useMemo(
+    () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches,
+    []
+  );
+  const reduced = useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    []
+  );
+  // the cards: two before, this one, two after — by the same step ← → take
+  const cards = useMemo(() => {
+    const out: { i: number; k: number }[] = [];
+    if (!count) return out;
+    let i = safeIndex;
+    for (let k = -1; k >= -2; k--) {
+      const j = stepIndex(count, i, -1, lit);
+      if (j === i) break;
+      out.unshift({ i: j, k });
+      i = j;
+    }
+    out.push({ i: safeIndex, k: 0 });
+    i = safeIndex;
+    for (let k = 1; k <= 2; k++) {
+      const j = stepIndex(count, i, 1, lit);
+      if (j === i) break;
+      out.push({ i: j, k });
+      i = j;
+    }
+    return out;
+  }, [safeIndex, count, lit]);
+  /* Where each card sits on the band, this one at 0. A phone's card is the
+     screen's width and a gap; a desk's frames are set by height and differ
+     in width, so there they sit edge to edge with the gap between. */
+  const lane = useMemo(() => {
+    if (!slot.w || !slot.h || !cards.length) return null;
+    const sizes = cards.map(({ i }) => {
+      const ar = arOf(photos[i]);
+      const h = Math.min(slot.h, slot.w / ar);
+      return { w: Math.round(h * ar), h: Math.round(h) };
+    });
+    const here = cards.findIndex((c) => c.k === 0);
+    const centres: number[] = cards.map(() => 0);
+    const gap = coarse ? filmParams.gapPhone : filmParams.gapDesk;
+    for (let n = here + 1; n < cards.length; n++)
+      centres[n] = coarse
+        ? centres[n - 1] + slot.w + gap
+        : centres[n - 1] + sizes[n - 1].w / 2 + gap + sizes[n].w / 2;
+    for (let n = here - 1; n >= 0; n--)
+      centres[n] = coarse
+        ? centres[n + 1] - slot.w - gap
+        : centres[n + 1] - sizes[n + 1].w / 2 - gap - sizes[n].w / 2;
+    return { sizes, centres, here };
+  }, [cards, photos, slot.w, slot.h, coarse, filmParams.gapPhone, filmParams.gapDesk]);
+  const filmRef = useRef<HTMLDivElement>(null);
+  const film = useRef(new Film(FILM_DEFAULTS.response, FILM_DEFAULTS.damping)).current;
+  useEffect(
+    () => film.retune(filmParams.response, filmParams.damping),
+    [film, filmParams.response, filmParams.damping]
+  );
+  const filmRaf = useRef(0);
+  const filmAt = useRef(0);
+  const drawFilm = useCallback(() => {
+    const el = filmRef.current;
+    if (el) el.style.transform = `translate3d(${film.x.toFixed(2)}px, 0, 0)`;
+  }, [film]);
+  const stopFilm = useCallback(() => {
+    if (filmRaf.current) cancelAnimationFrame(filmRaf.current);
+    filmRaf.current = 0;
+  }, []);
+  const runFilm = useCallback(() => {
+    if (filmRaf.current) return;
+    filmAt.current = performance.now();
+    const step = (now: number) => {
+      const dt = (now - filmAt.current) / 1000;
+      filmAt.current = now;
+      const done = film.tick(dt);
+      drawFilm();
+      filmRaf.current = done ? 0 : requestAnimationFrame(step);
+    };
+    filmRaf.current = requestAnimationFrame(step);
+  }, [film, drawFilm]);
+  useEffect(() => stopFilm, [stopFilm]);
+  /** the band's reach: past the first or last card it is on a rubber band */
+  const bandX = useCallback(
+    (x: number) => {
+      if (!lane) return x;
+      const max = -lane.centres[0];
+      const min = -lane.centres[lane.centres.length - 1];
+      const w = slot.w || 1;
+      if (x > max) return max + rubber(x - max, w, filmParams.band);
+      if (x < min) return min + rubber(x - min, w, filmParams.band);
+      return x;
+    },
+    [lane, slot.w, filmParams.band]
+  );
+  const bandXRef = useRef(bandX);
+  useEffect(() => {
+    bandXRef.current = bandX;
+  });
+  /* The photo changed: the card now at 0 was at some centre c on the band
+     before, so the band moves by c and nothing on screen moves — and the
+     spring takes it the rest of the way in, keeping whatever speed it had. A
+     photo from elsewhere (the strip, a tile) is simply there. */
+  const prevLane = useRef({ ids: cards.map((c) => photos[c.i]?.id), lane });
+  useLayoutEffect(() => {
+    const prev = prevLane.current;
+    const ids = cards.map((c) => photos[c.i]?.id);
+    prevLane.current = { ids, lane };
+    if (prev.ids.length === ids.length && prev.ids.every((id, n) => id === ids[n])) return;
+    const n = prev.ids.indexOf(photo?.id ?? '');
+    film.target = 0;
+    if (n >= 0 && prev.lane && !reduced) {
+      film.x += prev.lane.centres[n];
+      runFilm();
+    } else {
+      film.x = 0;
+      film.v = 0;
+      stopFilm();
+    }
+    drawFilm();
+  }, [cards, lane, photos, photo?.id, film, reduced, runFilm, stopFilm, drawFilm]);
+  /** let go (a finger, the trackpad) with this speed: where the band lands */
+  const letGo = useCallback(
+    (v: number, haptic = false) => {
+      if (!lane) return;
+      const n = landing(film.x, v, { centres: lane.centres, here: lane.here }, filmParams.project);
+      const j = cards[n].i;
+      film.release(0, v);
+      if (j !== safeIndex) {
+        setIndex(j);
+        if (haptic && navigator.vibrate) {
+          try {
+            navigator.vibrate(8);
+          } catch {
+            /* no haptics here */
+          }
+        }
+      } else if (reduced) {
+        film.x = 0;
+        film.v = 0;
+        drawFilm();
+      } else runFilm();
+    },
+    [lane, cards, film, filmParams.project, safeIndex, reduced, runFilm, drawFilm]
+  );
+  const letGoRef = useRef(letGo);
+  useEffect(() => {
+    letGoRef.current = letGo;
+  });
+  /** a mouse that dragged the band: the click that follows is not a turn of the page */
+  const dragged = useRef(false);
 
   const sheetRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -662,7 +823,6 @@ export default function PhotoGallery({
           safeIndex >= top && safeIndex <= bottom ? safeIndex : d > 0 ? top - 1 : bottom + 1;
         const j = stepIndex(count, Math.max(-1, Math.min(count, from)), d, lit);
         if (j >= 0 && j < count && lit?.(j)) {
-          setEntry(null);
           setIndex(j);
           jumpTo(sheetRef.current, j, 'focus');
         }
@@ -742,16 +902,39 @@ export default function PhotoGallery({
     // the sheet mounts once the scope has widened, so wait for that too
   }, [sheet, scope, close]);
 
-  /* ── the wheel over the picture: down is out (the sheet), up is back in ── */
+  /* ── the wheel over the picture: down is out (the sheet), up is back in;
+        across (two fingers on a trackpad) is the band, 1:1 ───────────────── */
   const wheelAcc = useRef(0);
+  const wheelFilm = useRef({ on: false, timer: 0, pts: [] as { x: number; t: number }[] });
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
+    const w = wheelFilm.current;
     const onWheel = (e: WheelEvent) => {
       const t = e.target as Node;
       if (stripRef.current?.contains(t)) return; // the strip scrolls itself
       if (e.ctrlKey || e.metaKey) return; // a pinch: the sheet's own
       const inSheet = sheetRef.current?.contains(t) ?? false;
+      if (!inSheet && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        // the band follows the fingers; 80ms of quiet is the hand lifting
+        const now = performance.now();
+        if (!w.on) {
+          w.on = true;
+          stopFilm();
+          film.grab();
+          w.pts = [{ x: film.x, t: now }];
+        }
+        film.x = bandXRef.current(film.x - e.deltaX);
+        w.pts.push({ x: film.x, t: now });
+        if (w.pts.length > 12) w.pts.shift();
+        drawFilm();
+        window.clearTimeout(w.timer);
+        w.timer = window.setTimeout(() => {
+          w.on = false;
+          letGoRef.current(speedOf(w.pts));
+        }, 80);
+        return;
+      }
       if (inSheet) {
         // at the top of the sheet, a further push up goes back into the photo
         if (sheetRef.current!.scrollTop <= 0 && e.deltaY < 0) {
@@ -772,8 +955,11 @@ export default function PhotoGallery({
       } else wheelAcc.current = 0;
     };
     el.addEventListener('wheel', onWheel, { passive: true });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, [cityName]);
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+      window.clearTimeout(w.timer);
+    };
+  }, [cityName, film, stopFilm, drawFilm]);
 
   /* ── the strip: a plain wheel moves it sideways, and it can be dragged ── */
   useEffect(() => {
@@ -891,8 +1077,19 @@ export default function PhotoGallery({
       });
   }, [safeIndex, cityName, scope]);
 
-  /* ── touch: swipe across, pull down to close ─────────────────────────── */
-  const gesture = useRef({ down: false, sx: 0, sy: 0, axis: '' as '' | 'x' | 'y', dy: 0, t0: 0 });
+  /* ── the hand: across is the band, down (a finger) is out ────────────── */
+  const gesture = useRef({
+    down: false,
+    sx: 0,
+    sy: 0,
+    axis: '' as '' | 'x' | 'y',
+    dy: 0,
+    t0: 0,
+    mouse: false,
+    /** where the band was when the hand took it */
+    x0: 0,
+    pts: [] as { x: number; t: number }[],
+  });
   const onPointerDown = (e: React.PointerEvent) => {
     // closing into its ring and caught again: it opens back out from where it is
     if (ringClosing.current) {
@@ -902,15 +1099,35 @@ export default function PhotoGallery({
       return;
     }
     ringCaught.current = false;
-    if (e.pointerType === 'mouse') return;
     const t = e.target as HTMLElement;
+    const mouse = e.pointerType === 'mouse';
+    // a mouse takes the band too, on the picture — not the controls round it
+    if (mouse && (!slotRef.current?.contains(t) || t.closest('button'))) return;
     // the sheet scrolls and pinches, the strip scrolls, the map aims: none of
     // them is a swipe of the photo. A finger running along the strip used to
     // turn the photo as well, and the strip then pulled itself back to centre
     // the new one against the finger — a scroll that went and came back.
     if (sheetRef.current?.contains(t) || stripRef.current?.contains(t) || t.closest('.pb__locator'))
       return;
-    gesture.current = { down: true, sx: e.clientX, sy: e.clientY, axis: '', dy: 0, t0: Date.now() };
+    if (mouse) {
+      e.preventDefault();
+      rootRef.current?.setPointerCapture(e.pointerId);
+    }
+    // a band in motion is caught where it is
+    stopFilm();
+    film.grab();
+    dragged.current = false;
+    gesture.current = {
+      down: true,
+      sx: e.clientX,
+      sy: e.clientY,
+      axis: '',
+      dy: 0,
+      t0: Date.now(),
+      mouse,
+      x0: film.x,
+      pts: [],
+    };
   };
   const onPointerMove = (e: React.PointerEvent) => {
     const g = gesture.current;
@@ -918,16 +1135,17 @@ export default function PhotoGallery({
     const dx = e.clientX - g.sx;
     const dy = e.clientY - g.sy;
     if (!g.axis) {
-      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-      g.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      if (Math.abs(dx) < (g.mouse ? 3 : 8) && Math.abs(dy) < 8) return;
+      // a mouse only ever has the band; a finger may be pulling the book away
+      g.axis = g.mouse || Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
     }
     nudge();
     if (g.axis === 'x') {
-      const slotEl = slotRef.current;
-      if (!slotEl) return;
-      const atEnd = (dx > 0 && safeIndex === 0) || (dx < 0 && safeIndex === count - 1);
-      slotEl.style.transition = 'none';
-      slotEl.style.transform = `translateX(${atEnd ? dx * 0.32 : dx * 0.9}px)`;
+      film.x = bandX(g.x0 + dx);
+      g.pts.push({ x: film.x, t: performance.now() });
+      if (g.pts.length > 12) g.pts.shift();
+      if (Math.abs(dx) > 3) dragged.current = true;
+      drawFilm();
       return;
     }
     g.dy = dy;
@@ -962,50 +1180,19 @@ export default function PhotoGallery({
       slotEl.style.transform = `translateY(${dy * 0.85}px) scale(${1 - k * 0.42})`;
     }
   };
-  const endGesture = (e: React.PointerEvent) => {
+  const endGesture = () => {
     const g = gesture.current;
     if (!g.down) return;
     g.down = false;
     const el = rootRef.current;
-    const dx = e.clientX - g.sx;
     const ms = Date.now() - g.t0;
     if (g.axis === 'x') {
-      const slotEl = slotRef.current;
-      const fling = Math.abs(dx) / Math.max(ms, 1) > 0.45;
-      const moved = Math.abs(dx) > 60 || fling;
-      const next = safeIndex + (dx < 0 ? 1 : -1);
-      const turning = moved && next >= 0 && next < count;
-      if (slotEl) {
-        if (turning) {
-          // the frame snaps home with no transition and the incoming photo
-          // slides in from the side the finger came from — one movement, not
-          // a spring-back racing a fade
-          slotEl.style.transition = '';
-          slotEl.style.transform = '';
-        } else {
-          slotEl.style.transition = 'transform 320ms var(--ease)';
-          slotEl.style.transform = '';
-          window.setTimeout(() => {
-            slotEl.style.transition = '';
-          }, 340);
-        }
-      }
-      if (turning) {
-        // the frame is sitting at dx; the photo continues from there, and the
-        // faster the throw the shorter the rest of the trip
-        const v = Math.abs(dx) / Math.max(ms, 1);
-        go(dx < 0 ? 1 : -1, {
-          from: dx,
-          ms: Math.round(Math.max(170, Math.min(320, 320 - v * 150))),
-        });
-        if (navigator.vibrate) {
-          try {
-            navigator.vibrate(8);
-          } catch {
-            /* no haptics here */
-          }
-        }
-      }
+      // the band goes on from where the hand left it, at the hand's last speed
+      g.pts.push({ x: film.x, t: performance.now() });
+      letGo(speedOf(g.pts), !g.mouse);
+    } else if (!g.axis) {
+      // a band caught on the way and let go without a move goes on to rest
+      if (film.x !== 0) letGo(0);
     } else if (g.axis === 'y') {
       const slotEl = slotRef.current;
       // back to the sheet goes either way for a photo that came from it
@@ -1092,6 +1279,11 @@ export default function PhotoGallery({
   const onFigureClick = (e: React.MouseEvent) => {
     const fig = figRef.current;
     if (!fig) return;
+    // the band was dragged here: letting go is not also a click
+    if (dragged.current) {
+      dragged.current = false;
+      return;
+    }
     const r = fig.getBoundingClientRect();
     go(e.clientX - r.left < r.width / 2 ? -1 : 1);
   };
@@ -1259,10 +1451,7 @@ export default function PhotoGallery({
             lang={lang}
             onPick={(i) => {
               if (rollSheet) jumpTo(sheetRef.current, i);
-              else {
-                setEntry(null);
-                setIndex(i);
-              }
+              else setIndex(i);
             }}
           />
         )}
@@ -1333,70 +1522,72 @@ export default function PhotoGallery({
 
       <div className="pb__stage">
         <div className="pb__slot" ref={slotRef}>
-          <figure
-            className={`pb__frame${zoomFrom ? ' is-zooming' : ''}`}
-            ref={figRef}
-            style={
-              box
-                ? ({
-                    width: box.w,
-                    height: box.h,
-                    ...(zoomFrom
-                      ? {
-                          '--zx': `${zoomFrom.zx}px`,
-                          '--zy': `${zoomFrom.zy}px`,
-                          '--zs': String(zoomFrom.zs),
-                        }
-                      : {}),
-                  } as React.CSSProperties)
-                : undefined
-            }
-            onPointerMove={onFigureMove}
-            onClick={onFigureClick}
-          >
-            {growing && photo && (
-              <img
-                key={`${photo.id}:tile`}
-                className="pb__img is-tile"
-                src={srcFor(photo, 480, { exact: true })}
-                alt=""
-                aria-hidden="true"
-              />
-            )}
-            {holding && box && (
-              <img
-                key={holding.id}
-                className="pb__img is-out"
-                src={srcFor(holding, box.w)}
-                alt=""
-                aria-hidden="true"
-              />
-            )}
-            <img
-              key={photo.id}
-              ref={mainImgRef}
-              className={`pb__img${growing ? ' is-waiting' : ''}`}
-              style={
-                {
-                  '--from': `${grownFrom === photo.id ? 0 : entry ? entry.from : dir > 0 ? 22 : -22}px`,
-                  '--in-ms': `${entry ? entry.ms : 300}ms`,
-                } as React.CSSProperties
-              }
-              src={srcFor(photo, box?.w ?? 800)}
-              alt={text}
-              decoding="async"
-              fetchPriority="high"
-              onLoad={() => {
-                setHolding(null);
-                setSharpId(photo.id);
-              }}
-              onError={() => {
-                setHolding(null);
-                setSharpId(photo.id);
-              }}
-            />
-            <span className="pb__cursor" ref={curRef} aria-hidden="true" />
-          </figure>
+          {/* the band: each card its own frame, the photo's shape, its tones
+              under it until the picture is in — so a late one moves the same */}
+          <div className="pb__film" ref={filmRef}>
+            {cards.map(({ i, k }, n) => {
+              const p = photos[i];
+              const here = k === 0;
+              const size = lane?.sizes[n] ?? (here ? box : null);
+              const c = lane?.centres[n] ?? 0;
+              const tone = p.tone?.split(',');
+              return (
+                <figure
+                  key={p.id}
+                  className={`pb__frame${here ? ' is-here' : ''}${here && zoomFrom ? ' is-zooming' : ''}`}
+                  ref={here ? figRef : undefined}
+                  style={
+                    size
+                      ? ({
+                          width: size.w,
+                          height: size.h,
+                          left: `calc(50% + ${c - size.w / 2}px)`,
+                          top: `calc(50% - ${size.h / 2}px)`,
+                          ...(tone?.length === 2
+                            ? { background: `linear-gradient(#${tone[0]}, #${tone[1]})` }
+                            : {}),
+                          ...(here && zoomFrom
+                            ? {
+                                '--zx': `${zoomFrom.zx}px`,
+                                '--zy': `${zoomFrom.zy}px`,
+                                '--zs': String(zoomFrom.zs),
+                              }
+                            : {}),
+                        } as React.CSSProperties)
+                      : undefined
+                  }
+                  onPointerMove={here ? onFigureMove : undefined}
+                  onClick={here ? onFigureClick : undefined}
+                >
+                  {here && growing && (
+                    <img
+                      key={`${p.id}:tile`}
+                      className="pb__img is-tile"
+                      src={srcFor(p, 480, { exact: true })}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                    />
+                  )}
+                  {size && (
+                    <img
+                      ref={here ? mainImgRef : undefined}
+                      className={`pb__img${here && growing ? ' is-waiting' : ''}`}
+                      src={srcFor(p, size.w)}
+                      alt={here ? text : ''}
+                      aria-hidden={here ? undefined : true}
+                      decoding="async"
+                      fetchPriority={here ? 'high' : undefined}
+                      draggable={false}
+                      onLoad={here ? () => setSharpId(p.id) : undefined}
+                      onError={here ? () => setSharpId(p.id) : undefined}
+                    />
+                  )}
+                  {here && <span className="pb__cursor" ref={curRef} aria-hidden="true" />}
+                </figure>
+              );
+            })}
+          </div>
         </div>
 
         <figcaption className="pb__cap" key={photo.id}>

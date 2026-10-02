@@ -64,7 +64,14 @@
     scale(calc(var(--ring-as) + (var(--ring-bs) - var(--ring-as)) * var(--fly)));
 }
 
-.pb.is-ringed .pb__frame {
+/* flying to or from a ring, or into its frame on the strip, this photo goes
+   alone: the cards beside it are not seen */
+.pb.is-ringed .pb__frame:not(.is-here),
+.pb.is-releasing .pb__frame:not(.is-here) {
+  visibility: hidden;
+}
+
+.pb.is-ringed .pb__frame.is-here {
   clip-path: circle(
     calc(
         var(--ring-r0) + (var(--ring-r1) - var(--ring-r0)) *
@@ -192,6 +199,16 @@
   place-items: center;
   min-height: 0;
   min-width: 0;
+  /* the band runs on past the slot's edges; what is past them is not seen */
+  overflow: clip;
+}
+
+/* the strip of film (G1): the cards lie on it, this one at the middle, and
+   the whole band is moved — by the hand 1:1, then by a spring (film.ts) */
+.pb__film {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
 }
 
 /*
@@ -201,7 +218,7 @@
  * means it is always exactly the picture's edge.
  */
 .pb__frame {
-  position: relative;
+  position: absolute;
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--line-strong);
@@ -209,9 +226,6 @@
   padding: 1px;
   background: var(--bg-card);
   cursor: none;
-  transition:
-    width var(--t-base) var(--ease),
-    height var(--t-base) var(--ease);
 }
 
 .pb__img {
@@ -222,22 +236,10 @@
   object-fit: cover;
   border-radius: 2px;
   display: block;
-  /* It arrives from the side the finger came from. The fade alone was there
-     before, and it read as random: the outgoing photo is held until the new
-     one decodes, so a cached neighbour swapped instantly and an uncached one
-     lingered. The movement is the same either way. */
-  animation: pbIn var(--in-ms, 300ms) var(--ease-out) both;
-}
-
-@keyframes pbIn {
-  from {
-    opacity: 0;
-    transform: translateX(var(--from, 0));
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  /* the picture comes up in its frame where it is — the frame, with the
+     photo's tones under it, has already been moving; the movement is the
+     band's and the same whether the picture was in hand or late */
+  animation: pbFade 160ms var(--ease-out) both;
 }
 
 /* Grown out of a tile: the tile's own thumbnail fills the frame, and the full
@@ -250,12 +252,6 @@
 .pb__img.is-waiting {
   animation: none;
   opacity: 0;
-}
-
-/* the photo on its way out: it holds the frame until the new one has decoded */
-.pb__img.is-out {
-  z-index: 0;
-  animation: none;
 }
 
 @keyframes pbFade {
@@ -294,8 +290,8 @@
   right: 1px;
 }
 
-.pb__frame[data-side='l']:hover::before,
-.pb__frame[data-side='r']:hover::after {
+.pb__frame.is-here[data-side='l']:hover::before,
+.pb__frame.is-here[data-side='r']:hover::after {
   opacity: 1;
 }
 
@@ -786,6 +782,9 @@
   .pb__img {
     transition-duration: 1ms;
     animation-duration: 1ms;
+  }
+  .pb__film {
+    will-change: auto;
   }
 }
 

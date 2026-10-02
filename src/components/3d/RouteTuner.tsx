@@ -55,7 +55,10 @@ lineWidth={${t.borderActive}}   // 활성
 
 // src/components/3d/themeRingScale.ts
 export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPhoneMin}, phoneStroke: ${t.ringPhoneStroke}, deskK: ${t.ringDeskK}, deskMin: ${t.ringDeskMin}, deskStroke: ${t.ringDeskStroke}, grow: ${t.ringGrow}, gap: ${t.ringGap}, pin: ${t.ringPin} };
-export const RING_MOVE: RingMove = { openMs: ${t.ringOpenMs}, closeMs: ${t.ringCloseMs}, hold: ${t.ringHold} };`;
+export const RING_MOVE: RingMove = { openMs: ${t.ringOpenMs}, closeMs: ${t.ringCloseMs}, hold: ${t.ringHold} };
+
+// src/components/gallery/film.ts
+export const FILM_DEFAULTS: FilmParams = { response: ${t.filmResponse}, damping: ${t.filmDamping}, project: ${t.filmProject}, band: ${t.filmBand}, gapPhone: ${t.filmGapPhone}, gapDesk: ${t.filmGapDesk} };`;
 
   return (
     <div className="tuner">
@@ -135,6 +138,18 @@ export const RING_MOVE: RingMove = { openMs: ${t.ringOpenMs}, closeMs: ${t.ringC
       <div className="tuner__note">
         여정 화면에서 주제를 켜고 고리를 누릅니다. 비율은 움직임 가운데 사진이 원인 채로 날아오는
         몫이고, 나머지 동안 원이 사진 모서리까지 열립니다.
+      </div>
+
+      <div className="tuner__group">사진첩 한 장 보기 · 띠</div>
+      {num('filmResponse', '스프링 response s', 0.15, 0.8, 0.01)}
+      {num('filmDamping', '스프링 damping', 0.5, 1.2, 0.02)}
+      {num('filmProject', '속도 투영 s', 0, 0.4, 0.01)}
+      {num('filmBand', '끝 고무줄', 0.1, 1.5, 0.05)}
+      {num('filmGapPhone', '폰 간격 px', 0, 80, 2)}
+      {num('filmGapDesk', '데스크톱 간격 px', 0, 160, 2)}
+      <div className="tuner__note">
+        사진첩에서 한 장을 끌어 봅니다. 폰은 한 장이 화면 폭 + 간격, 데스크톱은 사진 끝과 끝 사이가
+        간격입니다. 놓으면 마지막 80ms 속도 × 투영 s 만큼 앞을 보고 넘길지 정합니다.
       </div>
 
       <div className="tuner__group">화면에 찍히는 값</div>

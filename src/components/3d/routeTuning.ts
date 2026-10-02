@@ -3,6 +3,7 @@ import { GLOBE, type Theme } from '../../theme';
 import { ZOOM_DEFAULTS } from './cityZoom';
 import { PACE_DEFAULTS } from './pace';
 import { RING_FAR, RING_MOVE } from './themeRingScale';
+import { FILM_DEFAULTS } from '../gallery/film';
 
 /**
  * A bench for the route's two tenses. Dev only — `?tune=1` — and not shipped.
@@ -56,6 +57,13 @@ export type Tuning = {
   ringOpenMs: number;
   ringCloseMs: number;
   ringHold: number;
+  /** the photo book's strip of film — see gallery/film.ts */
+  filmResponse: number;
+  filmDamping: number;
+  filmProject: number;
+  filmBand: number;
+  filmGapPhone: number;
+  filmGapDesk: number;
 };
 
 export const TUNE_ON =
@@ -100,6 +108,12 @@ export function defaults(theme: Theme): Tuning {
     ringOpenMs: RING_MOVE.openMs,
     ringCloseMs: RING_MOVE.closeMs,
     ringHold: RING_MOVE.hold,
+    filmResponse: FILM_DEFAULTS.response,
+    filmDamping: FILM_DEFAULTS.damping,
+    filmProject: FILM_DEFAULTS.project,
+    filmBand: FILM_DEFAULTS.band,
+    filmGapPhone: FILM_DEFAULTS.gapPhone,
+    filmGapDesk: FILM_DEFAULTS.gapDesk,
   };
 }
 
