@@ -719,6 +719,8 @@ function Camera({
   fit = 5.5,
   held,
   refit = 0,
+  aim: aimRef,
+  aimed = 0,
   onHome,
 }: {
   target: THREE.Vector3;
@@ -738,6 +740,9 @@ function Camera({
   held?: React.MutableRefObject<boolean>;
   /** bumped to stand back to the whole globe again (double click / tap) */
   refit?: number;
+  /** where to go and how close, looking around — and the bump that says go */
+  aim?: React.MutableRefObject<{ dir: THREE.Vector3; len: number } | null>;
+  aimed?: number;
   /** the camera has come home from looking around */
   onHome?: () => void;
 }) {
@@ -751,7 +756,7 @@ function Camera({
    * turns at that height first (`turn`) and only then comes down (`down`).
    * A hand on the globe drops whatever it was doing.
    */
-  const phase = useRef<'none' | 'back' | 'free' | 'turn' | 'down'>('none');
+  const phase = useRef<'none' | 'back' | 'free' | 'aim' | 'turn' | 'down'>('none');
   /**
    * The globe is drawn on demand, so the frame a move starts on may come long
    * after the one before it. That first frame takes a frame's step, not the
@@ -767,7 +772,14 @@ function Camera({
     if (globe === 'on' && was !== 'on') phase.current = 'back';
     if (globe !== 'on' && was === 'on') phase.current = 'turn';
     fresh.current = true;
-  }, [globe]);
+    // an aim left over from the last look around is not this one's
+    if (aimRef) aimRef.current = null;
+  }, [globe, aimRef]);
+  useEffect(() => {
+    if (!aimed || globe !== 'on' || !aimRef?.current) return;
+    phase.current = 'aim';
+    fresh.current = true;
+  }, [aimed, globe, aimRef]);
   useEffect(() => {
     if (refit && globe === 'on') {
       phase.current = 'back';
@@ -814,8 +826,24 @@ function Camera({
     fresh.current = false;
     const ease = (tau: number) => 1 - Math.exp(-dt / tau);
     const ph = phase.current;
-    if (ph === 'back' || ph === 'free') {
+    if (ph === 'back' || ph === 'free' || ph === 'aim') {
       if (held?.current) phase.current = 'free';
+      if (phase.current === 'aim' && aimRef?.current) {
+        // one move, the turn and the approach together: the place is already
+        // on the screen, so there is no standing back to do first
+        const want = aimRef.current;
+        const dir = camera.position.clone().normalize();
+        const turn = new THREE.Quaternion().setFromUnitVectors(dir, want.dir);
+        dir.applyQuaternion(new THREE.Quaternion().slerp(turn, ease(0.2)));
+        const len = camera.position.length();
+        const next = len + (want.len - len) * ease(0.2);
+        const there = dir.angleTo(want.dir) < 0.002 && Math.abs(next - want.len) < 0.01;
+        camera.position.copy(dir.multiplyScalar(there ? want.len : next));
+        if (there) {
+          phase.current = 'free';
+          aimRef.current = null;
+        }
+      }
       if (phase.current === 'back') {
         const len = camera.position.length();
         const next = len + (fit - len) * ease(0.16);
@@ -885,6 +913,7 @@ function Camera({
       Math.max(0.01, camera.position.length() - GLOBE_RADIUS);
     if (
       ph === 'back' ||
+      ph === 'aim' ||
       ph === 'turn' ||
       ph === 'down' ||
       seen.current.distanceTo(camera.position) * pxPerUnit > STILL_PX
@@ -1087,6 +1116,25 @@ function Scene({
   useEffect(() => {
     held.current = false;
   }, [globe]);
+  // a ring of several pressed (ThemeRings): the camera goes over to it, close
+  // enough for it to come apart. North stays up, as it does under the hand.
+  const aim = useRef<{ dir: THREE.Vector3; len: number } | null>(null);
+  const [aimed, setAimed] = useState(0);
+  const aimAt = useCallback((dir: THREE.Vector3, len: number) => {
+    const polar = Math.acos(Math.max(-1, Math.min(1, dir.y)));
+    const kept = Math.max(0.22, Math.min(Math.PI - 0.22, polar));
+    const flat = Math.hypot(dir.x, dir.z) || 1;
+    aim.current = {
+      dir: new THREE.Vector3(
+        (dir.x / flat) * Math.sin(kept),
+        Math.cos(kept),
+        (dir.z / flat) * Math.sin(kept)
+      ),
+      len,
+    };
+    held.current = false;
+    setAimed((n) => n + 1);
+  }, []);
   const INK = GLOBE[theme].ink;
   const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
   const [hoveredLeg, setHoveredLeg] = useState<{ leg: Leg; at: THREE.Vector3 } | null>(null);
@@ -1265,6 +1313,7 @@ function Scene({
       const city = cities[c];
       if (city)
         out.push({
+          city: c,
           position: latLngToVector3(city.lat, city.lng, 2.004),
           n: e.n,
           twice: e.stays > 1,
@@ -1280,7 +1329,8 @@ function Scene({
           labels={labels}
           layer={labelLayer}
           fit={fit}
-          header={size.width <= 768 ? 48 : 56}
+          // the theme row sits under the bar
+          header={size.width <= 768 ? 48 + 34 : 56 + 36}
         />
       )}
       <TravelPath
@@ -1426,13 +1476,18 @@ function Scene({
         );
       })}
 
-      {globe === 'off' && photoTheme && (
+      {photoTheme && (
         <ThemeRings
           rings={themeRings}
           ink={INK}
           ground={GLOBE[theme].sphere}
-          k={size.width <= 768 ? 3.4 : 4.2}
-          min={size.width <= 768 ? 5 : 6}
+          phone={size.width <= 768}
+          small={Math.min(size.width, size.height) <= 768}
+          fit={fit}
+          nearest={nearest}
+          // looking around, and on the way home from it, rings that touch are one
+          gather={globe !== 'off'}
+          onAim={aimAt}
         />
       )}
 
@@ -1457,6 +1512,8 @@ function Scene({
         fit={fit}
         held={held}
         refit={refit}
+        aim={aim}
+        aimed={aimed}
         onHome={home}
       />
       {(() => {
@@ -2789,17 +2846,15 @@ function JourneyExperienceContent() {
         onOpenPhotos={handleOpenAllPhotos}
         barRef={barRef}
       />
-      {/* the one place a theme is chosen, the same row the photo book has */}
-      {globeView.mode === 'off' && (
-        <ThemeRow
-          className="journey-themes"
-          lang={language as 'ko' | 'en'}
-          halo
-          floating
-          moving={playing || orbitHeld || scrubHeld || wheelBusy}
-          wake={barRef}
-        />
-      )}
+      {/* the one place a theme is chosen, the same row the photo book has — looking around too */}
+      <ThemeRow
+        className="journey-themes"
+        lang={language as 'ko' | 'en'}
+        halo
+        floating
+        moving={playing || orbitHeld || scrubHeld || wheelBusy}
+        wake={barRef}
+      />
       {/* the filmstrip's photos of other themes step back, as the book's do */}
       {photoTheme && globeView.mode === 'off' && (
         <style>{`.filmstrip__thumb:not([data-t~="${photoTheme}"]){opacity:0.2;filter:grayscale(1)}`}</style>

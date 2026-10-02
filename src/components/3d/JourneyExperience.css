@@ -1888,7 +1888,7 @@ kbd.key {
   }
 }
 
-/* looking around there is no theme row yet (B2): the corners keep their place */
-:root[data-globe-view] .journey-experience {
-  --trow: 0px;
+/* looking around, ← → do not walk the journey: the row does not offer them */
+:root[data-globe-view='on'] .journey-themes.theme-row .theme-row__keys {
+  display: none;
 }
