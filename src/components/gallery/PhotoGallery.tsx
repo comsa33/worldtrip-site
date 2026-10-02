@@ -26,6 +26,7 @@ import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { hasTheme, themesOf, usePhotoTheme } from '../../lib/photoThemes';
 import { stepIndex } from '../../lib/themeStep';
+import { ThemeRow } from '../themes/ThemeRow';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
 import './PhotoGallery.css';
 
@@ -370,6 +371,32 @@ export default function PhotoGallery({
 
   const sheetRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
+
+  /* ── the hand at work: the theme row steps back while it is ───────────────
+     A wheel or a finger on the sheet, the year under the hand, the photo
+     dragged. Not the sheet's own scroll: ← → move it too, and the row would
+     blink at every key. */
+  const [busy, setBusy] = useState(false);
+  const [scrubbing, setScrubbing] = useState(false);
+  const quiet = useRef(0);
+  const nudge = useCallback(() => {
+    setBusy(true);
+    window.clearTimeout(quiet.current);
+    quiet.current = window.setTimeout(() => setBusy(false), 160);
+  }, []);
+  useEffect(() => () => window.clearTimeout(quiet.current), []);
+  useEffect(() => {
+    const el = sheetRef.current;
+    if (!el) return;
+    el.addEventListener('wheel', nudge, { passive: true });
+    el.addEventListener('touchmove', nudge, { passive: true });
+    return () => {
+      el.removeEventListener('wheel', nudge);
+      el.removeEventListener('touchmove', nudge);
+    };
+    // the sheet mounts once the scope has widened
+  }, [sheet, scope, nudge]);
   // where the tile was, relative to where the frame will be — measured in the
   // click, so the render only reads state
   const [zoomFrom, setZoomFrom] = useState<{ zx: number; zy: number; zs: number } | null>(null);
@@ -467,7 +494,7 @@ export default function PhotoGallery({
       if (t instanceof Node && (stripRef.current?.contains(t) || sheetRef.current?.contains(t)))
         return;
       // the theme row runs sideways on a phone
-      if (t instanceof Element && t.closest('.pb__themes')) return;
+      if (t instanceof Element && t.closest('.theme-row')) return;
       e.preventDefault();
     };
     window.addEventListener('wheel', block, { passive: false });
@@ -749,6 +776,7 @@ export default function PhotoGallery({
       if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
       g.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
     }
+    nudge();
     if (g.axis === 'x') {
       const slotEl = slotRef.current;
       if (!slotEl) return;
@@ -1030,7 +1058,7 @@ export default function PhotoGallery({
         onClick={() => (fromSheet && !sheet ? setSheet(true) : closeHome())}
       />
 
-      <div className="pb__top mono">
+      <div className="pb__top mono" ref={topRef}>
         {/* the where: the reading's place on the journey, in the corner, beside its name */}
         {wide && (
           <RollLocator
@@ -1089,9 +1117,7 @@ export default function PhotoGallery({
         <span className={`pb__keys${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
           <kbd>←</kbd>
           <kbd>→</kbd>
-          <span>
-            {anyLit ? (lang === 'ko' ? '켜진 곳' : 'lit') : lang === 'ko' ? '넘기기' : 'browse'}
-          </span>
+          <span>{lang === 'ko' ? '넘기기' : 'browse'}</span>
           <kbd>G</kbd>
           <span>{lang === 'ko' ? '전체' : 'all'}</span>
           <kbd>ESC</kbd>
@@ -1109,6 +1135,9 @@ export default function PhotoGallery({
           <X size={16} strokeWidth={1.5} />
         </button>
       </div>
+
+      {/* the one place a theme is chosen — the globe puts the same row under its bar */}
+      <ThemeRow className="pb__themerow" lang={lang} moving={busy || scrubbing} wake={topRef} />
 
       <div className="pb__stage">
         <div className="pb__slot" ref={slotRef}>
@@ -1273,6 +1302,7 @@ export default function PhotoGallery({
           lang={lang}
           theme={theme}
           onScrub={(i) => jumpTo(sheetRef.current, i)}
+          onScrubbing={setScrubbing}
         />
       )}
     </div>

@@ -1,0 +1,210 @@
+/* The theme row (H2′ + H2″) — see ThemeRow.tsx. No plate, no rule: over the
+   globe the letters carry a halo of the ground, over the photo book the page
+   is the ground. */
+.theme-row {
+  --ground: var(--bg);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  height: 36px;
+  padding: 0 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  font-size: 12.5px;
+  touch-action: pan-x;
+  /* coming back: wait 300ms after the hand stops, then 400ms. A transition,
+     not keyframes — a change halfway carries on from where it is. */
+  opacity: 1;
+  transition: opacity 400ms var(--ease, ease) 300ms;
+}
+
+.theme-row::-webkit-scrollbar {
+  display: none;
+}
+
+.theme-row.is-away {
+  opacity: 0.12;
+  transition: opacity 150ms var(--ease, ease);
+}
+
+/* a mouse over the row or the top bar: back at once, moving or not */
+.theme-row.is-woken {
+  opacity: 1;
+  transition: opacity 120ms var(--ease, ease);
+}
+
+.theme-row.is-halo .theme-row__w,
+.theme-row.is-halo .theme-row__keys {
+  text-shadow:
+    1px 0 0 var(--ground),
+    -1px 0 0 var(--ground),
+    0 1px 0 var(--ground),
+    0 -1px 0 var(--ground),
+    0 0 3px var(--ground),
+    0 0 8px var(--ground),
+    0 0 14px var(--ground);
+}
+
+.theme-row__w {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-family: var(--sans, inherit);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    color 160ms var(--ease, ease),
+    opacity 160ms var(--ease, ease);
+}
+
+.theme-row__w:hover {
+  color: var(--ink);
+}
+
+.theme-row__w.is-on {
+  color: var(--ink);
+}
+
+.theme-row__w.is-on .theme-row__label {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--ink-2);
+}
+
+/* chosen: the others go to 42%, the chosen word and its count stay */
+.theme-row.is-picked .theme-row__w:not(.is-on) {
+  color: var(--ink-3);
+  opacity: 0.42;
+}
+
+.theme-row.is-picked .theme-row__w:not(.is-on):hover {
+  opacity: 1;
+}
+
+.theme-row__n {
+  margin-left: 5px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-2);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.theme-row__label {
+  display: inline-block;
+  max-width: 10em;
+  overflow: hidden;
+  vertical-align: bottom;
+  transition:
+    max-width 240ms var(--ease, ease),
+    opacity 200ms var(--ease, ease);
+}
+
+/* H2″: left alone, the other words fold into dots — one dot a word, in its place */
+.theme-row__dot {
+  width: 0;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  opacity: 0;
+  transition:
+    width 240ms var(--ease, ease),
+    opacity 200ms var(--ease, ease);
+}
+
+.theme-row.is-folded {
+  gap: 9px;
+}
+
+.theme-row.is-folded .theme-row__w:not(.is-on):not(.theme-row__all) .theme-row__label {
+  max-width: 0;
+  opacity: 0;
+}
+
+.theme-row.is-folded .theme-row__w:not(.is-on):not(.theme-row__all) .theme-row__dot {
+  width: 3px;
+  opacity: 0.7;
+}
+
+/* a folded word is a dot at 42%; the dot itself carries the ink */
+.theme-row.is-folded .theme-row__w:not(.is-on):not(.theme-row__all) {
+  opacity: 1;
+}
+
+.theme-row__keys {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+  margin-left: 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+
+.theme-row.is-picked:not(.is-folded) .theme-row__keys {
+  display: inline-flex;
+}
+
+.theme-row__keys kbd {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 5px 3px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  color: var(--ink-2);
+  background: var(--bg-card);
+}
+
+@media (max-width: 768px) {
+  .theme-row {
+    gap: 14px;
+    height: 34px;
+    padding: 0 16px;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 14px,
+      #000 calc(100% - 32px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 14px,
+      #000 calc(100% - 32px),
+      transparent
+    );
+  }
+
+  .theme-row.is-folded {
+    gap: 7px;
+  }
+
+  /* no keys on a phone */
+  .theme-row.is-picked:not(.is-folded) .theme-row__keys {
+    display: none;
+  }
+}
+
+/* without motion: the states change, nothing moves between them */
+@media (prefers-reduced-motion: reduce) {
+  .theme-row,
+  .theme-row.is-away,
+  .theme-row.is-woken,
+  .theme-row__w,
+  .theme-row__label,
+  .theme-row__dot {
+    transition: none;
+  }
+}

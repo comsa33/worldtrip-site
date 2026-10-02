@@ -25,7 +25,7 @@ import {
   stopOrder,
   type RollBlock,
 } from '../../lib/journeyRoll';
-import { THEMES, THEME_TOTAL, setPhotoTheme, themeDays, themesOf } from '../../lib/photoThemes';
+import { themeDays, themesOf } from '../../lib/photoThemes';
 
 /*
  * The photo book with its walls taken down: every stop's photos, one after
@@ -966,6 +966,7 @@ export function YearWave({
   lang,
   theme,
   onScrub,
+  onScrubbing,
 }: {
   top: number;
   bottom: number;
@@ -974,6 +975,8 @@ export function YearWave({
   /** the chosen theme: its days stand out of the year, the rest go faint */
   theme: string | null;
   onScrub: (i: number) => void;
+  /** the hand is on the year — the theme row steps back meanwhile */
+  onScrubbing?: (on: boolean) => void;
 }) {
   const lit = theme ? themeDays(theme) : null;
   const photos = journeyRoll.photos;
@@ -1012,13 +1015,20 @@ export function YearWave({
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId);
         setScrubbing(true);
+        onScrubbing?.(true);
         scrubTo(e.clientX);
       }}
       onPointerMove={(e) => {
         if (scrubbing) scrubTo(e.clientX);
       }}
-      onPointerUp={() => setScrubbing(false)}
-      onPointerCancel={() => setScrubbing(false)}
+      onPointerUp={() => {
+        setScrubbing(false);
+        onScrubbing?.(false);
+      }}
+      onPointerCancel={() => {
+        setScrubbing(false);
+        onScrubbing?.(false);
+      }}
       role="slider"
       aria-label={lang === 'ko' ? '여정의 날' : 'Day of the journey'}
       aria-valuemin={1}
@@ -1066,67 +1076,6 @@ export function YearWave({
           ))}
         </span>
       </div>
-      <ThemeRow theme={theme} lang={lang} />
-    </div>
-  );
-}
-
-/**
- * The one place a theme is chosen: the floor of the bar under the time it
- * lights. 「전체」 is the way out. Only the chosen word says how many photos it
- * has. Runs sideways on a phone.
- */
-function ThemeRow({ theme, lang }: { theme: string | null; lang: Lang }) {
-  const rowRef = useRef<HTMLDivElement>(null);
-  // the chosen word comes into view on a phone, where the row runs off the edge
-  useEffect(() => {
-    const row = rowRef.current;
-    const on = row?.querySelector<HTMLElement>('.is-on');
-    if (!row || !on || row.scrollWidth <= row.clientWidth) return;
-    const l = on.offsetLeft; // the row is the word's offsetParent
-    if (l < row.scrollLeft || l + on.offsetWidth > row.scrollLeft + row.clientWidth)
-      row.scrollTo({ left: l - 24, behavior: 'smooth' });
-  }, [theme]);
-  return (
-    <div
-      className="pb__themes"
-      ref={rowRef}
-      // a pointer here chooses; it does not scrub the year above it
-      onPointerDown={(e) => e.stopPropagation()}
-      role="group"
-      aria-label={lang === 'ko' ? '사진 주제' : 'Photo themes'}
-    >
-      <button
-        type="button"
-        className={`pb__theme pb__theme--all${theme ? '' : ' is-on'}`}
-        aria-pressed={!theme}
-        onClick={() => setPhotoTheme(null)}
-      >
-        {lang === 'ko' ? '전체' : 'All'}
-      </button>
-      <span className="pb__themesep" aria-hidden="true" />
-      {THEMES.map((t) => {
-        const on = t.id === theme;
-        return (
-          <button
-            type="button"
-            key={t.id}
-            className={`pb__theme${on ? ' is-on' : ''}`}
-            aria-pressed={on}
-            onClick={() => setPhotoTheme(on ? null : t.id)}
-          >
-            {t[lang]}
-            {on && <span className="pb__themen mono">{THEME_TOTAL[t.id]}</span>}
-          </button>
-        );
-      })}
-      {theme && (
-        <span className="pb__themekeys mono" aria-hidden="true">
-          <kbd>←</kbd>
-          <kbd>→</kbd>
-          <span>{lang === 'ko' ? '켜진 곳' : 'lit'}</span>
-        </span>
-      )}
     </div>
   );
 }
