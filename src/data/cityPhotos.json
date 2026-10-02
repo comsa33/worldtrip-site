@@ -1313,26 +1313,6 @@
     "cityCode": "angradosreis",
     "photos": [
       {
-        "id": "angradosreis-002",
-        "publicId": "cities/angradosreis/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084688/cities/angradosreis/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084688/cities/angradosreis/photo002",
-        "date": "2017-03-17T14:12:45",
-        "gps": {
-          "lat": -23.030605555555553,
-          "lng": -44.54391944444444
-        },
-        "location": "Rua Rondônia, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768,
-        "tone": "9fa9b0,6f7350"
-      },
-      {
         "id": "angradosreis-003",
         "publicId": "cities/angradosreis/photo003",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084688/cities/angradosreis/photo003",
@@ -1351,26 +1331,6 @@
         "w": 1024,
         "h": 768,
         "tone": "c6c9cd,4d4d4a"
-      },
-      {
-        "id": "angradosreis-004",
-        "publicId": "cities/angradosreis/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084689/cities/angradosreis/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084689/cities/angradosreis/photo004",
-        "date": "2017-03-17T14:17:12",
-        "gps": {
-          "lat": -23.030602777777776,
-          "lng": -44.54289166666666
-        },
-        "location": "Rua Belo Horizonte, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768,
-        "tone": "a4aaaa,6b6f59"
       },
       {
         "id": "angradosreis-005",
@@ -1411,26 +1371,6 @@
         "w": 1024,
         "h": 768,
         "tone": "595650,7d7368"
-      },
-      {
-        "id": "angradosreis-007",
-        "publicId": "cities/angradosreis/photo007",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084691/cities/angradosreis/photo007",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084691/cities/angradosreis/photo007",
-        "date": "2017-03-17T14:15:23",
-        "gps": {
-          "lat": -23.033547222222225,
-          "lng": -44.54889722222222
-        },
-        "location": "Rua Pelotas, Paraty, RJ",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo007",
-        "w": 1022,
-        "h": 768,
-        "tone": "a5a4a3,5b4f4e"
       },
       {
         "id": "angradosreis-008",
@@ -8971,28 +8911,7 @@
   },
   "카라구아타투바": {
     "cityCode": "caraguatatuba",
-    "photos": [
-      {
-        "id": "caraguatatuba-001",
-        "publicId": "cities/caraguatatuba/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086342/cities/caraguatatuba/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086342/cities/caraguatatuba/photo001",
-        "date": "2017-03-24T14:36:29",
-        "gps": {
-          "lat": -23.803372222222222,
-          "lng": -45.403175
-        },
-        "location": "Rua Cristóvão Soares, 359–369, Centro, São Sebastião, SP",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 768,
-        "h": 1024,
-        "tone": "b29c78,a6a49c"
-      }
-    ]
+    "photos": []
   },
   "카르타헤나": {
     "cityCode": "cartagena",
@@ -13243,6 +13162,106 @@
         "tone": "6b7c5e,6f825d"
       },
       {
+        "id": "florianopolis-012",
+        "publicId": "cities/guardadoembau/photo006",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086392/cities/guardadoembau/photo006",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086392/cities/guardadoembau/photo006",
+        "date": "2017-03-31T12:59:08",
+        "gps": {
+          "lat": -27.752266666666667,
+          "lng": -48.56131388888888
+        },
+        "location": "Rodovia Baldicero Filomeno, 11263, Ribeirao da Ilha, Florianópolis, SC",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo006",
+        "w": 1024,
+        "h": 768,
+        "tone": "5b615c,b1a392"
+      },
+      {
+        "id": "florianopolis-013",
+        "publicId": "cities/guardadoembau/photo005",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086392/cities/guardadoembau/photo005",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086392/cities/guardadoembau/photo005",
+        "date": "2017-03-31T13:41:33",
+        "gps": {
+          "lat": -27.781669444444443,
+          "lng": -48.50886944444444
+        },
+        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo005",
+        "w": 1024,
+        "h": 768,
+        "tone": "748cb9,80807d"
+      },
+      {
+        "id": "florianopolis-014",
+        "publicId": "cities/guardadoembau/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086389/cities/guardadoembau/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086389/cities/guardadoembau/photo002",
+        "date": "2017-03-31T13:41:55",
+        "gps": {
+          "lat": -27.781716666666664,
+          "lng": -48.50883888888889
+        },
+        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002",
+        "w": 1024,
+        "h": 768,
+        "tone": "4f6c9c,c0bab1"
+      },
+      {
+        "id": "florianopolis-015",
+        "publicId": "cities/guardadoembau/photo001",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086389/cities/guardadoembau/photo001",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086389/cities/guardadoembau/photo001",
+        "date": "2017-03-31T13:43:02",
+        "gps": {
+          "lat": -27.781675,
+          "lng": -48.50866666666667
+        },
+        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo001",
+        "w": 1024,
+        "h": 768,
+        "tone": "5475b5,a6a5a1"
+      },
+      {
+        "id": "florianopolis-016",
+        "publicId": "cities/guardadoembau/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086391/cities/guardadoembau/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086391/cities/guardadoembau/photo004",
+        "date": "2017-03-31T13:43:26",
+        "gps": {
+          "lat": -27.781705555555554,
+          "lng": -48.50878055555555
+        },
+        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 1024,
+        "h": 768,
+        "tone": "5f7db0,bdb3a6"
+      },
+      {
         "id": "florianopolis-004",
         "publicId": "cities/florianopolis/photo016",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086360/cities/florianopolis/photo016",
@@ -13661,128 +13680,7 @@
   },
   "과르다 두 엠바우": {
     "cityCode": "guardadoembau",
-    "photos": [
-      {
-        "id": "guardadoembau-001",
-        "publicId": "cities/guardadoembau/photo001",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086389/cities/guardadoembau/photo001",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086389/cities/guardadoembau/photo001",
-        "date": "2017-03-31T13:43:02",
-        "gps": {
-          "lat": -27.781675,
-          "lng": -48.50866666666667
-        },
-        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo001",
-        "w": 1024,
-        "h": 768,
-        "tone": "5475b5,a6a5a1"
-      },
-      {
-        "id": "guardadoembau-002",
-        "publicId": "cities/guardadoembau/photo002",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086389/cities/guardadoembau/photo002",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086389/cities/guardadoembau/photo002",
-        "date": "2017-03-31T13:41:55",
-        "gps": {
-          "lat": -27.781716666666664,
-          "lng": -48.50883888888889
-        },
-        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo002",
-        "w": 1024,
-        "h": 768,
-        "tone": "4f6c9c,c0bab1"
-      },
-      {
-        "id": "guardadoembau-003",
-        "publicId": "cities/guardadoembau/photo003",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086390/cities/guardadoembau/photo003",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086390/cities/guardadoembau/photo003",
-        "date": "2017-04-02T17:29:02",
-        "gps": {
-          "lat": -28.023669444444444,
-          "lng": -48.617375
-        },
-        "location": "Avenida dos Pescadores, 9, Casa 1, Centro, Garopaba, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo003",
-        "w": 1024,
-        "h": 768,
-        "tone": "c2cad9,777f89"
-      },
-      {
-        "id": "guardadoembau-004",
-        "publicId": "cities/guardadoembau/photo004",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086391/cities/guardadoembau/photo004",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086391/cities/guardadoembau/photo004",
-        "date": "2017-03-31T13:43:26",
-        "gps": {
-          "lat": -27.781705555555554,
-          "lng": -48.50878055555555
-        },
-        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo004",
-        "w": 1024,
-        "h": 768,
-        "tone": "5f7db0,bdb3a6"
-      },
-      {
-        "id": "guardadoembau-005",
-        "publicId": "cities/guardadoembau/photo005",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086392/cities/guardadoembau/photo005",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086392/cities/guardadoembau/photo005",
-        "date": "2017-03-31T13:41:33",
-        "gps": {
-          "lat": -27.781669444444443,
-          "lng": -48.50886944444444
-        },
-        "location": "Rua Joaquim Neves, 260, Pantano do Sul, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo005",
-        "w": 1024,
-        "h": 768,
-        "tone": "748cb9,80807d"
-      },
-      {
-        "id": "guardadoembau-006",
-        "publicId": "cities/guardadoembau/photo006",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086392/cities/guardadoembau/photo006",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086392/cities/guardadoembau/photo006",
-        "date": "2017-03-31T12:59:08",
-        "gps": {
-          "lat": -27.752266666666667,
-          "lng": -48.56131388888888
-        },
-        "location": "Rodovia Baldicero Filomeno, 11263, Ribeirao da Ilha, Florianópolis, SC",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo006",
-        "w": 1024,
-        "h": 768,
-        "tone": "5b615c,b1a392"
-      }
-    ]
+    "photos": []
   },
   "과타페": {
     "cityCode": "guatape",
@@ -24960,6 +24858,66 @@
     "cityCode": "paraty",
     "photos": [
       {
+        "id": "paraty-029",
+        "publicId": "cities/angradosreis/photo002",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084688/cities/angradosreis/photo002",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084688/cities/angradosreis/photo002",
+        "date": "2017-03-17T14:12:45",
+        "gps": {
+          "lat": -23.030605555555553,
+          "lng": -44.54391944444444
+        },
+        "location": "Rua Rondônia, Paraty, RJ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo002",
+        "w": 1024,
+        "h": 768,
+        "tone": "9fa9b0,6f7350"
+      },
+      {
+        "id": "paraty-030",
+        "publicId": "cities/angradosreis/photo007",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084691/cities/angradosreis/photo007",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084691/cities/angradosreis/photo007",
+        "date": "2017-03-17T14:15:23",
+        "gps": {
+          "lat": -23.033547222222225,
+          "lng": -44.54889722222222
+        },
+        "location": "Rua Pelotas, Paraty, RJ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo007",
+        "w": 1022,
+        "h": 768,
+        "tone": "a5a4a3,5b4f4e"
+      },
+      {
+        "id": "paraty-031",
+        "publicId": "cities/angradosreis/photo004",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789084689/cities/angradosreis/photo004",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789084689/cities/angradosreis/photo004",
+        "date": "2017-03-17T14:17:12",
+        "gps": {
+          "lat": -23.030602777777776,
+          "lng": -44.54289166666666
+        },
+        "location": "Rua Belo Horizonte, Paraty, RJ",
+        "caption": {
+          "ko": "",
+          "en": ""
+        },
+        "alt": "photo004",
+        "w": 1024,
+        "h": 768,
+        "tone": "a4aaaa,6b6f59"
+      },
+      {
         "id": "paraty-001",
         "publicId": "cities/paraty/photo001",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789085669/cities/paraty/photo001",
@@ -30185,26 +30143,6 @@
         "tone": "617bad,b69b8b"
       },
       {
-        "id": "sanpedrodeatacama-020",
-        "publicId": "cities/sanpedrodeatacama/photo041",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789171686/cities/sanpedrodeatacama/photo041",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789171686/cities/sanpedrodeatacama/photo041",
-        "date": "2017-05-03T21:36:49",
-        "gps": {
-          "lat": -22.90368611111111,
-          "lng": -68.20012777777778
-        },
-        "location": "Purifica, Población El Carmen, San Pedro de Atacama, Región de Antofagasta",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo041",
-        "w": 1024,
-        "h": 768,
-        "tone": "a37a68,c0a493"
-      },
-      {
         "id": "sanpedrodeatacama-021",
         "publicId": "cities/sanpedrodeatacama/photo042",
         "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789175773/cities/sanpedrodeatacama/photo042",
@@ -34513,26 +34451,6 @@
         "w": 1024,
         "h": 768,
         "tone": "8b8e8e,504e49"
-      },
-      {
-        "id": "sucre-009",
-        "publicId": "cities/sucre/photo009",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789086079/cities/sucre/photo009",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789086079/cities/sucre/photo009",
-        "date": "2017-05-10T17:59:11",
-        "gps": {
-          "lat": -19.051502777777777,
-          "lng": -65.25428055555555
-        },
-        "location": "Calle Daniel Calvo, Sucre, Chuquisaca",
-        "caption": {
-          "ko": "",
-          "en": ""
-        },
-        "alt": "photo009",
-        "w": 768,
-        "h": 1024,
-        "tone": "516a9f,244385"
       },
       {
         "id": "sucre-003",
