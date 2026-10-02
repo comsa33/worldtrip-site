@@ -11699,8 +11699,8 @@
       {
         "id": "dahab-025",
         "publicId": "cities/dahab/photo025",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176710/cities/dahab/photo025",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176710/cities/dahab/photo025",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1790952202/cities/dahab/photo025",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1790952202/cities/dahab/photo025",
         "date": "2016-11-29T16:42:03",
         "gps": {
           "lat": 28.49651388888889,
@@ -11719,8 +11719,8 @@
       {
         "id": "dahab-022",
         "publicId": "cities/dahab/photo022",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789176703/cities/dahab/photo022",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789176703/cities/dahab/photo022",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1790952203/cities/dahab/photo022",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1790952203/cities/dahab/photo022",
         "date": "2016-11-29T16:43:39",
         "gps": {
           "lat": 28.496466666666667,
@@ -31015,8 +31015,8 @@
       {
         "id": "santiago-035",
         "publicId": "cities/santiago/photo054",
-        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1789175849/cities/santiago/photo054",
-        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1789175849/cities/santiago/photo054",
+        "url": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto/v1790952200/cities/santiago/photo054",
+        "thumbnail": "https://res.cloudinary.com/drgkcq7eb/image/upload/f_auto,q_auto,w_200,h_200,c_fill/v1790952200/cities/santiago/photo054",
         "date": "2017-04-24T00:27:34",
         "gps": {
           "lat": -33.43320833333333,
@@ -31028,9 +31028,9 @@
           "en": ""
         },
         "alt": "photo054",
-        "w": 769,
-        "h": 1024,
-        "tone": "8b8177,8b6e5f"
+        "w": 1024,
+        "h": 769,
+        "tone": "bda592,594a44"
       },
       {
         "id": "santiago-036",
