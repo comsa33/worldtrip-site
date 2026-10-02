@@ -31,6 +31,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ringPress } from './useGlobeView';
+import { RING_FAR, type RingFar } from './themeRingScale';
 
 export interface ThemeRing {
   city: string;
@@ -43,19 +44,15 @@ export interface ThemeRing {
 
 /** radius in px = k·√n + min, and the ring's own line */
 type RingScale = { k: number; min: number; stroke: number };
-/** The marks at the journey's closeness (B1), and with the whole globe in view (B2). */
-const SCALES: Record<'desk' | 'phone', { near: RingScale; far: RingScale }> = {
-  desk: { near: { k: 4.2, min: 6, stroke: 1.5 }, far: { k: 1.6, min: 2.6, stroke: 1.3 } },
-  phone: { near: { k: 3.4, min: 5, stroke: 1.5 }, far: { k: 0.95, min: 1.6, stroke: 1.1 } },
+/** The marks at the journey's closeness (B1). With the whole globe in view: themeRingScale.ts. */
+const NEAR: Record<'desk' | 'phone', RingScale> = {
+  desk: { k: 4.2, min: 6, stroke: 1.5 },
+  phone: { k: 3.4, min: 5, stroke: 1.5 },
 };
 
 const GLOBE_R = 2;
-/** Looking around, the marks grow by this power of how much the map has grown. */
-const GROW = 0.35;
 /** How long the marks take between the journey's size and the look around's, s. */
 const MODE_TAU = 0.2;
-/** Room left between two rings before they are one, px. */
-const TOUCH_GAP = 1;
 /** The screen has to grow or shrink by this share before the rings are sorted again. */
 const SORT_STEP = 0.07;
 /** How long a ring takes over most of its way to a new place and size, s. */
@@ -131,7 +128,8 @@ function sortRings(
   only: number[] | null,
   scale: number,
   k: number,
-  min: number
+  min: number,
+  gap: number
 ): Group[] {
   const r = (n: number) => k * Math.sqrt(n) + min;
   const idx = (only ?? rings.map((_, i) => i)).slice().sort((a, b) => rings[b].n - rings[a].n);
@@ -139,7 +137,7 @@ function sortRings(
   for (let pass = 0; pass < 4; pass++) {
     const out: Group[] = [];
     for (const q of groups) {
-      const hit = out.find((o) => o.dir.distanceTo(q.dir) * scale < r(o.n) + r(q.n) + TOUCH_GAP);
+      const hit = out.find((o) => o.dir.distanceTo(q.dir) * scale < r(o.n) + r(q.n) + gap);
       if (!hit) {
         out.push(q);
         continue;
@@ -210,6 +208,7 @@ export function ThemeRings({
   nearest,
   gather,
   onAim,
+  scale: sizes = RING_FAR,
 }: {
   rings: ThemeRing[];
   ink: string;
@@ -225,6 +224,8 @@ export function ThemeRings({
   gather: boolean;
   /** a ring of several was pressed: come this close, over there, and it comes apart */
   onAim?: (dir: THREE.Vector3, distance: number) => void;
+  /** the look around's sizes — the bench's while it is open */
+  scale?: RingFar;
 }) {
   const dpr = useThree((s) => s.viewport.dpr);
   const camera = useThree((s) => s.camera);
@@ -242,9 +243,12 @@ export function ThemeRings({
     return () => made.geometry.dispose();
   }, [made]);
 
-  const near = SCALES[phone ? 'phone' : 'desk'].near;
+  const near = NEAR[phone ? 'phone' : 'desk'];
   // the whole globe is as large as the screen's shorter side: a phone on its side is still a phone
-  const far = SCALES[small ? 'phone' : 'desk'].far;
+  const far: RingScale = small
+    ? { k: sizes.phoneK, min: sizes.phoneMin, stroke: sizes.phoneStroke }
+    : { k: sizes.deskK, min: sizes.deskMin, stroke: sizes.deskStroke };
+  const { grow, gap } = sizes;
   const material = useMemo(
     () =>
       new THREE.ShaderMaterial({
@@ -282,7 +286,7 @@ export function ThemeRings({
       (GLOBE_R * (height / 2 / Math.tan(fov / 2))) / Math.max(0.05, d - GLOBE_R);
     const scale = scaleAt(distance);
     // looking around: the whole globe's size, grown a little with the map, never past the journey's
-    const grown = Math.pow(Math.max(1, scale / scaleAt(fit)), GROW);
+    const grown = Math.pow(Math.max(1, scale / scaleAt(fit)), grow);
     const k = Math.min(near.k, far.k * grown);
     const min = Math.min(near.min, far.min * grown);
     // how far from the journey's look the line and its band are
@@ -296,15 +300,17 @@ export function ThemeRings({
     };
   };
   const atRef = useRef(at);
+  const gapRef = useRef(gap);
   useEffect(() => {
     atRef.current = at;
+    gapRef.current = gap;
   });
 
   // looking around or not, another screen: a new sorting
   useEffect(() => {
     if (live.current) live.current.sortedAt = 0;
     invalidate();
-  }, [gather, phone, small, fit, height, made, invalidate]);
+  }, [gather, phone, small, fit, height, made, invalidate, far.k, far.min, grow, gap]);
 
   useFrame((_, delta) => {
     const st = live.current;
@@ -330,7 +336,7 @@ export function ThemeRings({
     const ratio = now.scale / (now.k * 3 + now.min);
     if (!st.sortedAt || (gather && Math.abs(Math.log(ratio / st.sortedAt)) > SORT_STEP)) {
       st.groups = gather
-        ? sortRings(rings, st.dirs, null, now.scale, now.k, now.min)
+        ? sortRings(rings, st.dirs, null, now.scale, now.k, now.min, gap)
         : rings.map((ring, i) => ({ dir: st.dirs[i], n: ring.n, members: [i] }));
       for (const g of st.groups) {
         const several = g.members.length > 1;
@@ -432,7 +438,10 @@ export function ThemeRings({
       for (let step = 0; step < 60 && to > nearest; step++) {
         to = GLOBE_R + (to - GLOBE_R) / 1.1;
         const then = atRef.current(to, 1);
-        if (sortRings(rings, st.dirs, best.members, then.scale, then.k, then.min).length > 1) {
+        if (
+          sortRings(rings, st.dirs, best.members, then.scale, then.k, then.min, gapRef.current)
+            .length > 1
+        ) {
           to = GLOBE_R + (to - GLOBE_R) / 1.1;
           break;
         }

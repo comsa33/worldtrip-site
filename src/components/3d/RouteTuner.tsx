@@ -51,7 +51,10 @@ lineWidth={${t.borderActive}}   // 활성
 
 // src/styles/index.css — :root${theme === 'light' ? "[data-theme='light']" : ''}
 --route-ahead: ${t.aheadColor};
---route-ahead-o: ${t.aheadOpacity};`;
+--route-ahead-o: ${t.aheadOpacity};
+
+// src/components/3d/themeRingScale.ts
+export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPhoneMin}, phoneStroke: ${t.ringPhoneStroke}, deskK: ${t.ringDeskK}, deskMin: ${t.ringDeskMin}, deskStroke: ${t.ringDeskStroke}, grow: ${t.ringGrow}, gap: ${t.ringGap} };`;
 
   return (
     <div className="tuner">
@@ -107,6 +110,20 @@ lineWidth={${t.borderActive}}   // 활성
         {Math.round(Math.min(t.paceMax, t.paceBase + 1100 / t.pacePx + 3577 / t.paceKm))}ms · 가장
         긴 비행 {Math.round(Math.min(t.paceMax, t.paceBase + 1100 / t.pacePx + 14400 / t.paceKm))}ms
         (폰 기준 px). 도착 뒤 스프링이 0.5초쯤 더 붙습니다.
+      </div>
+
+      <div className="tuner__group">주제 고리 · 둘러보기 (반지름 = k·√사진 수 + 최소)</div>
+      {num('ringPhoneK', '폰 k', 0.4, 3, 0.05)}
+      {num('ringPhoneMin', '폰 최소 px', 0.5, 5, 0.1)}
+      {num('ringPhoneStroke', '폰 선 굵기', 0.5, 2, 0.05)}
+      {num('ringDeskK', '데스크톱 k', 0.4, 4.2, 0.05)}
+      {num('ringDeskMin', '데스크톱 최소 px', 0.5, 6, 0.1)}
+      {num('ringDeskStroke', '데스크톱 선 굵기', 0.5, 2, 0.05)}
+      {num('ringGrow', '당길 때 커지는 지수', 0, 1, 0.05)}
+      {num('ringGap', '합치는 간격 px', 0, 8, 0.5)}
+      <div className="tuner__note">
+        주제를 켜고 둘러보기(G)에서 봅니다. 지수 0 은 당겨도 크기 그대로, 1 은 지도와 같이 커져
+        갈라지지 않습니다. 폰은 짧은 변 768px 이하(가로로 눕힌 폰 포함).
       </div>
 
       <div className="tuner__group">화면에 찍히는 값</div>

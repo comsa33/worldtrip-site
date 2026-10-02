@@ -49,6 +49,7 @@ import { AUTOPLAY_BEAT_MS, PACE_DEFAULTS, jumpMs, type PaceParams } from './pace
 import { PhotoMarkers } from './PhotoMarkers';
 import { GlobeLabelDriver, GlobeViewToggle } from './GlobeView';
 import { ThemeRings, type ThemeRing } from './ThemeRings';
+import type { RingFar } from './themeRingScale';
 import { ThemeRow } from '../themes/ThemeRow';
 import { stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
 import { stepIndex } from '../../lib/themeStep';
@@ -1159,6 +1160,29 @@ function Scene({
   const segments = useMemo(() => buildSegments(path), [path]);
   const tuned = useTuning();
   const widths = TUNE_ON ? tuned : defaults(theme);
+  // the theme's rings while looking around, on the bench
+  const ringScale = useMemo<RingFar>(
+    () => ({
+      phoneK: tuned.ringPhoneK,
+      phoneMin: tuned.ringPhoneMin,
+      phoneStroke: tuned.ringPhoneStroke,
+      deskK: tuned.ringDeskK,
+      deskMin: tuned.ringDeskMin,
+      deskStroke: tuned.ringDeskStroke,
+      grow: tuned.ringGrow,
+      gap: tuned.ringGap,
+    }),
+    [
+      tuned.ringPhoneK,
+      tuned.ringPhoneMin,
+      tuned.ringPhoneStroke,
+      tuned.ringDeskK,
+      tuned.ringDeskMin,
+      tuned.ringDeskStroke,
+      tuned.ringGrow,
+      tuned.ringGap,
+    ]
+  );
   // every city that is a shape on the map, and how far each has handed over
   // from its ring to that shape this frame
   const outlines = useOutlines(cities);
@@ -1488,6 +1512,7 @@ function Scene({
           // looking around, and on the way home from it, rings that touch are one
           gather={globe !== 'off'}
           onAim={aimAt}
+          scale={TUNE_ON ? ringScale : undefined}
         />
       )}
 
