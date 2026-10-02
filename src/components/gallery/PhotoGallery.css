@@ -412,25 +412,47 @@
 }
 
 /* ── caption ───────────────────────────────────────────────────────────── */
+/* The words under the picture have a place of a fixed height — two lines of
+   caption, two of when and where — whatever this photo's words come to. The
+   picture's room above is then the same for every photo, and turning the
+   page (or a caption arriving late) never moves a picture up or down. Words
+   past their two lines are cut short with an ellipsis. */
 .pb__cap {
+  --cap-text: 20px;
+  --cap-meta: 16px;
   animation: pbFade 200ms var(--ease-out) both;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   gap: 4px;
+  height: calc(var(--cap-text) * 2 + 4px + var(--cap-meta) * 2);
+  overflow: hidden;
   text-align: center;
   max-width: 64ch;
   justify-self: center;
 }
 
+.pb__text,
+.pb__meta {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
 .pb__text {
   font-size: 14px;
+  line-height: var(--cap-text);
   color: var(--ink);
   text-wrap: pretty;
 }
 
 .pb__meta {
   font-size: 11.5px;
+  line-height: var(--cap-meta);
   color: var(--ink-3);
 }
 
