@@ -225,6 +225,10 @@
   border-radius: 3px;
   padding: 1px;
   background: var(--bg-card);
+}
+
+/* over this photo the pointer is the dot; the cards beside it keep the arrow */
+.pb__frame.is-here {
   cursor: none;
 }
 
@@ -290,8 +294,8 @@
   right: 1px;
 }
 
-.pb__frame.is-here[data-side='l']:hover::before,
-.pb__frame.is-here[data-side='r']:hover::after {
+.pb__frame.is-here[data-side='l']::before,
+.pb__frame.is-here[data-side='r']::after {
   opacity: 1;
 }
 
@@ -311,7 +315,7 @@
   transition: opacity 180ms var(--ease);
 }
 
-.pb__frame:hover .pb__cursor {
+.pb__slot.is-over .pb__cursor {
   opacity: 1;
 }
 
@@ -705,7 +709,8 @@
     display: none;
   }
 
-  .pb__frame {
+  .pb__frame,
+  .pb__frame.is-here {
     cursor: default;
   }
 
@@ -789,7 +794,8 @@
     display: none;
   }
 
-  .pb__frame {
+  .pb__frame,
+  .pb__frame.is-here {
     cursor: default;
   }
 

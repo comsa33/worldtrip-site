@@ -537,6 +537,8 @@ export default function PhotoGallery({
     [film, filmParams.response, filmParams.damping]
   );
   const filmRaf = useRef(0);
+  /** set once the cursor's own code is in place (below): the band calls it as it moves */
+  const cursorSync = useRef<() => void>(() => {});
   const filmAt = useRef(0);
   const drawFilm = useCallback(() => {
     const el = filmRef.current;
@@ -554,6 +556,7 @@ export default function PhotoGallery({
       filmAt.current = now;
       const done = film.tick(dt);
       drawFilm();
+      cursorSync.current();
       filmRaf.current = done ? 0 : requestAnimationFrame(step);
     };
     filmRaf.current = requestAnimationFrame(step);
@@ -1134,10 +1137,10 @@ export default function PhotoGallery({
     // the new one against the finger — a scroll that went and came back.
     if (sheetRef.current?.contains(t) || stripRef.current?.contains(t) || t.closest('.pb__locator'))
       return;
-    if (mouse) {
-      e.preventDefault();
-      rootRef.current?.setPointerCapture(e.pointerId);
-    }
+    // (No pointer capture for the mouse: a captured pointer's click goes to
+    // the element that holds it, and the picture's own click — left half back,
+    // right half on — never came. The lift is heard on the window instead.)
+    if (mouse) e.preventDefault();
     // a band in motion is caught where it is
     stopFilm();
     film.grab();
@@ -1157,6 +1160,11 @@ export default function PhotoGallery({
   const onPointerMove = (e: React.PointerEvent) => {
     const g = gesture.current;
     if (!g.down) return;
+    // the button came up where no one heard it (outside the window)
+    if (g.mouse && e.buttons === 0) {
+      endGesture();
+      return;
+    }
     const dx = e.clientX - g.sx;
     const dy = e.clientY - g.sy;
     if (!g.axis) {
@@ -1295,16 +1303,41 @@ export default function PhotoGallery({
     }
   }, [cards]);
 
-  /* ── the cursor is the accent dot, stretched by its own speed ────────── */
+  /* ── the cursor is the accent dot, stretched by its own speed ──────────
+     Over this photo the pointer is the dot, and the edge of the half it is on
+     lights: left goes back, right goes on. The dot lives on the slot, which
+     stays still — the photo under the pointer changes and the band moves, and
+     the dot and the lit edge are set again from where the pointer is, without
+     waiting for the mouse to move. */
   const originOf = useCallback(() => figRef.current?.getBoundingClientRect() ?? null, []);
   const curRef = useRef<HTMLSpanElement>(null);
   const cursor = useRef({ x: 0, y: 0, vx: 0, vy: 0, raf: 0 });
-  const onFigureMove = (e: React.PointerEvent) => {
-    if (e.pointerType !== 'mouse') return;
+  /** where the mouse is (client px) while it is over the slot */
+  const pointerAt = useRef<{ x: number; y: number } | null>(null);
+  const syncCursor = useCallback(() => {
+    const slotEl = slotRef.current;
+    if (!slotEl) return;
     const fig = figRef.current;
+    const at = pointerAt.current;
+    const r = fig?.getBoundingClientRect();
+    const over = Boolean(
+      at && r && at.x >= r.left && at.x <= r.right && at.y >= r.top && at.y <= r.bottom
+    );
+    slotEl.classList.toggle('is-over', over);
+    for (const f of Array.from(slotEl.querySelectorAll<HTMLElement>('.pb__frame[data-side]')))
+      if (f !== fig || !over) delete f.dataset.side;
+    if (over && fig && r && at) fig.dataset.side = at.x < r.left + r.width / 2 ? 'l' : 'r';
+  }, []);
+  useEffect(() => {
+    cursorSync.current = syncCursor;
+  }, [syncCursor]);
+  const onSlotMove = (e: React.PointerEvent) => {
+    if (e.pointerType !== 'mouse') return;
+    const slotEl = slotRef.current;
     const cur = curRef.current;
-    if (!fig || !cur) return;
-    const r = fig.getBoundingClientRect();
+    if (!slotEl || !cur) return;
+    pointerAt.current = { x: e.clientX, y: e.clientY };
+    const r = slotEl.getBoundingClientRect();
     const c = cursor.current;
     const x = e.clientX - r.left;
     const y = e.clientY - r.top;
@@ -1312,7 +1345,7 @@ export default function PhotoGallery({
     c.vy = y - c.y;
     c.x = x;
     c.y = y;
-    fig.dataset.side = x < r.width / 2 ? 'l' : 'r';
+    syncCursor();
     if (c.raf) return;
     const tick = () => {
       c.vx *= 0.82;
@@ -1324,6 +1357,12 @@ export default function PhotoGallery({
     };
     c.raf = requestAnimationFrame(tick);
   };
+  const onSlotLeave = () => {
+    pointerAt.current = null;
+    syncCursor();
+  };
+  // another photo under a pointer that has not moved: the dot is still there
+  useLayoutEffect(syncCursor, [syncCursor, photo?.id, lane]);
   const onFigureClick = (e: React.MouseEvent) => {
     const fig = figRef.current;
     if (!fig) return;
@@ -1570,7 +1609,12 @@ export default function PhotoGallery({
       <ThemeRow className="pb__themerow" lang={lang} moving={busy || scrubbing} wake={topRef} />
 
       <div className="pb__stage">
-        <div className="pb__slot" ref={slotRef}>
+        <div
+          className="pb__slot"
+          ref={slotRef}
+          onPointerMove={onSlotMove}
+          onPointerLeave={onSlotLeave}
+        >
           {/* the band: each card its own frame, the photo's shape, its tones
               under it until the picture is in — so a late one moves the same */}
           <div className="pb__film" ref={filmRef}>
@@ -1605,7 +1649,6 @@ export default function PhotoGallery({
                         } as React.CSSProperties)
                       : undefined
                   }
-                  onPointerMove={here ? onFigureMove : undefined}
                   onClick={here ? onFigureClick : undefined}
                 >
                   {here && growing && (
@@ -1632,11 +1675,11 @@ export default function PhotoGallery({
                       onError={here ? () => setSharpId(p.id) : undefined}
                     />
                   )}
-                  {here && <span className="pb__cursor" ref={curRef} aria-hidden="true" />}
                 </figure>
               );
             })}
           </div>
+          <span className="pb__cursor" ref={curRef} aria-hidden="true" />
         </div>
 
         <figcaption className="pb__cap" key={photo.id}>
