@@ -227,8 +227,8 @@
   background: var(--bg-card);
 }
 
-/* over this photo the pointer is the dot; the cards beside it keep the arrow */
-.pb__frame.is-here {
+/* over the slot the pointer is the dot (drawn below), wherever on it */
+.pb__slot {
   cursor: none;
 }
 
@@ -710,7 +710,7 @@
   }
 
   .pb__frame,
-  .pb__frame.is-here {
+  .pb__slot {
     cursor: default;
   }
 
@@ -795,7 +795,7 @@
   }
 
   .pb__frame,
-  .pb__frame.is-here {
+  .pb__slot {
     cursor: default;
   }
 

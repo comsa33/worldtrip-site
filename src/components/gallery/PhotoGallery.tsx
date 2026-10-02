@@ -1304,11 +1304,12 @@ export default function PhotoGallery({
   }, [cards]);
 
   /* ── the cursor is the accent dot, stretched by its own speed ──────────
-     Over this photo the pointer is the dot, and the edge of the half it is on
-     lights: left goes back, right goes on. The dot lives on the slot, which
-     stays still — the photo under the pointer changes and the band moves, and
-     the dot and the lit edge are set again from where the pointer is, without
-     waiting for the mouse to move. */
+     Over the slot — the whole width the picture has, the cards beside it and
+     the room around them — the pointer is the dot, and the picture's edge on
+     the half the pointer is on lights: left goes back, right goes on. The dot
+     lives on the slot, which stays still — the photo under the pointer
+     changes and the band moves, and the dot and the lit edge are set again
+     from where the pointer is, without waiting for the mouse to move. */
   const originOf = useCallback(() => figRef.current?.getBoundingClientRect() ?? null, []);
   const curRef = useRef<HTMLSpanElement>(null);
   const cursor = useRef({ x: 0, y: 0, vx: 0, vy: 0, raf: 0 });
@@ -1319,14 +1320,14 @@ export default function PhotoGallery({
     if (!slotEl) return;
     const fig = figRef.current;
     const at = pointerAt.current;
-    const r = fig?.getBoundingClientRect();
-    const over = Boolean(
-      at && r && at.x >= r.left && at.x <= r.right && at.y >= r.top && at.y <= r.bottom
-    );
+    const over = at !== null;
     slotEl.classList.toggle('is-over', over);
     for (const f of Array.from(slotEl.querySelectorAll<HTMLElement>('.pb__frame[data-side]')))
       if (f !== fig || !over) delete f.dataset.side;
-    if (over && fig && r && at) fig.dataset.side = at.x < r.left + r.width / 2 ? 'l' : 'r';
+    if (over && fig && at) {
+      const r = slotEl.getBoundingClientRect();
+      fig.dataset.side = at.x < r.left + r.width / 2 ? 'l' : 'r';
+    }
   }, []);
   useEffect(() => {
     cursorSync.current = syncCursor;
@@ -1363,15 +1364,19 @@ export default function PhotoGallery({
   };
   // another photo under a pointer that has not moved: the dot is still there
   useLayoutEffect(syncCursor, [syncCursor, photo?.id, lane]);
-  const onFigureClick = (e: React.MouseEvent) => {
-    const fig = figRef.current;
-    if (!fig) return;
+  /* A click anywhere on the slot turns the page by its half — on the picture,
+     on a card beside it, on the room around them. A control of its own (none
+     live in the slot today) keeps its click. */
+  const onSlotClick = (e: React.MouseEvent) => {
+    const slotEl = slotRef.current;
+    if (!slotEl) return;
+    if ((e.target as HTMLElement).closest('button, a, input')) return;
     // the band was dragged here: letting go is not also a click
     if (dragged.current) {
       dragged.current = false;
       return;
     }
-    const r = fig.getBoundingClientRect();
+    const r = slotEl.getBoundingClientRect();
     go(e.clientX - r.left < r.width / 2 ? -1 : 1);
   };
 
@@ -1614,6 +1619,7 @@ export default function PhotoGallery({
           ref={slotRef}
           onPointerMove={onSlotMove}
           onPointerLeave={onSlotLeave}
+          onClick={onSlotClick}
         >
           {/* the band: each card its own frame, the photo's shape, its tones
               under it until the picture is in — so a late one moves the same */}
@@ -1649,7 +1655,6 @@ export default function PhotoGallery({
                         } as React.CSSProperties)
                       : undefined
                   }
-                  onClick={here ? onFigureClick : undefined}
                 >
                   {here && growing && (
                     <img
