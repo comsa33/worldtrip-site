@@ -1,30 +1,30 @@
 {
   "laguna-001": {
-    "ko": "풀밭에 꽂힌 SAÍDA 화살표 표지판과 LIXO라고 쓴 쓰레기통",
-    "en": "An arrow sign reading SAÍDA and a drum marked LIXO in the grass"
+    "ko": "「출구」 화살표와 「쓰레기」 통",
+    "en": "An arrow for \"exit\" and a bin marked \"trash\""
   },
   "laguna-002": {
-    "ko": "바위 해안에 부서지는 파도, 언덕 위에 집들이 앉아 있다",
-    "en": "Waves breaking on a rocky shore, houses along the hilltop"
+    "ko": "바람이 셌고 하늘은 흐렸습니다.",
+    "en": "The wind was strong and the sky was grey."
   },
   "laguna-004": {
-    "ko": "언덕 비탈의 색색 지붕 집들, 그 너머로 바다",
-    "en": "Colorful roofs on a hillside, the sea beyond"
+    "ko": "언덕 비탈에 칠한 듯 붙은 집들",
+    "en": "Houses painted onto the slope"
   },
   "laguna-005": {
-    "ko": "풀과 바위 언덕 위에 선 흰 등대",
-    "en": "A white lighthouse on a grassy, rocky rise"
+    "ko": "등대까지 걸었습니다.",
+    "en": "I walked to the lighthouse."
   },
   "laguna-006": {
-    "ko": "구름 낮은 하늘 아래 만과 모래톱, 물가에 작은 집 한 채",
-    "en": "Bay and sandbar under low cloud, one small house at the water's edge"
+    "ko": "모래톱으로 이어지는 잿빛 만",
+    "en": "A grey bay running out to a sandbar"
   },
   "laguna-008": {
-    "ko": "바위 뒤로 펼쳐진 주홍 지붕 마을",
-    "en": "A town of orange roofs spread out behind a boulder"
+    "ko": "큰 바위 뒤로 모인 주황 지붕들",
+    "en": "Orange roofs gathered behind a boulder"
   },
   "laguna-009": {
-    "ko": "바위 사이로 내려다본 해안 마을 전경",
-    "en": "The coastal town seen wide from between the rocks"
+    "ko": "등대 언덕에서 한눈에 담은 마을",
+    "en": "The whole village from the lighthouse hill"
   }
 }

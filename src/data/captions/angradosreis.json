@@ -1,50 +1,38 @@
 {
-  "angradosreis-002": {
-    "ko": "구름 낀 하늘 아래 잔디밭과 노란 꽃이 핀 나무 두 그루",
-    "en": "Two trees with yellow flowers on a lawn under a partly cloudy sky"
-  },
   "angradosreis-003": {
-    "ko": "붉은 기와지붕 너머 산비탈의 집들과 성당 종탑",
-    "en": "Beyond a red-tiled roof, houses on a hillside and a church tower"
-  },
-  "angradosreis-004": {
-    "ko": "넓은 잔디밭 가장자리의 길, 자전거 표시가 바닥에 있다",
-    "en": "The edge of a big lawn, a bicycle symbol painted on the path"
+    "ko": "붉은 기와 너머 종탑 하나",
+    "en": "A single bell tower past the red tiles"
   },
   "angradosreis-005": {
-    "ko": "밤, 불 켜진 산비탈 마을과 슬레이트 지붕",
-    "en": "Lit-up hillside houses at night above a corrugated roof"
+    "ko": "밤 열한 시, 언덕에 불 밝힌 성당",
+    "en": "Eleven at night, a church lit up on the hill"
   },
   "angradosreis-006": {
-    "ko": "철창 안에 모여 있는 병아리들, 노랑과 검정이 섞여 있다",
-    "en": "Chicks huddled in a wire cage, yellow ones and a dark one"
-  },
-  "angradosreis-007": {
-    "ko": "버스 안 셀카, 뒤 좌석에 고개를 젖히고 자는 사람",
-    "en": "A selfie on a bus, a passenger asleep with head tilted back behind"
+    "ko": "가게 철망 안의 병아리 떼",
+    "en": "A crowd of chicks behind a shop's wire cage"
   },
   "angradosreis-008": {
-    "ko": "구름 낀 날 산자락을 덮은 집들과 하얀 성당",
-    "en": "Houses covering a hillside under clouds, a white church among them"
+    "ko": "흐린 아침 산비탈을 메운 집들",
+    "en": "Houses filling the slope on a cloudy morning"
   },
   "angradosreis-010": {
-    "ko": "배 앞쪽 갑판과 밧줄, 뒤로 산비탈 도시",
-    "en": "The bow of a boat with coiled rope, a hillside town behind"
+    "ko": "일랴 그란지로 가는 배를 여기서 탔습니다.",
+    "en": "I took the boat to Ilha Grande from here."
   },
   "angradosreis-011": {
-    "ko": "비 오는 도로, 전선 아래 차들이 달리고 뒤로 언덕",
-    "en": "A wet road with cars under power lines, hills behind"
+    "ko": "비구름이 내려앉은 산 아래 도로",
+    "en": "A road under hills sunk in rain cloud"
   },
   "angradosreis-012": {
-    "ko": "배 창문 너머로 보이는 만과 초록 언덕",
-    "en": "A bay and green hills through a ferry window"
+    "ko": "빗방울 묻은 창으로 본 초록 섬",
+    "en": "A green island through a rain-specked window"
   },
   "angradosreis-014": {
-    "ko": "노란 기둥과 의자가 줄지은 페리 객실, 배낭이 놓인 자리",
-    "en": "A ferry cabin with yellow posts and rows of seats, a backpack on one"
+    "ko": "배낭을 옆자리에 둔 페리 객실",
+    "en": "The ferry cabin, my pack on the next seat"
   },
   "angradosreis-015": {
-    "ko": "구름이 낮게 깔린 산 아래 물가의 도시와 흰 건물",
-    "en": "A waterfront town and a white building beneath low clouds over the hills"
+    "ko": "구름이 산허리를 감춘 항구 도시",
+    "en": "A port town with clouds hiding the hillsides"
   }
 }
