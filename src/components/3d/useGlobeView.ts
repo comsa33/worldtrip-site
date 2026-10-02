@@ -141,6 +141,13 @@ export function nearestDistance(aspect: number, fovDeg = 45) {
 const TAP_MS = 300;
 const TAP_PX = 24;
 
+/**
+ * When a press last landed on a ring of several (ThemeRings). That press asks
+ * the camera in; a second one straight after it is not the two taps that ask
+ * for the whole globe back.
+ */
+export const ringPress = { at: -Infinity };
+
 export function useDoubleTap(active: boolean, onDouble: () => void) {
   const { gl, events } = useThree();
   const cb = useRef(onDouble);
@@ -150,7 +157,7 @@ export function useDoubleTap(active: boolean, onDouble: () => void) {
   useEffect(() => {
     if (!active) return;
     const el = (events.connected as HTMLElement | undefined) ?? gl.domElement;
-    let last = { t: 0, x: 0, y: 0 };
+    let last = { t: 0, x: 0, y: 0, onRing: false };
     let down = { x: 0, y: 0 };
     const onDown = (e: PointerEvent) => {
       down = { x: e.clientX, y: e.clientY };
@@ -160,14 +167,23 @@ export function useDoubleTap(active: boolean, onDouble: () => void) {
       // a drag is a turn, not a tap
       if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 10) return;
       const now = performance.now();
-      if (now - last.t < TAP_MS && Math.hypot(e.clientX - last.x, e.clientY - last.y) < TAP_PX) {
-        last = { t: 0, x: 0, y: 0 };
+      if (
+        !last.onRing &&
+        now - last.t < TAP_MS &&
+        Math.hypot(e.clientX - last.x, e.clientY - last.y) < TAP_PX
+      ) {
+        last = { t: 0, x: 0, y: 0, onRing: false };
         cb.current();
         return;
       }
-      last = { t: now, x: e.clientX, y: e.clientY };
+      // the rings hear this same press first (they listen on the way down)
+      last = { t: now, x: e.clientX, y: e.clientY, onRing: now - ringPress.at < 50 };
     };
-    const onDbl = () => cb.current();
+    const onDbl = () => {
+      // a double click whose first click went to a ring
+      if (performance.now() - ringPress.at < 600) return;
+      cb.current();
+    };
     el.addEventListener('pointerdown', onDown);
     el.addEventListener('pointerup', onUp);
     el.addEventListener('dblclick', onDbl);

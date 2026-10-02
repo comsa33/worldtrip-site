@@ -30,6 +30,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { ringPress } from './useGlobeView';
 
 export interface ThemeRing {
   city: string;
@@ -425,6 +426,7 @@ export function ThemeRings({
         }
       }
       if (!best) return;
+      ringPress.at = performance.now();
       // closer by a tenth at a time until these are no longer one ring, and one step past it
       let to = distance;
       for (let step = 0; step < 60 && to > nearest; step++) {
@@ -437,11 +439,12 @@ export function ThemeRings({
       }
       aim.current?.(best.dir.clone(), Math.max(nearest, to));
     };
-    el.addEventListener('pointerdown', onDown);
-    el.addEventListener('pointerup', onUp);
+    // on the way down, so this is heard before the double tap makes up its mind
+    el.addEventListener('pointerdown', onDown, true);
+    el.addEventListener('pointerup', onUp, true);
     return () => {
-      el.removeEventListener('pointerdown', onDown);
-      el.removeEventListener('pointerup', onUp);
+      el.removeEventListener('pointerdown', onDown, true);
+      el.removeEventListener('pointerup', onUp, true);
     };
   }, [gather, rings, camera, gl, events, nearest]);
 
