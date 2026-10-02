@@ -38,6 +38,7 @@ import { useOutlines } from './cityOutlines';
 import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
 import { srcFor } from '../../lib/photoSrc';
+import { cityCodeOf, loadCaptions } from '../../lib/captions';
 import { DotGlobe, GLOBE_RADIUS } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
@@ -2250,7 +2251,10 @@ function JourneyExperienceContent() {
   // already asks for — which the book shows under the full photo.
   const handlePressStop = (_cityName: string, stopId: number) => {
     const first = firstLit(stopId);
-    if (first) new Image().src = srcFor(first, 480, { exact: true });
+    if (!first) return;
+    new Image().src = srcFor(first, 480, { exact: true });
+    // and its words, so the photo opens with its caption under it
+    void loadCaptions(cityCodeOf(first.id));
   };
   const handleOpenStop = (cityName: string, stopId: number) => {
     const first = firstLit(stopId);

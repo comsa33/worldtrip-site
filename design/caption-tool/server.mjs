@@ -3,8 +3,8 @@
 //   node design/caption-tool/server.mjs            → http://127.0.0.1:5181
 //   HOST=100.98.29.113 node design/caption-tool/server.mjs   (Tailscale only)
 //
-// Reads and writes design/photo-themes/captions/<cityCode>.json in this
-// worktree, formatted by the repo's prettier so a commit carries only the
+// Reads and writes src/data/captions/<cityCode>.json in this worktree — the
+// one copy, the same files the site's photo book loads — formatted by the repo's prettier so a commit carries only the
 // words that changed. Photos are the local originals under the main working
 // tree's photos/cities/ (never Cloudinary). Clues come from facts.jsonl, which
 // is local only and is shown here but never written anywhere.
@@ -17,7 +17,7 @@ import prettier from 'prettier';
 const here = dirname(fileURLToPath(import.meta.url));
 const repo = join(here, '..', '..');
 const MAIN = process.env.MAIN_TREE ?? '/Users/ruo/projects/worldtrip-site';
-const CAPTIONS = join(repo, 'design', 'photo-themes', 'captions');
+const CAPTIONS = join(repo, 'src', 'data', 'captions');
 const PHOTOS = join(MAIN, 'photos', 'cities');
 const FACTS = join(MAIN, 'design', 'photo-themes', 'facts.jsonl');
 const HOST = process.env.HOST ?? '127.0.0.1';

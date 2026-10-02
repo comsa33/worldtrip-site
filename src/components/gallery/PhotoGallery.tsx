@@ -25,6 +25,7 @@ import { srcFor } from '../../lib/photoSrc';
 import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { hasTheme, themesOf, usePhotoTheme } from '../../lib/photoThemes';
+import { useCaption } from '../../lib/captions';
 import { TUNE_ON, useTuning } from '../3d/routeTuning';
 import { RING_MOVE } from '../3d/themeRingScale';
 import { stepIndex } from '../../lib/themeStep';
@@ -266,6 +267,7 @@ export default function PhotoGallery({
   const safeIndex = count ? Math.min(index, count - 1) : 0;
   const photo: Photo | undefined = photos[safeIndex];
   const atEnd = count > 0 && safeIndex === count - 1;
+  const caption = useCaption(photo?.id, lang);
 
   /* ── reading the wide sheet: what is at the top, what is at the bottom ── */
   const [read, setRead] = useState({ top: 0, bottom: 0 });
@@ -1202,7 +1204,9 @@ export default function PhotoGallery({
       : photo.date || '';
   const place =
     photo.location || (photo.gps ? `${photo.gps.lat.toFixed(3)}, ${photo.gps.lng.toFixed(3)}` : '');
-  const text = photo.caption[lang]?.trim() ?? '';
+  // the words come with the city's caption file; until it is in, their line is kept
+  const text = caption ?? '';
+  const captionPending = caption === undefined;
 
   // The last photo of a city is where the dot comes to rest: it sits on the
   // full stop of the line that ends the city, stands up into a caret, and
@@ -1396,10 +1400,10 @@ export default function PhotoGallery({
         </div>
 
         <figcaption className="pb__cap" key={photo.id}>
-          {text && (
+          {(text || captionPending) && (
             <span className="pb__text">
-              {text}
-              {seat}
+              {text || '\u00a0'}
+              {text && seat}
             </span>
           )}
           <span className="pb__meta mono">
