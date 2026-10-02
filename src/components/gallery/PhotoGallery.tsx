@@ -60,6 +60,26 @@ interface PhotoGalleryProps {
   /** Open on the whole journey rather than the city — the header's door. */
   initialScope?: 'city' | 'all';
   onClose: () => void;
+  /**
+   * The book was opened from a lit ring on the globe. Where that city's ring
+   * is on the screen now (null if it is not) — the photo opens out of it as a
+   * circle and closes back into it, the way a book opened from the filmstrip
+   * closes into its frame: the shape it came from.
+   */
+  ringSpot?: ((city: string) => RingSpot | null) | null;
+}
+
+export type RingSpot = { x: number; y: number; r: number };
+
+/** The ring's move, the same pace and curve the book closes home with. */
+const RING_MS = 340;
+const RING_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+/** The slot's centre before any transform, and how much it is scaled now. */
+function slotAtRest(slotEl: HTMLElement) {
+  const r = slotEl.getBoundingClientRect();
+  const t = getComputedStyle(slotEl).transform;
+  const m = t && t !== 'none' ? new DOMMatrix(t) : new DOMMatrix();
+  return { cx: r.left + r.width / 2 - m.e, cy: r.top + r.height / 2 - m.f, s: m.a || 1 };
 }
 
 const DEFAULT_AR = 4 / 3;
@@ -101,6 +121,7 @@ export default function PhotoGallery({
   focusStopId,
   initialScope,
   onClose,
+  ringSpot = null,
 }: PhotoGalleryProps) {
   const { language } = useI18n();
   const lang = language as 'ko' | 'en';
@@ -278,9 +299,21 @@ export default function PhotoGallery({
      "+n"; a photo from another stop, or a book the strip did not open, drops
      away downward instead. */
   const liftRef = useRef<{ tx: number; ty: number; s: number } | null>(null);
+  const ringRef = useRef(ringSpot);
+  useEffect(() => {
+    ringRef.current = ringSpot;
+  });
+  /** set while the book is closing into a ring: call it to open back out */
+  const ringClosing = useRef<(() => void) | null>(null);
+  const ringTimer = useRef(0);
+  const ringCaught = useRef(false);
+  /** the open this book has already come out of its ring for */
+  const ringOpened = useRef('');
   const closeHomeRef = useRef<() => void>(() => {});
   const closeHome = useCallback(() => closeHomeRef.current(), []);
 
+  /** the city the open photo was taken in — whose ring it would close into */
+  const photoCity = wide ? journeyRoll.blocks[journeyRoll.blockOf[safeIndex]]?.stop.city : cityName;
   /** the photo the top bar speaks for: the one at the top of the sheet, or the one open */
   const spoken = rollSheet ? Math.min(read.top, count - 1) : safeIndex;
   const spokenCity = wide
@@ -371,6 +404,47 @@ export default function PhotoGallery({
 
   const sheetRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  /* ── out of the ring ─────────────────────────────────────────────────────
+     Opened from a lit ring, the photo starts as a circle the ring's size, on
+     the ring, and opens out to its place while the book comes up round it.
+     Transitions, not keyframes: closed halfway, it turns round from there. */
+  const figRef = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    const slotEl = slotRef.current;
+    const fig = figRef.current;
+    // closed: the same ring pressed again is a new opening
+    if (!cityName) ringOpened.current = '';
+    if (!ringSpot || !cityName || !box || sheet || ringOpened.current === openKey) return;
+    if (!root || !slotEl || !fig) return;
+    ringOpened.current = openKey;
+    const spot = ringSpot(cityName);
+    if (!spot || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const at = slotAtRest(slotEl);
+    const small = Math.min(box.w, box.h);
+    root.style.setProperty('--pull', '1');
+    slotEl.style.transition = 'none';
+    slotEl.style.transform = `translate(${spot.x - at.cx}px, ${spot.y - at.cy}px) scale(${(2 * spot.r) / small})`;
+    fig.style.transition = 'none';
+    fig.style.clipPath = `circle(${small / 2}px at 50% 50%)`;
+    void fig.offsetWidth;
+    root.classList.add('is-ring');
+    root.style.setProperty('--pull', '0');
+    slotEl.style.transition = `transform ${RING_MS}ms ${RING_EASE}`;
+    slotEl.style.transform = 'translate(0px, 0px) scale(1)';
+    fig.style.transition = `clip-path ${RING_MS}ms ${RING_EASE}`;
+    fig.style.clipPath = `circle(${Math.hypot(box.w, box.h) / 2}px at 50% 50%)`;
+    window.clearTimeout(ringTimer.current);
+    ringTimer.current = window.setTimeout(() => {
+      root.classList.remove('is-ring');
+      root.style.removeProperty('--pull');
+      slotEl.style.transition = '';
+      slotEl.style.transform = '';
+      fig.style.transition = '';
+      fig.style.clipPath = '';
+    }, RING_MS + 10);
+  }, [ringSpot, cityName, box, sheet, openKey]);
+
   const topRef = useRef<HTMLDivElement>(null);
 
   /* ── the hand at work: the theme row steps back while it is ───────────────
@@ -757,6 +831,14 @@ export default function PhotoGallery({
   /* ── touch: swipe across, pull down to close ─────────────────────────── */
   const gesture = useRef({ down: false, sx: 0, sy: 0, axis: '' as '' | 'x' | 'y', dy: 0, t0: 0 });
   const onPointerDown = (e: React.PointerEvent) => {
+    // closing into its ring and caught again: it opens back out from where it is
+    if (ringClosing.current) {
+      ringClosing.current();
+      // the press that caught it is not also a turn of the page
+      ringCaught.current = true;
+      return;
+    }
+    ringCaught.current = false;
     if (e.pointerType === 'mouse') return;
     const t = e.target as HTMLElement;
     // the sheet scrolls and pinches, the strip scrolls, the map aims: none of
@@ -916,7 +998,6 @@ export default function PhotoGallery({
   };
 
   /* ── the cursor is the accent dot, stretched by its own speed ────────── */
-  const figRef = useRef<HTMLElement>(null);
   const originOf = useCallback(() => figRef.current?.getBoundingClientRect() ?? null, []);
   const curRef = useRef<HTMLSpanElement>(null);
   const cursor = useRef({ x: 0, y: 0, vx: 0, vy: 0, raf: 0 });
@@ -959,6 +1040,55 @@ export default function PhotoGallery({
       const fig = figRef.current;
       if (!root || !slotEl || !fig || sheet || !photo) {
         close();
+        return;
+      }
+      const spot = ringRef.current?.(photoCity ?? '') ?? null;
+      if (spot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // back into the ring it came from (or the ring of the stop it has been
+        // paged on to): the photo goes over to it, closing to a circle its size
+        const at = slotAtRest(slotEl);
+        const f = fig.getBoundingClientRect();
+        const w0 = f.width / at.s;
+        const h0 = f.height / at.s;
+        const small = Math.min(w0, h0);
+        const tidy = () => {
+          ringClosing.current = null;
+          liftRef.current = null;
+          root.classList.remove('is-ring');
+          root.style.removeProperty('--pull');
+          slotEl.style.transition = '';
+          slotEl.style.transform = '';
+          fig.style.transition = '';
+          fig.style.clipPath = '';
+          fig.style.opacity = '';
+        };
+        // the whole photo is a circle through its corners; from wherever the
+        // circle is now if this is an opening turned round
+        if (!fig.style.clipPath)
+          fig.style.clipPath = `circle(${Math.hypot(w0, h0) / 2}px at 50% 50%)`;
+        void fig.offsetWidth;
+        root.classList.add('is-ring');
+        root.style.setProperty('--pull', '1');
+        slotEl.style.transition = `transform ${RING_MS}ms ${RING_EASE}`;
+        slotEl.style.transform = `translate(${spot.x - at.cx}px, ${spot.y - at.cy}px) scale(${(2 * spot.r) / small})`;
+        fig.style.transition = `clip-path ${RING_MS}ms ${RING_EASE}, opacity 100ms ease ${RING_MS - 100}ms`;
+        fig.style.clipPath = `circle(${small / 2}px at 50% 50%)`;
+        fig.style.opacity = '0';
+        window.clearTimeout(ringTimer.current);
+        ringTimer.current = window.setTimeout(() => {
+          tidy();
+          close();
+        }, RING_MS + 10);
+        ringClosing.current = () => {
+          window.clearTimeout(ringTimer.current);
+          root.style.setProperty('--pull', '0');
+          slotEl.style.transform = 'translate(0px, 0px) scale(1)';
+          fig.style.transition = `clip-path ${RING_MS}ms ${RING_EASE}, opacity 100ms ease`;
+          fig.style.clipPath = `circle(${Math.hypot(w0, h0) / 2}px at 50% 50%)`;
+          fig.style.opacity = '1';
+          ringClosing.current = null;
+          ringTimer.current = window.setTimeout(tidy, RING_MS + 10);
+        };
         return;
       }
       const strip = document.querySelector<HTMLElement>('.filmstrip');
@@ -1046,6 +1176,11 @@ export default function PhotoGallery({
       onPointerMove={onPointerMove}
       onPointerUp={endGesture}
       onPointerCancel={endGesture}
+      onClickCapture={(e) => {
+        if (!ringCaught.current) return;
+        ringCaught.current = false;
+        e.stopPropagation();
+      }}
     >
       {/* The rest step back from the chosen theme. Every tile and thumbnail
           carries its themes once (data-t); choosing is this one rule, so the

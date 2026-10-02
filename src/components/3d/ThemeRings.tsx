@@ -61,13 +61,16 @@ const SORT_STEP = 0.07;
 const TAU = 0.13;
 /** A ring that has joined another fades over its last pixels in. */
 const JOIN_PX = 3;
-/** A finger is not a pointer: this far from a ring still counts as on it, px. */
-const TAP_REACH = 16;
+/** A finger is not a pointer: this far from a ring's centre still counts as on it, px (44 across). */
+const TAP_REACH = 22;
+/** A ring under a press draws in by this much. */
+const SQUEEZE = 0.86;
 
 const vertex = /* glsl */ `
   attribute float aS;
   attribute float aOuter;
   attribute float aAlpha;
+  attribute float aSq;
   uniform float uDpr;
   uniform float uK;
   uniform float uMin;
@@ -79,7 +82,7 @@ const vertex = /* glsl */ `
     vec4 world = modelMatrix * vec4(position, 1.0);
     // the far side of the globe is not drawn, and the limb is fainter
     float facing = dot(normalize(world.xyz), normalize(cameraPosition - world.xyz));
-    float r = uK * aS + uMin;
+    float r = (uK * aS + uMin) * aSq;
     // room for the band (to r+3) and the outer ring (to r+3.6), and a pixel to smooth them
     vSize = (r + 4.0) * 2.0;
     vR = r;
@@ -162,6 +165,7 @@ function build(rings: ThemeRing[]) {
   const s = new Float32Array(count);
   const outer = new Float32Array(count);
   const alpha = new Float32Array(count).fill(1);
+  const sq = new Float32Array(count).fill(1);
   const dirs = rings.map((ring) => ring.position.clone().normalize());
   rings.forEach((ring, i) => {
     pos.set([ring.position.x, ring.position.y, ring.position.z], i * 3);
@@ -173,12 +177,16 @@ function build(rings: ThemeRing[]) {
   geometry.setAttribute('aS', new THREE.BufferAttribute(s, 1));
   geometry.setAttribute('aOuter', new THREE.BufferAttribute(outer, 1));
   geometry.setAttribute('aAlpha', new THREE.BufferAttribute(alpha, 1));
+  geometry.setAttribute('aSq', new THREE.BufferAttribute(sq, 1));
   return {
     geometry,
     pos,
     s,
     outer,
     alpha,
+    sq,
+    /** the ring under a press, or -1: it tightens while it is held */
+    pressed: -1,
     dirs,
     /** how far off the globe's centre the rings sit */
     lift: count ? rings[0].position.length() : GLOBE_R,
@@ -211,6 +219,7 @@ export function ThemeRings({
   gather,
   onAim,
   onOpen,
+  spot: spotRef,
   scale: sizes = RING_FAR,
 }: {
   rings: ThemeRing[];
@@ -229,6 +238,10 @@ export function ThemeRings({
   onAim?: (dir: THREE.Vector3, distance: number) => void;
   /** a ring on its own was pressed: its photo book, at this stay */
   onOpen?: (city: string, stopId: number) => void;
+  /** filled in here: where a city's ring is on the screen (null if it is not) */
+  spot?: React.MutableRefObject<
+    ((city: string) => { x: number; y: number; r: number } | null) | null
+  >;
   /** the look around's sizes — the bench's while it is open */
   scale?: RingFar;
 }) {
@@ -387,12 +400,19 @@ export function ThemeRings({
       } else st.outer[i] = st.toOuter[i];
       // a ring that goes into another is there until it has arrived
       st.alpha[i] = st.leads[i] ? 1 : Math.min(1, left / JOIN_PX);
+      // held under a press, it draws in; let go, it lets out
+      const dSq = (st.pressed === i ? SQUEEZE : 1) - st.sq[i];
+      if (Math.abs(dSq) > 0.004) {
+        st.sq[i] += dSq * (reduced ? 1 : 1 - Math.exp(-dt / 0.05));
+        moving = true;
+      } else st.sq[i] = st.pressed === i ? SQUEEZE : 1;
     }
     const a = st.geometry.attributes;
     a.position.needsUpdate = true;
     a.aS.needsUpdate = true;
     a.aOuter.needsUpdate = true;
     a.aAlpha.needsUpdate = true;
+    a.aSq.needsUpdate = true;
     st.moving = moving;
     // drawn on demand: there is a next frame while a ring is on its way
     if (moving) invalidate();
@@ -410,47 +430,99 @@ export function ThemeRings({
     // Heard on the window, not the canvas: on a phone the journey's canvas is
     // not touched at all (the page under it scrolls), and the press lands on
     // whatever lies there. Anything that is a thing of its own keeps its press.
-    const el = window;
     const own =
       'button, a, input, .journey-header, .theme-row, .stop-rail, .minimap, .country-inset, .filmstrip, .scrubber, .city-label, .about-overlay, .pb, .tuner';
-    let down = { x: 0, y: 0, t: 0 };
-    const onDown = (e: PointerEvent) => {
-      down = { x: e.clientX, y: e.clientY, t: performance.now() };
-    };
-    const onUp = (e: PointerEvent) => {
-      const st = live.current;
-      if (!st) return;
-      if (e.target instanceof Element && e.target.closest(own)) return;
-      // a drag is a turn, and a long press is not a press
-      if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 10) return;
-      if (performance.now() - down.t > 600) return;
-      const rect = gl.domElement.getBoundingClientRect();
-      const distance = camera.position.length();
-      const now = atRef.current(distance, 1);
+    const mine = (e: PointerEvent) => !(e.target instanceof Element && e.target.closest(own));
+    /** where a group is on the screen and how large it is drawn; null behind the globe */
+    const spotOf = (g: Group, st: NonNullable<typeof live.current>) => {
       const eye = camera.position.clone().normalize();
-      const v = new THREE.Vector3();
+      if (g.dir.dot(eye) < 0.15) return null;
+      const now = atRef.current(camera.position.length(), st.look < 0 ? 0 : st.look);
+      const rect = gl.domElement.getBoundingClientRect();
+      const v = g.dir.clone().multiplyScalar(st.lift).project(camera);
+      return {
+        x: rect.left + ((v.x + 1) / 2) * rect.width,
+        y: rect.top + ((1 - v.y) / 2) * rect.height,
+        r: (now.k * Math.sqrt(g.n) + now.min) * st.sq[g.members[0]],
+      };
+    };
+    const under = (x: number, y: number) => {
+      const st = live.current;
+      if (!st) return null;
       let best: Group | null = null;
       let bestD = Infinity;
       for (const g of st.groups) {
-        if (g.dir.dot(eye) < 0.15) continue;
-        v.copy(g.dir).multiplyScalar(st.lift).project(camera);
-        const x = rect.left + ((v.x + 1) / 2) * rect.width;
-        const y = rect.top + ((1 - v.y) / 2) * rect.height;
-        const d = Math.hypot(e.clientX - x, e.clientY - y);
-        const reach = Math.max(TAP_REACH, now.k * Math.sqrt(g.n) + now.min + 6);
-        if (d <= reach && d < bestD) {
+        const s = spotOf(g, st);
+        if (!s) continue;
+        const d = Math.hypot(x - s.x, y - s.y);
+        if (d <= Math.max(TAP_REACH, s.r + 6) && d < bestD) {
           best = g;
           bestD = d;
         }
       }
-      if (!best) return;
+      return best;
+    };
+    const press = (i: number) => {
+      const st = live.current;
+      if (!st || st.pressed === i) return;
+      st.pressed = i;
+      st.moving = true;
+      invalidate();
+    };
+    // the book asks where a city's ring is, to open out of it and close into it
+    if (spotRef)
+      spotRef.current = (city: string) => {
+        const st = live.current;
+        const i = rings.findIndex((ring) => ring.city === city);
+        const g = st?.groups.find((x) => x.members.includes(i));
+        const s = st && g ? spotOf(g, st) : null;
+        if (!s || s.x < 0 || s.y < 0 || s.x > window.innerWidth || s.y > window.innerHeight)
+          return null;
+        return s;
+      };
+
+    let down = { x: 0, y: 0, t: 0 };
+    const onDown = (e: PointerEvent) => {
+      down = { x: e.clientX, y: e.clientY, t: performance.now() };
+      if (!mine(e)) return;
+      const g = under(e.clientX, e.clientY);
+      // a ring on its own tightens under the press
+      if (g && g.members.length === 1) press(g.members[0]);
+    };
+    const onMove = (e: PointerEvent) => {
+      // a drag is a turn: the ring lets go
+      if (live.current && live.current.pressed >= 0)
+        if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 10) press(-1);
+      if (e.pointerType !== 'mouse') return;
+      const g = e.buttons === 0 && mine(e) ? under(e.clientX, e.clientY) : null;
+      gl.domElement.style.cursor = g ? 'pointer' : '';
+    };
+    const onUp = (e: PointerEvent) => {
+      const st = live.current;
+      if (!st) return;
+      const was = st.pressed;
+      // the ring that opens its book stays drawn in under it; any other lets go
+      const letGo = () => press(-1);
+      if (!mine(e)) return letGo();
+      // a drag is a turn, and a long press is not a press
+      if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 10) return letGo();
+      if (performance.now() - down.t > 600) return letGo();
+      const best = under(e.clientX, e.clientY);
+      if (!best) return letGo();
       ringPress.at = performance.now();
       if (best.members.length < 2) {
         const ring = rings[best.members[0]];
+        if (was !== best.members[0]) letGo();
         open.current?.(ring.city, ring.stopId);
+        // the globe stands still under the book; the ring lets out when it is back
+        st.pressed = -1;
+        st.moving = true;
         return;
       }
+      letGo();
+      if (!gather) return;
       // closer by a tenth at a time until these are no longer one ring, and one step past it
+      const distance = camera.position.length();
       let to = distance;
       for (let step = 0; step < 60 && to > nearest; step++) {
         to = GLOBE_R + (to - GLOBE_R) / 1.1;
@@ -465,14 +537,22 @@ export function ThemeRings({
       }
       aim.current?.(best.dir.clone(), Math.max(nearest, to));
     };
+    const onCancel = () => press(-1);
+    const canvas = gl.domElement;
     // on the way down, so this is heard before the double tap makes up its mind
-    el.addEventListener('pointerdown', onDown, true);
-    el.addEventListener('pointerup', onUp, true);
+    window.addEventListener('pointerdown', onDown, true);
+    window.addEventListener('pointermove', onMove, true);
+    window.addEventListener('pointerup', onUp, true);
+    window.addEventListener('pointercancel', onCancel, true);
     return () => {
-      el.removeEventListener('pointerdown', onDown, true);
-      el.removeEventListener('pointerup', onUp, true);
+      window.removeEventListener('pointerdown', onDown, true);
+      window.removeEventListener('pointermove', onMove, true);
+      window.removeEventListener('pointerup', onUp, true);
+      window.removeEventListener('pointercancel', onCancel, true);
+      canvas.style.cursor = '';
+      if (spotRef) spotRef.current = null;
     };
-  }, [rings, camera, gl, nearest]);
+  }, [rings, camera, gl, nearest, gather, invalidate, spotRef]);
 
   if (!rings.length) return null;
   // above the route and the city rings, under the dot's own overlay (DOM)

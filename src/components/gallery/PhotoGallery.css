@@ -37,6 +37,11 @@
   transition: --pull 320ms var(--ease);
 }
 
+/* out of a ring on the globe and back into it: the book follows the circle */
+.pb.is-ring {
+  transition: --pull 340ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 /* filter rather than opacity: the caption and the key hints already animate
    their opacity, and an animation's fill would win over this */
 .pb__backdrop,

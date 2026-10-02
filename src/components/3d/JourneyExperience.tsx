@@ -22,7 +22,7 @@ import AboutOverlay from '../about/AboutOverlay';
 import FinaleOverlay from '../about/FinaleOverlay';
 import StopNote from '../about/StopNote';
 import { useSettledStop } from '../about/useSettledStop';
-import PhotoGallery from '../gallery/PhotoGallery';
+import PhotoGallery, { type RingSpot } from '../gallery/PhotoGallery';
 import { TOTAL_LABEL, journeyRoll, rollIndexForStop } from '../../lib/journeyRoll';
 import { Filmstrip } from '../gallery/Filmstrip';
 import { TravelingDot } from '../gallery/TravelingDot';
@@ -51,11 +51,12 @@ import { GlobeLabelDriver, GlobeViewToggle } from './GlobeView';
 import { ThemeRings, type ThemeRing } from './ThemeRings';
 import type { RingFar } from './themeRingScale';
 import { ThemeRow } from '../themes/ThemeRow';
-import { stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
+import { hasTheme, stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
 import { stepIndex } from '../../lib/themeStep';
 import {
   fitDistance,
   nearestDistance,
+  ringPress,
   useDoubleTap,
   useGlobeView,
   useGlobeViewDocument,
@@ -1060,6 +1061,7 @@ function Scene({
   photoTheme,
   onHand,
   onOpenStop,
+  ringSpot,
 }: {
   progress: number;
   zoom: number;
@@ -1093,6 +1095,8 @@ function Scene({
   onHand: (on: boolean) => void;
   /** a lit ring on its own was pressed: that stay's photo book */
   onOpenStop: (cityName: string, stopId: number) => void;
+  /** filled in by the rings: where a city's ring is on the screen */
+  ringSpot: React.MutableRefObject<((city: string) => RingSpot | null) | null>;
 }) {
   const looking = globe === 'on';
   const { size, invalidate } = useThree();
@@ -1517,6 +1521,7 @@ function Scene({
           gather={globe !== 'off'}
           onAim={aimAt}
           onOpen={onOpenStop}
+          spot={ringSpot}
           scale={TUNE_ON ? ringScale : undefined}
         />
       )}
@@ -2204,22 +2209,37 @@ function JourneyExperienceContent() {
   // sheet. Both cameras on the globe open the same way — one is the place, the
   // other is the city — and a camera is a thing you expect to hand you all of
   // them. The filmstrip is the other door: it opens on the frame you clicked.
+  // a book opened from a lit ring opens out of it and closes back into it
+  const ringSpotRef = useRef<((city: string) => RingSpot | null) | null>(null);
+  const [fromRing, setFromRing] = useState(false);
+  const ringSpot = useCallback((c: string) => ringSpotRef.current?.(c) ?? null, []);
   const handleCityClick = (cityName: string) => {
+    // the current city's lit ring lies on its marker: the press that opened
+    // the book out of the ring is not also this door
+    if (performance.now() - ringPress.at < 500) return;
     setGalleryScope('city');
     setSelectedCity(cityName);
     setInitialPhotoId(null);
     setFocusStopId(city?.id ?? null);
     setSheetFirst(true);
+    setFromRing(false);
   };
 
   // From a lit ring: the city's book at the stay the theme is in, the theme
   // still on. The stay is the ring's, not the one the journey is standing on.
+  // It opens on the first photo of that stay, in the order they were taken,
+  // that the theme lights — out of the ring, and back into it (PhotoGallery).
   const handleOpenStop = (cityName: string, stopId: number) => {
+    const stay = [...photosForStop(stopId)].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    const first = photoTheme ? stay.find((p) => hasTheme(p.id, photoTheme)) : undefined;
     setGalleryScope('city');
     setSelectedCity(cityName);
-    setInitialPhotoId(null);
+    setInitialPhotoId(first?.id ?? null);
     setFocusStopId(stopId);
-    setSheetFirst(true);
+    setSheetFirst(false);
+    setFromRing(true);
   };
 
   // From the filmstrip: the city's whole book, opened on the frame clicked.
@@ -2231,6 +2251,7 @@ function JourneyExperienceContent() {
     setInitialPhotoId(photoId);
     setFocusStopId(city?.id ?? null);
     setSheetFirst(false);
+    setFromRing(false);
   };
 
   /* ── the opening ─────────────────────────────────────────────────────────
@@ -2374,6 +2395,7 @@ function JourneyExperienceContent() {
     setInitialPhotoId(null);
     setFocusStopId(block.stop.id);
     setSheetFirst(true);
+    setFromRing(false);
   }, []);
   const handleOpenAllPhotos = () => openAllPhotosAt(city?.id);
 
@@ -2391,6 +2413,7 @@ function JourneyExperienceContent() {
     setSelectedCity(null);
     setInitialPhotoId(null);
     setSheetFirst(false);
+    setFromRing(false);
     setFocusStopId(null);
   }, []);
 
@@ -2864,6 +2887,7 @@ function JourneyExperienceContent() {
             photoTheme={photoTheme}
             onHand={setOrbitHeld}
             onOpenStop={handleOpenStop}
+            ringSpot={ringSpotRef}
           />
           <Wake />
           <DotGlobe
@@ -3026,6 +3050,7 @@ function JourneyExperienceContent() {
         focusStopId={focusStopId}
         initialScope={galleryScope}
         onClose={handleCloseGallery}
+        ringSpot={fromRing ? ringSpot : null}
       />
     </div>
   );
