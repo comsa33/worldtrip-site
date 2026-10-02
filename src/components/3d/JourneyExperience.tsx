@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState, useEffect, useCallback, useLayoutEffect } from 'react';
-import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, type RootState, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Line, Html, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 import {
@@ -78,6 +78,12 @@ const MSAA =
   typeof window === 'undefined' ||
   !(window.devicePixelRatio >= 2 && window.matchMedia('(pointer: coarse)').matches);
 
+/**
+ * The camera has stopped when a frame moves the ground under it by less than
+ * this, in pixels. The slowest glide closes 4.5% of what is left each frame,
+ * so stopping here leaves under a twentieth of a pixel unwalked.
+ */
+const STILL_PX = 0.002;
 const SEGMENT_THRESHOLD = 0.15; // Progress within segment where we switch from showing "from" to "to" stop
 const TIMELINE_ITEM_HEIGHT = 34; // Must match CSS .timeline-stop height
 const JOURNEY_START = new Date('2016-08-13T00:00:00');
@@ -334,6 +340,7 @@ function CityRing({
   dim?: boolean;
 }) {
   const ref = useRef<THREE.Mesh>(null);
+  const invalidate = useThree((s) => s.invalidate);
   const spring = useRef({ s: 1, v: 0 });
   const wasNext = useRef(state === 'next');
   useEffect(() => {
@@ -351,6 +358,8 @@ function CityRing({
       sp.v += (1 - sp.s) * 0.22;
       sp.v *= 0.72;
       sp.s += sp.v;
+      // drawn on demand: the spring asks for its own next frame
+      invalidate();
     }
     const k = handoff ? (handoff.blend.current.get(handoff.city) ?? 0) : 0;
     // opening out: the ring grows to where the outline's edge is, thinning as
@@ -560,8 +569,11 @@ function RevealDriver({
   reveal: React.MutableRefObject<number>;
 }) {
   const st = useRef<{ i: number; t0: number; durs: number[] } | null>(null);
-  useFrame(({ clock }) => {
+  useFrame(({ clock, invalidate }) => {
     if (!run || revealRef.current === Infinity) return;
+    // drawn on demand: the pen asks for the next frame, and for one more after
+    // its last so the legs can show what it wrote
+    invalidate();
     const now = clock.elapsedTime * 1000;
     if (!st.current) {
       const lens = segments.map((sg) => pathLength(sg.pts));
@@ -729,7 +741,7 @@ function Camera({
   /** the camera has come home from looking around */
   onHome?: () => void;
 }) {
-  const { camera } = useThree();
+  const { camera, invalidate } = useThree();
   const cameraTarget = useRef(new THREE.Vector3(-2.5, 3, -3.5));
   const initialized = useRef(false);
   const resting = useRef(true);
@@ -740,15 +752,27 @@ function Camera({
    * A hand on the globe drops whatever it was doing.
    */
   const phase = useRef<'none' | 'back' | 'free' | 'turn' | 'down'>('none');
+  /**
+   * The globe is drawn on demand, so the frame a move starts on may come long
+   * after the one before it. That first frame takes a frame's step, not the
+   * step of however long the globe had been still.
+   */
+  const fresh = useRef(false);
+  /** where the camera was on the last frame drawn */
+  const seen = useRef(new THREE.Vector3());
   const prevGlobe = useRef<GlobeMode>('off');
   useEffect(() => {
     const was = prevGlobe.current;
     prevGlobe.current = globe;
     if (globe === 'on' && was !== 'on') phase.current = 'back';
     if (globe !== 'on' && was === 'on') phase.current = 'turn';
+    fresh.current = true;
   }, [globe]);
   useEffect(() => {
-    if (refit && globe === 'on') phase.current = 'back';
+    if (refit && globe === 'on') {
+      phase.current = 'back';
+      fresh.current = true;
+    }
   }, [refit, globe]);
 
   useEffect(() => {
@@ -770,7 +794,7 @@ function Camera({
     cameraTarget.current.copy(dir.multiplyScalar(distance));
   }, [target, zoom, isUserInteracting, progressiveZoom]);
 
-  useFrame((state, delta) => {
+  const glide = (state: RootState, delta: number) => {
     // The near plane follows the camera out, so depth keeps its precision when
     // it stands back for the whole globe (≈13 units on a phone). The margin
     // keeps the highest flight arcs (0.15 up) well in front of the plane.
@@ -786,7 +810,8 @@ function Camera({
     // home from 13 units away ran past ten seconds with the HUD waiting on it.
     // Each move closes on its target with a time constant instead, so it takes
     // about as long on any device: ~1.1s out, ~0.6s round, ~0.8s down.
-    const dt = Math.min(delta, 0.1);
+    const dt = fresh.current ? Math.min(delta, 1 / 60) : Math.min(delta, 0.1);
+    fresh.current = false;
     const ease = (tau: number) => 1 - Math.exp(-dt / tau);
     const ph = phase.current;
     if (ph === 'back' || ph === 'free') {
@@ -841,7 +866,56 @@ function Camera({
       resting.current = arrived;
       onRest?.(arrived);
     }
+  };
+  useFrame((state, delta) => {
+    glide(state, delta);
+    // Drawn on demand: there is a next frame while the camera is on its way —
+    // a move with a phase left to run, or a glide that still moved it. How far
+    // it moved is read in pixels on the ground below, since over a city the
+    // camera stands a tenth of a unit off the surface.
+    const ph = phase.current;
+    const fov = ((camera as THREE.PerspectiveCamera).fov ?? 45) * (Math.PI / 180);
+    const pxPerUnit =
+      state.size.height /
+      2 /
+      Math.tan(fov / 2) /
+      Math.max(0.01, camera.position.length() - GLOBE_RADIUS);
+    if (
+      ph === 'back' ||
+      ph === 'turn' ||
+      ph === 'down' ||
+      seen.current.distanceTo(camera.position) * pxPerUnit > STILL_PX
+    )
+      invalidate();
+    seen.current.copy(camera.position);
   });
+  return null;
+}
+
+/**
+ * The globe is drawn on demand: a frame when something asks for one, none
+ * while it stands still. Whatever moves on its own asks for its next frame
+ * from inside the frame (the camera, the dot's ribbon, the springs and eases);
+ * this is the other half — anything React has just changed is a reason to
+ * draw once, and so is the tab coming back or the GL context being restored.
+ */
+function Wake() {
+  const invalidate = useThree((s) => s.invalidate);
+  const canvas = useThree((s) => s.gl.domElement);
+  useEffect(() => {
+    invalidate();
+  });
+  useEffect(() => {
+    const wake = () => invalidate();
+    document.addEventListener('visibilitychange', wake);
+    window.addEventListener('pageshow', wake);
+    canvas.addEventListener('webglcontextrestored', wake);
+    return () => {
+      document.removeEventListener('visibilitychange', wake);
+      window.removeEventListener('pageshow', wake);
+      canvas.removeEventListener('webglcontextrestored', wake);
+    };
+  }, [invalidate, canvas]);
   return null;
 }
 
@@ -985,7 +1059,11 @@ function Scene({
   onHand: (on: boolean) => void;
 }) {
   const looking = globe === 'on';
-  const { size } = useThree();
+  const { size, invalidate } = useThree();
+  // drawn on demand: whatever this render changed is a reason to draw once
+  useEffect(() => {
+    invalidate();
+  });
   const aspect = size.width / Math.max(1, size.height);
   const fit = fitDistance(aspect);
   const nearest = nearestDistance(aspect);
@@ -2654,8 +2732,9 @@ function JourneyExperienceContent() {
       <div className="canvas-container">
         <Canvas
           // the photo book covers the globe: it holds its last frame instead of
-          // drawing sixty unseen ones a second under the photos
-          frameloop={selectedCity !== null ? 'never' : 'always'}
+          // drawing unseen ones under the photos. Otherwise a frame is drawn
+          // when something moves and none while the globe stands still (Wake).
+          frameloop={selectedCity !== null ? 'never' : 'demand'}
           camera={{ position: [-2.5, 3, -3.5], fov: 45, near: 0.01 }}
           gl={{ antialias: MSAA }}
         >
@@ -2685,6 +2764,7 @@ function JourneyExperienceContent() {
             photoTheme={photoTheme}
             onHand={setOrbitHeld}
           />
+          <Wake />
           <DotGlobe
             countryCode={currentCountry}
             visitedCodes={visitedCountries}

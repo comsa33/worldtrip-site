@@ -96,23 +96,31 @@ export function CityBounds({
   /** written every frame: city → how far it has handed over from ring to outline */
   blend: MutableRefObject<Map<string, number>>;
 }) {
-  const { camera, size } = useThree();
+  const { camera, size, invalidate } = useThree();
 
   // the handoff, decided once a frame for every city from the outline's size on screen
   useFrame(() => {
     const fov = ((camera as THREE.PerspectiveCamera).fov ?? 45) * (Math.PI / 180);
     const eye = camera.position;
     const eyeDir = eye.clone().normalize();
+    let changed = false;
+    const set = (city: string, k: number) => {
+      if (Math.abs((blend.current.get(city) ?? 0) - k) > 1e-4) changed = true;
+      blend.current.set(city, k);
+    };
     for (const o of outlines.values()) {
       // the far side of the world has nothing to hand over
       if (o.center.clone().normalize().dot(eyeDir) < -0.1) {
-        blend.current.set(o.city, 0);
+        set(o.city, 0);
         continue;
       }
       const dist = eye.distanceTo(o.center);
       const px = ((2 * o.reach) / (dist * Math.tan(fov / 2))) * (size.height / 2);
-      blend.current.set(o.city, handoff(px));
+      set(o.city, handoff(px));
     }
+    // drawn on demand: the rings and outlines read this a frame later, so a
+    // value that moved needs one more frame to be seen
+    if (changed) invalidate();
   });
 
   return (

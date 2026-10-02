@@ -64,8 +64,11 @@ export function HeadTracker({
   lean?: React.RefObject<number>;
   leanSpan?: number;
 }) {
-  const { camera, size, gl } = useThree();
+  const { camera, size, gl, invalidate } = useThree();
   const tail = useRef<number | null>(null);
+  /** the tail had caught the head on the last frame drawn — nothing was moving */
+  const rested = useRef(true);
+  const lastDt = useRef(16);
   const lastT = useRef(0);
   const travelled = useRef(0);
   const landings = useRef(0);
@@ -82,8 +85,11 @@ export function HeadTracker({
     if (!seatEl || !poly || path.length < 2) return;
 
     const now = clock.elapsedTime * 1000;
-    const dt = Math.min(64, now - lastT.current || 16);
+    // Drawn on demand, the frame before this one may be minutes old: the first
+    // frame of a move takes the pace of the last frames that did move.
+    const dt = rested.current ? lastDt.current : Math.min(64, now - lastT.current || 16);
     lastT.current = now;
+    lastDt.current = dt;
 
     const rect = gl.domElement.getBoundingClientRect();
     const toScreen = (p: THREE.Vector3, out: { x: number; y: number }) => {
@@ -144,6 +150,7 @@ export function HeadTracker({
     if (!active || !facing) {
       poly.removeAttribute('data-on');
       tail.current = head;
+      rested.current = true;
       setCarry(facing ? '' : 'hidden');
       return;
     }
@@ -168,6 +175,9 @@ export function HeadTracker({
     }
     tail.current = t;
     travelled.current = Math.max(travelled.current, len);
+    // until the tail has caught the head there is a next frame to draw
+    rested.current = t === head;
+    if (!rested.current) invalidate();
 
     if (len < REST_PX) {
       poly.removeAttribute('data-on');
@@ -188,6 +198,8 @@ export function HeadTracker({
       // still counts as travel and bounces.
       if (seatEl.hasAttribute('data-dot-gliding')) {
         setCarry('');
+        // the landing is still owed: keep looking until the glide lets go
+        if (travelled.current > 0) invalidate();
         return;
       }
 
@@ -333,7 +345,7 @@ export function NoteSideProbe({
   stopIdx: number | null;
   onSide: (side: 'below' | 'above') => void;
 }) {
-  const { camera, size, gl } = useThree();
+  const { camera, size, gl, invalidate } = useThree();
   const pending = useRef<number | null>(null);
   const v = useRef(new THREE.Vector3());
   const lastCam = useRef(new THREE.Vector3());
@@ -348,7 +360,11 @@ export function NoteSideProbe({
     // not while the camera is still gliding in: the lines have not landed yet
     const moved = lastCam.current.distanceToSquared(camera.position);
     lastCam.current.copy(camera.position);
-    if (moved > 1e-6) return;
+    if (moved > 1e-6) {
+      // still waiting for a frame the camera did not move in
+      invalidate();
+      return;
+    }
     pending.current = null;
 
     const rect = gl.domElement.getBoundingClientRect();

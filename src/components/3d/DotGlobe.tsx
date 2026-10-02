@@ -70,6 +70,8 @@ interface LandDotsData {
  */
 /** How far the land steps back while a city is speaking. */
 const HUSH = 0.38;
+/** An ease this close to its end has arrived — a thousandth of the step is not a shade. */
+const SETTLED = 1e-3;
 
 export function DotGlobe({
   countryCode,
@@ -89,7 +91,7 @@ export function DotGlobe({
   const DOT_BASE = useMemo(() => new THREE.Color(palette.dotBase), [palette.dotBase]);
   const DOT_VISITED = useMemo(() => new THREE.Color(palette.dotVisited), [palette.dotVisited]);
   const DOT_CURRENT = useMemo(() => new THREE.Color(palette.dotCurrent), [palette.dotCurrent]);
-  const { size, gl } = useThree();
+  const { size, gl, invalidate } = useThree();
 
   const { geometry, tags } = useMemo(() => {
     const n = data.dots.length / 3;
@@ -159,7 +161,13 @@ export function DotGlobe({
   const material = useRef<THREE.ShaderMaterial>(null);
   useFrame(() => {
     const u = material.current?.uniforms.uHush;
-    if (u) u.value += ((hush ? HUSH : 1) - u.value) * 0.12;
+    if (!u) return;
+    // drawn on demand: the ease asks for the next frame until it is there
+    const left = (hush ? HUSH : 1) - u.value;
+    if (Math.abs(left) > SETTLED) {
+      u.value += left * 0.12;
+      invalidate();
+    } else u.value = hush ? HUSH : 1;
   });
   // three's point-size scale: half the viewport height in device pixels
   const scale = size.height * 0.5 * gl.getPixelRatio();

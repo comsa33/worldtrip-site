@@ -295,6 +295,7 @@ export function WorldBorders({
   }, [cells]);
 
   const size = useThree((s) => s.size);
+  const invalidate = useThree((s) => s.invalidate);
   useLayoutEffect(() => {
     const m = cellsRef.current.material;
     m.linewidth = w.borderBase;
@@ -310,7 +311,12 @@ export function WorldBorders({
   const frustum = useMemo(() => ({ f: new THREE.Frustum(), m: new THREE.Matrix4() }), []);
   useFrame(({ camera }) => {
     const { material, list } = cellsRef.current;
-    hushed.current += ((hush ? 1 : 0) - hushed.current) * 0.12;
+    // drawn on demand: the ease asks for the next frame until it is there
+    const left = (hush ? 1 : 0) - hushed.current;
+    if (Math.abs(left) > 1e-3) {
+      hushed.current += left * 0.12;
+      invalidate();
+    } else hushed.current = hush ? 1 : 0;
     material.color.copy(loud).lerp(quiet, hushed.current);
     // round the back of the globe: a cell is drawn while any of its bounding
     // sphere can be in front of the horizon — p·c > R² for some p in it, so

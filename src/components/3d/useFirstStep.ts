@@ -1,4 +1,5 @@
 import { useEffect, useState, type RefObject } from 'react';
+import { invalidate } from '@react-three/fiber';
 
 /**
  * The first step, the hooks: when the reader has moved on their own, and the
@@ -90,8 +91,11 @@ export function useLean(enabled: boolean, lean: RefObject<number>) {
         else {
           lean.current = 0;
           then();
+          invalidate();
           return;
         }
+        // the globe draws on demand, and nothing else tells it the head has moved
+        invalidate();
         raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
