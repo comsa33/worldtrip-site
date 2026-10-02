@@ -48,6 +48,10 @@ import { TUNE_ON, defaults, useTuning, type Tuning } from './routeTuning';
 import { AUTOPLAY_BEAT_MS, PACE_DEFAULTS, jumpMs, type PaceParams } from './pace';
 import { PhotoMarkers } from './PhotoMarkers';
 import { GlobeLabelDriver, GlobeViewToggle } from './GlobeView';
+import { ThemeRings, type ThemeRing } from './ThemeRings';
+import { ThemeRow } from '../themes/ThemeRow';
+import { stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
+import { stepIndex } from '../../lib/themeStep';
 import {
   fitDistance,
   nearestDistance,
@@ -296,6 +300,7 @@ function CityRing({
   ink,
   been: beenColor,
   handoff,
+  dim = false,
 }: {
   radius: number;
   state: 'past' | 'next';
@@ -315,6 +320,8 @@ function CityRing({
     reach: number;
     markerScale: number;
   };
+  /** a theme is on: the plain rings step back to 40% under the lit ones */
+  dim?: boolean;
 }) {
   const ref = useRef<THREE.Mesh>(null);
   const spring = useRef({ s: 1, v: 0 });
@@ -325,7 +332,7 @@ function CityRing({
   }, [state]);
   const been = state !== 'next';
   const r = hovered ? radius * 1.3 : radius;
-  const baseOpacity = hovered ? 1 : been ? 0.9 : 0.35;
+  const baseOpacity = (hovered ? 1 : been ? 0.9 : 0.35) * (dim && !hovered ? 0.4 : 1);
   useFrame(() => {
     const mesh = ref.current;
     if (!mesh) return;
@@ -549,6 +556,7 @@ function TravelPath({
   reveal,
   hoveredLeg,
   onHoverLeg,
+  dim = false,
 }: {
   points: PathPoint[];
   segments: Segment[];
@@ -561,8 +569,11 @@ function TravelPath({
   reveal: React.MutableRefObject<number>;
   hoveredLeg: Leg | null;
   onHoverLeg: (leg: Leg | null, at?: THREE.Vector3) => void;
+  /** a theme is on: the route steps back to 40%, the lit rings say the rest */
+  dim?: boolean;
 }) {
   const idx = Math.min(Math.floor(points.length * progress), points.length - 1);
+  const k = dim ? 0.4 : 1;
   // The travelled line is the one coloured thing on a monochrome map — and it
   // all stays, at one weight, however long ago it was walked. The shade comes
   // from the theme: the same orange sits differently on paper than on ink.
@@ -599,7 +610,7 @@ function TravelPath({
               key={`past-${seg.start}`}
               points={seg.pts}
               color={pastColor}
-              opacity={isHovered ? 1 : w.opacity}
+              opacity={isHovered ? 1 : w.opacity * k}
               width={isHovered ? w.width + 0.75 : w.width}
               underlay={bg}
               {...hover}
@@ -612,7 +623,7 @@ function TravelPath({
               key={`ahead-${seg.start}`}
               points={seg.pts}
               color={t.aheadColor}
-              opacity={isHovered ? Math.min(1, t.aheadOpacity + 0.35) : t.aheadOpacity}
+              opacity={isHovered ? Math.min(1, t.aheadOpacity + 0.35) : t.aheadOpacity * k}
               width={trailAhead(seg.transport, t)}
               reveal={{ ref: reveal, start: seg.start, end: seg.end }}
               {...hover}
@@ -625,7 +636,7 @@ function TravelPath({
             <RouteLine
               points={seg.pts.slice(0, split + 1)}
               color={pastColor}
-              opacity={trail(seg.transport, t).opacity}
+              opacity={trail(seg.transport, t).opacity * k}
               width={trail(seg.transport, t).width}
               underlay={bg}
               {...hover}
@@ -633,7 +644,7 @@ function TravelPath({
             <RouteLine
               points={seg.pts.slice(split)}
               color={t.aheadColor}
-              opacity={Math.min(1, t.aheadOpacity + 0.12)}
+              opacity={Math.min(1, t.aheadOpacity + 0.12) * k}
               width={trailAhead(seg.transport, t)}
               reveal={{ ref: reveal, start: seg.start + split, end: seg.end }}
             />
@@ -898,6 +909,8 @@ function Scene({
   onGlobeHome,
   labelLayer,
   labels,
+  photoTheme,
+  onHand,
 }: {
   progress: number;
   zoom: number;
@@ -925,6 +938,10 @@ function Scene({
   /** where the names go while looking around (rendered outside the canvas) */
   labelLayer: React.RefObject<HTMLDivElement | null>;
   labels: GlobeLabel[];
+  /** the chosen photo theme: its cities light up as rings (B1) */
+  photoTheme: string | null;
+  /** the hand on the globe (a drag), for the theme row to step back */
+  onHand: (on: boolean) => void;
 }) {
   const looking = globe === 'on';
   const { size } = useThree();
@@ -1109,6 +1126,31 @@ function Scene({
     return out;
   }, [stops, cities, currentStopIdx, language, fromStopId, displayStopId]);
 
+  // the chosen theme's cities: one ring a city, its stays added up
+  const themeRings = useMemo<ThemeRing[]>(() => {
+    if (!photoTheme) return [];
+    const by = new Map<string, { n: number; stays: number }>();
+    for (const st of stops) {
+      const n = stopThemeCount(st.id, photoTheme);
+      if (!n) continue;
+      const e = by.get(st.city) ?? { n: 0, stays: 0 };
+      e.n += n;
+      e.stays += 1;
+      by.set(st.city, e);
+    }
+    const out: ThemeRing[] = [];
+    for (const [c, e] of by) {
+      const city = cities[c];
+      if (city)
+        out.push({
+          position: latLngToVector3(city.lat, city.lng, 2.004),
+          n: e.n,
+          twice: e.stays > 1,
+        });
+    }
+    return out;
+  }, [photoTheme, stops, cities]);
+
   return (
     <>
       {looking && (
@@ -1131,6 +1173,7 @@ function Scene({
         reveal={reveal}
         hoveredLeg={legTip?.leg ?? null}
         onHoverLeg={onHoverLeg}
+        dim={Boolean(photoTheme)}
       />
       <RevealDriver segments={segments} run={revealRun} reveal={reveal} />
       <HeadTracker
@@ -1207,6 +1250,7 @@ function Scene({
                 hovered={hovered}
                 ink={INK}
                 been={GLOBE[theme].routePast}
+                dim={Boolean(photoTheme)}
                 handoff={
                   outlines.has(m.city)
                     ? {
@@ -1260,6 +1304,16 @@ function Scene({
         );
       })}
 
+      {globe === 'off' && photoTheme && (
+        <ThemeRings
+          rings={themeRings}
+          ink={INK}
+          ground={GLOBE[theme].sphere}
+          k={size.width <= 768 ? 3.4 : 4.2}
+          min={size.width <= 768 ? 5 : 6}
+        />
+      )}
+
       {globe === 'off' && (
         <PhotoMarkers
           currentStopIdx={currentStopIdx}
@@ -1312,8 +1366,12 @@ function Scene({
                 ? () => {
                     held.current = true;
                   }
-                : onInteraction
+                : () => {
+                    onInteraction();
+                    onHand(true);
+                  }
             }
+            onEnd={() => onHand(false)}
             // looking around, the hand turning the globe stirs the orbit song
             onChange={(e) => {
               if (!looking || !held.current) return;
@@ -1496,6 +1554,7 @@ function Header({
   forced,
   onToggleGlobe,
   onOpenPhotos,
+  barRef,
 }: {
   globe: boolean;
   /** held open by the phone on its side: there is no journey to go back to at that size */
@@ -1503,10 +1562,13 @@ function Header({
   onToggleGlobe: () => void;
   /** every photo of the journey, opened where the journey is standing */
   onOpenPhotos: () => void;
+  /** the bar, for the theme row under it to wake when a mouse is over it */
+  barRef?: React.RefObject<HTMLElement | null>;
 }) {
   const { t, language } = useI18n();
   return (
     <header
+      ref={barRef}
       className="journey-header"
       // A switch pressed with the mouse lets go of the focus, so the arrow keys
       // go straight back to the journey. Pressed from the keyboard (detail 0)
@@ -1781,6 +1843,55 @@ function JourneyExperienceContent() {
     [seek, stopProgress, stops.length]
   );
 
+  /* A theme on: ← → and a swipe go to the next stop it lights; nothing lit, the
+     plain step. The camera's own rules (out, across, in) take a far one. */
+  const photoTheme = usePhotoTheme();
+  const litStop = useMemo(
+    () => (photoTheme ? (i: number) => stopThemeCount(stops[i].id, photoTheme) > 0 : null),
+    [photoTheme, stops]
+  );
+  const themeBars = useMemo(
+    () =>
+      photoTheme
+        ? stops.flatMap((st, i) => {
+            const n = stopThemeCount(st.id, photoTheme);
+            return n ? [{ progress: stopProgress[i], n }] : [];
+          })
+        : null,
+    [photoTheme, stops, stopProgress]
+  );
+  const stepTo = useCallback(
+    (from: number, dir: 1 | -1) => {
+      const to = stepIndex(stops.length, from, dir, litStop);
+      if (to !== from) goToStop(to);
+    },
+    [goToStop, litStop, stops.length]
+  );
+
+  /* The hand at work — a drag of the globe, the line scrubbed, autoplay, the
+     wheel or a finger moving the journey: the theme row steps back meanwhile.
+     Not the page's own scroll, which ← → drive too. */
+  const [orbitHeld, setOrbitHeld] = useState(false);
+  const [scrubHeld, setScrubHeld] = useState(false);
+  const [wheelBusy, setWheelBusy] = useState(false);
+  useEffect(() => {
+    let t = 0;
+    const on = (e: Event) => {
+      if (e.target instanceof Element && e.target.closest('.theme-row')) return;
+      setWheelBusy(true);
+      window.clearTimeout(t);
+      t = window.setTimeout(() => setWheelBusy(false), 160);
+    };
+    window.addEventListener('wheel', on, { passive: true });
+    window.addEventListener('touchmove', on, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', on);
+      window.removeEventListener('touchmove', on);
+      window.clearTimeout(t);
+    };
+  }, []);
+  const barRef = useRef<HTMLElement>(null);
+
   // Jump to a city: the stop of that city nearest to where we are now
   const goToCity = useCallback(
     (cityName: string) => {
@@ -1844,12 +1955,12 @@ function JourneyExperienceContent() {
         e.preventDefault();
         if (e.repeat) return;
         setPlaying(false);
-        goToStop((jumpTargetRef.current ?? currentStop) + 1);
+        stepTo(jumpTargetRef.current ?? currentStop, 1);
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         if (e.repeat) return;
         setPlaying(false);
-        goToStop((jumpTargetRef.current ?? currentStop) - 1);
+        stepTo(jumpTargetRef.current ?? currentStop, -1);
       } else if (e.key === ' ') {
         e.preventDefault();
         setPlaying((v) => !v);
@@ -1857,7 +1968,7 @@ function JourneyExperienceContent() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [currentStop, goToStop, selectedCity, globeView.mode, enterGlobe, exitGlobe]);
+  }, [currentStop, stepTo, selectedCity, globeView.mode, enterGlobe, exitGlobe]);
 
   // Countries the journey has reached so far (lights their land dots on the globe)
   const visitedCountries = useMemo(() => {
@@ -2144,13 +2255,15 @@ function JourneyExperienceContent() {
   // What the touch handlers read, kept current without re-binding them
   const currentStopRef = useRef(currentStop);
   const goToStopRef = useRef(goToStop);
+  const stepToRef = useRef(stepTo);
   const selectedCityRef = useRef<string | null>(null);
 
   useEffect(() => {
     currentStopRef.current = currentStop;
     goToStopRef.current = goToStop;
+    stepToRef.current = stepTo;
     selectedCityRef.current = selectedCity;
-  }, [currentStop, goToStop, selectedCity]);
+  }, [currentStop, goToStop, stepTo, selectedCity]);
 
   // Detect mobile for touch-action - using hook for proper reactivity
   const isMobile = useIsMobile();
@@ -2407,6 +2520,11 @@ function JourneyExperienceContent() {
         return;
       }
 
+      if (e.target instanceof Element && e.target.closest('.theme-row')) {
+        isDragging.current = false;
+        touchStartY.current = null;
+        return;
+      }
       if (e.touches.length === 1) {
         touchStartY.current = e.touches[0].clientY;
         isDragging.current = true;
@@ -2445,7 +2563,7 @@ function JourneyExperienceContent() {
       // FirstStep.tsx, whose words are gone exactly here).
       if (Math.abs(deltaY) > swipeThreshold) {
         const from = jumpTargetRef.current ?? currentStopRef.current;
-        goToStopRef.current(from + (deltaY > 0 ? 1 : -1));
+        stepToRef.current(from, deltaY > 0 ? 1 : -1);
       }
 
       isDragging.current = false;
@@ -2502,14 +2620,20 @@ function JourneyExperienceContent() {
             onGlobeHome={globeView.settled}
             labelLayer={labelLayerRef}
             labels={globeLabels}
+            photoTheme={photoTheme}
+            onHand={setOrbitHeld}
           />
           <DotGlobe
             countryCode={currentCountry}
             visitedCodes={visitedCountries}
             theme={theme}
-            hush={noteUp}
+            hush={noteUp || Boolean(photoTheme)}
           />
-          <WorldBorders countryCode={currentCountry} theme={theme} hush={noteUp} />
+          <WorldBorders
+            countryCode={currentCountry}
+            theme={theme}
+            hush={noteUp || Boolean(photoTheme)}
+          />
         </Canvas>
       </div>
 
@@ -2518,7 +2642,23 @@ function JourneyExperienceContent() {
         forced={globeView.forced}
         onToggleGlobe={globeOn ? exitGlobe : enterGlobe}
         onOpenPhotos={handleOpenAllPhotos}
+        barRef={barRef}
       />
+      {/* the one place a theme is chosen, the same row the photo book has */}
+      {globeView.mode === 'off' && (
+        <ThemeRow
+          className="journey-themes"
+          lang={language as 'ko' | 'en'}
+          halo
+          floating
+          moving={playing || orbitHeld || scrubHeld || wheelBusy}
+          wake={barRef}
+        />
+      )}
+      {/* the filmstrip's photos of other themes step back, as the book's do */}
+      {photoTheme && globeView.mode === 'off' && (
+        <style>{`.filmstrip__thumb:not([data-t~="${photoTheme}"]){opacity:0.2;filter:grayscale(1)}`}</style>
+      )}
       {/* the names of the cities walked, while looking around (GlobeLabelDriver places them) */}
       {globeOn && (
         <div className="globe-labels" ref={labelLayerRef} aria-hidden="true">
@@ -2598,6 +2738,8 @@ function JourneyExperienceContent() {
           seek(p, mode);
         }}
         onTogglePlay={() => setPlaying((v) => !v)}
+        bars={themeBars}
+        onDrag={setScrubHeld}
       />
 
       {/* About section at starting point */}

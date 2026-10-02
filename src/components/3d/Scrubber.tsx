@@ -35,6 +35,9 @@ const MONTHS = [
 
 const knownDate = (d?: string) => (d && !d.includes('?') ? d : null);
 
+/** the tallest a theme's bar stands over the line, px */
+const BAR_H = 18;
+
 /**
  * Bottom timeline. Drag, click or key through the 135 stops; every move goes back
  * through `onSeek` so the page scroll stays the single source of `progress`.
@@ -50,6 +53,8 @@ export function Scrubber({
   playing,
   onSeek,
   onTogglePlay,
+  bars = null,
+  onDrag,
 }: {
   stops: ScrubberStop[];
   stopProgress: number[];
@@ -63,6 +68,10 @@ export function Scrubber({
   playing: boolean;
   onSeek: (progress: number, mode: 'drag' | 'jump') => void;
   onTogglePlay: () => void;
+  /** a chosen theme: one bar a stop, where the stop stands on the line, as tall as √ its photos */
+  bars?: { progress: number; n: number }[] | null;
+  /** the hand is on the line — the theme row steps back meanwhile */
+  onDrag?: (on: boolean) => void;
 }) {
   const { language } = useI18n();
   const hitRef = useRef<HTMLDivElement>(null);
@@ -112,6 +121,7 @@ export function Scrubber({
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragging.current = true;
+    onDrag?.(true);
     e.currentTarget.setPointerCapture(e.pointerId);
     onSeek(progressFromEvent(e.clientX), 'drag');
   };
@@ -122,6 +132,7 @@ export function Scrubber({
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
     dragging.current = false;
+    onDrag?.(false);
     e.currentTarget.releasePointerCapture(e.pointerId);
     onSeek(snap(progressFromEvent(e.clientX)), 'jump');
   };
@@ -141,8 +152,19 @@ export function Scrubber({
 
   const ko = language === 'ko';
 
+  // the bars stand on the line; a wide theme (transit, people) is told by height, not by count
+  const barPath = useMemo(() => {
+    if (!bars?.length) return '';
+    let d = '';
+    for (const b of bars) {
+      const h = Math.min(BAR_H, 3 + Math.sqrt(b.n) * (BAR_H / 5));
+      d += `M${(b.progress * 1000).toFixed(1)} ${BAR_H}V${(BAR_H - h).toFixed(1)}`;
+    }
+    return d;
+  }, [bars]);
+
   return (
-    <div className="scrubber" role="group" aria-label="Timeline">
+    <div className={`scrubber${barPath ? ' has-bars' : ''}`} role="group" aria-label="Timeline">
       <div
         className={`scrubber__label mono${pct < 10 ? ' is-start' : pct > 90 ? ' is-end' : ''}`}
         style={{ left: `calc(var(--hit-l) + (100% - var(--hit-l) - var(--hit-r)) * ${progress})` }}
@@ -196,6 +218,16 @@ export function Scrubber({
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
+        {barPath && (
+          <svg
+            className="scrubber__bars"
+            viewBox={`0 0 1000 ${BAR_H}`}
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d={barPath} />
+          </svg>
+        )}
         <div className="scrubber__track" />
         <div className="scrubber__fill" style={{ width: `${pct}%` }} />
         {ticks.map((t, i) => (

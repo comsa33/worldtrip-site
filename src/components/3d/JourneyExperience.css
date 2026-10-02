@@ -32,6 +32,21 @@
 /* =============================================================================
    Header — wordmark, period, language
    ============================================================================= */
+/* the theme row under the header: what sits in the corners below starts under it */
+.journey-experience {
+  --trow: 36px;
+}
+
+/* the theme row (ThemeRow) under the header, letters haloed in the globe's own colour */
+.journey-themes {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  --ground: var(--globe);
+}
+
 .journey-header {
   position: fixed;
   top: 0;
@@ -309,7 +324,7 @@ html[data-globe-view='on'] .canvas-container:active {
 .stop-rail {
   position: fixed;
   left: 0;
-  top: 56px;
+  top: calc(56px + var(--trow, 0px));
   bottom: 0;
   width: 280px;
   z-index: 50;
@@ -547,6 +562,14 @@ html[data-globe-view='on'] .canvas-container:active {
    Mobile
    ============================================================================= */
 @media (max-width: 768px) {
+  .journey-experience {
+    --trow: 34px;
+  }
+
+  .journey-themes {
+    top: 48px;
+  }
+
   .journey-header {
     padding: 0 16px;
     height: 48px;
@@ -767,6 +790,31 @@ html[data-globe-view='on'] .canvas-container:active {
   transition: width var(--t-fast) var(--ease);
 }
 
+/* a chosen theme: a bar a stop, standing on the line */
+.scrubber__bars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4px;
+  height: 18px;
+  width: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.scrubber__bars path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* the walked line and the month ticks step back under the bars */
+.scrubber.has-bars .scrubber__fill,
+.scrubber.has-bars .scrubber__tick.is-past {
+  background: var(--ink-3);
+}
+
 .scrubber__tick {
   position: absolute;
   top: 22px;
@@ -980,7 +1028,7 @@ html[data-globe-view='on'] .canvas-container:active {
 .minimap {
   position: fixed;
   left: 332px; /* past the 280px rail and the fade at its edge */
-  top: 88px;
+  top: calc(88px + var(--trow, 0px));
   width: 200px;
   aspect-ratio: 2 / 1;
   z-index: 65;
@@ -1073,7 +1121,7 @@ html[data-globe-view='on'] .canvas-container:active {
 @media (max-width: 768px) {
   .minimap {
     left: 16px;
-    top: 64px;
+    top: calc(64px + var(--trow, 0px));
     width: 104px;
     padding: 6px;
   }
@@ -1116,7 +1164,9 @@ html[data-globe-view='on'] .canvas-container:active {
 .country-inset {
   position: fixed;
   left: 332px; /* under the world map: same corner, the other scale */
-  top: 216px; /* 88 + the world map's 100 + 16 padding + 2 border + 10 gap */
+  top: calc(
+    216px + var(--trow, 0px)
+  ); /* 88 + the world map's 100 + 16 padding + 2 border + 10 gap */
   width: 200px;
   aspect-ratio: 1;
   /* above the world map: the frame of what the globe shows runs past this
@@ -1286,7 +1336,7 @@ html[data-globe-view='on'] .canvas-container:active {
 @media (max-width: 1100px) {
   .country-inset {
     left: 300px;
-    top: 186px; /* 88 + 80 + 18 */
+    top: calc(186px + var(--trow, 0px)); /* 88 + 80 + 18 */
     width: 160px;
   }
 
@@ -1307,7 +1357,9 @@ html[data-globe-view='on'] .canvas-container:active {
   /* The rail is a sheet here, so the corner is free from the edge in. */
   .country-inset {
     left: 16px;
-    top: 138px; /* 64 + the world map's 52 + 12 padding + 2 border + 8 gap */
+    top: calc(
+      138px + var(--trow, 0px)
+    ); /* 64 + the world map's 52 + 12 padding + 2 border + 8 gap */
     width: 104px;
     padding: 6px;
   }
@@ -1360,7 +1412,7 @@ html[data-globe-view='on'] .canvas-container:active {
    ============================================================================= */
 .filmstrip {
   position: fixed;
-  top: 96px;
+  top: calc(96px + var(--trow, 0px));
   right: 32px;
   z-index: 50;
   display: flex;
@@ -1460,7 +1512,7 @@ html[data-globe-view='on'] .canvas-container:active {
 
 @media (max-width: 768px) {
   .filmstrip {
-    top: 64px;
+    top: calc(64px + var(--trow, 0px));
     right: 20px;
   }
 
@@ -1803,4 +1855,9 @@ kbd.key {
   .map-drag-hint__hand {
     transition: none;
   }
+}
+
+/* looking around there is no theme row yet (B2): the corners keep their place */
+:root[data-globe-view] .journey-experience {
+  --trow: 0px;
 }

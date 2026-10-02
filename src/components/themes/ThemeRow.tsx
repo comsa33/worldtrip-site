@@ -25,6 +25,7 @@ export function ThemeRow({
   moving = false,
   halo = false,
   wake,
+  floating = false,
   className = '',
 }: {
   lang: Lang;
@@ -34,6 +35,8 @@ export function ThemeRow({
   halo?: boolean;
   /** a mouse over this (the top bar) brings the row back at once, like a mouse over the row */
   wake?: RefObject<HTMLElement | null>;
+  /** over the globe: only the words take the pointer, the rest of the line lets the globe be dragged */
+  floating?: boolean;
   className?: string;
 }) {
   const theme = usePhotoTheme();
@@ -83,25 +86,88 @@ export function ThemeRow({
     return () => window.clearTimeout(t);
   }, [theme, folded]);
 
+  /* Wider than the screen, the row runs sideways: a finger pans it (touch-action:
+     pan-x), a vertical wheel turns into a sideways one, a mouse can drag it.
+     The clipped side fades, so there is visibly more past it. */
+  const [clip, setClip] = useState({ l: false, r: false });
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const read = () => {
+      const max = row.scrollWidth - row.clientWidth;
+      const l = row.scrollLeft > 1;
+      const r = row.scrollLeft < max - 1;
+      setClip((c) => (c.l === l && c.r === r ? c : { l, r }));
+    };
+    read();
+    const ro = new ResizeObserver(read);
+    ro.observe(row);
+    row.addEventListener('scroll', read, { passive: true });
+    // a wheel over the row moves the row, not the journey or the page behind it
+    const wheel = (e: WheelEvent) => {
+      if (row.scrollWidth <= row.clientWidth + 1) return;
+      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      e.preventDefault();
+      e.stopPropagation();
+      row.scrollLeft += d;
+    };
+    row.addEventListener('wheel', wheel, { passive: false });
+    return () => {
+      ro.disconnect();
+      row.removeEventListener('scroll', read);
+      row.removeEventListener('wheel', wheel);
+    };
+  }, []);
+
+  // a mouse drags the row sideways; a drag is not a click on the word it ends on
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+  const onMouseDown = (e: React.PointerEvent) => {
+    const row = rowRef.current;
+    if (e.pointerType !== 'mouse' || e.button !== 0 || !row) return;
+    if (row.scrollWidth <= row.clientWidth + 1) return;
+    drag.current = { x: e.clientX, left: row.scrollLeft, moved: false };
+    const move = (m: PointerEvent) => {
+      const d = drag.current;
+      if (!d) return;
+      const dx = m.clientX - d.x;
+      if (Math.abs(dx) > 4) d.moved = true;
+      if (d.moved) row.scrollLeft = d.left - dx;
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      // the click that follows a drag is swallowed in onClickCapture, then forgotten
+      window.setTimeout(() => (drag.current = null), 0);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
   const touch = () => setTouchedAt((n) => n + 1);
   const away = moving && !hovered;
 
   return (
     <div
       ref={rowRef}
-      className={`theme-row${halo ? ' is-halo' : ''}${away ? ' is-away' : ''}${hovered ? ' is-woken' : ''}${theme ? ' is-picked' : ''}${folded ? ' is-folded' : ''} ${className}`}
+      className={`theme-row${halo ? ' is-halo' : ''}${away ? ' is-away' : ''}${hovered ? ' is-woken' : ''}${theme ? ' is-picked' : ''}${folded ? ' is-folded' : ''}${floating ? ' is-floating' : ''}${clip.l ? ' is-clip-l' : ''}${clip.r ? ' is-clip-r' : ''} ${className}`}
       role="group"
       aria-label={lang === 'ko' ? '사진 주제' : 'Photo themes'}
       // the row is not a swipe of the photo or a drag of the globe
       onPointerDown={(e) => {
         e.stopPropagation();
         touch();
+        onMouseDown(e);
       }}
       onPointerEnter={(e) => e.pointerType === 'mouse' && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === 'mouse' && setHovered(false)}
       onFocus={touch}
       // folded, the first tap only opens the row: a dot is too small to aim at
       onClickCapture={(e) => {
+        if (drag.current?.moved) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
         if (!folded) return;
         e.preventDefault();
         e.stopPropagation();

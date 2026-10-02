@@ -20,6 +20,37 @@
   transition: opacity 400ms var(--ease, ease) 300ms;
 }
 
+/* over the globe: the gaps between the words let the globe be dragged */
+.theme-row.is-floating {
+  pointer-events: none;
+}
+
+.theme-row.is-floating > * {
+  pointer-events: auto;
+}
+
+/* more past an edge: that edge fades */
+.theme-row.is-clip-r {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+}
+
+.theme-row.is-clip-l {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px);
+  mask-image: linear-gradient(90deg, transparent, #000 24px);
+}
+
+.theme-row.is-clip-l.is-clip-r {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 24px,
+    #000 calc(100% - 40px),
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 40px), transparent);
+}
+
 .theme-row::-webkit-scrollbar {
   display: none;
 }
@@ -79,14 +110,15 @@
   text-decoration-color: var(--ink-2);
 }
 
-/* chosen: the others go to 42%, the chosen word and its count stay */
+/* chosen: the others go to 42%, the chosen word and its count stay. Mixed
+   towards the ground rather than made transparent — an opacity would thin the
+   halo too, and the route would show through the words. */
 .theme-row.is-picked .theme-row__w:not(.is-on) {
-  color: var(--ink-3);
-  opacity: 0.42;
+  color: color-mix(in srgb, var(--ink-2) 42%, var(--ground));
 }
 
 .theme-row.is-picked .theme-row__w:not(.is-on):hover {
-  opacity: 1;
+  color: var(--ink);
 }
 
 .theme-row__n {
@@ -134,11 +166,6 @@
   opacity: 0.7;
 }
 
-/* a folded word is a dot at 42%; the dot itself carries the ink */
-.theme-row.is-folded .theme-row__w:not(.is-on):not(.theme-row__all) {
-  opacity: 1;
-}
-
 .theme-row__keys {
   display: none;
   flex-shrink: 0;
@@ -171,20 +198,6 @@
     gap: 14px;
     height: 34px;
     padding: 0 16px;
-    -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent 0,
-      #000 14px,
-      #000 calc(100% - 32px),
-      transparent
-    );
-    mask-image: linear-gradient(
-      90deg,
-      transparent 0,
-      #000 14px,
-      #000 calc(100% - 32px),
-      transparent
-    );
   }
 
   .theme-row.is-folded {

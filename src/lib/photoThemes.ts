@@ -34,6 +34,10 @@ export const THEME_TOTAL: Record<string, number> = Object.fromEntries(
   THEMES.map((t) => [t.id, journeyRoll.photos.filter((p) => hasTheme(p.id, t.id)).length])
 );
 
+/** A stop's photos of a theme (photoTags.stops) — 0 if none. */
+export const stopThemeCount = (stopId: number, theme: string): number =>
+  TAGS.stops[String(stopId)]?.[theme] ?? 0;
+
 const dayCache = new Map<string, number[]>();
 /** The theme's photos per journey day, for the year under the sheet. */
 export function themeDays(theme: string): number[] {

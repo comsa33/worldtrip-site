@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { photosForStop } from '../../lib/visitPhotos';
+import { themesOf } from '../../lib/photoThemes';
 
 /** How many frames the strip shows before the tail takes over. */
 const SHOWN = 4;
@@ -90,6 +91,7 @@ export function Filmstrip({
             type="button"
             className="filmstrip__thumb"
             data-photo-id={p.id}
+            data-t={themesOf(p.id).join(' ')}
             onClick={() => onOpen(cityName, p.id)}
             aria-label={p.caption[language] || p.id}
           >
