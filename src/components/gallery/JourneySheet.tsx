@@ -25,6 +25,7 @@ import {
   stopOrder,
   type RollBlock,
 } from '../../lib/journeyRoll';
+import { THEMES, THEME_TOTAL, setPhotoTheme, themeDays, themesOf } from '../../lib/photoThemes';
 
 /*
  * The photo book with its walls taken down: every stop's photos, one after
@@ -569,6 +570,7 @@ const StopSection = memo(function StopSection({
                   key={p.id}
                   role="gridcell"
                   data-i={i}
+                  data-t={themesOf(p.id).join(' ')}
                   className={`pb__cell${i === current ? ' is-current' : ''}`}
                   style={toneStyle(ar, p.tone)}
                   onClick={(e) => onOpen(i, e.currentTarget)}
@@ -928,11 +930,11 @@ export function RollLocator({
 // =============================================================================
 
 const WAVE_H = 40;
-const wavePath = (from: number, to: number, inside: boolean) => {
+const wavePath = (from: number, to: number, inside: boolean, per: number[] = rollDays.count) => {
   let d = '';
   for (let day = 1; day <= JOURNEY_DAYS; day++) {
     if (day >= from && day <= to ? !inside : inside) continue;
-    const n = rollDays.count[day];
+    const n = per[day];
     const h = n ? Math.min(WAVE_H, 2 + Math.sqrt(n) * 6) : 1;
     d += `M${day - 0.5} ${WAVE_H}V${WAVE_H - h}`;
   }
@@ -962,14 +964,18 @@ export function YearWave({
   bottom,
   hover,
   lang,
+  theme,
   onScrub,
 }: {
   top: number;
   bottom: number;
   hover: number | null;
   lang: Lang;
+  /** the chosen theme: its days stand out of the year, the rest go faint */
+  theme: string | null;
   onScrub: (i: number) => void;
 }) {
+  const lit = theme ? themeDays(theme) : null;
   const photos = journeyRoll.photos;
   // a photo from the night before the start (the phone's clock, a timezone) is still day 1
   const clampDay = (d: number) => Math.min(JOURNEY_DAYS, Math.max(1, d));
@@ -1025,8 +1031,21 @@ export function YearWave({
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          <path className="pb__wavebars" d={wavePath(readDay, endDay, false)} />
-          <path className="pb__wavebars is-in" d={wavePath(readDay, endDay, true)} />
+          {lit ? (
+            <>
+              <path className="pb__wavebars is-faint" d={wavePath(0, -1, false)} />
+              <path className="pb__wavebars is-lit" d={wavePath(readDay, endDay, false, lit)} />
+              <path
+                className="pb__wavebars is-lit is-in"
+                d={wavePath(readDay, endDay, true, lit)}
+              />
+            </>
+          ) : (
+            <>
+              <path className="pb__wavebars" d={wavePath(readDay, endDay, false)} />
+              <path className="pb__wavebars is-in" d={wavePath(readDay, endDay, true)} />
+            </>
+          )}
         </svg>
         {hoverDay !== null && hoverPhoto && !scrubbing && (
           <span className="pb__wavehover mono" style={{ left: pct(hoverDay) }}>
@@ -1047,6 +1066,67 @@ export function YearWave({
           ))}
         </span>
       </div>
+      <ThemeRow theme={theme} lang={lang} />
+    </div>
+  );
+}
+
+/**
+ * The one place a theme is chosen: the floor of the bar under the time it
+ * lights. 「전체」 is the way out. Only the chosen word says how many photos it
+ * has. Runs sideways on a phone.
+ */
+function ThemeRow({ theme, lang }: { theme: string | null; lang: Lang }) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  // the chosen word comes into view on a phone, where the row runs off the edge
+  useEffect(() => {
+    const row = rowRef.current;
+    const on = row?.querySelector<HTMLElement>('.is-on');
+    if (!row || !on || row.scrollWidth <= row.clientWidth) return;
+    const l = on.offsetLeft - row.offsetLeft;
+    if (l < row.scrollLeft || l + on.offsetWidth > row.scrollLeft + row.clientWidth)
+      row.scrollTo({ left: l - 24, behavior: 'smooth' });
+  }, [theme]);
+  return (
+    <div
+      className="pb__themes"
+      ref={rowRef}
+      // a pointer here chooses; it does not scrub the year above it
+      onPointerDown={(e) => e.stopPropagation()}
+      role="group"
+      aria-label={lang === 'ko' ? '사진 주제' : 'Photo themes'}
+    >
+      <button
+        type="button"
+        className={`pb__theme pb__theme--all${theme ? '' : ' is-on'}`}
+        aria-pressed={!theme}
+        onClick={() => setPhotoTheme(null)}
+      >
+        {lang === 'ko' ? '전체' : 'All'}
+      </button>
+      <span className="pb__themesep" aria-hidden="true" />
+      {THEMES.map((t) => {
+        const on = t.id === theme;
+        return (
+          <button
+            type="button"
+            key={t.id}
+            className={`pb__theme${on ? ' is-on' : ''}`}
+            aria-pressed={on}
+            onClick={() => setPhotoTheme(on ? null : t.id)}
+          >
+            {t[lang]}
+            {on && <span className="pb__themen mono">{THEME_TOTAL[t.id]}</span>}
+          </button>
+        );
+      })}
+      {theme && (
+        <span className="pb__themekeys mono" aria-hidden="true">
+          <kbd>←</kbd>
+          <kbd>→</kbd>
+          <span>{lang === 'ko' ? '켜진 곳' : 'lit'}</span>
+        </span>
+      )}
     </div>
   );
 }

@@ -24,6 +24,8 @@ import {
 import { srcFor } from '../../lib/photoSrc';
 import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
+import { hasTheme, themesOf, usePhotoTheme } from '../../lib/photoThemes';
+import { stepIndex } from '../../lib/themeStep';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
 import './PhotoGallery.css';
 
@@ -298,12 +300,20 @@ export default function PhotoGallery({
      going, and the incoming photo picks the movement up from exactly there.
      A key or a click has no such handover, so it gets the house default. */
   const [entry, setEntry] = useState<{ from: number; ms: number } | null>(null);
+  /* A theme on, the others step back and ← → (a swipe too) go to the next lit
+     photo. A roll with nothing lit in it steps as it always has. */
+  const theme = usePhotoTheme();
+  const lit = useMemo(
+    () => (theme ? (i: number) => hasTheme(photos[i]?.id ?? '', theme) : null),
+    [theme, photos]
+  );
+  const anyLit = useMemo(() => (lit ? photos.some((_, i) => lit(i)) : false), [lit, photos]);
   const go = useCallback(
     (d: number, handoff?: { from: number; ms: number }) => {
       setEntry(handoff ?? null);
-      setIndex((i) => Math.max(0, Math.min(count - 1, i + d)));
+      setIndex((i) => stepIndex(count, Math.min(i, count - 1), d > 0 ? 1 : -1, lit));
     },
-    [count]
+    [count, lit]
   );
 
   /* ── the frame is the photo's own shape, known before it arrives ─────── */
@@ -456,6 +466,8 @@ export default function PhotoGallery({
       const t = e.target;
       if (t instanceof Node && (stripRef.current?.contains(t) || sheetRef.current?.contains(t)))
         return;
+      // the theme row runs sideways on a phone
+      if (t instanceof Element && t.closest('.pb__themes')) return;
       e.preventDefault();
     };
     window.addEventListener('wheel', block, { passive: false });
@@ -477,6 +489,19 @@ export default function PhotoGallery({
         if (sheet) leaveRef.current();
         else if (fromSheet) setSheet(true);
         else closeHome();
+      } else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && sheet && wide && anyLit) {
+        // the sheet is read by scrolling, so the step starts from what is in
+        // view: the open photo if it still is, else the edge being read towards
+        const d = e.key === 'ArrowRight' ? 1 : -1;
+        const { top, bottom } = read;
+        const from =
+          safeIndex >= top && safeIndex <= bottom ? safeIndex : d > 0 ? top - 1 : bottom + 1;
+        const j = stepIndex(count, Math.max(-1, Math.min(count, from)), d, lit);
+        if (j >= 0 && j < count && lit?.(j)) {
+          setEntry(null);
+          setIndex(j);
+          jumpTo(sheetRef.current, j, 'focus');
+        }
       } else if (e.key === 'ArrowRight') go(1);
       else if (e.key === 'ArrowLeft') go(-1);
       else if (e.key === 'g' || e.key === 'G') {
@@ -488,7 +513,7 @@ export default function PhotoGallery({
     };
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
-  }, [cityName, closeHome, go, sheet, fromSheet]);
+  }, [cityName, closeHome, go, sheet, fromSheet, wide, anyLit, count, lit, read, safeIndex]);
 
   /* ── pulling the sheet shut ─────────────────────────────────────────────
      The picture is closed by the root's pointer gesture, but the sheet is a
@@ -982,7 +1007,7 @@ export default function PhotoGallery({
 
   return (
     <div
-      className="pb"
+      className={`pb${anyLit ? ' is-lit' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-label={
@@ -994,6 +1019,12 @@ export default function PhotoGallery({
       onPointerUp={endGesture}
       onPointerCancel={endGesture}
     >
+      {/* The rest step back from the chosen theme. Every tile and thumbnail
+          carries its themes once (data-t); choosing is this one rule, so the
+          two thousand tiles are never drawn again for it. */}
+      {anyLit && theme && (
+        <style>{`.pb.is-lit .pb__cell:not([data-t~="${theme}"]),.pb.is-lit .pb__thumb:not([data-t~="${theme}"]){opacity:0.16 !important;filter:grayscale(1)}`}</style>
+      )}
       <div
         className="pb__backdrop"
         onClick={() => (fromSheet && !sheet ? setSheet(true) : closeHome())}
@@ -1058,7 +1089,9 @@ export default function PhotoGallery({
         <span className={`pb__keys${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
           <kbd>←</kbd>
           <kbd>→</kbd>
-          <span>{lang === 'ko' ? '넘기기' : 'browse'}</span>
+          <span>
+            {anyLit ? (lang === 'ko' ? '켜진 곳' : 'lit') : lang === 'ko' ? '넘기기' : 'browse'}
+          </span>
           <kbd>G</kbd>
           <span>{lang === 'ko' ? '전체' : 'all'}</span>
           <kbd>ESC</kbd>
@@ -1213,6 +1246,7 @@ export default function PhotoGallery({
                 type="button"
                 className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
                 data-id={p.id}
+                data-t={themesOf(p.id).join(' ')}
                 style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
                 data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
                 onClick={() => {
@@ -1237,6 +1271,7 @@ export default function PhotoGallery({
           bottom={read.bottom}
           hover={hover}
           lang={lang}
+          theme={theme}
           onScrub={(i) => jumpTo(sheetRef.current, i)}
         />
       )}
