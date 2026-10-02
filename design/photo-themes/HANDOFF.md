@@ -191,6 +191,17 @@ fe79fcf 이후. 브랜치 `feat/photo-themes`, worktree 그대로, **푸시 안 
 
 ## 16. 남은 것
 
-- 루오님 폰 확인(②③ 묶어서): 집 고리 탭 → 키보드, Enter 뒤 키보드 내려감, 순위 숫자 크기.
+- 루오님 폰 확인(②③ 묶어서): 집 고리 탭 → 키보드, Enter 뒤 키보드 내려감, 순위 숫자 크기. iOS 입력 확대는 9a9d6c2 로 고침(터치 화면 input 16px + scale 0.875).
 - 배포 때 총괄이 Vercel 방화벽 규칙(`/api/search` POST, IP 10회/60초) 을 만든다. TypeSafe 콘솔 지출 상한도 확인.
-- 다음 작업: G1 「한 줄 필름」(사진첩 한 장 보기 좌우 넘김) — 총괄 메시지 2026-10-02 저녁, 보드 4판 블록.
+
+## 17. G1 한 줄 필름 (c4351ce)
+
+사진첩 한 장 보기의 좌우 넘김. 보드 4판 G 블록(진단·G1·곡선·데스크톱).
+
+- `src/components/gallery/film.ts` — React 밖: `Film`(스프링 k·c = springOf(response, damping), `tick(dt)` 1/240s 소단계, `settled` 0.4px·12px/s), `landing(x, v, lane, project)`(x + v·project 가 가장 가까운 카드), `rubber`, `speedOf`(마지막 80ms). 테스트 `tests/film.test.ts` 5건.
+- `PhotoGallery.tsx` — `cards`(앞뒤 두 장씩, `stepIndex` 로 — 주제가 켜지면 켜진 사진), `lane`(카드 크기·가운데: 폰 `slot.w + gapPhone`, 데스크톱 반폭+gap+반폭), `film`(x·v·target), `runFilm`(rAF), `bandX`(끝 고무줄), 재중심 layoutEffect(사진이 바뀌면 전 띠에서 그 카드의 가운데만큼 x 를 더해 화면이 안 움직임 — ids 로 짝짓기, 다른 곳에서 온 사진은 x=0), `letGo(v)`(판정 → setIndex → 효과가 x 를 옮기고 스프링). 포인터: 마우스도 slot 안에서 띠를 끈다(setPointerCapture, 축은 늘 x), 손가락은 x/y 축 잠김, 축 없이 놓아도 띠가 제자리가 아니면 letGo(0). 휠: |deltaX|>|deltaY| 면 띠 1:1, 80ms 조용하면 letGoRef. 클릭: `dragged` 면 무시.
+- 렌더: `.pb__film` > `figure.pb__frame`(절대 위치 left/top 계산, tone 그라데이션 바탕, `.is-here` 가 지금 사진 — figRef·mainImgRef·커서·클릭은 여기만). 옆 카드 img 는 `srcFor(p, size.w)` = 미리 부르던 너비.
+- CSS: `.pb__slot { overflow: clip }`, `.pb__frame { position: absolute }`(width/height 전환 제거), `.pb__img` 는 `pbFade 160ms`, 링 전환·스트립 닫기 중 `:not(.is-here)` 는 visibility hidden, 반쪽 안내선은 `.is-here` 만.
+- 벤치 `?tune=1` 「사진첩 한 장 보기 · 띠」: filmResponse/Damping/Project/Band/GapPhone/GapDesk → `FILM_DEFAULTS`.
+- 측정: `node_modules/.cache/b1/g1.mjs <url> phone|desk`. puppeteer 터치는 0.5px/ms 라 던지기 판정이 경계에 걸린다(실제 손가락 1~3px/ms) — 폰 느낌은 루오님.
+- 남은 것: 루오님 폰에서 던지기·잡기 느낌, 투영 0.15s 가 짧으면 벤치로. 트랙패드 관성(손을 뗀 뒤 오는 deltaX)은 띠가 따라가다 80ms 뒤 스프링 — 과하면 관성 구간을 무시하는 규칙을 더한다.
