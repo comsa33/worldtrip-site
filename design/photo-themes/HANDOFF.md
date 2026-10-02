@@ -163,3 +163,34 @@ fe79fcf 이후. 브랜치 `feat/photo-themes`, worktree 그대로, **푸시 안 
 3. **통합·배포** — 마지막 프로덕션 배포는 루오님 허락 뒤 한 번(Cloudinary). 푸시 전 `npm run build`.
 4. **?perf=1 오버레이**(`src/lib/perfOverlay.ts` + `src/main.tsx` 세 줄, 작업 트리에만) — 남길지 걷을지 정한다. 커밋하지 말 것.
 5. 측정 스크립트는 `node_modules/.cache/b1/`(demand.mjs 프레임 수, b2cast.mjs 전환 프레임 녹화, b2stuck/b2come 고리 누름, capshot 캡션). git 밖.
+
+---
+
+# 3차 (dev coder, 2026-10-02 저녁) — C3 말로 찾기
+
+83e9588 이후. 커밋: 8430b90(캡션 dev HMR) · 319224d(① api/search) · 82aa171(② 헤더 닷 커서) · 6ee8eb0(③ 결과) · 53686bd(폰 헤더). 푸시 안 함. 매 커밋 eslint · tsc -b · npm test · npm run build 0.
+
+## 14. 구조
+
+- **서버 `api/search.ts`** — Vercel 함수(웹 표준 `POST(request)`), `tsconfig.api.json` 으로 build 관문에 포함. `{ q }` → `{ theme?, stops: [{ id, score 0~1 }] }`. 요청 하나로 141개 정거장(태그나 이야기가 있는 곳)을 TypeSafe Jev `score` 질문(4단계 0~3)으로 재고, 같은 요청의 `noul` 게이트(0.5)로 찾기가 아닌 글을 거른다. 요약은 도시·나라·날짜·cityNotes en·주제별 사진 수(「나」는 "the traveller in n")뿐 — **Apple 설명문 없음**. 임계 1.5/3, 최대 12. 주제 이름(ko/en)과 「나」 류(정규식 `ME_WORDS`)는 Jev 없이 태그로 바로 답한다(`theme` 필드). 방어: Origin, 80자·2KB, IP 분당 5, 인스턴스 하루 300, 해시 캐시 1시간, 키 거절 10분 일시정지. 키는 `TYPESAFE_API_KEY`(Vercel env, worktree `.env.local` 사본 — gitignore). `SEARCH_DEBUG=1` 이면 게이트·상위 점수를 로그.
+- **dev/preview `dev/searchDev.ts`** — vite 플러그인(configureServer + configurePreviewServer)이 같은 핸들러로 `/api/search` 를 답한다. 키 없거나 `SEARCH_FAKE=1` 이면 가짜 순위. **5182 preview 에서도 실제 Jev 가 불린다**(건수 로그 `[search] jev …`).
+- **상태 `src/lib/search.ts`** — 하나: closed / open(커서) / waiting(닷이 눕고 숨쉼) / result / none(마침표, 2초 뒤 닫힘). `onAnswer` 로 페이지가 답을 듣는다.
+- **헤더 `SearchField.tsx` + `.css`** — 브랜드(집 고리 버튼 + 이름) + 진짜 `input type=search`(caret-color transparent) + 닷 좌석(`data-dot-follow` + `data-dot-carry`: caret / caret-blink / wait). 입력 폭은 mirror span 으로 잰다. `/` 로 열기, Enter 보내기(blur), Esc 닫기. 닫혀 있을 때 고리 호버·누름 → 이름 뒤 반쯤 선 커서(가상 요소)와 기간 8px 비켜섬(`:has`). 폰은 찾기가 떠 있는 동안 사이트 링크 둘 숨김.
+- **TravelingDot** — 새 carry `wait`(`data-wait` 숨쉬기) 와 caret → dot 로 눕는 `data-caret-out`.
+- **결과(JourneyExperience)** — `searchRings`(도시별, n = 그곳 사진 수, 같은 도시 두 번이면 twice, `ranks`)를 Scene 의 `ThemeRings` 에 주제 대신 넣는다(`rings = photoTheme ? themeRings : searchRings`). 순위 숫자는 `SearchRanks.tsx`(캔버스 안 useFrame → DOM `.search-ranks`, 여정 화면만, `RING_NEAR` 반지름 + 4px 오른쪽). 답이 오면 `setPhotoTheme(null)` → goToStop(1위); 주제 낱말이면 `setPhotoTheme(theme)` + closeSearch. `stepTo` 는 결과가 있으면 순위 순. Esc 는 window onKey 에서 `closeSearch`. 헤더 「n / of」 + sr-only aria-live. ThemeRow 의 클릭은 `closeSearch()`.
+- `RING_NEAR` 는 `themeRingScale.ts` 로 옮김(ThemeRings·SearchRanks 공용).
+
+## 15. 측정·배운 것
+
+- Jev 점수 척도 0~3. 2026-10-02 질의 다섯: 답인 곳 1.66 이상, 느슨한 곳 1.4 이하 → 임계 1.5. 게이트: 「펭귄」 0.44·「ㅁㄴㅇㄹ」 0.13(0.5 기준). 「내가 찍힌 사진」은 게이트 0.30 + 점수 2.1~2.2 평평 → 「나」 류는 정규식 지름길. 호출당 입력 약 27K 토큰(≈0.0011달러), 0.4초.
+- 결과가 와도 헤더 좌석이 남아 있으면 닷이 안 날아간다(`[data-dot-active]` 는 문서 순서로 첫 것) — 좌석은 open/waiting/none 에서만.
+- Enter 뒤 input 에 포커스가 남으면 ← → 가 글자 커서로 간다 → blur.
+- `SearchField.css` 는 `JourneyExperience.css` 보다 먼저 로드된다(import 순서) — 브랜드 규칙을 이기려면 특이도를 올린다.
+- headless 스크립트: `node_modules/.cache/b1/c3field.mjs`(② 상태 흐름·스크린샷), `c3result.mjs`(③ 결과·← →·Esc). `sips` 는 가운데를 자르니 PIL 로 자른다. macOS 엔 `timeout` 이 없다.
+- ④ 「비행 중 잡기」는 기존 규칙으로 성립: 여정 화면 드래그 → `isUserInteracting` 3초 → 카메라만 멈추고 여정 글라이드는 계속(닷은 1위에 앉음). 폰 여정 화면은 회전이 꺼져 있다.
+
+## 16. 남은 것
+
+- 루오님 폰 확인(②③ 묶어서): 집 고리 탭 → 키보드, Enter 뒤 키보드 내려감, 순위 숫자 크기.
+- 배포 때 총괄이 Vercel 방화벽 규칙(`/api/search` POST, IP 10회/60초) 을 만든다. TypeSafe 콘솔 지출 상한도 확인.
+- 다음 작업: G1 「한 줄 필름」(사진첩 한 장 보기 좌우 넘김) — 총괄 메시지 2026-10-02 저녁, 보드 4판 블록.
