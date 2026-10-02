@@ -11,10 +11,10 @@
  * A Vercel Function (web signature, Node runtime). On dev and preview the
  * plugin in dev/searchDev.ts answers the same path with this handler.
  */
-import journeyData from '../src/data/journey.json';
-import notesData from '../src/data/cityNotes.json';
-import tagsData from '../src/data/photoTags.json';
-import citiesData from '../src/data/cities.json';
+import journeyData from '../src/data/journey.json' with { type: 'json' };
+import notesData from '../src/data/cityNotes.json' with { type: 'json' };
+import tagsData from '../src/data/photoTags.json' with { type: 'json' };
+import citiesData from '../src/data/cities.json' with { type: 'json' };
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
 const MODEL = 'jev-latest';

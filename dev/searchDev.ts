@@ -11,9 +11,9 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { loadEnv, type Plugin, type PreviewServer, type ViteDevServer } from 'vite';
 import { POST, queryOf, rankByTheme, themeOf, type SearchResult } from '../api/search';
-import journeyData from '../src/data/journey.json';
-import tagsData from '../src/data/photoTags.json';
-import citiesData from '../src/data/cities.json';
+import journeyData from '../src/data/journey.json' with { type: 'json' };
+import tagsData from '../src/data/photoTags.json' with { type: 'json' };
+import citiesData from '../src/data/cities.json' with { type: 'json' };
 
 const stops = journeyData.stops;
 const tagStops = (tagsData as { stops: Record<string, Record<string, number>> }).stops;
