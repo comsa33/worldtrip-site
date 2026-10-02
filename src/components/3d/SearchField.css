@@ -208,6 +208,19 @@
   opacity: 1;
 }
 
+/* A touch screen: iOS zooms the page to any input set under 16px when it is
+   focused, so the input is 16px and drawn at the brand's 14px by scaling —
+   the layout (SearchField.tsx) widens its box by the inverse and pulls it
+   back. The viewport is left alone: pinch zoom stays the reader's. */
+@media (pointer: coarse) {
+  .search-field__input {
+    --q-scale: 0.875;
+    font-size: 16px;
+    transform: scale(var(--q-scale));
+    transform-origin: left center;
+  }
+}
+
 @media (max-width: 768px) {
   .search-field__mark {
     height: 28px;

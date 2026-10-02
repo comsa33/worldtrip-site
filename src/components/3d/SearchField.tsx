@@ -43,7 +43,20 @@ export function SearchField({ brand }: { brand: string }) {
     const input = inputRef.current;
     const mirror = mirrorRef.current;
     if (!input || !mirror) return;
-    input.style.width = open ? `${Math.ceil(mirror.offsetWidth) + 2}px` : '';
+    if (!open) {
+      input.style.width = '';
+      input.style.marginRight = '';
+      return;
+    }
+    // On a touch screen the input is set in 16px, which is the size under
+    // which iOS zooms the page to it, and drawn scaled down to the brand's
+    // size (--q-scale, SearchField.css). Its box is still the unscaled width,
+    // so it is laid out wider and pulled back by the difference, and the seat
+    // after it stays right after the words as they are seen.
+    const k = parseFloat(getComputedStyle(input).getPropertyValue('--q-scale')) || 1;
+    const w = Math.ceil(mirror.offsetWidth) + 2;
+    input.style.width = `${w / k}px`;
+    input.style.marginRight = k < 1 ? `${w - w / k}px` : '';
   }, [search.text, open]);
 
   // opened from the keyboard (/): the focus has to follow
