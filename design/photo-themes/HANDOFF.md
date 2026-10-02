@@ -205,3 +205,27 @@ fe79fcf 이후. 브랜치 `feat/photo-themes`, worktree 그대로, **푸시 안 
 - 벤치 `?tune=1` 「사진첩 한 장 보기 · 띠」: filmResponse/Damping/Project/Band/GapPhone/GapDesk → `FILM_DEFAULTS`.
 - 측정: `node_modules/.cache/b1/g1.mjs <url> phone|desk`. puppeteer 터치는 0.5px/ms 라 던지기 판정이 경계에 걸린다(실제 손가락 1~3px/ms) — 폰 느낌은 루오님.
 - 남은 것: 루오님 폰에서 던지기·잡기 느낌, 투영 0.15s 가 짧으면 벤치로. 트랙패드 관성(손을 뗀 뒤 오는 deltaX)은 띠가 따라가다 80ms 뒤 스프링 — 과하면 관성 구간을 무시하는 규칙을 더한다.
+
+## 18. K2 「닷에게 묻는다」 — 계획 (2026-10-03, dev coder)
+
+루오님이 6판 K2 를 골랐다(보드 `Kboard('K2')` + 초록 메모 nK2s). C3 의 헤더 입력(이름 뒤 커서)을 **대체**한다. 서버 `api/search` 와 Node 로드 테스트는 그대로.
+
+정한 것(총괄·디자이너 2026-10-03)
+
+- Enter 뒤 지구본의 결과 고리·순위 숫자·헤더 「1 / 12」·← → 순위 걷기·Esc 는 C3 ③ 그대로. 「외 8곳」은 ← → 로 닿는다.
+- 헤더 입력·호버 힌트·기간 비켜섬은 걷고 브랜드는 원래대로. `/` 는 K2 를 연다.
+- 문 「물어보기」는 여정 화면에서만 닷에 붙는다(둘러보기에선 `/`). 둘러보기 폰의 여는 길은 디자이너와 정한다(없으면 열 수 없음).
+- 예시 다섯, 고정 차례: 밤기차 → 피라미드 → 폭포 앞에서 → 눈 덮인 마을 → 시장의 아침. 글자당 90ms · 머묾 1.6s · 지우기 글자당 40ms(거꾸로) · 다음 말 전 0.3s 빈칸. 두 바퀴 돌고 빈칸에서 멈춤, 칸이 비었다가 다시 비면 처음부터. 배포 전에 다섯 모두 `/api/search` 결과 1곳 이상인지 확인(없으면 다른 말로).
+- 「장면·물건·날씨로 — …」 안내 한 줄은 넣지 않는다(폰·데스크톱 둘 다).
+- 대표 사진: 주제가 켜져 있고 그 정거장에 켜진 사진이 있으면 첫 켜진 사진, 아니면 시간순 첫 사진(= 필름스트립 첫 칸). 인화지 타일(480 exact) cover, 오기 전엔 tone 바탕. **Cloudinary 새 크기 없음.**
+- 답 옆 닷: 「카이로」 바로 뒤(쉼표 앞) 4px, 글자 가운데, 지름은 누워 있던 닷과 같음. 답 블록이 떠오를 때 입력 끝에서 이름 뒤로 옮기고(디자이너 340ms — 닷의 비행은 사이트 공통 520ms 라 그것을 쓴다, 차이는 보고) 숨쉬기를 멈춘다. Enter 면 그 자리에서 리본을 끌고 날아간다.
+- 다크: 딤은 bg color-mix 80/82% 로 테마를 따르고, 훑는 토막은 accent · opacity 라이트 0.85 / 다크 0.7.
+- 없음: 닷이 입력 끝에 마침표, 예시가 다시 써짐, 딤 유지. 오류·429·8s 시간 초과: 닷이 숨쉬기를 멈추고 50% 로, mono 「지금은 답할 수 없어요 · 다시」(「다시」만 누름, 429 는 3초 뒤부터). 오프라인: 열 때 알면 입력 대신 그 한 줄, 문은 숨김. 폰 키보드: visualViewport 로 블록을 남은 높이의 38% 에, 답 목록만 스크롤. Esc·바탕 탭: 닫기, 닷은 지구본 제자리로.
+
+구조(구현 순서)
+
+1. `src/lib/search.ts` — 모드에 `answer`(답 떠 있음, 아직 안 감)·`error`(fail/rate/offline) 추가. submit → waiting → answer | none | error. `confirmAnswer(stopId?)` → result(기존 onAnswer 리스너가 goToStop·고리). none 의 2초 자동 닫힘은 없앤다. 8s 시간 초과.
+2. `src/components/3d/AskDot.tsx` + `.css` — 오버레이(scrim + 가운데 블록 + 예시 + 생각 줄 + 답 블록 + 오류 줄). 닷 좌석은 입력 끝(`data-dot-follow`, carry caret/caret-blink/wait/fade)과 답의 도시 이름 뒤(`data-dot-active`). 폰은 visualViewport.
+3. `AskDoor` — 여정 좌석(`seatRef`) rect 를 rAF 로 읽어 +18,+12 에 「물어보기」(+ 데스크톱 kbd /). 3s 숨쉬기, 한 번 쓰면 35%, 둘러보기·사진첩·오프라인·찾기 중엔 숨김.
+4. `RouteScan` — Scene 안, 전체 경로 점으로 dashed Line 하나(dashSize 작게, gapSize 전체 길이), waiting 동안 useFrame 으로 dashOffset 을 2.6s 에 한 바퀴 + invalidate. 카메라 고정.
+5. 헤더 되돌리기(SearchField 제거, rank·sr-only 는 남김), `/` 키, dotOnGlobe 의 searching 에 answer·error 포함. 5182 에 띄워 루오님 확인 → 커밋 확정.
