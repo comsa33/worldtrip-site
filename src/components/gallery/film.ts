@@ -137,6 +137,36 @@ export class Film {
   }
 }
 
+/** What lies on the band: the cards' photos in order, which one is at 0, and their centres. */
+export type Band = {
+  ids: (string | undefined)[];
+  here: string | undefined;
+  centres: number[] | null;
+};
+
+/**
+ * The photo changed: how far the band has to be moved so that nothing on
+ * screen moves. The card now at 0 was at some centre c on the band before,
+ * so the band's x grows by c — the spring then takes it in, keeping its
+ * speed. 'same' when nothing changed; null when the photo was not on the
+ * band before (it came from elsewhere and is simply there).
+ *
+ * Which card is here is part of what the band is: a roll of four photos has
+ * the same cards at its second photo and at its third, and comparing the
+ * cards alone called that "same" and left the band where the hand let go.
+ */
+export function rebase(prev: Band, next: Band): number | 'same' | null {
+  if (
+    prev.here === next.here &&
+    prev.ids.length === next.ids.length &&
+    prev.ids.every((id, n) => id === next.ids[n])
+  )
+    return 'same';
+  const n = next.here === undefined ? -1 : prev.ids.indexOf(next.here);
+  if (n < 0 || !prev.centres) return null;
+  return prev.centres[n];
+}
+
 /** the hand's speed from its last few points (px/s), over at most `window` ms */
 export function speedOf(points: { x: number; t: number }[], window = 80): number {
   if (points.length < 2) return 0;

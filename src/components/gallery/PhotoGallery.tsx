@@ -31,7 +31,16 @@ import { RING_MOVE } from '../3d/themeRingScale';
 import { stepIndex } from '../../lib/themeStep';
 import { ThemeRow } from '../themes/ThemeRow';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
-import { FILM_DEFAULTS, Film, landing, rubber, speedOf, type FilmParams } from './film';
+import {
+  FILM_DEFAULTS,
+  Film,
+  landing,
+  rebase,
+  rubber,
+  speedOf,
+  type Band,
+  type FilmParams,
+} from './film';
 import './PhotoGallery.css';
 
 interface Photo {
@@ -571,24 +580,39 @@ export default function PhotoGallery({
      before, so the band moves by c and nothing on screen moves — and the
      spring takes it the rest of the way in, keeping whatever speed it had. A
      photo from elsewhere (the strip, a tile) is simply there. */
-  const prevLane = useRef({ ids: cards.map((c) => photos[c.i]?.id), lane });
+  const prevBand = useRef<Band>({ ids: [], here: undefined, centres: null });
   useLayoutEffect(() => {
-    const prev = prevLane.current;
-    const ids = cards.map((c) => photos[c.i]?.id);
-    prevLane.current = { ids, lane };
-    if (prev.ids.length === ids.length && prev.ids.every((id, n) => id === ids[n])) return;
-    const n = prev.ids.indexOf(photo?.id ?? '');
+    const prev = prevBand.current;
+    const next: Band = {
+      ids: cards.map((c) => photos[c.i]?.id),
+      here: photo?.id,
+      centres: lane?.centres ?? null,
+    };
+    prevBand.current = next;
+    const shift = rebase(prev, next);
+    if (shift === 'same') return;
     film.target = 0;
-    if (n >= 0 && prev.lane && !reduced) {
-      film.x += prev.lane.centres[n];
+    if (shift !== null && !reduced) {
+      // the band and what is drawn move together, in this frame; the speed stays
+      film.x += shift;
+      drawFilm();
       runFilm();
     } else {
       film.x = 0;
       film.v = 0;
       stopFilm();
+      drawFilm();
     }
-    drawFilm();
   }, [cards, lane, photos, photo?.id, film, reduced, runFilm, stopFilm, drawFilm]);
+  /* A band left off its target with no spring running and no hand on it is
+     never right: it is sent on. (It should not happen.) */
+  const rescue = useCallback(() => {
+    requestAnimationFrame(() => {
+      if (filmRaf.current || gesture.current.down) return;
+      if (Math.abs(film.x - film.target) < 0.4) return;
+      runFilm();
+    });
+  }, [film, runFilm]);
   /** let go (a finger, the trackpad) with this speed: where the band lands */
   const letGo = useCallback(
     (v: number, haptic = false) => {
@@ -610,8 +634,9 @@ export default function PhotoGallery({
         film.v = 0;
         drawFilm();
       } else runFilm();
+      rescue();
     },
-    [lane, cards, film, filmParams.project, safeIndex, reduced, runFilm, drawFilm]
+    [lane, cards, film, filmParams.project, safeIndex, reduced, runFilm, drawFilm, rescue]
   );
   const letGoRef = useRef(letGo);
   useEffect(() => {
@@ -1247,6 +1272,29 @@ export default function PhotoGallery({
     g.axis = '';
   };
 
+  /* A lift the root never hears — the pointer gone off the book, a cancel
+     from the browser taking the gesture — still lets the band go. */
+  const endRef = useRef(endGesture);
+  endRef.current = endGesture;
+  useEffect(() => {
+    const end = () => endRef.current();
+    window.addEventListener('pointerup', end);
+    window.addEventListener('pointercancel', end);
+    return () => {
+      window.removeEventListener('pointerup', end);
+      window.removeEventListener('pointercancel', end);
+    };
+  }, []);
+  /* the cards' pictures are decoded as soon as they are in, off the band's
+     way: a picture decoded on its first paint stalls the hand on a phone */
+  useEffect(() => {
+    const el = filmRef.current;
+    if (!el) return;
+    for (const img of Array.from(el.querySelectorAll('img'))) {
+      if (!img.complete) img.decode().catch(() => {});
+    }
+  }, [cards]);
+
   /* ── the cursor is the accent dot, stretched by its own speed ────────── */
   const originOf = useCallback(() => figRef.current?.getBoundingClientRect() ?? null, []);
   const curRef = useRef<HTMLSpanElement>(null);
@@ -1425,6 +1473,7 @@ export default function PhotoGallery({
       onPointerMove={onPointerMove}
       onPointerUp={endGesture}
       onPointerCancel={endGesture}
+      onLostPointerCapture={endGesture}
       onClickCapture={(e) => {
         if (!ringCaught.current) return;
         ringCaught.current = false;
