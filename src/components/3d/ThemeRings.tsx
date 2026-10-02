@@ -219,6 +219,7 @@ export function ThemeRings({
   gather,
   onAim,
   onOpen,
+  onPress,
   spot: spotRef,
   scale: sizes = RING_FAR,
 }: {
@@ -238,6 +239,8 @@ export function ThemeRings({
   onAim?: (dir: THREE.Vector3, distance: number) => void;
   /** a ring on its own was pressed: its photo book, at this stay */
   onOpen?: (city: string, stopId: number) => void;
+  /** a ring on its own has just come under a press — the book may be about to open */
+  onPress?: (city: string, stopId: number) => void;
   /** filled in here: where a city's ring is on the screen (null if it is not) */
   spot?: React.MutableRefObject<
     ((city: string) => { x: number; y: number; r: number } | null) | null
@@ -422,9 +425,11 @@ export function ThemeRings({
   // come apart. One on its own: that stay's photo book, the theme still on.
   const aim = useRef(onAim);
   const open = useRef(onOpen);
+  const held = useRef(onPress);
   useEffect(() => {
     aim.current = onAim;
     open.current = onOpen;
+    held.current = onPress;
   });
   useEffect(() => {
     // Heard on the window, not the canvas: on a phone the journey's canvas is
@@ -486,8 +491,12 @@ export function ThemeRings({
       down = { x: e.clientX, y: e.clientY, t: performance.now() };
       if (!mine(e)) return;
       const g = under(e.clientX, e.clientY);
-      // a ring on its own tightens under the press
-      if (g && g.members.length === 1) press(g.members[0]);
+      // a ring on its own tightens under the press, and its picture is sent for
+      if (g && g.members.length === 1) {
+        press(g.members[0]);
+        const ring = rings[g.members[0]];
+        held.current?.(ring.city, ring.stopId);
+      }
     };
     const onMove = (e: PointerEvent) => {
       // a drag is a turn: the ring lets go

@@ -54,7 +54,8 @@ lineWidth={${t.borderActive}}   // 활성
 --route-ahead-o: ${t.aheadOpacity};
 
 // src/components/3d/themeRingScale.ts
-export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPhoneMin}, phoneStroke: ${t.ringPhoneStroke}, deskK: ${t.ringDeskK}, deskMin: ${t.ringDeskMin}, deskStroke: ${t.ringDeskStroke}, grow: ${t.ringGrow}, gap: ${t.ringGap} };`;
+export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPhoneMin}, phoneStroke: ${t.ringPhoneStroke}, deskK: ${t.ringDeskK}, deskMin: ${t.ringDeskMin}, deskStroke: ${t.ringDeskStroke}, grow: ${t.ringGrow}, gap: ${t.ringGap} };
+export const RING_MOVE: RingMove = { openMs: ${t.ringOpenMs}, closeMs: ${t.ringCloseMs}, hold: ${t.ringHold} };`;
 
   return (
     <div className="tuner">
@@ -124,6 +125,15 @@ export const RING_FAR: RingFar = { phoneK: ${t.ringPhoneK}, phoneMin: ${t.ringPh
       <div className="tuner__note">
         주제를 켜고 둘러보기(G)에서 봅니다. 지수 0 은 당겨도 크기 그대로, 1 은 지도와 같이 커져
         갈라지지 않습니다. 폰은 짧은 변 768px 이하(가로로 눕힌 폰 포함).
+      </div>
+
+      <div className="tuner__group">고리 → 사진첩</div>
+      {num('ringOpenMs', '열기 ms', 200, 1200, 10)}
+      {num('ringCloseMs', '닫기 ms', 200, 1200, 10)}
+      {num('ringHold', '원으로 있는 비율', 0, 0.95, 0.05)}
+      <div className="tuner__note">
+        여정 화면에서 주제를 켜고 고리를 누릅니다. 비율은 움직임 가운데 사진이 원인 채로 날아오는
+        몫이고, 나머지 동안 원이 사진 모서리까지 열립니다.
       </div>
 
       <div className="tuner__group">화면에 찍히는 값</div>

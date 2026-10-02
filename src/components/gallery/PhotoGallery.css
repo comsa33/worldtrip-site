@@ -37,9 +37,43 @@
   transition: --pull 320ms var(--ease);
 }
 
-/* out of a ring on the globe and back into it: the book follows the circle */
+/* Out of a ring on the globe and back into it. --ring is the whole move: 0 on
+   the ring, 1 open (set, with the two ends of the road, by PhotoGallery). For
+   the first --ring-hold of it the photo flies between the ring and its place
+   as a circle; over the rest the circle opens to the photo's corners. Closing
+   runs it backwards: a circle first, then home to the ring as one. */
+@property --ring {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
 .pb.is-ring {
-  transition: --pull 340ms cubic-bezier(0.32, 0.72, 0, 1);
+  transition:
+    --pull var(--ring-ms, 480ms) cubic-bezier(0.32, 0.72, 0, 1),
+    --ring var(--ring-ms, 480ms) cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.pb.is-ringed .pb__slot {
+  --fly: clamp(0, var(--ring) / var(--ring-hold, 0.6), 1);
+  transition: none;
+  transform: translate(
+      calc(var(--ring-ax) + (var(--ring-bx) - var(--ring-ax)) * var(--fly)),
+      calc(var(--ring-ay) + (var(--ring-by) - var(--ring-ay)) * var(--fly))
+    )
+    scale(calc(var(--ring-as) + (var(--ring-bs) - var(--ring-as)) * var(--fly)));
+}
+
+.pb.is-ringed .pb__frame {
+  clip-path: circle(
+    calc(
+        var(--ring-r0) + (var(--ring-r1) - var(--ring-r0)) *
+          clamp(0, (var(--ring) - var(--ring-hold, 0.6)) / (1 - var(--ring-hold, 0.6)), 1)
+      )
+      at 50% 50%
+  );
+  /* on the ring the circle gives way to the ring's own line */
+  opacity: clamp(0, var(--ring) * 30, 1);
 }
 
 /* filter rather than opacity: the caption and the key hints already animate

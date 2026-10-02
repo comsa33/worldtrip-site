@@ -27,3 +27,12 @@ export const RING_FAR: RingFar = {
   grow: 0.35,
   gap: 1,
 };
+
+/**
+ * A ring opening into its photo book, and the book closing back into it
+ * (PhotoGallery): how long each takes, and how much of the move the photo
+ * stays a circle for before it opens to its corners.
+ */
+export type RingMove = { openMs: number; closeMs: number; hold: number };
+
+export const RING_MOVE: RingMove = { openMs: 480, closeMs: 400, hold: 0.6 };

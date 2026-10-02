@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react';
 import { GLOBE, type Theme } from '../../theme';
 import { ZOOM_DEFAULTS } from './cityZoom';
 import { PACE_DEFAULTS } from './pace';
-import { RING_FAR } from './themeRingScale';
+import { RING_FAR, RING_MOVE } from './themeRingScale';
 
 /**
  * A bench for the route's two tenses. Dev only — `?tune=1` — and not shipped.
@@ -51,6 +51,10 @@ export type Tuning = {
   ringDeskStroke: number;
   ringGrow: number;
   ringGap: number;
+  /** a ring opening into its photo book and back */
+  ringOpenMs: number;
+  ringCloseMs: number;
+  ringHold: number;
 };
 
 export const TUNE_ON =
@@ -91,6 +95,9 @@ export function defaults(theme: Theme): Tuning {
     ringDeskStroke: RING_FAR.deskStroke,
     ringGrow: RING_FAR.grow,
     ringGap: RING_FAR.gap,
+    ringOpenMs: RING_MOVE.openMs,
+    ringCloseMs: RING_MOVE.closeMs,
+    ringHold: RING_MOVE.hold,
   };
 }
 

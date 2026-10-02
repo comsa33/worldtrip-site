@@ -37,6 +37,7 @@ import { PLACE_GLYPH } from './placeGlyphs';
 import { useOutlines } from './cityOutlines';
 import { useFirstMove, useLean } from './useFirstStep';
 import { photosForStop, cityHasPhotos } from '../../lib/visitPhotos';
+import { srcFor } from '../../lib/photoSrc';
 import { DotGlobe, GLOBE_RADIUS } from './DotGlobe';
 import { WorldBorders } from './WorldBorders';
 import { Scrubber } from './Scrubber';
@@ -1061,6 +1062,7 @@ function Scene({
   photoTheme,
   onHand,
   onOpenStop,
+  onPressStop,
   ringSpot,
 }: {
   progress: number;
@@ -1095,6 +1097,8 @@ function Scene({
   onHand: (on: boolean) => void;
   /** a lit ring on its own was pressed: that stay's photo book */
   onOpenStop: (cityName: string, stopId: number) => void;
+  /** a lit ring on its own is under a press: the book may be about to open */
+  onPressStop: (cityName: string, stopId: number) => void;
   /** filled in by the rings: where a city's ring is on the screen */
   ringSpot: React.MutableRefObject<((city: string) => RingSpot | null) | null>;
 }) {
@@ -1524,6 +1528,7 @@ function Scene({
           gather={globe !== 'off'}
           onAim={aimAt}
           onOpen={onOpenStop}
+          onPress={onPressStop}
           spot={ringSpot}
           scale={TUNE_ON ? ringScale : undefined}
         />
@@ -2232,11 +2237,21 @@ function JourneyExperienceContent() {
   // still on. The stay is the ring's, not the one the journey is standing on.
   // It opens on the first photo of that stay, in the order they were taken,
   // that the theme lights — out of the ring, and back into it (PhotoGallery).
-  const handleOpenStop = (cityName: string, stopId: number) => {
+  const firstLit = (stopId: number) => {
     const stay = [...photosForStop(stopId)].sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     );
-    const first = photoTheme ? stay.find((p) => hasTheme(p.id, photoTheme)) : undefined;
+    return photoTheme ? stay.find((p) => hasTheme(p.id, photoTheme)) : undefined;
+  };
+  // The press has only come down: send for the picture now, so the circle has
+  // something in it when it opens. The sheet's own tile — a size the site
+  // already asks for — which the book shows under the full photo.
+  const handlePressStop = (_cityName: string, stopId: number) => {
+    const first = firstLit(stopId);
+    if (first) new Image().src = srcFor(first, 480, { exact: true });
+  };
+  const handleOpenStop = (cityName: string, stopId: number) => {
+    const first = firstLit(stopId);
     setGalleryScope('city');
     setSelectedCity(cityName);
     setInitialPhotoId(first?.id ?? null);
@@ -2890,6 +2905,7 @@ function JourneyExperienceContent() {
             photoTheme={photoTheme}
             onHand={setOrbitHeld}
             onOpenStop={handleOpenStop}
+            onPressStop={handlePressStop}
             ringSpot={ringSpotRef}
           />
           <Wake />

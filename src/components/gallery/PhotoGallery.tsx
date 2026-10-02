@@ -25,6 +25,8 @@ import { srcFor } from '../../lib/photoSrc';
 import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { hasTheme, themesOf, usePhotoTheme } from '../../lib/photoThemes';
+import { TUNE_ON, useTuning } from '../3d/routeTuning';
+import { RING_MOVE } from '../3d/themeRingScale';
 import { stepIndex } from '../../lib/themeStep';
 import { ThemeRow } from '../themes/ThemeRow';
 import { JourneySheet, RollLocator, YearWave } from './JourneySheet';
@@ -71,15 +73,54 @@ interface PhotoGalleryProps {
 
 export type RingSpot = { x: number; y: number; r: number };
 
-/** The ring's move, the same pace and curve the book closes home with. */
-const RING_MS = 340;
-const RING_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+/** A photo opening out of a ring waits this long, at most, for its picture. */
+const RING_WAIT_MS = 120;
 /** The slot's centre before any transform, and how much it is scaled now. */
 function slotAtRest(slotEl: HTMLElement) {
   const r = slotEl.getBoundingClientRect();
   const t = getComputedStyle(slotEl).transform;
   const m = t && t !== 'none' ? new DOMMatrix(t) : new DOMMatrix();
-  return { cx: r.left + r.width / 2 - m.e, cy: r.top + r.height / 2 - m.f, s: m.a || 1 };
+  return {
+    cx: r.left + r.width / 2 - m.e,
+    cy: r.top + r.height / 2 - m.f,
+    tx: m.e,
+    ty: m.f,
+    s: m.a || 1,
+  };
+}
+
+/**
+ * The ring's move is one number, --ring: 0 on the ring, 1 open. The slot's
+ * place and the frame's circle are both read off it (PhotoGallery.css) — the
+ * photo flies as a circle for the first 60% and only then opens to its
+ * corners, and closing is the same road backwards. One number, moved by a
+ * transition, so a move turned round halfway goes back from where it is.
+ */
+function setRing(
+  root: HTMLElement,
+  ring: { x: number; y: number; r: number },
+  open: { cx: number; cy: number; tx: number; ty: number; s: number },
+  w: number,
+  h: number
+) {
+  const small = Math.min(w, h);
+  const set = (k: string, v: string) => root.style.setProperty(k, v);
+  set('--ring-ax', `${ring.x - open.cx}px`);
+  set('--ring-ay', `${ring.y - open.cy}px`);
+  // the circle lands the size the ring is drawn
+  set('--ring-as', String((2 * ring.r) / small));
+  set('--ring-bx', `${open.tx}px`);
+  set('--ring-by', `${open.ty}px`);
+  set('--ring-bs', String(open.s));
+  set('--ring-r0', `${small / 2}px`);
+  set('--ring-r1', `${Math.hypot(w, h) / 2}px`);
+}
+function clearRing(root: HTMLElement) {
+  root.classList.remove('is-ring', 'is-ringed');
+  for (const k of ['ax', 'ay', 'as', 'bx', 'by', 'bs', 'r0', 'r1', 'ms', 'hold'])
+    root.style.removeProperty(`--ring-${k}`);
+  root.style.removeProperty('--ring');
+  root.style.removeProperty('--pull');
 }
 
 const DEFAULT_AR = 4 / 3;
@@ -307,6 +348,12 @@ export default function PhotoGallery({
   const ringClosing = useRef<(() => void) | null>(null);
   const ringTimer = useRef(0);
   const ringCaught = useRef(false);
+  /** bumped by every ring move: an opening that was waiting for its picture is off */
+  const ringTurn = useRef(0);
+  const tuned = useTuning();
+  const ringMove = TUNE_ON
+    ? { openMs: tuned.ringOpenMs, closeMs: tuned.ringCloseMs, hold: tuned.ringHold }
+    : RING_MOVE;
   /** the open this book has already come out of its ring for */
   const ringOpened = useRef('');
   const closeHomeRef = useRef<() => void>(() => {});
@@ -382,6 +429,14 @@ export default function PhotoGallery({
      outgoing photo is the right thing to see until the next one is ready. */
   const [grownFrom, setGrownFrom] = useState<string | null>(null);
   const [sharpId, setSharpId] = useState<string | null>(null);
+  // Out of a ring, the frame shows the sheet's tile under the photo until the
+  // photo is in, as it does for a photo opened from a tile.
+  const [ringKey, setRingKey] = useState('');
+  if (!cityName && ringKey) setRingKey('');
+  if (ringSpot && cityName && initialPhotoId && ringKey !== openKey) {
+    setRingKey(openKey);
+    setGrownFrom(initialPhotoId);
+  }
   if (photo && shownId !== photo.id) {
     // the photo changed this render: keep the old one on screen until the new
     // one reports it has decoded (state reset during render, per React guidance)
@@ -420,29 +475,35 @@ export default function PhotoGallery({
     ringOpened.current = openKey;
     const spot = ringSpot(cityName);
     if (!spot || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const at = slotAtRest(slotEl);
-    const small = Math.min(box.w, box.h);
+    setRing(root, spot, slotAtRest(slotEl), box.w, box.h);
+    root.style.setProperty('--ring-ms', `${ringMove.openMs}ms`);
+    root.style.setProperty('--ring-hold', String(ringMove.hold));
+    root.style.setProperty('--ring', '0');
     root.style.setProperty('--pull', '1');
-    slotEl.style.transition = 'none';
-    slotEl.style.transform = `translate(${spot.x - at.cx}px, ${spot.y - at.cy}px) scale(${(2 * spot.r) / small})`;
-    fig.style.transition = 'none';
-    fig.style.clipPath = `circle(${small / 2}px at 50% 50%)`;
+    root.classList.add('is-ringed');
     void fig.offsetWidth;
-    root.classList.add('is-ring');
-    root.style.setProperty('--pull', '0');
-    slotEl.style.transition = `transform ${RING_MS}ms ${RING_EASE}`;
-    slotEl.style.transform = 'translate(0px, 0px) scale(1)';
-    fig.style.transition = `clip-path ${RING_MS}ms ${RING_EASE}`;
-    fig.style.clipPath = `circle(${Math.hypot(box.w, box.h) / 2}px at 50% 50%)`;
-    window.clearTimeout(ringTimer.current);
-    ringTimer.current = window.setTimeout(() => {
-      root.classList.remove('is-ring');
-      root.style.removeProperty('--pull');
-      slotEl.style.transition = '';
-      slotEl.style.transform = '';
-      fig.style.transition = '';
-      fig.style.clipPath = '';
-    }, RING_MS + 10);
+    const turn = ++ringTurn.current;
+    const go = () => {
+      if (ringTurn.current !== turn) return;
+      root.classList.add('is-ring');
+      root.style.setProperty('--ring', '1');
+      root.style.setProperty('--pull', '0');
+      window.clearTimeout(ringTimer.current);
+      ringTimer.current = window.setTimeout(() => clearRing(root), ringMove.openMs + 10);
+    };
+    // The circle should not open on an empty frame: it waits for the picture
+    // the ring asked for when it was pressed (the sheet's tile, which this
+    // frame shows under the full one) — a moment, and no longer.
+    const tile = photo ? new Image() : null;
+    if (tile && photo) tile.src = srcFor(photo, 480, { exact: true });
+    const ready = tile?.src ? tile.decode().catch(() => {}) : Promise.resolve();
+    const wait = window.setTimeout(go, RING_WAIT_MS);
+    ready.then(() => {
+      window.clearTimeout(wait);
+      go();
+    });
+    // the photo, the move's numbers: read once, when the book opens
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ringSpot, cityName, box, sheet, openKey]);
 
   const topRef = useRef<HTMLDivElement>(null);
@@ -1046,48 +1107,40 @@ export default function PhotoGallery({
       if (spot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         // back into the ring it came from (or the ring of the stop it has been
         // paged on to): the photo goes over to it, closing to a circle its size
-        const at = slotAtRest(slotEl);
-        const f = fig.getBoundingClientRect();
-        const w0 = f.width / at.s;
-        const h0 = f.height / at.s;
-        const small = Math.min(w0, h0);
         const tidy = () => {
           ringClosing.current = null;
           liftRef.current = null;
-          root.classList.remove('is-ring');
-          root.style.removeProperty('--pull');
+          clearRing(root);
+        };
+        // an opening turned round keeps the road it is on; otherwise the road
+        // runs from where the photo is now (under a finger, or at rest)
+        ringTurn.current += 1;
+        root.style.setProperty('--ring-ms', `${ringMove.closeMs}ms`);
+        root.style.setProperty('--ring-hold', String(ringMove.hold));
+        if (!root.classList.contains('is-ringed')) {
+          const at = slotAtRest(slotEl);
+          const f = fig.getBoundingClientRect();
+          setRing(root, spot, at, f.width / at.s, f.height / at.s);
+          root.style.setProperty('--ring', '1');
+          root.classList.add('is-ringed');
           slotEl.style.transition = '';
           slotEl.style.transform = '';
-          fig.style.transition = '';
-          fig.style.clipPath = '';
-          fig.style.opacity = '';
-        };
-        // the whole photo is a circle through its corners; from wherever the
-        // circle is now if this is an opening turned round
-        if (!fig.style.clipPath)
-          fig.style.clipPath = `circle(${Math.hypot(w0, h0) / 2}px at 50% 50%)`;
-        void fig.offsetWidth;
+          void fig.offsetWidth;
+        }
         root.classList.add('is-ring');
+        root.style.setProperty('--ring', '0');
         root.style.setProperty('--pull', '1');
-        slotEl.style.transition = `transform ${RING_MS}ms ${RING_EASE}`;
-        slotEl.style.transform = `translate(${spot.x - at.cx}px, ${spot.y - at.cy}px) scale(${(2 * spot.r) / small})`;
-        fig.style.transition = `clip-path ${RING_MS}ms ${RING_EASE}, opacity 100ms ease ${RING_MS - 100}ms`;
-        fig.style.clipPath = `circle(${small / 2}px at 50% 50%)`;
-        fig.style.opacity = '0';
         window.clearTimeout(ringTimer.current);
         ringTimer.current = window.setTimeout(() => {
           tidy();
           close();
-        }, RING_MS + 10);
+        }, ringMove.closeMs + 10);
         ringClosing.current = () => {
           window.clearTimeout(ringTimer.current);
+          root.style.setProperty('--ring', '1');
           root.style.setProperty('--pull', '0');
-          slotEl.style.transform = 'translate(0px, 0px) scale(1)';
-          fig.style.transition = `clip-path ${RING_MS}ms ${RING_EASE}, opacity 100ms ease`;
-          fig.style.clipPath = `circle(${Math.hypot(w0, h0) / 2}px at 50% 50%)`;
-          fig.style.opacity = '1';
           ringClosing.current = null;
-          ringTimer.current = window.setTimeout(tidy, RING_MS + 10);
+          ringTimer.current = window.setTimeout(tidy, ringMove.closeMs + 10);
         };
         return;
       }
