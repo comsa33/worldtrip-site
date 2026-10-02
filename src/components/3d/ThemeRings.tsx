@@ -35,7 +35,8 @@ const vertex = /* glsl */ `
     vec4 world = modelMatrix * vec4(position, 1.0);
     // the far side of the globe: not drawn
     float facing = dot(normalize(world.xyz), normalize(cameraPosition - world.xyz));
-    vSize = (aR + 6.0) * 2.0;
+    // room for the band (to r+3) and the outer ring (to r+3.6), and a pixel to smooth them
+    vSize = (aR + 4.0) * 2.0;
     vR = aR;
     vTwice = aTwice;
     gl_PointSize = facing > 0.04 ? vSize * uDpr : 0.0;

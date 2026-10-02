@@ -229,7 +229,8 @@ export function Scrubber({
           </svg>
         )}
         <div className="scrubber__track" />
-        <div className="scrubber__fill" style={{ width: `${pct}%` }} />
+        {/* scaled, not resized: the line moves on the compositor and the bars over it are never repainted */}
+        <div className="scrubber__fill" style={{ transform: `scaleX(${progress})` }} />
         {ticks.map((t, i) => (
           <span
             key={i}

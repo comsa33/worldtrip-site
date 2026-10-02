@@ -785,8 +785,10 @@ html[data-globe-view='on'] .canvas-container:active {
 }
 
 .scrubber__fill {
+  right: 0;
   background: var(--ink);
-  transition: width var(--t-fast) var(--ease);
+  transform-origin: 0 50%;
+  transition: transform var(--t-fast) var(--ease);
 }
 
 /* a chosen theme: a bar a stop, standing on the line */

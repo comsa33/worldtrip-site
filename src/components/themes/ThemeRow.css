@@ -1,14 +1,28 @@
 /* The theme row (H2′ + H2″) — see ThemeRow.tsx. No plate, no rule: over the
    globe the letters carry a halo of the ground, over the photo book the page
-   is the ground. */
+   is the ground.
+
+   Cheap to composite, because over the globe it sits on a canvas that changes
+   every frame: no mask, no group opacity, a light halo. How strongly the row
+   is there is one number, --row-k — 100% at rest, 12% while the hand is busy
+   elsewhere — and every colour in it, the halo's too, is mixed by it. */
+@property --row-k {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 100%;
+}
+
 .theme-row {
   --ground: var(--bg);
+  --row-k: 100%;
+  --halo: color-mix(in srgb, var(--ground) var(--row-k), transparent);
   position: relative;
   display: flex;
   align-items: center;
   gap: 13px;
   height: 36px;
   padding: 0 32px;
+  /* a native scroller: iOS pans it under the finger (pan-x) */
   overflow-x: auto;
   scrollbar-width: none;
   white-space: nowrap;
@@ -16,8 +30,7 @@
   touch-action: pan-x;
   /* coming back: wait 300ms after the hand stops, then 400ms. A transition,
      not keyframes — a change halfway carries on from where it is. */
-  opacity: 1;
-  transition: opacity 400ms var(--ease, ease) 300ms;
+  transition: --row-k 400ms var(--ease, ease) 300ms;
 }
 
 /* Over the globe the row is only as wide as its words, so the globe can be
@@ -27,29 +40,6 @@
   width: fit-content;
   max-width: 100%;
   box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* more past an edge: that edge fades */
-.theme-row.is-clip-r {
-  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
-  mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
-}
-
-.theme-row.is-clip-l {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px);
-  mask-image: linear-gradient(90deg, transparent, #000 24px);
-}
-
-.theme-row.is-clip-l.is-clip-r {
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 24px,
-    #000 calc(100% - 40px),
-    transparent
-  );
-  mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 40px), transparent);
 }
 
 .theme-row::-webkit-scrollbar {
@@ -57,26 +47,24 @@
 }
 
 .theme-row.is-away {
-  opacity: 0.12;
-  transition: opacity 150ms var(--ease, ease);
+  --row-k: 12%;
+  transition: --row-k 150ms var(--ease, ease);
 }
 
 /* a mouse over the row or the top bar: back at once, moving or not */
 .theme-row.is-woken {
-  opacity: 1;
-  transition: opacity 120ms var(--ease, ease);
+  --row-k: 100%;
+  transition: --row-k 120ms var(--ease, ease);
 }
 
 .theme-row.is-halo .theme-row__w,
 .theme-row.is-halo .theme-row__keys {
   text-shadow:
-    1px 0 0 var(--ground),
-    -1px 0 0 var(--ground),
-    0 1px 0 var(--ground),
-    0 -1px 0 var(--ground),
-    0 0 3px var(--ground),
-    0 0 8px var(--ground),
-    0 0 14px var(--ground);
+    1px 0 0 var(--halo),
+    -1px 0 0 var(--halo),
+    0 1px 0 var(--halo),
+    0 -1px 0 var(--halo),
+    0 0 6px var(--halo);
 }
 
 .theme-row__w {
@@ -89,68 +77,55 @@
   background: none;
   font: inherit;
   font-family: var(--sans, inherit);
-  color: var(--ink-2);
+  color: color-mix(in srgb, var(--ink-2) var(--row-k), var(--ground));
   cursor: pointer;
-  transition:
-    color 160ms var(--ease, ease),
-    opacity 160ms var(--ease, ease);
 }
 
-.theme-row__w:hover {
-  color: var(--ink);
-}
-
+.theme-row__w:hover,
 .theme-row__w.is-on {
-  color: var(--ink);
+  color: color-mix(in srgb, var(--ink) var(--row-k), var(--ground));
 }
 
 .theme-row__w.is-on .theme-row__label {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--ink-2);
+  text-decoration-color: color-mix(in srgb, var(--ink-2) var(--row-k), var(--ground));
 }
 
-/* chosen: the others go to 42%, the chosen word and its count stay. Mixed
-   towards the ground rather than made transparent — an opacity would thin the
-   halo too, and the route would show through the words. */
+/* chosen: the others go to 42%, the chosen word and its count stay — mixed
+   towards the ground, so the halo under them stays whole */
 .theme-row.is-picked .theme-row__w:not(.is-on) {
-  color: color-mix(in srgb, var(--ink-2) 42%, var(--ground));
+  color: color-mix(in srgb, var(--ink-2) calc(var(--row-k) * 0.42), var(--ground));
 }
 
 .theme-row.is-picked .theme-row__w:not(.is-on):hover {
-  color: var(--ink);
+  color: color-mix(in srgb, var(--ink) var(--row-k), var(--ground));
 }
 
 .theme-row__n {
   margin-left: 5px;
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--ink-2);
+  color: color-mix(in srgb, var(--ink-2) var(--row-k), var(--ground));
   text-decoration: none;
   display: inline-block;
 }
 
 .theme-row__label {
   display: inline-block;
-  max-width: 10em;
-  overflow: hidden;
-  vertical-align: bottom;
-  transition:
-    max-width 240ms var(--ease, ease),
-    opacity 200ms var(--ease, ease);
+  transition: opacity 200ms var(--ease, ease);
 }
 
-/* H2″: left alone, the other words fold into dots — one dot a word, in its place */
+/* H2″: left alone, the other words fold into dots — one dot a word, in its
+   place. The word steps out of the line and fades; the dot takes its place;
+   the line closes up by transform (ThemeRow.tsx), never by animating widths. */
 .theme-row__dot {
-  width: 0;
+  display: none;
+  width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: var(--ink-3);
-  opacity: 0;
-  transition:
-    width 240ms var(--ease, ease),
-    opacity 200ms var(--ease, ease);
+  background: color-mix(in srgb, var(--ink-3) calc(var(--row-k) * 0.7), transparent);
 }
 
 .theme-row.is-folded {
@@ -158,13 +133,14 @@
 }
 
 .theme-row.is-folded .theme-row__w:not(.is-on):not(.theme-row__all) .theme-row__label {
-  max-width: 0;
+  position: absolute;
+  left: 0;
   opacity: 0;
+  pointer-events: none;
 }
 
 .theme-row.is-folded .theme-row__w:not(.is-on):not(.theme-row__all) .theme-row__dot {
-  width: 3px;
-  opacity: 0.7;
+  display: block;
 }
 
 .theme-row__keys {
@@ -175,7 +151,7 @@
   margin-left: 6px;
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--ink-3);
+  color: color-mix(in srgb, var(--ink-3) var(--row-k), var(--ground));
 }
 
 .theme-row.is-picked:not(.is-folded) .theme-row__keys {
@@ -187,11 +163,11 @@
   font-size: 10px;
   line-height: 1;
   padding: 4px 5px 3px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid color-mix(in srgb, var(--line-strong) var(--row-k), var(--ground));
   border-bottom-width: 2px;
   border-radius: 4px;
-  color: var(--ink-2);
-  background: var(--bg-card);
+  color: color-mix(in srgb, var(--ink-2) var(--row-k), var(--ground));
+  background: color-mix(in srgb, var(--bg-card) var(--row-k), transparent);
 }
 
 @media (max-width: 768px) {
@@ -216,9 +192,7 @@
   .theme-row,
   .theme-row.is-away,
   .theme-row.is-woken,
-  .theme-row__w,
-  .theme-row__label,
-  .theme-row__dot {
+  .theme-row__label {
     transition: none;
   }
 }

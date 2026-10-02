@@ -86,23 +86,14 @@ export function ThemeRow({
     return () => window.clearTimeout(t);
   }, [theme, folded]);
 
-  /* Wider than the screen, the row runs sideways: a finger pans it (touch-action:
-     pan-x), a vertical wheel turns into a sideways one, a mouse can drag it.
-     The clipped side fades, so there is visibly more past it. */
-  const [clip, setClip] = useState({ l: false, r: false });
+  /* Wider than the screen, the row runs sideways: a finger pans it natively
+     (overflow-x + touch-action: pan-x), a vertical wheel turns into a sideways
+     one, a mouse can drag it. No fade at the clipped edge — a mask over the
+     globe's canvas is composited every frame; the half-cut last word says
+     there is more. */
   useEffect(() => {
     const row = rowRef.current;
     if (!row) return;
-    const read = () => {
-      const max = row.scrollWidth - row.clientWidth;
-      const l = row.scrollLeft > 1;
-      const r = row.scrollLeft < max - 1;
-      setClip((c) => (c.l === l && c.r === r ? c : { l, r }));
-    };
-    read();
-    const ro = new ResizeObserver(read);
-    ro.observe(row);
-    row.addEventListener('scroll', read, { passive: true });
     // a wheel over the row moves the row, not the journey or the page behind it
     const wheel = (e: WheelEvent) => {
       if (row.scrollWidth <= row.clientWidth + 1) return;
@@ -112,12 +103,32 @@ export function ThemeRow({
       row.scrollLeft += d;
     };
     row.addEventListener('wheel', wheel, { passive: false });
-    return () => {
-      ro.disconnect();
-      row.removeEventListener('scroll', read);
-      row.removeEventListener('wheel', wheel);
-    };
+    return () => row.removeEventListener('wheel', wheel);
   }, []);
+
+  /* Folding and opening move the words along the line. Their widths change at
+     once; each word is then slid from where it was to where it is (FLIP), a
+     transform the compositor runs — nothing is laid out frame by frame. */
+  const lefts = useRef(new Map<string, number>());
+  useLayoutEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const next = new Map<string, number>();
+    for (const el of Array.from(row.querySelectorAll<HTMLElement>('[data-w]'))) {
+      const key = el.dataset.w ?? '';
+      const x = el.offsetLeft;
+      next.set(key, x);
+      const was = lefts.current.get(key);
+      if (!reduce && was !== undefined && Math.abs(was - x) > 0.5) {
+        el.animate([{ transform: `translateX(${was - x}px)` }, { transform: 'none' }], {
+          duration: 240,
+          easing: 'cubic-bezier(0.32, 0.72, 0, 1)',
+        });
+      }
+    }
+    lefts.current = next;
+  }, [folded, theme]);
 
   // a mouse drags the row sideways; a drag is not a click on the word it ends on
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
@@ -149,7 +160,7 @@ export function ThemeRow({
   return (
     <div
       ref={rowRef}
-      className={`theme-row${halo ? ' is-halo' : ''}${away ? ' is-away' : ''}${hovered ? ' is-woken' : ''}${theme ? ' is-picked' : ''}${folded ? ' is-folded' : ''}${floating ? ' is-floating' : ''}${clip.l ? ' is-clip-l' : ''}${clip.r ? ' is-clip-r' : ''} ${className}`}
+      className={`theme-row${halo ? ' is-halo' : ''}${away ? ' is-away' : ''}${hovered ? ' is-woken' : ''}${theme ? ' is-picked' : ''}${folded ? ' is-folded' : ''}${floating ? ' is-floating' : ''} ${className}`}
       role="group"
       aria-label={lang === 'ko' ? '사진 주제' : 'Photo themes'}
       // the row is not a swipe of the photo or a drag of the globe
