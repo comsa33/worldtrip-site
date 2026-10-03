@@ -2554,13 +2554,18 @@ function JourneyExperienceContent() {
       window.clearTimeout(write);
     };
   }, [hand]);
-  /* The question field opening over the opening: the opening yields at once.
-     The words stand as written, the dot leaves from wherever it is — the
-     header's mark, the first stop, or the caret in the text — for the field,
-     and the route is simply there. Closing the field does not play it again:
-     the dot goes to where the opening would have left it, the first stop. */
+  /* The question field, or a photo book, opening over the opening: the
+     opening yields at once. The words stand as written, the dot leaves from
+     wherever it is — the header's mark, the first stop, or the caret in the
+     text — for the field or the book, and the route is simply there. Closing
+     does not play it again: the dot goes to where the opening would have left
+     it, the first stop. */
   const [yielded, setYielded] = useState(false);
-  if (!yielded && search.mode !== 'closed' && (!dotOut || hand !== 'self')) {
+  if (
+    !yielded &&
+    (search.mode !== 'closed' || selectedCity !== null) &&
+    (!dotOut || hand !== 'self')
+  ) {
     markOpeningSeen();
     setYielded(true);
     setDotOut(true);
