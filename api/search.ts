@@ -17,6 +17,7 @@ import notesData from '../src/data/cityNotes.json' with { type: 'json' };
 import tagsData from '../src/data/photoTags.json' with { type: 'json' };
 import citiesData from '../src/data/cities.json' with { type: 'json' };
 import captionsData from './stopCaptions.json' with { type: 'json' };
+import { normalizeQuery } from '../src/lib/queryText.ts';
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
 const MODEL = 'jev-latest';
@@ -81,17 +82,33 @@ async function hashOf(text: string): Promise<string> {
 const PAUSE_MS = 10 * 60_000;
 let pausedUntil = 0;
 
-/* Only the page itself calls this. Browsers send Origin on every POST; a
-   mismatch is another site or a script borrowing the endpoint. */
+/* Only the page itself calls this. Browsers send Origin on every POST and on
+   cross-site GETs; a same-site GET says so in Sec-Fetch-Site instead, and an
+   older browser in Referer. A mismatch is another site or a script borrowing
+   the endpoint. (An answer the edge has cached goes out without this — the
+   answers are the site's own public data.) */
 function sameOrigin(request: Request): boolean {
-  const origin = request.headers.get('origin');
   const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host');
-  if (!origin || !host) return false;
-  try {
-    return new URL(origin).host === host;
-  } catch {
-    return false;
+  if (!host) return false;
+  const origin = request.headers.get('origin');
+  if (origin) {
+    try {
+      return new URL(origin).host === host;
+    } catch {
+      return false;
+    }
   }
+  const site = request.headers.get('sec-fetch-site');
+  if (site) return site === 'same-origin';
+  const referer = request.headers.get('referer');
+  if (referer) {
+    try {
+      return new URL(referer).host === host;
+    } catch {
+      return false;
+    }
+  }
+  return false;
 }
 
 // ---- what Jev is told about each stop ----------------------------------------
@@ -196,9 +213,8 @@ const nameTheme = (c: { id: string; ko: string; en: string }) =>
 const ME_WORDS =
   /(^|\s)(나|내|me|myself|selfies?)(\s|$)|내가|나를|나만|내 ?(사진|얼굴|모습)|나 ?(나온|찍힌|있는)|셀카|셀피|photos? of me|my (photos?|face)|with me/i;
 
-export function normalize(q: string): string {
-  return q.normalize('NFC').replace(/\s+/g, ' ').trim();
-}
+/** The page's own normalisation (src/lib/queryText): the same words, the same URL, the same cache key. */
+export const normalize = normalizeQuery;
 
 /* Broad words that mean a theme — the theme by another name, not a thing in
    it. "배고플때" is food; "개" and "국수" are not, they go to Jev (and to the
@@ -425,20 +441,45 @@ export function resultOf(answers: Record<string, Answer>): SearchResult {
   return result;
 }
 
-const json = (body: unknown, status = 200) =>
+/* An answer is the data's — it changes only with a deploy, and the URL carries
+   the data's version — so the edge may keep it a week, serving it while it
+   fetches a fresh one past that. Faults are not kept. */
+const EDGE_CACHE = 'public, s-maxage=604800, stale-while-revalidate=86400';
+const json = (body: unknown, status = 200, cache = false) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      'cache-control': cache ? EDGE_CACHE : 'no-store',
+    },
   });
 const fail = (error: SearchError, status: number) => json({ error }, status);
 
 export type Asked = { q: string; photosOf: number[] | null };
 
-/** Reads the body: the words, and — the book's request — the stops whose photos to pick. */
+/** Reads what is asked: from a GET's URL (?q=…, and the book's &photos=1&stops=1,2 — the
+ *  form the edge caches), or from a POST's body. The words, and the stops whose photos to pick. */
 export async function askedOf(request: Request): Promise<Asked | null | 'too_long'> {
-  if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) return 'too_long';
+  let body: { q?: unknown; photos?: unknown; stops?: unknown };
+  if (request.method === 'GET') {
+    const u = new URL(request.url);
+    const q = u.searchParams.get('q') ?? '';
+    if (q.length > MAX_QUERY_CHARS * 4) return 'too_long';
+    const stops = u.searchParams.get('stops');
+    body = {
+      q,
+      photos: u.searchParams.get('photos') === '1',
+      stops: stops ? stops.split(',').map((x) => (x === '' ? NaN : Number(x))) : undefined,
+    };
+  } else {
+    if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) return 'too_long';
+    try {
+      body = (await request.json()) as { q?: unknown; photos?: unknown; stops?: unknown };
+    } catch {
+      return null;
+    }
+  }
   try {
-    const body = (await request.json()) as { q?: unknown; photos?: unknown; stops?: unknown };
     const q = typeof body?.q === 'string' ? normalize(body.q) : '';
     if (q.length > MAX_QUERY_CHARS) return 'too_long';
     if (!q) return null;
@@ -468,10 +509,10 @@ async function pickPhotos(key: string, q: string, stopIds: number[]): Promise<Re
   const sorted = [...new Set(stopIds)].sort((a, b) => a - b);
   const hash = await hashOf(`${q.toLowerCase()}|${sorted.join(',')}`);
   const cached = photoCache.get(hash);
-  if (cached && Date.now() - cached.at < CACHE_TTL_MS) return json(cached.result);
+  if (cached && Date.now() - cached.at < CACHE_TTL_MS) return json(cached.result, 200, true);
   if (overDailyCeiling(true)) return fail('unavailable', 503);
   const { questions, pool } = photoQuestionsFor(sorted);
-  if (!pool.length) return json({ photos: [] } satisfies PhotoResult);
+  if (!pool.length) return json({ photos: [] } satisfies PhotoResult, 200, true);
   let answers: Record<string, Answer>;
   try {
     const res = await fetch(ENDPOINT, {
@@ -501,7 +542,7 @@ async function pickPhotos(key: string, q: string, stopIds: number[]): Promise<Re
   const result: PhotoResult = { photos: photosOf(answers, pool) };
   if (photoCache.size > 500) photoCache.clear();
   photoCache.set(hash, { at: Date.now(), result });
-  return json(result);
+  return json(result, 200, true);
 }
 
 export async function POST(request: Request): Promise<Response> {
@@ -521,11 +562,11 @@ export async function POST(request: Request): Promise<Response> {
   if (asked.photosOf) return pickPhotos(key, q, asked.photosOf);
 
   const theme = themeOf(q);
-  if (theme) return json({ theme, stops: rankByTheme(theme) } satisfies SearchResult);
+  if (theme) return json({ theme, stops: rankByTheme(theme) } satisfies SearchResult, 200, true);
 
   const hash = await hashOf(q.toLowerCase());
   const cached = cache.get(hash);
-  if (cached && Date.now() - cached.at < CACHE_TTL_MS) return json(cached.result);
+  if (cached && Date.now() - cached.at < CACHE_TTL_MS) return json(cached.result, 200, true);
 
   if (overDailyCeiling()) return fail('unavailable', 503);
 
@@ -571,5 +612,8 @@ export async function POST(request: Request): Promise<Response> {
 
   if (cache.size > 500) cache.clear();
   cache.set(hash, { at: Date.now(), result });
-  return json(result);
+  return json(result, 200, true);
 }
+
+/** The same, asked by URL — the form the edge keeps. */
+export const GET = POST;

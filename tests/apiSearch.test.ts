@@ -159,3 +159,52 @@ test('what Jev is told of the stops stays under its input limit', async () => {
   const chars = m.SUMMARIES.reduce((n, s) => n + s.text.length, 0);
   assert.ok(chars <= 123_000, `${chars} chars of summaries`);
 });
+
+test('asked by URL (the form the edge keeps): the words, and the stops to pick photos from', async () => {
+  const m = await load();
+  const get = (qs: string, headers: Record<string, string> = {}) =>
+    new Request(`${ORIGIN}/api/search?v=abc&${qs}`, { method: 'GET', headers });
+  assert.deepEqual(await m.askedOf(get('q=%EB%B0%A4%EA%B8%B0%EC%B0%A8')), {
+    q: '밤기차',
+    photosOf: null,
+  });
+  assert.deepEqual(await m.askedOf(get('q=Night%20%20Train')), {
+    q: 'night train',
+    photosOf: null,
+  });
+  assert.deepEqual(await m.askedOf(get('q=%EA%B0%9C&photos=1&stops=53,54')), {
+    q: '개',
+    photosOf: [53, 54],
+  });
+  assert.equal(await m.askedOf(get('q=%EA%B0%9C&photos=1&stops=53,x')), null);
+  assert.equal(await m.askedOf(get('q=')), null);
+});
+
+test('a same-site GET is let in; an answer carries a week of edge cache, a fault none', async () => {
+  const m = await load();
+  const saved = process.env.TYPESAFE_API_KEY;
+  try {
+    process.env.TYPESAFE_API_KEY = 'not-a-key';
+    const get = (headers: Record<string, string>, q = '%EB%88%88') =>
+      m.GET(
+        new Request(`${ORIGIN}/api/search?v=abc&q=${q}`, {
+          method: 'GET',
+          headers: { host: 'backpacking.po24lio.com', 'x-forwarded-for': '10.8.8.8', ...headers },
+        })
+      );
+    // the browser says same-origin on a GET from the page itself
+    const ok = await get({ 'sec-fetch-site': 'same-origin' });
+    assert.equal(ok.status, 200);
+    assert.match(ok.headers.get('cache-control') ?? '', /s-maxage=604800/);
+    // from another site, by Sec-Fetch-Site or by Origin: refused, not kept
+    const cross = await get({ 'sec-fetch-site': 'cross-site' });
+    assert.equal(cross.status, 403);
+    assert.equal(cross.headers.get('cache-control'), 'no-store');
+    assert.equal((await get({ origin: 'https://elsewhere.example' })).status, 403);
+    // an older browser: the referer stands in
+    assert.equal((await get({ referer: `${ORIGIN}/` })).status, 200);
+  } finally {
+    if (saved === undefined) delete process.env.TYPESAFE_API_KEY;
+    else process.env.TYPESAFE_API_KEY = saved;
+  }
+});

@@ -13,6 +13,7 @@
  * answer taken puts new stops in their place.
  */
 import { useSyncExternalStore } from 'react';
+import { normalizeQuery } from './queryText';
 
 /** A stop and how well it answered, 0 to 1, best first. */
 export type Ranked = { id: number; score: number };
@@ -60,6 +61,19 @@ const RATE_RETRY_MS = 3000;
 /** How many of the answer's stops are listed at first, and at most. */
 export const LIST_FIRST = 5;
 export const LIST_MOST = 12;
+
+/* Asked by URL, so the edge can keep the answer: the words normalised the way
+   the server normalises them (the same words, the same key), and the data's
+   version, so a deploy with new data is a new key. */
+export function searchUrl(a: { q: string; photos?: boolean; stops?: number[] }): string {
+  const u = new URLSearchParams({ v: typeof __DATA_V__ === 'string' ? __DATA_V__ : 'dev' });
+  u.set('q', normalizeQuery(a.q));
+  if (a.photos && a.stops) {
+    u.set('photos', '1');
+    u.set('stops', [...new Set(a.stops)].sort((x, y) => x - y).join(','));
+  }
+  return `/api/search?${u.toString()}`;
+}
 
 let state: SearchState = { mode: 'closed', lit: null };
 const listeners = new Set<() => void>();
@@ -224,12 +238,7 @@ export async function submitSearch(words?: string) {
   let themes: NearTheme[] | undefined;
   let fault: SearchFault | null = null;
   try {
-    const res = await fetch('/api/search', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ q: text }),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
+    const res = await fetch(searchUrl({ q: text }), { signal: AbortSignal.timeout(TIMEOUT_MS) });
     if (res.ok) {
       const data = (await res.json()) as {
         stops?: Ranked[];
@@ -329,12 +338,10 @@ export async function askLitPhotos() {
   askingPhotos = key;
   let photos: string[] | null = null;
   try {
-    const res = await fetch('/api/search', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ q: lit.text, photos: true, stops: lit.stops.map((r) => r.id) }),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
+    const res = await fetch(
+      searchUrl({ q: lit.text, photos: true, stops: lit.stops.map((r) => r.id) }),
+      { signal: AbortSignal.timeout(TIMEOUT_MS) }
+    );
     if (res.ok) {
       const data = (await res.json()) as { photos?: string[] };
       photos = Array.isArray(data.photos) ? data.photos : null;

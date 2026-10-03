@@ -88,7 +88,7 @@ function attach(server: ViteDevServer | PreviewServer) {
     `[search] /api/search ${real ? 'calls Jev' : 'is a stand-in (no key)'}`
   );
   server.middlewares.use('/api/search', (req, res, next) => {
-    if (req.method !== 'POST') return next();
+    if (req.method !== 'POST' && req.method !== 'GET') return next();
     void (async () => {
       const request = await toRequest(req);
       if (real) return send(res, await POST(request));
