@@ -459,6 +459,10 @@
   line-height: var(--cap-meta);
   color: var(--ink-3);
 }
+/* the place follows the day on the same line, 「 · 」 between */
+.pb__place::before {
+  content: ' · ';
+}
 
 /*
  * The seat for the dot on the last photo of a city: the full stop of the line
@@ -786,7 +790,6 @@
     padding: 8px 16px;
   }
 
-  .pb__cap,
   .pb__strip,
   .pb__keys,
   .pb__nav,
@@ -802,6 +805,76 @@
   .pb__roll {
     --dot-size: 5px;
     --dot-below: 3px;
+  }
+
+  /* L1: the words stand in the margin beside the picture, their foot on its
+     foot, growing upward; up to 220px wide, never past the safe area. The
+     column moves with the picture's width (200ms), never up or down. The
+     place is set by PhotoGallery (--cap-left, --cap-bottom), from the frame. */
+  .pb__cap {
+    position: absolute;
+    left: var(--cap-left, 50%);
+    right: max(16px, env(safe-area-inset-right));
+    bottom: var(--cap-bottom, 24px);
+    max-width: 220px;
+    height: auto;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 6px;
+    text-align: left;
+    justify-self: auto;
+    transition: left 200ms var(--ease-out);
+  }
+  .pb__cap .pb__text {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .pb__cap .pb__meta {
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+  /* the day on one line, the place on the next */
+  .pb__place {
+    display: block;
+  }
+  .pb__place::before {
+    content: none;
+  }
+
+  /* L3: too wide a picture for a column — it gives up one line under itself */
+  .pb[data-cap='line'] .pb__stage {
+    padding-bottom: calc(8px + 28px);
+  }
+  .pb[data-cap='line'] .pb__cap {
+    left: max(16px, env(safe-area-inset-left));
+    right: max(16px, env(safe-area-inset-right));
+    bottom: calc(var(--cap-bottom, 24px) - 28px);
+    max-width: none;
+    height: 22px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: none;
+  }
+  .pb[data-cap='line'] .pb__cap .pb__text {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    line-height: 22px;
+  }
+  .pb[data-cap='line'] .pb__cap .pb__text ~ .pb__meta {
+    display: none;
+  }
+  .pb[data-cap='line'] .pb__cap .pb__meta {
+    line-height: 22px;
+  }
+  .pb[data-cap='line'] .pb__place {
+    display: inline;
+  }
+  .pb[data-cap='line'] .pb__place::before {
+    content: ' · ';
   }
 }
 

@@ -86,6 +86,13 @@ export type RingSpot = { x: number; y: number; r: number };
 
 /** A photo opening out of a ring waits this long, at most, for its picture. */
 const RING_WAIT_MS = 120;
+/* a phone on its side (L1): the caption column's gap from the picture, its
+   least width before the words go under the picture instead (L3), and what
+   that line takes from the picture's height (6px + 22px) */
+const SIDE_GAP_PX = 20;
+const SIDE_MIN_PX = 120;
+const SIDE_EDGE_PX = 16;
+const SIDE_LINE_PX = 28;
 /** The slot's centre before any transform, and how much it is scaled now. */
 function slotAtRest(slotEl: HTMLElement) {
   const r = slotEl.getBoundingClientRect();
@@ -425,6 +432,47 @@ export default function PhotoGallery({
     const h = Math.min(slot.h, slot.w / ar);
     return { w: Math.round(h * ar), h: Math.round(h) };
   }, [photo, slot.w, slot.h]);
+
+  /* ── a phone on its side: the words stand in the margin beside the picture (L1) ──
+     The picture keeps the whole height; the caption and the when-and-where go
+     in the column to its right, their foot on the picture's foot. A picture so
+     wide that the column would be under 120px (wider than about 16:9) gives up
+     one line under itself instead (L3): the frame is 28px shorter and the words
+     are one line, 6px below it. Judged per photo, from the full height, so the
+     two never flip back and forth. */
+  const capModeRef = useRef<'side' | 'line'>('side');
+  const [capLine, setCapLine] = useState(false);
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    const slotEl = slotRef.current;
+    if (!root) return;
+    if (!sideways || !photo || !slotEl || !slot.w || !slot.h) {
+      root.style.removeProperty('--cap-left');
+      root.style.removeProperty('--cap-bottom');
+      if (capLine) setCapLine(false);
+      return;
+    }
+    const ar = arOf(photo);
+    // the height the picture would have with the whole stage to itself
+    const fullH = slot.h + (capModeRef.current === 'line' ? SIDE_LINE_PX : 0);
+    const fullW = Math.min(fullH, slot.w / ar) * ar;
+    const sr = slotEl.getBoundingClientRect();
+    const colLeft = sr.left + sr.width / 2 + fullW / 2 + SIDE_GAP_PX;
+    const line = window.innerWidth - SIDE_EDGE_PX - colLeft < SIDE_MIN_PX;
+    capModeRef.current = line ? 'line' : 'side';
+    if (line !== capLine) setCapLine(line);
+    // the frame as it is now, centred in the slot
+    const h = Math.min(slot.h, slot.w / ar);
+    const w = h * ar;
+    root.style.setProperty(
+      '--cap-left',
+      `${(sr.left + sr.width / 2 + w / 2 + SIDE_GAP_PX).toFixed(1)}px`
+    );
+    root.style.setProperty(
+      '--cap-bottom',
+      `${(window.innerHeight - (sr.top + sr.height / 2 + h / 2)).toFixed(1)}px`
+    );
+  }, [sideways, photo, slot.w, slot.h, capLine]);
 
   /* ── which way the counter rolls ──────────────────────────────────────── */
   const [shownId, setShownId] = useState<string | undefined>(photo?.id);
@@ -1507,6 +1555,7 @@ export default function PhotoGallery({
   return (
     <div
       className={`pb${anyLit ? ' is-lit' : ''}`}
+      data-cap={sideways ? (capLine ? 'line' : 'side') : undefined}
       role="dialog"
       aria-modal="true"
       aria-label={
@@ -1696,7 +1745,7 @@ export default function PhotoGallery({
           )}
           <span className="pb__meta mono">
             {date}
-            {place ? ` · ${place}` : ''}
+            {place && <span className="pb__place">{place}</span>}
             {!text && seat}
           </span>
         </figcaption>
