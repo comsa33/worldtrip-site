@@ -25,7 +25,8 @@ import {
   stopOrder,
   type RollBlock,
 } from '../../lib/journeyRoll';
-import { themeDays, themesOf } from '../../lib/photoThemes';
+import { searchDays, themeDays, themesOf } from '../../lib/photoThemes';
+import { stopOfPhoto } from '../../lib/visitPhotos';
 
 /*
  * The photo book with its walls taken down: every stop's photos, one after
@@ -571,6 +572,7 @@ const StopSection = memo(function StopSection({
                   role="gridcell"
                   data-i={i}
                   data-t={themesOf(p.id).join(' ')}
+                  data-s={stopOfPhoto(p.id)}
                   className={`pb__cell${i === current ? ' is-current' : ''}`}
                   style={toneStyle(ar, p.tone)}
                   onClick={(e) => onOpen(i, e.currentTarget)}
@@ -965,6 +967,7 @@ export function YearWave({
   hover,
   lang,
   theme,
+  stops = null,
   onScrub,
   onScrubbing,
 }: {
@@ -974,11 +977,13 @@ export function YearWave({
   lang: Lang;
   /** the chosen theme: its days stand out of the year, the rest go faint */
   theme: string | null;
+  /** or a search's answer: its stops' days, the same way */
+  stops?: number[] | null;
   onScrub: (i: number) => void;
   /** the hand is on the year — the theme row steps back meanwhile */
   onScrubbing?: (on: boolean) => void;
 }) {
-  const lit = theme ? themeDays(theme) : null;
+  const lit = theme ? themeDays(theme) : stops ? searchDays(stops) : null;
   const photos = journeyRoll.photos;
   // a photo from the night before the start (the phone's clock, a timezone) is still day 1
   const clampDay = (d: number) => Math.min(JOURNEY_DAYS, Math.max(1, d));

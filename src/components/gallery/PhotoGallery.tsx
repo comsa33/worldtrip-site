@@ -10,7 +10,7 @@ import {
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import cityPhotosData from '../../data/cityPhotos.json';
-import { photosForStop, visitsForCity } from '../../lib/visitPhotos';
+import { photosForStop, visitsForCity, stopOfPhoto } from '../../lib/visitPhotos';
 import {
   TOTAL_LABEL,
   cityLabel,
@@ -25,6 +25,7 @@ import { srcFor } from '../../lib/photoSrc';
 import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { hasTheme, themesOf, usePhotoTheme } from '../../lib/photoThemes';
+import { useSearch } from '../../lib/search';
 import { useCaption } from '../../lib/captions';
 import { TUNE_ON, useTuning } from '../3d/routeTuning';
 import { RING_MOVE } from '../3d/themeRingScale';
@@ -398,9 +399,25 @@ export default function PhotoGallery({
   /* A theme on, the others step back and ← → (a swipe too) go to the next lit
      photo. A roll with nothing lit in it steps as it always has. */
   const theme = usePhotoTheme();
+  /* …or a search's answer: its stops' photos (by the visits' own sorting), the
+     rest stepping back the same way. One thing lit at a time (search.ts). */
+  const searchLit = useSearch().lit;
+  const litStops = useMemo(
+    () => (!theme && searchLit && !searchLit.theme ? searchLit.stops.map((r) => r.id) : null),
+    [theme, searchLit]
+  );
+  const litStopSet = useMemo(() => (litStops ? new Set(litStops) : null), [litStops]);
   const lit = useMemo(
-    () => (theme ? (i: number) => hasTheme(photos[i]?.id ?? '', theme) : null),
-    [theme, photos]
+    () =>
+      theme
+        ? (i: number) => hasTheme(photos[i]?.id ?? '', theme)
+        : litStopSet
+          ? (i: number) => {
+              const st = stopOfPhoto(photos[i]?.id ?? '');
+              return st !== undefined && litStopSet.has(st);
+            }
+          : null,
+    [theme, litStopSet, photos]
   );
   const anyLit = useMemo(() => (lit ? photos.some((_, i) => lit(i)) : false), [lit, photos]);
   /* A key, a click, a button: the band is set a card over and the spring
@@ -1579,6 +1596,10 @@ export default function PhotoGallery({
       {anyLit && theme && (
         <style>{`.pb.is-lit .pb__cell:not([data-t~="${theme}"]),.pb.is-lit .pb__thumb:not([data-t~="${theme}"]){opacity:0.16 !important;filter:grayscale(1)}`}</style>
       )}
+      {/* a search lit: the same rule by stop (data-s) — the same opacity, the same grey */}
+      {anyLit && !theme && litStops && (
+        <style>{`.pb.is-lit .pb__cell${litStops.map((id) => `:not([data-s="${id}"])`).join('')},.pb.is-lit .pb__thumb${litStops.map((id) => `:not([data-s="${id}"])`).join('')}{opacity:0.16 !important;filter:grayscale(1)}`}</style>
+      )}
       <div
         className="pb__backdrop"
         onClick={() => (fromSheet && !sheet ? setSheet(true) : closeHome())}
@@ -1805,6 +1826,7 @@ export default function PhotoGallery({
                 className={`pb__thumb${i === safeIndex ? ' is-current' : ''}`}
                 data-id={p.id}
                 data-t={themesOf(p.id).join(' ')}
+                data-s={stopOfPhoto(p.id)}
                 style={{ opacity: d === 0 ? 1 : d === 1 ? 0.72 : d === 2 ? 0.55 : 0.38 }}
                 data-dot-active={!sheet && !atEnd && !sideways && i === safeIndex ? '' : undefined}
                 onClick={() => {
@@ -1830,6 +1852,7 @@ export default function PhotoGallery({
           hover={hover}
           lang={lang}
           theme={theme}
+          stops={litStops}
           onScrub={(i) => jumpTo(sheetRef.current, i)}
           onScrubbing={setScrubbing}
         />

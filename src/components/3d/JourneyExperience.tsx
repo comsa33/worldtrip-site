@@ -3480,6 +3480,9 @@ function JourneyExperienceContent() {
       {photoTheme && globeView.mode === 'off' && (
         <style>{`.filmstrip__thumb:not([data-t~="${photoTheme}"]){opacity:0.2;filter:grayscale(1)}`}</style>
       )}
+      {!photoTheme && searchStops && globeView.mode === 'off' && (
+        <style>{`.filmstrip__thumb${searchStops.map((r) => `:not([data-s="${r.id}"])`).join('')}{opacity:0.2;filter:grayscale(1)}`}</style>
+      )}
       {/* the ranks beside the rings a search lit (SearchRanks places them) */}
       {searchRings && !globeOn && (
         <div className="search-ranks mono" ref={rankLayerRef} aria-hidden="true">

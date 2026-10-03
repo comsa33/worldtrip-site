@@ -98,6 +98,18 @@ const byStopId: Map<number, VisitPhoto[]> = (() => {
 
 const NONE: VisitPhoto[] = [];
 
+/* the same sorting, read the other way: a photo's stop */
+const stopOf: Map<string, number> = (() => {
+  const out = new Map<string, number>();
+  for (const [id, list] of byStopId) for (const p of list) out.set(p.id, id);
+  return out;
+})();
+
+/** The stop (visit) a photo was taken on, by the same rule as photosForStop. */
+export function stopOfPhoto(photoId: string): number | undefined {
+  return stopOf.get(photoId);
+}
+
 /** The photos taken during one visit, oldest first. */
 export function photosForStop(stopId: number | undefined): VisitPhoto[] {
   return (stopId !== undefined && byStopId.get(stopId)) || NONE;

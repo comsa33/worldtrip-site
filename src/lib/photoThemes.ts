@@ -9,6 +9,7 @@ import { useSyncExternalStore } from 'react';
 import tagsData from '../data/photoTags.json';
 import { journeyRoll, dayOf, JOURNEY_DAYS } from './journeyRoll';
 import { litPerDay } from './themeStep';
+import { stopOfPhoto } from './visitPhotos';
 
 export interface PhotoTheme {
   id: string;
@@ -51,6 +52,31 @@ export function themeDays(theme: string): number[] {
       JOURNEY_DAYS
     );
     dayCache.set(theme, out);
+  }
+  return out;
+}
+
+/* A search's answer lights its stops' photos the way a theme lights its own:
+   the book dims the rest, the year under the sheet shows their days. */
+const searchDayCache = new Map<string, number[]>();
+/** Those stops' photos per journey day, for the year under the sheet. */
+export function searchDays(stopIds: number[]): number[] {
+  const key = stopIds.join(',');
+  let out = searchDayCache.get(key);
+  if (!out) {
+    const set = new Set(stopIds);
+    const { photos } = journeyRoll;
+    out = litPerDay(
+      photos.map((p) => p.date),
+      (i) => {
+        const st = stopOfPhoto(photos[i].id);
+        return st !== undefined && set.has(st);
+      },
+      dayOf,
+      JOURNEY_DAYS
+    );
+    if (searchDayCache.size > 20) searchDayCache.clear();
+    searchDayCache.set(key, out);
   }
   return out;
 }
