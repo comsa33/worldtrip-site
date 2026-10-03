@@ -36,6 +36,8 @@ const RANK_OUT = 10;
 const CALL_BELOW = 26;
 const CALL_BESIDE = 24;
 const EDGE = 16;
+/** room between two labels, px */
+const GAP = 6;
 
 export type RingSpot = { x: number; y: number; r: number };
 
@@ -125,16 +127,66 @@ export function SearchGlobe({
     const ranks = root.querySelectorAll<HTMLElement>('.search-globe__rank');
     if (labels.length !== rings.length || arcs.length !== rings.length) return;
 
-    // which are round the back, and in which direction on the screen
+    /* The callout, placed first, so the labels can keep out of its way */
+    const call = root.querySelector<HTMLElement>('.search-callout');
+    const taken: { l: number; t: number; r: number; b: number }[] = [];
+    let callSpot: RingSpot | null = null;
+    if (call) {
+      const ring = preview !== null ? rings.find((r) => r.city === preview) : undefined;
+      callSpot = ring ? spot(ring.city) : null;
+      if (callSpot) {
+        const s = callSpot;
+        const w = call.offsetWidth;
+        const h = call.offsetHeight;
+        let x: number;
+        let y: number;
+        let side: 'below' | 'beside';
+        if (s.y + s.r + CALL_BELOW + h < size.height - EDGE) {
+          side = 'below';
+          x = Math.max(EDGE, Math.min(size.width - EDGE - w, s.x - w / 2));
+          y = s.y + s.r + CALL_BELOW;
+        } else {
+          side = 'beside';
+          x =
+            s.x + s.r + CALL_BESIDE + w > size.width - EDGE
+              ? s.x - s.r - CALL_BESIDE - w
+              : s.x + s.r + CALL_BESIDE;
+          y = Math.max(header + EDGE, Math.min(size.height - EDGE - h, s.y - h / 2));
+        }
+        call.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+        call.dataset.side = side;
+        call.style.setProperty('--lead-x', `${(s.x - x).toFixed(1)}px`);
+        call.style.setProperty('--lead-y', `${(s.y - y).toFixed(1)}px`);
+        call.style.setProperty('--lead-r', `${s.r.toFixed(1)}px`);
+        call.classList.add('is-on');
+        taken.push({ l: x - GAP, t: y - GAP, r: x + w + GAP, b: y + h + GAP });
+      } else call.classList.remove('is-on');
+    }
+
+    /* The labels, the better rank first: one that would lie over another, or
+       over the callout, is left unsaid (the map's rule for colliding names) */
+    const order = rings.map((_, i) => i).sort((p, q) => rings[p].ranks[0] - rings[q].ranks[0]);
     const back: { i: number; a: number }[] = [];
-    rings.forEach((r, i) => {
-      const facing = n.current.copy(r.position).normalize().dot(camDir);
+    const facings = rings.map((r) => n.current.copy(r.position).normalize().dot(camDir));
+    for (const i of order) {
+      const r = rings[i];
+      const facing = facings[i];
       const s = facing >= FACING ? spot(r.city) : null;
       const el = labels[i];
       if (s) {
-        el.style.transform = `translate(${s.x.toFixed(1)}px, ${(s.y - s.r - 4).toFixed(1)}px)`;
+        const x = s.x;
+        const y = s.y - s.r - 4;
+        el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+        const inner = el.firstElementChild as HTMLElement | null;
+        const w = inner?.offsetWidth ?? 0;
+        const h = inner?.offsetHeight ?? 0;
+        const box = { l: x - w / 2 - GAP, t: y - h - GAP, r: x + w / 2 + GAP, b: y + GAP };
         // the label of the one previewed is put away: the callout says it
-        const said = s.y - s.r - 4 > header && r.city !== preview;
+        let said = y > header && r.city !== preview;
+        if (said)
+          for (const o of taken)
+            if (box.l < o.r && box.r > o.l && box.t < o.b && box.b > o.t) said = false;
+        if (said) taken.push(box);
         el.classList.toggle('is-on', said);
       } else el.classList.remove('is-on');
       if (facing < FACING * 0.6) {
@@ -144,7 +196,7 @@ export function SearchGlobe({
         // a point behind the globe projects on the far side of the centre
         back.push({ i, a: Math.atan2(-y, -x) });
       }
-    });
+    }
     // arcs that share a direction are one, their ranks said together
     back.sort((p, q) => p.a - q.a);
     const used = new Set<number>();
@@ -188,39 +240,6 @@ export function SearchGlobe({
       const rr = rim + RANK_OUT;
       rk.style.transform = `translate(${(cx + rr * Math.cos(g.a)).toFixed(1)}px, ${(cy + rr * Math.sin(g.a)).toFixed(1)}px)`;
       rk.classList.add('is-on');
-    }
-
-    // the callout, on the ring previewed
-    const call = root.querySelector<HTMLElement>('.search-callout');
-    if (call) {
-      const ring = preview !== null ? rings.find((r) => r.city === preview) : undefined;
-      const s = ring ? spot(ring.city) : null;
-      if (s) {
-        const w = call.offsetWidth;
-        const h = call.offsetHeight;
-        let x: number;
-        let y: number;
-        let side: 'below' | 'beside';
-        if (s.y + s.r + CALL_BELOW + h < size.height - EDGE) {
-          side = 'below';
-          x = Math.max(EDGE, Math.min(size.width - EDGE - w, s.x - w / 2));
-          y = s.y + s.r + CALL_BELOW;
-        } else {
-          side = 'beside';
-          x =
-            s.x + s.r + CALL_BESIDE + w > size.width - EDGE
-              ? s.x - s.r - CALL_BESIDE - w
-              : s.x + s.r + CALL_BESIDE;
-          y = Math.max(header + EDGE, Math.min(size.height - EDGE - h, s.y - h / 2));
-        }
-        call.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
-        call.dataset.side = side;
-        // the hairline, from the ring's edge to the box
-        call.style.setProperty('--lead-x', `${(s.x - x).toFixed(1)}px`);
-        call.style.setProperty('--lead-y', `${(s.y - y).toFixed(1)}px`);
-        call.style.setProperty('--lead-r', `${s.r.toFixed(1)}px`);
-        call.classList.add('is-on');
-      } else call.classList.remove('is-on');
     }
   });
 

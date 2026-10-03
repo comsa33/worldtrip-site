@@ -2487,6 +2487,33 @@ function JourneyExperienceContent() {
     };
   }, [playing, currentStop, stops, goToStop, globeView.mode]);
 
+  const firstLit = (stopId: number) => {
+    const stay = [...photosForStop(stopId)].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    // the first photo of the theme on; else the first of the stay (an answer's ring, the callout)
+    return (photoTheme && stay.find((p) => hasTheme(p.id, photoTheme))) || stay[0];
+  };
+  // The press has only come down: send for the picture now, so the circle has
+  // something in it when it opens. The sheet's own tile — a size the site
+  // already asks for — which the book shows under the full photo.
+  const handlePressStop = (_cityName: string, stopId: number) => {
+    const first = firstLit(stopId);
+    if (!first) return;
+    new Image().src = srcFor(first, 480, { exact: true });
+    // and its words, so the photo opens with its caption under it
+    void loadCaptions(cityCodeOf(first.id));
+  };
+  const handleOpenStop = (cityName: string, stopId: number) => {
+    const first = firstLit(stopId);
+    setGalleryScope('city');
+    setSelectedCity(cityName);
+    setInitialPhotoId(first?.id ?? null);
+    setFocusStopId(stopId);
+    setSheetFirst(false);
+    setFromRing(true);
+  };
+
   /* Looking around with an answer lit (K3): the stops are picked on the globe.
      A press on a ring picks it (its ring thicker, its callout hung), a press on
      the one picked goes there; a mouse over a ring previews it; ← → walk the
@@ -2516,15 +2543,20 @@ function JourneyExperienceContent() {
     },
     [searchLit, turnToFront]
   );
+  /* Going, looking around, is the stop's photo book, opened out of its ring
+     (the ring → book transition the themes have); the look around stays under
+     it, with the answer's rings, the chip and the pick as they were. A phone
+     on its side is the look around and cannot leave it for a stop. */
   const goToLit = useCallback(
     (stopId: number) => {
-      const i = stopIndexOf(stopId);
-      if (i < 0) return;
+      const st = stops[stopIndexOf(stopId)];
+      if (!st) return;
       setPlaying(false);
-      exitGlobe();
-      goToStop(i);
+      handleOpenStop(st.city, stopId);
     },
-    [stopIndexOf, exitGlobe, goToStop]
+    // handleOpenStop is a plain function of this render's setters
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stops, stopIndexOf]
   );
   // a city's ring stands for all its stays: the first of them in the ranks is the one picked
   const firstLitOfCity = useCallback(
@@ -2722,31 +2754,6 @@ function JourneyExperienceContent() {
   // still on. The stay is the ring's, not the one the journey is standing on.
   // It opens on the first photo of that stay, in the order they were taken,
   // that the theme lights — out of the ring, and back into it (PhotoGallery).
-  const firstLit = (stopId: number) => {
-    const stay = [...photosForStop(stopId)].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-    return photoTheme ? stay.find((p) => hasTheme(p.id, photoTheme)) : undefined;
-  };
-  // The press has only come down: send for the picture now, so the circle has
-  // something in it when it opens. The sheet's own tile — a size the site
-  // already asks for — which the book shows under the full photo.
-  const handlePressStop = (_cityName: string, stopId: number) => {
-    const first = firstLit(stopId);
-    if (!first) return;
-    new Image().src = srcFor(first, 480, { exact: true });
-    // and its words, so the photo opens with its caption under it
-    void loadCaptions(cityCodeOf(first.id));
-  };
-  const handleOpenStop = (cityName: string, stopId: number) => {
-    const first = firstLit(stopId);
-    setGalleryScope('city');
-    setSelectedCity(cityName);
-    setInitialPhotoId(first?.id ?? null);
-    setFocusStopId(stopId);
-    setSheetFirst(false);
-    setFromRing(true);
-  };
 
   // From the filmstrip: the city's whole book, opened on the frame clicked.
   // The seam keeps the stays apart, so paging on lands in the next one rather
@@ -3534,13 +3541,38 @@ function JourneyExperienceContent() {
               >
                 <span className="search-callout__lead" />
                 <div className="search-callout__in">
-                  <span className="search-callout__title">
-                    <span className="search-callout__n mono">{searchLit.pick + 1}</span>
-                    {cityLabel(st.city, language)}
-                    <span className="search-callout__when">, {when}</span>
-                  </span>
-                  <span className="search-callout__meta mono">
-                    {cn} · {language === 'ko' ? `사진 ${photos}장` : `${photos} photos`}
+                  {(() => {
+                    const pic = firstLit(st.id);
+                    const tone = pic?.tone?.split(',');
+                    return (
+                      <span
+                        className="search-callout__picture"
+                        style={
+                          tone?.length === 2
+                            ? { background: `linear-gradient(#${tone[0]}, #${tone[1]})` }
+                            : undefined
+                        }
+                      >
+                        {pic && (
+                          <img
+                            src={srcFor(pic, 480, { exact: true })}
+                            alt=""
+                            decoding="async"
+                            draggable={false}
+                          />
+                        )}
+                      </span>
+                    );
+                  })()}
+                  <span className="search-callout__words">
+                    <span className="search-callout__title">
+                      <span className="search-callout__n mono">{searchLit.pick + 1}</span>
+                      {cityLabel(st.city, language)}
+                      <span className="search-callout__when">, {when}</span>
+                    </span>
+                    <span className="search-callout__meta mono">
+                      {cn} · {language === 'ko' ? `사진 ${photos}장` : `${photos} photos`}
+                    </span>
                   </span>
                 </div>
               </div>

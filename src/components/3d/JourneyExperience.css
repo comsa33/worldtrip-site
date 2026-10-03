@@ -2057,12 +2057,34 @@ kbd.key {
   cursor: pointer;
 }
 .search-callout__in {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   padding: 8px 10px;
+  border: 1px solid var(--line);
   border-radius: 3px;
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  /* the page's own colour, whole: nothing under it shows through */
+  background: var(--bg);
   animation: searchCallUp 200ms var(--ease) both;
+}
+.search-callout__picture {
+  width: 96px;
+  height: 72px;
+  flex-shrink: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.search-callout__picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.search-callout__words {
+  display: block;
+  min-width: 0;
 }
 @keyframes searchCallUp {
   from {
@@ -2123,6 +2145,10 @@ kbd.key {
   }
   .search-callout__title {
     font-size: 14px;
+  }
+  .search-callout__picture {
+    width: 64px;
+    height: 48px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
