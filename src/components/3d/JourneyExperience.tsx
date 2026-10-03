@@ -7,8 +7,11 @@ import {
   REST_FADE_MS,
   REST_HOLD_MS,
   REST_OPACITY,
+  SCAN_GLOBE_MS,
+  SCAN_MS,
   scanEnding,
   scanPhase,
+  setScanLap,
 } from '../../lib/scanClock';
 import { scanPath } from '../../lib/askField';
 import * as THREE from 'three';
@@ -49,6 +52,7 @@ import {
   openSearch,
   useSearch,
   type SearchState,
+  confirmAnswer,
 } from '../../lib/search';
 import { landOn, setFlying, setMood, turnedTo } from '../../lib/sound';
 import { composeJourney } from '../../lib/journeyScore';
@@ -641,11 +645,14 @@ function RouteScan({
   points,
   opacity,
   width,
+  dash: share,
   scan,
 }: {
   points: PathPoint[];
   opacity: number;
   width: number;
+  /** how much of the route the spark is */
+  dash: number;
   scan: Scan;
 }) {
   const { camera, size, gl, invalidate } = useThree();
@@ -661,8 +668,7 @@ function RouteScan({
     return out;
   }, [pts]);
   const len = cum[cum.length - 1] || 1;
-  // the designer's 90 of 1000: a ninth of the route
-  const dash = len * 0.09;
+  const dash = len * share;
   const v = useRef(new THREE.Vector3());
   const ease = (k: number) => 1 - Math.pow(1 - k, 3);
   const done = useRef(false);
@@ -1554,6 +1560,8 @@ function Scene({
           points={path}
           opacity={theme === 'dark' ? 0.7 : 0.85}
           width={size.width <= 768 ? 2 : 2.6}
+          // looking around the whole route is in view: a shorter spark (60 of 1000), a slower lap
+          dash={globe === 'on' ? 0.06 : 0.09}
           scan={scan}
         />
       )}
@@ -2491,17 +2499,29 @@ function JourneyExperienceContent() {
         const lit = s.lit;
         if (!lit) return;
         setPhotoTheme(lit.theme ?? null);
+        // a theme by another name is the theme chosen: nothing of its own stays lit
+        if (lit.theme) {
+          clearSearch();
+          return;
+        }
+        // looking around (K3): the answer lights the globe where it stands — the
+        // rings and their ranks say it, the camera does not move; going is a press
+        if (globeView.mode === 'on') return;
         const top = lit.stops[0] ? stopIndexOf(lit.stops[0].id) : -1;
         if (top >= 0) {
           setPlaying(false);
-          if (globeView.mode === 'on') exitGlobe();
           goToStop(top);
         }
-        // a theme by another name is the theme chosen: nothing of its own stays lit
-        if (lit.theme) clearSearch();
       }),
-    [stopIndexOf, goToStop, exitGlobe, globeView.mode]
+    [stopIndexOf, goToStop, globeView.mode]
   );
+  /* Looking around, an answer is not read in the field's list: it is taken at
+     once and lit on the globe (K3 — the globe is the list). */
+  useEffect(() => {
+    if (globeOn && search.mode === 'answer' && !search.theme) confirmAnswer();
+  }, [globeOn, search]);
+  // the spark's lap: the whole globe in view takes the longer one
+  useEffect(() => setScanLap(globeOn ? SCAN_GLOBE_MS : SCAN_MS), [globeOn]);
 
   // what a reader is told of an answer
   const searchNote = useMemo(() => {
@@ -3299,7 +3319,11 @@ function JourneyExperienceContent() {
         floating
         moving={playing || orbitHeld || scrubHeld || wheelBusy}
         wake={barRef}
-        stopId={stops[jumpTarget !== null && !cameraResting ? jumpTarget : currentStop]?.id}
+        stopId={
+          globeOn && searchLit
+            ? searchLit.stops[searchLit.pick]?.id
+            : stops[jumpTarget !== null && !cameraResting ? jumpTarget : currentStop]?.id
+        }
         place={city ? cityLabel(city.city, language) : undefined}
       />
       {/* the filmstrip's photos of other themes step back, as the book's do */}

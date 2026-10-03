@@ -15,6 +15,14 @@
   opacity: 1;
   transition: opacity 180ms var(--ease);
 }
+/* looking around (K3): opened on 78%, and thinking on 55% — the globe shows
+   through while the spark runs the whole route */
+html[data-globe-view='on'] .askdot__scrim {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+}
+html[data-globe-view='on'] .askdot[data-mode='waiting'] .askdot__scrim {
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+}
 /* thinking and the answer sit on a shade more */
 .askdot[data-mode='waiting'] .askdot__scrim,
 .askdot[data-mode='answer'] .askdot__scrim {

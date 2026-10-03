@@ -39,8 +39,8 @@ export type SearchField =
   | { mode: 'error'; text: string; fault: SearchFault; retryAt: number; since: number; at: number };
 
 export type SearchState = SearchField & {
-  /** the answer taken last — its stops are lit on the globe — with its words */
-  lit: (Answer & { text: string }) | null;
+  /** the answer taken last — its stops are lit on the globe — with its words, and which of them is picked (looking around) */
+  lit: (Answer & { text: string; pick: number }) | null;
 };
 
 export const MAX_QUERY_CHARS = 80;
@@ -284,9 +284,18 @@ export function confirmAnswer(stopId?: number) {
   const { text, theme } = state;
   const first = stopId ?? state.stops[state.pick]?.id ?? state.stops[0].id;
   const stops = [...state.stops].sort((a, b) => (a.id === first ? -1 : b.id === first ? 1 : 0));
-  state = { mode: 'closed', lit: theme ? { text, stops, theme } : { text, stops } };
+  state = { mode: 'closed', lit: { text, stops, theme, themes: state.themes, pick: 0 } };
   listeners.forEach((l) => l());
   answerListeners.forEach((l) => l(state));
+}
+
+/** Looking around: another of the lit stops picked (its ring drawn thicker, its preview hung). */
+export function pickLit(i: number) {
+  if (!state.lit) return;
+  const pick = Math.max(0, Math.min(state.lit.stops.length - 1, i));
+  if (pick === state.lit.pick) return;
+  state = { ...state, lit: { ...state.lit, pick } };
+  listeners.forEach((l) => l());
 }
 
 /** 「다시」 — the same words again. */

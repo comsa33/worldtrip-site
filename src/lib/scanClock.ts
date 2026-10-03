@@ -10,8 +10,17 @@
  * end together.
  */
 
-/** One run of the spark along the whole route. */
+/** One run of the spark along the whole route — looking around (the whole globe in view), a slower one. */
 export const SCAN_MS = 2600;
+export const SCAN_GLOBE_MS = 3200;
+let lap = SCAN_MS;
+/** The page says which lap the spark runs (the journey's, or the look around's). */
+export function setScanLap(ms: number) {
+  lap = ms;
+}
+export function scanLap(): number {
+  return lap;
+}
 /** However fast the answer, the spark draws at least this long — "it looked" has to be seen. */
 export const SCAN_MIN_MS = 700;
 /** Nothing found: from where it is, the spark draws on to the end within this. */
@@ -26,7 +35,7 @@ export const FAULT_FADE_MS = 300;
 
 /** Where along the route (0–1) the spark is at `t`, having set off at `since`. */
 export function scanPhase(since: number, t: number): number {
-  return ((Math.max(0, t - since) % SCAN_MS) / SCAN_MS + 1) % 1;
+  return ((Math.max(0, t - since) % lap) / lap + 1) % 1;
 }
 
 /**
