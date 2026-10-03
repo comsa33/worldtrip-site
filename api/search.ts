@@ -5,8 +5,9 @@
  * words, and the stops come back ranked. Jev returns typed values, never
  * prose, so nothing is written here: the answer can only ever be an order of
  * stops that already exist. What is sent about a stop is what the site already
- * shows — its city, its dates, its published story (cityNotes en) and how many
- * of its photos are of each theme (photoTags). No Apple caption, no label.
+ * shows — its city, its dates, its published story (cityNotes en), the
+ * captions of its photos (en, scripts/build-stop-captions.mjs) and how many of
+ * its photos are of each theme (photoTags). No Apple caption, no label, no name.
  *
  * A Vercel Function (web signature, Node runtime). On dev and preview the
  * plugin in dev/searchDev.ts answers the same path with this handler.
@@ -15,6 +16,7 @@ import journeyData from '../src/data/journey.json' with { type: 'json' };
 import notesData from '../src/data/cityNotes.json' with { type: 'json' };
 import tagsData from '../src/data/photoTags.json' with { type: 'json' };
 import citiesData from '../src/data/cities.json' with { type: 'json' };
+import captionsData from './stopCaptions.json' with { type: 'json' };
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
 const MODEL = 'jev-latest';
@@ -99,6 +101,7 @@ type Cities = {
 const tags = tagsData as Tags;
 const notes = notesData as Notes;
 const cities = citiesData as Cities;
+const captions = captionsData as Record<string, string[]>;
 const stops = journeyData.stops;
 
 const THEME_EN: Record<string, string> = Object.fromEntries(
@@ -110,16 +113,19 @@ const describeTheme = (id: string, n: number) =>
 
 export type StopSummary = { id: number; text: string };
 
-/** One line a stop, built once: city, country, dates, story, themes. */
+/** One line a stop, built once: city, country, dates, story, captions, themes. */
 export const SUMMARIES: StopSummary[] = stops.flatMap((s) => {
   const t = tags.stops[String(s.id)];
   const story = notes[String(s.id)]?.en?.story?.replace(/\s*\n\s*/g, ' ').trim();
-  if (!t && !story) return [];
+  const caps = captions[String(s.id)];
+  if (!t && !story && !caps) return [];
   const dates = s.endDate !== s.startDate ? `${s.startDate} to ${s.endDate}` : s.startDate;
   const parts = [
     `${cities.cities[s.city]?.en ?? s.city}, ${cities.countries[s.countryCode]?.en ?? s.countryCode} (${dates})`,
   ];
   if (story) parts.push(story);
+  // what the photos say under themselves — the words a visitor would search by
+  if (caps) parts.push(`Captions: ${caps.map((c) => c.replace(/[.。]$/, '')).join('; ')}.`);
   if (t) {
     const themes = Object.entries(t)
       .sort((a, b) => b[1] - a[1])
@@ -141,18 +147,33 @@ const LEVELS = [
 // Asked in the same request, so it costs nothing extra: a line of chat or a
 // string of letters would otherwise be ranked as if it named a place.
 const GATE_KEY = '_is_a_search';
-const GATE_MIN = 0.5;
+export const GATE_MIN = 0.5;
 const GATE =
   'Is the query in the state looking for a place, a scene, an experience, a time, a kind of photo or who is in the photo, from a journey — something one could search travel photos for?';
+/* A single word ("개", "맥주") reads to the gate as hardly a search (0.2–0.3)
+   while some stop still matches it squarely; so a stop matching this well lets
+   the words through on its own. "안녕하세요" tops out at 0.26 (2026-10-03). */
+export const GATE_BY_SCORE = 1.8;
 
 /* A score is where the stop falls among the levels, 0 to 3. Measured
    (2026-10-02, five queries): the stops that were the answer sat at 1.66 and
    up, the loosely related ones at 1.4 and under, so the line is 1.5. A query
    that is not a search ("ㅁㄴㅇㄹ") gated at 0.13, a penguin at 0.44. */
-const SCORE_MAX = LEVELS.length - 1;
-const SCORE_MIN = 1.5;
+export const SCORE_MAX = LEVELS.length - 1;
+export const SCORE_MIN = 1.5;
 /** How many stops come back at most. */
 export const TOP = 12;
+
+/* And the fourteen themes, scored against the words in the same request: when
+   no stop answers, the page can offer the nearest theme instead — only one
+   that is near (2026-10-03: "개" → animal 2.89, "사고" → transit 1.49). */
+const THEME_KEY = '_theme_';
+const THEME_Q =
+  'How close is what the query in the state is looking for to the photo theme `theme`?';
+export const THEME_MIN = 1.5;
+export const THEMES_TOP = 3;
+const nameTheme = (c: { id: string; ko: string; en: string }) =>
+  c.id === 'me' ? 'Me — photos with the traveller in them' : `${c.en} (${c.ko})`;
 
 // ---- the words a theme already answers -----------------------------------------
 
@@ -168,6 +189,106 @@ export function normalize(q: string): string {
   return q.normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
+/* Broad words that mean a theme — the theme by another name, not a thing in
+   it. "배고플때" is food; "개" and "국수" are not, they go to Jev (and to the
+   themes it scores, which the page may offer). Matched whole, lower-cased. */
+const SYNONYMS: Record<string, string[]> = {
+  food: [
+    '배고플때',
+    '배고플 때',
+    '배고파',
+    '배고픔',
+    '먹을 거',
+    '먹을거',
+    '먹거리',
+    '먹을것',
+    '먹을 것',
+    '먹은 것',
+    '먹은것',
+    '먹은',
+    '먹는',
+    '음식',
+    '식사',
+    '맛집',
+    '밥',
+    'eat',
+    'eating',
+    'meal',
+    'meals',
+    'hungry',
+    'foods',
+    'dishes',
+    'cuisine',
+  ],
+  animal: ['동물들', '짐승', '짐승들', '생물', 'animals', 'wildlife', 'creatures'],
+  people: ['사람들', '인물', '현지인', '현지인들', 'persons', 'locals', 'faces', 'portraits'],
+  mountain: ['산맥', '산들', '고산', 'mountains', 'hills', 'peaks'],
+  desert: ['사막들', 'deserts', 'dunes'],
+  snow: ['설경', '눈 내린', '눈내린', '눈 오는', '눈오는', 'snowy', 'snowfall', 'snow-covered'],
+  street: ['길거리', '거리들', '골목', '골목길', 'streets', 'alleys', 'alley', 'roads'],
+  architecture: ['건물', '건물들', '건축물', 'buildings', 'building', 'structures'],
+  transit: [
+    '교통',
+    '교통수단',
+    '탈것',
+    '이동수단',
+    '이동 수단',
+    '타고',
+    '이동하기',
+    'transport',
+    'transportation',
+    'vehicles',
+    'in transit',
+    'on the move',
+    'getting around',
+  ],
+  'golden-hour': [
+    '노을',
+    '석양',
+    '일몰',
+    '일출',
+    '해넘이',
+    '해돋이',
+    '황금빛',
+    '빛',
+    'sunset',
+    'sunsets',
+    'sunrise',
+    'golden hour',
+    'dusk',
+    'dawn',
+    'sunlight',
+    'light',
+  ],
+  night: [
+    '야경',
+    '밤에',
+    '밤의',
+    '저녁',
+    '야간',
+    'nights',
+    'nighttime',
+    'night time',
+    'evening',
+    'after dark',
+  ],
+  water: [
+    '물',
+    '바닷가',
+    '물가에서',
+    '해변',
+    '해안',
+    'waters',
+    'waterfront',
+    'seaside',
+    'shore',
+    'coast',
+  ],
+  things: ['물건들', '소지품', '짐', '장비', 'objects', 'stuff', 'belongings', 'gear', 'items'],
+};
+const BY_SYNONYM = new Map<string, string>();
+for (const [id, words] of Object.entries(SYNONYMS)) for (const w of words) BY_SYNONYM.set(w, id);
+
 /** The theme id these words are, or null. */
 export function themeOf(q: string): string | null {
   const w = normalize(q).toLowerCase();
@@ -176,7 +297,7 @@ export function themeOf(q: string): string | null {
   for (const c of tags.categories) {
     if (w === c.ko || w === c.en.toLowerCase()) return c.id;
   }
-  return null;
+  return BY_SYNONYM.get(w) ?? null;
 }
 
 /** A stop and how well it answered, 0 to 1. */
@@ -196,14 +317,63 @@ export function rankByTheme(theme: string): Ranked[] {
 // ---- the handler ------------------------------------------------------------------
 
 export type SearchError = 'invalid' | 'too_long' | 'rate_limited' | 'unavailable' | 'upstream';
+/** A theme and how near the words came to it, on Jev's own 0–3 scale. */
+export type NearTheme = { id: string; score: number };
 export type SearchResult = {
   /** when the words were a theme, that theme (the page may light it instead) */
   theme?: string;
   /** best first; empty when nothing matched or the words were not a search */
   stops: Ranked[];
+  /** the themes nearest the words (≥ THEME_MIN, at most THEMES_TOP), nearest first — for when no stop answers */
+  themes?: NearTheme[];
 };
 
 type Answer = { type?: string; score?: number; confidence?: number; noul?: number };
+
+/** What Jev is asked about the words: every stop, the gate, the fourteen themes. */
+export function questionsFor(): Record<string, unknown> {
+  const questions: Record<string, unknown> = {};
+  for (const s of SUMMARIES) {
+    questions[String(s.id)] = {
+      type: 'score',
+      instructions: { stop: s.text, question: QUESTION },
+      criteria: LEVELS,
+    };
+  }
+  questions[GATE_KEY] = { type: 'noul', instructions: GATE };
+  for (const c of tags.categories) {
+    questions[THEME_KEY + c.id] = {
+      type: 'score',
+      instructions: { theme: nameTheme(c), question: THEME_Q },
+      criteria: LEVELS,
+    };
+  }
+  return questions;
+}
+
+/** What Jev's answers come to: the stops that matched (if the words were a
+ *  search at all) and the themes that came near. Pure, so it can be tested. */
+export function resultOf(answers: Record<string, Answer>): SearchResult {
+  const scored = SUMMARIES.map((s) => ({ id: s.id, score: answers[String(s.id)]?.score ?? 0 }));
+  const best = scored.reduce((m, r) => Math.max(m, r.score), 0);
+  const isSearch = (answers[GATE_KEY]?.noul ?? 1) >= GATE_MIN || best >= GATE_BY_SCORE;
+  const result: SearchResult = { stops: [] };
+  if (isSearch) {
+    result.stops = scored
+      .filter((r) => r.score >= SCORE_MIN)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, TOP)
+      .map((r) => ({ id: r.id, score: r.score / SCORE_MAX }));
+  }
+  const themes = tags.categories
+    .map((c) => ({ id: c.id, score: answers[THEME_KEY + c.id]?.score ?? 0 }))
+    .filter((t) => t.score >= THEME_MIN)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, THEMES_TOP)
+    .map((t) => ({ id: t.id, score: Math.round(t.score * 100) / 100 }));
+  if (themes.length) result.themes = themes;
+  return result;
+}
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -246,18 +416,10 @@ export async function POST(request: Request): Promise<Response> {
 
   if (overDailyCeiling()) return fail('unavailable', 503);
 
-  /* One request, one read of the words: every stop is scored against them
-     and the words themselves are checked. Jev ingests the state once, so the
-     questions cost little beyond their own text. */
-  const questions: Record<string, unknown> = {};
-  for (const s of SUMMARIES) {
-    questions[String(s.id)] = {
-      type: 'score',
-      instructions: { stop: s.text, question: QUESTION },
-      criteria: LEVELS,
-    };
-  }
-  questions[GATE_KEY] = { type: 'noul', instructions: GATE };
+  /* One request, one read of the words: every stop is scored against them,
+     the words themselves are checked, and the themes are scored. Jev ingests
+     the state once, so the questions cost little beyond their own text. */
+  const questions = questionsFor();
 
   let answers: Record<string, Answer>;
   try {
@@ -292,14 +454,7 @@ export async function POST(request: Request): Promise<Response> {
     return fail('upstream', 502);
   }
 
-  const result: SearchResult = { stops: [] };
-  if ((answers[GATE_KEY]?.noul ?? 1) >= GATE_MIN) {
-    result.stops = SUMMARIES.map((s) => ({ id: s.id, score: answers[String(s.id)]?.score ?? 0 }))
-      .filter((r) => r.score >= SCORE_MIN)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, TOP)
-      .map((r) => ({ id: r.id, score: r.score / SCORE_MAX }));
-  }
+  const result = resultOf(answers);
 
   if (cache.size > 500) cache.clear();
   cache.set(hash, { at: Date.now(), result });

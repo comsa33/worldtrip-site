@@ -28,6 +28,16 @@ function fake(q: string): SearchResult {
     .map((s) => ({ id: s.id, score: 0.9 }));
   if (byCity.length) return { stops: byCity };
   if (/^[a-z\s]*$/.test(w) && w.length < 3) return { stops: [] };
+  // the no-answer screen, with and without near themes, and the faults — for working on them
+  if (w.includes('없음'))
+    return {
+      stops: [],
+      themes: [
+        { id: 'animal', score: 2.4 },
+        { id: 'street', score: 1.6 },
+      ],
+    };
+  if (w.includes('없다')) return { stops: [] };
   const nightTrains = stops
     .filter((s) => s.countryCode === 'IN')
     .map((s) => {
@@ -79,6 +89,11 @@ function attach(server: ViteDevServer | PreviewServer) {
       if (q === 'too_long') return send(res, Response.json({ error: 'too_long' }, { status: 413 }));
       if (!q) return send(res, Response.json({ error: 'invalid' }, { status: 400 }));
       await new Promise((r) => setTimeout(r, 400)); // a little of Jev's own time
+      if (q.includes('오류'))
+        return send(res, new Response('{"error":"upstream"}', { status: 502 }));
+      if (q.includes('429'))
+        return send(res, new Response('{"error":"rate_limited"}', { status: 429 }));
+      if (q.includes('느림')) await new Promise((r) => setTimeout(r, 9000));
       return send(res, Response.json(fake(q)));
     })().catch(next);
   });

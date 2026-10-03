@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/build-stop-captions.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -15,6 +16,7 @@
     "upload-photos": "node scripts/upload-photos.js",
     "sync-photos": "node scripts/sync-cloudinary-photos.js",
     "fetch-routes": "node scripts/fetch-osrm-routes.js",
+    "pretest": "node scripts/build-stop-captions.mjs",
     "test": "node --test tests/"
   },
   "lint-staged": {
