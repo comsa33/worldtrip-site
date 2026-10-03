@@ -71,19 +71,20 @@ test('a stop is described with the captions of its photos, and nothing from Appl
 });
 
 test('the stop captions file is what the captions say now', async () => {
-  const { buildStopCaptions, buildStopSummary, OUT, SUMMARY_OUT } = await import(
-    '../scripts/build-stop-captions.mjs'
-  );
+  const { buildStopCaptions, buildStopSummary, OUT, SUMMARY_OUT } =
+    await import('../scripts/build-stop-captions.mjs');
   const fs = await import('node:fs');
   assert.deepEqual(JSON.parse(fs.readFileSync(OUT, 'utf8')), buildStopCaptions());
   assert.deepEqual(JSON.parse(fs.readFileSync(SUMMARY_OUT, 'utf8')), buildStopSummary());
 });
 
 test('the copy for Jev is trimmed, the captions on screen are not', async () => {
-  const { buildStopCaptions, buildStopSummary } = await import('../scripts/build-stop-captions.mjs');
+  const { buildStopCaptions, buildStopSummary } =
+    await import('../scripts/build-stop-captions.mjs');
   const full = buildStopCaptions();
   const trimmed = buildStopSummary(full);
-  const count = (o: Record<string, unknown[]>) => Object.values(o).reduce((n, l) => n + l.length, 0);
+  const count = (o: Record<string, unknown[]>) =>
+    Object.values(o).reduce((n, l) => n + l.length, 0);
   const kept = Object.values(trimmed as Record<string, { captions: string[] }>).reduce(
     (n, r) => n + r.captions.length,
     0
@@ -250,4 +251,76 @@ test('the baked examples are of this data, all ten of them', async () => {
     assert.ok(r, `${w} is baked`);
     assert.ok(r.stops.length > 0, `${w} answers at least one stop`);
   }
+});
+
+test('the function imports nothing of the site but JSON: Vercel loads the emitted JS as is', async () => {
+  const fs = await import('node:fs');
+  const src = fs.readFileSync(new URL('../api/search.ts', import.meta.url), 'utf8');
+  const relative = [...src.matchAll(/from\s+'(\.[^']*)'/g)].map((m) => m[1]);
+  assert.ok(relative.length > 3, 'the imports are seen');
+  for (const p of relative)
+    assert.match(
+      p,
+      /\.json$/,
+      `${p}: a relative import of a .ts (or extensionless) module is not found by Node once emitted`
+    );
+});
+
+test('the page and the function normalise the words the same way', async () => {
+  const m = await load();
+  const { normalizeQuery } = await import('../src/lib/queryText.ts');
+  for (const w of ['  Night  Train ', '밤기차', 'Café\u0301', 'A\tsnowy\nvillage', '']) {
+    assert.equal(m.normalize(w), normalizeQuery(w), JSON.stringify(w));
+  }
+});
+
+test('emitted to JS by tsc and loaded by Node without type stripping, the function loads (as on Vercel)', async () => {
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const os = await import('node:os');
+  const { spawnSync } = await import('node:child_process');
+  const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'api-emit-'));
+  const tsc = spawnSync(
+    process.execPath,
+    [
+      path.join(root, 'node_modules/typescript/bin/tsc'),
+      path.join(root, 'api/search.ts'),
+      '--outDir',
+      out,
+      '--rootDir',
+      root,
+      '--module',
+      'nodenext',
+      '--moduleResolution',
+      'nodenext',
+      '--target',
+      'es2022',
+      '--resolveJsonModule',
+      '--skipLibCheck',
+      '--noEmit',
+      'false',
+    ],
+    { encoding: 'utf8' }
+  );
+  assert.equal(tsc.status, 0, tsc.stdout + tsc.stderr);
+  // the JSON the function reads, laid out as the emitted imports expect
+  fs.mkdirSync(path.join(out, 'src/data'), { recursive: true });
+  for (const f of fs.readdirSync(path.join(root, 'src/data')))
+    if (f.endsWith('.json'))
+      fs.copyFileSync(path.join(root, 'src/data', f), path.join(out, 'src/data', f));
+  for (const f of fs.readdirSync(path.join(root, 'api')))
+    if (f.endsWith('.json')) fs.copyFileSync(path.join(root, 'api', f), path.join(out, 'api', f));
+  const run = spawnSync(
+    process.execPath,
+    [
+      '--no-experimental-strip-types',
+      '-e',
+      `import(${JSON.stringify(path.join(out, 'api/search.js'))}).then((m) => { if (typeof m.GET !== 'function') throw new Error('no GET'); console.log('LOAD OK'); })`,
+    ],
+    { encoding: 'utf8' }
+  );
+  fs.rmSync(out, { recursive: true, force: true });
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.match(run.stdout, /LOAD OK/);
 });

@@ -18,7 +18,6 @@ import tagsData from '../src/data/photoTags.json' with { type: 'json' };
 import citiesData from '../src/data/cities.json' with { type: 'json' };
 import captionsData from './stopCaptions.json' with { type: 'json' };
 import examplesData from '../src/data/searchExamples.json' with { type: 'json' };
-import { normalizeQuery } from '../src/lib/queryText.ts';
 import summaryData from './stopSummary.json' with { type: 'json' };
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
@@ -218,8 +217,15 @@ const nameTheme = (c: { id: string; ko: string; en: string }) =>
 const ME_WORDS =
   /(^|\s)(나|내|me|myself|selfies?)(\s|$)|내가|나를|나만|내 ?(사진|얼굴|모습)|나 ?(나온|찍힌|있는)|셀카|셀피|photos? of me|my (photos?|face)|with me/i;
 
-/** The page's own normalisation (src/lib/queryText): the same words, the same URL, the same cache key. */
-export const normalize = normalizeQuery;
+/* The page normalises the words the same way (src/lib/queryText.ts) — the same
+   words, the same URL, the same cache key. Written out here rather than
+   imported: this function is bundled on its own for Vercel's Node, which loads
+   the emitted JS as is — a relative import of a .ts file is not found there
+   (2026-10-03, every call 500). A test keeps the two the same, and another
+   loads the emitted JS without type stripping. */
+export function normalize(q: string): string {
+  return q.normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
+}
 
 /* Broad words that mean a theme — the theme by another name, not a thing in
    it. "배고플때" is food; "개" and "국수" are not, they go to Jev (and to the
