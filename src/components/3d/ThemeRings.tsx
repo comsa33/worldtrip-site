@@ -75,6 +75,7 @@ const vertex = /* glsl */ `
   attribute float aOuter;
   attribute float aAlpha;
   attribute float aSq;
+  attribute float aW;
   uniform float uDpr;
   uniform float uK;
   uniform float uMin;
@@ -82,7 +83,9 @@ const vertex = /* glsl */ `
   varying float vOuter;
   varying float vAlpha;
   varying float vSize;
+  varying float vW;
   void main() {
+    vW = aW;
     vec4 world = modelMatrix * vec4(position, 1.0);
     // the far side of the globe is not drawn, and the limb is fainter
     float facing = dot(normalize(world.xyz), normalize(cameraPosition - world.xyz));
@@ -106,6 +109,7 @@ const fragment = /* glsl */ `
   varying float vOuter;
   varying float vAlpha;
   varying float vSize;
+  varying float vW;
   // a stroke of width w (px) at radius r, antialiased by a pixel
   float stroke(float d, float r, float w) {
     return clamp(w * 0.5 + 0.5 - abs(d - r), 0.0, 1.0);
@@ -114,7 +118,8 @@ const fragment = /* glsl */ `
     float d = length(gl_PointCoord - 0.5) * vSize;
     // a band of the ground under the ring, so it lifts off the route and the dots
     float halo = stroke(d, vR + mix(1.0, 1.5, uFar), mix(4.0, 2.4, uFar)) * 0.85;
-    float ink = stroke(d, vR, uStroke);
+    // the ring picked (K3) is drawn thicker: its own width, or the marks'
+    float ink = stroke(d, vR, vW > 0.0 ? vW : uStroke);
     ink = max(ink, vOuter * stroke(d, vR + mix(3.2, 2.6, uFar), mix(0.8, 0.6, uFar)));
     float a = max(halo, ink);
     if (a * vAlpha < 0.01) discard;
@@ -175,6 +180,7 @@ function build(rings: ThemeRing[]) {
   const outer = new Float32Array(count);
   const alpha = new Float32Array(count).fill(1);
   const sq = new Float32Array(count).fill(1);
+  const w = new Float32Array(count);
   const dirs = rings.map((ring) => ring.position.clone().normalize());
   rings.forEach((ring, i) => {
     pos.set([ring.position.x, ring.position.y, ring.position.z], i * 3);
@@ -187,6 +193,7 @@ function build(rings: ThemeRing[]) {
   geometry.setAttribute('aOuter', new THREE.BufferAttribute(outer, 1));
   geometry.setAttribute('aAlpha', new THREE.BufferAttribute(alpha, 1));
   geometry.setAttribute('aSq', new THREE.BufferAttribute(sq, 1));
+  geometry.setAttribute('aW', new THREE.BufferAttribute(w, 1));
   return {
     geometry,
     pos,
@@ -194,6 +201,7 @@ function build(rings: ThemeRing[]) {
     outer,
     alpha,
     sq,
+    w,
     /** the ring under a press, or -1: it tightens while it is held */
     pressed: -1,
     dirs,
@@ -231,6 +239,7 @@ export function ThemeRings({
   onPress,
   spot: spotRef,
   scale: sizes = RING_FAR,
+  pick,
 }: {
   rings: ThemeRing[];
   ink: string;
@@ -256,6 +265,14 @@ export function ThemeRings({
   >;
   /** the look around's sizes — the bench's while it is open */
   scale?: RingFar;
+  /** a search's answer, looking around (K3): the stop picked is drawn thicker; a press on a ring
+   *  picks it, a press on the one picked goes; a mouse over one previews it */
+  pick?: {
+    city: string | null;
+    onPick: (city: string) => void;
+    onGo: (city: string) => void;
+    onHover: (city: string | null) => void;
+  };
 }) {
   const dpr = useThree((s) => s.viewport.dpr);
   const camera = useThree((s) => s.camera);
@@ -303,6 +320,18 @@ export function ThemeRings({
   useEffect(() => () => material.dispose(), [material]);
 
   const reduced = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
+
+  // the ring picked (K3): drawn at 2.2px, the rest at the marks' width
+  const pickedCity = pick?.city ?? null;
+  useEffect(() => {
+    const st = live.current;
+    if (!st) return;
+    rings.forEach((ring, i) => {
+      st.w[i] = pickedCity !== null && ring.city === pickedCity ? 2.2 : 0;
+    });
+    st.geometry.attributes.aW.needsUpdate = true;
+    invalidate();
+  }, [rings, pickedCity, invalidate]);
 
   /**
    * The marks' scale and the map's, with the camera this far out. `look` is
@@ -461,10 +490,12 @@ export function ThemeRings({
   const aim = useRef(onAim);
   const open = useRef(onOpen);
   const held = useRef(onPress);
+  const picking = useRef(pick);
   useEffect(() => {
     aim.current = onAim;
     open.current = onOpen;
     held.current = onPress;
+    picking.current = pick;
   });
   useEffect(() => {
     // Heard on the window, not the canvas: on a phone the journey's canvas is
@@ -522,6 +553,7 @@ export function ThemeRings({
       };
 
     let down = { x: 0, y: 0, t: 0 };
+    let hovered: string | null = null;
     const onDown = (e: PointerEvent) => {
       down = { x: e.clientX, y: e.clientY, t: performance.now() };
       if (!mine(e)) return;
@@ -540,6 +572,15 @@ export function ThemeRings({
       if (e.pointerType !== 'mouse') return;
       const g = e.buttons === 0 && mine(e) ? under(e.clientX, e.clientY) : null;
       gl.domElement.style.cursor = g ? 'pointer' : '';
+      // a mouse over a lone ring of an answer: its preview
+      const pk = picking.current;
+      if (pk) {
+        const over = g && g.members.length === 1 ? rings[g.members[0]].city : null;
+        if (over !== hovered) {
+          hovered = over;
+          pk.onHover(over);
+        }
+      }
     };
     const onUp = (e: PointerEvent) => {
       const st = live.current;
@@ -556,6 +597,14 @@ export function ThemeRings({
       ringPress.at = performance.now();
       if (best.members.length < 2) {
         const ring = rings[best.members[0]];
+        // an answer's ring (K3): the first press picks it, the second goes
+        const pk = picking.current;
+        if (pk) {
+          letGo();
+          if (pk.city === ring.city) pk.onGo(ring.city);
+          else pk.onPick(ring.city);
+          return;
+        }
         // Far off, a press comes closer; close by, it goes in. Looking around
         // from further out than the journey ever stands, the camera goes over
         // to the ring first, and the press after that opens its book.

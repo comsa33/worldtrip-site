@@ -1964,3 +1964,169 @@ kbd.key {
 :root[data-globe-view='on'] .journey-themes.theme-row .theme-row__keys {
   display: none;
 }
+
+/* =============================================================================
+   An answer, looking around (K3): ranks and names over the rings, arcs on the
+   limb for the ones round the back, the callout on the one previewed
+   ============================================================================= */
+.search-globe {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+.search-globe__limb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+/* the arc: the direction of a stop round the back, 2px ink; the one picked 3px */
+.search-globe__arc {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0;
+  transition:
+    opacity 160ms var(--ease),
+    stroke-width 200ms var(--ease);
+}
+.search-globe__arc.is-on {
+  opacity: 1;
+}
+.search-globe__arc.is-picked {
+  stroke-width: 3;
+}
+.search-globe__rank {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-100px, -100px);
+  margin: -6px 0 0 -4px;
+  font-size: 10.5px;
+  line-height: 12px;
+  color: var(--ink-2);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 160ms var(--ease);
+}
+.search-globe__rank.is-on {
+  opacity: 1;
+}
+/* the label over a ring: the rank, then the name, as the names of cities are said */
+.search-globe__label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 160ms var(--ease);
+}
+.search-globe__label.is-on {
+  opacity: 1;
+}
+.search-globe__label > .city-label {
+  flex-shrink: 0;
+  animation: none;
+  transform: none;
+  gap: 5px;
+}
+.search-globe__n {
+  font-size: 10.5px;
+  color: var(--ink-2);
+}
+/* the callout: the box is placed (transform on the outer), the words come up
+   (animation on the inner) — never both on one element */
+.search-callout {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 340px;
+  opacity: 0;
+  transition: opacity 160ms var(--ease);
+}
+.search-callout.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.search-callout__in {
+  padding: 8px 10px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: searchCallUp 200ms var(--ease) both;
+}
+@keyframes searchCallUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.search-callout__title {
+  display: block;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.search-callout__n {
+  margin-right: 6px;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.search-callout__when {
+  white-space: nowrap;
+  color: var(--ink-2);
+}
+.search-callout__meta {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+/* the hairline from the ring's edge to the box: a 1px line drawn from the
+   ring's centre (--lead-x/--lead-y, in the box's frame) towards the box */
+.search-callout__lead {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  background: var(--ink-3);
+  transform-origin: 0 0;
+}
+.search-callout[data-side='below'] .search-callout__lead {
+  left: var(--lead-x);
+  top: calc(var(--lead-y) + var(--lead-r));
+  height: calc(-1 * var(--lead-y) - var(--lead-r));
+}
+.search-callout[data-side='beside'] .search-callout__lead {
+  top: var(--lead-y);
+  left: min(0px, calc(var(--lead-x) + var(--lead-r)));
+  width: max(calc(-1 * var(--lead-x) - var(--lead-r)), calc(var(--lead-x) - var(--lead-r) - 100%));
+}
+@media (max-width: 768px) {
+  .search-callout {
+    width: 250px;
+  }
+  .search-callout__title {
+    font-size: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .search-callout__in {
+    animation: none;
+  }
+}

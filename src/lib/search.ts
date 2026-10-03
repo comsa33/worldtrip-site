@@ -40,7 +40,7 @@ export type SearchField =
 
 export type SearchState = SearchField & {
   /** the answer taken last — its stops are lit on the globe — with its words, and which of them is picked (looking around) */
-  lit: (Answer & { text: string; pick: number }) | null;
+  lit: (Answer & { text: string; pick: number; shown: boolean }) | null;
 };
 
 export const MAX_QUERY_CHARS = 80;
@@ -284,17 +284,21 @@ export function confirmAnswer(stopId?: number) {
   const { text, theme } = state;
   const first = stopId ?? state.stops[state.pick]?.id ?? state.stops[0].id;
   const stops = [...state.stops].sort((a, b) => (a.id === first ? -1 : b.id === first ? 1 : 0));
-  state = { mode: 'closed', lit: { text, stops, theme, themes: state.themes, pick: 0 } };
+  state = {
+    mode: 'closed',
+    lit: { text, stops, theme, themes: state.themes, pick: 0, shown: false },
+  };
   listeners.forEach((l) => l());
   answerListeners.forEach((l) => l(state));
 }
 
-/** Looking around: another of the lit stops picked (its ring drawn thicker, its preview hung). */
-export function pickLit(i: number) {
+/** Looking around: another of the lit stops picked (its ring drawn thicker) — and, from a
+ *  press, a mouse or ← →, its preview hung (`shown`). The first is picked without one. */
+export function pickLit(i: number, shown = true) {
   if (!state.lit) return;
   const pick = Math.max(0, Math.min(state.lit.stops.length - 1, i));
-  if (pick === state.lit.pick) return;
-  state = { ...state, lit: { ...state.lit, pick } };
+  if (pick === state.lit.pick && shown === state.lit.shown) return;
+  state = { ...state, lit: { ...state.lit, pick, shown } };
   listeners.forEach((l) => l());
 }
 

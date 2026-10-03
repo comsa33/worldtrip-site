@@ -53,6 +53,7 @@ import {
   useSearch,
   type SearchState,
   confirmAnswer,
+  pickLit,
 } from '../../lib/search';
 import { landOn, setFlying, setMood, turnedTo } from '../../lib/sound';
 import { composeJourney } from '../../lib/journeyScore';
@@ -80,6 +81,7 @@ import type { RingFar } from './themeRingScale';
 import { ThemeRow } from '../themes/ThemeRow';
 import { hasTheme, setPhotoTheme, stopThemeCount, usePhotoTheme } from '../../lib/photoThemes';
 import { SearchRanks, type SearchRing } from './SearchRanks';
+import { GlobeLimb, SearchGlobe } from './SearchGlobe';
 import { stepIndex } from '../../lib/themeStep';
 import {
   fitDistance,
@@ -1217,6 +1219,8 @@ function Scene({
   labels,
   photoTheme,
   searchRings,
+  searchGlobe,
+  turnRef,
   scan,
   rankLayer,
   onHand,
@@ -1254,6 +1258,18 @@ function Scene({
   photoTheme: string | null;
   /** the stops a search answered, lit the same way, with their ranks (C3); null when none */
   searchRings: SearchRing[] | null;
+  /** looking around with an answer lit (K3): its layer, the stop picked, the one previewed, and what a press does */
+  searchGlobe: {
+    layer: React.RefObject<HTMLDivElement | null>;
+    /** the city whose ring is picked, and the one previewed (its callout hung) */
+    picked: string | null;
+    preview: string | null;
+    onPick: (city: string) => void;
+    onGo: (city: string) => void;
+    onHover: (city: string | null) => void;
+  } | null;
+  /** filled in here: turn the globe (one move, no zoom) so a direction comes to the front's edge */
+  turnRef: React.MutableRefObject<((dir: THREE.Vector3) => void) | null>;
   /** a question is out, or just answered with nothing or a fault: the spark on the route (K2); null when none */
   scan: Scan | null;
   /** where the ranks go (rendered outside the canvas) */
@@ -1312,6 +1328,27 @@ function Scene({
     held.current = false;
     setAimed((n) => n + 1);
   }, []);
+  // a stop round the back picked (K3): the globe turns just enough for it to
+  // come to the front's edge — one move, at this distance, no zoom
+  const getThree = useThree((s) => s.get);
+  useEffect(() => {
+    turnRef.current = (dir: THREE.Vector3) => {
+      const cam = getThree().camera;
+      const camDir = cam.position.clone().normalize();
+      const len = cam.position.length();
+      const theta = camDir.angleTo(dir);
+      // seen from this far, the limb is acos(R/len) round from the globe's centre;
+      // the stop comes to a little inside it
+      const edge = Math.max(0.2, Math.acos(Math.min(1, GLOBE_RADIUS / len)) - 0.25);
+      if (theta <= edge) return;
+      const q = new THREE.Quaternion().setFromUnitVectors(camDir, dir);
+      const part = new THREE.Quaternion().slerp(q, (theta - edge) / theta);
+      aimAt(camDir.applyQuaternion(part).normalize(), len);
+    };
+    return () => {
+      turnRef.current = null;
+    };
+  }, [getThree, aimAt, turnRef]);
   const INK = GLOBE[theme].ink;
   const BG = theme === 'light' ? '#fcfcfc' : '#0d0d0d';
   const [hoveredLeg, setHoveredLeg] = useState<{ leg: Leg; at: THREE.Vector3 } | null>(null);
@@ -1712,10 +1749,30 @@ function Scene({
           onPress={onPressStop}
           spot={ringSpot}
           scale={TUNE_ON ? ringScale : undefined}
+          pick={
+            looking && searchGlobe && searchRings && !photoTheme
+              ? {
+                  city: searchGlobe.picked,
+                  onPick: searchGlobe.onPick,
+                  onGo: searchGlobe.onGo,
+                  onHover: searchGlobe.onHover,
+                }
+              : undefined
+          }
         />
       )}
       {globe === 'off' && searchRings && (
         <SearchRanks rings={searchRings} layer={rankLayer} phone={size.width <= 768} />
+      )}
+      {looking && <GlobeLimb />}
+      {looking && searchRings && searchGlobe && !photoTheme && (
+        <SearchGlobe
+          rings={searchRings}
+          layer={searchGlobe.layer}
+          spot={(c) => ringSpot.current?.(c) ?? null}
+          preview={searchGlobe.preview}
+          header={size.width <= 768 ? 48 + 34 : 56 + 36}
+        />
       )}
 
       {globe === 'off' && (
@@ -2430,6 +2487,84 @@ function JourneyExperienceContent() {
     };
   }, [playing, currentStop, stops, goToStop, globeView.mode]);
 
+  /* Looking around with an answer lit (K3): the stops are picked on the globe.
+     A press on a ring picks it (its ring thicker, its callout hung), a press on
+     the one picked goes there; a mouse over a ring previews it; ← → walk the
+     ranks. One round the back is turned to the front's edge first — one move,
+     no zoom. Going is leaving the look around for that stop. */
+  const searchLayerRef = useRef<HTMLDivElement>(null);
+  const hoverShown = useRef(false);
+  // filled in by the scene: turn the globe so this direction comes to the front's edge
+  const turnRef = useRef<((dir: THREE.Vector3) => void) | null>(null);
+  const turnToFront = useCallback(
+    (stopId: number) => {
+      const st = stops.find((x) => x.id === stopId);
+      const c = st && cities[st.city];
+      if (!c) return;
+      turnRef.current?.(latLngToVector3(c.lat, c.lng, 1).normalize());
+    },
+    [stops, cities]
+  );
+  const pickStop = useCallback(
+    (stopId: number, shown = true) => {
+      const lit = searchLit;
+      if (!lit) return;
+      const i = lit.stops.findIndex((r) => r.id === stopId);
+      if (i < 0) return;
+      pickLit(i, shown);
+      turnToFront(stopId);
+    },
+    [searchLit, turnToFront]
+  );
+  const goToLit = useCallback(
+    (stopId: number) => {
+      const i = stopIndexOf(stopId);
+      if (i < 0) return;
+      setPlaying(false);
+      exitGlobe();
+      goToStop(i);
+    },
+    [stopIndexOf, exitGlobe, goToStop]
+  );
+  // a city's ring stands for all its stays: the first of them in the ranks is the one picked
+  const firstLitOfCity = useCallback(
+    (city: string) =>
+      searchLit?.stops.find((r) => stops[stopIndexOf(r.id)]?.city === city)?.id ?? null,
+    [searchLit, stops, stopIndexOf]
+  );
+  const pickedCity = searchLit
+    ? (stops[stopIndexOf(searchLit.stops[searchLit.pick]?.id ?? -1)]?.city ?? null)
+    : null;
+  const searchGlobe = useMemo(
+    () =>
+      globeOn && searchLit
+        ? {
+            layer: searchLayerRef,
+            picked: pickedCity,
+            preview: searchLit.shown ? pickedCity : null,
+            onPick: (c: string) => {
+              const id = firstLitOfCity(c);
+              hoverShown.current = false;
+              if (id !== null) pickStop(id, true);
+            },
+            onGo: () => {
+              const id = searchLit.stops[searchLit.pick]?.id;
+              if (id !== undefined) goToLit(id);
+            },
+            onHover: (c: string | null) => {
+              const id = c === null ? null : firstLitOfCity(c);
+              if (id !== null) {
+                hoverShown.current = true;
+                pickStop(id, true);
+              } else if (hoverShown.current) {
+                hoverShown.current = false;
+                pickLit(searchLit.pick, false);
+              }
+            },
+          }
+        : null,
+    [globeOn, searchLit, pickStop, goToLit, pickedCity, firstLitOfCity]
+  );
   // Keyboard: ← → stops, Space play/pause, Esc closes the gallery
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -2452,9 +2587,14 @@ function JourneyExperienceContent() {
         openSearch();
         return;
       }
-      // looking around, the one key is the way out
+      // looking around, the one key is the way out — and with an answer lit, ← → walk its ranks
       if (globeView.mode === 'on') {
         if (e.key === 'Escape') exitGlobe();
+        if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && searchLit) {
+          const i = searchLit.pick + (e.key === 'ArrowRight' ? 1 : -1);
+          const id = searchLit.stops[Math.max(0, Math.min(searchLit.stops.length - 1, i))]?.id;
+          if (id !== undefined) pickStop(id, true);
+        }
         return;
       }
       if ((e.key === 'g' || e.key === 'G') && !e.metaKey && !e.ctrlKey && !e.altKey) {
@@ -2487,6 +2627,7 @@ function JourneyExperienceContent() {
     exitGlobe,
     searchMode,
     searchLit,
+    pickStop,
   ]);
 
   /* An answer has come: a theme by another name is chosen, which the row
@@ -3281,6 +3422,8 @@ function JourneyExperienceContent() {
             labels={globeLabels}
             photoTheme={photoTheme}
             searchRings={searchRings}
+            searchGlobe={searchGlobe}
+            turnRef={turnRef}
             scan={scan}
             rankLayer={rankLayerRef}
             onHand={setOrbitHeld}
@@ -3338,6 +3481,71 @@ function JourneyExperienceContent() {
               {r.ranks.join('·')}
             </span>
           ))}
+        </div>
+      )}
+      {/* an answer, looking around (K3): ranks and names over the rings, arcs on the limb for
+          the ones round the back, and the callout on the one previewed (SearchGlobe places them) */}
+      {globeOn && searchRings && searchLit && !photoTheme && (
+        <div className="search-globe" ref={searchLayerRef} aria-hidden="true">
+          <svg className="search-globe__limb">
+            {searchRings.map((r) => (
+              <path key={r.city} className="search-globe__arc" />
+            ))}
+          </svg>
+          {searchRings.map((r) => (
+            <span key={r.city} className="search-globe__rank mono">
+              {r.ranks.join(' · ')}
+            </span>
+          ))}
+          {searchRings.map((r) => (
+            <span key={r.city} className="search-globe__label">
+              <span className="city-label city-label--past">
+                <span className="search-globe__n mono">{r.ranks.join('·')}</span>
+                {cityLabel(r.city, language)}
+              </span>
+            </span>
+          ))}
+          {(() => {
+            const picked = searchLit.stops[searchLit.pick];
+            const st = picked && stops.find((x) => x.id === picked.id);
+            if (!st) return null;
+            const start = st.startDate ?? '';
+            const y = start.slice(0, 4);
+            const mo = Number(start.slice(5, 7)) || 1;
+            const when =
+              language === 'ko'
+                ? `${y}년 ${mo}월`
+                : new Date(Number(y), mo - 1, 1).toLocaleString('en-US', {
+                    month: 'long',
+                    year: 'numeric',
+                  });
+            const country = (
+              citiesData as { countries: Record<string, { ko: string; en: string }> }
+            ).countries[(st as { countryCode?: string }).countryCode ?? ''];
+            const cn = country ? country[language as 'ko' | 'en'] : '';
+            const photos = photosForStop(st.id).length;
+            return (
+              <div
+                className="search-callout"
+                key={st.id}
+                role="button"
+                tabIndex={-1}
+                onClick={() => goToLit(st.id)}
+              >
+                <span className="search-callout__lead" />
+                <div className="search-callout__in">
+                  <span className="search-callout__title">
+                    <span className="search-callout__n mono">{searchLit.pick + 1}</span>
+                    {cityLabel(st.city, language)}
+                    <span className="search-callout__when">, {when}</span>
+                  </span>
+                  <span className="search-callout__meta mono">
+                    {cn} · {language === 'ko' ? `사진 ${photos}장` : `${photos} photos`}
+                  </span>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
       {/* the names of the cities walked, while looking around (GlobeLabelDriver places them) */}
