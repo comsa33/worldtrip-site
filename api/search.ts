@@ -17,6 +17,7 @@ import notesData from '../src/data/cityNotes.json' with { type: 'json' };
 import tagsData from '../src/data/photoTags.json' with { type: 'json' };
 import citiesData from '../src/data/cities.json' with { type: 'json' };
 import captionsData from './stopCaptions.json' with { type: 'json' };
+import examplesData from '../src/data/searchExamples.json' with { type: 'json' };
 import { normalizeQuery } from '../src/lib/queryText.ts';
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
@@ -135,6 +136,9 @@ const THEME_EN: Record<string, string> = Object.fromEntries(
 /* "me" is the one theme that is not a thing in the picture but who is in it. */
 const describeTheme = (id: string, n: number) =>
   id === 'me' ? `the traveller in ${n}` : `${THEME_EN[id] ?? id} ${n}`;
+
+/** The examples' answers, baked by scripts/bake-examples.mjs from the same data (its version inside). */
+export const BAKED = examplesData as { version: string; results: Record<string, SearchResult> };
 
 export type StopSummary = { id: number; text: string };
 
@@ -563,6 +567,10 @@ export async function POST(request: Request): Promise<Response> {
 
   const theme = themeOf(q);
   if (theme) return json({ theme, stops: rankByTheme(theme) } satisfies SearchResult, 200, true);
+
+  // the examples the field writes: baked once (scripts/bake-examples.mjs), no call
+  const baked = BAKED.results[q];
+  if (baked) return json(baked, 200, true);
 
   const hash = await hashOf(q.toLowerCase());
   const cached = cache.get(hash);

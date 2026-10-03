@@ -14,6 +14,7 @@
  */
 import { useSyncExternalStore } from 'react';
 import { normalizeQuery } from './queryText';
+import examplesData from '../data/searchExamples.json';
 
 /** A stop and how well it answered, 0 to 1, best first. */
 export type Ranked = { id: number; score: number };
@@ -215,7 +216,10 @@ export async function submitSearch(words?: string) {
   noteAsked(text);
   noteLearned();
   const since = Date.now();
-  const known = remembered.get(text.toLowerCase());
+  // the examples' answers come with the page (baked); the same words asked again, from memory
+  const known =
+    remembered.get(text.toLowerCase()) ??
+    (examplesData as { results: Record<string, Answer> }).results[normalizeQuery(text)];
   if (known) {
     seq += 1;
     // the same words over their lit answer: the row the journey stands on is the one picked

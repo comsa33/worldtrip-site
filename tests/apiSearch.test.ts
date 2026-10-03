@@ -203,8 +203,30 @@ test('a same-site GET is let in; an answer carries a week of edge cache, a fault
     assert.equal((await get({ origin: 'https://elsewhere.example' })).status, 403);
     // an older browser: the referer stands in
     assert.equal((await get({ referer: `${ORIGIN}/` })).status, 200);
+    // a baked example answers from the page's own data, cacheable, with no call
+    const baked = await get({ 'sec-fetch-site': 'same-origin' }, '%EB%B0%A4%EA%B8%B0%EC%B0%A8');
+    assert.equal(baked.status, 200);
+    const data = (await baked.json()) as { stops: unknown[] };
+    assert.ok(data.stops.length > 0);
+    assert.match(baked.headers.get('cache-control') ?? '', /s-maxage/);
   } finally {
     if (saved === undefined) delete process.env.TYPESAFE_API_KEY;
     else process.env.TYPESAFE_API_KEY = saved;
+  }
+});
+
+test('the baked examples are of this data, all ten of them', async () => {
+  const m = await load();
+  const { dataVersion } = await import('../scripts/dataVersion.ts');
+  const { EXAMPLES } = await import('../src/lib/askExamples.ts');
+  assert.equal(
+    m.BAKED.version,
+    dataVersion(),
+    'searchExamples.json is stale: node scripts/bake-examples.mjs'
+  );
+  for (const w of [...EXAMPLES.ko, ...EXAMPLES.en]) {
+    const r = m.BAKED.results[m.normalize(w)];
+    assert.ok(r, `${w} is baked`);
+    assert.ok(r.stops.length > 0, `${w} answers at least one stop`);
   }
 });

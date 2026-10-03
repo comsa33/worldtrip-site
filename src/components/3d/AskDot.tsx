@@ -24,6 +24,7 @@ import { hasTheme, usePhotoTheme } from '../../lib/photoThemes';
 import { focusAskField, setAskField, setScanPath } from '../../lib/askField';
 import { useSideways } from '../../lib/sideways';
 import { AskStatus } from './AskStatus';
+import { EXAMPLES } from '../../lib/askExamples';
 import {
   closeSearch,
   confirmAnswer,
@@ -48,11 +49,6 @@ const countries = (citiesData as { countries: Record<string, { ko: string; en: s
 const DAYS = journeyData.totalDays;
 const STOPS = stops.length;
 
-/** The examples, in this order always — the same gesture must look the same. */
-const EXAMPLES: Record<'ko' | 'en', string[]> = {
-  ko: ['밤기차', '피라미드', '폭포 앞에서', '눈 덮인 마을', '시장의 아침'],
-  en: ['night train', 'pyramids', 'in front of a waterfall', 'a snowy village', 'market morning'],
-};
 const TYPE_MS = 90;
 const HOLD_MS = 1600;
 const ERASE_MS = 40;
