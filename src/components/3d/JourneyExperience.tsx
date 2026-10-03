@@ -1,6 +1,15 @@
 import { useRef, useMemo, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { Canvas, useFrame, useThree, type RootState, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Line, Html, Billboard } from '@react-three/drei';
+import {
+  FAULT_FADE_MS,
+  FAULT_HOLD_MS,
+  REST_FADE_MS,
+  REST_HOLD_MS,
+  REST_OPACITY,
+  scanEnding,
+  scanPhase,
+} from '../../lib/scanClock';
 import * as THREE from 'three';
 import {
   Camera as CameraIcon,
@@ -616,31 +625,64 @@ function RevealDriver({
  * short dash on one dashed line over everything, its offset moved every frame.
  * The camera does not move; only this does, so the frames are asked for here.
  */
-const SCAN_MS = 2600;
+/** What the spark is doing: running, finishing to the end (nothing found), or stopped (a fault). */
+export type Scan = { phase: 'run' | 'none' | 'fault'; since: number; at: number };
+
 function RouteScan({
   points,
   color,
   opacity,
   width,
+  scan,
 }: {
   points: PathPoint[];
   color: string;
   opacity: number;
   width: number;
+  scan: Scan;
 }) {
   const invalidate = useThree((s) => s.invalidate);
   const pts = useMemo(() => points.map((p) => p.point), [points]);
   const len = useMemo(() => pathLength(pts), [pts]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
-  const t0 = useRef(0);
+  const dash = Math.max(0.05, len * 0.03);
+  const ease = (k: number) => 1 - Math.pow(1 - k, 3);
   useFrame(() => {
     const m = ref.current?.material;
     if (!m) return;
-    if (!t0.current) t0.current = performance.now();
-    const k = ((performance.now() - t0.current) % SCAN_MS) / SCAN_MS;
+    const now = Date.now();
+    let k: number;
+    let alpha = opacity;
+    let done = false;
+    if (scan.phase === 'run') {
+      k = scanPhase(scan.since, now);
+    } else {
+      const { hold, end } = scanEnding(scan.since, scan.at);
+      if (now < hold) k = scanPhase(scan.since, now);
+      else if (scan.phase === 'none') {
+        // on to the very end, then a hold, then back to a faint line that stays
+        const from = scanPhase(scan.since, hold);
+        const to = 1 - dash / len;
+        k = end > hold ? from + (to - from) * ease(Math.min(1, (now - hold) / (end - hold))) : to;
+        if (now >= end + REST_HOLD_MS) {
+          const f = Math.min(1, (now - end - REST_HOLD_MS) / REST_FADE_MS);
+          alpha = opacity + (REST_OPACITY * opacity - opacity) * f;
+          done = f >= 1;
+        }
+      } else {
+        // stopped where it was; after a beat, gone
+        k = scanPhase(scan.since, hold);
+        if (now >= hold + FAULT_HOLD_MS) {
+          const f = Math.min(1, (now - hold - FAULT_HOLD_MS) / FAULT_FADE_MS);
+          alpha = opacity * (1 - f);
+          done = f >= 1;
+        }
+      }
+    }
     m.dashOffset = -k * len;
-    invalidate();
+    m.opacity = alpha;
+    if (!done) invalidate();
   });
   if (pts.length < 2) return null;
   return (
@@ -654,7 +696,7 @@ function RouteScan({
       opacity={opacity}
       depthWrite={false}
       dashed
-      dashSize={Math.max(0.05, len * 0.03)}
+      dashSize={dash}
       gapSize={1e6}
       dashScale={1}
     />
@@ -1124,7 +1166,7 @@ function Scene({
   labels,
   photoTheme,
   searchRings,
-  scanning,
+  scan,
   rankLayer,
   onHand,
   onOpenStop,
@@ -1161,8 +1203,8 @@ function Scene({
   photoTheme: string | null;
   /** the stops a search answered, lit the same way, with their ranks (C3); null when none */
   searchRings: SearchRing[] | null;
-  /** a question is out: a spark runs the route (K2) */
-  scanning: boolean;
+  /** a question is out, or just answered with nothing or a fault: the spark on the route (K2); null when none */
+  scan: Scan | null;
   /** where the ranks go (rendered outside the canvas) */
   rankLayer: React.RefObject<HTMLDivElement | null>;
   /** the hand on the globe (a drag), for the theme row to step back */
@@ -1461,12 +1503,14 @@ function Scene({
         dim={lit}
       />
       <RevealDriver segments={segments} run={revealRun} reveal={reveal} />
-      {scanning && (
+      {scan && (
         <RouteScan
+          key={scan.since}
           points={path}
           color={GLOBE[theme].routePast}
           opacity={theme === 'dark' ? 0.7 : 0.85}
           width={size.width <= 768 ? 1.6 : 2.2}
+          scan={scan}
         />
       )}
       <HeadTracker
@@ -2210,6 +2254,16 @@ function JourneyExperienceContent() {
      word is the theme itself and has no rings of its own. */
   const search = useSearch();
   const searchMode = search.mode;
+  /* the spark on the route: running while the words are out; after an answer
+     of nothing it draws to the end and rests, after a fault it stops and goes.
+     An offline fault never set off (since 0): no spark. */
+  const scan = useMemo<Scan | null>(() => {
+    if (search.mode === 'waiting') return { phase: 'run', since: search.since, at: 0 };
+    if (search.mode === 'none') return { phase: 'none', since: search.since, at: search.at };
+    if (search.mode === 'error' && search.since)
+      return { phase: 'fault', since: search.since, at: search.at };
+    return null;
+  }, [search]);
   const searchLit = search.lit;
   const searchStops = searchLit && !searchLit.theme ? searchLit.stops : null;
   const rankLayerRef = useRef<HTMLDivElement>(null);
@@ -3178,7 +3232,7 @@ function JourneyExperienceContent() {
             labels={globeLabels}
             photoTheme={photoTheme}
             searchRings={searchRings}
-            scanning={searchMode === 'waiting'}
+            scan={scan}
             rankLayer={rankLayerRef}
             onHand={setOrbitHeld}
             onOpenStop={handleOpenStop}

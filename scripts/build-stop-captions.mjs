@@ -76,7 +76,7 @@ export const OUT = path.join(ROOT, 'api/stopCaptions.json');
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const out = buildStopCaptions();
-  const text = JSON.stringify(out, null, 1) + '\n';
+  const text = JSON.stringify(out, null, 2) + '\n';
   const before = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
   if (before !== text) fs.writeFileSync(OUT, text);
   const n = Object.values(out).reduce((a, l) => a + l.length, 0);

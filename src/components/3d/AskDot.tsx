@@ -22,6 +22,7 @@ import { srcFor } from '../../lib/photoSrc';
 import { cityLabel } from '../../lib/journeyRoll';
 import { hasTheme, usePhotoTheme } from '../../lib/photoThemes';
 import { focusAskField, setAskField } from '../../lib/askField';
+import { AskStatus } from './AskStatus';
 import {
   closeSearch,
   confirmAnswer,
@@ -31,7 +32,6 @@ import {
   MAX_QUERY_CHARS,
   openSearch,
   pickAnswer,
-  retrySearch,
   setSearchText,
   submitSearch,
   useAsked,
@@ -60,8 +60,6 @@ const ROUNDS = 2;
 
 /** After a keystroke the caret stands still this long before it blinks again. */
 const STILL_MS = 480;
-/** How long the dot sits as a full stop before the field is emptied for the examples. */
-const NONE_MS = 1200;
 /** The page's own dim comes off over this; the overlay stays until it has. */
 const LEAVE_MS = 240;
 
@@ -201,8 +199,10 @@ export function AskDot({ phone }: { phone: boolean }) {
     range.selectNodeContents(mirror);
     const gr = range.getBoundingClientRect();
     const fs = parseFloat(getComputedStyle(field).fontSize) || 34;
-    // the bar stands in the middle of the 8px seat: 2px after the last letter
-    seat.style.left = `${Math.ceil(to.offsetWidth) - 1}px`;
+    // the bar stands in the middle of the 8px seat: 2px after the last letter;
+    // on a fault the dot lies a little apart — not the sentence's full stop
+    const apart = search.mode === 'error' ? 6 : 0;
+    seat.style.left = `${Math.ceil(to.offsetWidth) - 1 + apart}px`;
     seat.style.top = `${Math.round(gr.bottom - fr.top - fs * 0.12 - 8)}px`;
   }, [text, caretAt, open, fontsIn, search.mode]);
 
@@ -226,26 +226,6 @@ export function AskDot({ phone }: { phone: boolean }) {
     const t = window.setTimeout(() => setTyping(false), STILL_MS);
     return () => window.clearTimeout(t);
   }, [typing, text]);
-
-  // nothing answered: the dot sits as a full stop, then the field is emptied
-  // and the examples write again
-  useEffect(() => {
-    if (search.mode !== 'none') return;
-    const t = window.setTimeout(() => setSearchText(''), NONE_MS);
-    return () => window.clearTimeout(t);
-  }, [search.mode]);
-
-  // 「다시」 waits out the rate limit
-  const [retryOpen, setRetryOpen] = useState(false);
-  useEffect(() => {
-    if (search.mode !== 'error') return;
-    const wait = search.retryAt - Date.now();
-    const t = window.setTimeout(() => setRetryOpen(true), Math.max(0, wait));
-    return () => {
-      window.clearTimeout(t);
-      setRetryOpen(false);
-    };
-  }, [search]);
 
   /* A phone's keyboard: the block goes to 38% of what is left above it. */
   const [top, setTop] = useState<number | null>(null);
@@ -295,7 +275,6 @@ export function AskDot({ phone }: { phone: boolean }) {
   const picked = answer ? answer.stops[answer.pick] : undefined;
   const listed = answer ? answer.stops.slice(0, shown) : [];
   const beyond = answer ? Math.min(answer.stops.length, LIST_MOST) - shown : 0;
-  const retryable = search.mode === 'error' && text !== '' && retryOpen;
   /* The row picked opens out in its place (its picture, the month, the
      country, the photos); the others stay one line. Keys pressed in a run
      move the mark at once, but a row opens only once it has been stayed on
@@ -365,11 +344,7 @@ export function AskDot({ phone }: { phone: boolean }) {
         style={top !== null ? ({ '--ask-top': `${top}px` } as React.CSSProperties) : undefined}
       >
         <div className="askdot__field">
-          {search.mode === 'error' && search.fault === 'offline' && text === '' ? (
-            <span className="askdot__text askdot__text--faint">
-              {lang === 'ko' ? '지금은 답할 수 없어요' : 'No answer right now'}
-            </span>
-          ) : (
+          {
             <>
               <span ref={mirrorRef} className="askdot__mirror" aria-hidden="true">
                 {text || '\u200b'}
@@ -424,6 +399,10 @@ export function AskDot({ phone }: { phone: boolean }) {
                       void submitSearch(ghost);
                     else void submitSearch();
                     if (search.mode !== 'open') inputRef.current?.blur();
+                  } else if (e.key === 'ArrowDown' && search.mode === 'none') {
+                    // down into what is offered instead
+                    e.preventDefault();
+                    document.querySelector<HTMLElement>('.askdot__word')?.focus();
                   } else if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && answer) {
                     // ↑ ↓ walk the list, the preview following; ↓ past the end opens it out
                     e.preventDefault();
@@ -449,35 +428,17 @@ export function AskDot({ phone }: { phone: boolean }) {
                 />
               )}
             </>
-          )}
+          }
         </div>
 
-        {search.mode === 'waiting' && (
-          <div className="askdot__line mono" aria-live="polite">
-            {lang === 'ko'
-              ? `${DAYS}일 · ${STOPS}곳을 훑는 중`
-              : `Looking through ${DAYS} days · ${STOPS} stops`}
-          </div>
-        )}
-
-        {search.mode === 'error' && (
-          <div className="askdot__line mono" aria-live="polite">
-            {lang === 'ko' ? '지금은 답할 수 없어요' : 'No answer right now'}
-            {text !== '' && (
-              <>
-                <span className="askdot__sep">·</span>
-                <button
-                  type="button"
-                  className="askdot__retry"
-                  disabled={!retryable}
-                  onClick={retrySearch}
-                >
-                  {lang === 'ko' ? '다시' : 'again'}
-                </button>
-              </>
-            )}
-          </div>
-        )}
+        {/* what became of the words: thinking, nothing found (and what is near), a fault */}
+        <AskStatus
+          search={search}
+          lang={lang}
+          days={DAYS}
+          stops={STOPS}
+          examples={EXAMPLES[lang]}
+        />
 
         {answer && picked && (
           <div

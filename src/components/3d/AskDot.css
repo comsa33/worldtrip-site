@@ -430,3 +430,229 @@
     animation: none;
   }
 }
+
+/* ── what became of the words (N1) ──────────────────────────────────────────
+   One line under the field: a 15px ring, the state's name, 「·」, what can be
+   done. Notes, not sentences — the dot above is the full stop. */
+.askdot__status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--ink);
+  animation: askUp 240ms var(--ease) both;
+}
+.askdot__status.is-fault {
+  color: var(--ink-2);
+}
+.askdot__status .askdot__sep {
+  margin: 0 2px;
+  color: var(--ink-3);
+}
+.askdot__state--soft {
+  color: var(--ink-3);
+}
+.askdot__status .mono {
+  font-size: 13px;
+}
+.askdot__act {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ink-2);
+  /* a 44px press on a 15px word */
+  position: relative;
+}
+.askdot__act::before {
+  content: '';
+  position: absolute;
+  inset: -14px -10px;
+}
+.askdot__act:hover,
+.askdot__act:focus-visible {
+  text-decoration-color: var(--ink);
+  outline: none;
+}
+@keyframes askUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* the ring: the same stroke as a city ring on the globe */
+.askring {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.askring__c {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  transform-origin: 50% 50%;
+  transform: rotate(-90deg);
+}
+/* thinking: a small orange arc going round — the spark on the route, in little */
+.askring[data-kind='arc'] .askring__c {
+  stroke: var(--accent);
+  stroke-dasharray: 10 30.2;
+  animation: askArc 1.3s linear infinite;
+}
+@keyframes askArc {
+  to {
+    transform: rotate(270deg);
+  }
+}
+/* found nothing: drawn shut as the spark reaches the end of the route */
+.askring[data-kind='closed'] .askring__c {
+  stroke-dasharray: 40.2;
+  stroke-dashoffset: 40.2;
+  transition: stroke-dashoffset 240ms var(--ease);
+}
+.askring[data-kind='closed'][data-on] .askring__c {
+  stroke-dashoffset: 0;
+}
+/* a fault: broken where the spark stopped */
+.askring[data-kind='broken'] .askring__c,
+.askring[data-kind='broken-dot'] .askring__c {
+  stroke-dasharray: 30 10.2;
+  transform: rotate(-60deg);
+}
+/* the rate limit: broken, and a dot waiting in the gap */
+.askring__dot {
+  fill: var(--ink-2);
+  animation: askWait 1.2s ease-in-out infinite;
+}
+@keyframes askWait {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+/* offline: it never set off */
+.askring[data-kind='dotted'] .askring__c {
+  stroke-dasharray: 2 2.2;
+}
+
+/* nothing found: the line comes when the spark has reached the end; the
+   suggestions follow, a word at a time */
+.askdot__none {
+  opacity: 0;
+}
+.askdot__none[data-on] {
+  opacity: 1;
+}
+.askdot__none .askdot__status {
+  animation: none;
+}
+.askdot__none[data-on] .askdot__status {
+  animation: askUp 240ms var(--ease) both;
+}
+.askdot__groups {
+  margin-top: 24px;
+  max-height: calc(100dvh - var(--ask-top) - 160px);
+  overflow-y: auto;
+}
+.askdot__group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 22px;
+  row-gap: 4px;
+}
+.askdot__group + .askdot__group {
+  margin-top: 12px;
+}
+.askdot__label {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.askdot__word {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--line-strong);
+  opacity: 0;
+}
+.askdot__none[data-on] .askdot__word {
+  animation: askUp 240ms var(--ease) both;
+  animation-delay: calc(120ms + var(--i, 0) * 40ms);
+}
+.askdot__word:hover,
+.askdot__word:focus-visible {
+  text-decoration-color: var(--ink-2);
+  outline: none;
+}
+.askdot__count {
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+@media (max-width: 768px) {
+  .askdot__status {
+    margin-top: 16px;
+    gap: 8px;
+    font-size: 14px;
+  }
+  .askdot__status .mono {
+    font-size: 12px;
+  }
+  .askdot__groups {
+    margin-top: 18px;
+  }
+  .askdot__group {
+    gap: 0 18px;
+  }
+  .askdot__word {
+    font-size: 14px;
+    /* a 44px press on a 14px word */
+    padding: 12px 0;
+    margin: -12px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .askring[data-kind='arc'] .askring__c,
+  .askring__dot {
+    animation: none;
+  }
+  .askdot__status,
+  .askdot__none[data-on] .askdot__status,
+  .askdot__none[data-on] .askdot__word {
+    animation: none;
+    opacity: 1;
+  }
+  .askring[data-kind='closed'] .askring__c {
+    transition: none;
+  }
+}

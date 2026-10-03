@@ -17,23 +17,26 @@ import { useSyncExternalStore } from 'react';
 /** A stop and how well it answered, 0 to 1, best first. */
 export type Ranked = { id: number; score: number };
 
-export type SearchFault = 'fail' | 'rate' | 'offline';
+export type SearchFault = 'fail' | 'timeout' | 'rate' | 'offline';
 
-/** An answer: the stops, best first, and the theme when the words were one. */
-export type Answer = { stops: Ranked[]; theme?: string };
+/** A theme and how near the words came to it, on the server's 0–3 scale (already over its line). */
+export type NearTheme = { id: string; score: number };
+
+/** An answer: the stops, best first, the theme when the words were one, and the themes nearest the words. */
+export type Answer = { stops: Ranked[]; theme?: string; themes?: NearTheme[] };
 
 export type SearchField =
   | { mode: 'closed' }
   /** the field is up and the dot is its caret; the hand writes */
   | { mode: 'open'; text: string }
-  /** sent; the dot lies down and breathes until the answer */
-  | { mode: 'waiting'; text: string }
+  /** sent at `since`; the dot lies down and breathes until the answer, the spark runs the route */
+  | { mode: 'waiting'; text: string; since: number }
   /** the answer stands under the words: `pick` is the one previewed, the list open or not */
   | ({ mode: 'answer'; text: string; pick: number; expanded: boolean } & Answer)
-  /** nothing answered: the dot sits as a full stop and the examples write again */
-  | { mode: 'none'; text: string }
-  /** no answer could come: the dot goes faint, one line says so, 「다시」 */
-  | { mode: 'error'; text: string; fault: SearchFault; retryAt: number };
+  /** nothing answered (at `at`): the dot sits as a full stop; the line says so and offers what is near */
+  | { mode: 'none'; text: string; since: number; at: number; themes?: NearTheme[] }
+  /** no answer could come: the dot goes faint, one line says so, 「다시」. `since` is 0 when it never set off (offline on opening) */
+  | { mode: 'error'; text: string; fault: SearchFault; retryAt: number; since: number; at: number };
 
 export type SearchState = SearchField & {
   /** the answer taken last — its stops are lit on the globe — with its words */
@@ -98,7 +101,7 @@ export function openSearch() {
   if (state.mode !== 'closed') return;
   asked = true;
   if (typeof navigator !== 'undefined' && navigator.onLine === false) {
-    set({ mode: 'error', text: '', fault: 'offline', retryAt: 0 });
+    set({ mode: 'error', text: '', fault: 'offline', retryAt: 0, since: 0, at: Date.now() });
     return;
   }
   set({ mode: 'open', text: state.lit?.text ?? '' });
@@ -126,6 +129,29 @@ export function clearSearch() {
 function answerOf(text: string, a: Answer): SearchField {
   return { mode: 'answer', text, pick: 0, expanded: false, stops: a.stops, theme: a.theme };
 }
+function noneOf(text: string, a: Answer, since: number): SearchField {
+  return { mode: 'none', text, since, at: Date.now(), themes: a.themes };
+}
+
+/* The words asked this visit, oldest first — so what is offered instead of a
+   word that found nothing is not one already tried. */
+const ASKED_KEY = 'asked-words';
+export function askedWords(): string[] {
+  try {
+    return JSON.parse(sessionStorage.getItem(ASKED_KEY) ?? '[]') as string[];
+  } catch {
+    return [];
+  }
+}
+function noteAsked(text: string) {
+  try {
+    const list = askedWords().filter((w) => w !== text);
+    list.push(text);
+    sessionStorage.setItem(ASKED_KEY, JSON.stringify(list.slice(-20)));
+  } catch {
+    /* no storage: nothing to remember by */
+  }
+}
 
 /** Enter: the words go, and what comes back is an answer, none, or a fault. */
 export async function submitSearch(words?: string) {
@@ -133,16 +159,19 @@ export async function submitSearch(words?: string) {
   if (state.mode === 'error' && Date.now() < state.retryAt) return;
   const text = (words ?? state.text).trim();
   if (!text) return;
+  noteAsked(text);
+  const since = Date.now();
   const known = remembered.get(text.toLowerCase());
   if (known) {
     seq += 1;
-    set(known.stops.length ? answerOf(text, known) : { mode: 'none', text });
+    set(known.stops.length ? answerOf(text, known) : noneOf(text, known, since));
     return;
   }
   const mine = ++seq;
-  set({ mode: 'waiting', text });
+  set({ mode: 'waiting', text, since });
   let stops: Ranked[] = [];
   let theme: string | undefined;
+  let themes: NearTheme[] | undefined;
   let fault: SearchFault | null = null;
   try {
     const res = await fetch('/api/search', {
@@ -152,15 +181,25 @@ export async function submitSearch(words?: string) {
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     if (res.ok) {
-      const data = (await res.json()) as { stops?: Ranked[]; theme?: string };
+      const data = (await res.json()) as {
+        stops?: Ranked[];
+        theme?: string;
+        themes?: NearTheme[];
+      };
       stops = data.stops ?? [];
       theme = data.theme;
+      themes = data.themes;
     } else if (res.status === 429) fault = 'rate';
     else if (res.status === 400 || res.status === 413)
       stops = []; // not a question
     else fault = 'fail';
-  } catch {
-    fault = typeof navigator !== 'undefined' && navigator.onLine === false ? 'offline' : 'fail';
+  } catch (e) {
+    fault =
+      typeof navigator !== 'undefined' && navigator.onLine === false
+        ? 'offline'
+        : e instanceof Error && e.name === 'TimeoutError'
+          ? 'timeout'
+          : 'fail';
   }
   if (mine !== seq) return; // the hand moved on meanwhile
   if (fault) {
@@ -169,16 +208,18 @@ export async function submitSearch(words?: string) {
       text,
       fault,
       retryAt: Date.now() + (fault === 'rate' ? RATE_RETRY_MS : 0),
+      since,
+      at: Date.now(),
     });
     return;
   }
-  const a: Answer = theme ? { stops, theme } : { stops };
+  const a: Answer = { stops, theme, themes };
   remembered.set(text.toLowerCase(), a);
   if (remembered.size > 40) {
     const oldest = remembered.keys().next().value;
     if (oldest !== undefined) remembered.delete(oldest);
   }
-  set(stops.length ? answerOf(text, a) : { mode: 'none', text });
+  set(stops.length ? answerOf(text, a) : noneOf(text, a, since));
 }
 
 /** Another of the answer's stops previewed — ↑ ↓, a hover, a first tap. */
