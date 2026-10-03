@@ -154,7 +154,8 @@
   color: color-mix(in srgb, var(--ink-3) var(--row-k), var(--ground));
 }
 
-.theme-row.is-picked:not(.is-folded) .theme-row__keys {
+.theme-row.is-picked:not(.is-folded) .theme-row__keys,
+.theme-row.is-search .theme-row__keys {
   display: inline-flex;
 }
 
@@ -170,7 +171,126 @@
   background: color-mix(in srgb, var(--bg-card) var(--row-k), transparent);
 }
 
+/* ── the search lit: its words in the lit place, 「1 / n」, × ─────────────── */
+.theme-row__search {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+  animation: themeChipIn 160ms var(--ease, ease) both;
+}
+.theme-row__search.is-out {
+  animation: themeChipOut 160ms var(--ease, ease) both;
+  pointer-events: none;
+}
+@keyframes themeChipIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes themeChipOut {
+  to {
+    opacity: 0;
+  }
+}
+.theme-row__rank {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 10.5px;
+  color: color-mix(in srgb, var(--ink-2) var(--row-k), var(--ground));
+}
+/* the rank rolls: the old number out one way, the new in from the other */
+.theme-row__roll {
+  position: relative;
+  display: inline-block;
+  height: 1.2em;
+  line-height: 1.2em;
+  overflow: hidden;
+  vertical-align: baseline;
+}
+.theme-row__roll-out {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: rollOut 200ms var(--ease, ease) both;
+}
+.theme-row__roll-in {
+  display: inline-block;
+  animation: rollIn 200ms var(--ease, ease) both;
+}
+.theme-row__roll[data-dir='-1'] .theme-row__roll-out {
+  animation-name: rollOutDown;
+}
+.theme-row__roll[data-dir='-1'] .theme-row__roll-in {
+  animation-name: rollInDown;
+}
+@keyframes rollOut {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@keyframes rollIn {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes rollOutDown {
+  to {
+    transform: translateY(100%);
+  }
+}
+@keyframes rollInDown {
+  from {
+    transform: translateY(-100%);
+  }
+}
+/* ×: a 12px cross of two hairlines, pressed on a 20px (phone 44px) square */
+.theme-row__x {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 0 0 0 -4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.theme-row__x > span::before,
+.theme-row__x > span::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink-3) var(--row-k), var(--ground));
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: background 150ms var(--ease, ease);
+}
+.theme-row__x > span::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.theme-row__x:hover > span::before,
+.theme-row__x:hover > span::after {
+  background: color-mix(in srgb, var(--ink) var(--row-k), var(--ground));
+}
+/* folded, the search chip stays whole */
+.theme-row.is-folded .theme-row__search .theme-row__label {
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @media (max-width: 768px) {
+  .theme-row__x {
+    width: 44px;
+    height: 44px;
+    margin: 0 -12px 0 -16px;
+  }
   .theme-row {
     gap: 14px;
     height: 34px;
@@ -182,7 +302,8 @@
   }
 
   /* no keys on a phone */
-  .theme-row.is-picked:not(.is-folded) .theme-row__keys {
+  .theme-row.is-picked:not(.is-folded) .theme-row__keys,
+  .theme-row.is-search .theme-row__keys {
     display: none;
   }
 }
@@ -194,5 +315,10 @@
   .theme-row.is-woken,
   .theme-row__label {
     transition: none;
+  }
+  .theme-row__search,
+  .theme-row__roll-out,
+  .theme-row__roll-in {
+    animation: none;
   }
 }

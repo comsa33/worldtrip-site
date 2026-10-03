@@ -1910,7 +1910,6 @@ function Header({
   onToggleGlobe,
   onOpenPhotos,
   barRef,
-  rank,
   note,
 }: {
   globe: boolean;
@@ -1921,8 +1920,6 @@ function Header({
   onOpenPhotos: () => void;
   /** the bar, for the theme row under it to wake when a mouse is over it */
   barRef?: React.RefObject<HTMLElement | null>;
-  /** a search answered: which of its stops the journey is on, of how many */
-  rank: { n: number; of: number } | null;
   /** what a reader is told of the answer (aria-live) */
   note: string;
 }) {
@@ -1955,18 +1952,7 @@ function Header({
         </button>
         <span>{t('journey.brand')}</span>
       </div>
-      {rank && (
-        <span className="journey-header__rank mono">
-          <span className="journey-header__rank-n">
-            {rank.n}&nbsp;/&nbsp;{rank.of}
-          </span>
-          <span className="journey-header__rank-keys">
-            <Kbd>←</Kbd>
-            <Kbd>→</Kbd>
-            <span>{language === 'ko' ? '켜진 곳' : 'lit'}</span>
-          </span>
-        </span>
-      )}
+      {/* a search's rank is said in the theme row, beside its words (one fact, one place) */}
       <span className="sr-only" aria-live="polite">
         {note}
       </span>
@@ -2223,10 +2209,14 @@ function JourneyExperienceContent() {
     globeView.exit();
   }, [globeView]);
 
+  // the stop a jump is going to, for what is said of the journey's place while
+  // the camera is still on its way (the rank in the theme row)
+  const [jumpTarget, setJumpTarget] = useState<number | null>(null);
   const goToStop = useCallback(
     (idx: number) => {
       const i = Math.max(0, Math.min(stops.length - 1, idx));
       jumpTargetRef.current = i;
+      setJumpTarget(i);
       seek(stopProgress[i], 'jump');
     },
     [seek, stopProgress, stops.length]
@@ -2469,12 +2459,7 @@ function JourneyExperienceContent() {
     [stopIndexOf, goToStop, exitGlobe, globeView.mode]
   );
 
-  // the header's "1 / 6", and what a reader is told
-  const searchRank = useMemo(() => {
-    if (!searchStops) return null;
-    const at = searchStops.findIndex((r) => r.id === stops[currentStop]?.id);
-    return { n: at < 0 ? 1 : at + 1, of: searchStops.length };
-  }, [searchStops, stops, currentStop]);
+  // what a reader is told of an answer
   const searchNote = useMemo(() => {
     const told = search.mode === 'answer' && !search.theme ? search.stops : searchStops;
     if (told) {
@@ -3260,7 +3245,6 @@ function JourneyExperienceContent() {
         onToggleGlobe={globeOn ? exitGlobe : enterGlobe}
         onOpenPhotos={handleOpenAllPhotos}
         barRef={barRef}
-        rank={searchRank}
         note={searchNote}
       />
       {/* the one place a theme is chosen, the same row the photo book has — looking around too */}
@@ -3271,6 +3255,8 @@ function JourneyExperienceContent() {
         floating
         moving={playing || orbitHeld || scrubHeld || wheelBusy}
         wake={barRef}
+        stopId={stops[jumpTarget !== null && !cameraResting ? jumpTarget : currentStop]?.id}
+        place={city ? cityLabel(city.city, language) : undefined}
       />
       {/* the filmstrip's photos of other themes step back, as the book's do */}
       {photoTheme && globeView.mode === 'off' && (

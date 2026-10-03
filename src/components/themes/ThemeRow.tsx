@@ -14,12 +14,43 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { THEMES, THEME_TOTAL, setPhotoTheme, usePhotoTheme } from '../../lib/photoThemes';
-import { clearSearch } from '../../lib/search';
+import { clearSearch, openSearch, useSearch } from '../../lib/search';
+import { focusAskField } from '../../lib/askField';
 import './ThemeRow.css';
 
 type Lang = 'ko' | 'en';
 
 const FOLD_AFTER_MS = 2000;
+/** the search chip goes in this long (and comes out in as long) */
+const CHIP_MS = 160;
+/** longer words are cut here, the whole in the title */
+const CHIP_CHARS = 12;
+
+/** A number that rolls up or down (200ms) when it changes — the way the header's total rolls. */
+function Rolling({ n }: { n: number }) {
+  const [was, setWas] = useState<{ from: number; dir: 1 | -1 } | null>(null);
+  const prev = useRef(n);
+  useEffect(() => {
+    if (prev.current === n) return;
+    const from = prev.current;
+    prev.current = n;
+    setWas({ from, dir: n > from ? 1 : -1 });
+    const t = window.setTimeout(() => setWas(null), 200);
+    return () => window.clearTimeout(t);
+  }, [n]);
+  return (
+    <span className="theme-row__roll" data-dir={was?.dir ?? undefined}>
+      {was && (
+        <span className="theme-row__roll-out" key={`o${was.from}`}>
+          {was.from}
+        </span>
+      )}
+      <span className={was ? 'theme-row__roll-in' : undefined} key={`i${n}`}>
+        {n}
+      </span>
+    </span>
+  );
+}
 
 export function ThemeRow({
   lang,
@@ -27,9 +58,15 @@ export function ThemeRow({
   halo = false,
   wake,
   floating = false,
+  stopId,
+  place,
   className = '',
 }: {
   lang: Lang;
+  /** the stop the journey stands on — its rank among a search's stops is shown */
+  stopId?: number;
+  /** that stop's name, read out when the rank changes */
+  place?: string;
   /** the hand is busy elsewhere: step back */
   moving?: boolean;
   /** over the globe: letters carry a halo of the ground (--ground) instead of a plate */
@@ -41,13 +78,44 @@ export function ThemeRow({
   className?: string;
 }) {
   const theme = usePhotoTheme();
+  const search = useSearch();
+  /* A search's answer is lit the way a theme is, and takes the lit place in
+     the row: the words, the rank the journey is on, a ×. One thing lit at a
+     time — a theme chosen puts it away, and it puts the theme away. */
+  const lit = search.lit && !search.lit.theme ? search.lit : null;
+  // kept a moment after it has gone, to go out (CHIP_MS)
+  const [chip, setChip] = useState(lit);
+  const [chipOut, setChipOut] = useState(false);
+  useEffect(() => {
+    if (lit) {
+      setChip(lit);
+      setChipOut(false);
+      return;
+    }
+    if (!chip) return;
+    setChipOut(true);
+    const t = window.setTimeout(() => {
+      setChip(null);
+      setChipOut(false);
+    }, CHIP_MS);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lit]);
+  // the rank the journey stands on; between lit stops the last one stays
+  const lastRank = useRef(1);
+  const at = lit ? lit.stops.findIndex((r) => r.id === stopId) : -1;
+  if (at >= 0) lastRank.current = at + 1;
+  if (!lit) lastRank.current = 1;
+  const rank = lit ? { n: lastRank.current, of: lit.stops.length } : null;
+  /** what is lit: a theme's id, or the search */
+  const picked = theme ?? (lit ? 'search' : null);
   const rowRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const [touchedAt, setTouchedAt] = useState(0);
-  /** which (theme, touch) the fold timer last ran out for — a new touch or theme unfolds by itself */
+  /** which (lit thing, touch) the fold timer last ran out for — a new touch or choice unfolds by itself */
   const [foldedFor, setFoldedFor] = useState<string | null>(null);
-  const foldKey = `${theme}:${touchedAt}`;
-  const folded = Boolean(theme) && !hovered && foldedFor === foldKey;
+  const foldKey = `${picked}:${touchedAt}`;
+  const folded = Boolean(picked) && !hovered && foldedFor === foldKey;
 
   // a mouse over the top bar wakes the row too
   useEffect(() => {
@@ -63,19 +131,23 @@ export function ThemeRow({
     };
   }, [wake]);
 
-  // fold two seconds after the last touch, only while a theme is chosen and nothing is over the row
+  // fold two seconds after the last touch, only while something is lit and nothing is over the
+  // row — a search lighting up folds the words at once
   useEffect(() => {
-    if (!theme || hovered) return;
-    const t = window.setTimeout(() => setFoldedFor(foldKey), FOLD_AFTER_MS);
+    if (!picked || hovered) return;
+    const t = window.setTimeout(
+      () => setFoldedFor(foldKey),
+      picked === 'search' && !touchedAt ? 0 : FOLD_AFTER_MS
+    );
     return () => window.clearTimeout(t);
-  }, [theme, hovered, foldKey]);
+  }, [picked, hovered, foldKey, touchedAt]);
 
   // phone: the chosen word to the second place from the left
   useLayoutEffect(() => {
     const row = rowRef.current;
     if (!row || row.scrollWidth <= row.clientWidth + 1) return;
     const items = Array.from(row.querySelectorAll<HTMLElement>('[data-w]'));
-    const at = items.findIndex((el) => el.dataset.w === (theme ?? ''));
+    const at = items.findIndex((el) => el.dataset.w === (picked ?? ''));
     const pad = parseFloat(getComputedStyle(row).paddingLeft) || 0;
     const left = at > 0 ? items[at - 1].offsetLeft - pad : 0;
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -85,7 +157,7 @@ export function ThemeRow({
       folded ? 260 : 0
     );
     return () => window.clearTimeout(t);
-  }, [theme, folded]);
+  }, [picked, folded]);
 
   /* Wider than the screen, the row runs sideways: a finger pans it natively
      (overflow-x + touch-action: pan-x), a vertical wheel turns into a sideways
@@ -129,7 +201,7 @@ export function ThemeRow({
       }
     }
     lefts.current = next;
-  }, [folded, theme]);
+  }, [folded, picked, chip]);
 
   // a mouse drags the row sideways; a drag is not a click on the word it ends on
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
@@ -161,7 +233,7 @@ export function ThemeRow({
   return (
     <div
       ref={rowRef}
-      className={`theme-row${halo ? ' is-halo' : ''}${away ? ' is-away' : ''}${hovered ? ' is-woken' : ''}${theme ? ' is-picked' : ''}${folded ? ' is-folded' : ''}${floating ? ' is-floating' : ''} ${className}`}
+      className={`theme-row${halo ? ' is-halo' : ''}${away ? ' is-away' : ''}${hovered ? ' is-woken' : ''}${picked ? ' is-picked' : ''}${chip ? ' is-search' : ''}${folded ? ' is-folded' : ''}${floating ? ' is-floating' : ''} ${className}`}
       role="group"
       aria-label={lang === 'ko' ? '사진 주제' : 'Photo themes'}
       // the row is not a swipe of the photo or a drag of the globe
@@ -181,6 +253,8 @@ export function ThemeRow({
           return;
         }
         if (!folded) return;
+        // the search chip is never folded: its words and its × are pressed as they are
+        if ((e.target as HTMLElement).closest('.theme-row__search')) return;
         e.preventDefault();
         e.stopPropagation();
         touch();
@@ -189,8 +263,8 @@ export function ThemeRow({
       <button
         type="button"
         data-w=""
-        className={`theme-row__w theme-row__all${theme ? '' : ' is-on'}`}
-        aria-pressed={!theme}
+        className={`theme-row__w theme-row__all${picked ? '' : ' is-on'}`}
+        aria-pressed={!picked}
         onClick={() => {
           setPhotoTheme(null);
           clearSearch();
@@ -198,6 +272,54 @@ export function ThemeRow({
       >
         <span className="theme-row__label">{lang === 'ko' ? '전체' : 'All'}</span>
       </button>
+      {/* the search lit: its words in the lit place, the rank, a × */}
+      {chip && (
+        <span
+          className={`theme-row__search${chipOut ? ' is-out' : ''}`}
+          data-w="search"
+          role="group"
+          aria-label={lang === 'ko' ? `검색 ${chip.text}` : `Search ${chip.text}`}
+        >
+          <button
+            type="button"
+            className="theme-row__w theme-row__q is-on"
+            title={chip.text}
+            aria-label={
+              lang === 'ko' ? `검색어 ${chip.text} — 다시 묻기` : `Search ${chip.text} — ask again`
+            }
+            onClick={() => {
+              // the field again, with these words — and the row the journey stands on picked
+              openSearch(rank?.n);
+              focusAskField();
+            }}
+          >
+            <span className="theme-row__label">
+              {Array.from(chip.text).length > CHIP_CHARS
+                ? `${Array.from(chip.text).slice(0, CHIP_CHARS).join('')}…`
+                : chip.text}
+            </span>
+          </button>
+          {rank && stopId !== undefined && (
+            <span className="theme-row__rank mono" aria-hidden="true">
+              <Rolling n={rank.n} />
+              <span className="theme-row__of">&nbsp;/&nbsp;{rank.of}</span>
+            </span>
+          )}
+          <button
+            type="button"
+            className="theme-row__x"
+            aria-label={lang === 'ko' ? '검색 끄기' : 'Turn the search off'}
+            onClick={() => clearSearch()}
+          >
+            <span aria-hidden="true" />
+          </button>
+          {rank && place && (
+            <span className="sr-only" aria-live="polite">
+              {lang === 'ko' ? `${rank.n}위 ${place}` : `#${rank.n} ${place}`}
+            </span>
+          )}
+        </span>
+      )}
       {THEMES.map((t) => {
         const on = t.id === theme;
         return (

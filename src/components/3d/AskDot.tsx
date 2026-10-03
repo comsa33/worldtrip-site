@@ -322,7 +322,7 @@ export function AskDot({ phone }: { phone: boolean }) {
         type="search"
         aria-hidden="true"
         tabIndex={-1}
-        onFocus={openSearch}
+        onFocus={() => openSearch()}
       />
     );
   }
@@ -375,7 +375,7 @@ export function AskDot({ phone }: { phone: boolean }) {
                 autoCapitalize="off"
                 spellCheck={false}
                 enterKeyHint="search"
-                onFocus={openSearch}
+                onFocus={() => openSearch()}
                 role="combobox"
                 aria-expanded={Boolean(answer)}
                 aria-controls="askdot-list"

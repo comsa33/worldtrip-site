@@ -114,9 +114,15 @@ export function useSearch(): SearchState {
   );
 }
 
-/** The field is up — the dot comes to it; over a lit answer, with its words. Off the net, the line says so instead. */
-export function openSearch() {
+/* Opened over a lit answer from its chip: the rank the journey is on, so the
+   same answer comes back with that row picked. */
+let reopenAt: number | null = null;
+
+/** The field is up — the dot comes to it; over a lit answer, with its words
+ *  (and, from the chip, the rank the journey stands on). Off the net, the line says so instead. */
+export function openSearch(atRank?: number) {
   if (state.mode !== 'closed') return;
+  reopenAt = atRank ?? null;
   if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     set({ mode: 'error', text: '', fault: 'offline', retryAt: 0, since: 0, at: Date.now() });
     return;
@@ -143,8 +149,15 @@ export function clearSearch() {
   listeners.forEach((l) => l());
 }
 
-function answerOf(text: string, a: Answer): SearchField {
-  return { mode: 'answer', text, pick: 0, expanded: false, stops: a.stops, theme: a.theme };
+function answerOf(text: string, a: Answer, pick = 0): SearchField {
+  return {
+    mode: 'answer',
+    text,
+    pick,
+    expanded: pick >= LIST_FIRST,
+    stops: a.stops,
+    theme: a.theme,
+  };
 }
 function noneOf(text: string, a: Answer, since: number): SearchField {
   return { mode: 'none', text, since, at: Date.now(), themes: a.themes };
@@ -182,7 +195,17 @@ export async function submitSearch(words?: string) {
   const known = remembered.get(text.toLowerCase());
   if (known) {
     seq += 1;
-    set(known.stops.length ? answerOf(text, known) : noneOf(text, known, since));
+    // the same words over their lit answer: the row the journey stands on is the one picked
+    let pick = 0;
+    if (reopenAt !== null && state.lit && state.lit.text === text) {
+      const id = state.lit.stops[reopenAt - 1]?.id;
+      pick = Math.max(
+        0,
+        known.stops.findIndex((r) => r.id === id)
+      );
+    }
+    reopenAt = null;
+    set(known.stops.length ? answerOf(text, known, pick) : noneOf(text, known, since));
     return;
   }
   const mine = ++seq;
