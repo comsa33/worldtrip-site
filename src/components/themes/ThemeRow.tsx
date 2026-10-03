@@ -14,7 +14,7 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { THEMES, THEME_TOTAL, setPhotoTheme, usePhotoTheme } from '../../lib/photoThemes';
-import { closeSearch } from '../../lib/search';
+import { clearSearch } from '../../lib/search';
 import './ThemeRow.css';
 
 type Lang = 'ko' | 'en';
@@ -193,7 +193,7 @@ export function ThemeRow({
         aria-pressed={!theme}
         onClick={() => {
           setPhotoTheme(null);
-          closeSearch();
+          clearSearch();
         }}
       >
         <span className="theme-row__label">{lang === 'ko' ? '전체' : 'All'}</span>
@@ -211,7 +211,7 @@ export function ThemeRow({
             onClick={() => {
               // one thing lit at a time: a theme chosen puts a search away
               setPhotoTheme(on ? null : t.id);
-              closeSearch();
+              clearSearch();
               touch();
             }}
           >

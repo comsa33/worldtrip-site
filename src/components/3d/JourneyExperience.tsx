@@ -29,8 +29,16 @@ import { TravelingDot } from '../gallery/TravelingDot';
 import { HeadTracker, JourneyDotOverlay, NoteSideProbe } from './JourneyDot';
 import { CursorHint, Kbd, SwipeHint } from './FirstStep';
 import { SoundToggle } from './SoundToggle';
-import { SearchField } from './SearchField';
-import { closeSearch, onAnswer, openSearch, useSearch, type SearchState } from '../../lib/search';
+import { AskDoor, AskDot } from './AskDot';
+import { focusAskField } from '../../lib/askField';
+import {
+  clearSearch,
+  closeSearch,
+  onAnswer,
+  openSearch,
+  useSearch,
+  type SearchState,
+} from '../../lib/search';
 import { landOn, setFlying, setMood, turnedTo } from '../../lib/sound';
 import { composeJourney } from '../../lib/journeyScore';
 import { ZOOM_DEFAULTS, legProfile, lookAlong, restZoomsByCountry, zoomAlong } from './cityZoom';
@@ -602,6 +610,56 @@ function RevealDriver({
   return null;
 }
 
+/**
+ * Thinking (K2): a spark runs the whole route while the question is out — one
+ * short dash on one dashed line over everything, its offset moved every frame.
+ * The camera does not move; only this does, so the frames are asked for here.
+ */
+const SCAN_MS = 2600;
+function RouteScan({
+  points,
+  color,
+  opacity,
+  width,
+}: {
+  points: PathPoint[];
+  color: string;
+  opacity: number;
+  width: number;
+}) {
+  const invalidate = useThree((s) => s.invalidate);
+  const pts = useMemo(() => points.map((p) => p.point), [points]);
+  const len = useMemo(() => pathLength(pts), [pts]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ref = useRef<any>(null);
+  const t0 = useRef(0);
+  useFrame(() => {
+    const m = ref.current?.material;
+    if (!m) return;
+    if (!t0.current) t0.current = performance.now();
+    const k = ((performance.now() - t0.current) % SCAN_MS) / SCAN_MS;
+    m.dashOffset = -k * len;
+    invalidate();
+  });
+  if (pts.length < 2) return null;
+  return (
+    <Line
+      ref={ref}
+      points={pts}
+      color={color}
+      lineWidth={width}
+      renderOrder={ROUTE_ORDER + 1}
+      transparent
+      opacity={opacity}
+      depthWrite={false}
+      dashed
+      dashSize={Math.max(0.05, len * 0.03)}
+      gapSize={1e6}
+      dashScale={1}
+    />
+  );
+}
+
 function TravelPath({
   points,
   segments,
@@ -1065,6 +1123,7 @@ function Scene({
   labels,
   photoTheme,
   searchRings,
+  scanning,
   rankLayer,
   onHand,
   onOpenStop,
@@ -1101,6 +1160,8 @@ function Scene({
   photoTheme: string | null;
   /** the stops a search answered, lit the same way, with their ranks (C3); null when none */
   searchRings: SearchRing[] | null;
+  /** a question is out: a spark runs the route (K2) */
+  scanning: boolean;
   /** where the ranks go (rendered outside the canvas) */
   rankLayer: React.RefObject<HTMLDivElement | null>;
   /** the hand on the globe (a drag), for the theme row to step back */
@@ -1399,6 +1460,14 @@ function Scene({
         dim={lit}
       />
       <RevealDriver segments={segments} run={revealRun} reveal={reveal} />
+      {scanning && (
+        <RouteScan
+          points={path}
+          color={GLOBE[theme].routePast}
+          opacity={theme === 'dark' ? 0.7 : 0.85}
+          width={size.width <= 768 ? 1.6 : 2.2}
+        />
+      )}
       <HeadTracker
         path={path}
         progress={progress}
@@ -1813,12 +1882,10 @@ function Header({
   note: string;
 }) {
   const { t, language } = useI18n();
-  const search = useSearch();
   return (
     <header
       ref={barRef}
       className="journey-header"
-      data-search={search.mode === 'closed' ? undefined : search.mode}
       // A switch pressed with the mouse lets go of the focus, so the arrow keys
       // go straight back to the journey. Pressed from the keyboard (detail 0)
       // it keeps it, and the reader tabbing along does not lose their place.
@@ -1826,7 +1893,23 @@ function Header({
         if (e.detail > 0) (e.target as HTMLElement).closest('button')?.blur();
       }}
     >
-      <SearchField brand={t('journey.brand')} />
+      <div className="journey-header__brand">
+        {/* the home of the dot — and, pressed, the door to asking it that is
+            always there, wherever the dot is */}
+        <button
+          type="button"
+          className="journey-header__mark"
+          aria-label={language === 'ko' ? '여정에서 찾기' : 'Ask the journey'}
+          title={language === 'ko' ? '여정에서 찾기 (/)' : 'Ask the journey (/)'}
+          onClick={() => {
+            openSearch();
+            focusAskField();
+          }}
+        >
+          <span className="journey-header__dot" data-dot-home aria-hidden="true" />
+        </button>
+        <span>{t('journey.brand')}</span>
+      </div>
       {rank && (
         <span className="journey-header__rank mono">
           <span className="journey-header__rank-n">
@@ -2126,7 +2209,8 @@ function JourneyExperienceContent() {
      word is the theme itself and has no rings of its own. */
   const search = useSearch();
   const searchMode = search.mode;
-  const searchStops = search.mode === 'result' && !search.theme ? search.stops : null;
+  const searchLit = search.lit;
+  const searchStops = searchLit && !searchLit.theme ? searchLit.stops : null;
   const rankLayerRef = useRef<HTMLDivElement>(null);
   const stopIndexOf = useCallback((id: number) => stops.findIndex((s) => s.id === id), [stops]);
   const searchRings = useMemo<SearchRing[] | null>(() => {
@@ -2260,6 +2344,11 @@ function JourneyExperienceContent() {
         closeSearch();
         return;
       }
+      // Esc over a lit answer: the lights go out
+      if (e.key === 'Escape' && searchLit) {
+        clearSearch();
+        return;
+      }
       // the dot stands up as a caret after the name: say where to go
       if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
@@ -2292,7 +2381,16 @@ function JourneyExperienceContent() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [currentStop, stepTo, selectedCity, globeView.mode, enterGlobe, exitGlobe, searchMode]);
+  }, [
+    currentStop,
+    stepTo,
+    selectedCity,
+    globeView.mode,
+    enterGlobe,
+    exitGlobe,
+    searchMode,
+    searchLit,
+  ]);
 
   /* An answer has come: a theme by another name is chosen, which the row
      shows, and the search is put away; otherwise the search is the one thing
@@ -2301,15 +2399,17 @@ function JourneyExperienceContent() {
   useEffect(
     () =>
       onAnswer((s: SearchState) => {
-        if (s.mode !== 'result') return;
-        setPhotoTheme(s.theme ?? null);
-        const top = s.stops[0] ? stopIndexOf(s.stops[0].id) : -1;
+        const lit = s.lit;
+        if (!lit) return;
+        setPhotoTheme(lit.theme ?? null);
+        const top = lit.stops[0] ? stopIndexOf(lit.stops[0].id) : -1;
         if (top >= 0) {
           setPlaying(false);
           if (globeView.mode === 'on') exitGlobe();
           goToStop(top);
         }
-        if (s.theme) closeSearch();
+        // a theme by another name is the theme chosen: nothing of its own stays lit
+        if (lit.theme) clearSearch();
       }),
     [stopIndexOf, goToStop, exitGlobe, globeView.mode]
   );
@@ -2321,16 +2421,17 @@ function JourneyExperienceContent() {
     return { n: at < 0 ? 1 : at + 1, of: searchStops.length };
   }, [searchStops, stops, currentStop]);
   const searchNote = useMemo(() => {
-    if (searchStops) {
-      const first = stops[stopIndexOf(searchStops[0].id)];
+    const told = search.mode === 'answer' && !search.theme ? search.stops : searchStops;
+    if (told) {
+      const first = stops[stopIndexOf(told[0].id)];
       const name = first ? cityLabel(first.city, language) : '';
       return language === 'ko'
-        ? `${searchStops.length}곳, 1위 ${name}`
-        : `${searchStops.length} stops, first ${name}`;
+        ? `${told.length}곳, 1위 ${name}`
+        : `${told.length} stops, first ${name}`;
     }
     if (search.mode === 'none') return language === 'ko' ? '맞는 곳이 없습니다' : 'Nothing matched';
     return '';
-  }, [searchStops, search.mode, stops, stopIndexOf, language]);
+  }, [searchStops, search, stops, stopIndexOf, language]);
 
   // Countries the journey has reached so far (lights their land dots on the globe)
   const visitedCountries = useMemo(() => {
@@ -2696,7 +2797,12 @@ function JourneyExperienceContent() {
   // home to the header's ring while the list is up and flies back after.
   // while the words are being written the dot is their caret in the header;
   // with an answer it is back on the globe, flying to the first stop
-  const searching = search.mode === 'open' || search.mode === 'waiting' || search.mode === 'none';
+  const searching =
+    search.mode === 'open' ||
+    search.mode === 'waiting' ||
+    search.mode === 'answer' ||
+    search.mode === 'none' ||
+    search.mode === 'error';
   const dotOnGlobe =
     dotOut && selectedCity === null && !finale && !(isMobile && railOpen) && !searching;
 
@@ -3050,6 +3156,7 @@ function JourneyExperienceContent() {
             labels={globeLabels}
             photoTheme={photoTheme}
             searchRings={searchRings}
+            scanning={searchMode === 'waiting'}
             rankLayer={rankLayerRef}
             onHand={setOrbitHeld}
             onOpenStop={handleOpenStop}
@@ -3202,6 +3309,14 @@ function JourneyExperienceContent() {
         lean={leanRef}
         next={nextCityName}
       />
+      {/* 「물어보기」, hung on the dot wherever it is */}
+      <AskDoor
+        seat={seatRef}
+        active={dotOnGlobe && (openingWritten || !openingUp)}
+        moving={globeMoving}
+        phone={isMobile}
+        ground={GLOBE[theme].sphere}
+      />
       {TUNE_ON && <RouteTuner theme={theme} />}
       {/* What a city has to say — only once the journey has actually stopped
           there. Scrubbing past a dozen of them says nothing. */}
@@ -3219,6 +3334,8 @@ function JourneyExperienceContent() {
           rides the head of the route on the globe, and flies into the photo
           book when one opens. */}
       <JourneyDotOverlay seat={seatRef} ribbon={ribbonRef} active={dotOnGlobe} />
+      {/* asking the dot: the field in the middle, the page dimmed */}
+      <AskDot phone={isMobile} />
       <TravelingDot />
 
       {/* Photo gallery overlay */}

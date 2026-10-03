@@ -229,3 +229,39 @@ fe79fcf 이후. 브랜치 `feat/photo-themes`, worktree 그대로, **푸시 안 
 3. `AskDoor` — 여정 좌석(`seatRef`) rect 를 rAF 로 읽어 +18,+12 에 「물어보기」(+ 데스크톱 kbd /). 3s 숨쉬기, 한 번 쓰면 35%, 둘러보기·사진첩·오프라인·찾기 중엔 숨김.
 4. `RouteScan` — Scene 안, 전체 경로 점으로 dashed Line 하나(dashSize 작게, gapSize 전체 길이), waiting 동안 useFrame 으로 dashOffset 을 2.6s 에 한 바퀴 + invalidate. 카메라 고정.
 5. 헤더 되돌리기(SearchField 제거, rank·sr-only 는 남김), `/` 키, dotOnGlobe 의 searching 에 answer·error 포함. 5182 에 띄워 루오님 확인 → 커밋 확정.
+
+## 19. K2 「닷에게 묻는다」 — 구현 인계 (2026-10-03, dev coder → coding worker)
+
+§18 의 계획을 구현했고 루오님 피드백 네 번(막대 정렬·커서 따라가기·목록 정책·A안 펼침)을 반영했다. **커밋 하나(K2)로 묶었고 「확인 대기」** — 루오님 최종 확인 전. 푸시 안 함.
+
+### 구조
+
+- `src/lib/search.ts` — 상태 하나. **칸(mode)** 과 **켜진 결과(lit)** 를 나눈다.
+  - mode: closed / open(커서) / waiting(닷이 눕고 숨쉼, 8s 시간 초과) / answer(목록 1–12, `pick` 고른 줄, `expanded`) / none(마침표 → 1.2s 뒤 칸이 비고 예시) / error(fault: fail·rate·offline, `retryAt` — 429 는 3s 뒤).
+  - lit: Enter(confirmAnswer) 로 가져간 답 `{ text, stops, theme? }`. 고리·순위 숫자·헤더 「n / m」·← → 는 lit 에서 나온다. `closeSearch` 는 칸만 닫고 lit 은 남김, `clearSearch`(칸 닫힌 채 Esc, 주제 고르기, 주제 낱말 답) 는 lit 도 끔.
+  - `remembered`: 같은 말(소문자) 은 이 방문 동안 캐시 → Jev 0건. `openSearch` 는 lit 이 있으면 그 말로 열림(AskDot 이 전부 선택).
+  - `onAnswer` 리스너(JourneyExperience): lit 이 생기면 setPhotoTheme(theme ?? null) + goToStop(1위) + 둘러보기면 exitGlobe.
+- `src/components/3d/AskDot.tsx` + `.css`
+  - `AskDot`: 오버레이(scrim 80/82%, 180ms in · 240ms out) + 가운데 블록(720/334px, top 250/190, 폰 키보드는 visualViewport 38%). 진짜 `<input>`(caret 숨김) 위에 stand-in 둘(전체 글 → 폭, 커서까지 글 → 닷 자리). 닷 좌석은 `.askdot__seat`(absolute, `--caret-height: 1.1`, 글자 상자 기준선 밑 0.12em, 막대가 글자 뒤 2px) — `selectionchange`/onSelect/keyup/click/compositionupdate 로 `caretAt` 갱신, `document.fonts.ready` 뒤 재측정. 예시(`useGhost`): 다섯, 90/1600/40/300ms, 두 바퀴. Enter: open 이면 submit(빈 칸이면 지금 써지는 예시), answer 면 confirmAnswer(pick). ↑↓: pickAnswer, 끝 넘으면 expandAnswer. Esc: closeSearch.
+  - 답 목록(A안): 1–12 한 목록(처음 5, 「외 n곳」/↓로 12). 고른 줄만 제자리에서 펼쳐짐(`.askdot__more` grid 0fr→1fr 200ms; 사진 480 exact 타일 + 연월 + 나라·사진 수). 연타는 120ms 머문 줄만 펼침(`settledPick`), 다음 줄 사진 하나만 미리 부름. 마우스: pointerenter(mouse) = 펼침, 클릭 = 가기. 폰: 접힌 줄 탭 = 펼침, 펼친 줄 탭 = 가기(`lastPointer`). 닷은 펼친 줄의 도시 이름 뒤 `.askdot__seat--city`. aria: input combobox + listbox/option + activedescendant.
+  - `AskDoor`: 여정 좌석(seatRef) rect 를 rAF 로 읽어 +18,+12(폰 +14,+10) 에 「물어보기」(+ kbd /). 어느 모드든 닷에 붙음; `moving`(globeMoving) 동안 숨고 멈춘 뒤 1.2s 에 400ms 로 복귀; 좌석 carry 가 hidden/ribbon 이면 `data-hidden`. 한 번 물으면 35%(`useAsked`).
+  - `src/lib/askField.ts`: 문·헤더 고리가 같은 제스처 안에서 input 을 focus(폰 키보드).
+- `JourneyExperience.tsx`: `RouteScan`(waiting 동안 전체 경로에 dashed Line 하나, dashOffset 2.6s 한 바퀴, invalidate, 라이트 0.85/다크 0.7), 헤더 브랜드의 집 고리 = 늘 있는 문(`journey-header__mark`), `searching`(open/waiting/answer/none/error) 이면 dotOnGlobe false, Esc: 칸 → closeSearch, 칸 닫힌 채 lit → clearSearch, `/` 는 openSearch.
+- `TravelingDot`: carry `fade`(data-faint 50%), `caretVars` 가 호스트의 `--caret-height` 를 읽음.
+- 걷은 것: `SearchField.tsx/.css`(C3 헤더 입력), 호버 힌트·기간 비켜섬·폰 링크 숨김.
+
+### 측정(headless, `node_modules/.cache/b1/` — git 밖, Cloudinary 차단)
+
+- `k2.mjs <url> desk|phone [query]`: 문 → 열림 → 예시 → 입력 → 생각 → 답 → Enter → 결과 → Esc 의 상태·닷 자리.
+- `k2list.mjs <url> desk|phone`: A안 정책 — ↓↑ 펼침 이동, 1위 복귀, 연타(120ms), ↓로 12 펼침, Enter 3위, / 다시 열기(검색어 선택), 같은 말 Enter 호출 0, Esc 두 단계, 「외」 클릭, 올림/클릭, 폰 두 번 탭. `calls` 로 /api/search 요청 수를 센다.
+- 막대 정렬은 이 절 위의 대화에 쓴 인라인 스크립트(빈 칸·한글·혼합·Home·→·끼워 넣기·Shift 선택·지우기·End·중간 클릭, 틈 1~4px·세로 글자 상자) — 다시 쓰려면 k2list 를 본떠 만든다.
+- 그 밖: `g1.mjs`/`g1tops.mjs`/`g1click.mjs`(사진첩 띠·세로·클릭), `c3field.mjs`/`c3result.mjs`(옛 C3).
+
+### 남은 것·주의
+
+- **루오님 최종 확인 대기**(A안 펼침, 폰 키보드 38%·iOS 키보드 뜸은 headless 로 못 봄). 확인 뒤 커밋 메시지의 「확인 대기」를 걷는 커밋(또는 수정 커밋)을 얹는다.
+- 미푸시 커밋: d8c6cf5(사진 칸 클릭 영역), 62f5733(api/search import attribute)·58047d5(클릭·커서) 는 이미 푸시됐을 수 있음 — `git log origin/main..HEAD` 로 확인. K2 커밋은 미푸시. 푸시·배포는 루오님 허락 뒤 총괄(master [c19f56])이.
+- 서버: 5182(preview, Tailscale 100.98.29.113, 실제 Jev 호출)·5184(총괄의 localhost 사본)·5190(dev, localhost). 백그라운드 2시간에 꺼진다. 이 세션 Jev 누적 약 28건(dev 8 + 이전 ~20).
+- **로컬 main 의 7951b5b(Cloudinary 변환 축소)는 건드리지 말 것** — 브랜치를 먼저 올리고 크레딧이 내려간 뒤 rebase(§「배포 준비 점검」 보고: Filmstrip.tsx import 한 줄 충돌).
+- 닷 비행은 사이트 공통 520ms(디자이너 340ms 와 다름, 총괄 확정). 영문 예시는 dev coder 번역.
+- 예시 다섯은 모두 /api/search 결과 1곳 이상(2026-10-03 확인).

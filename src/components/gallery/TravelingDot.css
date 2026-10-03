@@ -320,6 +320,14 @@
   }
 }
 
+/* no answer could come: the dot goes faint and still */
+.tdot__ball {
+  transition: opacity 240ms var(--ease);
+}
+.tdot__ball[data-faint] {
+  opacity: 0.5;
+}
+
 /* a cursor blinks while the hand pauses; it steps, never fades */
 .tdot__ball[data-blink] {
   animation: tdotBlink 1.06s step-end infinite;

@@ -132,6 +132,70 @@
   box-shadow: inset 0 0 0 1.5px var(--accent);
 }
 
+/* the mark is also a door — to asking the dot — drawn as the dot alone */
+.journey-header__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 32px;
+  margin: 0 -8px 0 -9px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.journey-header__mark:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* an answer up: which of its stops the journey is on, where the period was */
+.journey-header__rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.journey-header__rank-keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.journey-header__rank-keys > span {
+  margin-left: 2px;
+}
+
+/* the ranks beside the lit rings: small, mono, at each ring's right — not
+   where a city's name sits (above), and not its shape */
+.search-ranks {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+.search-ranks__n {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-100px, -100px);
+  margin-top: -6px;
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--ink-2);
+  opacity: 0;
+  transition: opacity var(--t-fast) var(--ease);
+}
+.search-ranks__n.is-on {
+  opacity: 1;
+}
+
 .journey-header__period {
   font-size: 12px;
   color: var(--ink-3);
@@ -623,6 +687,14 @@ html[data-globe-view='on'] .canvas-container:active {
 
   .journey-header__sep {
     margin: 0 2px;
+  }
+
+  .journey-header__mark {
+    height: 28px;
+  }
+
+  .journey-header__rank-keys {
+    display: none;
   }
 
   .stop-rail--sheet {

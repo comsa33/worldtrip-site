@@ -1,38 +1,62 @@
 /**
- * Finding a stop by saying it — the one search of the site.
+ * Asking the dot — the one search of the site (K2).
  *
- * The dot in the header stands up as the caret after the site's name; the
- * words go to /api/search, which ranks the journey's stops against them; the
- * dot flies to the first. This is the state of that, one for the whole site,
- * the way the theme choice is.
+ * The dot leaves the globe and stands up as the caret of a large field in the
+ * middle of the screen; the words go to /api/search, which ranks the
+ * journey's stops against them; the answer stands under the words, and on
+ * Enter the dot flies to it. This is the state of that, one for the whole
+ * site, the way the theme choice is.
+ *
+ * Two things are held apart: what the field is doing (`mode`) and what is lit
+ * on the globe (`lit`). An answer taken lights its stops and closes the
+ * field; the field opens again over them with the same words, and only a new
+ * answer taken puts new stops in their place.
  */
 import { useSyncExternalStore } from 'react';
 
 /** A stop and how well it answered, 0 to 1, best first. */
 export type Ranked = { id: number; score: number };
 
-export type SearchState =
-  | { mode: 'closed'; text: '' }
-  /** the caret stands after the name; the hand writes */
+export type SearchFault = 'fail' | 'rate' | 'offline';
+
+/** An answer: the stops, best first, and the theme when the words were one. */
+export type Answer = { stops: Ranked[]; theme?: string };
+
+export type SearchField =
+  | { mode: 'closed' }
+  /** the field is up and the dot is its caret; the hand writes */
   | { mode: 'open'; text: string }
   /** sent; the dot lies down and breathes until the answer */
   | { mode: 'waiting'; text: string }
-  /** the stops that answered, best first; `theme` when the words were one */
-  | { mode: 'result'; text: string; stops: Ranked[]; theme?: string }
-  /** nothing answered: the dot sits as a full stop, then the words go */
-  | { mode: 'none'; text: string };
+  /** the answer stands under the words: `pick` is the one previewed, the list open or not */
+  | ({ mode: 'answer'; text: string; pick: number; expanded: boolean } & Answer)
+  /** nothing answered: the dot sits as a full stop and the examples write again */
+  | { mode: 'none'; text: string }
+  /** no answer could come: the dot goes faint, one line says so, 「다시」 */
+  | { mode: 'error'; text: string; fault: SearchFault; retryAt: number };
+
+export type SearchState = SearchField & {
+  /** the answer taken last — its stops are lit on the globe — with its words */
+  lit: (Answer & { text: string }) | null;
+};
 
 export const MAX_QUERY_CHARS = 80;
-/** How long the full stop sits after nothing was found. */
-const NONE_MS = 2000;
+/** Longer than this without an answer is no answer. */
+const TIMEOUT_MS = 8000;
+/** After the rate limit, no retry sooner than this. */
+const RATE_RETRY_MS = 3000;
+/** How many of the answer's stops are listed at first, and at most. */
+export const LIST_FIRST = 5;
+export const LIST_MOST = 12;
 
-let state: SearchState = { mode: 'closed', text: '' };
+let state: SearchState = { mode: 'closed', lit: null };
 const listeners = new Set<() => void>();
-let noneTimer = 0;
 let seq = 0;
+/* The same words asked again this visit are answered from here, not Jev. */
+const remembered = new Map<string, Answer>();
 
-function set(next: SearchState) {
-  state = next;
+function set(next: SearchField) {
+  state = { ...next, lit: state.lit };
   listeners.forEach((l) => l());
 }
 
@@ -41,14 +65,24 @@ const subscribe = (l: () => void) => {
   return () => listeners.delete(l);
 };
 
-/* The page is told when an answer comes — a result or none — so it can act
-   on it (go to the first stop) the once, as it would on a press. */
+/* The page is told when an answer is taken — Enter on the answer — so it can
+   act on it (go to the first stop, light the rest) the once, as on a press. */
 const answerListeners = new Set<(s: SearchState) => void>();
 export function onAnswer(l: (s: SearchState) => void) {
   answerListeners.add(l);
   return () => {
     answerListeners.delete(l);
   };
+}
+
+/* Whether a question has been asked this visit — the door goes faint after one. */
+let asked = false;
+export function useAsked(): boolean {
+  return useSyncExternalStore(
+    subscribe,
+    () => asked,
+    () => false
+  );
 }
 
 export function useSearch(): SearchState {
@@ -59,59 +93,122 @@ export function useSearch(): SearchState {
   );
 }
 
+/** The field is up — the dot comes to it; over a lit answer, with its words. Off the net, the line says so instead. */
 export function openSearch() {
   if (state.mode !== 'closed') return;
-  window.clearTimeout(noneTimer);
-  set({ mode: 'open', text: '' });
+  asked = true;
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+    set({ mode: 'error', text: '', fault: 'offline', retryAt: 0 });
+    return;
+  }
+  set({ mode: 'open', text: state.lit?.text ?? '' });
 }
 
 export function setSearchText(text: string) {
   if (state.mode === 'closed') return;
   seq += 1; // words changed: an answer on its way is to the old ones
-  window.clearTimeout(noneTimer);
   set({ mode: 'open', text: text.slice(0, MAX_QUERY_CHARS) });
 }
 
+/** The field goes; what was lit stays lit. */
 export function closeSearch() {
-  window.clearTimeout(noneTimer);
   seq += 1;
-  set({ mode: 'closed', text: '' });
+  set({ mode: 'closed' });
 }
 
-/** Enter: the words go, and the answer comes back as a result or as none. */
-export async function submitSearch() {
-  if (state.mode !== 'open' && state.mode !== 'result' && state.mode !== 'none') return;
-  const text = state.text.trim();
+/** Esc over a lit answer: the lights go out too. */
+export function clearSearch() {
+  seq += 1;
+  state = { mode: 'closed', lit: null };
+  listeners.forEach((l) => l());
+}
+
+function answerOf(text: string, a: Answer): SearchField {
+  return { mode: 'answer', text, pick: 0, expanded: false, stops: a.stops, theme: a.theme };
+}
+
+/** Enter: the words go, and what comes back is an answer, none, or a fault. */
+export async function submitSearch(words?: string) {
+  if (state.mode === 'closed' || state.mode === 'waiting') return;
+  if (state.mode === 'error' && Date.now() < state.retryAt) return;
+  const text = (words ?? state.text).trim();
   if (!text) return;
+  const known = remembered.get(text.toLowerCase());
+  if (known) {
+    seq += 1;
+    set(known.stops.length ? answerOf(text, known) : { mode: 'none', text });
+    return;
+  }
   const mine = ++seq;
-  window.clearTimeout(noneTimer);
   set({ mode: 'waiting', text });
   let stops: Ranked[] = [];
   let theme: string | undefined;
+  let fault: SearchFault | null = null;
   try {
     const res = await fetch('/api/search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ q: text }),
+      signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     if (res.ok) {
       const data = (await res.json()) as { stops?: Ranked[]; theme?: string };
       stops = data.stops ?? [];
       theme = data.theme;
-    }
-    // any refusal (rate, length, the key away) reads as nothing found: the
-    // page has no words for it, and the dot sitting down says enough
+    } else if (res.status === 429) fault = 'rate';
+    else if (res.status === 400 || res.status === 413)
+      stops = []; // not a question
+    else fault = 'fail';
   } catch {
-    stops = [];
+    fault = typeof navigator !== 'undefined' && navigator.onLine === false ? 'offline' : 'fail';
   }
   if (mine !== seq) return; // the hand moved on meanwhile
-  if (stops.length) {
-    set(theme ? { mode: 'result', text, stops, theme } : { mode: 'result', text, stops });
-  } else {
-    set({ mode: 'none', text });
-    noneTimer = window.setTimeout(() => {
-      if (state.mode === 'none') closeSearch();
-    }, NONE_MS);
+  if (fault) {
+    set({
+      mode: 'error',
+      text,
+      fault,
+      retryAt: Date.now() + (fault === 'rate' ? RATE_RETRY_MS : 0),
+    });
+    return;
   }
+  const a: Answer = theme ? { stops, theme } : { stops };
+  remembered.set(text.toLowerCase(), a);
+  if (remembered.size > 40) {
+    const oldest = remembered.keys().next().value;
+    if (oldest !== undefined) remembered.delete(oldest);
+  }
+  set(stops.length ? answerOf(text, a) : { mode: 'none', text });
+}
+
+/** Another of the answer's stops previewed — ↑ ↓, a hover, a first tap. */
+export function pickAnswer(i: number) {
+  if (state.mode !== 'answer') return;
+  const last = Math.min(state.stops.length, state.expanded ? LIST_MOST : LIST_FIRST) - 1;
+  const pick = Math.max(0, Math.min(last, i));
+  if (pick === state.pick) return;
+  set({ ...state, pick });
+}
+
+/** 「외 n곳」: the list opens out to LIST_MOST. */
+export function expandAnswer() {
+  if (state.mode !== 'answer' || state.expanded) return;
+  set({ ...state, expanded: true });
+}
+
+/** Enter on the answer, or a press on the preview: the dot goes to the one picked. */
+export function confirmAnswer(stopId?: number) {
+  if (state.mode !== 'answer') return;
+  const { text, theme } = state;
+  const first = stopId ?? state.stops[state.pick]?.id ?? state.stops[0].id;
+  const stops = [...state.stops].sort((a, b) => (a.id === first ? -1 : b.id === first ? 1 : 0));
+  state = { mode: 'closed', lit: theme ? { text, stops, theme } : { text, stops } };
+  listeners.forEach((l) => l());
   answerListeners.forEach((l) => l(state));
+}
+
+/** 「다시」 — the same words again. */
+export function retrySearch() {
+  if (state.mode !== 'error') return;
+  void submitSearch(state.text);
 }

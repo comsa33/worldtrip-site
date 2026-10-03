@@ -204,8 +204,10 @@ export function TravelingDot() {
           } else if (wasCaret) {
             lieDown();
           }
-          // sent off and waiting for the answer: the dot breathes where it lies
+          // sent off and waiting for the answer: the dot breathes where it lies;
+          // no answer could come: it goes faint and still
           ball?.toggleAttribute('data-wait', carry === 'wait');
+          ball?.toggleAttribute('data-faint', carry === 'fade');
           if (carry.startsWith('land')) bounce();
           lastCarry = carry;
         }
@@ -220,7 +222,9 @@ export function TravelingDot() {
       if (!ball) return;
       const line = host.parentElement ?? host;
       const fontSize = parseFloat(getComputedStyle(line).fontSize) || 13;
-      const h = (fontSize * 0.92) / size;
+      // a host may say how tall, in ems of its line (a large field: the letters' own height)
+      const ratio = numVar(getComputedStyle(host), '--caret-height', 0.92);
+      const h = (fontSize * ratio) / size;
       const w = 1.4 / size;
       ball.style.setProperty('--cx', String(w));
       ball.style.setProperty('--cy', String(h));
@@ -236,6 +240,7 @@ export function TravelingDot() {
       ball.removeAttribute('data-blink');
       ball.removeAttribute('data-caret-out');
       ball.removeAttribute('data-wait');
+      ball.removeAttribute('data-faint');
     };
     /** The caret folds back into the dot — the standing-up run backwards. */
     const lieDown = () => {

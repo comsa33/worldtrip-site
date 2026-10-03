@@ -1,0 +1,430 @@
+/* ── asking the dot (K2) ─────────────────────────────────────────────────
+   The page dims and a large field stands in the middle; the dot is its
+   caret. No panel, no box: the words, a rule under them, and the dot. */
+
+.askdot {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+}
+
+.askdot__scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  opacity: 1;
+  transition: opacity 180ms var(--ease);
+}
+/* thinking and the answer sit on a shade more */
+.askdot[data-mode='waiting'] .askdot__scrim,
+.askdot[data-mode='answer'] .askdot__scrim {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+}
+.askdot[data-leaving] .askdot__scrim {
+  opacity: 0;
+  transition: opacity 240ms var(--ease);
+}
+
+.askdot__centre {
+  --ask-top: 250px;
+  position: absolute;
+  left: 50%;
+  top: var(--ask-top);
+  width: 720px;
+  margin-left: -360px;
+  animation: askRise 340ms var(--ease) both;
+}
+.askdot[data-leaving] .askdot__centre {
+  animation: askLeave 240ms var(--ease) both;
+}
+@keyframes askRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes askLeave {
+  to {
+    opacity: 0;
+  }
+}
+
+/* the field: the words at 34px, one rule under them */
+.askdot__field {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  min-height: 1.3em;
+  font-size: 34px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ink-2);
+  white-space: nowrap;
+  transition: border-color 200ms var(--ease);
+}
+.askdot[data-mode='waiting'] .askdot__field,
+.askdot[data-mode='answer'] .askdot__field,
+.askdot[data-mode='none'] .askdot__field,
+.askdot[data-mode='error'] .askdot__field {
+  border-bottom-color: var(--line-strong);
+}
+
+.askdot__mirror {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+}
+
+.askdot__input {
+  width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  caret-color: transparent;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.askdot__input::-webkit-search-decoration,
+.askdot__input::-webkit-search-cancel-button {
+  display: none;
+}
+/* the words, once sent, step back a shade; found nothing, they fade */
+.askdot[data-mode='waiting'] .askdot__input,
+.askdot[data-mode='answer'] .askdot__input {
+  color: var(--ink);
+}
+.askdot[data-mode='none'] .askdot__input,
+.askdot[data-mode='error'] .askdot__input {
+  color: var(--ink-3);
+}
+/* closed: the field is kept, unseen, for a door to focus */
+.askdot__input--away {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* the examples writing themselves in the empty field; a press asks that */
+.askdot__ghost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: var(--ink-3);
+  white-space: pre;
+  cursor: pointer;
+}
+
+.askdot__text--faint {
+  color: var(--ink-3);
+}
+
+/* where the dot sits: at the caret, between the letters, its foot a little
+   under the baseline (placed by AskDot from the measured words). The dot
+   stands up from it to 1.1em — the letters' own height. */
+.askdot__seat {
+  --dot-size: 8px;
+  --caret-height: 1.1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 8px;
+}
+/* …and by the city's name in the answer: 4px after it, on the x-height */
+.askdot__seat--city {
+  position: static;
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: middle;
+  transform: translateY(-2px);
+}
+
+.askdot__line {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.askdot__sep {
+  margin: 0 6px;
+}
+.askdot__retry {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.askdot__retry:disabled {
+  color: var(--ink-3);
+  cursor: default;
+  text-decoration: none;
+}
+
+/* the answer: one list, 1–12. The row picked opens out in its place — its
+   picture, the month, the country, the photos; the rest stay one line. The
+   opening is a grid row going 0fr → 1fr, short, so the list does not heave. */
+.askdot__answer {
+  margin-top: 18px;
+  animation: askFade 340ms var(--ease) both;
+}
+@keyframes askFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* opened out to twelve: the list alone scrolls, the words above stay */
+.askdot__answer.is-open {
+  max-height: calc(100dvh - var(--ask-top) - 150px);
+  overflow-y: auto;
+}
+.askdot__row {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  font: inherit;
+  color: var(--ink-2);
+  text-align: left;
+  cursor: pointer;
+  transition: color 200ms var(--ease);
+}
+.askdot__row.is-picked {
+  color: var(--ink);
+}
+.askdot__line1 {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 7px 0;
+  font-size: 14px;
+}
+.askdot__rank {
+  width: 14px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.askdot__row.is-picked .askdot__rank {
+  color: var(--ink);
+}
+.askdot__when {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+/* the opening: height from the grid, 200ms, no slide */
+.askdot__more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms var(--ease);
+}
+.askdot__more.is-on {
+  grid-template-rows: 1fr;
+}
+.askdot__more-in {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  min-height: 0;
+  overflow: hidden;
+  padding-left: 26px;
+}
+.askdot__more.is-on .askdot__more-in {
+  padding-bottom: 12px;
+}
+.askdot__picture {
+  width: 96px;
+  height: 72px;
+  flex-shrink: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.askdot__picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.askdot__words {
+  display: block;
+  min-width: 0;
+}
+.askdot__title {
+  display: block;
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.askdot__meta {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.askdot__beyond {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  color: var(--ink-3);
+  text-align: left;
+  cursor: pointer;
+}
+.askdot__beyond:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 768px) {
+  .askdot__centre {
+    --ask-top: 190px;
+    width: 334px;
+    margin-left: -167px;
+  }
+  .askdot__field {
+    font-size: 24px;
+    padding-bottom: 10px;
+  }
+  .askdot__line {
+    font-size: 11px;
+  }
+  .askdot__answer {
+    margin-top: 14px;
+  }
+  .askdot__more-in {
+    gap: 12px;
+    padding-left: 26px;
+  }
+  .askdot__picture {
+    width: 64px;
+    height: 48px;
+  }
+  .askdot__title {
+    font-size: 17px;
+  }
+  .askdot__line1 {
+    padding: 6px 0;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .askdot__centre,
+  .askdot__answer {
+    animation: none;
+  }
+  .askdot__more {
+    transition: none;
+  }
+  .askdot__scrim {
+    transition: none;
+  }
+}
+
+/* ── the door: one line hung on the dot ──────────────────────────────── */
+.ask-door {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-2);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms var(--ease);
+  will-change: transform;
+}
+.ask-door.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 400ms var(--ease);
+}
+.ask-door[data-hidden] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms var(--ease);
+}
+/* once asked, it stays, fainter */
+.ask-door.is-on.is-asked {
+  opacity: 0.35;
+}
+.ask-door__word {
+  margin: 0;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  /* the same halo the labels over the globe wear */
+  text-shadow:
+    0 0 2px var(--globe-ground, var(--bg)),
+    0 0 4px var(--globe-ground, var(--bg)),
+    0 0 8px var(--globe-ground, var(--bg));
+  animation: askBreathe 3s ease-in-out infinite;
+}
+.ask-door.is-asked .ask-door__word {
+  animation: none;
+}
+@keyframes askBreathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.ask-door__key {
+  opacity: 0.8;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ask-door__word {
+    animation: none;
+  }
+}
