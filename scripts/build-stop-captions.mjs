@@ -3,6 +3,8 @@
 // 사진→정거장 짝은 사이트와 같은 규칙(src/lib/visitPhotos.ts: 찍은 날이 든 방문, 없으면
 // 가장 가까운 방문)으로 배포 데이터(cityPhotos.json · journey.json)에서만 만든다.
 // Apple 설명문·장면 라벨·얼굴 이름은 재료가 아니다.
+// 요약용 사본 api/stopSummary.json 도 함께 만든다: 정거장 이야기·캡션을 Jev 입력에 맞게 줄인 것
+// (화면의 캡션과 사진 고르기는 stopCaptions.json 그대로).
 // 실행: node scripts/build-stop-captions.mjs   (npm run build / npm test 앞에 저절로 돈다)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -74,13 +76,68 @@ export function buildStopCaptions() {
 
 export const OUT = path.join(ROOT, 'api/stopCaptions.json');
 
+// ---- 요약용 사본 ---------------------------------------------------------------
+// 검색 한 번에 정거장 요약 전부가 Jev 로 간다(입력 한도 64K). 2026-10-03 측정: 아래 셋을
+// 합치면 46.8K → 39.3K 토큰, 질의 여섯의 상위 12곳이 Q2 그대로와 47/50 겹치고 맞힌 곳 수는
+// 같았다. 정거장당 20장 상한은 「30장 중 한 장」인 정거장의 그 한 장을 버려 쓰지 않는다.
+const ARTICLES = /\b(a|an|the)\b\s*/gi;
+const FILLER = /\b(I|my|was|were|there|just|very)\b\s*/g;
+const IGNORED = new Set('a an the i my me we our was were is are it its there this that so just then very also'.split(' '));
+const wordsOf = (s) =>
+  new Set((s.toLowerCase().match(/[a-zà-ÿ0-9'-]+/g) ?? []).filter((w) => w.length > 2 && !IGNORED.has(w)));
+const overlap = (a, b) => {
+  let n = 0;
+  for (const w of a) if (b.has(w)) n++;
+  return n;
+};
+
+/** { "<stopId>": { story?, captions } } — Jev 에게 보내는 이야기·캡션, 줄인 것. */
+export function buildStopSummary(stopCaptions = buildStopCaptions()) {
+  const notes = read('src/data/cityNotes.json');
+  const out = {};
+  for (const s of read('src/data/journey.json').stops) {
+    const story = notes[String(s.id)]?.en?.story?.replace(/\s*\n\s*/g, ' ').trim();
+    const list = stopCaptions[String(s.id)] ?? [];
+    if (!story && !list.length) continue;
+    const storyWords = story ? wordsOf(story) : new Set();
+    const kept = [];
+    const seen = [];
+    for (const { en } of list) {
+      const w = wordsOf(en);
+      // ① 이야기가 이미 말한 것(낱말의 60% 이상이 이야기에 있다)
+      if (w.size && overlap(w, storyWords) / w.size >= 0.6) continue;
+      // ② 앞의 캡션과 거의 같은 것(자카드 0.6 이상)
+      if (seen.some((x) => { const n = overlap(x, w); return n / (x.size + w.size - n || 1) >= 0.6; })) continue;
+      seen.push(w);
+      // ③ 관사·대명사 같은 군말을 걷는다
+      const short = en.trim().replace(/[.。]$/, '').replace(ARTICLES, '').replace(FILLER, '').replace(/\s+/g, ' ').replace(/[.,]$/, '').trim();
+      if (short) kept.push(short);
+    }
+    const row = { captions: kept };
+    if (story) row.story = story.replace(ARTICLES, '');
+    out[String(s.id)] = row;
+  }
+  return out;
+}
+
+export const SUMMARY_OUT = path.join(ROOT, 'api/stopSummary.json');
+
+function write(file, data) {
+  const text = JSON.stringify(data, null, 2) + '\n';
+  const before = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+  if (before !== text) fs.writeFileSync(file, text);
+  return before === text;
+}
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const out = buildStopCaptions();
-  const text = JSON.stringify(out, null, 2) + '\n';
-  const before = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
-  if (before !== text) fs.writeFileSync(OUT, text);
+  const same = write(OUT, out);
   const n = Object.values(out).reduce((a, l) => a + l.length, 0);
   console.log(
-    `api/stopCaptions.json: ${Object.keys(out).length} stops, ${n} captions${before === text ? ' (unchanged)' : ''}`
+    `api/stopCaptions.json: ${Object.keys(out).length} stops, ${n} captions${same ? ' (unchanged)' : ''}`
   );
+  const summary = buildStopSummary(out);
+  const sameSummary = write(SUMMARY_OUT, summary);
+  const k = Object.values(summary).reduce((a, r) => a + r.captions.length, 0);
+  console.log(`api/stopSummary.json: ${k} captions for Jev${sameSummary ? ' (unchanged)' : ''}`);
 }

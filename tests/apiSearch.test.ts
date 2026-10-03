@@ -64,15 +64,36 @@ test('a stop is described with the captions of its photos, and nothing from Appl
   const m = await load();
   const cairo = m.SUMMARIES.find((s) => s.id === 53);
   assert.ok(cairo, 'Cairo (53) is summarised');
-  assert.match(cairo.text, /Captions: .*Cairo airport on the day I arrived/);
+  // as trimmed for Jev: "Cairo airport on the day I arrived" → no articles, no "I"
+  assert.match(cairo.text, /Captions: .*Cairo airport on day arrived/);
   assert.match(cairo.text, /Photos of: /);
   for (const s of m.SUMMARIES) assert.doesNotMatch(s.text, /appleCaption|scene labels?/i);
 });
 
 test('the stop captions file is what the captions say now', async () => {
-  const { buildStopCaptions, OUT } = await import('../scripts/build-stop-captions.mjs');
+  const { buildStopCaptions, buildStopSummary, OUT, SUMMARY_OUT } = await import(
+    '../scripts/build-stop-captions.mjs'
+  );
   const fs = await import('node:fs');
   assert.deepEqual(JSON.parse(fs.readFileSync(OUT, 'utf8')), buildStopCaptions());
+  assert.deepEqual(JSON.parse(fs.readFileSync(SUMMARY_OUT, 'utf8')), buildStopSummary());
+});
+
+test('the copy for Jev is trimmed, the captions on screen are not', async () => {
+  const { buildStopCaptions, buildStopSummary } = await import('../scripts/build-stop-captions.mjs');
+  const full = buildStopCaptions();
+  const trimmed = buildStopSummary(full);
+  const count = (o: Record<string, unknown[]>) => Object.values(o).reduce((n, l) => n + l.length, 0);
+  const kept = Object.values(trimmed as Record<string, { captions: string[] }>).reduce(
+    (n, r) => n + r.captions.length,
+    0
+  );
+  assert.ok(kept < count(full), `${kept} of ${count(full)} captions kept`);
+  // Bangalore (21): five dog photos, each still said once somewhere for Jev
+  const bangalore = (trimmed as Record<string, { story?: string; captions: string[] }>)['21'];
+  assert.match([bangalore.story, ...bangalore.captions].join(' '), /\bdogs?\b/i);
+  for (const r of Object.values(trimmed as Record<string, { captions: string[] }>))
+    for (const c of r.captions) assert.doesNotMatch(c, /\b(the|an?)\b/i);
 });
 
 test('the answers are read: the gate, the line, the near themes', async () => {

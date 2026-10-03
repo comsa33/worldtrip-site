@@ -1,4 +1,4 @@
-// 검색 데이터의 판: 정거장·이야기·태그·캡션 파일의 해시. 배포마다 바뀌면 엣지 캐시 URL(v=)이
+// 검색 데이터의 판: 정거장·이야기·태그·캡션·요약용 사본 파일의 해시. 배포마다 바뀌면 엣지 캐시 URL(v=)이
 // 바뀌어 묵은 답이 나가지 않고, 구운 예시(searchExamples.json)의 신선도도 이것으로 잰다.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,6 +12,7 @@ export const DATA_FILES = [
   'src/data/photoTags.json',
   'src/data/cities.json',
   'api/stopCaptions.json',
+  'api/stopSummary.json',
 ];
 
 /** Ten hex characters of the hash of the data /api/search answers from. */

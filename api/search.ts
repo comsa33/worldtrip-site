@@ -6,19 +6,20 @@
  * prose, so nothing is written here: the answer can only ever be an order of
  * stops that already exist. What is sent about a stop is what the site already
  * shows — its city, its dates, its published story (cityNotes en), the
- * captions of its photos (en, scripts/build-stop-captions.mjs) and how many of
+ * captions of its photos (en, scripts/build-stop-captions.mjs — the story and
+ * captions trimmed for Jev's input in api/stopSummary.json) and how many of
  * its photos are of each theme (photoTags). No Apple caption, no label, no name.
  *
  * A Vercel Function (web signature, Node runtime). On dev and preview the
  * plugin in dev/searchDev.ts answers the same path with this handler.
  */
 import journeyData from '../src/data/journey.json' with { type: 'json' };
-import notesData from '../src/data/cityNotes.json' with { type: 'json' };
 import tagsData from '../src/data/photoTags.json' with { type: 'json' };
 import citiesData from '../src/data/cities.json' with { type: 'json' };
 import captionsData from './stopCaptions.json' with { type: 'json' };
 import examplesData from '../src/data/searchExamples.json' with { type: 'json' };
 import { normalizeQuery } from '../src/lib/queryText.ts';
+import summaryData from './stopSummary.json' with { type: 'json' };
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
 const MODEL = 'jev-latest';
@@ -118,16 +119,15 @@ type Tags = {
   categories: { id: string; ko: string; en: string }[];
   stops: Record<string, Record<string, number>>;
 };
-type Notes = Record<string, { en?: { title?: string; story?: string } }>;
 type Cities = {
   cities: Record<string, { en: string }>;
   countries: Record<string, { en: string }>;
 };
 
 const tags = tagsData as Tags;
-const notes = notesData as Notes;
 const cities = citiesData as Cities;
 const captions = captionsData as Record<string, { id: string; en: string }[]>;
+const trimmed = summaryData as Record<string, { story?: string; captions: string[] }>;
 const stops = journeyData.stops;
 
 const THEME_EN: Record<string, string> = Object.fromEntries(
@@ -145,16 +145,17 @@ export type StopSummary = { id: number; text: string };
 /** One line a stop, built once: city, country, dates, story, captions, themes. */
 export const SUMMARIES: StopSummary[] = stops.flatMap((s) => {
   const t = tags.stops[String(s.id)];
-  const story = notes[String(s.id)]?.en?.story?.replace(/\s*\n\s*/g, ' ').trim();
-  const caps = captions[String(s.id)];
-  if (!t && !story && !caps) return [];
+  // story and captions as trimmed for Jev (scripts/build-stop-captions.mjs)
+  const story = trimmed[String(s.id)]?.story;
+  const caps = trimmed[String(s.id)]?.captions;
+  if (!t && !story && !caps?.length) return [];
   const dates = s.endDate !== s.startDate ? `${s.startDate} to ${s.endDate}` : s.startDate;
   const parts = [
     `${cities.cities[s.city]?.en ?? s.city}, ${cities.countries[s.countryCode]?.en ?? s.countryCode} (${dates})`,
   ];
   if (story) parts.push(story);
   // what the photos say under themselves — the words a visitor would search by
-  if (caps) parts.push(`Captions: ${caps.map((c) => c.en.replace(/[.。]$/, '')).join('; ')}.`);
+  if (caps?.length) parts.push(`Captions: ${caps.join('; ')}.`);
   if (t) {
     const themes = Object.entries(t)
       .sort((a, b) => b[1] - a[1])
