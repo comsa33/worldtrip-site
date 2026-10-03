@@ -25,7 +25,7 @@ import { srcFor } from '../../lib/photoSrc';
 import { landOn, setAlbumRegion } from '../../lib/sound';
 import { useSideways } from '../../lib/sideways';
 import { hasTheme, themesOf, usePhotoTheme } from '../../lib/photoThemes';
-import { useSearch } from '../../lib/search';
+import { askLitPhotos, useSearch } from '../../lib/search';
 import { useCaption } from '../../lib/captions';
 import { TUNE_ON, useTuning } from '../3d/routeTuning';
 import { RING_MOVE } from '../3d/themeRingScale';
@@ -407,17 +407,26 @@ export default function PhotoGallery({
     [theme, searchLit]
   );
   const litStopSet = useMemo(() => (litStops ? new Set(litStops) : null), [litStops]);
+  /* The book open over an answer asks once which of those stops' photos show
+     it (B); until the answer, and should none come, the stops' photos stand. */
+  const litPhotos = !theme && searchLit && !searchLit.theme ? (searchLit.photos ?? null) : null;
+  const litPhotoSet = useMemo(() => (litPhotos ? new Set(litPhotos) : null), [litPhotos]);
+  useEffect(() => {
+    if (cityName && litStops) void askLitPhotos();
+  }, [cityName, litStops]);
   const lit = useMemo(
     () =>
       theme
         ? (i: number) => hasTheme(photos[i]?.id ?? '', theme)
-        : litStopSet
-          ? (i: number) => {
-              const st = stopOfPhoto(photos[i]?.id ?? '');
-              return st !== undefined && litStopSet.has(st);
-            }
-          : null,
-    [theme, litStopSet, photos]
+        : litPhotoSet
+          ? (i: number) => litPhotoSet.has(photos[i]?.id ?? '')
+          : litStopSet
+            ? (i: number) => {
+                const st = stopOfPhoto(photos[i]?.id ?? '');
+                return st !== undefined && litStopSet.has(st);
+              }
+            : null,
+    [theme, litPhotoSet, litStopSet, photos]
   );
   const anyLit = useMemo(() => (lit ? photos.some((_, i) => lit(i)) : false), [lit, photos]);
   /* A key, a click, a button: the band is set a card over and the spring
@@ -1597,8 +1606,12 @@ export default function PhotoGallery({
         <style>{`.pb.is-lit .pb__cell:not([data-t~="${theme}"]),.pb.is-lit .pb__thumb:not([data-t~="${theme}"]){opacity:0.16 !important;filter:grayscale(1)}`}</style>
       )}
       {/* a search lit: the same rule by stop (data-s) — the same opacity, the same grey */}
-      {anyLit && !theme && litStops && (
+      {anyLit && !theme && litStops && !litPhotos && (
         <style>{`.pb.is-lit .pb__cell${litStops.map((id) => `:not([data-s="${id}"])`).join('')},.pb.is-lit .pb__thumb${litStops.map((id) => `:not([data-s="${id}"])`).join('')}{opacity:0.16 !important;filter:grayscale(1)}`}</style>
+      )}
+      {/* …and once the answer has said which photos: by photo (data-id), the same rule */}
+      {anyLit && !theme && litPhotos && (
+        <style>{`.pb.is-lit .pb__cell${litPhotos.map((id) => `:not([data-id="${id}"])`).join('')},.pb.is-lit .pb__thumb${litPhotos.map((id) => `:not([data-id="${id}"])`).join('')}{opacity:0.16 !important;filter:grayscale(1)}`}</style>
       )}
       <div
         className="pb__backdrop"

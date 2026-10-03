@@ -19,7 +19,7 @@ function daysOutside(day, visit) {
   return 0;
 }
 
-/** { "<stopId>": ["caption en", …] } — 찍은 차례, 빈 캡션은 뺀다. */
+/** { "<stopId>": [{ id, en }, …] } — 찍은 차례, 빈 캡션은 뺀다. id 는 사진 고르기(B)가 쓴다. */
 export function buildStopCaptions() {
   const stops = read('src/data/journey.json').stops;
   const cityPhotos = read('src/data/cityPhotos.json');
@@ -58,7 +58,7 @@ export function buildStopCaptions() {
       const en = captions[photo.id]?.en?.trim();
       if (!en) continue;
       const list = rows.get(chosen.id) ?? [];
-      list.push({ date: photo.date, en });
+      list.push({ date: photo.date, id: photo.id, en });
       rows.set(chosen.id, list);
     }
   }
@@ -67,7 +67,7 @@ export function buildStopCaptions() {
     const list = rows.get(s.id);
     if (!list) continue;
     list.sort((a, b) => +new Date(a.date) - +new Date(b.date));
-    out[String(s.id)] = list.map((r) => r.en);
+    out[String(s.id)] = list.map((r) => ({ id: r.id, en: r.en }));
   }
   return out;
 }

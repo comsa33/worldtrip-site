@@ -111,3 +111,43 @@ test('the answers are read: the gate, the line, the near themes', async () => {
     { id: 'street', score: 1.6 },
   ]);
 });
+
+test("the book's request (B): the stops' photos by caption, yes or no, over the line", async () => {
+  const m = await load();
+  const { questions, pool } = m.photoQuestionsFor([53]);
+  assert.ok(pool.length > 5, `${pool.length} photos of Cairo`);
+  assert.ok(pool.every((id) => id.startsWith('cairo-')));
+  const q = questions['p:' + pool[0]] as { type: string; instructions: { photo: string } };
+  assert.equal(q.type, 'noul');
+  assert.match(q.instructions.photo, /Cairo airport/);
+  // read: over 0.5 only, in the pool's order
+  const answers: Record<string, { noul: number }> = {};
+  pool.forEach((id, i) => (answers['p:' + id] = { noul: i % 3 === 0 ? 0.9 : 0.1 }));
+  assert.deepEqual(
+    m.photosOf(answers, pool),
+    pool.filter((_, i) => i % 3 === 0)
+  );
+  // more than twelve stops are not asked about
+  assert.equal(
+    m.photoQuestionsFor(Array.from({ length: 20 }, (_, i) => i + 1)).pool.length,
+    m.photoQuestionsFor(Array.from({ length: 12 }, (_, i) => i + 1)).pool.length
+  );
+});
+
+test('the body: words alone, or words with the stops to pick photos from', async () => {
+  const m = await load();
+  const body = (b: unknown) => post(own, b);
+  assert.deepEqual(await m.askedOf(body({ q: '개' })), { q: '개', photosOf: null });
+  assert.deepEqual(await m.askedOf(body({ q: '개', photos: true, stops: [53, 54] })), {
+    q: '개',
+    photosOf: [53, 54],
+  });
+  assert.equal(await m.askedOf(body({ q: '개', photos: true, stops: [] })), null);
+  assert.equal(await m.askedOf(body({ q: '개', photos: true, stops: ['53'] })), null);
+  assert.equal(
+    await m.askedOf(
+      body({ q: '개', photos: true, stops: Array.from({ length: 13 }, (_, i) => i) })
+    ),
+    null
+  );
+});

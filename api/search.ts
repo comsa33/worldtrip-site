@@ -42,16 +42,24 @@ function limited(ip: string): boolean {
   return recent.length > MAX_PER_WINDOW;
 }
 
-/* A ceiling per instance per day, whoever is asking. */
+/* A ceiling per instance per day, whoever is asking — one for the stops, one
+   for the photos (the book's own request, B), counted apart. */
 const DAILY_CEILING = 300;
+const DAILY_PHOTO_CEILING = 300;
 let day = '';
 let dayCount = 0;
+let dayPhotoCount = 0;
 
-function overDailyCeiling(): boolean {
+function overDailyCeiling(photos = false): boolean {
   const today = new Date().toISOString().slice(0, 10);
   if (today !== day) {
     day = today;
     dayCount = 0;
+    dayPhotoCount = 0;
+  }
+  if (photos) {
+    dayPhotoCount += 1;
+    return dayPhotoCount > DAILY_PHOTO_CEILING;
   }
   dayCount += 1;
   return dayCount > DAILY_CEILING;
@@ -101,7 +109,7 @@ type Cities = {
 const tags = tagsData as Tags;
 const notes = notesData as Notes;
 const cities = citiesData as Cities;
-const captions = captionsData as Record<string, string[]>;
+const captions = captionsData as Record<string, { id: string; en: string }[]>;
 const stops = journeyData.stops;
 
 const THEME_EN: Record<string, string> = Object.fromEntries(
@@ -125,7 +133,7 @@ export const SUMMARIES: StopSummary[] = stops.flatMap((s) => {
   ];
   if (story) parts.push(story);
   // what the photos say under themselves — the words a visitor would search by
-  if (caps) parts.push(`Captions: ${caps.map((c) => c.replace(/[.。]$/, '')).join('; ')}.`);
+  if (caps) parts.push(`Captions: ${caps.map((c) => c.en.replace(/[.。]$/, '')).join('; ')}.`);
   if (t) {
     const themes = Object.entries(t)
       .sort((a, b) => b[1] - a[1])
@@ -351,6 +359,45 @@ export function questionsFor(): Record<string, unknown> {
   return questions;
 }
 
+// ---- the photos themselves (B): of the stops that answered, which show it -------
+
+/* The book asks this once, when it opens over a lit answer: every photo of
+   those stops, by its caption, yes or no (noul). Measured by 하급코더
+   (2026-10-03): precision 89%, recall 92% at 0.5; about 1–9K tokens in,
+   0.2–0.3s. */
+const PHOTO_KEY = 'p:';
+const PHOTO_Q =
+  'Does the photo described by `photo` show what the query in the state is looking for?';
+export const PHOTO_MIN = 0.5;
+/** At most this many stops' photos are asked about in one request. */
+export const PHOTO_STOPS_MOST = 12;
+
+/** The photos of these stops, with their captions, as the questions. */
+export function photoQuestionsFor(stopIds: number[]): {
+  questions: Record<string, unknown>;
+  pool: string[];
+} {
+  const questions: Record<string, unknown> = {};
+  const pool: string[] = [];
+  for (const id of stopIds.slice(0, PHOTO_STOPS_MOST)) {
+    for (const c of captions[String(id)] ?? []) {
+      questions[PHOTO_KEY + c.id] = {
+        type: 'noul',
+        instructions: { photo: c.en, question: PHOTO_Q },
+      };
+      pool.push(c.id);
+    }
+  }
+  return { questions, pool };
+}
+
+/** The photos that showed it: noul over the line, in the pool's order. Pure. */
+export function photosOf(answers: Record<string, Answer>, pool: string[]): string[] {
+  return pool.filter((id) => (answers[PHOTO_KEY + id]?.noul ?? 0) >= PHOTO_MIN);
+}
+
+export type PhotoResult = { photos: string[] };
+
 /** What Jev's answers come to: the stops that matched (if the words were a
  *  search at all) and the themes that came near. Pure, so it can be tested. */
 export function resultOf(answers: Record<string, Answer>): SearchResult {
@@ -382,17 +429,76 @@ const json = (body: unknown, status = 200) =>
   });
 const fail = (error: SearchError, status: number) => json({ error }, status);
 
-/** Reads the body and takes the query out of it, or null. */
-export async function queryOf(request: Request): Promise<string | null | 'too_long'> {
+export type Asked = { q: string; photosOf: number[] | null };
+
+/** Reads the body: the words, and — the book's request — the stops whose photos to pick. */
+export async function askedOf(request: Request): Promise<Asked | null | 'too_long'> {
   if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) return 'too_long';
   try {
-    const body = (await request.json()) as { q?: unknown };
+    const body = (await request.json()) as { q?: unknown; photos?: unknown; stops?: unknown };
     const q = typeof body?.q === 'string' ? normalize(body.q) : '';
     if (q.length > MAX_QUERY_CHARS) return 'too_long';
-    return q || null;
+    if (!q) return null;
+    if (body.photos === true) {
+      if (!Array.isArray(body.stops) || !body.stops.length || body.stops.length > PHOTO_STOPS_MOST)
+        return null;
+      const ids = body.stops.map((x) => (typeof x === 'number' && Number.isInteger(x) ? x : NaN));
+      if (ids.some((x) => Number.isNaN(x))) return null;
+      return { q, photosOf: ids };
+    }
+    return { q, photosOf: null };
   } catch {
     return null;
   }
+}
+
+/** Reads the body and takes the query out of it, or null. */
+export async function queryOf(request: Request): Promise<string | null | 'too_long'> {
+  const asked = await askedOf(request);
+  return asked === 'too_long' ? asked : (asked?.q ?? null);
+}
+
+/* The same words over the same stops are answered from memory (an hour). */
+const photoCache = new Map<string, { at: number; result: PhotoResult }>();
+
+async function pickPhotos(key: string, q: string, stopIds: number[]): Promise<Response> {
+  const sorted = [...new Set(stopIds)].sort((a, b) => a - b);
+  const hash = await hashOf(`${q.toLowerCase()}|${sorted.join(',')}`);
+  const cached = photoCache.get(hash);
+  if (cached && Date.now() - cached.at < CACHE_TTL_MS) return json(cached.result);
+  if (overDailyCeiling(true)) return fail('unavailable', 503);
+  const { questions, pool } = photoQuestionsFor(sorted);
+  if (!pool.length) return json({ photos: [] } satisfies PhotoResult);
+  let answers: Record<string, Answer>;
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: MODEL, state: { query: q }, questions }),
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (res.status === 429) return fail('rate_limited', 429);
+    if ([401, 402, 403].includes(res.status)) {
+      pausedUntil = Date.now() + PAUSE_MS;
+      console.error(`[search] TypeSafe refused the key (${res.status}); pausing for 10 min`);
+      return fail('unavailable', 503);
+    }
+    if (!res.ok) return fail('upstream', 502);
+    const data = (await res.json()) as {
+      answers?: Record<string, Answer>;
+      usage?: { input_tokens?: number; output_tokens?: number };
+    };
+    answers = data.answers ?? {};
+    console.log(
+      `[search] jev photos ${pool.length} of ${sorted.length} stops, ${data.usage?.input_tokens ?? '?'} in, ${data.usage?.output_tokens ?? '?'} out`
+    );
+  } catch {
+    return fail('upstream', 502);
+  }
+  const result: PhotoResult = { photos: photosOf(answers, pool) };
+  if (photoCache.size > 500) photoCache.clear();
+  photoCache.set(hash, { at: Date.now(), result });
+  return json(result);
 }
 
 export async function POST(request: Request): Promise<Response> {
@@ -403,9 +509,13 @@ export async function POST(request: Request): Promise<Response> {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'local';
   if (limited(ip)) return fail('rate_limited', 429);
 
-  const q = await queryOf(request);
-  if (q === 'too_long') return fail('too_long', 413);
-  if (!q) return fail('invalid', 400);
+  const asked = await askedOf(request);
+  if (asked === 'too_long') return fail('too_long', 413);
+  if (!asked) return fail('invalid', 400);
+  const { q } = asked;
+
+  // the book's request: of these stops, which photos show it
+  if (asked.photosOf) return pickPhotos(key, q, asked.photosOf);
 
   const theme = themeOf(q);
   if (theme) return json({ theme, stops: rankByTheme(theme) } satisfies SearchResult);

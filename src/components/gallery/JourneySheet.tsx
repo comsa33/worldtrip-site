@@ -571,6 +571,7 @@ const StopSection = memo(function StopSection({
                   key={p.id}
                   role="gridcell"
                   data-i={i}
+                  data-id={p.id}
                   data-t={themesOf(p.id).join(' ')}
                   data-s={stopOfPhoto(p.id)}
                   className={`pb__cell${i === current ? ' is-current' : ''}`}

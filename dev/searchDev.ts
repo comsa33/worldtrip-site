@@ -10,7 +10,14 @@
  */
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { loadEnv, type Plugin, type PreviewServer, type ViteDevServer } from 'vite';
-import { POST, queryOf, rankByTheme, themeOf, type SearchResult } from '../api/search';
+import {
+  POST,
+  askedOf,
+  photoQuestionsFor,
+  rankByTheme,
+  themeOf,
+  type SearchResult,
+} from '../api/search';
 import journeyData from '../src/data/journey.json' with { type: 'json' };
 import tagsData from '../src/data/photoTags.json' with { type: 'json' };
 import citiesData from '../src/data/cities.json' with { type: 'json' };
@@ -85,12 +92,22 @@ function attach(server: ViteDevServer | PreviewServer) {
     void (async () => {
       const request = await toRequest(req);
       if (real) return send(res, await POST(request));
-      const q = await queryOf(request);
-      if (q === 'too_long') return send(res, Response.json({ error: 'too_long' }, { status: 413 }));
-      if (!q) return send(res, Response.json({ error: 'invalid' }, { status: 400 }));
+      const asked = await askedOf(request);
+      if (asked === 'too_long')
+        return send(res, Response.json({ error: 'too_long' }, { status: 413 }));
+      if (!asked) return send(res, Response.json({ error: 'invalid' }, { status: 400 }));
+      const q = asked.q;
       await new Promise((r) => setTimeout(r, 400)); // a little of Jev's own time
       if (q.includes('오류'))
         return send(res, new Response('{"error":"upstream"}', { status: 502 }));
+      // the book's request (B): a stand-in picks every other photo of the stops, in the captions' order
+      if (asked.photosOf) {
+        // 「사진실패」: the photos cannot be had, the stops' photos stand in
+        if (q.includes('사진실패'))
+          return send(res, new Response('{"error":"upstream"}', { status: 502 }));
+        const { pool } = photoQuestionsFor(asked.photosOf);
+        return send(res, Response.json({ photos: pool.filter((_, i) => i % 2 === 0) }));
+      }
       if (q.includes('429'))
         return send(res, new Response('{"error":"rate_limited"}', { status: 429 }));
       if (q.includes('느림')) await new Promise((r) => setTimeout(r, 9000));

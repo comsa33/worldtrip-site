@@ -40,7 +40,16 @@ export type SearchField =
 
 export type SearchState = SearchField & {
   /** the answer taken last — its stops are lit on the globe — with its words, and which of them is picked (looking around) */
-  lit: (Answer & { text: string; pick: number; shown: boolean }) | null;
+  lit:
+    | (Answer & {
+        text: string;
+        pick: number;
+        shown: boolean;
+        /** the photos that show it (B), once the book has asked: undefined = not asked yet,
+         *  null = could not be had (the stops' photos stand in), string[] = these */
+        photos?: string[] | null;
+      })
+    | null;
 };
 
 export const MAX_QUERY_CHARS = 80;
@@ -290,6 +299,53 @@ export function confirmAnswer(stopId?: number) {
   };
   listeners.forEach((l) => l());
   answerListeners.forEach((l) => l(state));
+}
+
+/* The photos of the answer's stops that show it (B): asked once per answer,
+   when the book opens over it; the same words over the same stops are
+   answered from memory. Failing, the stops' photos stand in (null). */
+const rememberedPhotos = new Map<string, string[]>();
+let photosSeq = 0;
+/* the request out for this answer (its key) — asked once, not again while it is out;
+   kept apart from the state, which only ever changes with its listeners told */
+let askingPhotos: string | null = null;
+export async function askLitPhotos() {
+  const lit = state.lit;
+  if (!lit || lit.theme || lit.photos !== undefined) return;
+  const key = `${lit.text.toLowerCase()}|${lit.stops.map((r) => r.id).join(',')}`;
+  if (askingPhotos === key) return;
+  const known = rememberedPhotos.get(key);
+  const put = (photos: string[] | null) => {
+    if (state.lit !== lit && state.lit?.text !== lit.text) return; // the answer moved on
+    if (!state.lit) return;
+    state = { ...state, lit: { ...state.lit, photos } };
+    listeners.forEach((l) => l());
+  };
+  if (known) {
+    put(known);
+    return;
+  }
+  const mine = ++photosSeq;
+  askingPhotos = key;
+  let photos: string[] | null = null;
+  try {
+    const res = await fetch('/api/search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ q: lit.text, photos: true, stops: lit.stops.map((r) => r.id) }),
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (res.ok) {
+      const data = (await res.json()) as { photos?: string[] };
+      photos = Array.isArray(data.photos) ? data.photos : null;
+    }
+  } catch {
+    photos = null;
+  }
+  if (askingPhotos === key) askingPhotos = null;
+  if (mine !== photosSeq) return;
+  if (photos) rememberedPhotos.set(key, photos);
+  put(photos);
 }
 
 /** Looking around: another of the lit stops picked (its ring drawn thicker) — and, from a
