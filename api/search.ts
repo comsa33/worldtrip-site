@@ -144,8 +144,11 @@ export const SUMMARIES: StopSummary[] = stops.flatMap((s) => {
   return [{ id: s.id, text: parts.join(' — ') }];
 });
 
+/* Asked of the stop's photos, not of the stop as a whole: a stay of thirty
+   photos with one of them showing it is an answer (하급코더 Q2, 2026-10-03 —
+   the old wording put such stops under the line, recall 27%). */
 const QUESTION =
-  'How well does the stop `stop` match what the query in the state is looking for — the place, the scene, the experience or the kind of photo?';
+  'Does any photo of the stop `stop` show what the query in the state is looking for — a place, a scene, an experience or a thing?';
 const LEVELS = [
   'Unrelated to the query',
   'Loosely related',

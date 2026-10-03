@@ -151,3 +151,11 @@ test('the body: words alone, or words with the stops to pick photos from', async
     null
   );
 });
+
+test('what Jev is told of the stops stays under its input limit', async () => {
+  const m = await load();
+  // measured 2026-10-03: 119,485 chars came to 48,082 input tokens (≈2.49 chars a token),
+  // and TypeSafe took 50.1K but refused 67K. 123,000 chars ≈ 49.5K tokens.
+  const chars = m.SUMMARIES.reduce((n, s) => n + s.text.length, 0);
+  assert.ok(chars <= 123_000, `${chars} chars of summaries`);
+});
