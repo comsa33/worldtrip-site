@@ -34,7 +34,7 @@ import {
   pickAnswer,
   setSearchText,
   submitSearch,
-  useAsked,
+  useLearned,
   useSearch,
 } from '../../lib/search';
 import './AskDot.css';
@@ -544,20 +544,51 @@ export function AskDot({ phone }: { phone: boolean }) {
 }
 
 /**
- * The door: one line hung on the dot — 「물어보기」 — wherever the dot is,
- * the journey or looking around. Breathing while the hand rests; faint (35%)
- * once a question has been asked; hidden while the hand has the globe, and
- * back 1.2s after it has stopped; gone with the dot when it is round the
- * back of the world (its own opacity follows the seat's carry).
+ * The door: one word hung on the dot — 「물어보기」 — wherever the dot is, the
+ * journey or looking around (Q2). To the dot's right, on its centre line,
+ * 14px off; flipped to its left at the edge of the screen. On a desktop the
+ * `/` key follows the word, 8px after its last letter, in the line (no room
+ * kept for it). Faint (0.7, ink-3) at rest; when the dot sits down on a stop
+ * it goes dark for 1.6s and fades back — until a question has been asked,
+ * after which it only rests. Looking around, the same 1.2s after the hand
+ * lets go and the globe has stopped. Hidden while the globe moves. On the
+ * first visit, once the opening is over, the word writes itself, letter by
+ * letter, then the key comes.
  */
-const DOOR_OFFSET = { x: 18, y: 12 };
-const DOOR_OFFSET_PHONE = { x: 14, y: 10 };
-/** the globe has stopped: the line waits this long before it comes back */
-const DOOR_SETTLE_MS = 1200;
+const DOOR_GAP_PX = 14;
+const DOOR_EDGE_PX = 16;
+/** looking around: the globe has stopped, and this much later the word comes */
+const DOOR_SETTLE_GLOBE_MS = 1200;
+/** the dark moment: in, held, out */
+const DOOR_UP_IN_MS = 240;
+const DOOR_UP_HOLD_MS = 1600; // and 600ms back down (AskDot.css)
+/** the first visit: a pause after the dot sits, then the letters, then the key */
+const DOOR_WRITE_WAIT_MS = 400;
+const DOOR_LETTER_MS = 90;
+const DOOR_KEY_WAIT_MS = 120;
+const INTRO_KEY = 'askIntroSeen';
+const seenIntro = () => {
+  try {
+    return localStorage.getItem(INTRO_KEY) === '1';
+  } catch {
+    return true;
+  }
+};
+const noteIntro = () => {
+  try {
+    localStorage.setItem(INTRO_KEY, '1');
+  } catch {
+    /* no storage */
+  }
+};
+const reduced = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function AskDoor({
   seat,
   active,
   moving,
+  globe,
   phone,
   ground,
 }: {
@@ -568,32 +599,87 @@ export function AskDoor({
   active: boolean;
   /** the hand has the globe, or it is still turning */
   moving: boolean;
+  /** looking around (the globe view), where the word waits 1.2s after the hand lets go */
+  globe: boolean;
   phone: boolean;
 }) {
   const { language } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
+  const wordRef = useRef<HTMLSpanElement>(null);
   const search = useSearch();
   const [settled, setSettled] = useState(!moving);
   // the hand has the globe: gone at once (state reset during render)
   if (moving && settled) setSettled(false);
   useEffect(() => {
     if (moving) return;
-    const t = window.setTimeout(() => setSettled(true), DOOR_SETTLE_MS);
+    const t = window.setTimeout(() => setSettled(true), globe ? DOOR_SETTLE_GLOBE_MS : 0);
     return () => window.clearTimeout(t);
-  }, [moving]);
+  }, [moving, globe]);
   const on = active && settled && search.mode === 'closed';
+
+  // the word, letter by letter, the first time; then simply there
+  const [writing, setWriting] = useState<'wait' | 'letters' | 'done'>(() =>
+    seenIntro() || reduced() ? 'done' : 'wait'
+  );
+  const [letters, setLetters] = useState(0);
+  const [keyIn, setKeyIn] = useState(writing === 'done');
+  // dark for a moment: 'in' then 'out'
+  const [up, setUp] = useState(false);
+  const learned = useLearned();
+
+  const label = language === 'ko' ? '물어보기' : 'Ask';
+  const count = Array.from(label).length;
+
+  /* On coming up (the dot has sat down; looking around, the globe has stopped):
+     the first time, the word writes itself and the key follows; every time,
+     until a question has been asked, the word goes dark and fades back. */
+  useEffect(() => {
+    if (!on) {
+      setUp(false);
+      return;
+    }
+    const timers: number[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+    const dark = (from: number) => {
+      if (learned || reduced()) return;
+      at(from, () => setUp(true));
+      at(from + DOOR_UP_IN_MS + DOOR_UP_HOLD_MS, () => setUp(false));
+    };
+    if (writing === 'wait') {
+      at(DOOR_WRITE_WAIT_MS, () => setWriting('letters'));
+      for (let i = 1; i <= count; i++)
+        at(DOOR_WRITE_WAIT_MS + i * DOOR_LETTER_MS, () => setLetters(i));
+      const written = DOOR_WRITE_WAIT_MS + count * DOOR_LETTER_MS;
+      at(written, () => {
+        setWriting('done');
+        noteIntro();
+      });
+      at(written + DOOR_KEY_WAIT_MS, () => setKeyIn(true));
+      dark(written);
+    } else dark(0);
+    return () => timers.forEach((t) => window.clearTimeout(t));
+    // the first appearance runs its course; a later `on` only darkens
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [on]);
 
   // pinned to the dot's seat every frame it is up, as the swipe hint is
   useEffect(() => {
     const el = ref.current;
     if (!el || !on) return;
     let raf = 0;
-    const off = phone ? DOOR_OFFSET_PHONE : DOOR_OFFSET;
     const tick = () => {
       const s = seat.current;
       if (s) {
         const r = s.getBoundingClientRect();
-        el.style.transform = `translate(${(r.left + r.width / 2 + off.x).toFixed(1)}px, ${(r.top + r.height / 2 + off.y).toFixed(1)}px)`;
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const w = el.offsetWidth;
+        // to the right of the dot; at the edge of the screen, to its left
+        let x = cx + r.width / 2 + DOOR_GAP_PX;
+        const flip = x + w > window.innerWidth - DOOR_EDGE_PX;
+        if (flip) x = cx - r.width / 2 - DOOR_GAP_PX - w;
+        el.toggleAttribute('data-flip', flip);
+        el.style.transform = `translate(${x.toFixed(1)}px, ${(cy - el.offsetHeight / 2).toFixed(1)}px)`;
         // round the back of the world with the dot
         const carry = s.getAttribute('data-dot-carry') ?? '';
         el.toggleAttribute('data-hidden', carry === 'hidden' || carry === 'ribbon');
@@ -602,14 +688,14 @@ export function AskDoor({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [on, seat, phone]);
+  }, [on, seat]);
 
-  const asked = useAsked();
-  const label = language === 'ko' ? '물어보기' : 'Ask';
+  // the letters shown so far, by clipping — the word's box is always the word's own width
+  const shown = writing === 'done' ? 1 : writing === 'wait' ? 0 : letters / count;
   return (
     <div
       ref={ref}
-      className={`ask-door${on ? ' is-on' : ''}${asked ? ' is-asked' : ''}`}
+      className={`ask-door${on ? ' is-on' : ''}${up ? ' is-up' : ''}`}
       style={{ '--globe-ground': ground } as React.CSSProperties}
       aria-hidden={on ? undefined : true}
     >
@@ -617,15 +703,26 @@ export function AskDoor({
         type="button"
         className="ask-door__word"
         tabIndex={on ? 0 : -1}
+        aria-label={language === 'ko' ? '여정에서 묻기 (/)' : 'Ask the journey (/)'}
         onClick={() => {
           openSearch();
           // in the gesture itself, so the phone brings its keyboard
           focusAskField();
         }}
       >
-        {label}
+        <span
+          ref={wordRef}
+          className="ask-door__text"
+          style={{ clipPath: `inset(0 ${((1 - shown) * 100).toFixed(2)}% 0 0)` }}
+        >
+          {label}
+        </span>
+        {!phone && (
+          <kbd className={`key ask-door__key${keyIn ? ' is-in' : ''}`} aria-hidden="true">
+            /
+          </kbd>
+        )}
       </button>
-      {!phone && <kbd className="key ask-door__key">/</kbd>}
     </div>
   );
 }

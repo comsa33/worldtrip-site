@@ -78,12 +78,30 @@ export function onAnswer(l: (s: SearchState) => void) {
   };
 }
 
-/* Whether a question has been asked this visit — the door goes faint after one. */
-let asked = false;
-export function useAsked(): boolean {
+/* Whether a question has ever been asked here — once one has, the door no
+   longer darkens when the dot sits down; it only rests. Kept across visits. */
+const LEARNED_KEY = 'searchLearned';
+let learned = (() => {
+  try {
+    return typeof localStorage !== 'undefined' && localStorage.getItem(LEARNED_KEY) === '1';
+  } catch {
+    return false;
+  }
+})();
+function noteLearned() {
+  if (learned) return;
+  learned = true;
+  try {
+    localStorage.setItem(LEARNED_KEY, '1');
+  } catch {
+    /* no storage */
+  }
+  listeners.forEach((l) => l());
+}
+export function useLearned(): boolean {
   return useSyncExternalStore(
     subscribe,
-    () => asked,
+    () => learned,
     () => false
   );
 }
@@ -99,7 +117,6 @@ export function useSearch(): SearchState {
 /** The field is up — the dot comes to it; over a lit answer, with its words. Off the net, the line says so instead. */
 export function openSearch() {
   if (state.mode !== 'closed') return;
-  asked = true;
   if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     set({ mode: 'error', text: '', fault: 'offline', retryAt: 0, since: 0, at: Date.now() });
     return;
@@ -160,6 +177,7 @@ export async function submitSearch(words?: string) {
   const text = (words ?? state.text).trim();
   if (!text) return;
   noteAsked(text);
+  noteLearned();
   const since = Date.now();
   const known = remembered.get(text.toLowerCase());
   if (known) {

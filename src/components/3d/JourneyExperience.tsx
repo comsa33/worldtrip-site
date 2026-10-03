@@ -3390,6 +3390,7 @@ function JourneyExperienceContent() {
         seat={seatRef}
         active={dotOnGlobe && (openingWritten || !openingUp)}
         moving={globeMoving}
+        globe={globeOn}
         phone={isMobile}
         ground={GLOBE[theme].sphere}
       />

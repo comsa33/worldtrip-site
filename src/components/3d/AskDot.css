@@ -370,64 +370,94 @@
   left: 0;
   top: 0;
   z-index: 120;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--ink-2);
   white-space: nowrap;
+  /* at rest: faint; hidden while the globe moves; dark for a moment on arrival */
   opacity: 0;
   pointer-events: none;
   transition: opacity 150ms var(--ease);
   will-change: transform;
 }
 .ask-door.is-on {
-  opacity: 1;
+  opacity: 0.7;
   pointer-events: auto;
-  transition: opacity 400ms var(--ease);
+  transition: opacity 240ms var(--ease);
+}
+.ask-door.is-on.is-up {
+  opacity: 1;
+}
+/* coming back down from dark takes longer than going up */
+.ask-door.is-on:not(.is-up) {
+  transition: opacity 600ms var(--ease);
 }
 .ask-door[data-hidden] {
   opacity: 0;
   pointer-events: none;
   transition: opacity 150ms var(--ease);
 }
-/* once asked, it stays, fainter */
-.ask-door.is-on.is-asked {
-  opacity: 0.35;
-}
 .ask-door__word {
+  display: inline-flex;
+  align-items: baseline;
   margin: 0;
-  padding: 2px 0;
+  padding: 0;
   border: 0;
   background: transparent;
   font: inherit;
-  color: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--ink-3);
   cursor: pointer;
+  transition: color 240ms var(--ease);
   /* the same halo the labels over the globe wear */
   text-shadow:
     0 0 2px var(--globe-ground, var(--bg)),
     0 0 4px var(--globe-ground, var(--bg)),
     0 0 8px var(--globe-ground, var(--bg));
-  animation: askBreathe 3s ease-in-out infinite;
 }
-.ask-door.is-asked .ask-door__word {
-  animation: none;
+.ask-door.is-up .ask-door__word {
+  color: var(--ink);
 }
-@keyframes askBreathe {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 1;
-  }
+.ask-door.is-on:not(.is-up) .ask-door__word {
+  transition: color 600ms var(--ease);
 }
+/* the word's box is always its own width; the letters are revealed by clipping */
+.ask-door__text {
+  display: inline-block;
+}
+/* the key: in the line, 8px after the last letter, a shade under the baseline;
+   only where there is a keyboard. It comes after the word is written. */
 .ask-door__key {
-  opacity: 0.8;
+  margin-left: 8px;
+  position: relative;
+  top: 1px;
+  opacity: 0;
+  transition: opacity 160ms var(--ease);
+  text-shadow: none;
+}
+.ask-door__key.is-in {
+  opacity: 1;
+}
+@media not ((hover: hover) and (pointer: fine)) {
+  .ask-door__key {
+    display: none;
+  }
+}
+/* right-aligned when flipped to the dot's left */
+.ask-door[data-flip] {
+  text-align: right;
+}
+/* a 44px press on a phone */
+@media (hover: none) and (pointer: coarse) {
+  .ask-door__word {
+    padding: 12px 10px;
+    margin: -12px -10px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ask-door__word {
-    animation: none;
+  .ask-door,
+  .ask-door__word,
+  .ask-door__key {
+    transition: none;
   }
 }
 
