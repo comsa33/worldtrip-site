@@ -2015,7 +2015,9 @@ kbd.key {
 .search-globe__rank.is-on {
   opacity: 1;
 }
-/* the label over a ring: the rank, then the name, as the names of cities are said */
+/* the label by a ring: the rank, then the name, as the names of cities are said —
+   to its right, left, above or below (SearchGlobe finds the place with room);
+   with no room for the name, the rank alone */
 .search-globe__label {
   position: absolute;
   left: 0;
@@ -2023,10 +2025,27 @@ kbd.key {
   width: 0;
   height: 0;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
   opacity: 0;
   transition: opacity 160ms var(--ease);
+}
+.search-globe__label[data-at='left'] {
+  justify-content: flex-end;
+}
+.search-globe__label[data-at='above'] {
+  justify-content: center;
+  align-items: flex-end;
+}
+.search-globe__label[data-at='below'] {
+  justify-content: center;
+  align-items: flex-start;
+}
+.search-globe__label.is-n .search-globe__name {
+  display: none;
+}
+.search-globe__label.is-n .search-globe__n {
+  margin: 0;
 }
 .search-globe__label.is-on {
   opacity: 1;
@@ -2056,16 +2075,37 @@ kbd.key {
   pointer-events: auto;
   cursor: pointer;
 }
+/* no plate: the words carry a halo (as the cities' words do), the picture is
+   the picture, and behind it all a round fog of the page's colour — larger
+   than the callout by 60px either side and 40px above and below, with no edge —
+   so the dots and the route go out under the words without a border showing */
 .search-callout__in {
+  position: relative;
   display: flex;
   gap: 10px;
   align-items: center;
   padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  /* the page's own colour, whole: nothing under it shows through */
-  background: var(--bg);
   animation: searchCallUp 200ms var(--ease) both;
+}
+.search-callout__in::before {
+  content: '';
+  position: absolute;
+  left: -60px;
+  right: -60px;
+  top: -40px;
+  bottom: -40px;
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--bg) 70%, transparent);
+  pointer-events: none;
+}
+.search-callout__title,
+.search-callout__meta {
+  text-shadow:
+    1px 0 0 var(--bg),
+    -1px 0 0 var(--bg),
+    0 1px 0 var(--bg),
+    0 -1px 0 var(--bg),
+    0 0 6px var(--bg);
 }
 .search-callout__picture {
   width: 96px;

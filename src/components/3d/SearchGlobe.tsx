@@ -163,31 +163,78 @@ export function SearchGlobe({
       } else call.classList.remove('is-on');
     }
 
-    /* The labels, the better rank first: one that would lie over another, or
-       over the callout, is left unsaid (the map's rule for colliding names) */
+    /* The labels, the better rank first. Each tries the four places round its
+       ring — right, left, above, below, 6px off — and takes the first with
+       room: not over another, not over the callout, not off the screen or
+       under the bar (a name cut short is never shown). With no room for the
+       name, the rank alone stands by the ring, so the one the chip counts and
+       ← → walks can still be found; with no room even for that, nothing. */
     const order = rings.map((_, i) => i).sort((p, q) => rings[p].ranks[0] - rings[q].ranks[0]);
     const back: { i: number; a: number }[] = [];
     const facings = rings.map((r) => n.current.copy(r.position).normalize().dot(camDir));
+    type Box = { l: number; t: number; r: number; b: number };
+    const free = (b: Box) => {
+      if (b.t < header || b.l < 0 || b.r > size.width || b.b > size.height) return false;
+      for (const o of taken) if (b.l < o.r && b.r > o.l && b.t < o.b && b.b > o.t) return false;
+      return true;
+    };
     for (const i of order) {
       const r = rings[i];
       const facing = facings[i];
       const s = facing >= FACING ? spot(r.city) : null;
       const el = labels[i];
-      if (s) {
-        const x = s.x;
-        const y = s.y - s.r - 4;
-        el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      // the label of the one previewed is put away: the callout says it
+      if (s && r.city !== preview) {
         const inner = el.firstElementChild as HTMLElement | null;
-        const w = inner?.offsetWidth ?? 0;
-        const h = inner?.offsetHeight ?? 0;
-        const box = { l: x - w / 2 - GAP, t: y - h - GAP, r: x + w / 2 + GAP, b: y + GAP };
-        // the label of the one previewed is put away: the callout says it
-        let said = y > header && r.city !== preview;
-        if (said)
-          for (const o of taken)
-            if (box.l < o.r && box.r > o.l && box.t < o.b && box.b > o.t) said = false;
-        if (said) taken.push(box);
-        el.classList.toggle('is-on', said);
+        let placed = false;
+        for (const only of [false, true]) {
+          el.classList.toggle('is-n', only);
+          const w = inner?.offsetWidth ?? 0;
+          const h = inner?.offsetHeight ?? 0;
+          const off = s.r + GAP;
+          const places: { at: string; x: number; y: number; box: Box }[] = [
+            {
+              at: 'right',
+              x: s.x + off,
+              y: s.y,
+              box: { l: s.x + off, t: s.y - h / 2, r: s.x + off + w, b: s.y + h / 2 },
+            },
+            {
+              at: 'left',
+              x: s.x - off,
+              y: s.y,
+              box: { l: s.x - off - w, t: s.y - h / 2, r: s.x - off, b: s.y + h / 2 },
+            },
+            {
+              at: 'above',
+              x: s.x,
+              y: s.y - off,
+              box: { l: s.x - w / 2, t: s.y - off - h, r: s.x + w / 2, b: s.y - off },
+            },
+            {
+              at: 'below',
+              x: s.x,
+              y: s.y + off,
+              box: { l: s.x - w / 2, t: s.y + off, r: s.x + w / 2, b: s.y + off + h },
+            },
+          ];
+          for (const pl of places) {
+            const padded = {
+              l: pl.box.l - GAP,
+              t: pl.box.t - GAP,
+              r: pl.box.r + GAP,
+              b: pl.box.b + GAP,
+            };
+            if (!free(padded)) continue;
+            el.dataset.at = pl.at;
+            el.style.transform = `translate(${pl.x.toFixed(1)}px, ${pl.y.toFixed(1)}px)`;
+            taken.push(padded);
+            placed = true;
+            break;
+          }
+          if (placed) break;
+        }
+        el.classList.toggle('is-on', placed);
       } else el.classList.remove('is-on');
       if (facing < FACING * 0.6) {
         v.current.copy(r.position).project(camera);

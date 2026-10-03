@@ -3508,7 +3508,7 @@ function JourneyExperienceContent() {
             <span key={r.city} className="search-globe__label">
               <span className="city-label city-label--past">
                 <span className="search-globe__n mono">{r.ranks.join('·')}</span>
-                {cityLabel(r.city, language)}
+                <span className="search-globe__name">{cityLabel(r.city, language)}</span>
               </span>
             </span>
           ))}
