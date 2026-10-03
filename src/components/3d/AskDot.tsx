@@ -658,7 +658,20 @@ export function AskDoor({
     const t = window.setTimeout(() => setSettled(true), globe ? DOOR_SETTLE_GLOBE_MS : 0);
     return () => window.clearTimeout(t);
   }, [moving, globe]);
-  const on = active && settled && search.mode === 'closed';
+  /* While the dot is away writing the opening (or the finale) it has a seat in
+     the words — read off the page itself, not from any state that could miss
+     the opening's end: while that seat exists the door is away, and the first
+     visit's word is written once it has gone (the dot back on the globe). */
+  const [away, setAway] = useState(false);
+  useEffect(() => {
+    if (!active) return;
+    const look = () => setAway(document.querySelector('.about-overlay__seat') !== null);
+    look();
+    const mo = new MutationObserver(look);
+    mo.observe(document.body, { subtree: true, childList: true });
+    return () => mo.disconnect();
+  }, [active]);
+  const on = active && settled && !away && search.mode === 'closed';
 
   // the word, letter by letter, the first time; then simply there
   const [writing, setWriting] = useState<'wait' | 'letters' | 'done'>(() =>
@@ -688,7 +701,11 @@ export function AskDoor({
       at(from, () => setUp(true));
       at(from + DOOR_UP_IN_MS + DOOR_UP_HOLD_MS, () => setUp(false));
     };
-    if (writing === 'wait') {
+    if (writing !== 'done') {
+      // the first time, or again from the start if the door went away mid-word
+      // (a flight that began under it): never left half-written
+      setLetters(0);
+      setKeyIn(false);
       at(DOOR_WRITE_WAIT_MS, () => setWriting('letters'));
       for (let i = 1; i <= count; i++)
         at(DOOR_WRITE_WAIT_MS + i * DOOR_LETTER_MS, () => setLetters(i));
@@ -765,8 +782,11 @@ export function AskDoor({
           bk.toggleAttribute('data-flip', left);
           bk.style.transform = `translate(${rx.toFixed(1)}px, ${ry.toFixed(1)}px)`;
         }
-        // moving with the ribbon: gone; on the land side, gone while round the back without a limb
-        el.toggleAttribute('data-hidden', carry === 'ribbon' || (carry === 'hidden' && !isBack));
+        // gone while round the back without a limb to hang on. (A journey or a
+        // scroll hides it through `moving`; the ribbon itself does not — the first
+        // step's lean up the leg after the opening draws one, and the door stays
+        // with the dot through it.)
+        el.toggleAttribute('data-hidden', carry === 'hidden' && !isBack);
       }
       raf = requestAnimationFrame(tick);
     };

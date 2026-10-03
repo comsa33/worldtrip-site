@@ -3682,7 +3682,8 @@ function JourneyExperienceContent() {
       {/* 「물어보기」, hung on the dot wherever it is */}
       <AskDoor
         seat={seatRef}
-        active={dotOnGlobe && (openingWritten || !openingUp)}
+        // the dot is on the globe (while it is away writing the opening, the door sees that itself)
+        active={dotOnGlobe}
         moving={globeMoving}
         globe={globeOn}
         phone={isMobile}
