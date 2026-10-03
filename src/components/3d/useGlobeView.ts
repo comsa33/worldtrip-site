@@ -16,6 +16,8 @@ import { SIDEWAYS, isSideways } from '../../lib/sideways';
 export type GlobeMode = 'off' | 'on' | 'leaving';
 
 const HASH = '#globe';
+/** the look around's address — on its own, or with the photo book's entry on top (#globe/photos) */
+const inGlobe = (hash: string) => hash === HASH || hash.startsWith(`${HASH}/`);
 
 /**
  * The mode, and the address that goes with it. `#globe` opens straight into it
@@ -25,7 +27,7 @@ const HASH = '#globe';
  */
 export function useGlobeView({ held = false }: { held?: boolean } = {}) {
   const [mode, setMode] = useState<GlobeMode>(() =>
-    typeof window !== 'undefined' && window.location.hash === HASH ? 'on' : 'off'
+    typeof window !== 'undefined' && inGlobe(window.location.hash) ? 'on' : 'off'
   );
 
   /*
@@ -54,7 +56,7 @@ export function useGlobeView({ held = false }: { held?: boolean } = {}) {
 
   useEffect(() => {
     const onPop = () => {
-      const want = window.location.hash === HASH;
+      const want = inGlobe(window.location.hash);
       setMode((m) => (want ? 'on' : m === 'on' ? 'leaving' : m));
     };
     window.addEventListener('popstate', onPop);

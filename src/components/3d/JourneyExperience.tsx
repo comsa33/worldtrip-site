@@ -2779,7 +2779,7 @@ function JourneyExperienceContent() {
   const openingWanted = () =>
     typeof window !== 'undefined' &&
     window.scrollY < 8 &&
-    window.location.hash !== '#globe' &&
+    !window.location.hash.startsWith('#globe') &&
     !new URLSearchParams(window.location.search).get('stop') &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealRef = useRef<number>(openingWanted() ? 0 : Infinity);

@@ -144,6 +144,8 @@ function clearRing(root: HTMLElement) {
 
 const DEFAULT_AR = 4 / 3;
 const PHOTOS_HASH = '#photos';
+/** the book over the look around: its own entry, under #globe */
+const GLOBE_PHOTOS_HASH = '#globe/photos';
 /** How far a finger lifts the photo before letting go opens the sheet. */
 const REACH_PX = 90;
 const arOf = (p: Photo) => (p.w && p.h ? p.w / p.h : DEFAULT_AR);
@@ -324,30 +326,49 @@ export default function PhotoGallery({
   /* ── the address ────────────────────────────────────────────────────────
      The wide book is #photos: a link opens it, and the browser's back is a
      way out. Opening pushes an entry; closing from inside pops the one it
-     pushed (or, for a book that arrived by the link, just drops the hash). */
+     pushed (or, for a book that arrived by the link, just drops the hash).
+     A book opened while looking around (#globe) has an entry of its own too,
+     #globe/photos, so that back closes the book and leaves the look around —
+     its lit answer, chip and pick — as it was; back once more leaves that. */
   const closeRef = useRef(onClose);
   useEffect(() => {
     closeRef.current = onClose;
   }, [onClose]);
+  /** the hash this book stands at, or null for a book with no entry of its own (the journey's city book) */
+  const bookHash = useRef<string | null>(null);
   useEffect(() => {
-    if (!cityName || !wide) return;
-    if (window.location.hash !== PHOTOS_HASH) {
+    if (!cityName) return;
+    const inGlobe = document.documentElement.dataset.globeView === 'on';
+    const hash = inGlobe ? GLOBE_PHOTOS_HASH : wide ? PHOTOS_HASH : null;
+    bookHash.current = hash;
+    if (!hash) return;
+    if (window.location.hash !== hash) {
       history.pushState(
         { photos: true },
         '',
-        `${window.location.pathname}${window.location.search}${PHOTOS_HASH}`
+        `${window.location.pathname}${window.location.search}${hash}`
       );
     }
     const onPop = () => {
-      if (window.location.hash !== PHOTOS_HASH) closeRef.current();
+      if (window.location.hash !== hash) closeRef.current();
     };
     window.addEventListener('popstate', onPop);
-    return () => window.removeEventListener('popstate', onPop);
+    return () => {
+      window.removeEventListener('popstate', onPop);
+      bookHash.current = null;
+    };
   }, [cityName, wide]);
   const close = useCallback(() => {
-    if (window.location.hash === PHOTOS_HASH) {
+    const hash = bookHash.current;
+    if (hash && window.location.hash === hash) {
+      // the entry this book pushed goes with it, so back is not needed twice
       if ((history.state as { photos?: boolean } | null)?.photos) history.back();
-      else history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      else
+        history.replaceState(
+          null,
+          '',
+          `${window.location.pathname}${window.location.search}${hash === GLOBE_PHOTOS_HASH ? '#globe' : ''}`
+        );
     }
     onClose();
   }, [onClose]);
