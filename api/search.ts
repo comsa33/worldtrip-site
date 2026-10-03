@@ -44,8 +44,8 @@ function limited(ip: string): boolean {
 
 /* A ceiling per instance per day, whoever is asking — one for the stops, one
    for the photos (the book's own request, B), counted apart. */
-const DAILY_CEILING = 300;
-const DAILY_PHOTO_CEILING = 300;
+const DAILY_CEILING = 100;
+const DAILY_PHOTO_CEILING = 100;
 let day = '';
 let dayCount = 0;
 let dayPhotoCount = 0;
