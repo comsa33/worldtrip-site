@@ -32,9 +32,10 @@
 }
 
 /* Glide only after the first placement, so the page never loads mid-flight. */
+/* A host may ask for a quicker flight (`--dot-flight`), read onto the dot as --flight. */
 .tdot[data-ready='true'] {
   transition:
-    transform 520ms var(--ease),
+    transform var(--flight, 520ms) var(--ease),
     width 320ms var(--ease),
     height 320ms var(--ease);
 }

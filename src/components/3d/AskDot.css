@@ -158,6 +158,8 @@
 }
 /* …and by the city's name in the answer: 4px after it, on the x-height */
 .askdot__seat--city {
+  /* between rows the dot hops, it does not fly */
+  --dot-flight: 200;
   position: static;
   display: inline-block;
   margin-left: 4px;

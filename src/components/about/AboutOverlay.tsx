@@ -16,7 +16,7 @@ interface AboutOverlayProps {
 }
 
 /* typed once per load — the card is NoteCard, the hand useSelfTyped */
-const seen = new Set<string>();
+import { seen } from './openingSeen';
 
 export default function AboutOverlay({ visible, hand, onWritten }: AboutOverlayProps) {
   const { language } = useI18n();

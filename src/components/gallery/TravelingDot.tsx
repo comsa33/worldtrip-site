@@ -8,6 +8,8 @@ const SLOW_FLIGHT_MS = 1500;
 
 /** A move shorter than this is a nudge, not a journey — no deformation. */
 const JOURNEY_PX = 6;
+/** A flight quicker than this is a hop — no deformation either. */
+const SHORT_FLIGHT_MS = 300;
 
 type Spot = { x: number; y: number; size: number };
 
@@ -57,12 +59,30 @@ export function TravelingDot() {
        still typing themselves out in Gwangju — kept the dot, and the caret
        went on blinking and walking over the photos. With no host in the book
        the dot goes home, where it is not drawn. */
+    /* And when more than one host wants the dot at once — the opening still
+       writing itself in Gwangju while the question field opens over it — the
+       one that says the higher `data-dot-rank` wins; equals go in document
+       order. This is the one place that decides. */
     const activeEl = () => {
       const book = document.querySelector<HTMLElement>('.pb');
-      return book
-        ? book.querySelector<HTMLElement>('[data-dot-active]')
-        : document.querySelector<HTMLElement>('[data-dot-active]');
+      const hosts = Array.from(
+        (book ?? document).querySelectorAll<HTMLElement>('[data-dot-active]')
+      );
+      let best: HTMLElement | null = null;
+      let bestRank = -Infinity;
+      for (const h of hosts) {
+        const rank = parseFloat(h.getAttribute('data-dot-rank') ?? '0') || 0;
+        if (rank > bestRank) {
+          best = h;
+          bestRank = rank;
+        }
+      }
+      return best;
     };
+    /* While something that says `data-dot-stay` is up (the question field),
+       a frame with no host at all is a gap, not a departure: the dot keeps
+       its place rather than flying home and back. */
+    const stayPut = () => document.querySelector('[data-dot-stay]') !== null;
 
     const numVar = (cs: CSSStyleDeclaration, name: string, fallback: number) => {
       const v = parseFloat(cs.getPropertyValue(name));
@@ -84,6 +104,19 @@ export function TravelingDot() {
       };
     };
 
+    /** How long a flight to the current host takes: its `--dot-flight` (ms), or the site's. */
+    const flightMs = () => {
+      const v = parseFloat(dot.style.getPropertyValue('--flight'));
+      return Number.isFinite(v) ? v : FLIGHT_MS - 40;
+    };
+    /** A host may ask for a quicker flight (a seat hopping between the rows of
+     *  an answer); the transition reads it off the dot. */
+    const setFlight = (host: HTMLElement | null) => {
+      const ms = host ? numVar(getComputedStyle(host), '--dot-flight', NaN) : NaN;
+      if (Number.isFinite(ms)) dot.style.setProperty('--flight', `${ms}ms`);
+      else dot.style.removeProperty('--flight');
+    };
+
     const setTransform = (x: number, y: number) => {
       dot.style.transform = `translate(${x}px, ${y}px)`;
       lastX = x;
@@ -100,7 +133,8 @@ export function TravelingDot() {
       const dx = x - lastX;
       const dy = y - lastY;
       setTransform(x, y);
-      if (!ball || !(Math.hypot(dx, dy) >= JOURNEY_PX)) return;
+      // a short hop (a host that asked for a quick flight) is a step, not a journey
+      if (!ball || !(Math.hypot(dx, dy) >= JOURNEY_PX) || flightMs() < SHORT_FLIGHT_MS) return;
       ball.style.setProperty('--angle', `${Math.atan2(dy, dx)}rad`);
       ball.removeAttribute('data-squish');
       void ball.offsetWidth; // restart the animation
@@ -289,6 +323,7 @@ export function TravelingDot() {
       window.clearTimeout(followStart);
       stopFollowing();
       const slow = currentHost?.getAttribute('data-dot-return') === 'slow';
+      setFlight(null);
       dot.setAttribute('data-ready', 'true');
       if (slow) dot.setAttribute('data-slow', '');
       ball?.removeAttribute('data-land');
@@ -334,7 +369,16 @@ export function TravelingDot() {
       frame = 0;
       const host = activeEl();
       if (!host) {
+        if (currentHost && stayPut()) {
+          // the seat is between hosts: hold where it is
+          window.clearTimeout(followStart);
+          stopFollowing();
+          currentHost = null;
+          ready = true;
+          return;
+        }
         currentHost = null;
+        setFlight(null);
         goHome();
         ready = true;
         return;
@@ -344,6 +388,7 @@ export function TravelingDot() {
         stopFollowing();
         dot.setAttribute('data-ready', 'true');
         currentHost = host;
+        setFlight(host);
         scheduleLand(host);
       }
       // while pinned, the frame loop owns the transform
@@ -366,7 +411,14 @@ export function TravelingDot() {
       subtree: true,
       childList: true,
       attributes: true,
-      attributeFilter: ['data-dot-active', 'data-dot-end', 'data-dot-follow', 'cx', 'cy'],
+      attributeFilter: [
+        'data-dot-active',
+        'data-dot-end',
+        'data-dot-follow',
+        'data-dot-rank',
+        'cx',
+        'cy',
+      ],
     });
     const ro = new ResizeObserver(schedule);
     ro.observe(document.documentElement);

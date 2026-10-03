@@ -301,12 +301,23 @@ export function AskDot({ phone }: { phone: boolean }) {
      move the mark at once, but a row opens only once it has been stayed on
      for 120ms — and its picture is asked for then, with the next one's. */
   const [settledPick, setSettledPick] = useState(0);
+  // a new answer: its first row is the one stayed on, at once (state reset during render)
+  const [answerKey, setAnswerKey] = useState<string | null>(null);
+  const key = answer ? answer.text : null;
+  if (key !== answerKey) {
+    setAnswerKey(key);
+    if (answer) setSettledPick(answer.pick);
+  }
   useEffect(() => {
     if (!answer) return;
     const t = window.setTimeout(() => setSettledPick(answer.pick), 120);
     return () => window.clearTimeout(t);
   }, [answer]);
   const opened = answer && answer.pick === settledPick ? answer.pick : -1;
+  /* The dot sits by the name of the row stayed on — and stays there while the
+     mark runs on ahead, hopping (200ms) to the next row only once it has been
+     stayed on too. It never leaves the field while the field is up. */
+  const seatRow = answer ? (settledPick < listed.length ? settledPick : answer.pick) : -1;
   useEffect(() => {
     if (!answer || opened < 0) return;
     const next = answer.stops[opened + 1];
@@ -345,6 +356,7 @@ export function AskDot({ phone }: { phone: boolean }) {
       role="dialog"
       aria-modal="true"
       aria-label={label}
+      data-dot-stay=""
     >
       {/* the page steps back; a tap on it is a way out */}
       <div className="askdot__scrim" onClick={closeSearch} />
@@ -431,6 +443,7 @@ export function AskDot({ phone }: { phone: boolean }) {
                   className="askdot__seat"
                   data-dot-follow=""
                   data-dot-active=""
+                  data-dot-rank="2"
                   data-dot-carry={carry}
                   aria-hidden="true"
                 />
@@ -506,11 +519,12 @@ export function AskDot({ phone }: { phone: boolean }) {
                     <span className="askdot__rank mono">{at + 1}</span>
                     <span className="askdot__city">
                       {cityLabel(st.city, lang)}
-                      {/* the dot sits by the name of the one opened: this is the answer */}
-                      {isOpen && (
+                      {/* the dot sits by the name of the one stayed on: this is the answer */}
+                      {seatRow === at && (
                         <span
                           className="askdot__seat askdot__seat--city"
                           data-dot-active=""
+                          data-dot-rank="2"
                           aria-hidden="true"
                         />
                       )}

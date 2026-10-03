@@ -19,6 +19,7 @@ import citiesData from '../../data/cities.json';
 import countriesData from '../../data/countries.json';
 import { I18nProvider, useI18n, SUPPORTED_LANGUAGES, type Language } from '../../i18n';
 import AboutOverlay from '../about/AboutOverlay';
+import { markOpeningSeen } from '../about/openingSeen';
 import FinaleOverlay from '../about/FinaleOverlay';
 import StopNote from '../about/StopNote';
 import { useSettledStop } from '../about/useSettledStop';
@@ -2553,6 +2554,22 @@ function JourneyExperienceContent() {
       window.clearTimeout(write);
     };
   }, [hand]);
+  /* The question field opening over the opening: the opening yields at once.
+     The words stand as written, the dot leaves from wherever it is — the
+     header's mark, the first stop, or the caret in the text — for the field,
+     and the route is simply there. Closing the field does not play it again:
+     the dot goes to where the opening would have left it, the first stop. */
+  const [yielded, setYielded] = useState(false);
+  if (!yielded && search.mode !== 'closed' && (!dotOut || hand !== 'self')) {
+    markOpeningSeen();
+    setYielded(true);
+    setDotOut(true);
+    setHand('self');
+  }
+  useEffect(() => {
+    // the route is simply there: it is not drawn out of a dot that is elsewhere
+    if (yielded) revealRef.current = Infinity;
+  }, [yielded]);
   useEffect(() => {
     // the hand put down and the dot back on the first stop: the route comes out of it
     if (hand !== 'self' || revealRef.current === Infinity) return;
