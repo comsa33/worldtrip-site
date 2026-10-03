@@ -601,6 +601,10 @@ const DOOR_SETTLE_GLOBE_MS = 1200;
 /** the dark moment: in, held, out */
 const DOOR_UP_IN_MS = 240;
 const DOOR_UP_HOLD_MS = 1600; // and 600ms back down (AskDot.css)
+/** round the back (E1): the ring on the limb sits this far outside it (the ring 9.2px and the word 12px further: AskDot.css) */
+const RIM_OUT_PX = 12;
+/** the limb ring's direction is smoothed over this, so it does not shake near the poles */
+const RIM_TAU_MS = 120;
 /** the first visit: a pause after the dot sits, then the letters, then the key */
 const DOOR_WRITE_WAIT_MS = 400;
 const DOOR_LETTER_MS = 90;
@@ -701,53 +705,107 @@ export function AskDoor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [on]);
 
-  // pinned to the dot's seat every frame it is up, as the swipe hint is
+  /* Pinned to the dot's seat every frame it is up, as the swipe hint is. Round
+     the back of the world (E1, looking around): the dot's place is shown on
+     the limb — an orange empty ring, like the header's, 12px outside it in the
+     dot's direction, and the word outside that; the land word gives way to it
+     where it stands (160ms) and comes back the same way. The direction is
+     smoothed over 120ms so it does not shake near the poles. */
+  const landRef = useRef<HTMLButtonElement>(null);
+  const backRef = useRef<HTMLButtonElement>(null);
+  const [back, setBack] = useState(false);
   useEffect(() => {
     const el = ref.current;
-    if (!el || !on) return;
+    const land = landRef.current;
+    if (!el || !land || !on) return;
     let raf = 0;
+    let angle = NaN;
+    let last = performance.now();
+    let wasBack = false;
     const tick = () => {
       const s = seat.current;
+      const now = performance.now();
+      const dt = Math.min(100, now - last);
+      last = now;
       if (s) {
         const r = s.getBoundingClientRect();
         const cx = r.left + r.width / 2;
         const cy = r.top + r.height / 2;
-        const w = el.offsetWidth;
-        // to the right of the dot; at the edge of the screen, to its left
+        const carry = s.getAttribute('data-dot-carry') ?? '';
+        const cs = getComputedStyle(document.documentElement);
+        const gcx = parseFloat(cs.getPropertyValue('--globe-cx'));
+        const gcy = parseFloat(cs.getPropertyValue('--globe-cy'));
+        const gr = parseFloat(cs.getPropertyValue('--globe-r'));
+        const isBack = globe && carry === 'hidden' && Number.isFinite(gr) && gr > 0;
+        if (isBack !== wasBack) {
+          wasBack = isBack;
+          setBack(isBack);
+          if (!isBack) angle = NaN;
+        }
+        // the land word, by the dot: to its right; at the edge of the screen, to its left
+        const w = land.offsetWidth;
         let x = cx + r.width / 2 + DOOR_GAP_PX;
         const flip = x + w > window.innerWidth - DOOR_EDGE_PX;
         if (flip) x = cx - r.width / 2 - DOOR_GAP_PX - w;
-        el.toggleAttribute('data-flip', flip);
-        el.style.transform = `translate(${x.toFixed(1)}px, ${(cy - el.offsetHeight / 2).toFixed(1)}px)`;
-        // round the back of the world with the dot
-        const carry = s.getAttribute('data-dot-carry') ?? '';
-        el.toggleAttribute('data-hidden', carry === 'hidden' || carry === 'ribbon');
+        land.toggleAttribute('data-flip', flip);
+        land.style.transform = `translate(${x.toFixed(1)}px, ${(cy - land.offsetHeight / 2).toFixed(1)}px)`;
+        // the limb ring, in the dot's direction from the globe's centre
+        const bk = backRef.current;
+        if (isBack && bk) {
+          const want = Math.atan2(cy - gcy, cx - gcx);
+          if (!Number.isFinite(angle)) angle = want;
+          else {
+            let d = want - angle;
+            d = Math.atan2(Math.sin(d), Math.cos(d));
+            angle += d * (1 - Math.exp(-dt / RIM_TAU_MS));
+          }
+          const rx = gcx + (gr + RIM_OUT_PX) * Math.cos(angle);
+          const ry = gcy + (gr + RIM_OUT_PX) * Math.sin(angle);
+          const left = Math.cos(angle) < 0;
+          bk.toggleAttribute('data-flip', left);
+          bk.style.transform = `translate(${rx.toFixed(1)}px, ${ry.toFixed(1)}px)`;
+        }
+        // moving with the ribbon: gone; on the land side, gone while round the back without a limb
+        el.toggleAttribute('data-hidden', carry === 'ribbon' || (carry === 'hidden' && !isBack));
       }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [on, seat]);
+    return () => {
+      cancelAnimationFrame(raf);
+      setBack(false);
+    };
+  }, [on, seat, globe]);
 
   // the letters shown so far, by clipping — the word's box is always the word's own width
   const shown = writing === 'done' ? 1 : writing === 'wait' ? 0 : letters / count;
+  const ask = () => {
+    openSearch();
+    // in the gesture itself, so the phone brings its keyboard
+    focusAskField();
+  };
+  const aria = language === 'ko' ? '여정에서 묻기 (/)' : 'Ask the journey (/)';
+  const key = !phone && (
+    <kbd className={`key ask-door__key${keyIn ? ' is-in' : ''}`} aria-hidden="true">
+      /
+    </kbd>
+  );
   return (
     <div
       ref={ref}
       className={`ask-door${on ? ' is-on' : ''}${up ? ' is-up' : ''}`}
+      data-back={back ? '' : undefined}
       style={{ '--globe-ground': ground } as React.CSSProperties}
       aria-hidden={on ? undefined : true}
     >
+      {/* on the land, by the dot */}
       <button
+        ref={landRef}
         type="button"
-        className="ask-door__word"
-        tabIndex={on ? 0 : -1}
-        aria-label={language === 'ko' ? '여정에서 묻기 (/)' : 'Ask the journey (/)'}
-        onClick={() => {
-          openSearch();
-          // in the gesture itself, so the phone brings its keyboard
-          focusAskField();
-        }}
+        className="ask-door__word ask-door__land"
+        tabIndex={on && !back ? 0 : -1}
+        aria-label={aria}
+        onClick={ask}
       >
         <span
           ref={wordRef}
@@ -756,12 +814,30 @@ export function AskDoor({
         >
           {label}
         </span>
-        {!phone && (
-          <kbd className={`key ask-door__key${keyIn ? ' is-in' : ''}`} aria-hidden="true">
-            /
-          </kbd>
-        )}
+        {key}
       </button>
+      {/* on the limb, when the dot is round the back: its place as an empty ring, the word outside */}
+      {globe && (
+        <button
+          ref={backRef}
+          type="button"
+          className="ask-door__word ask-door__back"
+          tabIndex={on && back ? 0 : -1}
+          aria-label={aria}
+          onClick={ask}
+        >
+          <span
+            className="ask-door__rim"
+            data-dot-follow=""
+            data-dot-active={on && back ? '' : undefined}
+            data-dot-rank="1"
+            data-dot-carry="hidden"
+            aria-hidden="true"
+          />
+          <span className="ask-door__text">{label}</span>
+          {key}
+        </button>
+      )}
     </div>
   );
 }

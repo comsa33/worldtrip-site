@@ -460,10 +460,14 @@ html[data-globe-view='on'] .askdot[data-mode='waiting'] .askdot__scrim {
   transition: opacity 150ms var(--ease);
 }
 .ask-door__word {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: inline-flex;
   align-items: baseline;
   margin: 0;
   padding: 0;
+  will-change: transform;
   border: 0;
   background: transparent;
   font: inherit;
@@ -507,8 +511,55 @@ html[data-globe-view='on'] .askdot[data-mode='waiting'] .askdot__scrim {
     display: none;
   }
 }
+/* the two faces of the door cross-fade where they stand (160ms): the land word
+   by the dot, or the ring on the limb with the word outside it */
+.ask-door__land,
+.ask-door__back {
+  transition: opacity 160ms var(--ease);
+}
+.ask-door[data-back] .ask-door__land,
+.ask-door:not([data-back]) .ask-door__back {
+  opacity: 0;
+  pointer-events: none;
+}
+/* the limb ring: the dot's place, an orange empty ring like the header's, 9.2px,
+   centred on the button's origin; the word 12px outside it */
+.ask-door__back {
+  align-items: center;
+  gap: 0;
+}
+.ask-door__rim {
+  --dot-size: 9.2px;
+  position: absolute;
+  left: -4.6px;
+  top: -4.6px;
+  width: 9.2px;
+  height: 9.2px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+}
+.ask-door__back .ask-door__text {
+  margin-left: calc(4.6px + 12px);
+}
+/* on the left of the globe the word goes left of the ring */
+.ask-door__back[data-flip] {
+  flex-direction: row-reverse;
+}
+.ask-door__back[data-flip] .ask-door__text {
+  margin-left: 0;
+  margin-right: calc(4.6px + 12px);
+}
+.ask-door__back[data-flip] .ask-door__key {
+  margin-left: 0;
+  margin-right: 8px;
+}
+.ask-door__back[data-flip] {
+  transform-origin: right center;
+}
 /* right-aligned when flipped to the dot's left */
-.ask-door[data-flip] {
+.ask-door__land[data-flip] {
   text-align: right;
 }
 /* a 44px press on a phone */
@@ -521,7 +572,9 @@ html[data-globe-view='on'] .askdot[data-mode='waiting'] .askdot__scrim {
 @media (prefers-reduced-motion: reduce) {
   .ask-door,
   .ask-door__word,
-  .ask-door__key {
+  .ask-door__key,
+  .ask-door__land,
+  .ask-door__back {
     transition: none;
   }
 }

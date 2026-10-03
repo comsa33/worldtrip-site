@@ -2130,3 +2130,18 @@ kbd.key {
     animation: none;
   }
 }
+
+/* A phone on its side (the look around is forced): the theme row is only there
+   when something is lit — a theme, or a search — as a 30px line under the bar,
+   「전체 | 피라미드 1 / 5 × ···」, the other words folded; safe-area at the sides */
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
+  .journey-themes {
+    display: none;
+  }
+  .journey-themes.is-picked {
+    display: flex;
+    top: 56px;
+    height: 30px;
+    padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  }
+}
