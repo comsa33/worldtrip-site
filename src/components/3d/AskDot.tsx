@@ -21,7 +21,8 @@ import { photosForStop } from '../../lib/visitPhotos';
 import { srcFor } from '../../lib/photoSrc';
 import { cityLabel } from '../../lib/journeyRoll';
 import { hasTheme, usePhotoTheme } from '../../lib/photoThemes';
-import { focusAskField, setAskField } from '../../lib/askField';
+import { focusAskField, setAskField, setScanPath } from '../../lib/askField';
+import { useSideways } from '../../lib/sideways';
 import { AskStatus } from './AskStatus';
 import {
   closeSearch,
@@ -247,6 +248,30 @@ export function AskDot({ phone }: { phone: boolean }) {
     };
   }, [phone, open]);
 
+  /* A phone on its side: the keyboard and its bar leave a band of 100–150px.
+     The field goes to the top of what is seen (visualViewport), in one line,
+     and follows it; an answer puts the keyboard down (blur) and takes the
+     whole screen for the list. Pressing the words brings the band back. */
+  const sideways = useSideways();
+  const [seen, setSeen] = useState<{ top: number; h: number } | null>(null);
+  const band = sideways && open ? seen : null;
+  useEffect(() => {
+    if (!sideways || !open) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const sync = () => setSeen({ top: Math.round(vv.offsetTop), h: Math.round(vv.height) });
+    sync();
+    vv.addEventListener('resize', sync);
+    vv.addEventListener('scroll', sync);
+    return () => {
+      vv.removeEventListener('resize', sync);
+      vv.removeEventListener('scroll', sync);
+    };
+  }, [sideways, open]);
+  useEffect(() => {
+    if (sideways && search.mode === 'answer') inputRef.current?.blur();
+  }, [sideways, search.mode]);
+
   const ghostOn = (search.mode === 'open' || search.mode === 'none') && text === '';
   const ghost = useGhost(ghostOn, EXAMPLES[lang]);
 
@@ -331,6 +356,7 @@ export function AskDot({ phone }: { phone: boolean }) {
     <div
       className="askdot"
       data-mode={search.mode}
+      data-band={band ? '' : undefined}
       data-leaving={open ? undefined : ''}
       role="dialog"
       aria-modal="true"
@@ -339,9 +365,22 @@ export function AskDot({ phone }: { phone: boolean }) {
     >
       {/* the page steps back; a tap on it is a way out */}
       <div className="askdot__scrim" onClick={closeSearch} />
+      {/* the route's spark, over the dim (RouteScan draws it) */}
+      <svg className="askdot__scan" aria-hidden="true">
+        <path ref={setScanPath} />
+      </svg>
       <div
         className="askdot__centre"
-        style={top !== null ? ({ '--ask-top': `${top}px` } as React.CSSProperties) : undefined}
+        style={
+          band
+            ? ({
+                '--ask-top': `${band.top + 8}px`,
+                '--ask-h': `${band.h}px`,
+              } as React.CSSProperties)
+            : top !== null
+              ? ({ '--ask-top': `${top}px` } as React.CSSProperties)
+              : undefined
+        }
       >
         <div className="askdot__field">
           {

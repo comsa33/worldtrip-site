@@ -10,6 +10,7 @@ import {
   scanEnding,
   scanPhase,
 } from '../../lib/scanClock';
+import { scanPath } from '../../lib/askField';
 import * as THREE from 'three';
 import {
   Camera as CameraIcon,
@@ -628,33 +629,60 @@ function RevealDriver({
 /** What the spark is doing: running, finishing to the end (nothing found), or stopped (a fault). */
 export type Scan = { phase: 'run' | 'none' | 'fault'; since: number; at: number };
 
+/**
+ * The spark that runs the route while the words are out (K2): a ninth of the
+ * route, orange, 2.6s a lap. Drawn not in the scene but on the asking field's
+ * own SVG layer, over the dim — projected from here every frame, the way the
+ * ranks are placed — so the dim (82%) does not bury it. Points round the back
+ * of the world are left out. Its three endings are the status ring's
+ * (scanClock).
+ */
 function RouteScan({
   points,
-  color,
   opacity,
   width,
   scan,
 }: {
   points: PathPoint[];
-  color: string;
   opacity: number;
   width: number;
   scan: Scan;
 }) {
-  const invalidate = useThree((s) => s.invalidate);
+  const { camera, size, gl, invalidate } = useThree();
   const pts = useMemo(() => points.map((p) => p.point), [points]);
-  const len = useMemo(() => pathLength(pts), [pts]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref = useRef<any>(null);
-  const dash = Math.max(0.05, len * 0.03);
+  // the distance along the route at each point
+  const cum = useMemo(() => {
+    const out = new Float32Array(pts.length);
+    let d = 0;
+    for (let i = 1; i < pts.length; i++) {
+      d += pts[i].distanceTo(pts[i - 1]);
+      out[i] = d;
+    }
+    return out;
+  }, [pts]);
+  const len = cum[cum.length - 1] || 1;
+  // the designer's 90 of 1000: a ninth of the route
+  const dash = len * 0.09;
+  const v = useRef(new THREE.Vector3());
   const ease = (k: number) => 1 - Math.pow(1 - k, 3);
+  const done = useRef(false);
+  useEffect(
+    () => () => {
+      const el = scanPath();
+      if (el) {
+        el.setAttribute('d', '');
+        el.style.opacity = '';
+      }
+    },
+    []
+  );
   useFrame(() => {
-    const m = ref.current?.material;
-    if (!m) return;
+    const el = scanPath();
+    if (!el || pts.length < 2) return;
     const now = Date.now();
     let k: number;
     let alpha = opacity;
-    let done = false;
+    let finished = false;
     if (scan.phase === 'run') {
       k = scanPhase(scan.since, now);
     } else {
@@ -668,7 +696,7 @@ function RouteScan({
         if (now >= end + REST_HOLD_MS) {
           const f = Math.min(1, (now - end - REST_HOLD_MS) / REST_FADE_MS);
           alpha = opacity + (REST_OPACITY * opacity - opacity) * f;
-          done = f >= 1;
+          finished = f >= 1;
         }
       } else {
         // stopped where it was; after a beat, gone
@@ -676,31 +704,48 @@ function RouteScan({
         if (now >= hold + FAULT_HOLD_MS) {
           const f = Math.min(1, (now - hold - FAULT_HOLD_MS) / FAULT_FADE_MS);
           alpha = opacity * (1 - f);
-          done = f >= 1;
+          finished = f >= 1;
         }
       }
     }
-    m.dashOffset = -k * len;
-    m.opacity = alpha;
-    if (!done) invalidate();
+    if (done.current && finished) return;
+    // the dash: from k·len on, a ninth of the route, wrapping past the end
+    const a = k * len;
+    const b = a + dash;
+    const rect = gl.domElement.getBoundingClientRect();
+    const cam = camera.position;
+    let d = '';
+    let pen = false;
+    const put = (i: number) => {
+      const p = pts[i];
+      // round the back of the world: the point faces away from the camera
+      if (p.x * (cam.x - p.x) + p.y * (cam.y - p.y) + p.z * (cam.z - p.z) < 0) {
+        pen = false;
+        return;
+      }
+      v.current.copy(p).project(camera);
+      // off the screen (or behind the camera): the pen lifts
+      if (Math.abs(v.current.x) > 1.2 || Math.abs(v.current.y) > 1.2 || v.current.z > 1) {
+        pen = false;
+        return;
+      }
+      const x = rect.left + ((v.current.x + 1) / 2) * size.width;
+      const y = rect.top + ((1 - v.current.y) / 2) * size.height;
+      d += `${pen ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`;
+      pen = true;
+    };
+    for (let i = 0; i < pts.length; i++) {
+      const c = cum[i];
+      if ((c >= a && c <= b) || (b > len && c <= b - len)) put(i);
+      else pen = false;
+    }
+    el.setAttribute('d', d);
+    el.style.opacity = String(alpha);
+    el.style.strokeWidth = `${width}px`;
+    done.current = finished;
+    if (!finished) invalidate();
   });
-  if (pts.length < 2) return null;
-  return (
-    <Line
-      ref={ref}
-      points={pts}
-      color={color}
-      lineWidth={width}
-      renderOrder={ROUTE_ORDER + 1}
-      transparent
-      opacity={opacity}
-      depthWrite={false}
-      dashed
-      dashSize={dash}
-      gapSize={1e6}
-      dashScale={1}
-    />
-  );
+  return null;
 }
 
 function TravelPath({
@@ -1507,9 +1552,8 @@ function Scene({
         <RouteScan
           key={scan.since}
           points={path}
-          color={GLOBE[theme].routePast}
           opacity={theme === 'dark' ? 0.7 : 0.85}
-          width={size.width <= 768 ? 1.6 : 2.2}
+          width={size.width <= 768 ? 2 : 2.6}
           scan={scan}
         />
       )}

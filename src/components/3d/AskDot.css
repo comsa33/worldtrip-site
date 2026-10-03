@@ -25,6 +25,63 @@
   transition: opacity 240ms var(--ease);
 }
 
+/* the route's spark, over the dim: RouteScan writes the path each frame */
+.askdot__scan {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.askdot__scan path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* a phone on its side with the keyboard up: the band it leaves (visualViewport) */
+.askdot[data-band] .askdot__centre {
+  top: var(--ask-top);
+  left: max(16px, env(safe-area-inset-left));
+  right: max(16px, env(safe-area-inset-right));
+  width: auto;
+  margin-left: 0;
+  animation: none;
+}
+.askdot[data-band] .askdot__field {
+  font-size: 20px;
+  padding-bottom: 6px;
+}
+.askdot[data-band] .askdot__status {
+  margin-top: 8px;
+  font-size: 13px;
+  gap: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.askdot[data-band] .askdot__status .mono {
+  font-size: 11px;
+}
+.askdot[data-band] .askdot__groups {
+  margin-top: 8px;
+  max-height: calc(var(--ask-h, 100dvh) - 90px);
+}
+.askdot[data-band] .askdot__group + .askdot__group {
+  margin-top: 6px;
+}
+.askdot[data-band] .askdot__label {
+  margin-bottom: 4px;
+}
+/* the answer: the keyboard is down, the list has what is seen */
+.askdot[data-band] .askdot__answer {
+  margin-top: 8px;
+  max-height: calc(var(--ask-h, 100dvh) - 70px);
+  overflow-y: auto;
+}
+
 .askdot__centre {
   --ask-top: 250px;
   position: absolute;
