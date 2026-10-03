@@ -302,3 +302,35 @@ k2intro(인트로 양보, 사진첩 포함) · k2hop(프레임별 닷 위치) ·
 - 캡션 넘길 때 「나가는 글 동시 페이드아웃」(L1 수치표)은 key 재마운트 구조라 안 넣음 — 들어오는 글 200ms 만.
 - 검색 끌 때 지구본 고리·스크러버 막대 160ms 페이드(칩 기획)는 기존 즉시 사라짐 그대로.
 - Jev 이 세션 13건(측정). 5182 preview 는 서버 코드를 시작 때 읽으니 api/ 를 고치면 재시작.
+
+## 21. coding worker (2026-10-03 오후) — 검색어 칩 · 가로 키보드 · 토막 · K3 둘러보기 검색
+
+§20 이후 커밋(모두 「확인 대기」·미푸시): cb6e532 검색어 칩 · ef0752f docs · 861afb6 가로 키보드+토막 SVG · 7d4ede7 K3 ① · e4a4461 K3 ②③ · 454842e K3 ④⑤. 매 커밋 tsc -b · eslint · npm test(25) · npm run build 단독 0.
+
+### 검색어 칩 (ThemeRow)
+
+- `picked = theme ?? (lit ? 'search' : null)` 이 접힘·is-picked 를 몬다. 「전체」 뒤 `.theme-row__search`(검색어 `.theme-row__q` 12자 … · `.theme-row__rank`(Rolling 200ms) · `.theme-row__x`). 검색이 켜지면 즉시 접힘, 칩은 접혀도 통째. 헤더 「1 / n」 제거.
+- props `stopId`(여정: 카메라가 가는 동안 jumpTarget 의 정거장, 둘러보기: lit.pick 의 정거장)·`place`. 검색어 누름 = `openSearch(atRank)` → Enter 때 그 순위 줄 pick. 사진첩 줄은 stopId 없음 → 순위 없음.
+
+### 토막 · 가로 키보드 (861afb6)
+
+- RouteScan 은 장면에 선을 그리지 않고 매 프레임 투영해 `.askdot__scan`(묻는 칸 층, 딤 위) SVG path 에 쓴다(`lib/askField` setScanPath/scanPath). 뒤편·화면 밖 점은 펜을 뗀다. 여정 9%/2.6s, 둘러보기 6%/3.2s(`scanClock` setScanLap). 측정: 캔버스에 그리면 딤 82% 아래 안 보였다(주황 픽셀 19 vs 216).
+- 가로 폰: AskDot `band`(visualViewport offsetTop·height) → `.askdot[data-band]` 한 줄 20px, 띠 맨 위 +8. 가로는 둘러보기 강제라 답은 K3 로 지구본에 켜지고 input blur.
+
+### K3 둘러보기 검색
+
+- ① 둘러보기에서 `search.mode==='answer'` 면 즉시 `confirmAnswer()`(JourneyExperience 효과), onAnswer 는 globe 때 이동하지 않음. 딤 78%/55%(AskDot.css `html[data-globe-view='on']`).
+- ②③ `SearchGlobe.tsx`(캔버스 안 useFrame → `.search-globe` DOM): 앞면 라벨 「순위 도시」(ringSpot 위), 뒤편 림 호(±0.09rad, 같은 방향 합침 「4 · 5」), 콜아웃(`.search-callout`, 아래 26/옆 24, 폭 340/250, 지시선 --lead-\*). `GlobeLimb` 가 --globe-cx/cy/r 를 문서에 씀. ThemeRings `pick` prop(city·onPick·onGo·onHover) + `aW` 속성(선택 2.2px). search.ts `lit.pick`·`lit.shown`·`pickLit(i, shown)`. 페이지: `pickStop`(pickLit + turnToFront), `goToLit`(exitGlobe + goToStop), `turnRef`(Scene 이 채움: 뒤편 정거장을 acos(R/len)−0.25 까지만 돌림, aimAt len 유지). ←→ 는 globe 에서 순위 걷기. 콜아웃 클릭 = 가기. 한 도시 고리 = 그 도시 모든 체류(첫 순위 선택).
+- ④ AskDoor: `.ask-door__land`(닷 옆) / `.ask-door__back`(림 고리 `.ask-door__rim` + 낱말, rank 1 숨은 좌석) 를 각자 absolute 로 두고 `data-back` 으로 160ms 교차. 각도 120ms 다듬기. ⑤ JourneyExperience.css 끝: sideways 에서 `.journey-themes` 는 `.is-picked` 일 때만 30px.
+- 모드 사이(K3R): lit 은 store 하나라 여정↔둘러보기 그대로 이어짐. 「가기」= 그 정거장, 헤더 마크로 나가면 원래 정거장·고리 유지. Esc/×: 칸 → 닫기, 칸 닫힌 채 lit → clearSearch(둘러보기 그대로).
+
+### headless 추가
+
+k3.mjs(desk|phone: ①②③ + 뒤편 회전) · k3door.mjs(E1 반 바퀴 돌리기·/·Esc·가로 폰 줄) · k2band.mjs 는 가로=K3 로 갱신 · q2door.mjs 는 `.ask-door__land` 기준.
+
+### 남은 것
+
+- 루오님 확인(폰): 가로 키보드 띠, 림 고리 문, 콜아웃 44px 탭, 가로 주제 줄 30px.
+- 검색 끌 때 고리·라벨 160ms(라벨·호는 160ms 전환, 고리는 ThemeRings 기존 즉시).
+- 폰 가로 K3R 「미리보기 오른쪽 260px 칼럼」은 안 함 — 콜아웃이 고리에 매달리는 같은 규칙으로 둠(디자이너와 확인 필요).
+- Jev 이 세션 13건(측정만). 5182 는 api/ 바뀌면 재시작.
