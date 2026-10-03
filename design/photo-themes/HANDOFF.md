@@ -265,3 +265,40 @@ fe79fcf 이후. 브랜치 `feat/photo-themes`, worktree 그대로, **푸시 안 
 - **로컬 main 의 7951b5b(Cloudinary 변환 축소)는 건드리지 말 것** — 브랜치를 먼저 올리고 크레딧이 내려간 뒤 rebase(§「배포 준비 점검」 보고: Filmstrip.tsx import 한 줄 충돌).
 - 닷 비행은 사이트 공통 520ms(디자이너 340ms 와 다름, 총괄 확정). 영문 예시는 dev coder 번역.
 - 예시 다섯은 모두 /api/search 결과 1곳 이상(2026-10-03 확인).
+
+## 20. coding worker (2026-10-03) — 인트로 양보 · 닷 왕복 · 검색 품질 · N1 · L1 · Q2 · 검색어 칩
+
+35caa9a(K2, dev coder) 이후. 커밋(오래된 것부터, 모두 「확인 대기」·미푸시): 764b481 인트로 양보+닷 왕복 · 3098094 사진첩도 양보 · bbe1706 서버 · 4d09db2 N1 V2 · 145a107 L1 · 414e2b5 Q2 · cb6e532 검색어 칩. 매 커밋 tsc -b · eslint · npm test(25) · npm run build 단독 0.
+
+### 닷을 쥐는 규칙 (TravelingDot — 한 곳)
+
+- 좌석이 둘 이상이면 `data-dot-rank` 높은 쪽, 같으면 문서 순서(K2 좌석 2). 사진첩이 열려 있으면 그 안의 좌석만(기존).
+- `data-dot-stay` 가 떠 있는 동안(K2 칸) 좌석이 비는 프레임은 「틈」 — 집으로 가지 않고 제자리.
+- 좌석의 `--dot-flight`(ms) 를 닷의 `--flight` 로 읽어 비행 시간을 바꾼다(답 목록 줄 사이 200ms, 300ms 미만은 변형 없음). 그 외는 520ms.
+- 인트로(여정의 시작 타이핑) 중 K2·사진첩이 열리면 즉시 끝 상태(`openingSeen.ts` markOpeningSeen, reveal Infinity, dotOut·hand=self). 닫으면 닷은 광주, 다시 틀지 않음.
+
+### 서버 api/search.ts
+
+- 게이트 `noul ≥ 0.5 || 최고점 ≥ 1.8`(GATE_BY_SCORE). 요약 = 도시·나라·날짜·cityNotes en·**Captions(en)**·주제 사진 수. 캡션은 `api/stopCaptions.json`(scripts/build-stop-captions.mjs 가 cityPhotos+journey 의 visitPhotos 규칙으로 생성, prebuild·pretest 자동, prettier 제외, 테스트가 바이트 비교). facts.jsonl·Apple 자료 금지 그대로.
+- 동의어 SYNONYMS(넓은 말만) → themeOf. 14주제 `_theme_<id>` score 질문 → 응답 `themes:[{id, score}]`(0~3, THEME_MIN 1.5, 상위 3).
+- `questionsFor()`·`resultOf(answers)` 를 내보내 측정·테스트가 운영 로직을 그대로 쓴다. 측정 결과는 bbe1706 메시지(개 0→5, 고양이 0→5, 맥주 0→2, 사고 0→1, 국수·여자·사원 0→0+가까운 주제; 입력 토큰 27.8K→48.2K).
+- dev 가짜(SEARCH_FAKE=1): 「없음」(themes 있음) · 「없다」(없음) · 「오류」 502 · 「429」 · 「느림」 9s.
+
+### 화면
+
+- **search.ts**: waiting `since`, none `since·at·themes`, error `since·at`(offline 은 since 0 = 출발 안 함), fault 에 `timeout`. `askedWords()`(sessionStorage) · `useLearned()`(localStorage searchLearned, submit 때) · `openSearch(atRank)`(칩에서 다시 열면 그 순위 줄이 pick).
+- **N1**: `AskStatus.tsx`(+AskDot.css 뒤쪽). 문구는 `lib/askCopy.ts` 한 곳. 고리 결말 = 토막 결말 = `lib/scanClock.ts`(SCAN 2600 · 최소 700 · 끝까지 ≤600 · 200 머묾 · .18 로 400 / 오류 300 뒤 300 페이드). RouteScan 은 `Scan {phase run|none|fault, since, at}` 를 받아 그대로 그린다. 「다른 말」은 `lib/askWords.ts`(테스트).
+- **L1**: PhotoGallery 가 sideways 때 `--cap-left/--cap-bottom` 과 `data-cap=side|line` 을 .pb 에 둔다(SIDE\_\* 상수, 전체 높이 기준 판정). CSS 는 PhotoGallery.css sideways 블록. 메타의 장소는 `.pb__place`(평소엔 「 · 」 앞에).
+- **Q2**: AskDoor — 닷 중심선 +14(뒤집기), clip-path 쓰기(askIntroSeen), / 키 인라인 margin-left 8, is-up 진해짐(240/1.6s/600), 둘러보기 1.2s(`globe` prop). 옛 숨쉬기·is-asked 없음.
+- **검색어 칩**: ThemeRow 가 `useSearch()` 로 lit 을 읽어 「전체」 뒤에 `.theme-row__search`(검색어 `.theme-row__q` · `.theme-row__rank`(Rolling) · `.theme-row__x`). `picked = theme ?? 'search'` 가 접힘·is-picked 를 몬다. props `stopId`(JourneyExperience 는 카메라가 가는 동안 jumpTarget)·`place`. 헤더 rank 는 뺐다. 사진첩의 줄은 stopId 없음 → 순위 없이 검색어·× 만.
+
+### headless (node_modules/.cache/b1, git 밖, 127.0.0.1:5191 dev SEARCH_FAKE)
+
+k2intro(인트로 양보, 사진첩 포함) · k2hop(프레임별 닷 위치) · k2none(N1 다섯 갈래, desk|phone) · l1cap `<url> <stop> <steps>`(22 함피·54 다합 L3) · q2door(쓰기·8±1px·진해짐) · k2chip(desk|phone). k2list 는 가짜 순위가 6곳이라 「12곳」 단계만 FAIL(데이터 탓).
+
+### 남은 것
+
+- 루오님 확인(폰): N1 고리·문구, L1 실기기(safe-area 47px), Q2 첫 방문 쓰기, 칩 폰 ×(44).
+- 캡션 넘길 때 「나가는 글 동시 페이드아웃」(L1 수치표)은 key 재마운트 구조라 안 넣음 — 들어오는 글 200ms 만.
+- 검색 끌 때 지구본 고리·스크러버 막대 160ms 페이드(칩 기획)는 기존 즉시 사라짐 그대로.
+- Jev 이 세션 13건(측정). 5182 preview 는 서버 코드를 시작 때 읽으니 api/ 를 고치면 재시작.
