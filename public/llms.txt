@@ -4,7 +4,7 @@
 
 - 사이트: https://backpacking.po24lio.com/
 - 특정 도시로 바로 가기: https://backpacking.po24lio.com/?stop=<id> (id 1~161)
-- 작성자 포트폴리오: https://po24lio.com , 블로그: https://blog.po24lio.com
+- 작성자 포트폴리오: https://ruo.po24lio.com , 블로그: https://blog.po24lio.com
 - 사진: 각 도시 필름스트립 (Cloudinary). 육로 구간은 OSRM 실제 도로 경로.
 
 ## 여정 (국가 순서)

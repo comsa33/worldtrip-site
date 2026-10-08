@@ -24,7 +24,7 @@ const llms = `# 세계일주 배낭여행 2016-2017 (World Trip)
 
 - 사이트: ${SITE}/
 - 특정 도시로 바로 가기: ${SITE}/?stop=<id> (id 1~${j.stops.length})
-- 작성자 포트폴리오: https://po24lio.com , 블로그: https://blog.po24lio.com
+- 작성자 포트폴리오: https://ruo.po24lio.com , 블로그: https://blog.po24lio.com
 - 사진: 각 도시 필름스트립 (Cloudinary). 육로 구간은 OSRM 실제 도로 경로.
 
 ## 여정 (국가 순서)
@@ -74,7 +74,7 @@ const noscript = `      <main>
         <ol>
 ${order.map((c) => `          <li><a href="/?stop=${j.stops.find((s) => s.countryCode === c).id}">${byCode[c].name.ko} (${byCode[c].name.en})</a>: ${citiesOf[c].join(', ')}</li>`).join('\n')}
         </ol>
-        <p><a href="/llms.txt">텍스트 요약 (llms.txt)</a> · <a href="https://po24lio.com">이루오 포트폴리오</a> · <a href="https://blog.po24lio.com">블로그</a></p>
+        <p><a href="/llms.txt">텍스트 요약 (llms.txt)</a> · <a href="https://ruo.po24lio.com">이루오 포트폴리오</a> · <a href="https://blog.po24lio.com">블로그</a></p>
       </main>`;
 
 let html = fs.readFileSync('index.html', 'utf8');

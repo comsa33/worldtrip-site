@@ -2073,7 +2073,7 @@ function Header({
         {language === 'ko' ? `· ${TOTAL_LABEL}장` : `· ${TOTAL_LABEL} photos`}
       </button>
       <nav className="journey-header__nav mono" aria-label="Sites">
-        <a href="https://po24lio.com">{t('nav.portfolio')}</a>
+        <a href="https://ruo.po24lio.com">{t('nav.portfolio')}</a>
         <a href="https://blog.po24lio.com">{t('nav.blog')}</a>
         <LanguageToggle />
         <span className="journey-header__sep" aria-hidden="true" />
